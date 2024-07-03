@@ -293,9 +293,9 @@ type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2AlternatePolicySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2Constraint: A constraint describes a way to restrict
@@ -353,9 +353,9 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2Constraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ConstraintBooleanConstraint: A constraint that is
@@ -391,9 +391,9 @@ type GoogleCloudOrgpolicyV2ConstraintListConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2ConstraintListConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2ConstraintListConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ConstraintListConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined by
@@ -462,9 +462,9 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2CustomConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ListConstraintsResponse: The response returned from
@@ -492,9 +492,9 @@ type GoogleCloudOrgpolicyV2ListConstraintsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2ListConstraintsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2ListConstraintsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListConstraintsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ListCustomConstraintsResponse: The response returned
@@ -523,9 +523,9 @@ type GoogleCloudOrgpolicyV2ListCustomConstraintsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2ListCustomConstraintsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2ListCustomConstraintsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListCustomConstraintsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ListPoliciesResponse: The response returned from the
@@ -554,9 +554,9 @@ type GoogleCloudOrgpolicyV2ListPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2ListPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2ListPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is used
@@ -602,9 +602,9 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpec: Defines a Google Cloud policy
@@ -655,9 +655,9 @@ type GoogleCloudOrgpolicyV2PolicySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpecPolicyRule: A rule used to express this
@@ -700,9 +700,9 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues: A message that holds
@@ -736,9 +736,9 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -794,9 +794,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersConstraintsListCall struct {

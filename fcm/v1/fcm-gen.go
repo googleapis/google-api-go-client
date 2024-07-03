@@ -249,9 +249,9 @@ type AndroidConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidConfig) MarshalJSON() ([]byte, error) {
+func (s AndroidConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidFcmOptions: Options for features provided by the FCM SDK for Android.
@@ -271,9 +271,9 @@ type AndroidFcmOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidFcmOptions) MarshalJSON() ([]byte, error) {
+func (s AndroidFcmOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidFcmOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidNotification: Notification to send to android devices.
@@ -465,9 +465,9 @@ type AndroidNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidNotification) MarshalJSON() ([]byte, error) {
+func (s AndroidNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApnsConfig: Apple Push Notification Service (https://goo.gl/MXRTPa) specific
@@ -501,9 +501,9 @@ type ApnsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApnsConfig) MarshalJSON() ([]byte, error) {
+func (s ApnsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApnsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApnsFcmOptions: Options for features provided by the FCM SDK for iOS.
@@ -527,9 +527,9 @@ type ApnsFcmOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
+func (s ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ApnsFcmOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Color: Represents a color in the RGBA color space. This representation is
@@ -610,9 +610,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -653,9 +653,9 @@ type FcmOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FcmOptions) MarshalJSON() ([]byte, error) {
+func (s FcmOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod FcmOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LightSettings: Settings to control notification LED.
@@ -684,9 +684,9 @@ type LightSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LightSettings) MarshalJSON() ([]byte, error) {
+func (s LightSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LightSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Message: Message to send by Firebase Cloud Messaging Service.
@@ -740,9 +740,9 @@ type Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Message) MarshalJSON() ([]byte, error) {
+func (s Message) MarshalJSON() ([]byte, error) {
 	type NoMethod Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Notification: Basic notification template to use across all platforms.
@@ -771,9 +771,9 @@ type Notification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Notification) MarshalJSON() ([]byte, error) {
+func (s Notification) MarshalJSON() ([]byte, error) {
 	type NoMethod Notification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SendMessageRequest: Request to send a message to specified target.
@@ -796,9 +796,9 @@ type SendMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SendMessageRequest) MarshalJSON() ([]byte, error) {
+func (s SendMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SendMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebpushConfig: Webpush protocol (https://tools.ietf.org/html/rfc8030)
@@ -833,9 +833,9 @@ type WebpushConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebpushConfig) MarshalJSON() ([]byte, error) {
+func (s WebpushConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WebpushConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebpushFcmOptions: Options for features provided by the FCM SDK for Web.
@@ -858,9 +858,9 @@ type WebpushFcmOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebpushFcmOptions) MarshalJSON() ([]byte, error) {
+func (s WebpushFcmOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod WebpushFcmOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsMessagesSendCall struct {

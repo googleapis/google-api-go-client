@@ -250,9 +250,9 @@ type Callback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Callback) MarshalJSON() ([]byte, error) {
+func (s Callback) MarshalJSON() ([]byte, error) {
 	type NoMethod Callback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelExecutionRequest: Request for the CancelExecution method.
@@ -281,9 +281,9 @@ type Error struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Error) MarshalJSON() ([]byte, error) {
+func (s Error) MarshalJSON() ([]byte, error) {
 	type NoMethod Error
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Exception: Exception describes why the step entry failed.
@@ -303,9 +303,9 @@ type Exception struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Exception) MarshalJSON() ([]byte, error) {
+func (s Exception) MarshalJSON() ([]byte, error) {
 	type NoMethod Exception
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Execution: A running instance of a Workflow
@@ -395,9 +395,9 @@ type Execution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Execution) MarshalJSON() ([]byte, error) {
+func (s Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod Execution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportDataResponse: Response for the ExportData method.
@@ -421,9 +421,9 @@ type ExportDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportDataResponse) MarshalJSON() ([]byte, error) {
+func (s ExportDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCallbacksResponse: RPC response object for the ListCallbacks method.
@@ -449,9 +449,9 @@ type ListCallbacksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCallbacksResponse) MarshalJSON() ([]byte, error) {
+func (s ListCallbacksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCallbacksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExecutionsResponse: Response for the ListExecutions method.
@@ -477,9 +477,9 @@ type ListExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStepEntriesResponse: Response message for
@@ -511,9 +511,9 @@ type ListStepEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStepEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListStepEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStepEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NavigationInfo: NavigationInfo describes what steps if any come before or
@@ -542,9 +542,9 @@ type NavigationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NavigationInfo) MarshalJSON() ([]byte, error) {
+func (s NavigationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod NavigationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Position: Position contains source position information about the stack
@@ -573,9 +573,9 @@ type Position struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Position) MarshalJSON() ([]byte, error) {
+func (s Position) MarshalJSON() ([]byte, error) {
 	type NoMethod Position
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message that is published by publishers and consumed by
@@ -625,9 +625,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackTrace: A collection of stack elements (frames) where an error occurred.
@@ -647,9 +647,9 @@ type StackTrace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackTrace) MarshalJSON() ([]byte, error) {
+func (s StackTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTrace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackTraceElement: A single stack element (frame) where an error occurred.
@@ -673,9 +673,9 @@ type StackTraceElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
+func (s StackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTraceElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateError: Describes an error related to the current state of the Execution
@@ -702,9 +702,9 @@ type StateError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateError) MarshalJSON() ([]byte, error) {
+func (s StateError) MarshalJSON() ([]byte, error) {
 	type NoMethod StateError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: Represents the current status of this execution.
@@ -730,9 +730,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Step: Represents a step of the workflow this execution is running.
@@ -754,9 +754,9 @@ type Step struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Step) MarshalJSON() ([]byte, error) {
+func (s Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StepEntry: An StepEntry contains debugging information for a step transition
@@ -842,9 +842,9 @@ type StepEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StepEntry) MarshalJSON() ([]byte, error) {
+func (s StepEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod StepEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StepEntryMetadata: StepEntryMetadata contains metadata information about
@@ -886,9 +886,9 @@ type StepEntryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StepEntryMetadata) MarshalJSON() ([]byte, error) {
+func (s StepEntryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StepEntryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TriggerPubsubExecutionRequest: Request for the TriggerPubsubExecution
@@ -921,9 +921,9 @@ type TriggerPubsubExecutionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
+func (s TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TriggerPubsubExecutionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsWorkflowsTriggerPubsubExecutionCall struct {

@@ -199,9 +199,9 @@ type ListQuotaGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListQuotaGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListQuotaGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQuotaGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MethodDetails: The method details per method in the Merchant API.
@@ -228,9 +228,9 @@ type MethodDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MethodDetails) MarshalJSON() ([]byte, error) {
+func (s MethodDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod MethodDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -288,9 +288,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -337,9 +337,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuotaGroup: The group information for methods in the Merchant API. The quota
@@ -375,9 +375,9 @@ type QuotaGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuotaGroup) MarshalJSON() ([]byte, error) {
+func (s QuotaGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsQuotasListCall struct {

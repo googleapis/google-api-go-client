@@ -317,9 +317,9 @@ type AclEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AclEntry) MarshalJSON() ([]byte, error) {
+func (s AclEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod AclEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcquireSsrsLeaseContext: Acquire SSRS lease context.
@@ -347,9 +347,9 @@ type AcquireSsrsLeaseContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcquireSsrsLeaseContext) MarshalJSON() ([]byte, error) {
+func (s AcquireSsrsLeaseContext) MarshalJSON() ([]byte, error) {
 	type NoMethod AcquireSsrsLeaseContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvancedMachineFeatures: Specifies options for controlling advanced machine
@@ -370,9 +370,9 @@ type AdvancedMachineFeatures struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
+func (s AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedMachineFeatures
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApiWarning: An Admin API warning message.
@@ -409,9 +409,9 @@ type ApiWarning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiWarning) MarshalJSON() ([]byte, error) {
+func (s ApiWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiWarning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AvailableDatabaseVersion: An available database version. It can be a major
@@ -437,9 +437,9 @@ type AvailableDatabaseVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AvailableDatabaseVersion) MarshalJSON() ([]byte, error) {
+func (s AvailableDatabaseVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AvailableDatabaseVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupConfiguration: Database instance backup configuration.
@@ -494,9 +494,9 @@ type BackupConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupConfiguration) MarshalJSON() ([]byte, error) {
+func (s BackupConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupContext: Backup context.
@@ -518,9 +518,9 @@ type BackupContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupContext) MarshalJSON() ([]byte, error) {
+func (s BackupContext) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupReencryptionConfig: Backup Reencryption Config
@@ -548,9 +548,9 @@ type BackupReencryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupReencryptionConfig) MarshalJSON() ([]byte, error) {
+func (s BackupReencryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupReencryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupRetentionSettings: We currently only support backup retention by
@@ -581,9 +581,9 @@ type BackupRetentionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupRetentionSettings) MarshalJSON() ([]byte, error) {
+func (s BackupRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupRetentionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupRun: A BackupRun resource.
@@ -677,9 +677,9 @@ type BackupRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupRun) MarshalJSON() ([]byte, error) {
+func (s BackupRun) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupRunsListResponse: Backup run list results.
@@ -709,9 +709,9 @@ type BackupRunsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupRunsListResponse) MarshalJSON() ([]byte, error) {
+func (s BackupRunsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupRunsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BinLogCoordinates: Binary log coordinates.
@@ -735,9 +735,9 @@ type BinLogCoordinates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BinLogCoordinates) MarshalJSON() ([]byte, error) {
+func (s BinLogCoordinates) MarshalJSON() ([]byte, error) {
 	type NoMethod BinLogCoordinates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloneContext: Database instance clone context.
@@ -783,9 +783,9 @@ type CloneContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloneContext) MarshalJSON() ([]byte, error) {
+func (s CloneContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectSettings: Connect settings retrieval response.
@@ -913,9 +913,9 @@ type ConnectSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectSettings) MarshalJSON() ([]byte, error) {
+func (s ConnectSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataCacheConfig: Data cache configurations.
@@ -935,9 +935,9 @@ type DataCacheConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataCacheConfig) MarshalJSON() ([]byte, error) {
+func (s DataCacheConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DataCacheConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Database: Represents a SQL database on the Cloud SQL instance.
@@ -979,9 +979,9 @@ type Database struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Database) MarshalJSON() ([]byte, error) {
+func (s Database) MarshalJSON() ([]byte, error) {
 	type NoMethod Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseFlags: Database flags for Cloud SQL instances.
@@ -1009,9 +1009,9 @@ type DatabaseFlags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseFlags) MarshalJSON() ([]byte, error) {
+func (s DatabaseFlags) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseFlags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseInstance: A Cloud SQL instance resource.
@@ -1282,9 +1282,9 @@ type DatabaseInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
+func (s DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseInstanceFailoverReplica: The name and status of the failover
@@ -1311,9 +1311,9 @@ type DatabaseInstanceFailoverReplica struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseInstanceFailoverReplica) MarshalJSON() ([]byte, error) {
+func (s DatabaseInstanceFailoverReplica) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstanceFailoverReplica
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabasesListResponse: Database list response.
@@ -1338,9 +1338,9 @@ type DatabasesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabasesListResponse) MarshalJSON() ([]byte, error) {
+func (s DatabasesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabasesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DemoteContext: This context is used to demote an existing standalone
@@ -1364,9 +1364,9 @@ type DemoteContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DemoteContext) MarshalJSON() ([]byte, error) {
+func (s DemoteContext) MarshalJSON() ([]byte, error) {
 	type NoMethod DemoteContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DemoteMasterConfiguration: Read-replica configuration for connecting to the
@@ -1394,9 +1394,9 @@ type DemoteMasterConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DemoteMasterConfiguration) MarshalJSON() ([]byte, error) {
+func (s DemoteMasterConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod DemoteMasterConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DemoteMasterContext: Database instance demote primary instance context.
@@ -1432,9 +1432,9 @@ type DemoteMasterContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DemoteMasterContext) MarshalJSON() ([]byte, error) {
+func (s DemoteMasterContext) MarshalJSON() ([]byte, error) {
 	type NoMethod DemoteMasterContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DemoteMasterMySqlReplicaConfiguration: Read-replica configuration specific
@@ -1467,9 +1467,9 @@ type DemoteMasterMySqlReplicaConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DemoteMasterMySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
+func (s DemoteMasterMySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod DemoteMasterMySqlReplicaConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DenyMaintenancePeriod: Deny Maintenance Periods. This specifies a date range
@@ -1501,9 +1501,9 @@ type DenyMaintenancePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod DenyMaintenancePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiskEncryptionConfiguration: Disk encryption configuration for an instance.
@@ -1525,9 +1525,9 @@ type DiskEncryptionConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiskEncryptionConfiguration) MarshalJSON() ([]byte, error) {
+func (s DiskEncryptionConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskEncryptionConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiskEncryptionStatus: Disk encryption status for an instance.
@@ -1550,9 +1550,9 @@ type DiskEncryptionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
+func (s DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskEncryptionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1613,9 +1613,9 @@ type ExportContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContext) MarshalJSON() ([]byte, error) {
+func (s ExportContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportContextBakExportOptions: Options for exporting BAK files (SQL
@@ -1653,9 +1653,9 @@ type ExportContextBakExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextBakExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportContextBakExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextBakExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportContextCsvExportOptions: Options for exporting data as CSV. `MySQL`
@@ -1688,9 +1688,9 @@ type ExportContextCsvExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextCsvExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportContextCsvExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextCsvExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportContextSqlExportOptions: Options for exporting data as SQL statements.
@@ -1720,9 +1720,9 @@ type ExportContextSqlExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextSqlExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportContextSqlExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextSqlExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportContextSqlExportOptionsMysqlExportOptions: Options for exporting from
@@ -1747,9 +1747,9 @@ type ExportContextSqlExportOptionsMysqlExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextSqlExportOptionsMysqlExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FailoverContext: Database instance failover context.
@@ -1772,9 +1772,9 @@ type FailoverContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FailoverContext) MarshalJSON() ([]byte, error) {
+func (s FailoverContext) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Flag: A flag resource.
@@ -1910,9 +1910,9 @@ type Flag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Flag) MarshalJSON() ([]byte, error) {
+func (s Flag) MarshalJSON() ([]byte, error) {
 	type NoMethod Flag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FlagsListResponse: Flags list response.
@@ -1937,9 +1937,9 @@ type FlagsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
+func (s FlagsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlagsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeminiInstanceConfig: Gemini instance configuration.
@@ -1972,9 +1972,9 @@ type GeminiInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeminiInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GeminiInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GeminiInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateEphemeralCertRequest: Ephemeral certificate creation request.
@@ -2001,9 +2001,9 @@ type GenerateEphemeralCertRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateEphemeralCertRequest) MarshalJSON() ([]byte, error) {
+func (s GenerateEphemeralCertRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateEphemeralCertRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateEphemeralCertResponse: Ephemeral certificate creation request.
@@ -2026,9 +2026,9 @@ type GenerateEphemeralCertResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateEphemeralCertResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateEphemeralCertResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateEphemeralCertResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportContext: Database instance import context.
@@ -2077,9 +2077,9 @@ type ImportContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContext) MarshalJSON() ([]byte, error) {
+func (s ImportContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportContextBakImportOptions: Import parameters specific to SQL Server .BAK
@@ -2127,9 +2127,9 @@ type ImportContextBakImportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContextBakImportOptions) MarshalJSON() ([]byte, error) {
+func (s ImportContextBakImportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextBakImportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ImportContextBakImportOptionsEncryptionOptions struct {
@@ -2156,9 +2156,9 @@ type ImportContextBakImportOptionsEncryptionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContextBakImportOptionsEncryptionOptions) MarshalJSON() ([]byte, error) {
+func (s ImportContextBakImportOptionsEncryptionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextBakImportOptionsEncryptionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportContextCsvImportOptions: Options for importing data as CSV.
@@ -2193,9 +2193,9 @@ type ImportContextCsvImportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContextCsvImportOptions) MarshalJSON() ([]byte, error) {
+func (s ImportContextCsvImportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextCsvImportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportContextSqlImportOptions: Optional. Options for importing data from SQL
@@ -2218,9 +2218,9 @@ type ImportContextSqlImportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContextSqlImportOptions) MarshalJSON() ([]byte, error) {
+func (s ImportContextSqlImportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextSqlImportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsightsConfig: Insights configuration. This specifies when Cloud SQL
@@ -2255,9 +2255,9 @@ type InsightsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsightsConfig) MarshalJSON() ([]byte, error) {
+func (s InsightsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InsightsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceReference: Reference to another Cloud SQL instance.
@@ -2283,9 +2283,9 @@ type InstanceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceReference) MarshalJSON() ([]byte, error) {
+func (s InstanceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesAcquireSsrsLeaseRequest: Request to acquire an SSRS lease for an
@@ -2307,9 +2307,9 @@ type InstancesAcquireSsrsLeaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesAcquireSsrsLeaseRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesAcquireSsrsLeaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesAcquireSsrsLeaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesCloneRequest: Database instance clone request.
@@ -2329,9 +2329,9 @@ type InstancesCloneRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesCloneRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesCloneRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesCloneRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesDemoteMasterRequest: Database demote primary instance request.
@@ -2351,9 +2351,9 @@ type InstancesDemoteMasterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesDemoteMasterRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesDemoteMasterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesDemoteMasterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesDemoteRequest: This request is used to demote an existing
@@ -2377,9 +2377,9 @@ type InstancesDemoteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesDemoteRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesDemoteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesDemoteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesExportRequest: Database instance export request.
@@ -2399,9 +2399,9 @@ type InstancesExportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesExportRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesExportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesExportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesFailoverRequest: Instance failover request.
@@ -2421,9 +2421,9 @@ type InstancesFailoverRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesFailoverRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesFailoverRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesFailoverRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesImportRequest: Database instance import request.
@@ -2443,9 +2443,9 @@ type InstancesImportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesImportRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesImportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesImportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesListResponse: Database instances list response.
@@ -2476,9 +2476,9 @@ type InstancesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesListResponse) MarshalJSON() ([]byte, error) {
+func (s InstancesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesListServerCasResponse: Instances ListServerCas response.
@@ -2504,9 +2504,9 @@ type InstancesListServerCasResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesListServerCasResponse) MarshalJSON() ([]byte, error) {
+func (s InstancesListServerCasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesListServerCasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesReencryptRequest: Database Instance reencrypt request.
@@ -2526,9 +2526,9 @@ type InstancesReencryptRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesReencryptRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesReencryptRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesReencryptRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesRestoreBackupRequest: Database instance restore backup request.
@@ -2549,9 +2549,9 @@ type InstancesRestoreBackupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesRestoreBackupRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesRestoreBackupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesRestoreBackupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesRotateServerCaRequest: Rotate Server CA request.
@@ -2572,9 +2572,9 @@ type InstancesRotateServerCaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesRotateServerCaRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesRotateServerCaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesRotateServerCaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancesTruncateLogRequest: Instance truncate log request.
@@ -2594,9 +2594,9 @@ type InstancesTruncateLogRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancesTruncateLogRequest) MarshalJSON() ([]byte, error) {
+func (s InstancesTruncateLogRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesTruncateLogRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IpConfiguration: IP Management configuration.
@@ -2682,9 +2682,9 @@ type IpConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IpConfiguration) MarshalJSON() ([]byte, error) {
+func (s IpConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod IpConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IpMapping: Database instance IP mapping
@@ -2727,9 +2727,9 @@ type IpMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IpMapping) MarshalJSON() ([]byte, error) {
+func (s IpMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod IpMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationPreference: Preferred location. This specifies where a Cloud SQL
@@ -2763,9 +2763,9 @@ type LocationPreference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationPreference) MarshalJSON() ([]byte, error) {
+func (s LocationPreference) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationPreference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: Maintenance window. This specifies when a Cloud SQL
@@ -2811,9 +2811,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MySqlReplicaConfiguration: Read-replica configuration specific to MySQL
@@ -2862,9 +2862,9 @@ type MySqlReplicaConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
+func (s MySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod MySqlReplicaConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MySqlSyncConfig: MySQL-specific external server sync settings.
@@ -2884,9 +2884,9 @@ type MySqlSyncConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MySqlSyncConfig) MarshalJSON() ([]byte, error) {
+func (s MySqlSyncConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MySqlSyncConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OnPremisesConfiguration: On-premises instance configuration.
@@ -2924,9 +2924,9 @@ type OnPremisesConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
+func (s OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod OnPremisesConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: An Operation resource. For successful operations that return an
@@ -3074,9 +3074,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationError: Database instance operation error.
@@ -3100,9 +3100,9 @@ type OperationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationError) MarshalJSON() ([]byte, error) {
+func (s OperationError) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationErrors: Database instance operation errors list wrapper.
@@ -3124,9 +3124,9 @@ type OperationErrors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationErrors) MarshalJSON() ([]byte, error) {
+func (s OperationErrors) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationErrors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -3162,9 +3162,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationsListResponse: Operations list response.
@@ -3193,9 +3193,9 @@ type OperationsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
+func (s OperationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PasswordStatus: Read-only password status.
@@ -3217,9 +3217,9 @@ type PasswordStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PasswordStatus) MarshalJSON() ([]byte, error) {
+func (s PasswordStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod PasswordStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PasswordValidationPolicy: Database instance local user password validation
@@ -3259,9 +3259,9 @@ type PasswordValidationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PasswordValidationPolicy) MarshalJSON() ([]byte, error) {
+func (s PasswordValidationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PasswordValidationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerformDiskShrinkContext: Perform disk shrink context.
@@ -3281,9 +3281,9 @@ type PerformDiskShrinkContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
+func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformDiskShrinkContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PscConfig: PSC settings for a Cloud SQL instance.
@@ -3309,9 +3309,9 @@ type PscConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PscConfig) MarshalJSON() ([]byte, error) {
+func (s PscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicaConfiguration: Read-replica configuration for connecting to the
@@ -3350,9 +3350,9 @@ type ReplicaConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicaConfiguration) MarshalJSON() ([]byte, error) {
+func (s ReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicaConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicationCluster: A primary instance and disaster recovery (DR) replica
@@ -3393,9 +3393,9 @@ type ReplicationCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicationCluster) MarshalJSON() ([]byte, error) {
+func (s ReplicationCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicationCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Reschedule struct {
@@ -3426,9 +3426,9 @@ type Reschedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reschedule) MarshalJSON() ([]byte, error) {
+func (s Reschedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Reschedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreBackupContext: Database instance restore from backup context. Backup
@@ -3455,9 +3455,9 @@ type RestoreBackupContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreBackupContext) MarshalJSON() ([]byte, error) {
+func (s RestoreBackupContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreBackupContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RotateServerCaContext: Instance rotate server CA context.
@@ -3480,9 +3480,9 @@ type RotateServerCaContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotateServerCaContext) MarshalJSON() ([]byte, error) {
+func (s RotateServerCaContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RotateServerCaContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Settings: Database instance settings.
@@ -3667,9 +3667,9 @@ type Settings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Settings) MarshalJSON() ([]byte, error) {
+func (s Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlActiveDirectoryConfig: Active Directory configuration, relevant only for
@@ -3692,9 +3692,9 @@ type SqlActiveDirectoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlActiveDirectoryConfig) MarshalJSON() ([]byte, error) {
+func (s SqlActiveDirectoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlActiveDirectoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlExternalSyncSettingError: External primary instance migration setting
@@ -3820,9 +3820,9 @@ type SqlExternalSyncSettingError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlExternalSyncSettingError) MarshalJSON() ([]byte, error) {
+func (s SqlExternalSyncSettingError) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlExternalSyncSettingError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesAcquireSsrsLeaseResponse: Acquire SSRS lease response.
@@ -3845,9 +3845,9 @@ type SqlInstancesAcquireSsrsLeaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesAcquireSsrsLeaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesGetDiskShrinkConfigResponse: Instance get disk shrink config
@@ -3876,9 +3876,9 @@ type SqlInstancesGetDiskShrinkConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesGetDiskShrinkConfigResponse) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesGetDiskShrinkConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesGetDiskShrinkConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesGetLatestRecoveryTimeResponse: Instance get latest recovery time
@@ -3905,9 +3905,9 @@ type SqlInstancesGetLatestRecoveryTimeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesGetLatestRecoveryTimeResponse) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesGetLatestRecoveryTimeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesGetLatestRecoveryTimeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesReleaseSsrsLeaseResponse: The response for the release of the
@@ -3931,9 +3931,9 @@ type SqlInstancesReleaseSsrsLeaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesReleaseSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesReleaseSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesReleaseSsrsLeaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesRescheduleMaintenanceRequestBody: Reschedule options for
@@ -3954,9 +3954,9 @@ type SqlInstancesRescheduleMaintenanceRequestBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesRescheduleMaintenanceRequestBody) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesRescheduleMaintenanceRequestBody) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesRescheduleMaintenanceRequestBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesResetReplicaSizeRequest: Instance reset replica size request.
@@ -4012,9 +4012,9 @@ type SqlInstancesStartExternalSyncRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesStartExternalSyncRequest) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesStartExternalSyncRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesStartExternalSyncRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SqlInstancesVerifyExternalSyncSettingsRequest struct {
@@ -4069,9 +4069,9 @@ type SqlInstancesVerifyExternalSyncSettingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesVerifyExternalSyncSettingsRequest) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesVerifyExternalSyncSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesVerifyExternalSyncSettingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlInstancesVerifyExternalSyncSettingsResponse: Instance verify external
@@ -4099,9 +4099,9 @@ type SqlInstancesVerifyExternalSyncSettingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlInstancesVerifyExternalSyncSettingsResponse) MarshalJSON() ([]byte, error) {
+func (s SqlInstancesVerifyExternalSyncSettingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesVerifyExternalSyncSettingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlOutOfDiskReport: This message wraps up the information written by
@@ -4136,9 +4136,9 @@ type SqlOutOfDiskReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlOutOfDiskReport) MarshalJSON() ([]byte, error) {
+func (s SqlOutOfDiskReport) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlOutOfDiskReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlScheduledMaintenance: Any scheduled maintenance for this instance.
@@ -4165,9 +4165,9 @@ type SqlScheduledMaintenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlScheduledMaintenance) MarshalJSON() ([]byte, error) {
+func (s SqlScheduledMaintenance) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlScheduledMaintenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlServerAuditConfig: SQL Server specific audit configuration.
@@ -4193,9 +4193,9 @@ type SqlServerAuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlServerAuditConfig) MarshalJSON() ([]byte, error) {
+func (s SqlServerAuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerAuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlServerDatabaseDetails: Represents a Sql Server database on the Cloud SQL
@@ -4219,9 +4219,9 @@ type SqlServerDatabaseDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlServerDatabaseDetails) MarshalJSON() ([]byte, error) {
+func (s SqlServerDatabaseDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerDatabaseDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlServerUserDetails: Represents a Sql Server user on the Cloud SQL
@@ -4244,9 +4244,9 @@ type SqlServerUserDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlServerUserDetails) MarshalJSON() ([]byte, error) {
+func (s SqlServerUserDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerUserDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCert: SslCerts Resource
@@ -4289,9 +4289,9 @@ type SslCert struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCert) MarshalJSON() ([]byte, error) {
+func (s SslCert) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCert
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCertDetail: SslCertDetail.
@@ -4314,9 +4314,9 @@ type SslCertDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCertDetail) MarshalJSON() ([]byte, error) {
+func (s SslCertDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCertsCreateEphemeralRequest: SslCerts create ephemeral certificate
@@ -4339,9 +4339,9 @@ type SslCertsCreateEphemeralRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCertsCreateEphemeralRequest) MarshalJSON() ([]byte, error) {
+func (s SslCertsCreateEphemeralRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertsCreateEphemeralRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCertsInsertRequest: SslCerts insert request.
@@ -4362,9 +4362,9 @@ type SslCertsInsertRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCertsInsertRequest) MarshalJSON() ([]byte, error) {
+func (s SslCertsInsertRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertsInsertRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCertsInsertResponse: SslCert insert response.
@@ -4395,9 +4395,9 @@ type SslCertsInsertResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCertsInsertResponse) MarshalJSON() ([]byte, error) {
+func (s SslCertsInsertResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertsInsertResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslCertsListResponse: SslCerts list response.
@@ -4422,9 +4422,9 @@ type SslCertsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslCertsListResponse) MarshalJSON() ([]byte, error) {
+func (s SslCertsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncFlags: Initial sync flags for certain Cloud SQL APIs. Currently used for
@@ -4448,9 +4448,9 @@ type SyncFlags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SyncFlags) MarshalJSON() ([]byte, error) {
+func (s SyncFlags) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncFlags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tier: A Google Cloud SQL service tier resource.
@@ -4479,9 +4479,9 @@ type Tier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tier) MarshalJSON() ([]byte, error) {
+func (s Tier) MarshalJSON() ([]byte, error) {
 	type NoMethod Tier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TiersListResponse: Tiers list response.
@@ -4506,9 +4506,9 @@ type TiersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TiersListResponse) MarshalJSON() ([]byte, error) {
+func (s TiersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TiersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TruncateLogContext: Database Instance truncate log context.
@@ -4531,9 +4531,9 @@ type TruncateLogContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TruncateLogContext) MarshalJSON() ([]byte, error) {
+func (s TruncateLogContext) MarshalJSON() ([]byte, error) {
 	type NoMethod TruncateLogContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: A Cloud SQL user resource.
@@ -4601,9 +4601,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserPasswordValidationPolicy: User level password validation policy.
@@ -4635,9 +4635,9 @@ type UserPasswordValidationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserPasswordValidationPolicy) MarshalJSON() ([]byte, error) {
+func (s UserPasswordValidationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UserPasswordValidationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsersListResponse: User list response.
@@ -4664,9 +4664,9 @@ type UsersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsersListResponse) MarshalJSON() ([]byte, error) {
+func (s UsersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UsersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BackupRunsDeleteCall struct {

@@ -511,9 +511,9 @@ type GoogleAnalyticsAdminV1alphaAccessBetweenFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessBetweenFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessBetweenFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessBetweenFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessBinding: A binding of a user to a set of
@@ -549,9 +549,9 @@ type GoogleAnalyticsAdminV1alphaAccessBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessBinding) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessDateRange: A contiguous range of days:
@@ -580,9 +580,9 @@ type GoogleAnalyticsAdminV1alphaAccessDateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessDateRange) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessDateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessDateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessDimension: Dimensions are attributes of
@@ -608,9 +608,9 @@ type GoogleAnalyticsAdminV1alphaAccessDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessDimensionHeader: Describes a dimension
@@ -634,9 +634,9 @@ type GoogleAnalyticsAdminV1alphaAccessDimensionHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessDimensionHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessDimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessDimensionHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessDimensionValue: The value of a dimension.
@@ -657,9 +657,9 @@ type GoogleAnalyticsAdminV1alphaAccessDimensionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessDimensionValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessDimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessDimensionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessFilter: An expression to filter dimension
@@ -688,9 +688,9 @@ type GoogleAnalyticsAdminV1alphaAccessFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessFilterExpression: Expresses dimension or
@@ -721,9 +721,9 @@ type GoogleAnalyticsAdminV1alphaAccessFilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessFilterExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessFilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessFilterExpressionList: A list of filter
@@ -744,9 +744,9 @@ type GoogleAnalyticsAdminV1alphaAccessFilterExpressionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessFilterExpressionList) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessFilterExpressionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessInListFilter: The result needs to be in a
@@ -769,9 +769,9 @@ type GoogleAnalyticsAdminV1alphaAccessInListFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessInListFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessInListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessInListFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessMetric: The quantitative measurements of a
@@ -796,9 +796,9 @@ type GoogleAnalyticsAdminV1alphaAccessMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessMetricHeader: Describes a metric column in
@@ -822,9 +822,9 @@ type GoogleAnalyticsAdminV1alphaAccessMetricHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessMetricHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessMetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessMetricHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessMetricValue: The value of a metric.
@@ -844,9 +844,9 @@ type GoogleAnalyticsAdminV1alphaAccessMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessNumericFilter: Filters for numeric or date
@@ -877,9 +877,9 @@ type GoogleAnalyticsAdminV1alphaAccessNumericFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessNumericFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessNumericFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessNumericFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessOrderBy: Order bys define how rows will be
@@ -907,9 +907,9 @@ type GoogleAnalyticsAdminV1alphaAccessOrderBy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessOrderBy) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessOrderBy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy: Sorts by dimension
@@ -943,9 +943,9 @@ type GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy: Sorts by metric
@@ -966,9 +966,9 @@ type GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessQuota: Current state of all quotas for this
@@ -1006,9 +1006,9 @@ type GoogleAnalyticsAdminV1alphaAccessQuota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessQuota) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessQuota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessQuotaStatus: Current state for a particular
@@ -1031,9 +1031,9 @@ type GoogleAnalyticsAdminV1alphaAccessQuotaStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessQuotaStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessQuotaStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessQuotaStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessRow: Access report data for each row.
@@ -1057,9 +1057,9 @@ type GoogleAnalyticsAdminV1alphaAccessRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessRow) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccessStringFilter: The filter for strings.
@@ -1094,9 +1094,9 @@ type GoogleAnalyticsAdminV1alphaAccessStringFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccessStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccessStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccessStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccount: A resource message representing a Google
@@ -1138,9 +1138,9 @@ type GoogleAnalyticsAdminV1alphaAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccount) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAccountSummary: A virtual resource representing
@@ -1170,9 +1170,9 @@ type GoogleAnalyticsAdminV1alphaAccountSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAccountSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAccountSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAccountSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest: Request
@@ -1198,9 +1198,9 @@ type GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse: Response
@@ -1236,9 +1236,9 @@ type GoogleAnalyticsAdminV1alphaAdSenseLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAdSenseLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAdSenseLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAdSenseLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalReques
@@ -1268,9 +1268,9 @@ type GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalResp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaArchiveAudienceRequest: Request message for
@@ -1373,9 +1373,9 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAttributionSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAttributionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAttributionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudience: A resource message representing a GA4
@@ -1430,9 +1430,9 @@ type GoogleAnalyticsAdminV1alphaAudience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudience) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudience) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter: A specific
@@ -1484,9 +1484,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter: A
@@ -1510,9 +1510,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter: A
@@ -1537,9 +1537,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter: A
@@ -1568,9 +1568,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue: To
@@ -1593,9 +1593,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue) UnmarshalJSON(data []byte) error {
@@ -1643,9 +1643,9 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceEventFilter: A filter that matches events
@@ -1677,9 +1677,9 @@ type GoogleAnalyticsAdminV1alphaAudienceEventFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceEventFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceEventFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceEventFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceEventTrigger: Specifies an event to log
@@ -1709,9 +1709,9 @@ type GoogleAnalyticsAdminV1alphaAudienceEventTrigger struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceEventTrigger) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceEventTrigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceEventTrigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceFilterClause: A clause for defining
@@ -1749,9 +1749,9 @@ type GoogleAnalyticsAdminV1alphaAudienceFilterClause struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceFilterClause) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceFilterClause) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterClause
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceFilterExpression: A logical expression of
@@ -1787,9 +1787,9 @@ type GoogleAnalyticsAdminV1alphaAudienceFilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceFilterExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList: A list of Audience
@@ -1810,9 +1810,9 @@ type GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceSequenceFilter: Defines filters that must
@@ -1848,9 +1848,9 @@ type GoogleAnalyticsAdminV1alphaAudienceSequenceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceSequenceFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceSequenceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSequenceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep: A
@@ -1895,9 +1895,9 @@ type GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaAudienceSimpleFilter: Defines a simple filter
@@ -1930,9 +1930,9 @@ type GoogleAnalyticsAdminV1alphaAudienceSimpleFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaAudienceSimpleFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaAudienceSimpleFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSimpleFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest: Request message
@@ -1954,9 +1954,9 @@ type GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse: Response
@@ -1980,9 +1980,9 @@ type GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest: Request message
@@ -2004,9 +2004,9 @@ type GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse: Response message
@@ -2030,9 +2030,9 @@ type GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest: Request message
@@ -2054,9 +2054,9 @@ type GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse: Response
@@ -2080,9 +2080,9 @@ type GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaBigQueryLink: A link between a GA4 Property and
@@ -2134,9 +2134,9 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaBigQueryLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaBigQueryLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaBigQueryLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCalculatedMetric: A definition for a calculated
@@ -2208,9 +2208,9 @@ type GoogleAnalyticsAdminV1alphaCalculatedMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCalculatedMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCalculatedMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCalculatedMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCancelDisplayVideo360AdvertiserLinkProposalRequest
@@ -2251,9 +2251,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChangeHistoryChange) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChangeHistoryChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource: A
@@ -2336,9 +2336,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChangeHistoryEvent: A set of changes within a
@@ -2382,9 +2382,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChangeHistoryEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChangeHistoryEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroup: A resource message representing a
@@ -2428,9 +2428,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroupFilter: A specific filter for a
@@ -2457,9 +2457,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroupFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroupFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroupFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroupFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroupFilterExpression: A logical
@@ -2492,9 +2492,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroupFilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroupFilterExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroupFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroupFilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroupFilterExpressionList: A list of
@@ -2515,9 +2515,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroupFilterExpressionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroupFilterExpressionList) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroupFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroupFilterExpressionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroupFilterInListFilter: A filter for a
@@ -2540,9 +2540,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroupFilterInListFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroupFilterInListFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroupFilterInListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroupFilterInListFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaChannelGroupFilterStringFilter: Filter where the
@@ -2574,9 +2574,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroupFilterStringFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaChannelGroupFilterStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaChannelGroupFilterStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaChannelGroupFilterStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaConnectedSiteTag: Configuration for a specific
@@ -2601,9 +2601,9 @@ type GoogleAnalyticsAdminV1alphaConnectedSiteTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaConnectedSiteTag) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaConnectedSiteTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaConnectedSiteTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaConversionEvent: A conversion event in a Google
@@ -2657,9 +2657,9 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaConversionEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaConversionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue: Defines a
@@ -2687,9 +2687,9 @@ type GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) UnmarshalJSON(data []byte) error {
@@ -2749,9 +2749,9 @@ type GoogleAnalyticsAdminV1alphaConversionValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaConversionValues) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaConversionValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest: Request message for
@@ -2774,9 +2774,9 @@ type GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest: Request message
@@ -2802,9 +2802,9 @@ type GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse: Response message
@@ -2835,9 +2835,9 @@ type GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse: Response message
@@ -2863,9 +2863,9 @@ type GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest: Request message for
@@ -2889,9 +2889,9 @@ type GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse: Response message for
@@ -2917,9 +2917,9 @@ type GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCustomDimension: A definition for a
@@ -2974,9 +2974,9 @@ type GoogleAnalyticsAdminV1alphaCustomDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCustomDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCustomDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCustomDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaCustomMetric: A definition for a custom metric.
@@ -3044,9 +3044,9 @@ type GoogleAnalyticsAdminV1alphaCustomMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaCustomMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaCustomMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaCustomMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataRedactionSettings: Settings for client-side
@@ -3086,9 +3086,9 @@ type GoogleAnalyticsAdminV1alphaDataRedactionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataRedactionSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataRedactionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataRedactionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataRetentionSettings: Settings values for data
@@ -3130,9 +3130,9 @@ type GoogleAnalyticsAdminV1alphaDataRetentionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataRetentionSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataRetentionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataSharingSettings: A resource message
@@ -3175,9 +3175,9 @@ type GoogleAnalyticsAdminV1alphaDataSharingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataSharingSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataSharingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataSharingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataStream: A resource message representing a
@@ -3228,9 +3228,9 @@ type GoogleAnalyticsAdminV1alphaDataStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataStream) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataStream) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData: Data specific to
@@ -3255,9 +3255,9 @@ type GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData: Data specific to iOS
@@ -3282,9 +3282,9 @@ type GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDataStreamWebStreamData: Data specific to web
@@ -3312,9 +3312,9 @@ type GoogleAnalyticsAdminV1alphaDataStreamWebStreamData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDataStreamWebStreamData) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDataStreamWebStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamWebStreamData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest: Request message for
@@ -3336,9 +3336,9 @@ type GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest: Request message
@@ -3364,9 +3364,9 @@ type GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink: A link between a
@@ -3413,9 +3413,9 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal: A proposal
@@ -3474,9 +3474,9 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings: Singleton resource
@@ -3537,9 +3537,9 @@ type GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaEventCreateRule: An Event Create Rule defines
@@ -3586,9 +3586,9 @@ type GoogleAnalyticsAdminV1alphaEventCreateRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaEventCreateRule) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaEventCreateRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaEventCreateRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaEventMapping: Event setting conditions to match
@@ -3626,9 +3626,9 @@ type GoogleAnalyticsAdminV1alphaEventMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaEventMapping) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaEventMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaEventMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1alphaEventMapping) UnmarshalJSON(data []byte) error {
@@ -3692,9 +3692,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSetFilter: A specific filter for a
@@ -3721,9 +3721,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression: A logical
@@ -3754,9 +3754,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList: A list of
@@ -3777,9 +3777,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter: A filter for a
@@ -3804,9 +3804,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter: A filter for a
@@ -3838,9 +3838,9 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest:
@@ -3864,9 +3864,9 @@ type GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse:
@@ -3891,9 +3891,9 @@ type GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse: Response for
@@ -3919,9 +3919,9 @@ type GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaFirebaseLink: A link between a GA4 property and a
@@ -3953,9 +3953,9 @@ type GoogleAnalyticsAdminV1alphaFirebaseLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaFirebaseLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaFirebaseLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaFirebaseLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaGlobalSiteTag: Read-only resource with the tag
@@ -3985,9 +3985,9 @@ type GoogleAnalyticsAdminV1alphaGlobalSiteTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaGlobalSiteTag) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaGlobalSiteTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaGlobalSiteTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaGoogleAdsLink: A link between a GA4 property and
@@ -4032,9 +4032,9 @@ type GoogleAnalyticsAdminV1alphaGoogleAdsLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaGoogleAdsLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaGoogleAdsLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaGoogleAdsLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaGoogleSignalsSettings: Settings values for Google
@@ -4079,9 +4079,9 @@ type GoogleAnalyticsAdminV1alphaGoogleSignalsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaGoogleSignalsSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaGoogleSignalsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaGoogleSignalsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaGroupingRule: The rules that govern how traffic
@@ -4104,9 +4104,9 @@ type GoogleAnalyticsAdminV1alphaGroupingRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaGroupingRule) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaGroupingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaGroupingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaKeyEvent: A key event in a Google Analytics
@@ -4157,9 +4157,9 @@ type GoogleAnalyticsAdminV1alphaKeyEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaKeyEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaKeyEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaKeyEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaKeyEventDefaultValue: Defines a default
@@ -4187,9 +4187,9 @@ type GoogleAnalyticsAdminV1alphaKeyEventDefaultValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaKeyEventDefaultValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaKeyEventDefaultValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaKeyEventDefaultValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1alphaKeyEventDefaultValue) UnmarshalJSON(data []byte) error {
@@ -4256,9 +4256,9 @@ type GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListAccessBindingsResponse: Response message for
@@ -4286,9 +4286,9 @@ type GoogleAnalyticsAdminV1alphaListAccessBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListAccessBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListAccessBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAccessBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListAccountSummariesResponse: Response message
@@ -4316,9 +4316,9 @@ type GoogleAnalyticsAdminV1alphaListAccountSummariesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListAccountSummariesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListAccountSummariesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAccountSummariesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListAccountsResponse: Request message for
@@ -4345,9 +4345,9 @@ type GoogleAnalyticsAdminV1alphaListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse: Response message for
@@ -4374,9 +4374,9 @@ type GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListAudiencesResponse: Response message for
@@ -4403,9 +4403,9 @@ type GoogleAnalyticsAdminV1alphaListAudiencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListAudiencesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAudiencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse: Response message for
@@ -4432,9 +4432,9 @@ type GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListCalculatedMetricsResponse: Response message
@@ -4461,9 +4461,9 @@ type GoogleAnalyticsAdminV1alphaListCalculatedMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListCalculatedMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListCalculatedMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListCalculatedMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListChannelGroupsResponse: Response message for
@@ -4491,9 +4491,9 @@ type GoogleAnalyticsAdminV1alphaListChannelGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListChannelGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListChannelGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListChannelGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest: Request message for
@@ -4516,9 +4516,9 @@ type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse: Response message
@@ -4543,9 +4543,9 @@ type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListConversionEventsResponse: Response message
@@ -4572,9 +4572,9 @@ type GoogleAnalyticsAdminV1alphaListConversionEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListConversionEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListConversionEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListConversionEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListCustomDimensionsResponse: Response message
@@ -4601,9 +4601,9 @@ type GoogleAnalyticsAdminV1alphaListCustomDimensionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListCustomDimensionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListCustomDimensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListCustomDimensionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListCustomMetricsResponse: Response message for
@@ -4630,9 +4630,9 @@ type GoogleAnalyticsAdminV1alphaListCustomMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListCustomMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListCustomMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListCustomMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListDataStreamsResponse: Response message for
@@ -4659,9 +4659,9 @@ type GoogleAnalyticsAdminV1alphaListDataStreamsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListDataStreamsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListDataStreamsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListDataStreamsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsResponse
@@ -4691,9 +4691,9 @@ type GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsRespon
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse:
@@ -4721,9 +4721,9 @@ type GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse: Response message
@@ -4751,9 +4751,9 @@ type GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse: Response message
@@ -4781,9 +4781,9 @@ type GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse: Response message for
@@ -4812,9 +4812,9 @@ type GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse: Response message for
@@ -4841,9 +4841,9 @@ type GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListKeyEventsResponse: Response message for
@@ -4870,9 +4870,9 @@ type GoogleAnalyticsAdminV1alphaListKeyEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListKeyEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListKeyEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListKeyEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse: Response
@@ -4900,9 +4900,9 @@ type GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListPropertiesResponse: Response message for
@@ -4930,9 +4930,9 @@ type GoogleAnalyticsAdminV1alphaListPropertiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListPropertiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse: Response
@@ -4959,9 +4959,9 @@ type GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse:
@@ -4992,9 +4992,9 @@ type GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse: Response message
@@ -5021,9 +5021,9 @@ type GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse: Response
@@ -5050,9 +5050,9 @@ type GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaMatchingCondition: Defines a condition for when
@@ -5104,9 +5104,9 @@ type GoogleAnalyticsAdminV1alphaMatchingCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaMatchingCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaMatchingCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaMatchingCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret: A secret value used
@@ -5139,9 +5139,9 @@ type GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaNumericValue: To represent a number.
@@ -5163,9 +5163,9 @@ type GoogleAnalyticsAdminV1alphaNumericValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaNumericValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaNumericValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaNumericValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1alphaNumericValue) UnmarshalJSON(data []byte) error {
@@ -5210,9 +5210,9 @@ type GoogleAnalyticsAdminV1alphaParameterMutation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaParameterMutation) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaParameterMutation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaParameterMutation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaPostbackWindow: Settings for a SKAdNetwork
@@ -5244,9 +5244,9 @@ type GoogleAnalyticsAdminV1alphaPostbackWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaPostbackWindow) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaPostbackWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaPostbackWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaProperty: A resource message representing a
@@ -5352,9 +5352,9 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaPropertySummary: A virtual resource representing
@@ -5392,9 +5392,9 @@ type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaPropertySummary) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaPropertySummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaPropertySummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest: Request message
@@ -5418,9 +5418,9 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse: Response message
@@ -5444,9 +5444,9 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest: Request message for
@@ -5469,9 +5469,9 @@ type GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaRollupPropertySourceLink: A link that references
@@ -5500,9 +5500,9 @@ type GoogleAnalyticsAdminV1alphaRollupPropertySourceLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaRollupPropertySourceLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaRollupPropertySourceLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaRunAccessReportRequest: The request for a Data
@@ -5584,9 +5584,9 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaRunAccessReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaRunAccessReportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaRunAccessReportResponse: The customized Data
@@ -5629,9 +5629,9 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaRunAccessReportResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaRunAccessReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaRunAccessReportResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema: SKAdNetwork
@@ -5684,9 +5684,9 @@ type GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSearchAds360Link: A link between a GA4 property
@@ -5736,9 +5736,9 @@ type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSearchAds360Link) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSearchAds360Link) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSearchAds360Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest: Request message
@@ -5824,9 +5824,9 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse: Response
@@ -5853,9 +5853,9 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest:
@@ -5881,9 +5881,9 @@ type GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutResponse:
@@ -5924,9 +5924,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause: A clause for
@@ -5960,9 +5960,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition: A specific
@@ -5988,9 +5988,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter: A
@@ -6026,9 +6026,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression: A logical
@@ -6057,9 +6057,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList: A list of
@@ -6081,9 +6081,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest: Request message for
@@ -6104,9 +6104,9 @@ type GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid

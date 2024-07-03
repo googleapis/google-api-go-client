@@ -278,9 +278,9 @@ type AudioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioConfig) MarshalJSON() ([]byte, error) {
+func (s AudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AudioConfig) UnmarshalJSON(data []byte) error {
@@ -331,9 +331,9 @@ type CustomVoiceParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomVoiceParams) MarshalJSON() ([]byte, error) {
+func (s CustomVoiceParams) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomVoiceParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata: Metadata for
@@ -359,9 +359,9 @@ type GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
@@ -401,9 +401,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVoicesResponse: The message returned to the client by the `ListVoices`
@@ -427,9 +427,9 @@ type ListVoicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVoicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListVoicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVoicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -474,9 +474,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -508,9 +508,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SynthesisInput: Contains text input to be synthesized. Either `text` or
@@ -537,9 +537,9 @@ type SynthesisInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SynthesisInput) MarshalJSON() ([]byte, error) {
+func (s SynthesisInput) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesisInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SynthesizeLongAudioMetadata: Metadata for response returned by the
@@ -565,9 +565,9 @@ type SynthesizeLongAudioMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+func (s SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesizeLongAudioMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
@@ -611,9 +611,9 @@ type SynthesizeLongAudioRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SynthesizeLongAudioRequest) MarshalJSON() ([]byte, error) {
+func (s SynthesizeLongAudioRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesizeLongAudioRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SynthesizeSpeechRequest: The top-level message sent by the client for the
@@ -648,9 +648,9 @@ type SynthesizeSpeechRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SynthesizeSpeechRequest) MarshalJSON() ([]byte, error) {
+func (s SynthesizeSpeechRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesizeSpeechRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SynthesizeSpeechResponse: The message returned to the client by the
@@ -684,9 +684,9 @@ type SynthesizeSpeechResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
+func (s SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesizeSpeechResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Timepoint: This contains a mapping between a certain point in the input text
@@ -709,9 +709,9 @@ type Timepoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Timepoint) MarshalJSON() ([]byte, error) {
+func (s Timepoint) MarshalJSON() ([]byte, error) {
 	type NoMethod Timepoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Timepoint) UnmarshalJSON(data []byte) error {
@@ -763,9 +763,9 @@ type Voice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Voice) MarshalJSON() ([]byte, error) {
+func (s Voice) MarshalJSON() ([]byte, error) {
 	type NoMethod Voice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoiceSelectionParams: Description of which voice to use for a synthesis
@@ -820,9 +820,9 @@ type VoiceSelectionParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoiceSelectionParams) MarshalJSON() ([]byte, error) {
+func (s VoiceSelectionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod VoiceSelectionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsSynthesizeLongAudioCall struct {

@@ -259,9 +259,9 @@ type GoogleCloudKmsInventoryV1ListCryptoKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ListCryptoKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1ProtectedResource: Metadata about a resource
@@ -314,9 +314,9 @@ type GoogleCloudKmsInventoryV1ProtectedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ProtectedResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ProtectedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ProtectedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1ProtectedResourcesSummary: Aggregate information
@@ -357,9 +357,9 @@ type GoogleCloudKmsInventoryV1ProtectedResourcesSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ProtectedResourcesSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ProtectedResourcesSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ProtectedResourcesSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse: Response message
@@ -386,9 +386,9 @@ type GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKey: A CryptoKey represents a logical key that can be
@@ -481,9 +481,9 @@ type GoogleCloudKmsV1CryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKeyVersion: A CryptoKeyVersion represents an
@@ -660,9 +660,9 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKeyVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKeyVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKeyVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKeyVersionTemplate: A CryptoKeyVersionTemplate
@@ -757,9 +757,9 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKeyVersionTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1ExternalProtectionLevelOptions:
@@ -787,9 +787,9 @@ type GoogleCloudKmsV1ExternalProtectionLevelOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1ExternalProtectionLevelOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1ExternalProtectionLevelOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1ExternalProtectionLevelOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1KeyAccessJustificationsPolicy: A
@@ -853,9 +853,9 @@ type GoogleCloudKmsV1KeyAccessJustificationsPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1KeyAccessJustificationsPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1KeyAccessJustificationsPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1KeyAccessJustificationsPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1KeyOperationAttestation: Contains an HSM-generated
@@ -891,9 +891,9 @@ type GoogleCloudKmsV1KeyOperationAttestation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1KeyOperationAttestation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1KeyOperationAttestation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1KeyOperationAttestation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1KeyOperationAttestationCertificateChains: Certificate chains
@@ -921,9 +921,9 @@ type GoogleCloudKmsV1KeyOperationAttestationCertificateChains struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1KeyOperationAttestationCertificateChains) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1KeyOperationAttestationCertificateChains) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1KeyOperationAttestationCertificateChains
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsProtectedResourcesSearchCall struct {

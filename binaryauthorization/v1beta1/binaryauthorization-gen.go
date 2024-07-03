@@ -246,9 +246,9 @@ type AdmissionRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdmissionRule) MarshalJSON() ([]byte, error) {
+func (s AdmissionRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AdmissionRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdmissionWhitelistPattern: An admission allowlist pattern exempts images
@@ -275,9 +275,9 @@ type AdmissionWhitelistPattern struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
+func (s AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod AdmissionWhitelistPattern
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttestationOccurrence: Occurrence that represents a single "attestation".
@@ -319,9 +319,9 @@ type AttestationOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
+func (s AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestationOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attestor: An attestor that attests to container image artifacts. An existing
@@ -358,9 +358,9 @@ type Attestor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attestor) MarshalJSON() ([]byte, error) {
+func (s Attestor) MarshalJSON() ([]byte, error) {
 	type NoMethod Attestor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttestorPublicKey: An attestor public key that will be used to verify
@@ -400,9 +400,9 @@ type AttestorPublicKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttestorPublicKey) MarshalJSON() ([]byte, error) {
+func (s AttestorPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestorPublicKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -499,9 +499,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -556,9 +556,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IamPolicy: An Identity and Access Management (IAM) policy, which specifies
@@ -646,9 +646,9 @@ type IamPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IamPolicy) MarshalJSON() ([]byte, error) {
+func (s IamPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IamPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Jwt struct {
@@ -669,9 +669,9 @@ type Jwt struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Jwt) MarshalJSON() ([]byte, error) {
+func (s Jwt) MarshalJSON() ([]byte, error) {
 	type NoMethod Jwt
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAttestorsResponse: Response message for
@@ -699,9 +699,9 @@ type ListAttestorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAttestorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAttestorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttestorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PkixPublicKey: A public key in the PkixPublicKey format (see
@@ -757,9 +757,9 @@ type PkixPublicKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PkixPublicKey) MarshalJSON() ([]byte, error) {
+func (s PkixPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PkixPublicKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: A policy for Binary Authorization.
@@ -830,9 +830,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -855,9 +855,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Signature: Verifiers (e.g. Kritis implementations) MUST verify signatures
@@ -911,9 +911,9 @@ type Signature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Signature) MarshalJSON() ([]byte, error) {
+func (s Signature) MarshalJSON() ([]byte, error) {
 	type NoMethod Signature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -936,9 +936,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -963,9 +963,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserOwnedDrydockNote: An user owned drydock note references a Drydock
@@ -1007,9 +1007,9 @@ type UserOwnedDrydockNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserOwnedDrydockNote) MarshalJSON() ([]byte, error) {
+func (s UserOwnedDrydockNote) MarshalJSON() ([]byte, error) {
 	type NoMethod UserOwnedDrydockNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateAttestationOccurrenceRequest: Request message for
@@ -1038,9 +1038,9 @@ type ValidateAttestationOccurrenceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateAttestationOccurrenceRequest) MarshalJSON() ([]byte, error) {
+func (s ValidateAttestationOccurrenceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateAttestationOccurrenceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateAttestationOccurrenceResponse: Response message for
@@ -1073,9 +1073,9 @@ type ValidateAttestationOccurrenceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateAttestationOccurrenceResponse) MarshalJSON() ([]byte, error) {
+func (s ValidateAttestationOccurrenceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateAttestationOccurrenceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsGetPolicyCall struct {

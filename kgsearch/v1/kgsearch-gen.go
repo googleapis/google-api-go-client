@@ -172,9 +172,9 @@ type SearchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchResponse) MarshalJSON() ([]byte, error) {
+func (s SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EntitiesSearchCall struct {

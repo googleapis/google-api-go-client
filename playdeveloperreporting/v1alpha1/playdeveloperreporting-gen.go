@@ -345,9 +345,9 @@ type GooglePlayDeveloperReportingV1alpha1Anomaly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1Anomaly) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1Anomaly) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1Anomaly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet: Singleton resource
@@ -435,9 +435,9 @@ type GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1App: A representation of an app in the
@@ -464,9 +464,9 @@ type GooglePlayDeveloperReportingV1alpha1App struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1App) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1App) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1App
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1AppVersion: Representations of an app
@@ -488,9 +488,9 @@ type GooglePlayDeveloperReportingV1alpha1AppVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1AppVersion) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1AppVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1AppVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet: Singleton resource
@@ -581,9 +581,9 @@ type GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval: Represents
@@ -606,9 +606,9 @@ type GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1DeviceId: Identifier of a device.
@@ -630,9 +630,9 @@ type GooglePlayDeveloperReportingV1alpha1DeviceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1DeviceId) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1DeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1DeviceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1DeviceModelSummary: Summary of a device
@@ -656,9 +656,9 @@ type GooglePlayDeveloperReportingV1alpha1DeviceModelSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1DeviceModelSummary) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1DeviceModelSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1DeviceModelSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1DimensionValue: Represents the value of
@@ -689,9 +689,9 @@ type GooglePlayDeveloperReportingV1alpha1DimensionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1DimensionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet: Singleton resource
@@ -760,9 +760,9 @@ type GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ErrorIssue: A group of related
@@ -849,9 +849,9 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ErrorIssue) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ErrorIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ErrorIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ErrorReport: An error report received
@@ -915,9 +915,9 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ErrorReport) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ErrorReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ErrorReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet: Singleton
@@ -994,9 +994,9 @@ type GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1FreshnessInfo: Represents the latest
@@ -1022,9 +1022,9 @@ type GooglePlayDeveloperReportingV1alpha1FreshnessInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1FreshnessInfo) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1FreshnessInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1FreshnessInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness: Information
@@ -1060,9 +1060,9 @@ type GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse: Response with a
@@ -1088,9 +1088,9 @@ type GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1MetricValue: Represents the value of a
@@ -1116,9 +1116,9 @@ type GooglePlayDeveloperReportingV1alpha1MetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1MetricValue) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1MetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1MetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1MetricsRow: Represents a row of
@@ -1153,9 +1153,9 @@ type GooglePlayDeveloperReportingV1alpha1MetricsRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1MetricsRow) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1MetricsRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1MetricsRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1OsVersion: Representation of an OS
@@ -1176,9 +1176,9 @@ type GooglePlayDeveloperReportingV1alpha1OsVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1OsVersion) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1OsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1OsVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest: Request
@@ -1292,9 +1292,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse: Response
@@ -1320,9 +1320,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest: Request
@@ -1438,9 +1438,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse:
@@ -1466,9 +1466,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest: Request
@@ -1543,9 +1543,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse: Error
@@ -1571,9 +1571,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest:
@@ -1677,9 +1677,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse
@@ -1705,9 +1705,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRespon
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest:
@@ -1817,9 +1817,9 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest 
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResponse:
@@ -1845,9 +1845,9 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResponse
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest:
@@ -1948,9 +1948,9 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse:
@@ -1976,9 +1976,9 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSet
@@ -2081,9 +2081,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSet
@@ -2109,9 +2109,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1Release: A representation of an app
@@ -2134,9 +2134,9 @@ type GooglePlayDeveloperReportingV1alpha1Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1Release) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1Release) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions: A set of filtering
@@ -2161,9 +2161,9 @@ type GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse: Response
@@ -2190,9 +2190,9 @@ type GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse: Response with
@@ -2218,9 +2218,9 @@ type GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse: Response
@@ -2246,9 +2246,9 @@ type GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet: Singleton
@@ -2335,9 +2335,9 @@ type GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet: Singleton
@@ -2413,9 +2413,9 @@ type GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet:
@@ -2492,9 +2492,9 @@ type GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet st
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1TimelineSpec: Specification of the
@@ -2551,9 +2551,9 @@ type GooglePlayDeveloperReportingV1alpha1TimelineSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1TimelineSpec) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1TimelineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1TimelineSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1alpha1Track: A representation of a Play
@@ -2578,9 +2578,9 @@ type GooglePlayDeveloperReportingV1alpha1Track struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayDeveloperReportingV1alpha1Track) MarshalJSON() ([]byte, error) {
+func (s GooglePlayDeveloperReportingV1alpha1Track) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1Track
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDateTime: Represents civil time (or occasionally physical time).
@@ -2641,9 +2641,9 @@ type GoogleTypeDateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDecimal: A representation of a decimal value, such as 2.5. Clients
@@ -2702,9 +2702,9 @@ type GoogleTypeDecimal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDecimal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
@@ -2727,9 +2727,9 @@ type GoogleTypeTimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AnomaliesListCall struct {

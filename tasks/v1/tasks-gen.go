@@ -218,9 +218,9 @@ type AssignmentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignmentInfo) MarshalJSON() ([]byte, error) {
+func (s AssignmentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignmentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveResourceInfo: Information about the Drive resource where a task was
@@ -245,9 +245,9 @@ type DriveResourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveResourceInfo) MarshalJSON() ([]byte, error) {
+func (s DriveResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveResourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpaceInfo: Information about the Chat Space where a task was assigned from.
@@ -268,9 +268,9 @@ type SpaceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpaceInfo) MarshalJSON() ([]byte, error) {
+func (s SpaceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SpaceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Task struct {
@@ -350,9 +350,9 @@ type Task struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Task) MarshalJSON() ([]byte, error) {
+func (s Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLinks struct {
@@ -376,9 +376,9 @@ type TaskLinks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskLinks) MarshalJSON() ([]byte, error) {
+func (s TaskLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLinks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskList struct {
@@ -412,9 +412,9 @@ type TaskList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskList) MarshalJSON() ([]byte, error) {
+func (s TaskList) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLists struct {
@@ -443,9 +443,9 @@ type TaskLists struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskLists) MarshalJSON() ([]byte, error) {
+func (s TaskLists) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLists
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Tasks struct {
@@ -473,9 +473,9 @@ type Tasks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tasks) MarshalJSON() ([]byte, error) {
+func (s Tasks) MarshalJSON() ([]byte, error) {
 	type NoMethod Tasks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TasklistsDeleteCall struct {

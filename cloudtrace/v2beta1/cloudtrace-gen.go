@@ -221,9 +221,9 @@ type ListTraceSinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTraceSinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OutputConfig: OutputConfig contains a destination for writing trace data.
@@ -244,9 +244,9 @@ type OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OutputConfig) MarshalJSON() ([]byte, error) {
+func (s OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TraceSink: Describes a sink used to export traces to a BigQuery dataset. The
@@ -287,9 +287,9 @@ type TraceSink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TraceSink) MarshalJSON() ([]byte, error) {
+func (s TraceSink) MarshalJSON() ([]byte, error) {
 	type NoMethod TraceSink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsTraceSinksCreateCall struct {

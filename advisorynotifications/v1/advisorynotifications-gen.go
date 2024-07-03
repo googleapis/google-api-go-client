@@ -243,9 +243,9 @@ type GoogleCloudAdvisorynotificationsV1Attachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Attachment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Attachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Csv: A representation of a CSV file
@@ -269,9 +269,9 @@ type GoogleCloudAdvisorynotificationsV1Csv struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Csv) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Csv) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Csv
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1CsvCsvRow: A representation of a single
@@ -293,9 +293,9 @@ type GoogleCloudAdvisorynotificationsV1CsvCsvRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1CsvCsvRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1CsvCsvRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1CsvCsvRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1ListNotificationsResponse: Response of
@@ -324,9 +324,9 @@ type GoogleCloudAdvisorynotificationsV1ListNotificationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1ListNotificationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Message: A message which contains
@@ -353,9 +353,9 @@ type GoogleCloudAdvisorynotificationsV1Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Message) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Message) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1MessageBody: A message body containing
@@ -376,9 +376,9 @@ type GoogleCloudAdvisorynotificationsV1MessageBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1MessageBody) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1MessageBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1MessageBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Notification: A notification object for
@@ -420,9 +420,9 @@ type GoogleCloudAdvisorynotificationsV1Notification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Notification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Notification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Notification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1NotificationSettings: Settings for each
@@ -443,9 +443,9 @@ type GoogleCloudAdvisorynotificationsV1NotificationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1NotificationSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1NotificationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1NotificationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Settings: Settings for Advisory
@@ -480,9 +480,9 @@ type GoogleCloudAdvisorynotificationsV1Settings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Settings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Settings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Subject: A subject line of a notification.
@@ -502,9 +502,9 @@ type GoogleCloudAdvisorynotificationsV1Subject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Subject) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Subject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Text: A text object containing the English
@@ -541,9 +541,9 @@ type GoogleCloudAdvisorynotificationsV1Text struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAdvisorynotificationsV1Text) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAdvisorynotificationsV1Text) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Text
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsGetSettingsCall struct {

@@ -228,9 +228,9 @@ type AcknowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AcknowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -327,9 +327,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -384,9 +384,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response for the `ListSubscriptions` method.
@@ -413,9 +413,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicSubscriptionsResponse: Response for the `ListTopicSubscriptions`
@@ -443,9 +443,9 @@ type ListTopicSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicsResponse: Response for the `ListTopics` method.
@@ -471,9 +471,9 @@ type ListTopicsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -502,9 +502,9 @@ type ModifyAckDeadlineRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAckDeadlineRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
@@ -527,9 +527,9 @@ type ModifyPushConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyPushConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OidcToken: Contains information needed for generating an OpenID Connect
@@ -561,9 +561,9 @@ type OidcToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OidcToken) MarshalJSON() ([]byte, error) {
+func (s OidcToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OidcToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -651,9 +651,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishRequest: Request for the Publish method.
@@ -673,9 +673,9 @@ type PublishRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishRequest) MarshalJSON() ([]byte, error) {
+func (s PublishRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishResponse: Response for the `Publish` method.
@@ -700,9 +700,9 @@ type PublishResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishResponse) MarshalJSON() ([]byte, error) {
+func (s PublishResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message data and its attributes. The message payload must
@@ -736,9 +736,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullRequest: Request for the `Pull` method.
@@ -768,9 +768,9 @@ type PullRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullRequest) MarshalJSON() ([]byte, error) {
+func (s PullRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullResponse: Response for the `Pull` method.
@@ -796,9 +796,9 @@ type PullResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullResponse) MarshalJSON() ([]byte, error) {
+func (s PullResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -838,9 +838,9 @@ type PushConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PushConfig) MarshalJSON() ([]byte, error) {
+func (s PushConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PushConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReceivedMessage: A message and its corresponding acknowledgment ID.
@@ -862,9 +862,9 @@ type ReceivedMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
+func (s ReceivedMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ReceivedMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -887,9 +887,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A subscription resource.
@@ -939,9 +939,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -964,9 +964,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -991,9 +991,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: A topic resource.
@@ -1021,9 +1021,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsSubscriptionsAcknowledgeCall struct {

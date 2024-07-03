@@ -238,9 +238,9 @@ type AcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessConfig: An access configuration attached to an instance's network
@@ -265,9 +265,9 @@ type AccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessConfig) MarshalJSON() ([]byte, error) {
+func (s AccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -364,9 +364,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BootDisk: The definition of a boot disk.
@@ -410,9 +410,9 @@ type BootDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BootDisk) MarshalJSON() ([]byte, error) {
+func (s BootDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod BootDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -450,9 +450,9 @@ type CheckInstanceUpgradabilityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckInstanceUpgradabilityResponse) MarshalJSON() ([]byte, error) {
+func (s CheckInstanceUpgradabilityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckInstanceUpgradabilityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Config: Response for getting WbI configurations in a location
@@ -479,9 +479,9 @@ type Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Config) MarshalJSON() ([]byte, error) {
+func (s Config) MarshalJSON() ([]byte, error) {
 	type NoMethod Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerImage: Definition of a container image for starting a notebook
@@ -506,9 +506,9 @@ type ContainerImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerImage) MarshalJSON() ([]byte, error) {
+func (s ContainerImage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataDisk: An instance-attached disk resource.
@@ -552,9 +552,9 @@ type DataDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataDisk) MarshalJSON() ([]byte, error) {
+func (s DataDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod DataDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DefaultValues: DefaultValues represents the default configuration values.
@@ -575,9 +575,9 @@ type DefaultValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DefaultValues) MarshalJSON() ([]byte, error) {
+func (s DefaultValues) MarshalJSON() ([]byte, error) {
 	type NoMethod DefaultValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnoseInstanceRequest: Request for creating a notebook instance diagnostic
@@ -602,9 +602,9 @@ type DiagnoseInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnoseInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s DiagnoseInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnoseInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnosticConfig: Defines flags that are used to run the diagnostic tool
@@ -644,9 +644,9 @@ type DiagnosticConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnosticConfig) MarshalJSON() ([]byte, error) {
+func (s DiagnosticConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnosticConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -694,9 +694,9 @@ type Event struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Event) MarshalJSON() ([]byte, error) {
+func (s Event) MarshalJSON() ([]byte, error) {
 	type NoMethod Event
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -742,9 +742,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GPUDriverConfig: A GPU driver configuration
@@ -771,9 +771,9 @@ type GPUDriverConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GPUDriverConfig) MarshalJSON() ([]byte, error) {
+func (s GPUDriverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GPUDriverConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceSetup: The definition of how to configure a VM instance outside of
@@ -836,9 +836,9 @@ type GceSetup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceSetup) MarshalJSON() ([]byte, error) {
+func (s GceSetup) MarshalJSON() ([]byte, error) {
 	type NoMethod GceSetup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageRelease: ConfigImage represents an image release available to create a
@@ -862,9 +862,9 @@ type ImageRelease struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageRelease) MarshalJSON() ([]byte, error) {
+func (s ImageRelease) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageRelease
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: The definition of a notebook instance.
@@ -957,9 +957,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancesResponse: Response for listing notebook instances.
@@ -989,9 +989,9 @@ type ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1017,9 +1017,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1045,9 +1045,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1083,9 +1083,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkInterface: The definition of a network interface resource attached to
@@ -1123,9 +1123,9 @@ type NetworkInterface struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
+func (s NetworkInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInterface
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1170,9 +1170,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1209,9 +1209,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1299,9 +1299,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportInstanceInfoSystemRequest: Request for notebook instances to report
@@ -1325,9 +1325,9 @@ type ReportInstanceInfoSystemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportInstanceInfoSystemRequest) MarshalJSON() ([]byte, error) {
+func (s ReportInstanceInfoSystemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportInstanceInfoSystemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetInstanceRequest: Request for resetting a notebook instance
@@ -1355,9 +1355,9 @@ type ResizeDiskRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResizeDiskRequest) MarshalJSON() ([]byte, error) {
+func (s ResizeDiskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResizeDiskRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackInstanceRequest: Request for rollbacking a notebook instance
@@ -1380,9 +1380,9 @@ type RollbackInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccount: A service account that acts as an identity.
@@ -1406,9 +1406,9 @@ type ServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1431,9 +1431,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShieldedInstanceConfig: A set of Shielded Instance options. See Images using
@@ -1470,9 +1470,9 @@ type ShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartInstanceRequest: Request for starting a notebook instance
@@ -1508,9 +1508,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopInstanceRequest: Request for stopping a notebook instance
@@ -1537,9 +1537,9 @@ type SupportedValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupportedValues) MarshalJSON() ([]byte, error) {
+func (s SupportedValues) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1562,9 +1562,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1589,9 +1589,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeHistoryEntry: The entry of VM image upgrade history.
@@ -1640,9 +1640,9 @@ type UpgradeHistoryEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
+func (s UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeHistoryEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeInstanceRequest: Request for upgrading a notebook instance
@@ -1668,9 +1668,9 @@ type UpgradeInstanceSystemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeInstanceSystemRequest) MarshalJSON() ([]byte, error) {
+func (s UpgradeInstanceSystemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeInstanceSystemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmImage: Definition of a custom Compute Engine virtual machine image for
@@ -1698,9 +1698,9 @@ type VmImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmImage) MarshalJSON() ([]byte, error) {
+func (s VmImage) MarshalJSON() ([]byte, error) {
 	type NoMethod VmImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

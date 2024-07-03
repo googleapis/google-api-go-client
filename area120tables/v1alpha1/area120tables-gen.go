@@ -230,9 +230,9 @@ type BatchCreateRowsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateRowsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreateRowsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateRowsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateRowsResponse: Response message for TablesService.BatchCreateRows.
@@ -255,9 +255,9 @@ type BatchCreateRowsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateRowsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateRowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateRowsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeleteRowsRequest: Request message for TablesService.BatchDeleteRows
@@ -279,9 +279,9 @@ type BatchDeleteRowsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeleteRowsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeleteRowsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteRowsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateRowsRequest: Request message for TablesService.BatchUpdateRows.
@@ -302,9 +302,9 @@ type BatchUpdateRowsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateRowsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateRowsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateRowsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateRowsResponse: Response message for TablesService.BatchUpdateRows.
@@ -327,9 +327,9 @@ type BatchUpdateRowsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateRowsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateRowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateRowsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ColumnDescription: Details on a column in the table.
@@ -379,9 +379,9 @@ type ColumnDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnDescription) MarshalJSON() ([]byte, error) {
+func (s ColumnDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateRowRequest: Request message for TablesService.CreateRow.
@@ -411,9 +411,9 @@ type CreateRowRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateRowRequest) MarshalJSON() ([]byte, error) {
+func (s CreateRowRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateRowRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateDetails: Details about a date column.
@@ -433,9 +433,9 @@ type DateDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateDetails) MarshalJSON() ([]byte, error) {
+func (s DateDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DateDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -466,9 +466,9 @@ type LabeledItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabeledItem) MarshalJSON() ([]byte, error) {
+func (s LabeledItem) MarshalJSON() ([]byte, error) {
 	type NoMethod LabeledItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRowsResponse: Response message for TablesService.ListRows.
@@ -494,9 +494,9 @@ type ListRowsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRowsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRowsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTablesResponse: Response message for TablesService.ListTables.
@@ -522,9 +522,9 @@ type ListTablesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTablesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTablesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkspacesResponse: Response message for TablesService.ListWorkspaces.
@@ -550,9 +550,9 @@ type ListWorkspacesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkspacesResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkspacesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkspacesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupDetails: Details about a lookup column whose value comes from the
@@ -576,9 +576,9 @@ type LookupDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupDetails) MarshalJSON() ([]byte, error) {
+func (s LookupDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RelationshipDetails: Details about a relationship column.
@@ -598,9 +598,9 @@ type RelationshipDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RelationshipDetails) MarshalJSON() ([]byte, error) {
+func (s RelationshipDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RelationshipDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Row: A single row in a table.
@@ -632,9 +632,9 @@ type Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Row) MarshalJSON() ([]byte, error) {
+func (s Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SavedView: A saved view of a table. NextId: 3
@@ -656,9 +656,9 @@ type SavedView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedView) MarshalJSON() ([]byte, error) {
+func (s SavedView) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Table: A single table. NextId: 8
@@ -697,9 +697,9 @@ type Table struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Table) MarshalJSON() ([]byte, error) {
+func (s Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateRowRequest: Request message for TablesService.UpdateRow.
@@ -728,9 +728,9 @@ type UpdateRowRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateRowRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateRowRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateRowRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Workspace: A single workspace.
@@ -762,9 +762,9 @@ type Workspace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Workspace) MarshalJSON() ([]byte, error) {
+func (s Workspace) MarshalJSON() ([]byte, error) {
 	type NoMethod Workspace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TablesGetCall struct {

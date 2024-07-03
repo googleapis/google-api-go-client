@@ -239,9 +239,9 @@ type ImportSshPublicKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
+func (s ImportSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportSshPublicKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoginProfile: The user profile information used for logging in to a virtual
@@ -270,9 +270,9 @@ type LoginProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoginProfile) MarshalJSON() ([]byte, error) {
+func (s LoginProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod LoginProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PosixAccount: The POSIX account information associated with a Google
@@ -320,9 +320,9 @@ type PosixAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PosixAccount) MarshalJSON() ([]byte, error) {
+func (s PosixAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod PosixAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SshPublicKey: The SSH public key information associated with a Google
@@ -352,9 +352,9 @@ type SshPublicKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
+func (s SshPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SshPublicKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsersGetLoginProfileCall struct {

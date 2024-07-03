@@ -192,9 +192,9 @@ type AccountActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountActivity) MarshalJSON() ([]byte, error) {
+func (s AccountActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountDetails: Contains the account information such as the licensing
@@ -230,9 +230,9 @@ type AccountDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountDetails) MarshalJSON() ([]byte, error) {
+func (s AccountDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppAccessRiskVerdict: Contains signals about others apps on the device which
@@ -319,9 +319,9 @@ type AppAccessRiskVerdict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppAccessRiskVerdict) MarshalJSON() ([]byte, error) {
+func (s AppAccessRiskVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod AppAccessRiskVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppIntegrity: Contains the application integrity information.
@@ -362,9 +362,9 @@ type AppIntegrity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppIntegrity) MarshalJSON() ([]byte, error) {
+func (s AppIntegrity) MarshalJSON() ([]byte, error) {
 	type NoMethod AppIntegrity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DecodeIntegrityTokenRequest: Request to decode the integrity token.
@@ -384,9 +384,9 @@ type DecodeIntegrityTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DecodeIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
+func (s DecodeIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DecodeIntegrityTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DecodeIntegrityTokenResponse: Response containing the decoded integrity
@@ -411,9 +411,9 @@ type DecodeIntegrityTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
+func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DecodeIntegrityTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceIntegrity: Contains the device attestation information. Next tag: 4
@@ -451,9 +451,9 @@ type DeviceIntegrity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
+func (s DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceIntegrity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnvironmentDetails: Contains information about the environment Play
@@ -488,9 +488,9 @@ type EnvironmentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
+func (s EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecentDeviceActivity: Recent device activity can help developers identify
@@ -525,9 +525,9 @@ type RecentDeviceActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecentDeviceActivity) MarshalJSON() ([]byte, error) {
+func (s RecentDeviceActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod RecentDeviceActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestDetails: Contains the integrity request information.
@@ -558,9 +558,9 @@ type RequestDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestDetails) MarshalJSON() ([]byte, error) {
+func (s RequestDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestingDetails: Contains additional information generated for testing
@@ -583,9 +583,9 @@ type TestingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestingDetails) MarshalJSON() ([]byte, error) {
+func (s TestingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod TestingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TokenPayloadExternal: Contains basic app information and integrity signals
@@ -618,9 +618,9 @@ type TokenPayloadExternal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
+func (s TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPayloadExternal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type V1DecodeIntegrityTokenCall struct {

@@ -252,9 +252,9 @@ type ApplicationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationInfo) MarshalJSON() ([]byte, error) {
+func (s ApplicationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeleteJobsRequest: Input only. Batch delete jobs request.
@@ -278,9 +278,9 @@ type BatchDeleteJobsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeleteJobsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeleteJobsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteJobsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BucketRange: Represents starting and ending value of a range in double.
@@ -302,9 +302,9 @@ type BucketRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BucketRange) MarshalJSON() ([]byte, error) {
+func (s BucketRange) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BucketRange) UnmarshalJSON(data []byte) error {
@@ -343,9 +343,9 @@ type BucketizedCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BucketizedCount) MarshalJSON() ([]byte, error) {
+func (s BucketizedCount) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketizedCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientEvent: An event issued when an end user interacts with the application
@@ -393,9 +393,9 @@ type ClientEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientEvent) MarshalJSON() ([]byte, error) {
+func (s ClientEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommuteFilter: Input only. Parameters needed for commute search.
@@ -454,9 +454,9 @@ type CommuteFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommuteFilter) MarshalJSON() ([]byte, error) {
+func (s CommuteFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CommuteFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommuteInfo: Output only. Commute details related to this job.
@@ -481,9 +481,9 @@ type CommuteInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommuteInfo) MarshalJSON() ([]byte, error) {
+func (s CommuteInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CommuteInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Company: A Company resource represents a company in the service. A company
@@ -565,9 +565,9 @@ type Company struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Company) MarshalJSON() ([]byte, error) {
+func (s Company) MarshalJSON() ([]byte, error) {
 	type NoMethod Company
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompanyDerivedInfo: Derived details about the company.
@@ -588,9 +588,9 @@ type CompanyDerivedInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompanyDerivedInfo) MarshalJSON() ([]byte, error) {
+func (s CompanyDerivedInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CompanyDerivedInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompensationEntry: A compensation entry that represents one component of
@@ -655,9 +655,9 @@ type CompensationEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationEntry) MarshalJSON() ([]byte, error) {
+func (s CompensationEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CompensationEntry) UnmarshalJSON(data []byte) error {
@@ -731,9 +731,9 @@ type CompensationFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationFilter) MarshalJSON() ([]byte, error) {
+func (s CompensationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompensationHistogramRequest: Input only. Compensation based histogram
@@ -769,9 +769,9 @@ type CompensationHistogramRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationHistogramRequest) MarshalJSON() ([]byte, error) {
+func (s CompensationHistogramRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationHistogramRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompensationHistogramResult: Output only. Compensation based histogram
@@ -805,9 +805,9 @@ type CompensationHistogramResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationHistogramResult) MarshalJSON() ([]byte, error) {
+func (s CompensationHistogramResult) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationHistogramResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompensationInfo: Job compensation details.
@@ -840,9 +840,9 @@ type CompensationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationInfo) MarshalJSON() ([]byte, error) {
+func (s CompensationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompensationRange: Compensation range.
@@ -868,9 +868,9 @@ type CompensationRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompensationRange) MarshalJSON() ([]byte, error) {
+func (s CompensationRange) MarshalJSON() ([]byte, error) {
 	type NoMethod CompensationRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteQueryResponse: Output only. Response of auto-complete query.
@@ -896,9 +896,9 @@ type CompleteQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompleteQueryResponse) MarshalJSON() ([]byte, error) {
+func (s CompleteQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompletionResult: Output only. Resource that represents completion results.
@@ -928,9 +928,9 @@ type CompletionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompletionResult) MarshalJSON() ([]byte, error) {
+func (s CompletionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod CompletionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateClientEventRequest: The report event request.
@@ -951,9 +951,9 @@ type CreateClientEventRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateClientEventRequest) MarshalJSON() ([]byte, error) {
+func (s CreateClientEventRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateClientEventRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateCompanyRequest: Input only. The Request of the CreateCompany method.
@@ -973,9 +973,9 @@ type CreateCompanyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateCompanyRequest) MarshalJSON() ([]byte, error) {
+func (s CreateCompanyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateCompanyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateJobRequest: Input only. Create job request.
@@ -995,9 +995,9 @@ type CreateJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateJobRequest) MarshalJSON() ([]byte, error) {
+func (s CreateJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomAttribute: Custom attribute values that are either filterable or
@@ -1034,9 +1034,9 @@ type CustomAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomAttributeHistogramRequest: Custom attributes histogram request. An
@@ -1068,9 +1068,9 @@ type CustomAttributeHistogramRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttributeHistogramRequest) MarshalJSON() ([]byte, error) {
+func (s CustomAttributeHistogramRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttributeHistogramRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomAttributeHistogramResult: Output only. Custom attribute histogram
@@ -1098,9 +1098,9 @@ type CustomAttributeHistogramResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttributeHistogramResult) MarshalJSON() ([]byte, error) {
+func (s CustomAttributeHistogramResult) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttributeHistogramResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomRankingInfo: Input only. Custom ranking information for
@@ -1159,9 +1159,9 @@ type CustomRankingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomRankingInfo) MarshalJSON() ([]byte, error) {
+func (s CustomRankingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomRankingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceInfo: Device information collected from the job seeker, candidate, or
@@ -1198,9 +1198,9 @@ type DeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
+func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1276,9 +1276,9 @@ type HistogramFacets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramFacets) MarshalJSON() ([]byte, error) {
+func (s HistogramFacets) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramFacets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistogramQuery: Input Only. The histogram request.
@@ -1358,9 +1358,9 @@ type HistogramQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramQuery) MarshalJSON() ([]byte, error) {
+func (s HistogramQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistogramQueryResult: Output only. Histogram result that matches
@@ -1389,9 +1389,9 @@ type HistogramQueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramQueryResult) MarshalJSON() ([]byte, error) {
+func (s HistogramQueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramQueryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistogramResult: Output only. Result of a histogram call. The response
@@ -1456,9 +1456,9 @@ type HistogramResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramResult) MarshalJSON() ([]byte, error) {
+func (s HistogramResult) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistogramResults: Output only. Histogram results that match HistogramFacets
@@ -1486,9 +1486,9 @@ type HistogramResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramResults) MarshalJSON() ([]byte, error) {
+func (s HistogramResults) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Job: A Job resource represents a job posting (also referred to as a "job
@@ -1804,9 +1804,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobDerivedInfo: Output only. Derived details about the job posting.
@@ -1882,9 +1882,9 @@ type JobDerivedInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobDerivedInfo) MarshalJSON() ([]byte, error) {
+func (s JobDerivedInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod JobDerivedInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobEvent: An event issued when a job seeker interacts with the application
@@ -1973,9 +1973,9 @@ type JobEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobEvent) MarshalJSON() ([]byte, error) {
+func (s JobEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod JobEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobQuery: Input only. The query required to perform a search query.
@@ -2171,9 +2171,9 @@ type JobQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobQuery) MarshalJSON() ([]byte, error) {
+func (s JobQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod JobQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -2199,9 +2199,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -2245,9 +2245,9 @@ type ListCompaniesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCompaniesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCompaniesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCompaniesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobsResponse: Output only. List jobs response.
@@ -2276,9 +2276,9 @@ type ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: Output only. A resource that represents a location with full
@@ -2331,9 +2331,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Location) UnmarshalJSON(data []byte) error {
@@ -2411,9 +2411,9 @@ type LocationFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationFilter) MarshalJSON() ([]byte, error) {
+func (s LocationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LocationFilter) UnmarshalJSON(data []byte) error {
@@ -2462,9 +2462,9 @@ type MatchingJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MatchingJob) MarshalJSON() ([]byte, error) {
+func (s MatchingJob) MarshalJSON() ([]byte, error) {
 	type NoMethod MatchingJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -2493,9 +2493,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NumericBucketingOption: Input only. Use this field to specify bucketing
@@ -2522,9 +2522,9 @@ type NumericBucketingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NumericBucketingOption) MarshalJSON() ([]byte, error) {
+func (s NumericBucketingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod NumericBucketingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NumericBucketingOption) UnmarshalJSON(data []byte) error {
@@ -2568,9 +2568,9 @@ type NumericBucketingResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NumericBucketingResult) MarshalJSON() ([]byte, error) {
+func (s NumericBucketingResult) MarshalJSON() ([]byte, error) {
 	type NoMethod NumericBucketingResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NumericBucketingResult) UnmarshalJSON(data []byte) error {
@@ -2631,9 +2631,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostalAddress: Represents a postal address, e.g. for postal delivery or
@@ -2730,9 +2730,9 @@ type PostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
+func (s PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProcessingOptions: Input only. Options for job processing.
@@ -2766,9 +2766,9 @@ type ProcessingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProcessingOptions) MarshalJSON() ([]byte, error) {
+func (s ProcessingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ProcessingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestMetadata: Input only. Meta information related to the job searcher or
@@ -2817,9 +2817,9 @@ type RequestMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
+func (s RequestMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResponseMetadata: Output only. Additional information returned to client,
@@ -2841,9 +2841,9 @@ type ResponseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResponseMetadata) MarshalJSON() ([]byte, error) {
+func (s ResponseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ResponseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchJobsRequest: Input only. The Request body of the `SearchJobs` call.
@@ -2999,9 +2999,9 @@ type SearchJobsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchJobsRequest) MarshalJSON() ([]byte, error) {
+func (s SearchJobsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchJobsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchJobsResponse: Output only. Response for SearchJob method.
@@ -3058,9 +3058,9 @@ type SearchJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchJobsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpellingCorrection: Output only. Spell check result.
@@ -3082,9 +3082,9 @@ type SpellingCorrection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpellingCorrection) MarshalJSON() ([]byte, error) {
+func (s SpellingCorrection) MarshalJSON() ([]byte, error) {
 	type NoMethod SpellingCorrection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -3116,9 +3116,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -3149,9 +3149,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimestampRange: Message representing a period of time between two
@@ -3174,9 +3174,9 @@ type TimestampRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimestampRange) MarshalJSON() ([]byte, error) {
+func (s TimestampRange) MarshalJSON() ([]byte, error) {
 	type NoMethod TimestampRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateCompanyRequest: Input only. Request for updating a specified company.
@@ -3203,9 +3203,9 @@ type UpdateCompanyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateCompanyRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateCompanyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateCompanyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateJobRequest: Input only. Update job request.
@@ -3231,9 +3231,9 @@ type UpdateJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateJobRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsCompleteCall struct {

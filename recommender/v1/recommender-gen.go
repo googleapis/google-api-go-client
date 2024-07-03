@@ -466,9 +466,9 @@ type GoogleCloudRecommenderV1CostProjection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1CostProjection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1CostProjection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1CostProjection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1Impact: Contains the impact a recommendation can
@@ -508,9 +508,9 @@ type GoogleCloudRecommenderV1Impact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1Impact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1Impact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1Impact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1Insight: An insight along with the information used
@@ -580,9 +580,9 @@ type GoogleCloudRecommenderV1Insight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1Insight) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1Insight) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1Insight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1InsightRecommendationReference: Reference to an
@@ -605,9 +605,9 @@ type GoogleCloudRecommenderV1InsightRecommendationReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1InsightRecommendationReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1InsightRecommendationReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1InsightRecommendationReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1InsightStateInfo: Information related to insight
@@ -643,9 +643,9 @@ type GoogleCloudRecommenderV1InsightStateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1InsightStateInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1InsightStateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1InsightStateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1InsightTypeConfig: Configuration for an InsightType.
@@ -693,9 +693,9 @@ type GoogleCloudRecommenderV1InsightTypeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1InsightTypeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1InsightTypeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1InsightTypeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1InsightTypeGenerationConfig: A configuration to
@@ -718,9 +718,9 @@ type GoogleCloudRecommenderV1InsightTypeGenerationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1InsightTypeGenerationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1InsightTypeGenerationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1InsightTypeGenerationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1ListInsightsResponse: Response to the `ListInsights`
@@ -747,9 +747,9 @@ type GoogleCloudRecommenderV1ListInsightsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1ListInsightsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1ListInsightsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1ListInsightsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1ListRecommendationsResponse: Response to the
@@ -776,9 +776,9 @@ type GoogleCloudRecommenderV1ListRecommendationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1ListRecommendationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1ListRecommendationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1ListRecommendationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1MarkInsightAcceptedRequest: Request for the
@@ -802,9 +802,9 @@ type GoogleCloudRecommenderV1MarkInsightAcceptedRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1MarkInsightAcceptedRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1MarkInsightAcceptedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1MarkInsightAcceptedRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1MarkRecommendationClaimedRequest: Request for the
@@ -830,9 +830,9 @@ type GoogleCloudRecommenderV1MarkRecommendationClaimedRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1MarkRecommendationClaimedRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1MarkRecommendationDismissedRequest: Request for the
@@ -853,9 +853,9 @@ type GoogleCloudRecommenderV1MarkRecommendationDismissedRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1MarkRecommendationDismissedRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1MarkRecommendationDismissedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1MarkRecommendationDismissedRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1MarkRecommendationFailedRequest: Request for the
@@ -881,9 +881,9 @@ type GoogleCloudRecommenderV1MarkRecommendationFailedRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1MarkRecommendationFailedRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1MarkRecommendationFailedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1MarkRecommendationFailedRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1MarkRecommendationSucceededRequest: Request for the
@@ -909,9 +909,9 @@ type GoogleCloudRecommenderV1MarkRecommendationSucceededRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1MarkRecommendationSucceededRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1Operation: Contains an operation for a resource
@@ -983,9 +983,9 @@ type GoogleCloudRecommenderV1Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1Operation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1OperationGroup: Group of operations that need to be
@@ -1008,9 +1008,9 @@ type GoogleCloudRecommenderV1OperationGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1OperationGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1OperationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1OperationGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1Recommendation: A recommendation along with a
@@ -1083,9 +1083,9 @@ type GoogleCloudRecommenderV1Recommendation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1Recommendation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1Recommendation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1Recommendation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1RecommendationContent: Contains what resources are
@@ -1110,9 +1110,9 @@ type GoogleCloudRecommenderV1RecommendationContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1RecommendationContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1RecommendationContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1RecommendationContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1RecommendationInsightReference: Reference to an
@@ -1135,9 +1135,9 @@ type GoogleCloudRecommenderV1RecommendationInsightReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1RecommendationInsightReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1RecommendationInsightReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1RecommendationInsightReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1RecommendationStateInfo: Information for state.
@@ -1178,9 +1178,9 @@ type GoogleCloudRecommenderV1RecommendationStateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1RecommendationStateInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1RecommendationStateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1RecommendationStateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1RecommenderConfig: Configuration for a Recommender.
@@ -1228,9 +1228,9 @@ type GoogleCloudRecommenderV1RecommenderConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1RecommenderConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1RecommenderConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1RecommenderConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1RecommenderGenerationConfig: A Configuration to
@@ -1253,9 +1253,9 @@ type GoogleCloudRecommenderV1RecommenderGenerationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1RecommenderGenerationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1RecommenderGenerationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1RecommenderGenerationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1ReliabilityProjection: Contains information on the
@@ -1285,9 +1285,9 @@ type GoogleCloudRecommenderV1ReliabilityProjection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1ReliabilityProjection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1ReliabilityProjection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1ReliabilityProjection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1SecurityProjection: Contains various ways of
@@ -1309,9 +1309,9 @@ type GoogleCloudRecommenderV1SecurityProjection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1SecurityProjection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1SecurityProjection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1SecurityProjection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommenderV1SustainabilityProjection: Contains metadata about
@@ -1335,9 +1335,9 @@ type GoogleCloudRecommenderV1SustainabilityProjection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1SustainabilityProjection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1SustainabilityProjection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1SustainabilityProjection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommenderV1SustainabilityProjection) UnmarshalJSON(data []byte) error {
@@ -1374,9 +1374,9 @@ type GoogleCloudRecommenderV1ValueMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecommenderV1ValueMatcher) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecommenderV1ValueMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1ValueMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -1405,9 +1405,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BillingAccountsLocationsInsightTypesGetConfigCall struct {

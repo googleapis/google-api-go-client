@@ -402,9 +402,9 @@ type ActivationOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivationOptions) MarshalJSON() ([]byte, error) {
+func (s ActivationOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivationOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivationStatus: The activation status of the object. This field includes
@@ -430,9 +430,9 @@ type ActivationStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivationStatus) MarshalJSON() ([]byte, error) {
+func (s ActivationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddMessageRequest: Resource used when the AddMessage endpoints are called.
@@ -451,9 +451,9 @@ type AddMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddMessageRequest) MarshalJSON() ([]byte, error) {
+func (s AddMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AirportInfo struct {
@@ -489,9 +489,9 @@ type AirportInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AirportInfo) MarshalJSON() ([]byte, error) {
+func (s AirportInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AirportInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppLinkData struct {
@@ -514,9 +514,9 @@ type AppLinkData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppLinkData) MarshalJSON() ([]byte, error) {
+func (s AppLinkData) MarshalJSON() ([]byte, error) {
 	type NoMethod AppLinkData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppLinkDataAppLinkInfo struct {
@@ -542,9 +542,9 @@ type AppLinkDataAppLinkInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppLinkDataAppLinkInfo) MarshalJSON() ([]byte, error) {
+func (s AppLinkDataAppLinkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppLinkDataAppLinkInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppLinkDataAppLinkInfoAppTarget struct {
@@ -567,9 +567,9 @@ type AppLinkDataAppLinkInfoAppTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppLinkDataAppLinkInfoAppTarget) MarshalJSON() ([]byte, error) {
+func (s AppLinkDataAppLinkInfoAppTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod AppLinkDataAppLinkInfoAppTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AuthenticationKey struct {
@@ -592,9 +592,9 @@ type AuthenticationKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthenticationKey) MarshalJSON() ([]byte, error) {
+func (s AuthenticationKey) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthenticationKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Barcode struct {
@@ -680,9 +680,9 @@ type Barcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Barcode) MarshalJSON() ([]byte, error) {
+func (s Barcode) MarshalJSON() ([]byte, error) {
 	type NoMethod Barcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BarcodeSectionDetail struct {
@@ -702,9 +702,9 @@ type BarcodeSectionDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BarcodeSectionDetail) MarshalJSON() ([]byte, error) {
+func (s BarcodeSectionDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod BarcodeSectionDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Blobstore2Info: Information to read/write to blobstore2.
@@ -739,9 +739,9 @@ type Blobstore2Info struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
+func (s Blobstore2Info) MarshalJSON() ([]byte, error) {
 	type NoMethod Blobstore2Info
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BoardingAndSeatingInfo struct {
@@ -797,9 +797,9 @@ type BoardingAndSeatingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BoardingAndSeatingInfo) MarshalJSON() ([]byte, error) {
+func (s BoardingAndSeatingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BoardingAndSeatingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BoardingAndSeatingPolicy struct {
@@ -847,9 +847,9 @@ type BoardingAndSeatingPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BoardingAndSeatingPolicy) MarshalJSON() ([]byte, error) {
+func (s BoardingAndSeatingPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod BoardingAndSeatingPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CallbackOptions struct {
@@ -874,9 +874,9 @@ type CallbackOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CallbackOptions) MarshalJSON() ([]byte, error) {
+func (s CallbackOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CallbackOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardBarcodeSectionDetails struct {
@@ -903,9 +903,9 @@ type CardBarcodeSectionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardBarcodeSectionDetails) MarshalJSON() ([]byte, error) {
+func (s CardBarcodeSectionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CardBarcodeSectionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardRowOneItem struct {
@@ -925,9 +925,9 @@ type CardRowOneItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardRowOneItem) MarshalJSON() ([]byte, error) {
+func (s CardRowOneItem) MarshalJSON() ([]byte, error) {
 	type NoMethod CardRowOneItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardRowTemplateInfo struct {
@@ -953,9 +953,9 @@ type CardRowTemplateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardRowTemplateInfo) MarshalJSON() ([]byte, error) {
+func (s CardRowTemplateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CardRowTemplateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardRowThreeItems struct {
@@ -981,9 +981,9 @@ type CardRowThreeItems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardRowThreeItems) MarshalJSON() ([]byte, error) {
+func (s CardRowThreeItems) MarshalJSON() ([]byte, error) {
 	type NoMethod CardRowThreeItems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardRowTwoItems struct {
@@ -1006,9 +1006,9 @@ type CardRowTwoItems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardRowTwoItems) MarshalJSON() ([]byte, error) {
+func (s CardRowTwoItems) MarshalJSON() ([]byte, error) {
 	type NoMethod CardRowTwoItems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CardTemplateOverride struct {
@@ -1028,9 +1028,9 @@ type CardTemplateOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CardTemplateOverride) MarshalJSON() ([]byte, error) {
+func (s CardTemplateOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod CardTemplateOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ClassTemplateInfo struct {
@@ -1057,9 +1057,9 @@ type ClassTemplateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClassTemplateInfo) MarshalJSON() ([]byte, error) {
+func (s ClassTemplateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ClassTemplateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompositeMedia: A sequence of media data references representing composite
@@ -1120,9 +1120,9 @@ type CompositeMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompositeMedia) MarshalJSON() ([]byte, error) {
+func (s CompositeMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentTypeInfo: Detailed Content-Type information from Scotty. The
@@ -1159,9 +1159,9 @@ type ContentTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentTypeInfo) MarshalJSON() ([]byte, error) {
+func (s ContentTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DateTime struct {
@@ -1201,9 +1201,9 @@ type DateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateTime) MarshalJSON() ([]byte, error) {
+func (s DateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod DateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DetailsItemInfo struct {
@@ -1222,9 +1222,9 @@ type DetailsItemInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetailsItemInfo) MarshalJSON() ([]byte, error) {
+func (s DetailsItemInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DetailsItemInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DetailsTemplateOverride struct {
@@ -1244,9 +1244,9 @@ type DetailsTemplateOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetailsTemplateOverride) MarshalJSON() ([]byte, error) {
+func (s DetailsTemplateOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod DetailsTemplateOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceContext: Device context associated with the object.
@@ -1271,9 +1271,9 @@ type DeviceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceContext) MarshalJSON() ([]byte, error) {
+func (s DeviceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffChecksumsResponse: Backend response for a Diff get checksums response.
@@ -1310,9 +1310,9 @@ type DiffChecksumsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffChecksumsResponse) MarshalJSON() ([]byte, error) {
+func (s DiffChecksumsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffChecksumsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffDownloadResponse: Backend response for a Diff download response. For
@@ -1333,9 +1333,9 @@ type DiffDownloadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffDownloadResponse) MarshalJSON() ([]byte, error) {
+func (s DiffDownloadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffDownloadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffUploadRequest: A Diff upload request. For details on the Scotty Diff
@@ -1367,9 +1367,9 @@ type DiffUploadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffUploadRequest) MarshalJSON() ([]byte, error) {
+func (s DiffUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffUploadResponse: Backend response for a Diff upload request. For details
@@ -1396,9 +1396,9 @@ type DiffUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffUploadResponse) MarshalJSON() ([]byte, error) {
+func (s DiffUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffVersionResponse: Backend response for a Diff get version response. For
@@ -1421,9 +1421,9 @@ type DiffVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffVersionResponse) MarshalJSON() ([]byte, error) {
+func (s DiffVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoverableProgram: Information about how a class may be discovered and
@@ -1463,9 +1463,9 @@ type DiscoverableProgram struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoverableProgram) MarshalJSON() ([]byte, error) {
+func (s DiscoverableProgram) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoverableProgram
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoverableProgramMerchantSigninInfo: Information about the merchant hosted
@@ -1486,9 +1486,9 @@ type DiscoverableProgramMerchantSigninInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoverableProgramMerchantSigninInfo) MarshalJSON() ([]byte, error) {
+func (s DiscoverableProgramMerchantSigninInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoverableProgramMerchantSigninInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoverableProgramMerchantSignupInfo: Information about the merchant hosted
@@ -1529,9 +1529,9 @@ type DiscoverableProgramMerchantSignupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoverableProgramMerchantSignupInfo) MarshalJSON() ([]byte, error) {
+func (s DiscoverableProgramMerchantSignupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoverableProgramMerchantSignupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DownloadParameters: Parameters specific to media downloads.
@@ -1557,9 +1557,9 @@ type DownloadParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadParameters) MarshalJSON() ([]byte, error) {
+func (s DownloadParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventDateTime struct {
@@ -1662,9 +1662,9 @@ type EventDateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventDateTime) MarshalJSON() ([]byte, error) {
+func (s EventDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod EventDateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventReservationInfo struct {
@@ -1688,9 +1688,9 @@ type EventReservationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventReservationInfo) MarshalJSON() ([]byte, error) {
+func (s EventReservationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EventReservationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventSeat struct {
@@ -1726,9 +1726,9 @@ type EventSeat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventSeat) MarshalJSON() ([]byte, error) {
+func (s EventSeat) MarshalJSON() ([]byte, error) {
 	type NoMethod EventSeat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketClass struct {
@@ -2025,9 +2025,9 @@ type EventTicketClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketClass) MarshalJSON() ([]byte, error) {
+func (s EventTicketClass) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketClassAddMessageResponse struct {
@@ -2049,9 +2049,9 @@ type EventTicketClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s EventTicketClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketClassListResponse struct {
@@ -2075,9 +2075,9 @@ type EventTicketClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketClassListResponse) MarshalJSON() ([]byte, error) {
+func (s EventTicketClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketObject struct {
@@ -2219,9 +2219,9 @@ type EventTicketObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketObject) MarshalJSON() ([]byte, error) {
+func (s EventTicketObject) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketObjectAddMessageResponse struct {
@@ -2243,9 +2243,9 @@ type EventTicketObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s EventTicketObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventTicketObjectListResponse struct {
@@ -2269,9 +2269,9 @@ type EventTicketObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventTicketObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s EventTicketObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTicketObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventVenue struct {
@@ -2297,9 +2297,9 @@ type EventVenue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventVenue) MarshalJSON() ([]byte, error) {
+func (s EventVenue) MarshalJSON() ([]byte, error) {
 	type NoMethod EventVenue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpiryNotification: Indicates that the issuer would like Google Wallet to
@@ -2321,9 +2321,9 @@ type ExpiryNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpiryNotification) MarshalJSON() ([]byte, error) {
+func (s ExpiryNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpiryNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldReference: Reference definition to use with field overrides.
@@ -2366,9 +2366,9 @@ type FieldReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldReference) MarshalJSON() ([]byte, error) {
+func (s FieldReference) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldSelector: Custom field selector to use with field overrides.
@@ -2389,9 +2389,9 @@ type FieldSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldSelector) MarshalJSON() ([]byte, error) {
+func (s FieldSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FirstRowOption struct {
@@ -2421,9 +2421,9 @@ type FirstRowOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirstRowOption) MarshalJSON() ([]byte, error) {
+func (s FirstRowOption) MarshalJSON() ([]byte, error) {
 	type NoMethod FirstRowOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightCarrier struct {
@@ -2467,9 +2467,9 @@ type FlightCarrier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightCarrier) MarshalJSON() ([]byte, error) {
+func (s FlightCarrier) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightCarrier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightClass struct {
@@ -2731,9 +2731,9 @@ type FlightClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightClass) MarshalJSON() ([]byte, error) {
+func (s FlightClass) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightClassAddMessageResponse struct {
@@ -2755,9 +2755,9 @@ type FlightClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s FlightClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightClassListResponse struct {
@@ -2781,9 +2781,9 @@ type FlightClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightClassListResponse) MarshalJSON() ([]byte, error) {
+func (s FlightClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightHeader struct {
@@ -2820,9 +2820,9 @@ type FlightHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightHeader) MarshalJSON() ([]byte, error) {
+func (s FlightHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightObject struct {
@@ -2952,9 +2952,9 @@ type FlightObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightObject) MarshalJSON() ([]byte, error) {
+func (s FlightObject) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightObjectAddMessageResponse struct {
@@ -2976,9 +2976,9 @@ type FlightObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s FlightObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightObjectListResponse struct {
@@ -3002,9 +3002,9 @@ type FlightObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s FlightObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FrequentFlyerInfo struct {
@@ -3030,9 +3030,9 @@ type FrequentFlyerInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FrequentFlyerInfo) MarshalJSON() ([]byte, error) {
+func (s FrequentFlyerInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod FrequentFlyerInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericClass: Generic Class
@@ -3132,9 +3132,9 @@ type GenericClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericClass) MarshalJSON() ([]byte, error) {
+func (s GenericClass) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericClassAddMessageResponse: Response to adding a new issuer message to
@@ -3158,9 +3158,9 @@ type GenericClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s GenericClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericClassListResponse: List response which contains the list of all
@@ -3186,9 +3186,9 @@ type GenericClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericClassListResponse) MarshalJSON() ([]byte, error) {
+func (s GenericClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericObject: Generic Object
@@ -3320,9 +3320,9 @@ type GenericObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericObject) MarshalJSON() ([]byte, error) {
+func (s GenericObject) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericObjectAddMessageResponse: Response to adding a new issuer message to
@@ -3346,9 +3346,9 @@ type GenericObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s GenericObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericObjectListResponse: List response which contains the list of all
@@ -3374,9 +3374,9 @@ type GenericObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s GenericObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardClass struct {
@@ -3572,9 +3572,9 @@ type GiftCardClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardClass) MarshalJSON() ([]byte, error) {
+func (s GiftCardClass) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardClassAddMessageResponse struct {
@@ -3596,9 +3596,9 @@ type GiftCardClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s GiftCardClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardClassListResponse struct {
@@ -3622,9 +3622,9 @@ type GiftCardClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardClassListResponse) MarshalJSON() ([]byte, error) {
+func (s GiftCardClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardObject struct {
@@ -3750,9 +3750,9 @@ type GiftCardObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardObject) MarshalJSON() ([]byte, error) {
+func (s GiftCardObject) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardObjectAddMessageResponse struct {
@@ -3774,9 +3774,9 @@ type GiftCardObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s GiftCardObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GiftCardObjectListResponse struct {
@@ -3800,9 +3800,9 @@ type GiftCardObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GiftCardObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s GiftCardObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GiftCardObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupingInfo struct {
@@ -3827,9 +3827,9 @@ type GroupingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupingInfo) MarshalJSON() ([]byte, error) {
+func (s GroupingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Image: Wrapping type for Google hosted images. Next ID: 7
@@ -3854,9 +3854,9 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ImageModuleData struct {
@@ -3878,9 +3878,9 @@ type ImageModuleData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageModuleData) MarshalJSON() ([]byte, error) {
+func (s ImageModuleData) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageModuleData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ImageUri struct {
@@ -3905,9 +3905,9 @@ type ImageUri struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageUri) MarshalJSON() ([]byte, error) {
+func (s ImageUri) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageUri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InfoModuleData struct {
@@ -3928,9 +3928,9 @@ type InfoModuleData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InfoModuleData) MarshalJSON() ([]byte, error) {
+func (s InfoModuleData) MarshalJSON() ([]byte, error) {
 	type NoMethod InfoModuleData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Issuer struct {
@@ -3964,9 +3964,9 @@ type Issuer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Issuer) MarshalJSON() ([]byte, error) {
+func (s Issuer) MarshalJSON() ([]byte, error) {
 	type NoMethod Issuer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IssuerContactInfo struct {
@@ -3991,9 +3991,9 @@ type IssuerContactInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssuerContactInfo) MarshalJSON() ([]byte, error) {
+func (s IssuerContactInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IssuerContactInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IssuerListResponse struct {
@@ -4015,9 +4015,9 @@ type IssuerListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssuerListResponse) MarshalJSON() ([]byte, error) {
+func (s IssuerListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IssuerListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IssuerToUserInfo struct {
@@ -4046,9 +4046,9 @@ type IssuerToUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssuerToUserInfo) MarshalJSON() ([]byte, error) {
+func (s IssuerToUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IssuerToUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JwtInsertResponse struct {
@@ -4076,9 +4076,9 @@ type JwtInsertResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JwtInsertResponse) MarshalJSON() ([]byte, error) {
+func (s JwtInsertResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod JwtInsertResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JwtResource struct {
@@ -4098,9 +4098,9 @@ type JwtResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JwtResource) MarshalJSON() ([]byte, error) {
+func (s JwtResource) MarshalJSON() ([]byte, error) {
 	type NoMethod JwtResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelValue: A pair of text strings to be displayed in the details view. Note
@@ -4136,9 +4136,9 @@ type LabelValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelValue) MarshalJSON() ([]byte, error) {
+func (s LabelValue) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LabelValueRow struct {
@@ -4159,9 +4159,9 @@ type LabelValueRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelValueRow) MarshalJSON() ([]byte, error) {
+func (s LabelValueRow) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelValueRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LatLongPoint struct {
@@ -4187,9 +4187,9 @@ type LatLongPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLongPoint) MarshalJSON() ([]byte, error) {
+func (s LatLongPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLongPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLongPoint) UnmarshalJSON(data []byte) error {
@@ -4224,9 +4224,9 @@ type LinksModuleData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinksModuleData) MarshalJSON() ([]byte, error) {
+func (s LinksModuleData) MarshalJSON() ([]byte, error) {
 	type NoMethod LinksModuleData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListTemplateOverride struct {
@@ -4257,9 +4257,9 @@ type ListTemplateOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTemplateOverride) MarshalJSON() ([]byte, error) {
+func (s ListTemplateOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTemplateOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocalizedString struct {
@@ -4284,9 +4284,9 @@ type LocalizedString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedString) MarshalJSON() ([]byte, error) {
+func (s LocalizedString) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyClass struct {
@@ -4513,9 +4513,9 @@ type LoyaltyClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyClass) MarshalJSON() ([]byte, error) {
+func (s LoyaltyClass) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyClassAddMessageResponse struct {
@@ -4537,9 +4537,9 @@ type LoyaltyClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s LoyaltyClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyClassListResponse struct {
@@ -4563,9 +4563,9 @@ type LoyaltyClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyClassListResponse) MarshalJSON() ([]byte, error) {
+func (s LoyaltyClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyObject struct {
@@ -4697,9 +4697,9 @@ type LoyaltyObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyObject) MarshalJSON() ([]byte, error) {
+func (s LoyaltyObject) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyObjectAddMessageResponse struct {
@@ -4721,9 +4721,9 @@ type LoyaltyObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s LoyaltyObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyObjectListResponse struct {
@@ -4747,9 +4747,9 @@ type LoyaltyObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s LoyaltyObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyPoints struct {
@@ -4776,9 +4776,9 @@ type LoyaltyPoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
+func (s LoyaltyPoints) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyPoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LoyaltyPointsBalance struct {
@@ -4807,9 +4807,9 @@ type LoyaltyPointsBalance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyPointsBalance) MarshalJSON() ([]byte, error) {
+func (s LoyaltyPointsBalance) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyPointsBalance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LoyaltyPointsBalance) UnmarshalJSON(data []byte) error {
@@ -4966,9 +4966,9 @@ type Media struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Media) MarshalJSON() ([]byte, error) {
+func (s Media) MarshalJSON() ([]byte, error) {
 	type NoMethod Media
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaRequestInfo: Extra information added to operations that support Scotty
@@ -5044,9 +5044,9 @@ type MediaRequestInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaRequestInfo) MarshalJSON() ([]byte, error) {
+func (s MediaRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaRequestInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Message: A message that will be displayed with a Valuable
@@ -5099,9 +5099,9 @@ type Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Message) MarshalJSON() ([]byte, error) {
+func (s Message) MarshalJSON() ([]byte, error) {
 	type NoMethod Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ModifyLinkedOfferObjects struct {
@@ -5123,9 +5123,9 @@ type ModifyLinkedOfferObjects struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyLinkedOfferObjects) MarshalJSON() ([]byte, error) {
+func (s ModifyLinkedOfferObjects) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyLinkedOfferObjects
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ModifyLinkedOfferObjectsRequest struct {
@@ -5145,9 +5145,9 @@ type ModifyLinkedOfferObjectsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyLinkedOfferObjectsRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyLinkedOfferObjectsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyLinkedOfferObjectsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Money struct {
@@ -5172,9 +5172,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Notifications: Indicates if the object needs to have notification enabled.
@@ -5202,9 +5202,9 @@ type Notifications struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Notifications) MarshalJSON() ([]byte, error) {
+func (s Notifications) MarshalJSON() ([]byte, error) {
 	type NoMethod Notifications
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObjectId: This is a copy of the tech.blob.ObjectId proto, which could not be
@@ -5233,9 +5233,9 @@ type ObjectId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObjectId) MarshalJSON() ([]byte, error) {
+func (s ObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferClass struct {
@@ -5454,9 +5454,9 @@ type OfferClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferClass) MarshalJSON() ([]byte, error) {
+func (s OfferClass) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferClassAddMessageResponse struct {
@@ -5478,9 +5478,9 @@ type OfferClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s OfferClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferClassListResponse struct {
@@ -5504,9 +5504,9 @@ type OfferClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferClassListResponse) MarshalJSON() ([]byte, error) {
+func (s OfferClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferObject struct {
@@ -5619,9 +5619,9 @@ type OfferObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferObject) MarshalJSON() ([]byte, error) {
+func (s OfferObject) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferObjectAddMessageResponse struct {
@@ -5643,9 +5643,9 @@ type OfferObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s OfferObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OfferObjectListResponse struct {
@@ -5669,9 +5669,9 @@ type OfferObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s OfferObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Pagination struct {
@@ -5695,9 +5695,9 @@ type Pagination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pagination) MarshalJSON() ([]byte, error) {
+func (s Pagination) MarshalJSON() ([]byte, error) {
 	type NoMethod Pagination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PassConstraints: Container for any constraints that may be placed on passes.
@@ -5734,9 +5734,9 @@ type PassConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PassConstraints) MarshalJSON() ([]byte, error) {
+func (s PassConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod PassConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Permission struct {
@@ -5767,9 +5767,9 @@ type Permission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permission) MarshalJSON() ([]byte, error) {
+func (s Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Permissions struct {
@@ -5793,9 +5793,9 @@ type Permissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permissions) MarshalJSON() ([]byte, error) {
+func (s Permissions) MarshalJSON() ([]byte, error) {
 	type NoMethod Permissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PurchaseDetails struct {
@@ -5837,9 +5837,9 @@ type PurchaseDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PurchaseDetails) MarshalJSON() ([]byte, error) {
+func (s PurchaseDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PurchaseDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReservationInfo struct {
@@ -5867,9 +5867,9 @@ type ReservationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReservationInfo) MarshalJSON() ([]byte, error) {
+func (s ReservationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Resources struct {
@@ -5914,9 +5914,9 @@ type Resources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Resources) MarshalJSON() ([]byte, error) {
+func (s Resources) MarshalJSON() ([]byte, error) {
 	type NoMethod Resources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Review struct {
@@ -5934,9 +5934,9 @@ type Review struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Review) MarshalJSON() ([]byte, error) {
+func (s Review) MarshalJSON() ([]byte, error) {
 	type NoMethod Review
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RotatingBarcode struct {
@@ -6032,9 +6032,9 @@ type RotatingBarcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotatingBarcode) MarshalJSON() ([]byte, error) {
+func (s RotatingBarcode) MarshalJSON() ([]byte, error) {
 	type NoMethod RotatingBarcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RotatingBarcodeTotpDetails: Configuration for the time-based OTP
@@ -6066,9 +6066,9 @@ type RotatingBarcodeTotpDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotatingBarcodeTotpDetails) MarshalJSON() ([]byte, error) {
+func (s RotatingBarcodeTotpDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RotatingBarcodeTotpDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RotatingBarcodeTotpDetailsTotpParameters: Configuration for the key and
@@ -6092,9 +6092,9 @@ type RotatingBarcodeTotpDetailsTotpParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotatingBarcodeTotpDetailsTotpParameters) MarshalJSON() ([]byte, error) {
+func (s RotatingBarcodeTotpDetailsTotpParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod RotatingBarcodeTotpDetailsTotpParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RotatingBarcodeValues: A payload containing many barcode values and start
@@ -6132,9 +6132,9 @@ type RotatingBarcodeValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotatingBarcodeValues) MarshalJSON() ([]byte, error) {
+func (s RotatingBarcodeValues) MarshalJSON() ([]byte, error) {
 	type NoMethod RotatingBarcodeValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SecurityAnimation struct {
@@ -6158,9 +6158,9 @@ type SecurityAnimation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityAnimation) MarshalJSON() ([]byte, error) {
+func (s SecurityAnimation) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityAnimation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SignUpInfo struct {
@@ -6179,9 +6179,9 @@ type SignUpInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignUpInfo) MarshalJSON() ([]byte, error) {
+func (s SignUpInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SignUpInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SmartTap struct {
@@ -6214,9 +6214,9 @@ type SmartTap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SmartTap) MarshalJSON() ([]byte, error) {
+func (s SmartTap) MarshalJSON() ([]byte, error) {
 	type NoMethod SmartTap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SmartTapMerchantData struct {
@@ -6239,9 +6239,9 @@ type SmartTapMerchantData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SmartTapMerchantData) MarshalJSON() ([]byte, error) {
+func (s SmartTapMerchantData) MarshalJSON() ([]byte, error) {
 	type NoMethod SmartTapMerchantData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TemplateItem struct {
@@ -6277,9 +6277,9 @@ type TemplateItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TemplateItem) MarshalJSON() ([]byte, error) {
+func (s TemplateItem) MarshalJSON() ([]byte, error) {
 	type NoMethod TemplateItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextModuleData: Data for Text module. All fields are optional. Header will
@@ -6319,9 +6319,9 @@ type TextModuleData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextModuleData) MarshalJSON() ([]byte, error) {
+func (s TextModuleData) MarshalJSON() ([]byte, error) {
 	type NoMethod TextModuleData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TicketCost struct {
@@ -6345,9 +6345,9 @@ type TicketCost struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TicketCost) MarshalJSON() ([]byte, error) {
+func (s TicketCost) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketCost
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TicketLeg struct {
@@ -6439,9 +6439,9 @@ type TicketLeg struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TicketLeg) MarshalJSON() ([]byte, error) {
+func (s TicketLeg) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketLeg
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TicketRestrictions struct {
@@ -6468,9 +6468,9 @@ type TicketRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TicketRestrictions) MarshalJSON() ([]byte, error) {
+func (s TicketRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TicketSeat struct {
@@ -6510,9 +6510,9 @@ type TicketSeat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TicketSeat) MarshalJSON() ([]byte, error) {
+func (s TicketSeat) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketSeat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TimeInterval struct {
@@ -6538,9 +6538,9 @@ type TimeInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeInterval) MarshalJSON() ([]byte, error) {
+func (s TimeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitClass struct {
@@ -6796,9 +6796,9 @@ type TransitClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitClass) MarshalJSON() ([]byte, error) {
+func (s TransitClass) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitClassAddMessageResponse struct {
@@ -6820,9 +6820,9 @@ type TransitClassAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s TransitClassAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitClassAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitClassListResponse struct {
@@ -6846,9 +6846,9 @@ type TransitClassListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitClassListResponse) MarshalJSON() ([]byte, error) {
+func (s TransitClassListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitClassListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitObject struct {
@@ -7045,9 +7045,9 @@ type TransitObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitObject) MarshalJSON() ([]byte, error) {
+func (s TransitObject) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitObjectAddMessageResponse struct {
@@ -7069,9 +7069,9 @@ type TransitObjectAddMessageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+func (s TransitObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitObjectAddMessageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TransitObjectListResponse struct {
@@ -7095,9 +7095,9 @@ type TransitObjectListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitObjectListResponse) MarshalJSON() ([]byte, error) {
+func (s TransitObjectListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitObjectListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransitObjectUploadRotatingBarcodeValuesRequest: Request to upload rotating
@@ -7120,9 +7120,9 @@ type TransitObjectUploadRotatingBarcodeValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitObjectUploadRotatingBarcodeValuesRequest) MarshalJSON() ([]byte, error) {
+func (s TransitObjectUploadRotatingBarcodeValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitObjectUploadRotatingBarcodeValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransitObjectUploadRotatingBarcodeValuesResponse: Response for uploading
@@ -7154,9 +7154,9 @@ type TranslatedString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslatedString) MarshalJSON() ([]byte, error) {
+func (s TranslatedString) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslatedString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpcomingNotification: Indicates that the issuer would like Google Wallet to
@@ -7179,9 +7179,9 @@ type UpcomingNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpcomingNotification) MarshalJSON() ([]byte, error) {
+func (s UpcomingNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UpcomingNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Uri struct {
@@ -7218,9 +7218,9 @@ type Uri struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Uri) MarshalJSON() ([]byte, error) {
+func (s Uri) MarshalJSON() ([]byte, error) {
 	type NoMethod Uri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EventticketclassAddmessageCall struct {

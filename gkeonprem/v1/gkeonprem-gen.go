@@ -352,9 +352,9 @@ type Authorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Authorization) MarshalJSON() ([]byte, error) {
+func (s Authorization) MarshalJSON() ([]byte, error) {
 	type NoMethod Authorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminApiServerArgument: BareMetalAdminApiServerArgument represents
@@ -381,9 +381,9 @@ type BareMetalAdminApiServerArgument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminApiServerArgument) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminApiServerArgument) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminApiServerArgument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminCluster: Resource that represents a bare metal admin cluster.
@@ -500,9 +500,9 @@ type BareMetalAdminCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminCluster) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminClusterOperationsConfig: BareMetalAdminClusterOperationsConfig
@@ -524,9 +524,9 @@ type BareMetalAdminClusterOperationsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminClusterOperationsConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminClusterOperationsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminClusterOperationsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminControlPlaneConfig: BareMetalAdminControlPlaneConfig specifies
@@ -555,9 +555,9 @@ type BareMetalAdminControlPlaneConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminControlPlaneConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminControlPlaneConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminControlPlaneConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminControlPlaneNodePoolConfig:
@@ -582,9 +582,9 @@ type BareMetalAdminControlPlaneNodePoolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminControlPlaneNodePoolConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminControlPlaneNodePoolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminControlPlaneNodePoolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminDrainedMachine: BareMetalAdminDrainedMachine represents the
@@ -605,9 +605,9 @@ type BareMetalAdminDrainedMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminDrainedMachine) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminDrainedMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminDrainedMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminDrainingMachine: BareMetalAdminDrainingMachine represents the
@@ -630,9 +630,9 @@ type BareMetalAdminDrainingMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminDrainingMachine) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminDrainingMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminDrainingMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminIslandModeCidrConfig: BareMetalAdminIslandModeCidrConfig
@@ -659,9 +659,9 @@ type BareMetalAdminIslandModeCidrConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminIslandModeCidrConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminLoadBalancerConfig: BareMetalAdminLoadBalancerConfig specifies
@@ -686,9 +686,9 @@ type BareMetalAdminLoadBalancerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminLoadBalancerConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminLoadBalancerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminLoadBalancerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminMachineDrainStatus: BareMetalAdminMachineDrainStatus
@@ -712,9 +712,9 @@ type BareMetalAdminMachineDrainStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminMachineDrainStatus) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminMachineDrainStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminMachineDrainStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminMaintenanceConfig: BareMetalAdminMaintenanceConfig specifies
@@ -740,9 +740,9 @@ type BareMetalAdminMaintenanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminMaintenanceConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminMaintenanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminMaintenanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminMaintenanceStatus: BareMetalAdminMaintenanceStatus represents
@@ -764,9 +764,9 @@ type BareMetalAdminMaintenanceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminMaintenanceStatus) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminMaintenanceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminMaintenanceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminManualLbConfig: BareMetalAdminManualLbConfig represents
@@ -787,9 +787,9 @@ type BareMetalAdminManualLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminManualLbConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminManualLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminManualLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminNetworkConfig: BareMetalAdminNetworkConfig specifies the
@@ -810,9 +810,9 @@ type BareMetalAdminNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminNodeAccessConfig: Specifies the node access related settings
@@ -834,9 +834,9 @@ type BareMetalAdminNodeAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminNodeAccessConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminNodeAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminNodeAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminOsEnvironmentConfig: Specifies operating system operation
@@ -858,9 +858,9 @@ type BareMetalAdminOsEnvironmentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminOsEnvironmentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminPortConfig: BareMetalAdminPortConfig is the specification of
@@ -882,9 +882,9 @@ type BareMetalAdminPortConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminPortConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminPortConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminPortConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminProxyConfig: BareMetalAdminProxyConfig specifies the cluster
@@ -910,9 +910,9 @@ type BareMetalAdminProxyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminProxyConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminProxyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminSecurityConfig: Specifies the security related settings for
@@ -933,9 +933,9 @@ type BareMetalAdminSecurityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminSecurityConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminSecurityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminSecurityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminStorageConfig: BareMetalAdminStorageConfig specifies the
@@ -963,9 +963,9 @@ type BareMetalAdminStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminStorageConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminVipConfig: BareMetalAdminVipConfig for bare metal load
@@ -987,9 +987,9 @@ type BareMetalAdminVipConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminVipConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminVipConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminVipConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalAdminWorkloadNodeConfig: BareMetalAdminWorkloadNodeConfig specifies
@@ -1014,9 +1014,9 @@ type BareMetalAdminWorkloadNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalAdminWorkloadNodeConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalAdminWorkloadNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminWorkloadNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalApiServerArgument: Represents an arg name->value pair. Only a
@@ -1043,9 +1043,9 @@ type BareMetalApiServerArgument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalApiServerArgument) MarshalJSON() ([]byte, error) {
+func (s BareMetalApiServerArgument) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalApiServerArgument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalBgpLbConfig: BareMetalBgpLbConfig represents configuration
@@ -1081,9 +1081,9 @@ type BareMetalBgpLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalBgpLbConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalBgpLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalBgpLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalBgpPeerConfig: BareMetalBgpPeerConfig represents configuration
@@ -1112,9 +1112,9 @@ type BareMetalBgpPeerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalBgpPeerConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalBgpPeerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalBgpPeerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalCluster: Resource that represents a bare metal user cluster.
@@ -1240,9 +1240,9 @@ type BareMetalCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalCluster) MarshalJSON() ([]byte, error) {
+func (s BareMetalCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalClusterOperationsConfig: Specifies the bare metal user cluster's
@@ -1264,9 +1264,9 @@ type BareMetalClusterOperationsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalClusterOperationsConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalClusterOperationsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalClusterOperationsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalClusterUpgradePolicy: BareMetalClusterUpgradePolicy defines the
@@ -1292,9 +1292,9 @@ type BareMetalClusterUpgradePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
+func (s BareMetalClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalClusterUpgradePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalControlPlaneConfig: Specifies the control plane configuration.
@@ -1320,9 +1320,9 @@ type BareMetalControlPlaneConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalControlPlaneConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalControlPlaneConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalControlPlaneConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalControlPlaneNodePoolConfig: Specifies the control plane node pool
@@ -1344,9 +1344,9 @@ type BareMetalControlPlaneNodePoolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalControlPlaneNodePoolConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalControlPlaneNodePoolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalControlPlaneNodePoolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalDrainedMachine: Represents a machine that is currently drained.
@@ -1366,9 +1366,9 @@ type BareMetalDrainedMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalDrainedMachine) MarshalJSON() ([]byte, error) {
+func (s BareMetalDrainedMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalDrainedMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalDrainingMachine: Represents a machine that is currently draining.
@@ -1390,9 +1390,9 @@ type BareMetalDrainingMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalDrainingMachine) MarshalJSON() ([]byte, error) {
+func (s BareMetalDrainingMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalDrainingMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalIslandModeCidrConfig: Specifies the cluster CIDR configuration
@@ -1419,9 +1419,9 @@ type BareMetalIslandModeCidrConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalIslandModeCidrConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalKubeletConfig: KubeletConfig defines the modifiable kubelet
@@ -1457,9 +1457,9 @@ type BareMetalKubeletConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalKubeletConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalKubeletConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalKubeletConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalLoadBalancerAddressPool: Represents an IP pool used by the load
@@ -1491,9 +1491,9 @@ type BareMetalLoadBalancerAddressPool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalLoadBalancerAddressPool) MarshalJSON() ([]byte, error) {
+func (s BareMetalLoadBalancerAddressPool) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalLoadBalancerAddressPool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalLoadBalancerConfig: Specifies the load balancer configuration.
@@ -1522,9 +1522,9 @@ type BareMetalLoadBalancerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalLoadBalancerConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalLoadBalancerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalLoadBalancerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalLoadBalancerNodePoolConfig: Specifies the load balancer's node pool
@@ -1546,9 +1546,9 @@ type BareMetalLoadBalancerNodePoolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalLoadBalancerNodePoolConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalLoadBalancerNodePoolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalLoadBalancerNodePoolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalLvpConfig: Specifies the configs for local persistent volumes
@@ -1571,9 +1571,9 @@ type BareMetalLvpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalLvpConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalLvpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalLvpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalLvpShareConfig: Specifies the configs for local persistent volumes
@@ -1597,9 +1597,9 @@ type BareMetalLvpShareConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalLvpShareConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalLvpShareConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalLvpShareConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalMachineDrainStatus: Represents the status of node machines that are
@@ -1622,9 +1622,9 @@ type BareMetalMachineDrainStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalMachineDrainStatus) MarshalJSON() ([]byte, error) {
+func (s BareMetalMachineDrainStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalMachineDrainStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalMaintenanceConfig: Specifies configurations to put bare metal nodes
@@ -1649,9 +1649,9 @@ type BareMetalMaintenanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalMaintenanceConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalMaintenanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalMaintenanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalMaintenanceStatus: Represents the maintenance status of the bare
@@ -1672,9 +1672,9 @@ type BareMetalMaintenanceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalMaintenanceStatus) MarshalJSON() ([]byte, error) {
+func (s BareMetalMaintenanceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalMaintenanceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalManualLbConfig: Represents configuration parameters for a manual
@@ -1695,9 +1695,9 @@ type BareMetalManualLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalManualLbConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalManualLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalManualLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalMetalLbConfig: Represents configuration parameters for a MetalLB
@@ -1724,9 +1724,9 @@ type BareMetalMetalLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalMetalLbConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalMetalLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalMetalLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalMultipleNetworkInterfacesConfig: Specifies the multiple networking
@@ -1748,9 +1748,9 @@ type BareMetalMultipleNetworkInterfacesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalMultipleNetworkInterfacesConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalMultipleNetworkInterfacesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalMultipleNetworkInterfacesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNetworkConfig: Specifies the cluster network configuration.
@@ -1785,9 +1785,9 @@ type BareMetalNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNodeAccessConfig: Specifies the node access related settings for
@@ -1809,9 +1809,9 @@ type BareMetalNodeAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNodeAccessConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalNodeAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNodeAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNodeConfig: BareMetalNodeConfig lists machine addresses to access
@@ -1839,9 +1839,9 @@ type BareMetalNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNodeConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNodePool: Resource that represents a bare metal node pool.
@@ -1918,9 +1918,9 @@ type BareMetalNodePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNodePool) MarshalJSON() ([]byte, error) {
+func (s BareMetalNodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNodePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNodePoolConfig: BareMetalNodePoolConfig describes the configuration
@@ -1957,9 +1957,9 @@ type BareMetalNodePoolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNodePoolConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalNodePoolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNodePoolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalNodePoolUpgradePolicy: BareMetalNodePoolUpgradePolicy defines the
@@ -1980,9 +1980,9 @@ type BareMetalNodePoolUpgradePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalNodePoolUpgradePolicy) MarshalJSON() ([]byte, error) {
+func (s BareMetalNodePoolUpgradePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalNodePoolUpgradePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalOsEnvironmentConfig: Specifies operating system settings for
@@ -2004,9 +2004,9 @@ type BareMetalOsEnvironmentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalOsEnvironmentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalParallelUpgradeConfig: BareMetalParallelUpgradeConfig defines the
@@ -2031,9 +2031,9 @@ type BareMetalParallelUpgradeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalParallelUpgradeConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalParallelUpgradeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalParallelUpgradeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalPortConfig: Specifies load balancer ports for the bare metal user
@@ -2055,9 +2055,9 @@ type BareMetalPortConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalPortConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalPortConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalPortConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalProxyConfig: Specifies the cluster proxy configuration.
@@ -2082,9 +2082,9 @@ type BareMetalProxyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalProxyConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalProxyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalSecurityConfig: Specifies the security related settings for the
@@ -2105,9 +2105,9 @@ type BareMetalSecurityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalSecurityConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalSecurityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalSecurityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalSrIovConfig: Specifies the SR-IOV networking operator config.
@@ -2127,9 +2127,9 @@ type BareMetalSrIovConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalSrIovConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalSrIovConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalSrIovConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalStorageConfig: BareMetalStorageConfig specifies the cluster storage
@@ -2157,9 +2157,9 @@ type BareMetalStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalStorageConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalVersionInfo: Contains information about a specific Anthos on bare
@@ -2186,9 +2186,9 @@ type BareMetalVersionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalVersionInfo) MarshalJSON() ([]byte, error) {
+func (s BareMetalVersionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalVersionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalVipConfig: Specifies the VIP config for the bare metal load
@@ -2213,9 +2213,9 @@ type BareMetalVipConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalVipConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalVipConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalVipConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BareMetalWorkloadNodeConfig: Specifies the workload node configurations.
@@ -2242,9 +2242,9 @@ type BareMetalWorkloadNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BareMetalWorkloadNodeConfig) MarshalJSON() ([]byte, error) {
+func (s BareMetalWorkloadNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalWorkloadNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BinaryAuthorization: Configuration for Binary Authorization.
@@ -2271,9 +2271,9 @@ type BinaryAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BinaryAuthorization) MarshalJSON() ([]byte, error) {
+func (s BinaryAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod BinaryAuthorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -2370,9 +2370,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -2396,9 +2396,9 @@ type ClusterUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterUser) MarshalJSON() ([]byte, error) {
+func (s ClusterUser) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2434,9 +2434,9 @@ type EnrollBareMetalAdminClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollBareMetalAdminClusterRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollBareMetalAdminClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollBareMetalAdminClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollBareMetalClusterRequest: Message for enrolling an existing bare metal
@@ -2472,9 +2472,9 @@ type EnrollBareMetalClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollBareMetalClusterRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollBareMetalClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollBareMetalClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollBareMetalNodePoolRequest: Message for enrolling an existing bare metal
@@ -2499,9 +2499,9 @@ type EnrollBareMetalNodePoolRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollBareMetalNodePoolRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollBareMetalNodePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollBareMetalNodePoolRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollVmwareAdminClusterRequest: Message for enrolling an existing VMware
@@ -2528,9 +2528,9 @@ type EnrollVmwareAdminClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollVmwareAdminClusterRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollVmwareAdminClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollVmwareAdminClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollVmwareClusterRequest: Message for enrolling an existing VMware cluster
@@ -2568,9 +2568,9 @@ type EnrollVmwareClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollVmwareClusterRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollVmwareClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollVmwareClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollVmwareNodePoolRequest: Message for enrolling a VMware node pool.
@@ -2590,9 +2590,9 @@ type EnrollVmwareNodePoolRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollVmwareNodePoolRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollVmwareNodePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollVmwareNodePoolRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -2638,9 +2638,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Fleet: Fleet related configuration. Fleets are a Google Cloud concept for
@@ -2666,9 +2666,9 @@ type Fleet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Fleet) MarshalJSON() ([]byte, error) {
+func (s Fleet) MarshalJSON() ([]byte, error) {
 	type NoMethod Fleet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBareMetalAdminClustersResponse: Response message for listing bare metal
@@ -2699,9 +2699,9 @@ type ListBareMetalAdminClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBareMetalAdminClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListBareMetalAdminClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBareMetalAdminClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBareMetalClustersResponse: Response message for listing bare metal
@@ -2732,9 +2732,9 @@ type ListBareMetalClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBareMetalClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListBareMetalClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBareMetalClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBareMetalNodePoolsResponse: Response message for listing bare metal node
@@ -2763,9 +2763,9 @@ type ListBareMetalNodePoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBareMetalNodePoolsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBareMetalNodePoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBareMetalNodePoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -2791,9 +2791,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -2819,9 +2819,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVmwareAdminClustersResponse: Response message for listing VMware admin
@@ -2852,9 +2852,9 @@ type ListVmwareAdminClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVmwareAdminClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListVmwareAdminClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVmwareAdminClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVmwareClustersResponse: Response message for listing VMware Clusters.
@@ -2884,9 +2884,9 @@ type ListVmwareClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVmwareClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListVmwareClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVmwareClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVmwareNodePoolsResponse: Response message for listing VMware node pools.
@@ -2914,9 +2914,9 @@ type ListVmwareNodePoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVmwareNodePoolsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVmwareNodePoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVmwareNodePoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -2952,9 +2952,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metric: Progress metric is (string, int|float|string) pair.
@@ -2996,9 +2996,9 @@ type Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metric) MarshalJSON() ([]byte, error) {
+func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Metric) UnmarshalJSON(data []byte) error {
@@ -3050,9 +3050,9 @@ type NodeTaint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeTaint) MarshalJSON() ([]byte, error) {
+func (s NodeTaint) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeTaint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -3097,9 +3097,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -3151,9 +3151,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationProgress: Information about operation progress.
@@ -3173,9 +3173,9 @@ type OperationProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+func (s OperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationStage: Information about a particular stage of an operation.
@@ -3218,9 +3218,9 @@ type OperationStage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationStage) MarshalJSON() ([]byte, error) {
+func (s OperationStage) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationStage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -3308,9 +3308,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryBareMetalAdminVersionConfigResponse: Response message for querying bare
@@ -3334,9 +3334,9 @@ type QueryBareMetalAdminVersionConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryBareMetalAdminVersionConfigResponse) MarshalJSON() ([]byte, error) {
+func (s QueryBareMetalAdminVersionConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryBareMetalAdminVersionConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryBareMetalVersionConfigResponse: Response message for querying bare
@@ -3360,9 +3360,9 @@ type QueryBareMetalVersionConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryBareMetalVersionConfigResponse) MarshalJSON() ([]byte, error) {
+func (s QueryBareMetalVersionConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryBareMetalVersionConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryVmwareVersionConfigResponse: Response message for querying VMware user
@@ -3386,9 +3386,9 @@ type QueryVmwareVersionConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryVmwareVersionConfigResponse) MarshalJSON() ([]byte, error) {
+func (s QueryVmwareVersionConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryVmwareVersionConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceCondition: ResourceCondition provides a standard mechanism for
@@ -3426,9 +3426,9 @@ type ResourceCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceCondition) MarshalJSON() ([]byte, error) {
+func (s ResourceCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceStatus: ResourceStatus describes why a cluster or node pool has a
@@ -3456,9 +3456,9 @@ type ResourceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceStatus) MarshalJSON() ([]byte, error) {
+func (s ResourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -3481,9 +3481,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -3515,9 +3515,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -3540,9 +3540,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -3567,9 +3567,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeDependency: UpgradeDependency represents a dependency when upgrading
@@ -3599,9 +3599,9 @@ type UpgradeDependency struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeDependency) MarshalJSON() ([]byte, error) {
+func (s UpgradeDependency) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeDependency
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidationCheck: ValidationCheck represents the result of preflight check.
@@ -3637,9 +3637,9 @@ type ValidationCheck struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidationCheck) MarshalJSON() ([]byte, error) {
+func (s ValidationCheck) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationCheck
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidationCheckResult: ValidationCheckResult defines the details about the
@@ -3675,9 +3675,9 @@ type ValidationCheckResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidationCheckResult) MarshalJSON() ([]byte, error) {
+func (s ValidationCheckResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationCheckResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidationCheckStatus: ValidationCheckStatus defines the detailed validation
@@ -3699,9 +3699,9 @@ type ValidationCheckStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidationCheckStatus) MarshalJSON() ([]byte, error) {
+func (s ValidationCheckStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationCheckStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAAGConfig: Specifies anti affinity group config for the VMware user
@@ -3723,9 +3723,9 @@ type VmwareAAGConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAAGConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAAGConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAAGConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAddressPool: Represents an IP pool used by the load balancer.
@@ -3756,9 +3756,9 @@ type VmwareAddressPool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAddressPool) MarshalJSON() ([]byte, error) {
+func (s VmwareAddressPool) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAddressPool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminAddonNodeConfig: VmwareAdminAddonNodeConfig contains add-on node
@@ -3780,9 +3780,9 @@ type VmwareAdminAddonNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminAddonNodeConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminAddonNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminAddonNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminAuthorizationConfig: VmwareAdminAuthorizationConfig represents
@@ -3804,9 +3804,9 @@ type VmwareAdminAuthorizationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminAuthorizationConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminAuthorizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminAuthorizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminCluster: Resource that represents a VMware admin cluster.
@@ -3917,9 +3917,9 @@ type VmwareAdminCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminCluster) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminControlPlaneNodeConfig: VmwareAdminControlPlaneNodeConfig
@@ -3946,9 +3946,9 @@ type VmwareAdminControlPlaneNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminControlPlaneNodeConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminControlPlaneNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminControlPlaneNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminF5BigIpConfig: VmwareAdminF5BigIpConfig represents configuration
@@ -3975,9 +3975,9 @@ type VmwareAdminF5BigIpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminF5BigIpConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminF5BigIpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminF5BigIpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminHAControlPlaneConfig: Specifies HA admin control plane config.
@@ -3997,9 +3997,9 @@ type VmwareAdminHAControlPlaneConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminHAControlPlaneConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminHAControlPlaneConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminHAControlPlaneConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminLoadBalancerConfig: VmwareAdminLoadBalancerConfig contains load
@@ -4028,9 +4028,9 @@ type VmwareAdminLoadBalancerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminLoadBalancerConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminLoadBalancerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminLoadBalancerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VmwareAdminManualLbConfig struct {
@@ -4064,9 +4064,9 @@ type VmwareAdminManualLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminManualLbConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminManualLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminManualLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminMetalLbConfig: VmwareAdminMetalLbConfig represents configuration
@@ -4110,9 +4110,9 @@ type VmwareAdminNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminPreparedSecretsConfig: VmwareAdminPreparedSecretsConfig
@@ -4133,9 +4133,9 @@ type VmwareAdminPreparedSecretsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminPreparedSecretsConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminPreparedSecretsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminPreparedSecretsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminSeesawConfig: VmwareSeesawConfig represents configuration
@@ -4184,9 +4184,9 @@ type VmwareAdminSeesawConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminSeesawConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminSeesawConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminSeesawConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminVCenterConfig: VmwareAdminVCenterConfig contains VCenter
@@ -4225,9 +4225,9 @@ type VmwareAdminVCenterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminVCenterConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminVCenterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminVCenterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminVipConfig: VmwareAdminVipConfig for VMware load balancer
@@ -4251,9 +4251,9 @@ type VmwareAdminVipConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAdminVipConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAdminVipConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminVipConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAutoRepairConfig: Specifies config to enable/disable auto repair. The
@@ -4274,9 +4274,9 @@ type VmwareAutoRepairConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAutoRepairConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAutoRepairConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAutoRepairConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAutoResizeConfig: Represents auto resizing configurations for the
@@ -4297,9 +4297,9 @@ type VmwareAutoResizeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareAutoResizeConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareAutoResizeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAutoResizeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareBundleConfig: VmwareBundleConfig represents configuration for the
@@ -4322,9 +4322,9 @@ type VmwareBundleConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareBundleConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareBundleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareBundleConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareCluster: Resource that represents a VMware user cluster. ##
@@ -4453,9 +4453,9 @@ type VmwareCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareCluster) MarshalJSON() ([]byte, error) {
+func (s VmwareCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareClusterUpgradePolicy: VmwareClusterUpgradePolicy defines the cluster
@@ -4477,9 +4477,9 @@ type VmwareClusterUpgradePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
+func (s VmwareClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareClusterUpgradePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareControlPlaneNodeConfig: Specifies control plane node config for the
@@ -4511,9 +4511,9 @@ type VmwareControlPlaneNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareControlPlaneNodeConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareControlPlaneNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareControlPlaneNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareControlPlaneV2Config: Specifies control plane V2 config.
@@ -4533,9 +4533,9 @@ type VmwareControlPlaneV2Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareControlPlaneV2Config) MarshalJSON() ([]byte, error) {
+func (s VmwareControlPlaneV2Config) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareControlPlaneV2Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareControlPlaneVsphereConfig: Specifies control plane node config.
@@ -4558,9 +4558,9 @@ type VmwareControlPlaneVsphereConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareControlPlaneVsphereConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareControlPlaneVsphereConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareControlPlaneVsphereConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareDataplaneV2Config: Contains configurations for Dataplane V2, which is
@@ -4590,9 +4590,9 @@ type VmwareDataplaneV2Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareDataplaneV2Config) MarshalJSON() ([]byte, error) {
+func (s VmwareDataplaneV2Config) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareDataplaneV2Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareDhcpIpConfig: Represents the network configuration required for the
@@ -4614,9 +4614,9 @@ type VmwareDhcpIpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareDhcpIpConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareDhcpIpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareDhcpIpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareF5BigIpConfig: Represents configuration parameters for an F5 BIG-IP
@@ -4643,9 +4643,9 @@ type VmwareF5BigIpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareF5BigIpConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareF5BigIpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareF5BigIpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareHostConfig: Represents the common parameters for all the hosts
@@ -4670,9 +4670,9 @@ type VmwareHostConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareHostConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareHostConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareHostConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareHostIp: Represents VMware user cluster node's network configuration.
@@ -4695,9 +4695,9 @@ type VmwareHostIp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareHostIp) MarshalJSON() ([]byte, error) {
+func (s VmwareHostIp) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareHostIp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareIpBlock: Represents a collection of IP addresses to assign to nodes.
@@ -4721,9 +4721,9 @@ type VmwareIpBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareIpBlock) MarshalJSON() ([]byte, error) {
+func (s VmwareIpBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareIpBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareLoadBalancerConfig: Specifies the locad balancer config for the VMware
@@ -4752,9 +4752,9 @@ type VmwareLoadBalancerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareLoadBalancerConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareLoadBalancerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareLoadBalancerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareManualLbConfig: Represents configuration parameters for an already
@@ -4792,9 +4792,9 @@ type VmwareManualLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareManualLbConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareManualLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareManualLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareMetalLbConfig: Represents configuration parameters for the MetalLB
@@ -4817,9 +4817,9 @@ type VmwareMetalLbConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareMetalLbConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareMetalLbConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareMetalLbConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareNetworkConfig: Specifies network config for the VMware user cluster.
@@ -4857,9 +4857,9 @@ type VmwareNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareNodeConfig: Parameters that describe the configuration of all nodes
@@ -4907,9 +4907,9 @@ type VmwareNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareNodeConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareNodePool: Resource VmwareNodePool represents a VMware node pool. ##
@@ -4986,9 +4986,9 @@ type VmwareNodePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareNodePool) MarshalJSON() ([]byte, error) {
+func (s VmwareNodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareNodePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareNodePoolAutoscalingConfig: NodePoolAutoscaling config for the NodePool
@@ -5011,9 +5011,9 @@ type VmwareNodePoolAutoscalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareNodePoolAutoscalingConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareNodePoolAutoscalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareNodePoolAutoscalingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwarePlatformConfig: VmwarePlatformConfig represents configuration for the
@@ -5044,9 +5044,9 @@ type VmwarePlatformConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwarePlatformConfig) MarshalJSON() ([]byte, error) {
+func (s VmwarePlatformConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwarePlatformConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareSeesawConfig: VmwareSeesawConfig represents configuration parameters
@@ -5095,9 +5095,9 @@ type VmwareSeesawConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareSeesawConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareSeesawConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareSeesawConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareStaticIpConfig: Represents the network configuration required for the
@@ -5119,9 +5119,9 @@ type VmwareStaticIpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareStaticIpConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareStaticIpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareStaticIpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareStorageConfig: Specifies vSphere CSI components deployment config in
@@ -5143,9 +5143,9 @@ type VmwareStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareStorageConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVCenterConfig: Represents configuration for the VMware VCenter for the
@@ -5182,9 +5182,9 @@ type VmwareVCenterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVCenterConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareVCenterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVCenterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVersionInfo: Contains information about a specific Anthos on VMware
@@ -5215,9 +5215,9 @@ type VmwareVersionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVersionInfo) MarshalJSON() ([]byte, error) {
+func (s VmwareVersionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVersionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVipConfig: Specifies the VIP config for the VMware user cluster load
@@ -5242,9 +5242,9 @@ type VmwareVipConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVipConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareVipConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVipConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVsphereConfig: VmwareVsphereConfig represents configuration for the
@@ -5270,9 +5270,9 @@ type VmwareVsphereConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVsphereConfig) MarshalJSON() ([]byte, error) {
+func (s VmwareVsphereConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVsphereConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVsphereTag: VmwareVsphereTag describes a vSphere tag to be placed on
@@ -5296,9 +5296,9 @@ type VmwareVsphereTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVsphereTag) MarshalJSON() ([]byte, error) {
+func (s VmwareVsphereTag) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVsphereTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

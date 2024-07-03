@@ -299,9 +299,9 @@ type CloudAiPlatformTenantresourceCloudSqlInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceCloudSqlInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceCloudSqlInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceCloudSqlInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceGcsBucketConfig: The identity to configure a
@@ -340,9 +340,9 @@ type CloudAiPlatformTenantresourceGcsBucketConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceGcsBucketConfig) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceGcsBucketConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceGcsBucketConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceIamPolicyBinding: The dynamic IAM bindings to
@@ -387,9 +387,9 @@ type CloudAiPlatformTenantresourceIamPolicyBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceIamPolicyBinding) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceIamPolicyBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceIamPolicyBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceInfraSpannerConfig: The configuration for a
@@ -430,9 +430,9 @@ type CloudAiPlatformTenantresourceInfraSpannerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceInfraSpannerConfig) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceInfraSpannerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceInfraSpannerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceInfraSpannerConfigCreateDatabaseOptions: The
@@ -463,9 +463,9 @@ type CloudAiPlatformTenantresourceInfraSpannerConfigCreateDatabaseOptions struct
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceInfraSpannerConfigCreateDatabaseOptions) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceInfraSpannerConfigCreateDatabaseOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceInfraSpannerConfigCreateDatabaseOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceServiceAccountIdentity: The identity to
@@ -493,9 +493,9 @@ type CloudAiPlatformTenantresourceServiceAccountIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceServiceAccountIdentity) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceServiceAccountIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceServiceAccountIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceTenantProjectConfig: The identity to configure
@@ -529,9 +529,9 @@ type CloudAiPlatformTenantresourceTenantProjectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceTenantProjectConfig) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceTenantProjectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceTenantProjectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceTenantProjectResource: The tenant project and
@@ -577,9 +577,9 @@ type CloudAiPlatformTenantresourceTenantProjectResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceTenantProjectResource) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceTenantProjectResource) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceTenantProjectResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceTenantResource: A collection of tenant
@@ -604,9 +604,9 @@ type CloudAiPlatformTenantresourceTenantResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceTenantResource) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceTenantResource) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceTenantResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformTenantresourceTenantServiceAccountIdentity: The identity of
@@ -631,9 +631,9 @@ type CloudAiPlatformTenantresourceTenantServiceAccountIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformTenantresourceTenantServiceAccountIdentity) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformTenantresourceTenantServiceAccountIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformTenantresourceTenantServiceAccountIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceconsumermanagementV1BillingConfig: Describes the billing
@@ -655,9 +655,9 @@ type GoogleApiServiceconsumermanagementV1BillingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceconsumermanagementV1BillingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceconsumermanagementV1BillingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceconsumermanagementV1BillingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceconsumermanagementV1PolicyBinding: Translates to IAM Policy
@@ -683,9 +683,9 @@ type GoogleApiServiceconsumermanagementV1PolicyBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceconsumermanagementV1PolicyBinding) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceconsumermanagementV1PolicyBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceconsumermanagementV1PolicyBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1AccessControlAction: Represents the action
@@ -719,9 +719,9 @@ type GoogleCloudContentwarehouseV1AccessControlAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1AccessControlAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1AccessControlAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1AccessControlAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1Action: Represents the action triggered by Rule
@@ -756,9 +756,9 @@ type GoogleCloudContentwarehouseV1Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1Action) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1Action) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ActionExecutorOutput: Represents the output of
@@ -779,9 +779,9 @@ type GoogleCloudContentwarehouseV1ActionExecutorOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ActionExecutorOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ActionExecutorOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ActionExecutorOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ActionOutput: Represents the result of
@@ -813,9 +813,9 @@ type GoogleCloudContentwarehouseV1ActionOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ActionOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ActionOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ActionOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1AddToFolderAction: Represents the action
@@ -838,9 +838,9 @@ type GoogleCloudContentwarehouseV1AddToFolderAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1AddToFolderAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1AddToFolderAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1AddToFolderAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1CloudAIDocumentOption: Request Option for
@@ -867,9 +867,9 @@ type GoogleCloudContentwarehouseV1CloudAIDocumentOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1CloudAIDocumentOption) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1CloudAIDocumentOption) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1CloudAIDocumentOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1CreateDocumentLinkRequest: Request message for
@@ -894,9 +894,9 @@ type GoogleCloudContentwarehouseV1CreateDocumentLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1CreateDocumentLinkRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1CreateDocumentLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1CreateDocumentLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1CreateDocumentMetadata: Metadata object for
@@ -938,9 +938,9 @@ type GoogleCloudContentwarehouseV1CreateDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1CreateDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1CreateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1CreateDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1CreateDocumentResponse: Response message for
@@ -973,9 +973,9 @@ type GoogleCloudContentwarehouseV1CreateDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1CreateDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1CreateDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1CreateDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1CustomWeightsMetadata: To support the custom
@@ -997,9 +997,9 @@ type GoogleCloudContentwarehouseV1CustomWeightsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1CustomWeightsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1CustomWeightsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1CustomWeightsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DataUpdateAction: Represents the action
@@ -1023,9 +1023,9 @@ type GoogleCloudContentwarehouseV1DataUpdateAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DataUpdateAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DataUpdateAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DataUpdateAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DataValidationAction: Represents the action
@@ -1049,9 +1049,9 @@ type GoogleCloudContentwarehouseV1DataValidationAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DataValidationAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DataValidationAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DataValidationAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DateTimeArray: DateTime values.
@@ -1072,9 +1072,9 @@ type GoogleCloudContentwarehouseV1DateTimeArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DateTimeArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DateTimeArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DateTimeArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DateTimeTypeOptions: Configurations for a date
@@ -1101,9 +1101,9 @@ type GoogleCloudContentwarehouseV1DeleteDocumentAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DeleteDocumentAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DeleteDocumentAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DeleteDocumentAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DeleteDocumentLinkRequest: Request message for
@@ -1125,9 +1125,9 @@ type GoogleCloudContentwarehouseV1DeleteDocumentLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DeleteDocumentLinkRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DeleteDocumentLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DeleteDocumentLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DeleteDocumentRequest: Request message for
@@ -1149,9 +1149,9 @@ type GoogleCloudContentwarehouseV1DeleteDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DeleteDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DeleteDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DeleteDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1Document: Defines the structure for content
@@ -1246,9 +1246,9 @@ type GoogleCloudContentwarehouseV1Document struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1Document) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DocumentLink: A document-link between source
@@ -1296,9 +1296,9 @@ type GoogleCloudContentwarehouseV1DocumentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DocumentLink) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DocumentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DocumentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudContentwarehouseV1DocumentQuery struct {
@@ -1409,9 +1409,9 @@ type GoogleCloudContentwarehouseV1DocumentQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DocumentQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DocumentQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DocumentQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DocumentReference: References to the documents.
@@ -1450,9 +1450,9 @@ type GoogleCloudContentwarehouseV1DocumentReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DocumentReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DocumentReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DocumentReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1DocumentSchema: A document schema used to
@@ -1492,9 +1492,9 @@ type GoogleCloudContentwarehouseV1DocumentSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1DocumentSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1DocumentSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1DocumentSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1EnumArray: Enum values.
@@ -1514,9 +1514,9 @@ type GoogleCloudContentwarehouseV1EnumArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1EnumArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1EnumArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1EnumArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1EnumTypeOptions: Configurations for an
@@ -1541,9 +1541,9 @@ type GoogleCloudContentwarehouseV1EnumTypeOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1EnumTypeOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1EnumTypeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1EnumTypeOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1EnumValue: Represents the string value of the
@@ -1565,9 +1565,9 @@ type GoogleCloudContentwarehouseV1EnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1EnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1EnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1EnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ExportToCdwPipeline: The configuration of
@@ -1603,9 +1603,9 @@ type GoogleCloudContentwarehouseV1ExportToCdwPipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ExportToCdwPipeline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ExportToCdwPipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ExportToCdwPipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContentwarehouseV1ExportToCdwPipeline) UnmarshalJSON(data []byte) error {
@@ -1644,9 +1644,9 @@ type GoogleCloudContentwarehouseV1FetchAclRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1FetchAclRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1FetchAclRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1FetchAclRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1FetchAclResponse: Response message for
@@ -1673,9 +1673,9 @@ type GoogleCloudContentwarehouseV1FetchAclResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1FetchAclResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1FetchAclResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1FetchAclResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1FileTypeFilter: Filter for the specific types
@@ -1704,9 +1704,9 @@ type GoogleCloudContentwarehouseV1FileTypeFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1FileTypeFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1FileTypeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1FileTypeFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1FloatArray: Float values.
@@ -1726,9 +1726,9 @@ type GoogleCloudContentwarehouseV1FloatArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1FloatArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1FloatArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1FloatArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContentwarehouseV1FloatArray) UnmarshalJSON(data []byte) error {
@@ -1788,9 +1788,9 @@ type GoogleCloudContentwarehouseV1GcsIngestPipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1GcsIngestPipeline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1GcsIngestPipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1GcsIngestPipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline: The
@@ -1832,9 +1832,9 @@ type GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1GetDocumentRequest: Request message for
@@ -1856,9 +1856,9 @@ type GoogleCloudContentwarehouseV1GetDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1GetDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1GetDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1GetDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1HistogramQuery: The histogram request.
@@ -1889,9 +1889,9 @@ type GoogleCloudContentwarehouseV1HistogramQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1HistogramQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1HistogramQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1HistogramQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudContentwarehouseV1HistogramQueryPropertyNameFilter struct {
@@ -1930,9 +1930,9 @@ type GoogleCloudContentwarehouseV1HistogramQueryPropertyNameFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1HistogramQueryPropertyNameFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1HistogramQueryPropertyNameFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1HistogramQueryPropertyNameFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1HistogramQueryResult: Histogram result that
@@ -1957,9 +1957,9 @@ type GoogleCloudContentwarehouseV1HistogramQueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1HistogramQueryResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1HistogramQueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1HistogramQueryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1IngestPipelineConfig: The ingestion pipeline
@@ -2010,9 +2010,9 @@ type GoogleCloudContentwarehouseV1IngestPipelineConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1IngestPipelineConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1IngestPipelineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1IngestPipelineConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1InitializeProjectRequest: Request message for
@@ -2071,9 +2071,9 @@ type GoogleCloudContentwarehouseV1InitializeProjectRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1InitializeProjectRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1InitializeProjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1InitializeProjectRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1InitializeProjectResponse: Response message for
@@ -2103,9 +2103,9 @@ type GoogleCloudContentwarehouseV1InitializeProjectResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1InitializeProjectResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1InitializeProjectResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1InitializeProjectResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1IntegerArray: Integer values.
@@ -2125,9 +2125,9 @@ type GoogleCloudContentwarehouseV1IntegerArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1IntegerArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1IntegerArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1IntegerArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1IntegerTypeOptions: Configurations for an
@@ -2155,9 +2155,9 @@ type GoogleCloudContentwarehouseV1InvalidRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1InvalidRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1InvalidRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1InvalidRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListDocumentSchemasResponse: Response message
@@ -2184,9 +2184,9 @@ type GoogleCloudContentwarehouseV1ListDocumentSchemasResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListDocumentSchemasResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListDocumentSchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListDocumentSchemasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListLinkedSourcesRequest: Response message for
@@ -2218,9 +2218,9 @@ type GoogleCloudContentwarehouseV1ListLinkedSourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListLinkedSourcesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListLinkedSourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListLinkedSourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListLinkedSourcesResponse: Response message for
@@ -2247,9 +2247,9 @@ type GoogleCloudContentwarehouseV1ListLinkedSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListLinkedSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListLinkedSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListLinkedSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListLinkedTargetsRequest: Request message for
@@ -2271,9 +2271,9 @@ type GoogleCloudContentwarehouseV1ListLinkedTargetsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListLinkedTargetsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListLinkedTargetsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListLinkedTargetsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListLinkedTargetsResponse: Response message for
@@ -2300,9 +2300,9 @@ type GoogleCloudContentwarehouseV1ListLinkedTargetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListLinkedTargetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListLinkedTargetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListLinkedTargetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListRuleSetsResponse: Response message for
@@ -2329,9 +2329,9 @@ type GoogleCloudContentwarehouseV1ListRuleSetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListRuleSetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListRuleSetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListRuleSetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ListSynonymSetsResponse: Response message for
@@ -2358,9 +2358,9 @@ type GoogleCloudContentwarehouseV1ListSynonymSetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ListSynonymSetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ListSynonymSetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ListSynonymSetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1LockDocumentRequest: Request message for
@@ -2383,9 +2383,9 @@ type GoogleCloudContentwarehouseV1LockDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1LockDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1LockDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1LockDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1MapProperty: Map property value. Represents a
@@ -2407,9 +2407,9 @@ type GoogleCloudContentwarehouseV1MapProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1MapProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1MapProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1MapProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1MapTypeOptions: Configurations for a Map
@@ -2448,9 +2448,9 @@ type GoogleCloudContentwarehouseV1MergeFieldsOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1MergeFieldsOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1MergeFieldsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1MergeFieldsOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline: The configuration of
@@ -2481,9 +2481,9 @@ type GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ProcessorInfo: The DocAI processor information.
@@ -2514,9 +2514,9 @@ type GoogleCloudContentwarehouseV1ProcessorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ProcessorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ProcessorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ProcessorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ProjectStatus: Status of a project, including
@@ -2580,9 +2580,9 @@ type GoogleCloudContentwarehouseV1ProjectStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ProjectStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ProjectStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ProjectStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1Property: Property of a document.
@@ -2621,9 +2621,9 @@ type GoogleCloudContentwarehouseV1Property struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1Property) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1Property) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1Property
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1PropertyArray: Property values.
@@ -2643,9 +2643,9 @@ type GoogleCloudContentwarehouseV1PropertyArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PropertyArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PropertyArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PropertyArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1PropertyDefinition: Defines the metadata for a
@@ -2719,9 +2719,9 @@ type GoogleCloudContentwarehouseV1PropertyDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PropertyDefinition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PropertyDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PropertyDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource: The schema
@@ -2744,9 +2744,9 @@ type GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PropertyDefinitionSchemaSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudContentwarehouseV1PropertyFilter struct {
@@ -2794,9 +2794,9 @@ type GoogleCloudContentwarehouseV1PropertyFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PropertyFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PropertyFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PropertyFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1PropertyTypeOptions: Configurations for a
@@ -2817,9 +2817,9 @@ type GoogleCloudContentwarehouseV1PropertyTypeOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PropertyTypeOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PropertyTypeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PropertyTypeOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1PublishAction: Represents the action
@@ -2843,9 +2843,9 @@ type GoogleCloudContentwarehouseV1PublishAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1PublishAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1PublishAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1PublishAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1QAResult: Additional result info for the
@@ -2870,9 +2870,9 @@ type GoogleCloudContentwarehouseV1QAResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1QAResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1QAResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1QAResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContentwarehouseV1QAResult) UnmarshalJSON(data []byte) error {
@@ -2910,9 +2910,9 @@ type GoogleCloudContentwarehouseV1QAResultHighlight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1QAResultHighlight) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1QAResultHighlight) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1QAResultHighlight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RemoveFromFolderAction: Represents the action
@@ -2936,9 +2936,9 @@ type GoogleCloudContentwarehouseV1RemoveFromFolderAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RemoveFromFolderAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RemoveFromFolderAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RemoveFromFolderAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RequestMetadata: Meta information is used to
@@ -2959,9 +2959,9 @@ type GoogleCloudContentwarehouseV1RequestMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RequestMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RequestMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RequestMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1ResponseMetadata: Additional information
@@ -2983,9 +2983,9 @@ type GoogleCloudContentwarehouseV1ResponseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1ResponseMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1ResponseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1ResponseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1Rule: Represents the rule for a content
@@ -3024,9 +3024,9 @@ type GoogleCloudContentwarehouseV1Rule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1Rule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1Rule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RuleActionsPair: Represents a rule and outputs
@@ -3050,9 +3050,9 @@ type GoogleCloudContentwarehouseV1RuleActionsPair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RuleActionsPair) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RuleActionsPair) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RuleActionsPair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RuleEngineOutput: Records the output of Rule
@@ -3080,9 +3080,9 @@ type GoogleCloudContentwarehouseV1RuleEngineOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RuleEngineOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RuleEngineOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RuleEngineOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RuleEvaluatorOutput: Represents the output of
@@ -3110,9 +3110,9 @@ type GoogleCloudContentwarehouseV1RuleEvaluatorOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RuleEvaluatorOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RuleEvaluatorOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RuleEvaluatorOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RuleSet: Represents a set of rules from a
@@ -3144,9 +3144,9 @@ type GoogleCloudContentwarehouseV1RuleSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RuleSet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RuleSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RuleSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineMetadata: Metadata message of
@@ -3182,9 +3182,9 @@ type GoogleCloudContentwarehouseV1RunPipelineMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineMetadataExportToCdwPipelineMetadata:
@@ -3210,9 +3210,9 @@ type GoogleCloudContentwarehouseV1RunPipelineMetadataExportToCdwPipelineMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineMetadataExportToCdwPipelineMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineMetadataExportToCdwPipelineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineMetadataExportToCdwPipelineMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineMetadataGcsIngestPipelineMetadata:
@@ -3234,9 +3234,9 @@ type GoogleCloudContentwarehouseV1RunPipelineMetadataGcsIngestPipelineMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineMetadataGcsIngestPipelineMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineMetadataGcsIngestPipelineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineMetadataGcsIngestPipelineMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineMetadataIndividualDocumentStatus:
@@ -3259,9 +3259,9 @@ type GoogleCloudContentwarehouseV1RunPipelineMetadataIndividualDocumentStatus st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineMetadataIndividualDocumentStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineMetadataIndividualDocumentStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineMetadataIndividualDocumentStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineMetadataProcessWithDocAiPipelineMetad
@@ -3285,9 +3285,9 @@ type GoogleCloudContentwarehouseV1RunPipelineMetadataProcessWithDocAiPipelineMet
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineMetadataProcessWithDocAiPipelineMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineMetadataProcessWithDocAiPipelineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineMetadataProcessWithDocAiPipelineMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1RunPipelineRequest: Request message for
@@ -3321,9 +3321,9 @@ type GoogleCloudContentwarehouseV1RunPipelineRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1RunPipelineRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1RunPipelineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1RunPipelineRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SearchDocumentsRequest: Request message for
@@ -3417,9 +3417,9 @@ type GoogleCloudContentwarehouseV1SearchDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SearchDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SearchDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SearchDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SearchDocumentsResponse: Response message for
@@ -3463,9 +3463,9 @@ type GoogleCloudContentwarehouseV1SearchDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SearchDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SearchDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SearchDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument:
@@ -3502,9 +3502,9 @@ type GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SetAclRequest: Request message for
@@ -3542,9 +3542,9 @@ type GoogleCloudContentwarehouseV1SetAclRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SetAclRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SetAclRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SetAclRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SetAclResponse: Response message for
@@ -3571,9 +3571,9 @@ type GoogleCloudContentwarehouseV1SetAclResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SetAclResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SetAclResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SetAclResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SynonymSet: Represents a list of synonyms for a
@@ -3607,9 +3607,9 @@ type GoogleCloudContentwarehouseV1SynonymSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SynonymSet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SynonymSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SynonymSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1SynonymSetSynonym: Represents a list of words
@@ -3630,9 +3630,9 @@ type GoogleCloudContentwarehouseV1SynonymSetSynonym struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1SynonymSetSynonym) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1SynonymSetSynonym) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1SynonymSetSynonym
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1TextArray: String/text values.
@@ -3652,9 +3652,9 @@ type GoogleCloudContentwarehouseV1TextArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1TextArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1TextArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1TextArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1TextTypeOptions: Configurations for a text
@@ -3688,9 +3688,9 @@ type GoogleCloudContentwarehouseV1TimeFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1TimeFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1TimeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1TimeFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1TimestampArray: Timestamp values.
@@ -3710,9 +3710,9 @@ type GoogleCloudContentwarehouseV1TimestampArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1TimestampArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1TimestampArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1TimestampArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1TimestampTypeOptions: Configurations for a
@@ -3741,9 +3741,9 @@ type GoogleCloudContentwarehouseV1TimestampValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1TimestampValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1TimestampValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1TimestampValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UpdateDocumentMetadata: Metadata object for
@@ -3779,9 +3779,9 @@ type GoogleCloudContentwarehouseV1UpdateDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UpdateDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UpdateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UpdateDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UpdateDocumentResponse: Response message for
@@ -3812,9 +3812,9 @@ type GoogleCloudContentwarehouseV1UpdateDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UpdateDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UpdateDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UpdateDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UpdateDocumentSchemaRequest: Request message
@@ -3835,9 +3835,9 @@ type GoogleCloudContentwarehouseV1UpdateDocumentSchemaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UpdateDocumentSchemaRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UpdateDocumentSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UpdateDocumentSchemaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UpdateOptions: Options for Update operations.
@@ -3879,9 +3879,9 @@ type GoogleCloudContentwarehouseV1UpdateOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UpdateOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UpdateOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UpdateOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UpdateRuleSetRequest: Request message for
@@ -3902,9 +3902,9 @@ type GoogleCloudContentwarehouseV1UpdateRuleSetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UpdateRuleSetRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UpdateRuleSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UpdateRuleSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1UserInfo: The user information.
@@ -3930,9 +3930,9 @@ type GoogleCloudContentwarehouseV1UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1UserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1Value: `Value` represents a dynamically typed
@@ -3967,9 +3967,9 @@ type GoogleCloudContentwarehouseV1Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1Value) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContentwarehouseV1Value) UnmarshalJSON(data []byte) error {
@@ -4006,9 +4006,9 @@ type GoogleCloudContentwarehouseV1WeightedSchemaProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1WeightedSchemaProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1WeightedSchemaProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1WeightedSchemaProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1beta1CreateDocumentMetadata: Metadata object
@@ -4043,9 +4043,9 @@ type GoogleCloudContentwarehouseV1beta1InitializeProjectResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContentwarehouseV1beta1InitializeProjectResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContentwarehouseV1beta1InitializeProjectResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContentwarehouseV1beta1InitializeProjectResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContentwarehouseV1beta1UpdateDocumentMetadata: Metadata object
@@ -4086,9 +4086,9 @@ type GoogleCloudDocumentaiV1Barcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1Barcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1Barcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1Barcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1BoundingPoly: A bounding polygon for the detected
@@ -4111,9 +4111,9 @@ type GoogleCloudDocumentaiV1BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1BoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1BoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1Document: Document represents the canonical document
@@ -4169,9 +4169,9 @@ type GoogleCloudDocumentaiV1Document struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1Document) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentEntity: An entity that could be a phrase in
@@ -4222,9 +4222,9 @@ type GoogleCloudDocumentaiV1DocumentEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentEntity) UnmarshalJSON(data []byte) error {
@@ -4285,9 +4285,9 @@ type GoogleCloudDocumentaiV1DocumentEntityNormalizedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentEntityNormalizedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
@@ -4326,9 +4326,9 @@ type GoogleCloudDocumentaiV1DocumentEntityRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentEntityRelation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentEntityRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPage: A page in a Document.
@@ -4389,9 +4389,9 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageAnchor: Referencing the visual context of
@@ -4414,9 +4414,9 @@ type GoogleCloudDocumentaiV1DocumentPageAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageAnchorPageRef: Represents a weak
@@ -4462,9 +4462,9 @@ type GoogleCloudDocumentaiV1DocumentPageAnchorPageRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageAnchorPageRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
@@ -4503,9 +4503,9 @@ type GoogleCloudDocumentaiV1DocumentPageBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageDetectedBarcode: A detected barcode.
@@ -4527,9 +4527,9 @@ type GoogleCloudDocumentaiV1DocumentPageDetectedBarcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageDetectedBarcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageDetectedLanguage: Detected language for a
@@ -4554,9 +4554,9 @@ type GoogleCloudDocumentaiV1DocumentPageDetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageDetectedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageDetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -4594,9 +4594,9 @@ type GoogleCloudDocumentaiV1DocumentPageDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageDimension) UnmarshalJSON(data []byte) error {
@@ -4656,9 +4656,9 @@ type GoogleCloudDocumentaiV1DocumentPageFormField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageFormField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageFormField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageFormField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageImage: Rendered image contents for this
@@ -4687,9 +4687,9 @@ type GoogleCloudDocumentaiV1DocumentPageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageImageQualityScores: Image quality scores
@@ -4713,9 +4713,9 @@ type GoogleCloudDocumentaiV1DocumentPageImageQualityScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
@@ -4757,9 +4757,9 @@ type GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
@@ -4812,9 +4812,9 @@ type GoogleCloudDocumentaiV1DocumentPageLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageLayout) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageLayout) UnmarshalJSON(data []byte) error {
@@ -4854,9 +4854,9 @@ type GoogleCloudDocumentaiV1DocumentPageLine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageLine) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageLine) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageLine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageMatrix: Representation for transformation
@@ -4887,9 +4887,9 @@ type GoogleCloudDocumentaiV1DocumentPageMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageParagraph: A collection of lines that a
@@ -4914,9 +4914,9 @@ type GoogleCloudDocumentaiV1DocumentPageParagraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageParagraph
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageSymbol: A detected symbol.
@@ -4938,9 +4938,9 @@ type GoogleCloudDocumentaiV1DocumentPageSymbol struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageSymbol
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageTable: A table representation similar to
@@ -4969,9 +4969,9 @@ type GoogleCloudDocumentaiV1DocumentPageTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageTableTableCell: A cell representation
@@ -4998,9 +4998,9 @@ type GoogleCloudDocumentaiV1DocumentPageTableTableCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageTableTableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageTableTableRow: A row of table cells.
@@ -5020,9 +5020,9 @@ type GoogleCloudDocumentaiV1DocumentPageTableTableRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageTableTableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageToken: A detected token.
@@ -5050,9 +5050,9 @@ type GoogleCloudDocumentaiV1DocumentPageToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageToken) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageTokenDetectedBreak: Detected break at the
@@ -5080,9 +5080,9 @@ type GoogleCloudDocumentaiV1DocumentPageTokenDetectedBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageTokenDetectedBreak
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo: Font and other text style
@@ -5138,9 +5138,9 @@ type GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentPageTokenStyleInfo) UnmarshalJSON(data []byte) error {
@@ -5181,9 +5181,9 @@ type GoogleCloudDocumentaiV1DocumentPageVisualElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageVisualElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentProvenance: Structure to identify provenance
@@ -5227,9 +5227,9 @@ type GoogleCloudDocumentaiV1DocumentProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentProvenance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentProvenanceParent: The parent element the
@@ -5256,9 +5256,9 @@ type GoogleCloudDocumentaiV1DocumentProvenanceParent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentProvenanceParent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentRevision: Contains past or forward revisions
@@ -5299,9 +5299,9 @@ type GoogleCloudDocumentaiV1DocumentRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentRevisionHumanReview: Human Review information
@@ -5325,9 +5325,9 @@ type GoogleCloudDocumentaiV1DocumentRevisionHumanReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentRevisionHumanReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentShardInfo: For a large document, sharding may
@@ -5354,9 +5354,9 @@ type GoogleCloudDocumentaiV1DocumentShardInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentShardInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentShardInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentShardInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentStyle: Annotation for common text style
@@ -5398,9 +5398,9 @@ type GoogleCloudDocumentaiV1DocumentStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentStyle) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentStyleFontSize: Font size with unit.
@@ -5423,9 +5423,9 @@ type GoogleCloudDocumentaiV1DocumentStyleFontSize struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentStyleFontSize
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1DocumentStyleFontSize) UnmarshalJSON(data []byte) error {
@@ -5463,9 +5463,9 @@ type GoogleCloudDocumentaiV1DocumentTextAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentTextAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentTextAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentTextAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentTextAnchorTextSegment: A text segment in the
@@ -5490,9 +5490,9 @@ type GoogleCloudDocumentaiV1DocumentTextAnchorTextSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentTextAnchorTextSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DocumentTextChange: This message is used for text
@@ -5521,9 +5521,9 @@ type GoogleCloudDocumentaiV1DocumentTextChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DocumentTextChange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DocumentTextChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentTextChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1NormalizedVertex: A vertex represents a 2D point in
@@ -5547,9 +5547,9 @@ type GoogleCloudDocumentaiV1NormalizedVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1NormalizedVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1NormalizedVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -5588,9 +5588,9 @@ type GoogleCloudDocumentaiV1Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1Vertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1Vertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -5629,9 +5629,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -5664,9 +5664,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -5763,9 +5763,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -5852,9 +5852,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -5899,9 +5899,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -5943,9 +5943,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
@@ -6026,9 +6026,9 @@ type GoogleTypeColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeColor) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeColor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeColor) UnmarshalJSON(data []byte) error {
@@ -6084,9 +6084,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDateTime: Represents civil time (or occasionally physical time).
@@ -6147,9 +6147,9 @@ type GoogleTypeDateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -6195,9 +6195,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeInterval: Represents a time interval, encoded as a Timestamp start
@@ -6226,9 +6226,9 @@ type GoogleTypeInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeInterval) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -6257,9 +6257,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypePostalAddress: Represents a postal address, e.g. for postal
@@ -6356,9 +6356,9 @@ type GoogleTypePostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypePostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
@@ -6381,9 +6381,9 @@ type GoogleTypeTimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsFetchAclCall struct {

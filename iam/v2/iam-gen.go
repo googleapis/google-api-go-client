@@ -205,9 +205,9 @@ type CloudControl2SharedOperationsReconciliationOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudControl2SharedOperationsReconciliationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudCommonOperationMetadata: Represents the metadata of the
@@ -244,9 +244,9 @@ type GoogleCloudCommonOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudCommonOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudCommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudCommonOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamAdminV1AuditData: Audit log information specific to Cloud IAM admin
@@ -268,9 +268,9 @@ type GoogleIamAdminV1AuditData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamAdminV1AuditData) MarshalJSON() ([]byte, error) {
+func (s GoogleIamAdminV1AuditData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamAdminV1AuditData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamAdminV1AuditDataPermissionDelta: A PermissionDelta message to
@@ -293,9 +293,9 @@ type GoogleIamAdminV1AuditDataPermissionDelta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamAdminV1AuditDataPermissionDelta) MarshalJSON() ([]byte, error) {
+func (s GoogleIamAdminV1AuditDataPermissionDelta) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamAdminV1AuditDataPermissionDelta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1BindingDelta: One delta entry for Binding. Each individual change
@@ -329,9 +329,9 @@ type GoogleIamV1BindingDelta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1BindingDelta) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1BindingDelta) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1BindingDelta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1LoggingAuditData: Audit log information specific to Cloud IAM.
@@ -354,9 +354,9 @@ type GoogleIamV1LoggingAuditData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1LoggingAuditData) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1LoggingAuditData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1LoggingAuditData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1PolicyDelta: The difference delta between two policies.
@@ -376,9 +376,9 @@ type GoogleIamV1PolicyDelta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1PolicyDelta) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1PolicyDelta) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1PolicyDelta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1betaWorkloadIdentityPoolOperationMetadata: Metadata for
@@ -489,9 +489,9 @@ type GoogleIamV2DenyRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV2DenyRule) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV2DenyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV2DenyRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV2ListPoliciesResponse: Response message for `ListPolicies`.
@@ -518,9 +518,9 @@ type GoogleIamV2ListPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV2ListPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV2ListPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV2ListPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV2Policy: Data for an IAM policy.
@@ -578,9 +578,9 @@ type GoogleIamV2Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV2Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV2Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV2Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV2PolicyOperationMetadata: Metadata for long-running `Policy`
@@ -601,9 +601,9 @@ type GoogleIamV2PolicyOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV2PolicyOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV2PolicyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV2PolicyOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV2PolicyRule: A single rule in a `Policy`.
@@ -626,9 +626,9 @@ type GoogleIamV2PolicyRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV2PolicyRule) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV2PolicyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV2PolicyRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV3OperationMetadata: Represents the metadata of the long-running
@@ -664,9 +664,9 @@ type GoogleIamV3OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV3OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV3OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV3OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV3alphaOperationMetadata: Represents the metadata of the
@@ -702,9 +702,9 @@ type GoogleIamV3alphaOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV3alphaOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV3alphaOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV3alphaOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV3betaOperationMetadata: Represents the metadata of the
@@ -740,9 +740,9 @@ type GoogleIamV3betaOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV3betaOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV3betaOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV3betaOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV3mainOperationMetadata: Represents the metadata of the
@@ -778,9 +778,9 @@ type GoogleIamV3mainOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV3mainOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV3mainOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV3mainOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -825,9 +825,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -859,9 +859,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -907,9 +907,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PoliciesCreatePolicyCall struct {

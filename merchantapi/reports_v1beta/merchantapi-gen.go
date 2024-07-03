@@ -267,9 +267,9 @@ type BestSellersBrandView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BestSellersBrandView) MarshalJSON() ([]byte, error) {
+func (s BestSellersBrandView) MarshalJSON() ([]byte, error) {
 	type NoMethod BestSellersBrandView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BestSellersProductClusterView: Fields available for query in
@@ -420,9 +420,9 @@ type BestSellersProductClusterView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BestSellersProductClusterView) MarshalJSON() ([]byte, error) {
+func (s BestSellersProductClusterView) MarshalJSON() ([]byte, error) {
 	type NoMethod BestSellersProductClusterView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompetitiveVisibilityBenchmarkView: Fields available for query in
@@ -478,9 +478,9 @@ type CompetitiveVisibilityBenchmarkView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompetitiveVisibilityBenchmarkView) MarshalJSON() ([]byte, error) {
+func (s CompetitiveVisibilityBenchmarkView) MarshalJSON() ([]byte, error) {
 	type NoMethod CompetitiveVisibilityBenchmarkView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CompetitiveVisibilityBenchmarkView) UnmarshalJSON(data []byte) error {
@@ -576,9 +576,9 @@ type CompetitiveVisibilityCompetitorView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompetitiveVisibilityCompetitorView) MarshalJSON() ([]byte, error) {
+func (s CompetitiveVisibilityCompetitorView) MarshalJSON() ([]byte, error) {
 	type NoMethod CompetitiveVisibilityCompetitorView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CompetitiveVisibilityCompetitorView) UnmarshalJSON(data []byte) error {
@@ -670,9 +670,9 @@ type CompetitiveVisibilityTopMerchantView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompetitiveVisibilityTopMerchantView) MarshalJSON() ([]byte, error) {
+func (s CompetitiveVisibilityTopMerchantView) MarshalJSON() ([]byte, error) {
 	type NoMethod CompetitiveVisibilityTopMerchantView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CompetitiveVisibilityTopMerchantView) UnmarshalJSON(data []byte) error {
@@ -726,9 +726,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IssueSeverityPerReportingContext: Issue severity per reporting context.
@@ -785,9 +785,9 @@ type IssueSeverityPerReportingContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssueSeverityPerReportingContext) MarshalJSON() ([]byte, error) {
+func (s IssueSeverityPerReportingContext) MarshalJSON() ([]byte, error) {
 	type NoMethod IssueSeverityPerReportingContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemIssue: Item issue associated with the product.
@@ -819,9 +819,9 @@ type ItemIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ItemIssue) MarshalJSON() ([]byte, error) {
+func (s ItemIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemIssueSeverity: How the issue affects the serving of the product.
@@ -852,9 +852,9 @@ type ItemIssueSeverity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ItemIssueSeverity) MarshalJSON() ([]byte, error) {
+func (s ItemIssueSeverity) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemIssueSeverity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemIssueType: Issue type.
@@ -877,9 +877,9 @@ type ItemIssueType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ItemIssueType) MarshalJSON() ([]byte, error) {
+func (s ItemIssueType) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemIssueType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NonProductPerformanceView: Fields available for query in
@@ -920,9 +920,9 @@ type NonProductPerformanceView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NonProductPerformanceView) MarshalJSON() ([]byte, error) {
+func (s NonProductPerformanceView) MarshalJSON() ([]byte, error) {
 	type NoMethod NonProductPerformanceView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NonProductPerformanceView) UnmarshalJSON(data []byte) error {
@@ -961,9 +961,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PriceCompetitivenessProductView: Fields available for query in
@@ -1032,9 +1032,9 @@ type PriceCompetitivenessProductView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PriceCompetitivenessProductView) MarshalJSON() ([]byte, error) {
+func (s PriceCompetitivenessProductView) MarshalJSON() ([]byte, error) {
 	type NoMethod PriceCompetitivenessProductView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PriceInsightsProductView: Fields available for query in
@@ -1120,9 +1120,9 @@ type PriceInsightsProductView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PriceInsightsProductView) MarshalJSON() ([]byte, error) {
+func (s PriceInsightsProductView) MarshalJSON() ([]byte, error) {
 	type NoMethod PriceInsightsProductView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PriceInsightsProductView) UnmarshalJSON(data []byte) error {
@@ -1198,9 +1198,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPerformanceView: Fields available for query in
@@ -1319,9 +1319,9 @@ type ProductPerformanceView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPerformanceView) MarshalJSON() ([]byte, error) {
+func (s ProductPerformanceView) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPerformanceView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ProductPerformanceView) UnmarshalJSON(data []byte) error {
@@ -1386,9 +1386,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductView: Fields available for query in `product_view` table. Products in
@@ -1525,9 +1525,9 @@ type ProductView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductView) MarshalJSON() ([]byte, error) {
+func (s ProductView) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRow: Result row returned from the search query. Only the message
@@ -1577,9 +1577,9 @@ type ReportRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRow) MarshalJSON() ([]byte, error) {
+func (s ReportRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchRequest: Request message for the `ReportService.Search` method.
@@ -1609,9 +1609,9 @@ type SearchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchRequest) MarshalJSON() ([]byte, error) {
+func (s SearchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchResponse: Response message for the `ReportService.Search` method.
@@ -1637,9 +1637,9 @@ type SearchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchResponse) MarshalJSON() ([]byte, error) {
+func (s SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsReportsSearchCall struct {

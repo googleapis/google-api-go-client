@@ -238,9 +238,9 @@ type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1AccountReport) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1AccountReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1AccountReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsHomeservicesLocalservicesV1AccountReport) UnmarshalJSON(data []byte) error {
@@ -284,9 +284,9 @@ type GoogleAdsHomeservicesLocalservicesV1AggregatorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1AggregatorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1AggregatorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1AggregatorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsHomeservicesLocalservicesV1BookingLead: Container for booking lead
@@ -316,9 +316,9 @@ type GoogleAdsHomeservicesLocalservicesV1BookingLead struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1BookingLead) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1BookingLead) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1BookingLead
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport: A Detailed Lead
@@ -384,9 +384,9 @@ type GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport) UnmarshalJSON(data []byte) error {
@@ -427,9 +427,9 @@ type GoogleAdsHomeservicesLocalservicesV1MessageLead struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1MessageLead) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1MessageLead) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1MessageLead
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsHomeservicesLocalservicesV1PhoneLead: Container for phone lead
@@ -456,9 +456,9 @@ type GoogleAdsHomeservicesLocalservicesV1PhoneLead struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1PhoneLead) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1PhoneLead) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1PhoneLead
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse: A page of
@@ -489,9 +489,9 @@ type GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse: A
@@ -523,9 +523,9 @@ type GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
@@ -548,9 +548,9 @@ type GoogleTypeTimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountReportsSearchCall struct {

@@ -209,9 +209,9 @@ type AttributionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributionSettings) MarshalJSON() ([]byte, error) {
+func (s AttributionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConversionSource: Represents a conversion source owned by a Merchant
@@ -268,9 +268,9 @@ type ConversionSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConversionSource) MarshalJSON() ([]byte, error) {
+func (s ConversionSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversionSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConversionType: Message representing a types of conversion events
@@ -294,9 +294,9 @@ type ConversionType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConversionType) MarshalJSON() ([]byte, error) {
+func (s ConversionType) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversionType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -334,9 +334,9 @@ type GoogleAnalyticsLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAnalyticsLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAnalyticsLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListConversionSourcesResponse: Response message for the
@@ -362,9 +362,9 @@ type ListConversionSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListConversionSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListConversionSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConversionSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MerchantCenterDestination: "Merchant Center Destination" sources can be used
@@ -397,9 +397,9 @@ type MerchantCenterDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MerchantCenterDestination) MarshalJSON() ([]byte, error) {
+func (s MerchantCenterDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod MerchantCenterDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -457,9 +457,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -506,9 +506,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteConversionSourceRequest: Request message for the

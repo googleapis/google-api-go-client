@@ -323,9 +323,9 @@ type GoogleFirebaseAppdistroV1Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1Release) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1Release) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ReleaseNotes: Notes that belong to a release.
@@ -345,9 +345,9 @@ type GoogleFirebaseAppdistroV1ReleaseNotes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ReleaseNotes) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ReleaseNotes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ReleaseNotes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1UploadReleaseMetadata: Operation metadata for
@@ -382,9 +382,9 @@ type GoogleFirebaseAppdistroV1UploadReleaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1UploadReleaseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1UploadReleaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1UploadReleaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaAabCertificate: App bundle test certificate
@@ -408,9 +408,9 @@ type GoogleFirebaseAppdistroV1alphaAabCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaAabCertificate) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaAabCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAabCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaAiInstructions: Instructions for AI driven
@@ -433,9 +433,9 @@ type GoogleFirebaseAppdistroV1alphaAiInstructions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaAiInstructions) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaAiInstructions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAiInstructions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaAiInstructionsStep: A step to be accomplished
@@ -458,9 +458,9 @@ type GoogleFirebaseAppdistroV1alphaAiInstructionsStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaAiInstructionsStep) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaAiInstructionsStep) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAiInstructionsStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaApp struct {
@@ -509,9 +509,9 @@ type GoogleFirebaseAppdistroV1alphaApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaApp) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaAppCrash: An app crash that occurred during an
@@ -534,9 +534,9 @@ type GoogleFirebaseAppdistroV1alphaAppCrash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaAppCrash) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaAppCrash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAppCrash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
@@ -555,9 +555,9 @@ type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse struct {
@@ -640,9 +640,9 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceExecution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest struct {
@@ -672,9 +672,9 @@ type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse struct {
@@ -703,9 +703,9 @@ type GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse: Response containing
@@ -729,9 +729,9 @@ type GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
@@ -792,9 +792,9 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaJwt struct {
@@ -815,9 +815,9 @@ type GoogleFirebaseAppdistroV1alphaJwt struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaJwt) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaJwt) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaJwt
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse: The response message
@@ -845,9 +845,9 @@ type GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaLoginCredential: Login credential for
@@ -874,9 +874,9 @@ type GoogleFirebaseAppdistroV1alphaLoginCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaLoginCredential) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaLoginCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaLoginCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints: Hints to the
@@ -905,9 +905,9 @@ type GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaProvisionAppResponse struct {
@@ -953,9 +953,9 @@ type GoogleFirebaseAppdistroV1alphaRelease struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaRelease) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaRelease) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRelease
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaReleaseNotes struct {
@@ -973,9 +973,9 @@ type GoogleFirebaseAppdistroV1alphaReleaseNotes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaReleaseNotes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaReleaseTest: The results of running an
@@ -1011,9 +1011,9 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaReleaseTest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaReleaseTest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaReleaseTest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaRoboCrawler: Configuration for Robo crawler
@@ -1035,9 +1035,9 @@ type GoogleFirebaseAppdistroV1alphaRoboCrawler struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaRoboCrawler) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaRoboCrawler) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRoboCrawler
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaRoboStats: Statistics collected during a Robo
@@ -1065,9 +1065,9 @@ type GoogleFirebaseAppdistroV1alphaRoboStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaRoboStats) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaRoboStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRoboStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaTestConfig: Configuration for automated tests
@@ -1095,9 +1095,9 @@ type GoogleFirebaseAppdistroV1alphaTestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaTestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaTestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaTestDevice: A device on which automated tests
@@ -1125,9 +1125,9 @@ type GoogleFirebaseAppdistroV1alphaTestDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaTestDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaTestDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTestDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaTesterUdid: The UDIDs of a tester's iOS device
@@ -1151,9 +1151,9 @@ type GoogleFirebaseAppdistroV1alphaTesterUdid struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1alphaTesterUdid) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1alphaTesterUdid) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTesterUdid
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppsGetCall struct {

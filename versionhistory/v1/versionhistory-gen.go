@@ -222,9 +222,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -253,9 +253,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListChannelsResponse: Response message for ListChannels.
@@ -281,9 +281,9 @@ type ListChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPlatformsResponse: Response message for ListPlatforms.
@@ -309,9 +309,9 @@ type ListPlatformsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPlatformsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPlatformsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlatformsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReleasesResponse: Response message for ListReleases.
@@ -337,9 +337,9 @@ type ListReleasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReleasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVersionsResponse: Response message for ListVersions.
@@ -365,9 +365,9 @@ type ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Platform: Each Platform is owned by a Product and owns a collection of
@@ -410,9 +410,9 @@ type Platform struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Platform) MarshalJSON() ([]byte, error) {
+func (s Platform) MarshalJSON() ([]byte, error) {
 	type NoMethod Platform
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Release: A Release is owned by a Version. A Release contains information
@@ -453,9 +453,9 @@ type Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Release) MarshalJSON() ([]byte, error) {
+func (s Release) MarshalJSON() ([]byte, error) {
 	type NoMethod Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Release) UnmarshalJSON(data []byte) error {
@@ -494,9 +494,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlatformsListCall struct {

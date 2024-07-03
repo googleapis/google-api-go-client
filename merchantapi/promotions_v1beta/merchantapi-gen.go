@@ -411,9 +411,9 @@ type Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attributes) MarshalJSON() ([]byte, error) {
+func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomAttribute: A message that represents custom attributes. Exactly one of
@@ -440,9 +440,9 @@ type CustomAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationStatus: The status for the specified destination.
@@ -505,9 +505,9 @@ type DestinationStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
+func (s DestinationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertPromotionRequest: Request message for the `InsertPromotion` method.
@@ -531,9 +531,9 @@ type InsertPromotionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertPromotionRequest) MarshalJSON() ([]byte, error) {
+func (s InsertPromotionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertPromotionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -562,9 +562,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemLevelIssue: The issue associated with the promotion.
@@ -642,9 +642,9 @@ type ItemLevelIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ItemLevelIssue) MarshalJSON() ([]byte, error) {
+func (s ItemLevelIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemLevelIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPromotionsResponse: Response message for the `ListPromotions` method.
@@ -670,9 +670,9 @@ type ListPromotionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPromotionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPromotionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPromotionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: The price represented as a number and currency.
@@ -697,9 +697,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -757,9 +757,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -806,9 +806,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Promotion: Represents a promotion. See the following articles for more
@@ -889,9 +889,9 @@ type Promotion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Promotion) MarshalJSON() ([]byte, error) {
+func (s Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod Promotion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PromotionStatus: The status of the promotion.
@@ -924,9 +924,9 @@ type PromotionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PromotionStatus) MarshalJSON() ([]byte, error) {
+func (s PromotionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod PromotionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsPromotionsGetCall struct {

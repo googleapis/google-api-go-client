@@ -587,9 +587,9 @@ type AbuseReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AbuseReport) MarshalJSON() ([]byte, error) {
+func (s AbuseReport) MarshalJSON() ([]byte, error) {
 	type NoMethod AbuseReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AbuseType struct {
@@ -607,9 +607,9 @@ type AbuseType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AbuseType) MarshalJSON() ([]byte, error) {
+func (s AbuseType) MarshalJSON() ([]byte, error) {
 	type NoMethod AbuseType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessPolicy: Rights management policy for YouTube resources.
@@ -633,9 +633,9 @@ type AccessPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
+func (s AccessPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Activity: An *activity* resource contains information about an action that a
@@ -674,9 +674,9 @@ type Activity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Activity) MarshalJSON() ([]byte, error) {
+func (s Activity) MarshalJSON() ([]byte, error) {
 	type NoMethod Activity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetails: Details about the content of an activity: the video
@@ -736,9 +736,9 @@ type ActivityContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetails) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsBulletin: Details about a channel bulletin post.
@@ -759,9 +759,9 @@ type ActivityContentDetailsBulletin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsBulletin) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsBulletin) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsBulletin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsChannelItem: Details about a resource which was added
@@ -783,9 +783,9 @@ type ActivityContentDetailsChannelItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsChannelItem) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsChannelItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsChannelItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsComment: Information about a resource that received a
@@ -807,9 +807,9 @@ type ActivityContentDetailsComment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsComment) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsComment) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsComment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsFavorite: Information about a video that was marked as
@@ -831,9 +831,9 @@ type ActivityContentDetailsFavorite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsFavorite) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsFavorite) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsFavorite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsLike: Information about a resource that received a
@@ -855,9 +855,9 @@ type ActivityContentDetailsLike struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsLike) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsLike) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsLike
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsPlaylistItem: Information about a new playlist item.
@@ -882,9 +882,9 @@ type ActivityContentDetailsPlaylistItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsPlaylistItem) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsPlaylistItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsPlaylistItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsPromotedItem: Details about a resource which is being
@@ -935,9 +935,9 @@ type ActivityContentDetailsPromotedItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsPromotedItem) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsPromotedItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsPromotedItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsRecommendation: Information that identifies the
@@ -970,9 +970,9 @@ type ActivityContentDetailsRecommendation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsRecommendation) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsRecommendation) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsRecommendation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsSocial: Details about a social network post.
@@ -1007,9 +1007,9 @@ type ActivityContentDetailsSocial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsSocial) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsSocial) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsSocial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsSubscription: Information about a channel that a user
@@ -1031,9 +1031,9 @@ type ActivityContentDetailsSubscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsSubscription) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsSubscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityContentDetailsUpload: Information about the uploaded video.
@@ -1053,9 +1053,9 @@ type ActivityContentDetailsUpload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityContentDetailsUpload) MarshalJSON() ([]byte, error) {
+func (s ActivityContentDetailsUpload) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityContentDetailsUpload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityListResponse struct {
@@ -1094,9 +1094,9 @@ type ActivityListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityListResponse) MarshalJSON() ([]byte, error) {
+func (s ActivityListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivitySnippet: Basic details about an activity, including title,
@@ -1155,9 +1155,9 @@ type ActivitySnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivitySnippet) MarshalJSON() ([]byte, error) {
+func (s ActivitySnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivitySnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Caption: A *caption* resource represents a YouTube caption track. A caption
@@ -1188,9 +1188,9 @@ type Caption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Caption) MarshalJSON() ([]byte, error) {
+func (s Caption) MarshalJSON() ([]byte, error) {
 	type NoMethod Caption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CaptionListResponse struct {
@@ -1221,9 +1221,9 @@ type CaptionListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CaptionListResponse) MarshalJSON() ([]byte, error) {
+func (s CaptionListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CaptionListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CaptionSnippet: Basic details about a caption track, such as its language
@@ -1305,9 +1305,9 @@ type CaptionSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CaptionSnippet) MarshalJSON() ([]byte, error) {
+func (s CaptionSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod CaptionSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CdnSettings: Brief description of the live stream cdn settings.
@@ -1357,9 +1357,9 @@ type CdnSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CdnSettings) MarshalJSON() ([]byte, error) {
+func (s CdnSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CdnSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A *channel* resource contains information about a YouTube channel.
@@ -1415,9 +1415,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelAuditDetails: The auditDetails object encapsulates channel data that
@@ -1446,9 +1446,9 @@ type ChannelAuditDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelAuditDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelAuditDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelAuditDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelBannerResource: A channel banner returned as the response to a
@@ -1476,9 +1476,9 @@ type ChannelBannerResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelBannerResource) MarshalJSON() ([]byte, error) {
+func (s ChannelBannerResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelBannerResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelBrandingSettings: Branding properties of a YouTube channel.
@@ -1504,9 +1504,9 @@ type ChannelBrandingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelBrandingSettings) MarshalJSON() ([]byte, error) {
+func (s ChannelBrandingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelBrandingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelContentDetails: Details about the content of a channel.
@@ -1525,9 +1525,9 @@ type ChannelContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelContentDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChannelContentDetailsRelatedPlaylists struct {
@@ -1564,9 +1564,9 @@ type ChannelContentDetailsRelatedPlaylists struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelContentDetailsRelatedPlaylists) MarshalJSON() ([]byte, error) {
+func (s ChannelContentDetailsRelatedPlaylists) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelContentDetailsRelatedPlaylists
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelContentOwnerDetails: The contentOwnerDetails object encapsulates
@@ -1590,9 +1590,9 @@ type ChannelContentOwnerDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelContentOwnerDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelContentOwnerDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelContentOwnerDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelConversionPing: Pings that the app shall fire (authenticated by
@@ -1627,9 +1627,9 @@ type ChannelConversionPing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelConversionPing) MarshalJSON() ([]byte, error) {
+func (s ChannelConversionPing) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelConversionPing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelConversionPings: The conversionPings object encapsulates information
@@ -1652,9 +1652,9 @@ type ChannelConversionPings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelConversionPings) MarshalJSON() ([]byte, error) {
+func (s ChannelConversionPings) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelConversionPings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChannelListResponse struct {
@@ -1693,9 +1693,9 @@ type ChannelListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelListResponse) MarshalJSON() ([]byte, error) {
+func (s ChannelListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelLocalization: Channel localization setting
@@ -1717,9 +1717,9 @@ type ChannelLocalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelLocalization) MarshalJSON() ([]byte, error) {
+func (s ChannelLocalization) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelLocalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChannelProfileDetails struct {
@@ -1744,9 +1744,9 @@ type ChannelProfileDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelProfileDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelProfileDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelProfileDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChannelSection struct {
@@ -1785,9 +1785,9 @@ type ChannelSection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSection) MarshalJSON() ([]byte, error) {
+func (s ChannelSection) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSectionContentDetails: Details about a channelsection, including
@@ -1811,9 +1811,9 @@ type ChannelSectionContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSectionContentDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelSectionContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSectionContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChannelSectionListResponse struct {
@@ -1844,9 +1844,9 @@ type ChannelSectionListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSectionListResponse) MarshalJSON() ([]byte, error) {
+func (s ChannelSectionListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSectionListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSectionLocalization: ChannelSection localization setting
@@ -1866,9 +1866,9 @@ type ChannelSectionLocalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSectionLocalization) MarshalJSON() ([]byte, error) {
+func (s ChannelSectionLocalization) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSectionLocalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSectionSnippet: Basic details about a channel section, including
@@ -1928,9 +1928,9 @@ type ChannelSectionSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSectionSnippet) MarshalJSON() ([]byte, error) {
+func (s ChannelSectionSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSectionSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSectionTargeting: ChannelSection targeting setting.
@@ -1954,9 +1954,9 @@ type ChannelSectionTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSectionTargeting) MarshalJSON() ([]byte, error) {
+func (s ChannelSectionTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSectionTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSettings: Branding properties for the channel view.
@@ -2004,9 +2004,9 @@ type ChannelSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSettings) MarshalJSON() ([]byte, error) {
+func (s ChannelSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelSnippet: Basic details about a channel, including title, description
@@ -2053,9 +2053,9 @@ type ChannelSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelSnippet) MarshalJSON() ([]byte, error) {
+func (s ChannelSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelStatistics: Statistics about a channel: number of subscribers, number
@@ -2085,9 +2085,9 @@ type ChannelStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelStatistics) MarshalJSON() ([]byte, error) {
+func (s ChannelStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelStatus: JSON template for the status part of a channel.
@@ -2126,9 +2126,9 @@ type ChannelStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelStatus) MarshalJSON() ([]byte, error) {
+func (s ChannelStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelToStoreLinkDetails: Information specific to a store on a
@@ -2155,9 +2155,9 @@ type ChannelToStoreLinkDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelToStoreLinkDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelToStoreLinkDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelToStoreLinkDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelToStoreLinkDetailsBillingDetails: Information specific to billing.
@@ -2183,9 +2183,9 @@ type ChannelToStoreLinkDetailsBillingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelToStoreLinkDetailsBillingDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelToStoreLinkDetailsBillingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelToStoreLinkDetailsBillingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelTopicDetails: Freebase topic information related to the channel.
@@ -2209,9 +2209,9 @@ type ChannelTopicDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelTopicDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelTopicDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelTopicDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Comment: A *comment* represents a single YouTube comment.
@@ -2241,9 +2241,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CommentListResponse struct {
@@ -2280,9 +2280,9 @@ type CommentListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentListResponse) MarshalJSON() ([]byte, error) {
+func (s CommentListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentSnippet: Basic details about a comment, such as its author and text.
@@ -2351,9 +2351,9 @@ type CommentSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentSnippet) MarshalJSON() ([]byte, error) {
+func (s CommentSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentSnippetAuthorChannelId: The id of the author's YouTube channel, if
@@ -2373,9 +2373,9 @@ type CommentSnippetAuthorChannelId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentSnippetAuthorChannelId) MarshalJSON() ([]byte, error) {
+func (s CommentSnippetAuthorChannelId) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentSnippetAuthorChannelId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentThread: A *comment thread* represents information that applies to a
@@ -2411,9 +2411,9 @@ type CommentThread struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentThread) MarshalJSON() ([]byte, error) {
+func (s CommentThread) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentThread
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CommentThreadListResponse struct {
@@ -2450,9 +2450,9 @@ type CommentThreadListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentThreadListResponse) MarshalJSON() ([]byte, error) {
+func (s CommentThreadListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentThreadListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentThreadReplies: Comments written in (direct or indirect) reply to the
@@ -2475,9 +2475,9 @@ type CommentThreadReplies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentThreadReplies) MarshalJSON() ([]byte, error) {
+func (s CommentThreadReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentThreadReplies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentThreadSnippet: Basic details about a comment thread.
@@ -2513,9 +2513,9 @@ type CommentThreadSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
+func (s CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentThreadSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are mostly for
@@ -3468,9 +3468,9 @@ type ContentRating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentRating) MarshalJSON() ([]byte, error) {
+func (s ContentRating) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cuepoint: Note that there may be a 5-second end-point resolution issue. For
@@ -3508,9 +3508,9 @@ type Cuepoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cuepoint) MarshalJSON() ([]byte, error) {
+func (s Cuepoint) MarshalJSON() ([]byte, error) {
 	type NoMethod Cuepoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CuepointSchedule: Schedule to insert cuepoints into a broadcast by ads
@@ -3547,9 +3547,9 @@ type CuepointSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CuepointSchedule) MarshalJSON() ([]byte, error) {
+func (s CuepointSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod CuepointSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Entity struct {
@@ -3569,9 +3569,9 @@ type Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entity) MarshalJSON() ([]byte, error) {
+func (s Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoPoint: Geographical coordinates of a point, in WGS84.
@@ -3595,9 +3595,9 @@ type GeoPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoPoint) MarshalJSON() ([]byte, error) {
+func (s GeoPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GeoPoint) UnmarshalJSON(data []byte) error {
@@ -3644,9 +3644,9 @@ type I18nLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nLanguage) MarshalJSON() ([]byte, error) {
+func (s I18nLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type I18nLanguageListResponse struct {
@@ -3678,9 +3678,9 @@ type I18nLanguageListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nLanguageListResponse) MarshalJSON() ([]byte, error) {
+func (s I18nLanguageListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nLanguageListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // I18nLanguageSnippet: Basic details about an i18n language, such as language
@@ -3703,9 +3703,9 @@ type I18nLanguageSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nLanguageSnippet) MarshalJSON() ([]byte, error) {
+func (s I18nLanguageSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nLanguageSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // I18nRegion: A *i18nRegion* resource identifies a region where YouTube is
@@ -3734,9 +3734,9 @@ type I18nRegion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nRegion) MarshalJSON() ([]byte, error) {
+func (s I18nRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nRegion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type I18nRegionListResponse struct {
@@ -3769,9 +3769,9 @@ type I18nRegionListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nRegionListResponse) MarshalJSON() ([]byte, error) {
+func (s I18nRegionListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nRegionListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // I18nRegionSnippet: Basic details about an i18n region, such as region code
@@ -3794,9 +3794,9 @@ type I18nRegionSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nRegionSnippet) MarshalJSON() ([]byte, error) {
+func (s I18nRegionSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nRegionSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageSettings: Branding properties for images associated with the channel.
@@ -3874,9 +3874,9 @@ type ImageSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageSettings) MarshalJSON() ([]byte, error) {
+func (s ImageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngestionInfo: Describes information necessary for ingesting an RTMP, HTTP,
@@ -3915,9 +3915,9 @@ type IngestionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngestionInfo) MarshalJSON() ([]byte, error) {
+func (s IngestionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InvideoBranding: LINT.IfChange Describes an invideo branding.
@@ -3950,9 +3950,9 @@ type InvideoBranding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InvideoBranding) MarshalJSON() ([]byte, error) {
+func (s InvideoBranding) MarshalJSON() ([]byte, error) {
 	type NoMethod InvideoBranding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InvideoPosition: Describes the spatial position of a visual widget inside a
@@ -3986,9 +3986,9 @@ type InvideoPosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InvideoPosition) MarshalJSON() ([]byte, error) {
+func (s InvideoPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod InvideoPosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InvideoTiming: Describes a temporal position of a visual widget inside a
@@ -4024,9 +4024,9 @@ type InvideoTiming struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InvideoTiming) MarshalJSON() ([]byte, error) {
+func (s InvideoTiming) MarshalJSON() ([]byte, error) {
 	type NoMethod InvideoTiming
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LanguageTag struct {
@@ -4044,9 +4044,9 @@ type LanguageTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageTag) MarshalJSON() ([]byte, error) {
+func (s LanguageTag) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LevelDetails struct {
@@ -4065,9 +4065,9 @@ type LevelDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LevelDetails) MarshalJSON() ([]byte, error) {
+func (s LevelDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LevelDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcast: A *liveBroadcast* resource represents an event that will be
@@ -4114,9 +4114,9 @@ type LiveBroadcast struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcast) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcast) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcast
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcastContentDetails: Detailed settings of a broadcast.
@@ -4232,9 +4232,9 @@ type LiveBroadcastContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastContentDetails) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveBroadcastListResponse struct {
@@ -4274,9 +4274,9 @@ type LiveBroadcastListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastListResponse) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcastMonetizationDetails: Monetization settings of a broadcast.
@@ -4295,9 +4295,9 @@ type LiveBroadcastMonetizationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastMonetizationDetails) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastMonetizationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastMonetizationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcastSnippet: Basic broadcast information.
@@ -4350,9 +4350,9 @@ type LiveBroadcastSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastSnippet) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcastStatistics: Statistics about the live broadcast. These
@@ -4380,9 +4380,9 @@ type LiveBroadcastStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastStatistics) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveBroadcastStatus: Live broadcast state.
@@ -4451,9 +4451,9 @@ type LiveBroadcastStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveBroadcastStatus) MarshalJSON() ([]byte, error) {
+func (s LiveBroadcastStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveChatBan: A `__liveChatBan__` resource represents a ban for a YouTube
@@ -4484,9 +4484,9 @@ type LiveChatBan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatBan) MarshalJSON() ([]byte, error) {
+func (s LiveChatBan) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatBan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatBanSnippet struct {
@@ -4516,9 +4516,9 @@ type LiveChatBanSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatBanSnippet) MarshalJSON() ([]byte, error) {
+func (s LiveChatBanSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatBanSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatFanFundingEventDetails struct {
@@ -4544,9 +4544,9 @@ type LiveChatFanFundingEventDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatFanFundingEventDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatGiftMembershipReceivedDetails struct {
@@ -4579,9 +4579,9 @@ type LiveChatGiftMembershipReceivedDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatGiftMembershipReceivedDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatGiftMembershipReceivedDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatGiftMembershipReceivedDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMemberMilestoneChatDetails struct {
@@ -4609,9 +4609,9 @@ type LiveChatMemberMilestoneChatDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMemberMilestoneChatDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatMemberMilestoneChatDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMemberMilestoneChatDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMembershipGiftingDetails struct {
@@ -4634,9 +4634,9 @@ type LiveChatMembershipGiftingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMembershipGiftingDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatMembershipGiftingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMembershipGiftingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveChatMessage: A *liveChatMessage* resource represents a chat message in a
@@ -4670,9 +4670,9 @@ type LiveChatMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessage) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMessageAuthorDetails struct {
@@ -4705,9 +4705,9 @@ type LiveChatMessageAuthorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessageAuthorDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessageAuthorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessageAuthorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMessageDeletedDetails struct {
@@ -4725,9 +4725,9 @@ type LiveChatMessageDeletedDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessageDeletedDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessageDeletedDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessageDeletedDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMessageListResponse struct {
@@ -4768,9 +4768,9 @@ type LiveChatMessageListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessageListResponse) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessageListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessageListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatMessageRetractedDetails struct {
@@ -4788,9 +4788,9 @@ type LiveChatMessageRetractedDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessageRetractedDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveChatMessageSnippet: Next ID: 34
@@ -4883,9 +4883,9 @@ type LiveChatMessageSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatMessageSnippet) MarshalJSON() ([]byte, error) {
+func (s LiveChatMessageSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMessageSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveChatModerator: A *liveChatModerator* resource represents a moderator for
@@ -4917,9 +4917,9 @@ type LiveChatModerator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatModerator) MarshalJSON() ([]byte, error) {
+func (s LiveChatModerator) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatModerator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatModeratorListResponse struct {
@@ -4959,9 +4959,9 @@ type LiveChatModeratorListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatModeratorListResponse) MarshalJSON() ([]byte, error) {
+func (s LiveChatModeratorListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatModeratorListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatModeratorSnippet struct {
@@ -4982,9 +4982,9 @@ type LiveChatModeratorSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatModeratorSnippet) MarshalJSON() ([]byte, error) {
+func (s LiveChatModeratorSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatModeratorSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatNewSponsorDetails struct {
@@ -5008,9 +5008,9 @@ type LiveChatNewSponsorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatNewSponsorDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatNewSponsorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatNewSponsorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatPollDetails struct {
@@ -5033,9 +5033,9 @@ type LiveChatPollDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatPollDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatPollDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatPollDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatPollDetailsPollMetadata struct {
@@ -5055,9 +5055,9 @@ type LiveChatPollDetailsPollMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatPollDetailsPollMetadata) MarshalJSON() ([]byte, error) {
+func (s LiveChatPollDetailsPollMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatPollDetailsPollMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatPollDetailsPollMetadataPollOption struct {
@@ -5076,9 +5076,9 @@ type LiveChatPollDetailsPollMetadataPollOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatPollDetailsPollMetadataPollOption) MarshalJSON() ([]byte, error) {
+func (s LiveChatPollDetailsPollMetadataPollOption) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatPollDetailsPollMetadataPollOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatSuperChatDetails struct {
@@ -5108,9 +5108,9 @@ type LiveChatSuperChatDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatSuperChatDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatSuperChatDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatSuperChatDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatSuperStickerDetails struct {
@@ -5140,9 +5140,9 @@ type LiveChatSuperStickerDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatSuperStickerDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatSuperStickerDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatSuperStickerDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatTextMessageDetails struct {
@@ -5161,9 +5161,9 @@ type LiveChatTextMessageDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatTextMessageDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatTextMessageDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatTextMessageDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveChatUserBannedMessageDetails struct {
@@ -5191,9 +5191,9 @@ type LiveChatUserBannedMessageDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveChatUserBannedMessageDetails) MarshalJSON() ([]byte, error) {
+func (s LiveChatUserBannedMessageDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatUserBannedMessageDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveStream: A live stream describes a live ingestion point.
@@ -5233,9 +5233,9 @@ type LiveStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStream) MarshalJSON() ([]byte, error) {
+func (s LiveStream) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveStreamConfigurationIssue struct {
@@ -5301,9 +5301,9 @@ type LiveStreamConfigurationIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamConfigurationIssue) MarshalJSON() ([]byte, error) {
+func (s LiveStreamConfigurationIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamConfigurationIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveStreamContentDetails: Detailed settings of a stream.
@@ -5337,9 +5337,9 @@ type LiveStreamContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamContentDetails) MarshalJSON() ([]byte, error) {
+func (s LiveStreamContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveStreamHealthStatus struct {
@@ -5369,9 +5369,9 @@ type LiveStreamHealthStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamHealthStatus) MarshalJSON() ([]byte, error) {
+func (s LiveStreamHealthStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamHealthStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveStreamListResponse struct {
@@ -5410,9 +5410,9 @@ type LiveStreamListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamListResponse) MarshalJSON() ([]byte, error) {
+func (s LiveStreamListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LiveStreamSnippet struct {
@@ -5441,9 +5441,9 @@ type LiveStreamSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamSnippet) MarshalJSON() ([]byte, error) {
+func (s LiveStreamSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveStreamStatus: Brief description of the live stream status.
@@ -5470,9 +5470,9 @@ type LiveStreamStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveStreamStatus) MarshalJSON() ([]byte, error) {
+func (s LiveStreamStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveStreamStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocalizedProperty struct {
@@ -5493,9 +5493,9 @@ type LocalizedProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedProperty) MarshalJSON() ([]byte, error) {
+func (s LocalizedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocalizedString struct {
@@ -5514,9 +5514,9 @@ type LocalizedString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedString) MarshalJSON() ([]byte, error) {
+func (s LocalizedString) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Member: A *member* resource represents a member for a YouTube channel. A
@@ -5543,9 +5543,9 @@ type Member struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Member) MarshalJSON() ([]byte, error) {
+func (s Member) MarshalJSON() ([]byte, error) {
 	type NoMethod Member
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MemberListResponse struct {
@@ -5581,9 +5581,9 @@ type MemberListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemberListResponse) MarshalJSON() ([]byte, error) {
+func (s MemberListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod MemberListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MemberSnippet struct {
@@ -5606,9 +5606,9 @@ type MemberSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemberSnippet) MarshalJSON() ([]byte, error) {
+func (s MemberSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod MemberSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MembershipsDetails struct {
@@ -5641,9 +5641,9 @@ type MembershipsDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsDetails) MarshalJSON() ([]byte, error) {
+func (s MembershipsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MembershipsDuration struct {
@@ -5667,9 +5667,9 @@ type MembershipsDuration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsDuration) MarshalJSON() ([]byte, error) {
+func (s MembershipsDuration) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsDuration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MembershipsDurationAtLevel struct {
@@ -5695,9 +5695,9 @@ type MembershipsDurationAtLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsDurationAtLevel) MarshalJSON() ([]byte, error) {
+func (s MembershipsDurationAtLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsDurationAtLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MembershipsLevel: A *membershipsLevel* resource represents an offer made by
@@ -5727,9 +5727,9 @@ type MembershipsLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsLevel) MarshalJSON() ([]byte, error) {
+func (s MembershipsLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MembershipsLevelListResponse struct {
@@ -5760,9 +5760,9 @@ type MembershipsLevelListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsLevelListResponse) MarshalJSON() ([]byte, error) {
+func (s MembershipsLevelListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsLevelListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MembershipsLevelSnippet struct {
@@ -5783,9 +5783,9 @@ type MembershipsLevelSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipsLevelSnippet) MarshalJSON() ([]byte, error) {
+func (s MembershipsLevelSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipsLevelSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitorStreamInfo: Settings and Info of the monitor stream
@@ -5817,9 +5817,9 @@ type MonitorStreamInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitorStreamInfo) MarshalJSON() ([]byte, error) {
+func (s MonitorStreamInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitorStreamInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageInfo: Paging details for lists of resources, including total number of
@@ -5842,9 +5842,9 @@ type PageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageInfo) MarshalJSON() ([]byte, error) {
+func (s PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Playlist: A *playlist* resource represents a YouTube playlist. A playlist is
@@ -5898,9 +5898,9 @@ type Playlist struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Playlist) MarshalJSON() ([]byte, error) {
+func (s Playlist) MarshalJSON() ([]byte, error) {
 	type NoMethod Playlist
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistContentDetails struct {
@@ -5919,9 +5919,9 @@ type PlaylistContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistContentDetails) MarshalJSON() ([]byte, error) {
+func (s PlaylistContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistImage struct {
@@ -5947,9 +5947,9 @@ type PlaylistImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistImage) MarshalJSON() ([]byte, error) {
+func (s PlaylistImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistImageListResponse struct {
@@ -5981,9 +5981,9 @@ type PlaylistImageListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistImageListResponse) MarshalJSON() ([]byte, error) {
+func (s PlaylistImageListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistImageListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistImageSnippet: A *playlistImage* resource identifies another
@@ -6024,9 +6024,9 @@ type PlaylistImageSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistImageSnippet) MarshalJSON() ([]byte, error) {
+func (s PlaylistImageSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistImageSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistItem: A *playlistItem* resource identifies another resource, such as
@@ -6078,9 +6078,9 @@ type PlaylistItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistItem) MarshalJSON() ([]byte, error) {
+func (s PlaylistItem) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistItemContentDetails struct {
@@ -6116,9 +6116,9 @@ type PlaylistItemContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistItemContentDetails) MarshalJSON() ([]byte, error) {
+func (s PlaylistItemContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistItemContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistItemListResponse struct {
@@ -6157,9 +6157,9 @@ type PlaylistItemListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistItemListResponse) MarshalJSON() ([]byte, error) {
+func (s PlaylistItemListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistItemListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistItemSnippet: Basic details about a playlist, including title,
@@ -6209,9 +6209,9 @@ type PlaylistItemSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistItemSnippet) MarshalJSON() ([]byte, error) {
+func (s PlaylistItemSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistItemSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistItemStatus: Information about the playlist item's privacy status.
@@ -6236,9 +6236,9 @@ type PlaylistItemStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistItemStatus) MarshalJSON() ([]byte, error) {
+func (s PlaylistItemStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistItemStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistListResponse struct {
@@ -6278,9 +6278,9 @@ type PlaylistListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistListResponse) MarshalJSON() ([]byte, error) {
+func (s PlaylistListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistLocalization: Playlist localization setting
@@ -6302,9 +6302,9 @@ type PlaylistLocalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistLocalization) MarshalJSON() ([]byte, error) {
+func (s PlaylistLocalization) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistLocalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistPlayer struct {
@@ -6323,9 +6323,9 @@ type PlaylistPlayer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistPlayer) MarshalJSON() ([]byte, error) {
+func (s PlaylistPlayer) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistPlayer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaylistSnippet: Basic details about a playlist, including title,
@@ -6375,9 +6375,9 @@ type PlaylistSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistSnippet) MarshalJSON() ([]byte, error) {
+func (s PlaylistSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlaylistStatus struct {
@@ -6401,9 +6401,9 @@ type PlaylistStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaylistStatus) MarshalJSON() ([]byte, error) {
+func (s PlaylistStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaylistStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PropertyValue: A pair Property / Value.
@@ -6425,9 +6425,9 @@ type PropertyValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PropertyValue) MarshalJSON() ([]byte, error) {
+func (s PropertyValue) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RelatedEntity struct {
@@ -6445,9 +6445,9 @@ type RelatedEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RelatedEntity) MarshalJSON() ([]byte, error) {
+func (s RelatedEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceId: A resource id is a generic reference that points to another
@@ -6480,9 +6480,9 @@ type ResourceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceId) MarshalJSON() ([]byte, error) {
+func (s ResourceId) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SearchListResponse struct {
@@ -6523,9 +6523,9 @@ type SearchListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchListResponse) MarshalJSON() ([]byte, error) {
+func (s SearchListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchResult: A search result contains information about a YouTube video,
@@ -6559,9 +6559,9 @@ type SearchResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchResult) MarshalJSON() ([]byte, error) {
+func (s SearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchResultSnippet: Basic details about a search result, including title,
@@ -6607,9 +6607,9 @@ type SearchResultSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchResultSnippet) MarshalJSON() ([]byte, error) {
+func (s SearchResultSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResultSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A *subscription* resource contains information about a YouTube
@@ -6649,9 +6649,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionContentDetails: Details about the content to witch a
@@ -6684,9 +6684,9 @@ type SubscriptionContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionContentDetails) MarshalJSON() ([]byte, error) {
+func (s SubscriptionContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SubscriptionListResponse struct {
@@ -6725,9 +6725,9 @@ type SubscriptionListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionListResponse) MarshalJSON() ([]byte, error) {
+func (s SubscriptionListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionSnippet: Basic details about a subscription, including title,
@@ -6765,9 +6765,9 @@ type SubscriptionSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionSnippet) MarshalJSON() ([]byte, error) {
+func (s SubscriptionSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionSubscriberSnippet: Basic details about a subscription's
@@ -6794,9 +6794,9 @@ type SubscriptionSubscriberSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionSubscriberSnippet) MarshalJSON() ([]byte, error) {
+func (s SubscriptionSubscriberSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionSubscriberSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SuperChatEvent: A `__superChatEvent__` resource represents a Super Chat
@@ -6825,9 +6825,9 @@ type SuperChatEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuperChatEvent) MarshalJSON() ([]byte, error) {
+func (s SuperChatEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod SuperChatEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SuperChatEventListResponse struct {
@@ -6863,9 +6863,9 @@ type SuperChatEventListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuperChatEventListResponse) MarshalJSON() ([]byte, error) {
+func (s SuperChatEventListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SuperChatEventListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SuperChatEventSnippet struct {
@@ -6906,9 +6906,9 @@ type SuperChatEventSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuperChatEventSnippet) MarshalJSON() ([]byte, error) {
+func (s SuperChatEventSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod SuperChatEventSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SuperStickerMetadata struct {
@@ -6935,9 +6935,9 @@ type SuperStickerMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuperStickerMetadata) MarshalJSON() ([]byte, error) {
+func (s SuperStickerMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SuperStickerMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TestItem struct {
@@ -6961,9 +6961,9 @@ type TestItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestItem) MarshalJSON() ([]byte, error) {
+func (s TestItem) MarshalJSON() ([]byte, error) {
 	type NoMethod TestItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TestItemTestItemSnippet struct {
@@ -7002,9 +7002,9 @@ type ThirdPartyLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyLink) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ThirdPartyLinkListResponse struct {
@@ -7030,9 +7030,9 @@ type ThirdPartyLinkListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyLinkListResponse) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyLinkListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyLinkListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyLinkSnippet: Basic information about a third party account link,
@@ -7062,9 +7062,9 @@ type ThirdPartyLinkSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyLinkSnippet) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyLinkSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyLinkSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyLinkStatus: The third-party link status object contains
@@ -7089,9 +7089,9 @@ type ThirdPartyLinkStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyLinkStatus) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyLinkStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyLinkStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Thumbnail: A thumbnail is an image representing a YouTube resource.
@@ -7115,9 +7115,9 @@ type Thumbnail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Thumbnail) MarshalJSON() ([]byte, error) {
+func (s Thumbnail) MarshalJSON() ([]byte, error) {
 	type NoMethod Thumbnail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThumbnailDetails: Internal representation of thumbnails for a YouTube
@@ -7146,9 +7146,9 @@ type ThumbnailDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThumbnailDetails) MarshalJSON() ([]byte, error) {
+func (s ThumbnailDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ThumbnailDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ThumbnailSetResponse struct {
@@ -7179,9 +7179,9 @@ type ThumbnailSetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThumbnailSetResponse) MarshalJSON() ([]byte, error) {
+func (s ThumbnailSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ThumbnailSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TokenPagination: Stub token pagination template to suppress results.
@@ -7275,9 +7275,9 @@ type Video struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Video) MarshalJSON() ([]byte, error) {
+func (s Video) MarshalJSON() ([]byte, error) {
 	type NoMethod Video
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoAbuseReport struct {
@@ -7307,9 +7307,9 @@ type VideoAbuseReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAbuseReport) MarshalJSON() ([]byte, error) {
+func (s VideoAbuseReport) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAbuseReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoAbuseReportReason: A `__videoAbuseReportReason__` resource identifies a
@@ -7339,9 +7339,9 @@ type VideoAbuseReportReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAbuseReportReason) MarshalJSON() ([]byte, error) {
+func (s VideoAbuseReportReason) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAbuseReportReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoAbuseReportReasonListResponse struct {
@@ -7372,9 +7372,9 @@ type VideoAbuseReportReasonListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAbuseReportReasonListResponse) MarshalJSON() ([]byte, error) {
+func (s VideoAbuseReportReasonListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAbuseReportReasonListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoAbuseReportReasonSnippet: Basic details about a video category, such as
@@ -7398,9 +7398,9 @@ type VideoAbuseReportReasonSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAbuseReportReasonSnippet) MarshalJSON() ([]byte, error) {
+func (s VideoAbuseReportReasonSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAbuseReportReasonSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoAbuseReportSecondaryReason struct {
@@ -7421,9 +7421,9 @@ type VideoAbuseReportSecondaryReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAbuseReportSecondaryReason) MarshalJSON() ([]byte, error) {
+func (s VideoAbuseReportSecondaryReason) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAbuseReportSecondaryReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoAgeGating struct {
@@ -7457,9 +7457,9 @@ type VideoAgeGating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAgeGating) MarshalJSON() ([]byte, error) {
+func (s VideoAgeGating) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAgeGating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoCategory: A *videoCategory* resource identifies a category that has
@@ -7488,9 +7488,9 @@ type VideoCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoCategory) MarshalJSON() ([]byte, error) {
+func (s VideoCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoCategoryListResponse struct {
@@ -7532,9 +7532,9 @@ type VideoCategoryListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoCategoryListResponse) MarshalJSON() ([]byte, error) {
+func (s VideoCategoryListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoCategoryListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoCategorySnippet: Basic details about a video category, such as its
@@ -7558,9 +7558,9 @@ type VideoCategorySnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoCategorySnippet) MarshalJSON() ([]byte, error) {
+func (s VideoCategorySnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoCategorySnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoContentDetails: Details about the content of a YouTube Video.
@@ -7627,9 +7627,9 @@ type VideoContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoContentDetails) MarshalJSON() ([]byte, error) {
+func (s VideoContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoContentDetailsRegionRestriction: DEPRECATED Region restriction of the
@@ -7659,9 +7659,9 @@ type VideoContentDetailsRegionRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoContentDetailsRegionRestriction) MarshalJSON() ([]byte, error) {
+func (s VideoContentDetailsRegionRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoContentDetailsRegionRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoFileDetails: Describes original video file properties, including
@@ -7720,9 +7720,9 @@ type VideoFileDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoFileDetails) MarshalJSON() ([]byte, error) {
+func (s VideoFileDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoFileDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoFileDetailsAudioStream: Information about an audio stream.
@@ -7749,9 +7749,9 @@ type VideoFileDetailsAudioStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoFileDetailsAudioStream) MarshalJSON() ([]byte, error) {
+func (s VideoFileDetailsAudioStream) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoFileDetailsAudioStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoFileDetailsVideoStream: Information about a video stream.
@@ -7796,9 +7796,9 @@ type VideoFileDetailsVideoStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoFileDetailsVideoStream) MarshalJSON() ([]byte, error) {
+func (s VideoFileDetailsVideoStream) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoFileDetailsVideoStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VideoFileDetailsVideoStream) UnmarshalJSON(data []byte) error {
@@ -7845,9 +7845,9 @@ type VideoGetRatingResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoGetRatingResponse) MarshalJSON() ([]byte, error) {
+func (s VideoGetRatingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoGetRatingResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VideoListResponse struct {
@@ -7886,9 +7886,9 @@ type VideoListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoListResponse) MarshalJSON() ([]byte, error) {
+func (s VideoListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoLiveStreamingDetails: Details about the live streaming metadata.
@@ -7933,9 +7933,9 @@ type VideoLiveStreamingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoLiveStreamingDetails) MarshalJSON() ([]byte, error) {
+func (s VideoLiveStreamingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoLiveStreamingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoLocalization: Localized versions of certain video properties (e.g.
@@ -7958,9 +7958,9 @@ type VideoLocalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoLocalization) MarshalJSON() ([]byte, error) {
+func (s VideoLocalization) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoLocalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoMonetizationDetails: Details about monetization of a YouTube Video.
@@ -7981,9 +7981,9 @@ type VideoMonetizationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoMonetizationDetails) MarshalJSON() ([]byte, error) {
+func (s VideoMonetizationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoMonetizationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoPlayer: Player to be used for a video playback.
@@ -8006,9 +8006,9 @@ type VideoPlayer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoPlayer) MarshalJSON() ([]byte, error) {
+func (s VideoPlayer) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoPlayer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoProcessingDetails: Describes processing status and progress and
@@ -8076,9 +8076,9 @@ type VideoProcessingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoProcessingDetails) MarshalJSON() ([]byte, error) {
+func (s VideoProcessingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoProcessingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoProcessingDetailsProcessingProgress: Video processing progress and
@@ -8112,9 +8112,9 @@ type VideoProcessingDetailsProcessingProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoProcessingDetailsProcessingProgress) MarshalJSON() ([]byte, error) {
+func (s VideoProcessingDetailsProcessingProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoProcessingDetailsProcessingProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoProjectDetails: DEPRECATED. b/157517979: This part was never populated
@@ -8152,9 +8152,9 @@ type VideoRating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoRating) MarshalJSON() ([]byte, error) {
+func (s VideoRating) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoRating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoRecordingDetails: Recording information associated with the video.
@@ -8179,9 +8179,9 @@ type VideoRecordingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoRecordingDetails) MarshalJSON() ([]byte, error) {
+func (s VideoRecordingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoRecordingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoSnippet: Basic details about a video, including title, description,
@@ -8241,9 +8241,9 @@ type VideoSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoSnippet) MarshalJSON() ([]byte, error) {
+func (s VideoSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoStatistics: Statistics about the video, such as the number of times the
@@ -8275,9 +8275,9 @@ type VideoStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoStatistics) MarshalJSON() ([]byte, error) {
+func (s VideoStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoStatus: Basic details about a video category, such as its localized
@@ -8360,9 +8360,9 @@ type VideoStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoStatus) MarshalJSON() ([]byte, error) {
+func (s VideoStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoSuggestions: Specifies suggestions on how to improve video content,
@@ -8452,9 +8452,9 @@ type VideoSuggestions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoSuggestions) MarshalJSON() ([]byte, error) {
+func (s VideoSuggestions) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoSuggestions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoSuggestionsTagSuggestion: A single tag suggestion with it's relevance
@@ -8481,9 +8481,9 @@ type VideoSuggestionsTagSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoSuggestionsTagSuggestion) MarshalJSON() ([]byte, error) {
+func (s VideoSuggestionsTagSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoSuggestionsTagSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoTopicDetails: Freebase topic information related to the video.
@@ -8515,9 +8515,9 @@ type VideoTopicDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoTopicDetails) MarshalJSON() ([]byte, error) {
+func (s VideoTopicDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoTopicDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WatchSettings: Branding properties for the watch. All deprecated.
@@ -8542,9 +8542,9 @@ type WatchSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WatchSettings) MarshalJSON() ([]byte, error) {
+func (s WatchSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod WatchSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AbuseReportsInsertCall struct {

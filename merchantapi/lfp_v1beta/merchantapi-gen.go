@@ -276,9 +276,9 @@ type LfpInventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LfpInventory) MarshalJSON() ([]byte, error) {
+func (s LfpInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod LfpInventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LfpSale: A sale for the merchant.
@@ -336,9 +336,9 @@ type LfpSale struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LfpSale) MarshalJSON() ([]byte, error) {
+func (s LfpSale) MarshalJSON() ([]byte, error) {
 	type NoMethod LfpSale
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LfpStore: A store for the merchant. This will be used to match to a store
@@ -413,9 +413,9 @@ type LfpStore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LfpStore) MarshalJSON() ([]byte, error) {
+func (s LfpStore) MarshalJSON() ([]byte, error) {
 	type NoMethod LfpStore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLfpStoresResponse: Response message for the ListLfpStores method.
@@ -441,9 +441,9 @@ type ListLfpStoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLfpStoresResponse) MarshalJSON() ([]byte, error) {
+func (s ListLfpStoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLfpStoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: The price represented as a number and currency.
@@ -468,9 +468,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -528,9 +528,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -577,9 +577,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsLfpInventoriesInsertCall struct {

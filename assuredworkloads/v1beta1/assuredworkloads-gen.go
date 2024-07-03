@@ -245,9 +245,9 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse: Response for
@@ -280,9 +280,9 @@ type GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis: Represents move
@@ -311,9 +311,9 @@ type GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata: Operation
@@ -381,9 +381,9 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse: Response
@@ -423,9 +423,9 @@ type GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse: Response of
@@ -451,9 +451,9 @@ type GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup: Represents a logical
@@ -479,9 +479,9 @@ type GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult: Represents the
@@ -506,9 +506,9 @@ type GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1MoveImpact: Represents the impact of
@@ -529,9 +529,9 @@ type GoogleCloudAssuredworkloadsV1beta1MoveImpact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1MoveImpact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1MoveImpact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveImpact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest: Request
@@ -567,9 +567,9 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse: Response
@@ -673,9 +673,9 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1Violation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1Violation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1Violation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext: Violation
@@ -702,9 +702,9 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationRemediation: Represents
@@ -747,9 +747,9 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationRemediation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ViolationRemediation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationRemediation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions:
@@ -774,9 +774,9 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole:
@@ -801,9 +801,9 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud:
@@ -828,9 +828,9 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1Workload: A Workload object for managing
@@ -1004,9 +1004,9 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1Workload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1Workload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings: Settings specific to
@@ -1028,9 +1028,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus: Represents the
@@ -1063,9 +1063,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse: External
@@ -1117,9 +1117,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings: Settings
@@ -1141,9 +1141,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings: Settings
@@ -1165,9 +1165,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings: Settings specific to
@@ -1189,9 +1189,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings: Settings specific to
@@ -1218,9 +1218,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions: Permissions
@@ -1247,9 +1247,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo: Represent the
@@ -1282,9 +1282,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings: Represent the
@@ -1324,9 +1324,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse: Signed
@@ -1365,9 +1365,9 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -1394,9 +1394,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -1441,9 +1441,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -1485,9 +1485,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsOperationsGetCall struct {

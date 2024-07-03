@@ -265,9 +265,9 @@ type GoogleChromePolicyVersionsV1AdditionalTargetKeyName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1AdditionalTargetKeyName) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1AdditionalTargetKeyName) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1AdditionalTargetKeyName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest: Request message
@@ -294,9 +294,9 @@ type GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest: Request
@@ -326,9 +326,9 @@ type GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest: Request message
@@ -355,9 +355,9 @@ type GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest: Request
@@ -386,9 +386,9 @@ type GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1CertificateReference: Error information for
@@ -413,9 +413,9 @@ type GoogleChromePolicyVersionsV1CertificateReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1CertificateReference) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1CertificateReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1CertificateReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DefineCertificateRequest: Request object for
@@ -446,9 +446,9 @@ type GoogleChromePolicyVersionsV1DefineCertificateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1DefineCertificateRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1DefineCertificateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineCertificateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DefineCertificateResponse: Response object for
@@ -476,9 +476,9 @@ type GoogleChromePolicyVersionsV1DefineCertificateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1DefineCertificateResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1DefineCertificateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineCertificateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DefineNetworkRequest: Request object for
@@ -505,9 +505,9 @@ type GoogleChromePolicyVersionsV1DefineNetworkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1DefineNetworkRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1DefineNetworkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineNetworkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DefineNetworkResponse: Response object for
@@ -537,9 +537,9 @@ type GoogleChromePolicyVersionsV1DefineNetworkResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1DefineNetworkResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1DefineNetworkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineNetworkResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest: Request parameters for
@@ -564,9 +564,9 @@ type GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1FieldConstraints: Information about any range
@@ -591,9 +591,9 @@ type GoogleChromePolicyVersionsV1FieldConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1FieldConstraints) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1FieldConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1FieldConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest: Request parameters
@@ -619,9 +619,9 @@ type GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest: Request
@@ -648,9 +648,9 @@ type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse: Response
@@ -682,9 +682,9 @@ type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ListPolicySchemasResponse: Response message for
@@ -710,9 +710,9 @@ type GoogleChromePolicyVersionsV1ListPolicySchemasResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ListPolicySchemasResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ListPolicySchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListPolicySchemasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest: Request parameters for
@@ -741,9 +741,9 @@ type GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest: Request parameters
@@ -772,9 +772,9 @@ type GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1NetworkSetting: A network setting contains
@@ -797,9 +797,9 @@ type GoogleChromePolicyVersionsV1NetworkSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1NetworkSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1NetworkSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1NetworkSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1NumericRangeConstraint: A constraint on upper
@@ -822,9 +822,9 @@ type GoogleChromePolicyVersionsV1NumericRangeConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1NumericRangeConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyApiLifecycle: Lifecycle information.
@@ -877,9 +877,9 @@ type GoogleChromePolicyVersionsV1PolicyApiLifecycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyApiLifecycle) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyApiLifecycle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyApiLifecycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyModificationError: Error information for a
@@ -908,9 +908,9 @@ type GoogleChromePolicyVersionsV1PolicyModificationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyModificationError) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyModificationError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyModificationErrorDetails: Details of the
@@ -934,9 +934,9 @@ type GoogleChromePolicyVersionsV1PolicyModificationErrorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyModificationErrorDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyModificationErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationErrorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyModificationFieldError: Error information
@@ -959,9 +959,9 @@ type GoogleChromePolicyVersionsV1PolicyModificationFieldError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyModificationFieldError) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyModificationFieldError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationFieldError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchema: Resource representing a policy
@@ -1034,9 +1034,9 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchema) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies: The field and the
@@ -1060,9 +1060,9 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchemaFieldDescription: Provides detailed
@@ -1114,9 +1114,9 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldDescription) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchemaFieldDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription: Provides
@@ -1144,9 +1144,9 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription: Provides special
@@ -1178,9 +1178,9 @@ type GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicySchemaRequiredItems: The fields that will
@@ -1206,9 +1206,9 @@ type GoogleChromePolicyVersionsV1PolicySchemaRequiredItems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicySchemaRequiredItems) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicySchemaRequiredItems) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaRequiredItems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyTargetKey: The key used to identify the
@@ -1234,9 +1234,9 @@ type GoogleChromePolicyVersionsV1PolicyTargetKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyTargetKey) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyTargetKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyTargetKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1PolicyValue: A particular value for a policy
@@ -1261,9 +1261,9 @@ type GoogleChromePolicyVersionsV1PolicyValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1PolicyValue) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1PolicyValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails: Details of the
@@ -1288,9 +1288,9 @@ type GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1RemoveCertificateRequest: Request object for
@@ -1315,9 +1315,9 @@ type GoogleChromePolicyVersionsV1RemoveCertificateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1RemoveCertificateRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1RemoveCertificateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveCertificateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1RemoveCertificateResponse: Response object for
@@ -1349,9 +1349,9 @@ type GoogleChromePolicyVersionsV1RemoveNetworkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1RemoveNetworkRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1RemoveNetworkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveNetworkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1RemoveNetworkResponse: Response object for
@@ -1395,9 +1395,9 @@ type GoogleChromePolicyVersionsV1ResolveRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ResolveRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ResolveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolveRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ResolveResponse: Response message for getting
@@ -1425,9 +1425,9 @@ type GoogleChromePolicyVersionsV1ResolveResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ResolveResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ResolveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolveResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ResolvedPolicy: The resolved value of a policy
@@ -1465,9 +1465,9 @@ type GoogleChromePolicyVersionsV1ResolvedPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1ResolvedPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1ResolvedPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolvedPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest: Request
@@ -1495,9 +1495,9 @@ type GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1UploadPolicyFileRequest: Request message for
@@ -1520,9 +1520,9 @@ type GoogleChromePolicyVersionsV1UploadPolicyFileRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1UploadPolicyFileRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1UploadPolicyFileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1UploadPolicyFileResponse: Response message for
@@ -1546,9 +1546,9 @@ type GoogleChromePolicyVersionsV1UploadPolicyFileResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1UploadedFileConstraints: Constraints on the
@@ -1585,9 +1585,9 @@ type GoogleChromePolicyVersionsV1UploadedFileConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyVersionsV1UploadedFileConstraints) MarshalJSON() ([]byte, error) {
+func (s GoogleChromePolicyVersionsV1UploadedFileConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadedFileConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -1633,9 +1633,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2DescriptorProto: Describes a message type.
@@ -1658,9 +1658,9 @@ type Proto2DescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2DescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2DescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2DescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2EnumDescriptorProto: Describes an enum type.
@@ -1680,9 +1680,9 @@ type Proto2EnumDescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2EnumDescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2EnumDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2EnumDescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2EnumValueDescriptorProto: Describes a value within an enum.
@@ -1702,9 +1702,9 @@ type Proto2EnumValueDescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2EnumValueDescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2EnumValueDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2EnumValueDescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2FieldDescriptorProto: Describes a field within a message.
@@ -1796,9 +1796,9 @@ type Proto2FieldDescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2FieldDescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2FileDescriptorProto: Describes a complete .proto file.
@@ -1830,9 +1830,9 @@ type Proto2FileDescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2FileDescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2FileDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2FileDescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2OneofDescriptorProto: Describes a oneof.
@@ -1851,9 +1851,9 @@ type Proto2OneofDescriptorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Proto2OneofDescriptorProto) MarshalJSON() ([]byte, error) {
+func (s Proto2OneofDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2OneofDescriptorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersPoliciesResolveCall struct {

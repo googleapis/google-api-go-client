@@ -209,9 +209,9 @@ type Bucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Bucket) MarshalJSON() ([]byte, error) {
+func (s Bucket) MarshalJSON() ([]byte, error) {
 	type NoMethod Bucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -271,9 +271,9 @@ type GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata:
@@ -323,9 +323,9 @@ type GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBucketsResponse: The response returned by `ListBuckets`.
@@ -351,9 +351,9 @@ type ListBucketsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBucketsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBucketsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBucketsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveFirebaseRequest: The request used to unlink a Google Cloud Storage

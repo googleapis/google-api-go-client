@@ -219,9 +219,9 @@ type DownloadModelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadModelResponse) MarshalJSON() ([]byte, error) {
+func (s DownloadModelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadModelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -256,9 +256,9 @@ type ListModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Model: An ML model hosted in Firebase ML
@@ -310,9 +310,9 @@ type Model struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Model) MarshalJSON() ([]byte, error) {
+func (s Model) MarshalJSON() ([]byte, error) {
 	type NoMethod Model
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelOperationMetadata: This is returned in the longrunning operations for
@@ -339,9 +339,9 @@ type ModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s ModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelState: State common to all model types. Includes publishing and
@@ -368,9 +368,9 @@ type ModelState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelState) MarshalJSON() ([]byte, error) {
+func (s ModelState) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -415,9 +415,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -449,9 +449,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TfLiteModel: Information that is specific to TfLite models.
@@ -481,9 +481,9 @@ type TfLiteModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TfLiteModel) MarshalJSON() ([]byte, error) {
+func (s TfLiteModel) MarshalJSON() ([]byte, error) {
 	type NoMethod TfLiteModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsModelsCreateCall struct {

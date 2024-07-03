@@ -263,9 +263,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -297,9 +297,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2AndroidApplication: Identifier of an Android application for key use.
@@ -324,9 +324,9 @@ type V2AndroidApplication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2AndroidApplication) MarshalJSON() ([]byte, error) {
+func (s V2AndroidApplication) MarshalJSON() ([]byte, error) {
 	type NoMethod V2AndroidApplication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2AndroidKeyRestrictions: The Android apps that are allowed to use the key.
@@ -347,9 +347,9 @@ type V2AndroidKeyRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2AndroidKeyRestrictions) MarshalJSON() ([]byte, error) {
+func (s V2AndroidKeyRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod V2AndroidKeyRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2ApiTarget: A restriction for a specific service and optionally one or
@@ -379,9 +379,9 @@ type V2ApiTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2ApiTarget) MarshalJSON() ([]byte, error) {
+func (s V2ApiTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod V2ApiTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2BrowserKeyRestrictions: The HTTP referrers (websites) that are allowed to
@@ -403,9 +403,9 @@ type V2BrowserKeyRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2BrowserKeyRestrictions) MarshalJSON() ([]byte, error) {
+func (s V2BrowserKeyRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod V2BrowserKeyRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2GetKeyStringResponse: Response message for `GetKeyString` method.
@@ -428,9 +428,9 @@ type V2GetKeyStringResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2GetKeyStringResponse) MarshalJSON() ([]byte, error) {
+func (s V2GetKeyStringResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod V2GetKeyStringResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2IosKeyRestrictions: The iOS apps that are allowed to use the key.
@@ -451,9 +451,9 @@ type V2IosKeyRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2IosKeyRestrictions) MarshalJSON() ([]byte, error) {
+func (s V2IosKeyRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod V2IosKeyRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2Key: The representation of a key managed by the API Keys API.
@@ -509,9 +509,9 @@ type V2Key struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2Key) MarshalJSON() ([]byte, error) {
+func (s V2Key) MarshalJSON() ([]byte, error) {
 	type NoMethod V2Key
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2ListKeysResponse: Response message for `ListKeys` method.
@@ -536,9 +536,9 @@ type V2ListKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2ListKeysResponse) MarshalJSON() ([]byte, error) {
+func (s V2ListKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod V2ListKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2LookupKeyResponse: Response message for `LookupKey` method.
@@ -565,9 +565,9 @@ type V2LookupKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2LookupKeyResponse) MarshalJSON() ([]byte, error) {
+func (s V2LookupKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod V2LookupKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2Restrictions: Describes the restrictions on the key.
@@ -599,9 +599,9 @@ type V2Restrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2Restrictions) MarshalJSON() ([]byte, error) {
+func (s V2Restrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod V2Restrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2ServerKeyRestrictions: The IP addresses of callers that are allowed to use
@@ -623,9 +623,9 @@ type V2ServerKeyRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *V2ServerKeyRestrictions) MarshalJSON() ([]byte, error) {
+func (s V2ServerKeyRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod V2ServerKeyRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // V2UndeleteKeyRequest: Request message for `UndeleteKey` method.

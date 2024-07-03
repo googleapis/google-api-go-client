@@ -293,9 +293,9 @@ type AlterMetadataResourceLocationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
+func (s AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AlterMetadataResourceLocationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlterMetadataResourceLocationResponse: Response message for
@@ -335,9 +335,9 @@ type AlterTablePropertiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlterTablePropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s AlterTablePropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AlterTablePropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -376,9 +376,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -411,9 +411,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoscalingConfig: Represents the autoscaling configuration of a metastore
@@ -440,9 +440,9 @@ type AutoscalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingConfig) MarshalJSON() ([]byte, error) {
+func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AutoscalingConfig) UnmarshalJSON(data []byte) error {
@@ -487,9 +487,9 @@ type AuxiliaryVersionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuxiliaryVersionConfig) MarshalJSON() ([]byte, error) {
+func (s AuxiliaryVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuxiliaryVersionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackendMetastore: Represents a backend metastore for the federation.
@@ -519,9 +519,9 @@ type BackendMetastore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackendMetastore) MarshalJSON() ([]byte, error) {
+func (s BackendMetastore) MarshalJSON() ([]byte, error) {
 	type NoMethod BackendMetastore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Backup: The details of a backup resource.
@@ -567,9 +567,9 @@ type Backup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Backup) MarshalJSON() ([]byte, error) {
+func (s Backup) MarshalJSON() ([]byte, error) {
 	type NoMethod Backup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates members, or principals, with a role.
@@ -663,9 +663,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelMigrationRequest: Request message for
@@ -727,9 +727,9 @@ type CdcConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CdcConfig) MarshalJSON() ([]byte, error) {
+func (s CdcConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CdcConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSQLConnectionConfig: Configuration information to establish customer
@@ -779,9 +779,9 @@ type CloudSQLConnectionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
+func (s CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSQLConnectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSQLMigrationConfig: Configuration information for migrating from
@@ -809,9 +809,9 @@ type CloudSQLMigrationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSQLMigrationConfig) MarshalJSON() ([]byte, error) {
+func (s CloudSQLMigrationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSQLMigrationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteMigrationRequest: Request message for
@@ -849,9 +849,9 @@ type Consumer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Consumer) MarshalJSON() ([]byte, error) {
+func (s Consumer) MarshalJSON() ([]byte, error) {
 	type NoMethod Consumer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataCatalogConfig: Specifies how metastore metadata should be integrated
@@ -874,9 +874,9 @@ type DataCatalogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataCatalogConfig) MarshalJSON() ([]byte, error) {
+func (s DataCatalogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DataCatalogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseDump: A specification of the location of and metadata about a
@@ -914,9 +914,9 @@ type DatabaseDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseDump) MarshalJSON() ([]byte, error) {
+func (s DatabaseDump) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -948,9 +948,9 @@ type EncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorDetails: Error details in public error message for
@@ -972,9 +972,9 @@ type ErrorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorDetails) MarshalJSON() ([]byte, error) {
+func (s ErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportMetadataRequest: Request message for DataprocMetastore.ExportMetadata.
@@ -1013,9 +1013,9 @@ type ExportMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s ExportMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -1061,9 +1061,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Federation: Represents a federation of multiple backend metastores.
@@ -1126,9 +1126,9 @@ type Federation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Federation) MarshalJSON() ([]byte, error) {
+func (s Federation) MarshalJSON() ([]byte, error) {
 	type NoMethod Federation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveMetastoreConfig: Specifies configuration information specific to running
@@ -1180,9 +1180,9 @@ type HiveMetastoreConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HiveMetastoreConfig) MarshalJSON() ([]byte, error) {
+func (s HiveMetastoreConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveMetastoreConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveMetastoreVersion: A specification of a supported version of the Hive
@@ -1206,9 +1206,9 @@ type HiveMetastoreVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HiveMetastoreVersion) MarshalJSON() ([]byte, error) {
+func (s HiveMetastoreVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveMetastoreVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KerberosConfig: Configuration information for a Kerberos principal.
@@ -1237,9 +1237,9 @@ type KerberosConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KerberosConfig) MarshalJSON() ([]byte, error) {
+func (s KerberosConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod KerberosConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatestBackup: The details of the latest scheduled backup.
@@ -1272,9 +1272,9 @@ type LatestBackup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatestBackup) MarshalJSON() ([]byte, error) {
+func (s LatestBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod LatestBackup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LimitConfig: Represents the autoscaling limit configuration of a metastore
@@ -1299,9 +1299,9 @@ type LimitConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LimitConfig) MarshalJSON() ([]byte, error) {
+func (s LimitConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LimitConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LimitConfig) UnmarshalJSON(data []byte) error {
@@ -1345,9 +1345,9 @@ type ListBackupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFederationsResponse: Response message for ListFederations
@@ -1375,9 +1375,9 @@ type ListFederationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFederationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListFederationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFederationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1403,9 +1403,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMetadataImportsResponse: Response message for
@@ -1434,9 +1434,9 @@ type ListMetadataImportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMetadataImportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMetadataImportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMetadataImportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMigrationExecutionsResponse: Response message for
@@ -1465,9 +1465,9 @@ type ListMigrationExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMigrationExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMigrationExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMigrationExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1493,9 +1493,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServicesResponse: Response message for DataprocMetastore.ListServices.
@@ -1523,9 +1523,9 @@ type ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1560,9 +1560,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Metadata about the service in a location.
@@ -1588,9 +1588,9 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: Maintenance window. This specifies when Dataproc
@@ -1623,9 +1623,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataExport: The details of a metadata export operation.
@@ -1667,9 +1667,9 @@ type MetadataExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetadataExport) MarshalJSON() ([]byte, error) {
+func (s MetadataExport) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataImport: A metastore resource that imports metadata.
@@ -1715,9 +1715,9 @@ type MetadataImport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetadataImport) MarshalJSON() ([]byte, error) {
+func (s MetadataImport) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataImport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataIntegration: Specifies how metastore metadata should be integrated
@@ -1739,9 +1739,9 @@ type MetadataIntegration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetadataIntegration) MarshalJSON() ([]byte, error) {
+func (s MetadataIntegration) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataIntegration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataManagementActivity: The metadata management activities of the
@@ -1765,9 +1765,9 @@ type MetadataManagementActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
+func (s MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataManagementActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationExecution: The details of a migration execution resource.
@@ -1831,9 +1831,9 @@ type MigrationExecution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrationExecution) MarshalJSON() ([]byte, error) {
+func (s MigrationExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationExecution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveTableToDatabaseRequest: Request message for
@@ -1859,9 +1859,9 @@ type MoveTableToDatabaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
+func (s MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveTableToDatabaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveTableToDatabaseResponse: Response message for
@@ -1888,9 +1888,9 @@ type MultiRegionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiRegionMetadata) MarshalJSON() ([]byte, error) {
+func (s MultiRegionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiRegionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore service.
@@ -1911,9 +1911,9 @@ type NetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1957,9 +1957,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of a long-running operation.
@@ -1995,9 +1995,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -2085,9 +2085,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryMetadataRequest: Request message for DataprocMetastore.QueryMetadata.
@@ -2108,9 +2108,9 @@ type QueryMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s QueryMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryMetadataResponse: Response message for DataprocMetastore.QueryMetadata.
@@ -2133,9 +2133,9 @@ type QueryMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s QueryMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Restore: The details of a metadata restore operation.
@@ -2184,9 +2184,9 @@ type Restore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Restore) MarshalJSON() ([]byte, error) {
+func (s Restore) MarshalJSON() ([]byte, error) {
 	type NoMethod Restore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreServiceRequest: Request message for DataprocMetastore.Restore.
@@ -2233,9 +2233,9 @@ type RestoreServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreServiceRequest) MarshalJSON() ([]byte, error) {
+func (s RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScalingConfig: Represents the scaling configuration of a metastore service.
@@ -2272,9 +2272,9 @@ type ScalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScalingConfig) MarshalJSON() ([]byte, error) {
+func (s ScalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ScalingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
@@ -2327,9 +2327,9 @@ type ScheduledBackup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScheduledBackup) MarshalJSON() ([]byte, error) {
+func (s ScheduledBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduledBackup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Secret: A securely stored value.
@@ -2351,9 +2351,9 @@ type Secret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Secret) MarshalJSON() ([]byte, error) {
+func (s Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Service: A managed metastore service that serves metadata queries.
@@ -2482,9 +2482,9 @@ type Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Service) MarshalJSON() ([]byte, error) {
+func (s Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for SetIamPolicy method.
@@ -2511,9 +2511,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartMigrationRequest: Request message for DataprocMetastore.StartMigration.
@@ -2543,9 +2543,9 @@ type StartMigrationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartMigrationRequest) MarshalJSON() ([]byte, error) {
+func (s StartMigrationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartMigrationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The Status type defines a logical error model that is suitable for
@@ -2577,9 +2577,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TelemetryConfig: Telemetry Configuration for the Dataproc Metastore service.
@@ -2604,9 +2604,9 @@ type TelemetryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TelemetryConfig) MarshalJSON() ([]byte, error) {
+func (s TelemetryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TelemetryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for TestIamPermissions method.
@@ -2629,9 +2629,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for TestIamPermissions method.
@@ -2655,9 +2655,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

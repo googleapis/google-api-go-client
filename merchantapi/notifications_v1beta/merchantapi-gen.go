@@ -208,9 +208,9 @@ type ListNotificationSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNotificationSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListNotificationSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotificationSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationSubscription: Represents a notification subscription owned by a
@@ -255,9 +255,9 @@ type NotificationSubscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationSubscription) MarshalJSON() ([]byte, error) {
+func (s NotificationSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationSubscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -315,9 +315,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -364,9 +364,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsNotificationsubscriptionsCreateCall struct {

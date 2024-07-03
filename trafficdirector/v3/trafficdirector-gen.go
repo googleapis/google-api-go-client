@@ -185,9 +185,9 @@ type Address struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Address) MarshalJSON() ([]byte, error) {
+func (s Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildVersion: BuildVersion combines SemVer version of extension with
@@ -212,9 +212,9 @@ type BuildVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildVersion) MarshalJSON() ([]byte, error) {
+func (s BuildVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientConfig: All xds configs for a particular client.
@@ -244,9 +244,9 @@ type ClientConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientConfig) MarshalJSON() ([]byte, error) {
+func (s ClientConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientStatusRequest: Request for client status of clients identified by a
@@ -274,9 +274,9 @@ type ClientStatusRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientStatusRequest) MarshalJSON() ([]byte, error) {
+func (s ClientStatusRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientStatusRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ClientStatusResponse struct {
@@ -298,9 +298,9 @@ type ClientStatusResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientStatusResponse) MarshalJSON() ([]byte, error) {
+func (s ClientStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientStatusResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClustersConfigDump: Envoy's cluster manager fills this message with all
@@ -336,9 +336,9 @@ type ClustersConfigDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClustersConfigDump) MarshalJSON() ([]byte, error) {
+func (s ClustersConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ClustersConfigDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContextParams: Additional parameters that can be used to select resource
@@ -363,9 +363,9 @@ type ContextParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContextParams) MarshalJSON() ([]byte, error) {
+func (s ContextParams) MarshalJSON() ([]byte, error) {
 	type NoMethod ContextParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleMatcher: Specifies the way to match a double value.
@@ -389,9 +389,9 @@ type DoubleMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleMatcher) MarshalJSON() ([]byte, error) {
+func (s DoubleMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleMatcher) UnmarshalJSON(data []byte) error {
@@ -428,9 +428,9 @@ type DoubleRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleRange) MarshalJSON() ([]byte, error) {
+func (s DoubleRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleRange) UnmarshalJSON(data []byte) error {
@@ -496,9 +496,9 @@ type DynamicCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicCluster) MarshalJSON() ([]byte, error) {
+func (s DynamicCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicEndpointConfig: [#next-free-field: 6]
@@ -547,9 +547,9 @@ type DynamicEndpointConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicEndpointConfig) MarshalJSON() ([]byte, error) {
+func (s DynamicEndpointConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicEndpointConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicListener: Describes a dynamically loaded listener via the LDS API.
@@ -607,9 +607,9 @@ type DynamicListener struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicListener) MarshalJSON() ([]byte, error) {
+func (s DynamicListener) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicListener
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DynamicListenerState struct {
@@ -635,9 +635,9 @@ type DynamicListenerState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicListenerState) MarshalJSON() ([]byte, error) {
+func (s DynamicListenerState) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicListenerState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicRouteConfig: [#next-free-field: 6]
@@ -685,9 +685,9 @@ type DynamicRouteConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicRouteConfig) MarshalJSON() ([]byte, error) {
+func (s DynamicRouteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicRouteConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicScopedRouteConfigs: [#next-free-field: 7]
@@ -738,9 +738,9 @@ type DynamicScopedRouteConfigs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicScopedRouteConfigs) MarshalJSON() ([]byte, error) {
+func (s DynamicScopedRouteConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicScopedRouteConfigs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointsConfigDump: Envoy's admin fill this message with all currently
@@ -765,9 +765,9 @@ type EndpointsConfigDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointsConfigDump) MarshalJSON() ([]byte, error) {
+func (s EndpointsConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointsConfigDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnvoyInternalAddress: The address represents an envoy internal listener.
@@ -794,9 +794,9 @@ type EnvoyInternalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvoyInternalAddress) MarshalJSON() ([]byte, error) {
+func (s EnvoyInternalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvoyInternalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Extension: Version and identification for an Envoy extension.
@@ -835,9 +835,9 @@ type Extension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Extension) MarshalJSON() ([]byte, error) {
+func (s Extension) MarshalJSON() ([]byte, error) {
 	type NoMethod Extension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericXdsConfig: GenericXdsConfig is used to specify the config status and
@@ -910,9 +910,9 @@ type GenericXdsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericXdsConfig) MarshalJSON() ([]byte, error) {
+func (s GenericXdsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericXdsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRE2: Google's `RE2 `_ regex engine. The regex string must adhere to
@@ -952,9 +952,9 @@ type GoogleRE2 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRE2) MarshalJSON() ([]byte, error) {
+func (s GoogleRE2) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRE2
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InlineScopedRouteConfigs struct {
@@ -978,9 +978,9 @@ type InlineScopedRouteConfigs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InlineScopedRouteConfigs) MarshalJSON() ([]byte, error) {
+func (s InlineScopedRouteConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod InlineScopedRouteConfigs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMatcher: Specifies the way to match a list value.
@@ -1001,9 +1001,9 @@ type ListMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMatcher) MarshalJSON() ([]byte, error) {
+func (s ListMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListenersConfigDump: Envoy's listener manager fills this message with all
@@ -1032,9 +1032,9 @@ type ListenersConfigDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListenersConfigDump) MarshalJSON() ([]byte, error) {
+func (s ListenersConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ListenersConfigDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Locality: Identifies location of where either Envoy runs or where upstream
@@ -1065,9 +1065,9 @@ type Locality struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Locality) MarshalJSON() ([]byte, error) {
+func (s Locality) MarshalJSON() ([]byte, error) {
 	type NoMethod Locality
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Node: Identifies a specific Envoy instance. The node identifier is presented
@@ -1134,9 +1134,9 @@ type Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Node) MarshalJSON() ([]byte, error) {
+func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeMatcher: Specifies the way to match a Node. The match follows AND
@@ -1159,9 +1159,9 @@ type NodeMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeMatcher) MarshalJSON() ([]byte, error) {
+func (s NodeMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NullMatch: NullMatch is an empty message to specify a null value.
@@ -1184,9 +1184,9 @@ type OrMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrMatcher) MarshalJSON() ([]byte, error) {
+func (s OrMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod OrMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathSegment: Specifies the segment in a path to retrieve value from Struct.
@@ -1206,9 +1206,9 @@ type PathSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PathSegment) MarshalJSON() ([]byte, error) {
+func (s PathSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod PathSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerXdsConfig: Detailed config (per xDS) with status. [#next-free-field: 8]
@@ -1261,9 +1261,9 @@ type PerXdsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerXdsConfig) MarshalJSON() ([]byte, error) {
+func (s PerXdsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PerXdsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Pipe struct {
@@ -1287,9 +1287,9 @@ type Pipe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pipe) MarshalJSON() ([]byte, error) {
+func (s Pipe) MarshalJSON() ([]byte, error) {
 	type NoMethod Pipe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegexMatcher: A regex matcher designed for safety when used with untrusted
@@ -1314,9 +1314,9 @@ type RegexMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegexMatcher) MarshalJSON() ([]byte, error) {
+func (s RegexMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod RegexMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RoutesConfigDump: Envoy's RDS implementation fills this message with all
@@ -1344,9 +1344,9 @@ type RoutesConfigDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RoutesConfigDump) MarshalJSON() ([]byte, error) {
+func (s RoutesConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod RoutesConfigDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScopedRoutesConfigDump: Envoy's scoped RDS implementation fills this message
@@ -1372,9 +1372,9 @@ type ScopedRoutesConfigDump struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScopedRoutesConfigDump) MarshalJSON() ([]byte, error) {
+func (s ScopedRoutesConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ScopedRoutesConfigDump
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SemanticVersion: Envoy uses SemVer (https://semver.org/). Major/minor
@@ -1397,9 +1397,9 @@ type SemanticVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SemanticVersion) MarshalJSON() ([]byte, error) {
+func (s SemanticVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod SemanticVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SocketAddress: [#next-free-field: 7]
@@ -1447,9 +1447,9 @@ type SocketAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SocketAddress) MarshalJSON() ([]byte, error) {
+func (s SocketAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod SocketAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StaticCluster: Describes a statically loaded cluster.
@@ -1471,9 +1471,9 @@ type StaticCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StaticCluster) MarshalJSON() ([]byte, error) {
+func (s StaticCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StaticEndpointConfig struct {
@@ -1495,9 +1495,9 @@ type StaticEndpointConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StaticEndpointConfig) MarshalJSON() ([]byte, error) {
+func (s StaticEndpointConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticEndpointConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StaticListener: Describes a statically loaded listener.
@@ -1519,9 +1519,9 @@ type StaticListener struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StaticListener) MarshalJSON() ([]byte, error) {
+func (s StaticListener) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticListener
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StaticRouteConfig struct {
@@ -1542,9 +1542,9 @@ type StaticRouteConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StaticRouteConfig) MarshalJSON() ([]byte, error) {
+func (s StaticRouteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticRouteConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StringMatcher: Specifies the way to match a string. [#next-free-field: 9]
@@ -1588,9 +1588,9 @@ type StringMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StringMatcher) MarshalJSON() ([]byte, error) {
+func (s StringMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod StringMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StructMatcher: StructMatcher provides a general interface to check if a
@@ -1626,9 +1626,9 @@ type StructMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StructMatcher) MarshalJSON() ([]byte, error) {
+func (s StructMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod StructMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TypedExtensionConfig: Message type for extension configuration.
@@ -1656,9 +1656,9 @@ type TypedExtensionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TypedExtensionConfig) MarshalJSON() ([]byte, error) {
+func (s TypedExtensionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TypedExtensionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UpdateFailureState struct {
@@ -1686,9 +1686,9 @@ type UpdateFailureState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateFailureState) MarshalJSON() ([]byte, error) {
+func (s UpdateFailureState) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateFailureState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValueMatcher: Specifies the way to match a ProtobufWkt::Value. Primitive
@@ -1731,9 +1731,9 @@ type ValueMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValueMatcher) MarshalJSON() ([]byte, error) {
+func (s ValueMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DiscoveryClientStatusCall struct {

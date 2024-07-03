@@ -1213,8 +1213,8 @@ func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
 type GamePlayerToken struct {
 	// ApplicationId: The application that this player identifier is for.
 	ApplicationId string `json:"applicationId,omitempty"`
-	// Token: Recall token data.
-	Token []*RecallToken `json:"token,omitempty"`
+	// RecallToken: Recall token data.
+	RecallToken *RecallToken `json:"recallToken,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2543,22 +2543,22 @@ func (s *ResetPersonaResponse) MarshalJSON() ([]byte, error) {
 // RetrieveDeveloperGamesLastPlayerTokenResponse: Recall token data returned
 // from for the RetrieveDeveloperGamesLastPlayerToken RPC
 type RetrieveDeveloperGamesLastPlayerTokenResponse struct {
-	// Token: The recall token associated with the requested PGS Player principal.
-	// It can be unset if there is no recall token associated with the requested
-	// principal.
-	Token *RecallToken `json:"token,omitempty"`
+	// GamePlayerToken: The recall token associated with the requested PGS Player
+	// principal. It can be unset if there is no recall token associated with the
+	// requested principal.
+	GamePlayerToken *GamePlayerToken `json:"gamePlayerToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "GamePlayerToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Token") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GamePlayerToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2571,22 +2571,22 @@ func (s *RetrieveDeveloperGamesLastPlayerTokenResponse) MarshalJSON() ([]byte, e
 // RetrieveGamesPlayerTokensResponse: A list of recall token data returned from
 // the RetrieveGamesPlayerTokens RPC
 type RetrieveGamesPlayerTokensResponse struct {
-	// ApplicationRecallTokens: The requested applications along with the recall
-	// tokens for the player. If the player does not have recall tokens for an
+	// GamePlayerTokens: The requested applications along with the recall tokens
+	// for the player. If the player does not have recall tokens for an
 	// application, that application is not included in the response.
-	ApplicationRecallTokens []*GamePlayerToken `json:"applicationRecallTokens,omitempty"`
+	GamePlayerTokens []*GamePlayerToken `json:"gamePlayerTokens,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ApplicationRecallTokens") to
+	// ForceSendFields is a list of field names (e.g. "GamePlayerTokens") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplicationRecallTokens") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GamePlayerTokens") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

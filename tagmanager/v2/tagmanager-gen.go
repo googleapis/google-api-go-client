@@ -4167,7 +4167,7 @@ type AccountsContainersLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up a Container by destination ID.
+// Lookup: Looks up a Container by destination ID or tag ID.
 func (r *AccountsContainersService) Lookup() *AccountsContainersLookupCall {
 	c := &AccountsContainersLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4175,9 +4175,18 @@ func (r *AccountsContainersService) Lookup() *AccountsContainersLookupCall {
 
 // DestinationId sets the optional parameter "destinationId": Destination ID
 // linked to a GTM Container, e.g. AW-123456789. Example:
-// accounts/containers:lookup?destination_id={destination_id}.
+// accounts/containers:lookup?destination_id={destination_id}. Only one of
+// destination_id or tag_id should be set.
 func (c *AccountsContainersLookupCall) DestinationId(destinationId string) *AccountsContainersLookupCall {
 	c.urlParams_.Set("destinationId", destinationId)
+	return c
+}
+
+// TagId sets the optional parameter "tagId": Tag ID for a GTM Container, e.g.
+// GTM-123456789. Example: accounts/containers:lookup?tag_id={tag_id}. Only one
+// of destination_id or tag_id should be set.
+func (c *AccountsContainersLookupCall) TagId(tagId string) *AccountsContainersLookupCall {
+	c.urlParams_.Set("tagId", tagId)
 	return c
 }
 

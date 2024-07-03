@@ -398,6 +398,8 @@ type Parameters struct {
 	// report.
 	//   "REACH" - Reach report.
 	//   "UNIQUE_REACH_AUDIENCE" - Unique Reach Audience report.
+	//   "FULL_PATH" - Full Path report.
+	//   "PATH_ATTRIBUTION" - Path Attribution report.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

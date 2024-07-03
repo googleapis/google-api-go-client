@@ -1901,26 +1901,6 @@ type GoogleCloudRetailV2alphaBranch struct {
 	// branch, provided for different scopes. This field is not populated in
 	// BranchView.BASIC view.
 	ProductCountStats []*GoogleCloudRetailV2alphaBranchProductCountStatistic `json:"productCountStats,omitempty"`
-	// ProductCounts: Output only. The number of products in different groups that
-	// this branch has. The key is a group representing a set of products, and the
-	// value is the number of products in that group. Note: keys in this map may
-	// change over time. Possible keys: * "primary-in-stock", products have
-	// Product.Type.PRIMARY type and Product.Availability.IN_STOCK availability. *
-	// "primary-out-of-stock", products have Product.Type.PRIMARY type and
-	// Product.Availability.OUT_OF_STOCK availability. * "primary-preorder",
-	// products have Product.Type.PRIMARY type and Product.Availability.PREORDER
-	// availability. * "primary-backorder", products have Product.Type.PRIMARY type
-	// and Product.Availability.BACKORDER availability. * "variant-in-stock",
-	// products have Product.Type.VARIANT type and Product.Availability.IN_STOCK
-	// availability. * "variant-out-of-stock", products have Product.Type.VARIANT
-	// type and Product.Availability.OUT_OF_STOCK availability. *
-	// "variant-preorder", products have Product.Type.VARIANT type and
-	// Product.Availability.PREORDER availability. * "variant-backorder", products
-	// have Product.Type.VARIANT type and Product.Availability.BACKORDER
-	// availability. * "price-discounted", products have [Product.price_info.price]
-	// < [Product.price_info.original_price]. This field is not populated in
-	// BranchView.BASIC view.
-	ProductCounts map[string]string `json:"productCounts,omitempty"`
 	// QualityMetrics: Output only. The quality metrics measured among products of
 	// this branch. See QualityMetric.requirement_key for supported metrics.
 	// Metrics could be missing if failed to retrieve. This field is not populated
@@ -2329,10 +2309,6 @@ type GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet struct {
 	// path of length 2). This merged facet key needs to be either a textual custom
 	// attribute or a numerical custom attribute.
 	MergedFacetKey string `json:"mergedFacetKey,omitempty"`
-	// MergedFacetValues: Each instance is a list of facet values that map into the
-	// same (possibly different) merged facet value. For the current attribute
-	// config, each facet value should map to at most one merged facet value.
-	MergedFacetValues []*GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacetValue `json:"mergedFacetValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MergedFacetKey") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2565,8 +2541,8 @@ func (s *GoogleCloudRetailV2alphaCompleteQueryResponseCompletionResult) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2alphaCompleteQueryResponseRecentSearchResult: Recent
-// search of this user.
+// GoogleCloudRetailV2alphaCompleteQueryResponseRecentSearchResult: Deprecated:
+// Recent search of this user.
 type GoogleCloudRetailV2alphaCompleteQueryResponseRecentSearchResult struct {
 	// RecentSearch: The recent search query.
 	RecentSearch string `json:"recentSearch,omitempty"`

@@ -1613,10 +1613,10 @@ func (s *Schema) writeSchemaStruct(api *API) {
 // by forceSendFieldName, and allows fields to be transmitted with the null value
 // by listing them in the field identified by nullFieldsName.
 func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
-	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
+	s.api.pn("func (s %s) MarshalJSON() ([]byte, error) {", s.GoName())
 	s.api.pn("\ttype NoMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
-	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(*s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
+	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
 

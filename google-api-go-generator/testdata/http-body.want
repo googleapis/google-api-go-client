@@ -281,9 +281,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall struct {

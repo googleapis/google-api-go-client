@@ -727,6 +727,11 @@ type GooglePrivacyDlpV2AllOtherBigQueryTables struct {
 type GooglePrivacyDlpV2AllOtherDatabaseResources struct {
 }
 
+// GooglePrivacyDlpV2AllOtherResources: Match discovery resources not covered
+// by any other filter.
+type GooglePrivacyDlpV2AllOtherResources struct {
+}
+
 // GooglePrivacyDlpV2AllText: Apply to all text.
 type GooglePrivacyDlpV2AllText struct {
 }
@@ -1485,6 +1490,39 @@ func (s *GooglePrivacyDlpV2CloudSqlProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CloudStorageDiscoveryTarget: Target used to match against
+// for discovery with Cloud Storage buckets.
+type GooglePrivacyDlpV2CloudStorageDiscoveryTarget struct {
+	// Conditions: Optional. In addition to matching the filter, these conditions
+	// must be true before a profile is generated.
+	Conditions *GooglePrivacyDlpV2DiscoveryFileStoreConditions `json:"conditions,omitempty"`
+	// Disabled: Optional. Disable profiling for buckets that match this filter.
+	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
+	// Filter: Required. The buckets the generation_cadence applies to. The first
+	// target with a matching filter will be the one to apply to a bucket.
+	Filter *GooglePrivacyDlpV2DiscoveryCloudStorageFilter `json:"filter,omitempty"`
+	// GenerationCadence: Optional. How often and when to update profiles. New
+	// buckets that match both the filter and conditions are scanned as quickly as
+	// possible depending on system capacity.
+	GenerationCadence *GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence `json:"generationCadence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudStorageDiscoveryTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageDiscoveryTarget
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CloudStorageFileSet: Message representing a set of files
 // in Cloud Storage.
 type GooglePrivacyDlpV2CloudStorageFileSet struct {
@@ -1628,6 +1666,36 @@ func (s *GooglePrivacyDlpV2CloudStoragePath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CloudStorageRegex: A pattern to match against one or more
+// file stores. At least one pattern must be specified. Regular expressions use
+// RE2 syntax (https://github.com/google/re2/wiki/Syntax); a guide can be found
+// under the google/re2 repository on GitHub.
+type GooglePrivacyDlpV2CloudStorageRegex struct {
+	// BucketNameRegex: Optional. Regex to test the bucket name against. If empty,
+	// all buckets match. Example: "marketing2021" or "(marketing)\d{4}" will both
+	// match the bucket gs://marketing2021
+	BucketNameRegex string `json:"bucketNameRegex,omitempty"`
+	// ProjectIdRegex: Optional. For organizations, if unset, will match all
+	// projects.
+	ProjectIdRegex string `json:"projectIdRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketNameRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketNameRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudStorageRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageRegex
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CloudStorageRegexFileSet: Message representing a set of
 // files in a Cloud Storage bucket. Regular expressions are used to allow
 // fine-grained control over which files in the bucket to include. Included
@@ -1681,6 +1749,32 @@ type GooglePrivacyDlpV2CloudStorageRegexFileSet struct {
 
 func (s *GooglePrivacyDlpV2CloudStorageRegexFileSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageRegexFileSet
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudStorageResourceReference: Identifies a single Cloud
+// Storage bucket.
+type GooglePrivacyDlpV2CloudStorageResourceReference struct {
+	// BucketName: Required. The bucket to scan.
+	BucketName string `json:"bucketName,omitempty"`
+	// ProjectId: Required. If within a project-level config, then this must match
+	// the config's project id.
+	ProjectId string `json:"projectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudStorageResourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageResourceReference
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3131,18 +3225,18 @@ func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 // project and dataset as the original table. Compatible with: Inspect
 type GooglePrivacyDlpV2Deidentify struct {
 	// CloudStorageOutput: Required. User settable Cloud Storage bucket and folders
-	// to store de-identified files. This field must be set for cloud storage
+	// to store de-identified files. This field must be set for Cloud Storage
 	// deidentification. The output Cloud Storage bucket must be different from the
 	// input bucket. De-identified files will overwrite files in the output path.
 	// Form of: gs://bucket/folder/ or gs://bucket
 	CloudStorageOutput string `json:"cloudStorageOutput,omitempty"`
 	// FileTypesToTransform: List of user-specified file type groups to transform.
-	// If specified, only the files with these filetypes will be transformed. If
+	// If specified, only the files with these file types will be transformed. If
 	// empty, all supported files will be transformed. Supported types may be
 	// automatically added over time. If a file type is set in this field that
 	// isn't supported by the Deidentify action then the job will fail and will not
-	// be successfully created/started. Currently the only filetypes supported are:
-	// IMAGES, TEXT_FILES, CSV, TSV.
+	// be successfully created/started. Currently the only file types supported
+	// are: IMAGES, TEXT_FILES, CSV, TSV.
 	//
 	// Possible values:
 	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
@@ -3843,6 +3937,140 @@ func (s *GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DiscoveryCloudStorageConditions: Requirements that must be
+// true before a Cloud Storage bucket or object is scanned in discovery for the
+// first time. There is an AND relationship between the top-level attributes.
+type GooglePrivacyDlpV2DiscoveryCloudStorageConditions struct {
+	// IncludedBucketAttributes: Required. Only objects with the specified
+	// attributes will be scanned. Defaults to [ALL_SUPPORTED_BUCKETS] if unset.
+	//
+	// Possible values:
+	//   "CLOUD_STORAGE_BUCKET_ATTRIBUTE_UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_BUCKETS" - Scan buckets regardless of the attribute.
+	//   "AUTOCLASS_DISABLED" - Buckets with autoclass disabled
+	// (https://cloud.google.com/storage/docs/autoclass). Only one of
+	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
+	//   "AUTOCLASS_ENABLED" - Buckets with autoclass enabled
+	// (https://cloud.google.com/storage/docs/autoclass). Only one of
+	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
+	// Autoclass-enabled buckets can affect object storage classes.
+	IncludedBucketAttributes []string `json:"includedBucketAttributes,omitempty"`
+	// IncludedObjectAttributes: Required. Only objects with the specified
+	// attributes will be scanned. If an object has one of the specified attributes
+	// but is inside an excluded bucket, it will not be scanned. Defaults to
+	// [ALL_SUPPORTED_OBJECTS]. A profile will be created even if no objects match
+	// the included_object_attributes.
+	//
+	// Possible values:
+	//   "CLOUD_STORAGE_OBJECT_ATTRIBUTE_UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_OBJECTS" - Scan objects regardless of the attribute.
+	//   "STANDARD" - Scan objects with the standard storage class.
+	//   "NEARLINE" - Scan objects with the nearline storage class. This will incur
+	// retrieval fees.
+	//   "COLDLINE" - Scan objects with the coldline storage class. This will incur
+	// retrieval fees.
+	//   "ARCHIVE" - Scan objects with the archive storage class. This will incur
+	// retrieval fees.
+	//   "REGIONAL" - Scan objects with the regional storage class.
+	//   "MULTI_REGIONAL" - Scan objects with the multi-regional storage class.
+	//   "DURABLE_REDUCED_AVAILABILITY" - Scan objects with the dual-regional
+	// storage class. This will incur retrieval fees.
+	IncludedObjectAttributes []string `json:"includedObjectAttributes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludedBucketAttributes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludedBucketAttributes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudStorageConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageConditions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudStorageFilter: Determines which buckets will
+// have profiles generated within an organization or project. Includes the
+// ability to filter by regular expression patterns on project ID and bucket
+// name.
+type GooglePrivacyDlpV2DiscoveryCloudStorageFilter struct {
+	// CloudStorageResourceReference: Optional. The bucket to scan. Targets
+	// including this can only include one target (the target with this bucket).
+	// This enables profiling the contents of a single bucket, while the other
+	// options allow for easy profiling of many bucets within a project or an
+	// organization.
+	CloudStorageResourceReference *GooglePrivacyDlpV2CloudStorageResourceReference `json:"cloudStorageResourceReference,omitempty"`
+	// Collection: Optional. A specific set of buckets for this filter to apply to.
+	Collection *GooglePrivacyDlpV2FileStoreCollection `json:"collection,omitempty"`
+	// Others: Optional. Catch-all. This should always be the last target in the
+	// list because anything above it will apply first. Should only appear once in
+	// a configuration. If none is specified, a default one will be added
+	// automatically.
+	Others *GooglePrivacyDlpV2AllOtherResources `json:"others,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudStorageResourceReference") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageResourceReference")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudStorageFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageFilter
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence: How often existing
+// buckets should have their profiles refreshed. New buckets are scanned as
+// quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Optional. Governs when to update data
+	// profiles when the inspection rules defined by the `InspectTemplate` change.
+	// If not set, changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: Optional. Data changes in Cloud Storage can't trigger
+	// reprofiling. If you set this field, profiles are refreshed at this frequency
+	// regardless of whether the underlying buckets have changed. Defaults to
+	// never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DiscoveryConfig: Configuration for discovery to scan
 // resources for profile generation. Only one discovery configuration may exist
 // per organization, folder, or project. The generated data profiles are
@@ -3913,24 +4141,59 @@ func (s *GooglePrivacyDlpV2DiscoveryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DiscoveryFileStoreConditions: Requirements that must be
+// true before a file store is scanned in discovery for the first time. There
+// is an AND relationship between the top-level attributes.
+type GooglePrivacyDlpV2DiscoveryFileStoreConditions struct {
+	// CloudStorageConditions: Optional. Cloud Storage conditions.
+	CloudStorageConditions *GooglePrivacyDlpV2DiscoveryCloudStorageConditions `json:"cloudStorageConditions,omitempty"`
+	// CreatedAfter: Optional. File store must have been created after this date.
+	// Used to avoid backfilling.
+	CreatedAfter string `json:"createdAfter,omitempty"`
+	// MinAge: Optional. Minimum age a file store must have. If set, the value must
+	// be 1 hour or greater.
+	MinAge string `json:"minAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageConditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageConditions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryFileStoreConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryFileStoreConditions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DiscoveryGenerationCadence: What must take place for a
 // profile to be updated and how frequently it should occur. New tables are
 // scanned as quickly as possible depending on system capacity.
 type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Governs when to update data profiles when
+	// the inspection rules defined by the `InspectTemplate` change. If not set,
+	// changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
 	// SchemaModifiedCadence: Governs when to update data profiles when a schema is
 	// modified.
 	SchemaModifiedCadence *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
 	// TableModifiedCadence: Governs when to update data profiles when a table is
 	// modified.
 	TableModifiedCadence *GooglePrivacyDlpV2DiscoveryTableModifiedCadence `json:"tableModifiedCadence,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SchemaModifiedCadence") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SchemaModifiedCadence") to
-	// include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -3938,6 +4201,40 @@ type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
 
 func (s *GooglePrivacyDlpV2DiscoveryGenerationCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryGenerationCadence
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence: The cadence at
+// which to update data profiles when the inspection rules defined by the
+// `InspectTemplate` change.
+type GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence struct {
+	// Frequency: How frequently data profiles can be updated when the template is
+	// modified. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	Frequency string `json:"frequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Frequency") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4062,6 +4359,9 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// CloudSqlTarget: Cloud SQL target for Discovery. The first target to match a
 	// table will be the one applied.
 	CloudSqlTarget *GooglePrivacyDlpV2CloudSqlDiscoveryTarget `json:"cloudSqlTarget,omitempty"`
+	// CloudStorageTarget: Cloud Storage target for Discovery. The first target to
+	// match a table will be the one applied.
+	CloudStorageTarget *GooglePrivacyDlpV2CloudStorageDiscoveryTarget `json:"cloudStorageTarget,omitempty"`
 	// SecretsTarget: Discovery target that looks for credentials and secrets
 	// stored in cloud resource metadata and reports them as vulnerabilities to
 	// Security Command Center. Only one target of this type is allowed.
@@ -4469,7 +4769,7 @@ type GooglePrivacyDlpV2FileClusterSummary struct {
 	// DataRiskLevel: The data risk level of this cluster. RISK_LOW if nothing has
 	// been scanned.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
-	// Errors: A list of Errors detected while scanning this cluster. The list is
+	// Errors: A list of errors detected while scanning this cluster. The list is
 	// truncated to 10 per cluster.
 	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
 	// FileClusterType: The file cluster type.
@@ -4596,8 +4896,32 @@ func (s *GooglePrivacyDlpV2FileSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2FileStoreCollection: Match file stores (e.g. buckets)
+// using regex filters.
+type GooglePrivacyDlpV2FileStoreCollection struct {
+	// IncludeRegexes: Optional. A collection of regular expressions to match a
+	// file store against.
+	IncludeRegexes *GooglePrivacyDlpV2FileStoreRegexes `json:"includeRegexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeRegexes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileStoreCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreCollection
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2FileStoreDataProfile: The profile for a file store. *
-// Google Cloud Storage: maps 1:1 with a bucket.
+// Cloud Storage: maps 1:1 with a bucket.
 type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// ConfigSnapshot: The snapshot of the configurations used to generate the
 	// profile.
@@ -4609,11 +4933,11 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// DataSourceType: The resource type that was profiled.
 	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
 	// DataStorageLocations: For resources that have multiple storage locations,
-	// these are those regions. For Google Cloud Storage this is the list of
-	// regions chosen for dual-region storage. `file_store_location` will normally
-	// be the corresponding multi-region for the list of individual locations. The
-	// first region is always picked as the processing and storage location for the
-	// data profile.
+	// these are those regions. For Cloud Storage this is the list of regions
+	// chosen for dual-region storage. `file_store_location` will normally be the
+	// corresponding multi-region for the list of individual locations. The first
+	// region is always picked as the processing and storage location for the data
+	// profile.
 	DataStorageLocations []string `json:"dataStorageLocations,omitempty"`
 	// FileClusterSummaries: FileClusterSummary per each cluster.
 	FileClusterSummaries []*GooglePrivacyDlpV2FileClusterSummary `json:"fileClusterSummaries,omitempty"`
@@ -4621,10 +4945,10 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
 	// FileStoreIsEmpty: The file store does not have any files.
 	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
-	// FileStoreLocation: The location of the file store. * Google Cloud Storage:
+	// FileStoreLocation: The location of the file store. * Cloud Storage:
 	// https://cloud.google.com/storage/docs/locations#available-locations
 	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
-	// FileStorePath: The file store path. * Google Cloud Storage: `gs://{bucket}`
+	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}`
 	FileStorePath string `json:"fileStorePath,omitempty"`
 	// FullResource: The resource name of the resource profiled.
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
@@ -4642,14 +4966,14 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// ProfileStatus: Success or error status from the most recent profile
 	// generation attempt. May be empty if the profile is still being generated.
 	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
-	// ProjectDataProfile: The resource name to the project data profile for this
+	// ProjectDataProfile: The resource name of the project data profile for this
 	// file store.
 	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
 	// ProjectId: The Google Cloud project ID that owns the resource.
 	ProjectId string `json:"projectId,omitempty"`
 	// ResourceAttributes: Attributes of the resource being profiled. Currently
-	// used attributes: - customer_managed_encryption: boolean true: the resource
-	// is encrypted with a customer-managed key. false: the resource is encrypted
+	// used attributes: * customer_managed_encryption: boolean - true: the resource
+	// is encrypted with a customer-managed key. - false: the resource is encrypted
 	// with a provider-managed key.
 	ResourceAttributes map[string]GooglePrivacyDlpV2Value `json:"resourceAttributes,omitempty"`
 	// ResourceLabels: The labels applied to the resource at the time the profile
@@ -4718,6 +5042,54 @@ type GooglePrivacyDlpV2FileStoreInfoTypeSummary struct {
 
 func (s *GooglePrivacyDlpV2FileStoreInfoTypeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileStoreInfoTypeSummary
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreRegex: A pattern to match against one or more
+// file stores.
+type GooglePrivacyDlpV2FileStoreRegex struct {
+	// CloudStorageRegex: Optional. Regex for Cloud Storage.
+	CloudStorageRegex *GooglePrivacyDlpV2CloudStorageRegex `json:"cloudStorageRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileStoreRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreRegex
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreRegexes: A collection of regular expressions to
+// determine what file store to match against.
+type GooglePrivacyDlpV2FileStoreRegexes struct {
+	// Patterns: Required. The group of regular expression patterns to match
+	// against one or more file stores. Maximum of 100 entries. The sum of all
+	// regular expression's length can't exceed 10 KiB.
+	Patterns []*GooglePrivacyDlpV2FileStoreRegex `json:"patterns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Patterns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Patterns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileStoreRegexes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreRegexes
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8864,7 +9236,7 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// ProfileStatus: Success or error status from the most recent profile
 	// generation attempt. May be empty if the profile is still being generated.
 	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
-	// ProjectDataProfile: The resource name to the project data profile for this
+	// ProjectDataProfile: The resource name of the project data profile for this
 	// table.
 	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
 	// ResourceLabels: The labels applied to the resource at the time the profile
@@ -10623,7 +10995,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -11236,7 +11608,7 @@ func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -11633,7 +12005,7 @@ func (c *OrganizationsLocationsColumnDataProfilesListCall) Filter(filter string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -12710,7 +13082,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationI
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -13291,7 +13663,7 @@ func (r *OrganizationsLocationsDiscoveryConfigsService) List(parentid string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // config fields to order by, followed by `asc` or `desc` postfix. This list is
 // case insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -13591,7 +13963,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) LocationId(locationId string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -13980,7 +14352,7 @@ func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string)
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` . * 'file_store_path =
+// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
 // "gs://mybucket" The length of this field should be no more than 500
 // characters.
 func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter string) *OrganizationsLocationsFileStoreDataProfilesListCall {
@@ -13988,7 +14360,7 @@ func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter stri
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -14500,7 +14872,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId s
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -15123,7 +15495,7 @@ func (c *OrganizationsLocationsJobTriggersListCall) LocationId(locationId string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -15525,7 +15897,7 @@ func (c *OrganizationsLocationsProjectDataProfilesListCall) Filter(filter string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -16029,7 +16401,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId st
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -16521,7 +16893,7 @@ func (c *OrganizationsLocationsTableDataProfilesListCall) Filter(filter string) 
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -17029,7 +17401,7 @@ func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *Or
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -17988,7 +18360,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *Pro
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -18730,7 +19102,7 @@ func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobs
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -19364,7 +19736,7 @@ func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -20091,7 +20463,7 @@ func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJob
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -20502,7 +20874,7 @@ func (c *ProjectsLocationsColumnDataProfilesListCall) Filter(filter string) *Pro
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -22074,7 +22446,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) LocationId(locationId str
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -22655,7 +23027,7 @@ func (r *ProjectsLocationsDiscoveryConfigsService) List(parentid string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // config fields to order by, followed by `asc` or `desc` postfix. This list is
 // case insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -23600,7 +23972,7 @@ func (c *ProjectsLocationsDlpJobsListCall) LocationId(locationId string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -23989,7 +24361,7 @@ func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *Pro
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` . * 'file_store_path =
+// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
 // "gs://mybucket" The length of this field should be no more than 500
 // characters.
 func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *ProjectsLocationsFileStoreDataProfilesListCall {
@@ -23997,7 +24369,7 @@ func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -24625,7 +24997,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) LocationId(locationId string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -25457,7 +25829,7 @@ func (c *ProjectsLocationsJobTriggersListCall) LocationId(locationId string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -25859,7 +26231,7 @@ func (c *ProjectsLocationsProjectDataProfilesListCall) Filter(filter string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -26363,7 +26735,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) LocationId(locationId string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -26855,7 +27227,7 @@ func (c *ProjectsLocationsTableDataProfilesListCall) Filter(filter string) *Proj
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -27363,7 +27735,7 @@ func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *Project
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time

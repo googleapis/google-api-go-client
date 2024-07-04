@@ -409,12 +409,12 @@ func (s *GoogleCloudAiplatformV1beta1Content) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1beta1CountTokensRequest: Request message for
 // PredictionService.CountTokens.
 type GoogleCloudAiplatformV1beta1CountTokensRequest struct {
-	// Contents: Required. Input content.
+	// Contents: Optional. Input content.
 	Contents []*GoogleCloudAiplatformV1beta1Content `json:"contents,omitempty"`
-	// Instances: Required. The instances that are the input to token counting
+	// Instances: Optional. The instances that are the input to token counting
 	// call. Schema is identical to the prediction schema of the underlying model.
 	Instances []interface{} `json:"instances,omitempty"`
-	// Model: Required. The name of the publisher model requested to serve the
+	// Model: Optional. The name of the publisher model requested to serve the
 	// prediction. Format:
 	// `projects/{project}/locations/{location}/publishers/*/models/*`
 	Model string `json:"model,omitempty"`
@@ -852,100 +852,6 @@ func (s *GoogleCloudAiplatformV1beta1GenerationConfig) UnmarshalJSON(data []byte
 type GoogleCloudAiplatformV1beta1GoogleSearchRetrieval struct {
 }
 
-// GoogleCloudAiplatformV1beta1GroundingAttribution: Grounding attribution.
-type GoogleCloudAiplatformV1beta1GroundingAttribution struct {
-	// ConfidenceScore: Optional. Output only. Confidence score of the attribution.
-	// Ranges from 0 to 1. 1 is the most confident.
-	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
-	// RetrievedContext: Optional. Attribution from context retrieved by the
-	// retrieval tools.
-	RetrievedContext *GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext `json:"retrievedContext,omitempty"`
-	// Segment: Output only. Segment of the content this attribution belongs to.
-	Segment *GoogleCloudAiplatformV1beta1Segment `json:"segment,omitempty"`
-	// Web: Optional. Attribution from the web.
-	Web *GoogleCloudAiplatformV1beta1GroundingAttributionWeb `json:"web,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1beta1GroundingAttribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GroundingAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1beta1GroundingAttribution) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1beta1GroundingAttribution
-	var s1 struct {
-		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceScore = float64(s1.ConfidenceScore)
-	return nil
-}
-
-// GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext:
-// Attribution from context retrieved by the retrieval tools.
-type GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext struct {
-	// Title: Output only. Title of the attribution.
-	Title string `json:"title,omitempty"`
-	// Uri: Output only. URI reference of the attribution.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudAiplatformV1beta1GroundingAttributionWeb: Attribution from the
-// web.
-type GoogleCloudAiplatformV1beta1GroundingAttributionWeb struct {
-	// Title: Output only. Title of the attribution.
-	Title string `json:"title,omitempty"`
-	// Uri: Output only. URI reference of the attribution.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1beta1GroundingAttributionWeb) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GroundingAttributionWeb
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAiplatformV1beta1GroundingChunk: Grounding chunk.
 type GoogleCloudAiplatformV1beta1GroundingChunk struct {
 	// RetrievedContext: Grounding chunk from context retrieved by the retrieval
@@ -1023,8 +929,6 @@ func (s *GoogleCloudAiplatformV1beta1GroundingChunkWeb) MarshalJSON() ([]byte, e
 // GoogleCloudAiplatformV1beta1GroundingMetadata: Metadata returned to client
 // when grounding is enabled.
 type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
-	// GroundingAttributions: Optional. List of grounding attributions.
-	GroundingAttributions []*GoogleCloudAiplatformV1beta1GroundingAttribution `json:"groundingAttributions,omitempty"`
 	// GroundingChunks: List of supporting references retrieved from specified
 	// grounding source.
 	GroundingChunks []*GoogleCloudAiplatformV1beta1GroundingChunk `json:"groundingChunks,omitempty"`
@@ -1038,15 +942,15 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundingAttributions") to
+	// ForceSendFields is a list of field names (e.g. "GroundingChunks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundingAttributions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GroundingChunks") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

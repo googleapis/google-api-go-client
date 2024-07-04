@@ -2588,7 +2588,9 @@ func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, e
 // FirestoreAdmin.RestoreDatabase.
 type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// Backup: Backup to restore from. Must be from the same project as the parent.
-	// Format is: `projects/{project_id}/locations/{location}/backups/{backup}`
+	// The restored database will be created in the same location as the source
+	// backup. Format is:
+	// `projects/{project_id}/locations/{location}/backups/{backup}`
 	Backup string `json:"backup,omitempty"`
 	// DatabaseId: Required. The ID to use for the database, which will become the
 	// final component of the database's resource name. This database id must not
@@ -2599,9 +2601,9 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// valid.
 	DatabaseId string `json:"databaseId,omitempty"`
 	// KmsKeyName: Use Customer Managed Encryption Keys (CMEK) for encryption. Only
-	// keys in the same location as this database are allowed to be used for
-	// encryption. For Firestore's nam5 multi-region, this corresponds to Cloud KMS
-	// multi-region us. For Firestore's eur3 multi-region, this corresponds to
+	// keys in the same location as the restored database are allowed to be used
+	// for encryption. For Firestore's nam5 multi-region, this corresponds to Cloud
+	// KMS multi-region us. For Firestore's eur3 multi-region, this corresponds to
 	// Cloud KMS multi-region europe. See
 	// https://cloud.google.com/kms/docs/locations. The expected format is
 	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKey

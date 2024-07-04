@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240617",
+  "revision": "20240702",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -394,21 +394,21 @@
       "id": "GoogleCloudAiplatformV1beta1CountTokensRequest",
       "properties": {
         "contents": {
-          "description": "Required. Input content.",
+          "description": "Optional. Input content.",
           "items": {
             "$ref": "GoogleCloudAiplatformV1beta1Content"
           },
           "type": "array"
         },
         "instances": {
-          "description": "Required. The instances that are the input to token counting call. Schema is identical to the prediction schema of the underlying model.",
+          "description": "Optional. The instances that are the input to token counting call. Schema is identical to the prediction schema of the underlying model.",
           "items": {
             "type": "any"
           },
           "type": "array"
         },
         "model": {
-          "description": "Required. The name of the publisher model requested to serve the prediction. Format: `projects/{project}/locations/{location}/publishers/*/models/*`",
+          "description": "Optional. The name of the publisher model requested to serve the prediction. Format: `projects/{project}/locations/{location}/publishers/*/models/*`",
           "type": "string"
         }
       },
@@ -728,66 +728,6 @@
       "properties": {},
       "type": "object"
     },
-    "GoogleCloudAiplatformV1beta1GroundingAttribution": {
-      "description": "Grounding attribution.",
-      "id": "GoogleCloudAiplatformV1beta1GroundingAttribution",
-      "properties": {
-        "confidenceScore": {
-          "description": "Optional. Output only. Confidence score of the attribution. Ranges from 0 to 1. 1 is the most confident.",
-          "format": "float",
-          "readOnly": true,
-          "type": "number"
-        },
-        "retrievedContext": {
-          "$ref": "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext",
-          "description": "Optional. Attribution from context retrieved by the retrieval tools."
-        },
-        "segment": {
-          "$ref": "GoogleCloudAiplatformV1beta1Segment",
-          "description": "Output only. Segment of the content this attribution belongs to.",
-          "readOnly": true
-        },
-        "web": {
-          "$ref": "GoogleCloudAiplatformV1beta1GroundingAttributionWeb",
-          "description": "Optional. Attribution from the web."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext": {
-      "description": "Attribution from context retrieved by the retrieval tools.",
-      "id": "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext",
-      "properties": {
-        "title": {
-          "description": "Output only. Title of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "uri": {
-          "description": "Output only. URI reference of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAiplatformV1beta1GroundingAttributionWeb": {
-      "description": "Attribution from the web.",
-      "id": "GoogleCloudAiplatformV1beta1GroundingAttributionWeb",
-      "properties": {
-        "title": {
-          "description": "Output only. Title of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "uri": {
-          "description": "Output only. URI reference of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudAiplatformV1beta1GroundingChunk": {
       "description": "Grounding chunk.",
       "id": "GoogleCloudAiplatformV1beta1GroundingChunk",
@@ -837,13 +777,6 @@
       "description": "Metadata returned to client when grounding is enabled.",
       "id": "GoogleCloudAiplatformV1beta1GroundingMetadata",
       "properties": {
-        "groundingAttributions": {
-          "description": "Optional. List of grounding attributions.",
-          "items": {
-            "$ref": "GoogleCloudAiplatformV1beta1GroundingAttribution"
-          },
-          "type": "array"
-        },
         "groundingChunks": {
           "description": "List of supporting references retrieved from specified grounding source.",
           "items": {

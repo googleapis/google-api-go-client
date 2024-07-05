@@ -303,6 +303,8 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
+	// Score: Output only. Confidence score of the candidate.
+	Score float64 `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -319,6 +321,20 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 func (s *GoogleCloudAiplatformV1beta1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Candidate
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1Candidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1Candidate
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1Citation: Source attributions for content.
@@ -418,6 +434,15 @@ type GoogleCloudAiplatformV1beta1CountTokensRequest struct {
 	// prediction. Format:
 	// `projects/{project}/locations/{location}/publishers/*/models/*`
 	Model string `json:"model,omitempty"`
+	// SystemInstruction: Optional. The user provided system instructions for the
+	// model. Note: only text should be used in parts and content in each part will
+	// be in a separate paragraph.
+	SystemInstruction *GoogleCloudAiplatformV1beta1Content `json:"systemInstruction,omitempty"`
+	// Tools: Optional. A list of `Tools` the model may use to generate the next
+	// response. A `Tool` is a piece of code that enables the system to interact
+	// with external systems to perform an action, or set of actions, outside of
+	// knowledge and scope of the model.
+	Tools []*GoogleCloudAiplatformV1beta1Tool `json:"tools,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

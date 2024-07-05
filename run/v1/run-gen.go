@@ -1323,21 +1323,35 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 // ExecutionReference: Reference to an Execution. Use /Executions.GetExecution
 // with the given name to get full execution including the latest status.
 type ExecutionReference struct {
+	// CompletionStatus: Optional. Status for the execution completion.
+	//
+	// Possible values:
+	//   "COMPLETION_STATUS_UNSPECIFIED" - The default value. This value is used if
+	// the state is omitted.
+	//   "EXECUTION_SUCCEEDED" - Job execution has succeeded.
+	//   "EXECUTION_FAILED" - Job execution has failed.
+	//   "EXECUTION_RUNNING" - Job execution is running normally.
+	//   "EXECUTION_PENDING" - Waiting for backing resources to be provisioned.
+	//   "EXECUTION_CANCELLED" - Job execution has been cancelled by the user.
+	CompletionStatus string `json:"completionStatus,omitempty"`
 	// CompletionTimestamp: Optional. Completion timestamp of the execution.
 	CompletionTimestamp string `json:"completionTimestamp,omitempty"`
 	// CreationTimestamp: Optional. Creation timestamp of the execution.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// DeletionTimestamp: Optional. The read-only soft deletion timestamp of the
+	// execution.
+	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 	// Name: Optional. Name of the execution.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CompletionTimestamp") to
+	// ForceSendFields is a list of field names (e.g. "CompletionStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CompletionTimestamp") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CompletionStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2329,36 +2343,6 @@ func (s *GoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDevtoolsCloudbuildV1GCSLocation: Represents a storage location in
-// Cloud Storage
-type GoogleDevtoolsCloudbuildV1GCSLocation struct {
-	// Bucket: Cloud Storage bucket. See
-	// https://cloud.google.com/storage/docs/naming#requirements
-	Bucket string `json:"bucket,omitempty"`
-	// Generation: Cloud Storage generation for the object. If the generation is
-	// omitted, the latest generation will be used.
-	Generation int64 `json:"generation,omitempty,string"`
-	// Object: Cloud Storage object. See
-	// https://cloud.google.com/storage/docs/naming#objectnames
-	Object string `json:"object,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsCloudbuildV1GCSLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsCloudbuildV1GCSLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a configuration for git
 // operations.
 type GoogleDevtoolsCloudbuildV1GitConfig struct {
@@ -2452,11 +2436,11 @@ func (s *GoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
 // related git operations.
 type GoogleDevtoolsCloudbuildV1HttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
-	// proxy URL should be in format protocol://@]proxyhost[:port].
+	// Service Account used in the build (either the default Service Account or
+	// user-specified Service Account) should have secretmanager.versions.access
+	// permissions on this secret. The proxy URL should be in format
+	// protocol://@]proxyhost[:port].
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
-	// ProxySslCaInfo: Optional. Cloud Storage object storing the certificate to
-	// use with the HTTP proxy.
-	ProxySslCaInfo *GoogleDevtoolsCloudbuildV1GCSLocation `json:"proxySslCaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4330,10 +4314,9 @@ type RevisionSpec struct {
 	// in-flight (concurrent) requests per container instance of the Revision. If
 	// not specified, defaults to 80.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
-	// Containers: Required. Containers holds the single container that defines the
-	// unit of execution for this Revision. In the context of a Revision, we
-	// disallow a number of fields on this Container, including: name and
-	// lifecycle. In Cloud Run, only a single container may be provided.
+	// Containers: Required. Containers holds the list which define the units of
+	// execution for this Revision. In the context of a Revision, we disallow a
+	// number of fields on this Container, including: name and lifecycle.
 	Containers []*Container `json:"containers,omitempty"`
 	// EnableServiceLinks: Not supported by Cloud Run.
 	EnableServiceLinks bool `json:"enableServiceLinks,omitempty"`

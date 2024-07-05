@@ -3225,6 +3225,14 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput struct {
 	// Query: Query text. Article Search uses this to store the input query used to
 	// generate the search results.
 	Query string `json:"query,omitempty"`
+	// QuerySource: Query source for the answer.
+	//
+	// Possible values:
+	//   "QUERY_SOURCE_UNSPECIFIED" - Unknown query source.
+	//   "AGENT_QUERY" - The query is from agents.
+	//   "SUGGESTED_QUERY" - The query is a query from previous suggestions, e.g.
+	// from a preceding SuggestKnowledgeAssist response.
+	QuerySource string `json:"querySource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6129,6 +6137,14 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput struct {
 	// Query: Query text. Article Search uses this to store the input query used to
 	// generate the search results.
 	Query string `json:"query,omitempty"`
+	// QuerySource: Query source for the answer.
+	//
+	// Possible values:
+	//   "QUERY_SOURCE_UNSPECIFIED" - Unknown query source.
+	//   "AGENT_QUERY" - The query is from agents.
+	//   "SUGGESTED_QUERY" - The query is a query from previous suggestions, e.g.
+	// from a preceding SuggestKnowledgeAssist response.
+	QuerySource string `json:"querySource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -4601,6 +4601,14 @@ func (r *EnterprisesService) GenerateSignupUrl() *EnterprisesGenerateSignupUrlCa
 	return c
 }
 
+// AdminEmail sets the optional parameter "adminEmail": Email address used to
+// prefill the admin field of the enterprise signup form. This value is a hint
+// only and can be altered by the user.
+func (c *EnterprisesGenerateSignupUrlCall) AdminEmail(adminEmail string) *EnterprisesGenerateSignupUrlCall {
+	c.urlParams_.Set("adminEmail", adminEmail)
+	return c
+}
+
 // CallbackUrl sets the optional parameter "callbackUrl": The callback URL to
 // which the Admin will be redirected after successfully creating an
 // enterprise. Before redirecting there the system will add a single query

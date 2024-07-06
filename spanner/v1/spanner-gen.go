@@ -1606,9 +1606,9 @@ type Database struct {
 	// recover data, make sure to account for the time from the moment when the
 	// value is queried to the moment when you initiate the recovery.
 	EarliestVersionTime string `json:"earliestVersionTime,omitempty"`
-	// EnableDropProtection: Whether drop protection is enabled for this database.
-	// Defaults to false, if not set. For more details, please see how to prevent
-	// accidental database deletion
+	// EnableDropProtection: Optional. Whether drop protection is enabled for this
+	// database. Defaults to false, if not set. For more details, please see how to
+	// prevent accidental database deletion
 	// (https://cloud.google.com/spanner/docs/prevent-database-deletion).
 	EnableDropProtection bool `json:"enableDropProtection,omitempty"`
 	// EncryptionConfig: Output only. For databases that are using customer managed

@@ -1682,9 +1682,9 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 
 // Output: Location of output file(s) in a Cloud Storage bucket.
 type Output struct {
-	// Uri: URI for the output file(s). For example, `gs://my-bucket/outputs/`. If
-	// empty, the value is populated from Job.output_uri. See Supported input and
-	// output formats
+	// Uri: URI for the output file(s). For example, `gs://my-bucket/outputs/`.
+	// Must be a directory and not a top-level bucket. If empty, the value is
+	// populated from Job.output_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally

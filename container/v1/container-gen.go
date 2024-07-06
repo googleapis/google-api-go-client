@@ -453,6 +453,8 @@ type AddonsConfig struct {
 	// whether the addon is enabled or not on the Master, it does not track whether
 	// network policy is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
+	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
+	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
@@ -5041,6 +5043,79 @@ func (s *RangeInfo) UnmarshalJSON(data []byte) error {
 	}
 	s.Utilization = float64(s1.Utilization)
 	return nil
+}
+
+// RayClusterLoggingConfig: RayClusterLoggingConfig specifies configuration of
+// Ray logging.
+type RayClusterLoggingConfig struct {
+	// Enabled: Enable log collection for Ray clusters.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RayClusterLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayClusterLoggingConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// RayClusterMonitoringConfig: RayClusterMonitoringConfig specifies monitoring
+// configuration for Ray clusters.
+type RayClusterMonitoringConfig struct {
+	// Enabled: Enable metrics collection for Ray clusters.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RayClusterMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayClusterMonitoringConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// RayOperatorConfig: Configuration options for the Ray Operator add-on.
+type RayOperatorConfig struct {
+	// Enabled: Whether the Ray Operator addon is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// RayClusterLoggingConfig: Optional. Logging configuration for Ray clusters.
+	RayClusterLoggingConfig *RayClusterLoggingConfig `json:"rayClusterLoggingConfig,omitempty"`
+	// RayClusterMonitoringConfig: Optional. Monitoring configuration for Ray
+	// clusters.
+	RayClusterMonitoringConfig *RayClusterMonitoringConfig `json:"rayClusterMonitoringConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RayOperatorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayOperatorConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RecurringTimeWindow: Represents an arbitrary window of time that recurs.

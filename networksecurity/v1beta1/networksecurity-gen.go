@@ -1943,14 +1943,14 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MTLSPolicy: Specification of the MTLSPolicy.
 type MTLSPolicy struct {
 	// ClientValidationCa: Required if the policy is to be used with Traffic
-	// Director. For external HTTPS load balancers it must be empty. Defines the
+	// Director. For Application Load Balancers it must be empty. Defines the
 	// mechanism to obtain the Certificate Authority certificate to validate the
 	// client certificate.
 	ClientValidationCa []*ValidationCA `json:"clientValidationCa,omitempty"`
 	// ClientValidationMode: When the client presents an invalid certificate or no
 	// certificate to the load balancer, the `client_validation_mode` specifies how
 	// the client connection is handled. Required if the policy is to be used with
-	// the external HTTPS load balancing. For Traffic Director it must be empty.
+	// the Application Load Balancers. For Traffic Director it must be empty.
 	//
 	// Possible values:
 	//   "CLIENT_VALIDATION_MODE_UNSPECIFIED" - Not allowed.
@@ -1969,8 +1969,8 @@ type MTLSPolicy struct {
 	// ClientValidationTrustConfig: Reference to the TrustConfig from
 	// certificatemanager.googleapis.com namespace. If specified, the chain
 	// validation will be performed against certificates configured in the given
-	// TrustConfig. Allowed only if the policy is to be used with external HTTPS
-	// load balancers.
+	// TrustConfig. Allowed only if the policy is to be used with Application Load
+	// Balancers.
 	ClientValidationTrustConfig string `json:"clientValidationTrustConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientValidationCa") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2142,7 +2142,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfile: SecurityProfile is a resource that defines the behavior for
-// one of many ProfileTypes. Next ID: 10
+// one of many ProfileTypes. Next ID: 11
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2194,7 +2194,7 @@ func (s *SecurityProfile) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfileGroup: SecurityProfileGroup is a resource that defines the
-// behavior for various ProfileTypes. Next ID: 9
+// behavior for various ProfileTypes. Next ID: 10
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2241,22 +2241,22 @@ func (s *SecurityProfileGroup) MarshalJSON() ([]byte, error) {
 // ServerTlsPolicy: ServerTlsPolicy is a resource that specifies how a server
 // should authenticate incoming requests. This resource itself does not affect
 // configuration unless it is attached to a target HTTPS proxy or endpoint
-// config selector resource. ServerTlsPolicy in the form accepted by external
-// HTTPS load balancers can be attached only to TargetHttpsProxy with an
-// `EXTERNAL` or `EXTERNAL_MANAGED` load balancing scheme. Traffic Director
-// compatible ServerTlsPolicies can be attached to EndpointPolicy and
-// TargetHttpsProxy with Traffic Director `INTERNAL_SELF_MANAGED` load
-// balancing scheme.
+// config selector resource. ServerTlsPolicy in the form accepted by
+// Application Load Balancers can be attached only to TargetHttpsProxy with an
+// `EXTERNAL`, `EXTERNAL_MANAGED` or `INTERNAL_MANAGED` load balancing scheme.
+// Traffic Director compatible ServerTlsPolicies can be attached to
+// EndpointPolicy and TargetHttpsProxy with Traffic Director
+// `INTERNAL_SELF_MANAGED` load balancing scheme.
 type ServerTlsPolicy struct {
 	// AllowOpen: This field applies only for Traffic Director policies. It is must
-	// be set to false for external HTTPS load balancer policies. Determines if
-	// server allows plaintext connections. If set to true, server allows plain
-	// text connections. By default, it is set to false. This setting is not
-	// exclusive of other encryption modes. For example, if `allow_open` and
-	// `mtls_policy` are set, server allows both plain text and mTLS connections.
-	// See documentation of other encryption modes to confirm compatibility.
-	// Consider using it if you wish to upgrade in place your deployment to TLS
-	// while having mixed TLS and non-TLS traffic reaching port :80.
+	// be set to false for Application Load Balancer policies. Determines if server
+	// allows plaintext connections. If set to true, server allows plain text
+	// connections. By default, it is set to false. This setting is not exclusive
+	// of other encryption modes. For example, if `allow_open` and `mtls_policy`
+	// are set, server allows both plain text and mTLS connections. See
+	// documentation of other encryption modes to confirm compatibility. Consider
+	// using it if you wish to upgrade in place your deployment to TLS while having
+	// mixed TLS and non-TLS traffic reaching port :80.
 	AllowOpen bool `json:"allowOpen,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2264,8 +2264,8 @@ type ServerTlsPolicy struct {
 	Description string `json:"description,omitempty"`
 	// Labels: Set of label tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MtlsPolicy: This field is required if the policy is used with external HTTPS
-	// load balancers. This field can be empty for Traffic Director. Defines a
+	// MtlsPolicy: This field is required if the policy is used with Application
+	// Load Balancers. This field can be empty for Traffic Director. Defines a
 	// mechanism to provision peer validation certificates for peer to peer
 	// authentication (Mutual TLS - mTLS). If not specified, client certificate
 	// will not be requested. The connection is treated as TLS and not mTLS. If
@@ -2276,7 +2276,7 @@ type ServerTlsPolicy struct {
 	// `projects/*/locations/{location}/serverTlsPolicies/{server_tls_policy}`
 	Name string `json:"name,omitempty"`
 	// ServerCertificate: Optional if policy is to be used with Traffic Director.
-	// For external HTTPS load balancer must be empty. Defines a mechanism to
+	// For Application Load Balancers must be empty. Defines a mechanism to
 	// provision server identity (public and private keys). Cannot be combined with
 	// `allow_open` as a permissive mode that allows both plain text and TLS is not
 	// supported.

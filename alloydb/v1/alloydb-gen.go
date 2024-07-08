@@ -652,6 +652,16 @@ type Cluster struct {
 	// cluster are not allowed while the cluster is in this state.
 	//   "PROMOTING" - The cluster is being promoted.
 	State string `json:"state,omitempty"`
+	// SubscriptionType: Optional. Subscription type of the cluster.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - This is an unknown Subscription type (By
+	// default, Subscription Type is STANDARD)
+	//   "STANDARD" - Standard subscription.
+	//   "TRIAL" - Trial subscription.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
+	// TrialMetadata: Output only. Metadata for free trial clusters
+	TrialMetadata *TrialMetadata `json:"trialMetadata,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
 	// assigned when the resource is created, and it is retained until it is
 	// deleted.
@@ -3522,6 +3532,33 @@ type TimeBasedRetention struct {
 func (s TimeBasedRetention) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeBasedRetention
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrialMetadata: Contains information and all metadata related to TRIAL
+// clusters.
+type TrialMetadata struct {
+	// EndTime: End time of the trial cluster.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: start time of the trial cluster.
+	StartTime string `json:"startTime,omitempty"`
+	// UpgradeTime: Upgrade time of trial cluster to Standard cluster.
+	UpgradeTime string `json:"upgradeTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrialMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod TrialMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Message describing User object.

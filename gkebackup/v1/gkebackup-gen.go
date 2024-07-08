@@ -1162,7 +1162,7 @@ func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 type GroupKind struct {
 	// ResourceGroup: Optional. API group string of a Kubernetes resource, e.g.
 	// "apiextensions.k8s.io", "storage.k8s.io", etc. Note: use empty string for
-	// core API group
+	// core API group.
 	ResourceGroup string `json:"resourceGroup,omitempty"`
 	// ResourceKind: Optional. Kind of a Kubernetes resource, must be in
 	// UpperCamelCase (PascalCase) and singular form. E.g.
@@ -1504,9 +1504,9 @@ func (s NamespacedNames) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Namespaces: A list of Kubernetes Namespaces
+// Namespaces: A list of Kubernetes Namespaces.
 type Namespaces struct {
-	// Namespaces: Optional. A list of Kubernetes Namespaces
+	// Namespaces: Optional. A list of Kubernetes Namespaces.
 	Namespaces []string `json:"namespaces,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Namespaces") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1773,7 +1773,7 @@ type Restore struct {
 	Etag string `json:"etag,omitempty"`
 	// Filter: Optional. Immutable. Filters resources for `Restore`. If not
 	// specified, the scope of the restore will remain the same as defined in the
-	// `RestorePlan`. If this is specified, and no resources are matched by the
+	// `RestorePlan`. If this is specified and no resources are matched by the
 	// `inclusion_filters` or everyting is excluded by the `exclusion_filters`,
 	// nothing will be restored. This filter can only be specified if the value of
 	// namespaced_resource_restore_mode is set to `MERGE_SKIP_ON_CONFLICT`,

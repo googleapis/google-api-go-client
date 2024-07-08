@@ -1483,13 +1483,11 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	// identifier of the user's device model. * `deviceType` (string): identifier
 	// of the device's form factor, e.g., PHONE. * `reportType` (string): the type
 	// of error. The value should correspond to one of the possible values in
-	// ErrorType. * `isUserPerceived` (string): denotes whether error is user
-	// perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED. * `issueId`
-	// (string): the id an error was assigned to. The value should correspond to
-	// the `{issue}` component of the issue name. * `deviceRamBucket` (int64): RAM
-	// of the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// ErrorType. * `issueId` (string): the id an error was assigned to. The value
+	// should correspond to the `{issue}` component of the issue name. *
+	// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+	// etc.). * `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1507,7 +1505,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	Dimensions []string `json:"dimensions,omitempty"`
 	// Filter: Filters to apply to data. The filtering expression follows AIP-160
 	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// all breakdown dimensions and: * `isUserPerceived` (string): denotes whether
+	// error is user perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED.
 	Filter string `json:"filter,omitempty"`
 	// Metrics: Metrics to aggregate. **Supported metrics:** * `errorReportCount`
 	// (`google.type.Decimal`): Absolute count of individual error reports that

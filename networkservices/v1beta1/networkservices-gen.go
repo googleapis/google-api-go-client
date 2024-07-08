@@ -3450,7 +3450,7 @@ type TlsRoute struct {
 	// `projects/*/locations/global/meshes/` The attached Mesh should be of a type
 	// SIDECAR
 	Meshes []string `json:"meshes,omitempty"`
-	// Name: Required. Name of the TlsRoute resource. It matches pattern
+	// Name: Identifier. Name of the TlsRoute resource. It matches pattern
 	// `projects/*/locations/global/tlsRoutes/tls_route_name>`.
 	Name string `json:"name,omitempty"`
 	// Rules: Required. Rules that define how traffic is routed and handled. At
@@ -12271,7 +12271,7 @@ type ProjectsLocationsTlsRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single TlsRoute.
 //
-//   - name: Name of the TlsRoute resource. It matches pattern
+//   - name: Identifier. Name of the TlsRoute resource. It matches pattern
 //     `projects/*/locations/global/tlsRoutes/tls_route_name>`.
 func (r *ProjectsLocationsTlsRoutesService) Patch(name string, tlsroute *TlsRoute) *ProjectsLocationsTlsRoutesPatchCall {
 	c := &ProjectsLocationsTlsRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

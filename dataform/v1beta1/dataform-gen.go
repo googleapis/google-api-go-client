@@ -719,6 +719,9 @@ type CompilationResult struct {
 	// CompilationErrors: Output only. Errors encountered during project
 	// compilation.
 	CompilationErrors []*CompilationError `json:"compilationErrors,omitempty"`
+	// CreateTime: Output only. The timestamp of when the compilation result was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
 	// DataEncryptionState: Output only. Only set if the repository has a KMS Key.
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// DataformCoreVersion: Output only. The version of `@dataform/core` that was
@@ -2728,6 +2731,9 @@ func (s UncommittedFileChange) MarshalJSON() ([]byte, error) {
 
 // WorkflowConfig: Represents a Dataform workflow configuration.
 type WorkflowConfig struct {
+	// CreateTime: Output only. The timestamp of when the WorkflowConfig was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
 	// CronSchedule: Optional. Optional schedule (in cron format) for automatic
 	// execution of this workflow config.
 	CronSchedule string `json:"cronSchedule,omitempty"`
@@ -2750,16 +2756,19 @@ type WorkflowConfig struct {
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left
 	// unspecified, the default is UTC.
 	TimeZone string `json:"timeZone,omitempty"`
+	// UpdateTime: Output only. The timestamp of when the WorkflowConfig was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CronSchedule") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CronSchedule") to include in API
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

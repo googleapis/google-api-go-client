@@ -1699,6 +1699,9 @@ type ExportContextSqlExportOptions struct {
 	MysqlExportOptions *ExportContextSqlExportOptionsMysqlExportOptions `json:"mysqlExportOptions,omitempty"`
 	// Parallel: Optional. Whether or not the export should be parallel.
 	Parallel bool `json:"parallel,omitempty"`
+	// PostgresExportOptions: Options for exporting from a Cloud SQL for PostgreSQL
+	// instance.
+	PostgresExportOptions *ExportContextSqlExportOptionsPostgresExportOptions `json:"postgresExportOptions,omitempty"`
 	// SchemaOnly: Export only schemas.
 	SchemaOnly bool `json:"schemaOnly,omitempty"`
 	// Tables: Tables to export, or that were exported, from the specified
@@ -1750,6 +1753,34 @@ type ExportContextSqlExportOptionsMysqlExportOptions struct {
 func (s ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextSqlExportOptionsMysqlExportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportContextSqlExportOptionsPostgresExportOptions: Options for exporting
+// from a Cloud SQL for PostgreSQL instance.
+type ExportContextSqlExportOptionsPostgresExportOptions struct {
+	// Clean: Optional. Use this option to include DROP SQL statements. These
+	// statements are used to delete database objects before running the import
+	// operation.
+	Clean bool `json:"clean,omitempty"`
+	// IfExists: Optional. Option to include an IF EXISTS SQL statement with each
+	// DROP statement produced by clean.
+	IfExists bool `json:"ifExists,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Clean") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Clean") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportContextSqlExportOptionsPostgresExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportContextSqlExportOptionsPostgresExportOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FailoverContext: Database instance failover context.
@@ -2203,6 +2234,9 @@ func (s ImportContextCsvImportOptions) MarshalJSON() ([]byte, error) {
 type ImportContextSqlImportOptions struct {
 	// Parallel: Optional. Whether or not the import should be parallel.
 	Parallel bool `json:"parallel,omitempty"`
+	// PostgresImportOptions: Optional. Options for importing from a Cloud SQL for
+	// PostgreSQL instance.
+	PostgresImportOptions *ImportContextSqlImportOptionsPostgresImportOptions `json:"postgresImportOptions,omitempty"`
 	// Threads: Optional. The number of threads to use for parallel import.
 	Threads int64 `json:"threads,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Parallel") to
@@ -2221,6 +2255,33 @@ type ImportContextSqlImportOptions struct {
 func (s ImportContextSqlImportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextSqlImportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportContextSqlImportOptionsPostgresImportOptions: Optional. Options for
+// importing from a Cloud SQL for PostgreSQL instance.
+type ImportContextSqlImportOptionsPostgresImportOptions struct {
+	// Clean: Optional. The --clean flag for the pg_restore utility. This flag
+	// applies only if you enabled Cloud SQL to import files in parallel.
+	Clean bool `json:"clean,omitempty"`
+	// IfExists: Optional. The --if-exists flag for the pg_restore utility. This
+	// flag applies only if you enabled Cloud SQL to import files in parallel.
+	IfExists bool `json:"ifExists,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Clean") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Clean") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportContextSqlImportOptionsPostgresImportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportContextSqlImportOptionsPostgresImportOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InsightsConfig: Insights configuration. This specifies when Cloud SQL

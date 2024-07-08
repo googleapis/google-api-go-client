@@ -467,6 +467,92 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoscalingPolicy: Autoscaling policy describes the behavior of the
+// autoscaling with respect to the resource utilization. The scale-out
+// operation is initiated if the utilization exceeds ANY of the respective
+// thresholds. The scale-in operation is initiated if the utilization is below
+// ALL of the respective thresholds.
+type AutoscalingPolicy struct {
+	// ConsumedMemoryThresholds: Optional. Utilization thresholds pertaining to
+	// amount of consumed memory.
+	ConsumedMemoryThresholds *Thresholds `json:"consumedMemoryThresholds,omitempty"`
+	// CpuThresholds: Optional. Utilization thresholds pertaining to CPU
+	// utilization.
+	CpuThresholds *Thresholds `json:"cpuThresholds,omitempty"`
+	// GrantedMemoryThresholds: Optional. Utilization thresholds pertaining to
+	// amount of granted memory.
+	GrantedMemoryThresholds *Thresholds `json:"grantedMemoryThresholds,omitempty"`
+	// NodeTypeId: Required. The canonical identifier of the node type to add or
+	// remove. Corresponds to the `NodeType`.
+	NodeTypeId string `json:"nodeTypeId,omitempty"`
+	// ScaleOutSize: Required. Number of nodes to add to a cluster during a
+	// scale-out operation. Must be divisible by 2 for stretched clusters. During a
+	// scale-in operation only one node (or 2 for stretched clusters) are removed
+	// in a single iteration.
+	ScaleOutSize int64 `json:"scaleOutSize,omitempty"`
+	// StorageThresholds: Optional. Utilization thresholds pertaining to amount of
+	// consumed storage.
+	StorageThresholds *Thresholds `json:"storageThresholds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumedMemoryThresholds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumedMemoryThresholds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingPolicy
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingSettings: Autoscaling settings define the rules used by VMware
+// Engine to automatically scale-out and scale-in the clusters in a private
+// cloud.
+type AutoscalingSettings struct {
+	// AutoscalingPolicies: Required. The map with autoscaling policies applied to
+	// the cluster. The key is the identifier of the policy. It must meet the
+	// following requirements: * Only contains 1-63 alphanumeric characters and
+	// hyphens * Begins with an alphabetical character * Ends with a non-hyphen
+	// character * Not formatted as a UUID * Complies with RFC 1034
+	// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5) Currently
+	// there map must contain only one element that describes the autoscaling
+	// policy for compute nodes.
+	AutoscalingPolicies map[string]AutoscalingPolicy `json:"autoscalingPolicies,omitempty"`
+	// CoolDownPeriod: Optional. The minimum duration between consecutive autoscale
+	// operations. It starts once addition or removal of nodes is fully completed.
+	// Defaults to 30 minutes if not specified. Cool down period must be in whole
+	// minutes (for example, 30, 31, 50, 180 minutes).
+	CoolDownPeriod string `json:"coolDownPeriod,omitempty"`
+	// MaxClusterNodeCount: Optional. Maximum number of nodes of any type in a
+	// cluster. If not specified the default limits apply.
+	MaxClusterNodeCount int64 `json:"maxClusterNodeCount,omitempty"`
+	// MinClusterNodeCount: Optional. Minimum number of nodes of any type in a
+	// cluster. If not specified the default limits apply.
+	MinClusterNodeCount int64 `json:"minClusterNodeCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoscalingPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoscalingPolicies") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingSettings
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -568,6 +654,9 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // Cluster: A cluster in a private cloud.
 type Cluster struct {
+	// AutoscalingSettings: Optional. Configuration of the autoscaling applied to
+	// this cluster.
+	AutoscalingSettings *AutoscalingSettings `json:"autoscalingSettings,omitempty"`
 	// CreateTime: Output only. Creation time of this resource.
 	CreateTime string `json:"createTime,omitempty"`
 	// Management: Output only. True if the cluster is a management cluster; false
@@ -606,15 +695,15 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutoscalingSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoscalingSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3152,6 +3241,33 @@ type TestIamPermissionsResponse struct {
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Thresholds: Thresholds define the utilization of resources triggering
+// scale-out and scale-in operations.
+type Thresholds struct {
+	// ScaleIn: Required. The utilization triggering the scale-in operation in
+	// percent.
+	ScaleIn int64 `json:"scaleIn,omitempty"`
+	// ScaleOut: Required. The utilization triggering the scale-out operation in
+	// percent.
+	ScaleOut int64 `json:"scaleOut,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScaleIn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScaleIn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Thresholds) MarshalJSON() ([]byte, error) {
+	type NoMethod Thresholds
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeletePrivateCloudRequest: Request message for

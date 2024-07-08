@@ -669,11 +669,11 @@ type GoogleMapsAddressvalidationV1UspsData struct {
 	// confirmed for primary and any secondary numbers. * `N`: Primary and any
 	// secondary number information failed to DPV confirm. * `S`: Address was DPV
 	// confirmed for the primary number only, and the secondary number information
-	// was present by not confirmed, or a single trailing alpha on a primary number
-	// was dropped to make a DPV match and secondary information required. * `D`:
-	// Address was DPV confirmed for the primary number only, and the secondary
-	// number information was missing. * `R`: Address confirmed but assigned to
-	// phantom route R777 and R779 and USPS delivery is not provided.
+	// was present but not confirmed, or a single trailing alpha on a primary
+	// number was dropped to make a DPV match and secondary information required. *
+	// `D`: Address was DPV confirmed for the primary number only, and the
+	// secondary number information was missing. * `R`: Address confirmed but
+	// assigned to phantom route R777 and R779 and USPS delivery is not provided.
 	DpvEnhancedDeliveryCode string `json:"dpvEnhancedDeliveryCode,omitempty"`
 	// DpvFootnote: The footnotes from delivery point validation. Multiple
 	// footnotes may be strung together in the same string. * `AA`: Input address

@@ -303,6 +303,8 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
+	// Score: Output only. Confidence score of the candidate.
+	Score float64 `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -319,6 +321,20 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 func (s GoogleCloudAiplatformV1beta1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Candidate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1Candidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1Candidate
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1Citation: Source attributions for content.
@@ -409,15 +425,24 @@ func (s GoogleCloudAiplatformV1beta1Content) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1beta1CountTokensRequest: Request message for
 // PredictionService.CountTokens.
 type GoogleCloudAiplatformV1beta1CountTokensRequest struct {
-	// Contents: Required. Input content.
+	// Contents: Optional. Input content.
 	Contents []*GoogleCloudAiplatformV1beta1Content `json:"contents,omitempty"`
-	// Instances: Required. The instances that are the input to token counting
+	// Instances: Optional. The instances that are the input to token counting
 	// call. Schema is identical to the prediction schema of the underlying model.
 	Instances []interface{} `json:"instances,omitempty"`
-	// Model: Required. The name of the publisher model requested to serve the
+	// Model: Optional. The name of the publisher model requested to serve the
 	// prediction. Format:
 	// `projects/{project}/locations/{location}/publishers/*/models/*`
 	Model string `json:"model,omitempty"`
+	// SystemInstruction: Optional. The user provided system instructions for the
+	// model. Note: only text should be used in parts and content in each part will
+	// be in a separate paragraph.
+	SystemInstruction *GoogleCloudAiplatformV1beta1Content `json:"systemInstruction,omitempty"`
+	// Tools: Optional. A list of `Tools` the model may use to generate the next
+	// response. A `Tool` is a piece of code that enables the system to interact
+	// with external systems to perform an action, or set of actions, outside of
+	// knowledge and scope of the model.
+	Tools []*GoogleCloudAiplatformV1beta1Tool `json:"tools,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1023,8 +1048,6 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkWeb) MarshalJSON() ([]byte, er
 // GoogleCloudAiplatformV1beta1GroundingMetadata: Metadata returned to client
 // when grounding is enabled.
 type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
-	// GroundingAttributions: Optional. List of grounding attributions.
-	GroundingAttributions []*GoogleCloudAiplatformV1beta1GroundingAttribution `json:"groundingAttributions,omitempty"`
 	// GroundingChunks: List of supporting references retrieved from specified
 	// grounding source.
 	GroundingChunks []*GoogleCloudAiplatformV1beta1GroundingChunk `json:"groundingChunks,omitempty"`
@@ -1038,15 +1061,15 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundingAttributions") to
+	// ForceSendFields is a list of field names (e.g. "GroundingChunks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundingAttributions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GroundingChunks") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

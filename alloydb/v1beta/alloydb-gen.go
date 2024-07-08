@@ -1740,9 +1740,8 @@ func (s Node) MarshalJSON() ([]byte, error) {
 
 // ObservabilityInstanceConfig: Observability Instance specific configuration.
 type ObservabilityInstanceConfig struct {
-	// Enabled: Observability feature status for an instance. This is a read-only
-	// flag and modifiable only by producer API. This flag is turned "off" by
-	// default.
+	// Enabled: Observability feature status for an instance. This flag is turned
+	// "off" by default.
 	Enabled bool `json:"enabled,omitempty"`
 	// MaxQueryStringLength: Query string length. The default value is 10k.
 	MaxQueryStringLength int64 `json:"maxQueryStringLength,omitempty"`
@@ -1750,8 +1749,8 @@ type ObservabilityInstanceConfig struct {
 	// flag is turned "off" by default.
 	PreserveComments bool `json:"preserveComments,omitempty"`
 	// QueryPlansPerMinute: Number of query execution plans captured by Insights
-	// per minute for all queries combined. The default value is 5. Any integer
-	// between 0 to 20 is considered valid.
+	// per minute for all queries combined. The default value is 200. Any integer
+	// between 0 to 200 is considered valid.
 	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
 	// RecordApplicationTags: Record application tags for an instance. This flag is
 	// turned "off" by default.

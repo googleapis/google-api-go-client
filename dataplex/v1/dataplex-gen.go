@@ -722,8 +722,7 @@ type GoogleCloudDataplexV1Aspect struct {
 	// CreateTime: Output only. The time when the Aspect was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Data: Required. The content of the aspect, according to its aspect type
-	// schema. This will replace content. The maximum size of the field is 120KB
-	// (encoded as UTF-8).
+	// schema. The maximum size of the field is 120KB (encoded as UTF-8).
 	Data googleapi.RawMessage `json:"data,omitempty"`
 	// Path: Output only. The path in the entry under which the aspect is attached.
 	Path string `json:"path,omitempty"`
@@ -747,8 +746,8 @@ func (s *GoogleCloudDataplexV1Aspect) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectSource: AspectSource contains source system
-// related information for the aspect.
+// GoogleCloudDataplexV1AspectSource: AspectSource contains information related
+// to the source system of the Aspect.
 type GoogleCloudDataplexV1AspectSource struct {
 	// CreateTime: The create time of the aspect in the source system.
 	CreateTime string `json:"createTime,omitempty"`
@@ -772,11 +771,11 @@ func (s *GoogleCloudDataplexV1AspectSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectType: Aspect Type is a template for creating
-// Aspects, and represents the JSON-schema for a given Entry, e.g., BigQuery
-// Table Schema.
+// GoogleCloudDataplexV1AspectType: AspectType is a template for creating
+// Aspects, and represents the JSON-schema for a given Entry, for example,
+// BigQuery Table Schema.
 type GoogleCloudDataplexV1AspectType struct {
-	// Authorization: Immutable. Authorization defined for this type.
+	// Authorization: Immutable. Defines the Authorization for this type.
 	Authorization *GoogleCloudDataplexV1AspectTypeAuthorization `json:"authorization,omitempty"`
 	// CreateTime: Output only. The time when the AspectType was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -784,9 +783,8 @@ type GoogleCloudDataplexV1AspectType struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: The service computes this checksum. The client may send it on update
+	// and delete requests to ensure it has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the AspectType.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -797,22 +795,9 @@ type GoogleCloudDataplexV1AspectType struct {
 	// projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_id
 	// }.
 	Name string `json:"name,omitempty"`
-	// TransferStatus: Output only. Denotes the transfer status of the Aspect Type.
-	// It is unspecified for Aspect Types created from Dataplex API.
-	//
-	// Possible values:
-	//   "TRANSFER_STATUS_UNSPECIFIED" - The default value. It is set for resources
-	// that were not subject for migration from Data Catalog service.
-	//   "TRANSFER_STATUS_MIGRATED" - Indicates that a resource was migrated from
-	// Data Catalog service but it hasn't been transferred yet. In particular the
-	// resource cannot be updated from Dataplex API.
-	//   "TRANSFER_STATUS_TRANSFERRED" - Indicates that a resource was transferred
-	// from Data Catalog service. The resource can only be updated from Dataplex
-	// API.
-	TransferStatus string `json:"transferStatus,omitempty"`
-	// Uid: Output only. System generated globally unique ID for the AspectType.
-	// This ID will be different if the AspectType is deleted and re-created with
-	// the same name.
+	// Uid: Output only. System generated globally unique ID for the AspectType. If
+	// you delete and recreate the AspectType with the same name, then this ID will
+	// be different.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time when the AspectType was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -837,12 +822,12 @@ func (s *GoogleCloudDataplexV1AspectType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectTypeAuthorization: Autorization for an Aspect
-// Type.
+// GoogleCloudDataplexV1AspectTypeAuthorization: Autorization for an
+// AspectType.
 type GoogleCloudDataplexV1AspectTypeAuthorization struct {
-	// AlternateUsePermission: Immutable. The IAM permission grantable on the Entry
-	// Group to allow access to instantiate Aspects of Dataplex owned Aspect Types,
-	// only settable for Dataplex owned Types.
+	// AlternateUsePermission: Immutable. The IAM permission grantable on the
+	// EntryGroup to allow access to instantiate Aspects of Dataplex owned
+	// AspectTypes, only settable for Dataplex owned Types.
 	AlternateUsePermission string `json:"alternateUsePermission,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlternateUsePermission") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -863,20 +848,20 @@ func (s *GoogleCloudDataplexV1AspectTypeAuthorization) MarshalJSON() ([]byte, er
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplate: MetadataTemplate definition
-// for AspectType
+// for an AspectType.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// Annotations: Optional. Specifies annotations on this field.
 	Annotations *GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations `json:"annotations,omitempty"`
-	// ArrayItems: Optional. array_items needs to be set if the type is array.
-	// array_items can refer to a primitive field or a complex (record only) field.
-	// To specify a primitive field, just name and type needs to be set in the
-	// nested MetadataTemplate. The recommended value for the name field is item,
-	// as this is not used in the actual payload.
+	// ArrayItems: Optional. If the type is array, set array_items. array_items can
+	// refer to a primitive field or a complex (record only) field. To specify a
+	// primitive field, you only need to set name and type in the nested
+	// MetadataTemplate. The recommended value for the name field is item, as this
+	// isn't used in the actual payload.
 	ArrayItems *GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"arrayItems,omitempty"`
 	// Constraints: Optional. Specifies the constraints on this field.
 	Constraints *GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints `json:"constraints,omitempty"`
-	// EnumValues: Optional. The list of values for an enum type. Needs to be
-	// defined if the type is enum.
+	// EnumValues: Optional. The list of values for an enum type. You must define
+	// it if the type is enum.
 	EnumValues []*GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue `json:"enumValues,omitempty"`
 	// Index: Optional. Index is used to encode Template messages. The value of
 	// index can range between 1 and 2,147,483,647. Index must be unique within all
@@ -885,31 +870,30 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// the actual storage format. Index is a mandatory field, but it is optional
 	// for top level fields, and map/array "values" definitions.
 	Index int64 `json:"index,omitempty"`
-	// MapItems: Optional. map_items needs to be set if the type is map. map_items
-	// can refer to a primitive field or a complex (record only) field. To specify
-	// a primitive field, just name and type needs to be set in the nested
+	// MapItems: Optional. If the type is map, set map_items. map_items can refer
+	// to a primitive field or a complex (record only) field. To specify a
+	// primitive field, you only need to set name and type in the nested
 	// MetadataTemplate. The recommended value for the name field is item, as this
-	// is not used in the actual payload.
+	// isn't used in the actual payload.
 	MapItems *GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"mapItems,omitempty"`
 	// Name: Required. The name of the field.
 	Name string `json:"name,omitempty"`
-	// RecordFields: Optional. Field definition, needs to be specified if the type
-	// is record. Defines the nested fields.
+	// RecordFields: Optional. Field definition. You must specify it if the type is
+	// record. It defines the nested fields.
 	RecordFields []*GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"recordFields,omitempty"`
 	// Type: Required. The datatype of this field. The following values are
-	// supported: Primitive types (string, integer, boolean, double, datetime);
-	// datetime must be of the format RFC3339 UTC "Zulu" (Examples:
-	// "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z"). Complex types
-	// (enum, array, map, record).
+	// supported:Primitive types: string integer boolean double datetime. Must be
+	// of the format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
+	// "2014-10-02T15:01:23.045123456Z").Complex types: enum array map record
 	Type string `json:"type,omitempty"`
-	// TypeId: Optional. Id can be used if this definition of the field needs to be
-	// reused later. Id needs to be unique across the entire template. Id can only
-	// be specified if the field type is record.
+	// TypeId: Optional. You can use type id if this definition of the field needs
+	// to be reused later. The type id must be unique across the entire template.
+	// You can only specify it if the field type is record.
 	TypeId string `json:"typeId,omitempty"`
-	// TypeRef: Optional. A reference to another field definition (instead of an
-	// inline definition). The value must be equal to the value of an id field
-	// defined elsewhere in the MetadataTemplate. Only fields with type as record
-	// can refer to other fields.
+	// TypeRef: Optional. A reference to another field definition (not an inline
+	// definition). The value must be equal to the value of an id field defined
+	// elsewhere in the MetadataTemplate. Only fields with record type can refer to
+	// other fields.
 	TypeRef string `json:"typeRef,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -930,25 +914,25 @@ func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplate) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations: Definition of
-// the annotations of a field
+// the annotations of a field.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations struct {
-	// Deprecated -- Optional. Marks a field as deprecated, a deprecation message
-	// can be included.
+	// Deprecated -- Optional. Marks a field as deprecated. You can include a
+	// deprecation message.
 	Deprecated string `json:"deprecated,omitempty"`
-	// Description: Optional. Specify a description for a field
+	// Description: Optional. Description for a field.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. Specify a displayname for a field.
+	// DisplayName: Optional. Display name for a field.
 	DisplayName string `json:"displayName,omitempty"`
-	// DisplayOrder: Optional. Specify a display order for a field. Display order
-	// can be used to reorder where a field is rendered
+	// DisplayOrder: Optional. Display order for a field. You can use this to
+	// reorder where a field is rendered.
 	DisplayOrder int64 `json:"displayOrder,omitempty"`
-	// StringType: Optional. String Type annotations can be used to specify special
+	// StringType: Optional. You can use String Type annotations to specify special
 	// meaning to string fields. The following values are supported: richText: The
-	// field must be interpreted as a rich text field. url: A fully qualified url
+	// field must be interpreted as a rich text field. url: A fully qualified URL
 	// link. resource: A service qualified resource reference.
 	StringType string `json:"stringType,omitempty"`
-	// StringValues: Optional. Suggested hints for string fields. These can be used
-	// to suggest values to users, through an UI for example.
+	// StringValues: Optional. Suggested hints for string fields. You can use them
+	// to suggest values to users through console.
 	StringValues []string `json:"stringValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -969,9 +953,9 @@ func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations) MarshalJSON
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints: Definition of
-// the constraints of a field
+// the constraints of a field.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints struct {
-	// Required: Optional. Marks this as an optional/required field.
+	// Required: Optional. Marks this field as optional or required.
 	Required bool `json:"required,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Required") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -992,15 +976,15 @@ func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints) MarshalJSON
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue: Definition of
-// Enumvalue (to be used by enum fields)
+// Enumvalue, to be used for enum fields.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue struct {
-	// Deprecated -- Optional. Optional deprecation message to be set if an enum
-	// value needs to be deprecated.
+	// Deprecated -- Optional. You can set this message if you need to deprecate an
+	// enum value.
 	Deprecated string `json:"deprecated,omitempty"`
-	// Index: Required. Index for the enum. Cannot be modified.
+	// Index: Required. Index for the enum value. It can't be modified.
 	Index int64 `json:"index,omitempty"`
 	// Name: Required. Name of the enumvalue. This is the actual value that the
-	// aspect will contain.
+	// aspect can contain.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3559,6 +3543,8 @@ func (s *GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, er
 // GoogleCloudDataplexV1DataScanJob: A DataScanJob represents an instance of
 // DataScan execution.
 type GoogleCloudDataplexV1DataScanJob struct {
+	// CreateTime: Output only. The time when the DataScanJob was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// DataProfileResult: Output only. The result of the data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Output only. DataProfileScan related setting.
@@ -3602,15 +3588,15 @@ type GoogleCloudDataplexV1DataScanJob struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataProfileResult") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataProfileResult") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4020,14 +4006,15 @@ func (s *GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSO
 // which can be described by various metadata.
 type GoogleCloudDataplexV1Entry struct {
 	// Aspects: Optional. The Aspects attached to the Entry. The format for the key
-	// can be one of the following: 1. {projectId}.{locationId}.{aspectTypeId} (if
-	// the aspect is attached directly to the entry) 2.
+	// can be one of the following: {projectId}.{locationId}.{aspectTypeId} (if the
+	// aspect is attached directly to the entry)
 	// {projectId}.{locationId}.{aspectTypeId}@{path} (if the aspect is attached to
 	// an entry's path)
 	Aspects map[string]GoogleCloudDataplexV1Aspect `json:"aspects,omitempty"`
 	// CreateTime: Output only. The time when the Entry was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// EntrySource: Optional. Source system related information for an entry.
+	// EntrySource: Optional. Information related to the source system for an
+	// entry.
 	EntrySource *GoogleCloudDataplexV1EntrySource `json:"entrySource,omitempty"`
 	// EntryType: Required. Immutable. The resource name of the EntryType used to
 	// create this Entry.
@@ -4073,9 +4060,9 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: This checksum is computed by the service, and might be sent on update
+	// and delete requests to ensure the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the EntryGroup.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -4084,22 +4071,9 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	// projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_id
 	// }.
 	Name string `json:"name,omitempty"`
-	// TransferStatus: Output only. Denotes the transfer status of the Entry Group.
-	// It is unspecified for Entry Group created from Dataplex API.
-	//
-	// Possible values:
-	//   "TRANSFER_STATUS_UNSPECIFIED" - The default value. It is set for resources
-	// that were not subject for migration from Data Catalog service.
-	//   "TRANSFER_STATUS_MIGRATED" - Indicates that a resource was migrated from
-	// Data Catalog service but it hasn't been transferred yet. In particular the
-	// resource cannot be updated from Dataplex API.
-	//   "TRANSFER_STATUS_TRANSFERRED" - Indicates that a resource was transferred
-	// from Data Catalog service. The resource can only be updated from Dataplex
-	// API.
-	TransferStatus string `json:"transferStatus,omitempty"`
-	// Uid: Output only. System generated globally unique ID for the EntryGroup.
-	// This ID will be different if the EntryGroup is deleted and re-created with
-	// the same name.
+	// Uid: Output only. System generated globally unique ID for the EntryGroup. If
+	// you delete and recreate the EntryGroup with the same name, this ID will be
+	// different.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time when the EntryGroup was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4124,8 +4098,8 @@ func (s *GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1EntrySource: EntrySource contains source system related
-// information for the entry.
+// GoogleCloudDataplexV1EntrySource: EntrySource contains information related
+// to the source system of the Entry.
 type GoogleCloudDataplexV1EntrySource struct {
 	// Ancestors: Immutable. The ancestors of the Entry in the source system.
 	Ancestors []*GoogleCloudDataplexV1EntrySourceAncestor `json:"ancestors,omitempty"`
@@ -4140,10 +4114,10 @@ type GoogleCloudDataplexV1EntrySource struct {
 	// Labels: User-defined labels. The maximum size of keys and values is 128
 	// characters each.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Location: Output only. Location of the resource in the source system. Entry
-	// will be searchable by this location. By default, this should match the
+	// Location: Output only. Location of the resource in the source system. You
+	// can search the Entry by this location. By default, this should match the
 	// location of the EntryGroup containing this entry. A different value allows
-	// capturing source location for data external to GCP.
+	// capturing the source location for data external to Google Cloud.
 	Location string `json:"location,omitempty"`
 	// Platform: The platform containing the source system. The maximum size of the
 	// field is 64 characters.
@@ -4210,9 +4184,9 @@ type GoogleCloudDataplexV1EntryType struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: Optional. This checksum is computed by the server based on the value
-	// of other fields, and may be sent on update and delete requests to ensure the
-	// client has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the service, and might be sent
+	// on update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the EntryType.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -4226,7 +4200,7 @@ type GoogleCloudDataplexV1EntryType struct {
 	// System: Optional. The system that Entries of this type belongs to. Examples
 	// include CloudSQL, MariaDB etc
 	System string `json:"system,omitempty"`
-	// TypeAliases: Optional. Indicates the class this Entry Type belongs to, for
+	// TypeAliases: Optional. Indicates the classes this Entry Type belongs to, for
 	// example, TABLE, DATABASE, MODEL.
 	TypeAliases []string `json:"typeAliases,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the EntryType.
@@ -4943,14 +4917,14 @@ func (s *GoogleCloudDataplexV1ListActionsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListAspectTypesResponse: List AspectTypes response
+// GoogleCloudDataplexV1ListAspectTypesResponse: List AspectTypes response.
 type GoogleCloudDataplexV1ListAspectTypesResponse struct {
-	// AspectTypes: ListAspectTypes under the given parent location.
+	// AspectTypes: AspectTypes under the given parent location.
 	AspectTypes []*GoogleCloudDataplexV1AspectType `json:"aspectTypes,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5209,10 +5183,12 @@ func (s *GoogleCloudDataplexV1ListEntitiesResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1ListEntriesResponse: List Entries response.
 type GoogleCloudDataplexV1ListEntriesResponse struct {
-	// Entries: The list of entries.
+	// Entries: The list of entries under the given parent location.
 	Entries []*GoogleCloudDataplexV1Entry `json:"entries,omitempty"`
-	// NextPageToken: Pagination token.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5235,14 +5211,14 @@ func (s *GoogleCloudDataplexV1ListEntriesResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListEntryGroupsResponse: List ListEntryGroups response.
+// GoogleCloudDataplexV1ListEntryGroupsResponse: List entry groups response.
 type GoogleCloudDataplexV1ListEntryGroupsResponse struct {
-	// EntryGroups: ListEntryGroups under the given parent location.
+	// EntryGroups: Entry groups under the given parent location.
 	EntryGroups []*GoogleCloudDataplexV1EntryGroup `json:"entryGroups,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5265,14 +5241,14 @@ func (s *GoogleCloudDataplexV1ListEntryGroupsResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListEntryTypesResponse: List EntryTypes response
+// GoogleCloudDataplexV1ListEntryTypesResponse: List EntryTypes response.
 type GoogleCloudDataplexV1ListEntryTypesResponse struct {
-	// EntryTypes: ListEntryTypes under the given parent location.
+	// EntryTypes: EntryTypes under the given parent location.
 	EntryTypes []*GoogleCloudDataplexV1EntryType `json:"entryTypes,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5901,15 +5877,16 @@ func (s *GoogleCloudDataplexV1SchemaSchemaField) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudDataplexV1SearchEntriesResponse struct {
-	// NextPageToken: Pagination token.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Results: The results matching the search query.
 	Results []*GoogleCloudDataplexV1SearchEntriesResult `json:"results,omitempty"`
-	// TotalSize: The estimated total number of matching entries. Not guaranteed to
-	// be accurate.
+	// TotalSize: The estimated total number of matching entries. This number isn't
+	// guaranteed to be accurate.
 	TotalSize int64 `json:"totalSize,omitempty"`
-	// Unreachable: Unreachable locations. Search results don't include data from
-	// those locations.
+	// Unreachable: Locations that the service couldn't reach. Search results don't
+	// include data from these locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7773,7 +7750,8 @@ type ProjectsLocationsLookupEntryCall struct {
 	header_      http.Header
 }
 
-// LookupEntry: Looks up a single entry.
+// LookupEntry: Looks up a single Entry by name using the permission on the
+// source system.
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -7784,8 +7762,7 @@ func (r *ProjectsLocationsService) LookupEntry(name string) *ProjectsLocationsLo
 }
 
 // AspectTypes sets the optional parameter "aspectTypes": Limits the aspects
-// returned to the provided aspect types. Only works if the CUSTOM view is
-// selected.
+// returned to the provided aspect types. It only works for CUSTOM view.
 func (c *ProjectsLocationsLookupEntryCall) AspectTypes(aspectTypes ...string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.SetMulti("aspectTypes", append([]string{}, aspectTypes...))
 	return c
@@ -7801,15 +7778,15 @@ func (c *ProjectsLocationsLookupEntryCall) Entry(entry string) *ProjectsLocation
 }
 
 // Paths sets the optional parameter "paths": Limits the aspects returned to
-// those associated with the provided paths within the Entry. Only works if the
-// CUSTOM view is selected.
+// those associated with the provided paths within the Entry. It only works for
+// CUSTOM view.
 func (c *ProjectsLocationsLookupEntryCall) Paths(paths ...string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.SetMulti("paths", append([]string{}, paths...))
 	return c
 }
 
-// View sets the optional parameter "view": View for controlling which parts of
-// an entry are to be returned.
+// View sets the optional parameter "view": View to control which parts of an
+// entry the service should return.
 //
 // Possible values:
 //
@@ -7821,11 +7798,11 @@ func (c *ProjectsLocationsLookupEntryCall) Paths(paths ...string) *ProjectsLocat
 //
 //	"CUSTOM" - Returns aspects matching custom fields in GetEntryRequest. If
 //
-// the number of aspects would exceed 100, the first 100 will be returned.
+// the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects would exceed 100,
+//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
 //
-// the first 100 will be returned.
+// first 100 will be returned.
 func (c *ProjectsLocationsLookupEntryCall) View(view string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7929,7 +7906,7 @@ type ProjectsLocationsSearchEntriesCall struct {
 	header_    http.Header
 }
 
-// SearchEntries: Searches for entries matching given query and scope.
+// SearchEntries: Searches for Entries matching the given query and scope.
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -7939,20 +7916,23 @@ func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocations
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Ordering of the results.
-// Supported options to be added later.
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering of
+// results.
 func (c *ProjectsLocationsSearchEntriesCall) OrderBy(orderBy string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Pagination.
+// PageSize sets the optional parameter "pageSize": Number of results in the
+// search page. If <=0, then defaults to 10. Max limit for page_size is 1000.
+// Throws an invalid argument for page_size > 1000.
 func (c *ProjectsLocationsSearchEntriesCall) PageSize(pageSize int64) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous SearchEntries call. Provide this to retrieve the subsequent page.
 func (c *ProjectsLocationsSearchEntriesCall) PageToken(pageToken string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7966,9 +7946,9 @@ func (c *ProjectsLocationsSearchEntriesCall) Query(query string) *ProjectsLocati
 }
 
 // Scope sets the optional parameter "scope": The scope under which the search
-// should be operating. Should either be organizations/ or projects/. If left
-// unspecified, it will default to the organization where the project provided
-// in name is located.
+// should be operating. It must either be organizations/ or projects/. If it is
+// unspecified, it defaults to the organization where the project provided in
+// name is located.
 func (c *ProjectsLocationsSearchEntriesCall) Scope(scope string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("scope", scope)
 	return c
@@ -8083,11 +8063,11 @@ type ProjectsLocationsAspectTypesCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an AspectType
+// Create: Creates an AspectType.
 //
 //   - parent: The resource name of the AspectType, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsAspectTypesService) Create(parent string, googleclouddataplexv1aspecttype *GoogleCloudDataplexV1AspectType) *ProjectsLocationsAspectTypesCreateCall {
 	c := &ProjectsLocationsAspectTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8102,8 +8082,9 @@ func (c *ProjectsLocationsAspectTypesCreateCall) AspectTypeId(aspectTypeId strin
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsAspectTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsAspectTypesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -8200,7 +8181,7 @@ type ProjectsLocationsAspectTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a AspectType resource.
+// Delete: Deletes an AspectType.
 //
 //   - name: The resource name of the AspectType:
 //     projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_
@@ -8213,7 +8194,7 @@ func (r *ProjectsLocationsAspectTypesService) Delete(name string) *ProjectsLocat
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteAspectTypeRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsAspectTypesDeleteCall) Etag(etag string) *ProjectsLocationsAspectTypesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -8307,7 +8288,7 @@ type ProjectsLocationsAspectTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a AspectType resource.
+// Get: Gets an AspectType.
 //
 //   - name: The resource name of the AspectType:
 //     projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_
@@ -8549,7 +8530,7 @@ type ProjectsLocationsAspectTypesListCall struct {
 //
 //   - parent: The resource name of the AspectType location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsAspectTypesService) List(parent string) *ProjectsLocationsAspectTypesListCall {
 	c := &ProjectsLocationsAspectTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8557,16 +8538,16 @@ func (r *ProjectsLocationsAspectTypesService) List(parent string) *ProjectsLocat
 }
 
 // Filter sets the optional parameter "filter": Filter request. Filters are
-// case-sensitive. The following formats are supported:labels.key1 = "value1"
-// labels:key1 name = "value" These restrictions can be coinjoined with AND, OR
-// and NOT conjunctions.
+// case-sensitive. The service supports the following formats: labels.key1 =
+// "value1" labels:key1 name = "value"These restrictions can be conjoined with
+// AND, OR, and NOT conjunctions.
 func (c *ProjectsLocationsAspectTypesListCall) Filter(filter string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Order by fields (name or
-// create_time) for the result. If not specified, the ordering is undefined.
+// OrderBy sets the optional parameter "orderBy": Orders the result by name or
+// create_time fields. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsAspectTypesListCall) OrderBy(orderBy string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -8574,8 +8555,8 @@ func (c *ProjectsLocationsAspectTypesListCall) OrderBy(orderBy string) *Projects
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // AspectTypes to return. The service may return fewer than this value. If
-// unspecified, at most 10 AspectTypes will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, the service returns at most 10 AspectTypes. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsAspectTypesListCall) PageSize(pageSize int64) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8583,8 +8564,8 @@ func (c *ProjectsLocationsAspectTypesListCall) PageSize(pageSize int64) *Project
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListAspectTypes call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListAspectTypes must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provide to ListAspectTypes
+// must match the call that provided the page token.
 func (c *ProjectsLocationsAspectTypesListCall) PageToken(pageToken string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8710,7 +8691,7 @@ type ProjectsLocationsAspectTypesPatchCall struct {
 	header_                         http.Header
 }
 
-// Patch: Updates a AspectType resource.
+// Patch: Updates an AspectType.
 //
 //   - name: Output only. The relative resource name of the AspectType, of the
 //     form:
@@ -13507,7 +13488,7 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an EntryGroup
+// Create: Creates an EntryGroup.
 //
 //   - parent: The resource name of the entryGroup, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
@@ -13526,8 +13507,9 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) EntryGroupId(entryGroupId strin
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryGroupsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryGroupsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -13624,7 +13606,7 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a EntryGroup resource.
+// Delete: Deletes an EntryGroup.
 //
 //   - name: The resource name of the EntryGroup:
 //     projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_
@@ -13637,7 +13619,7 @@ func (r *ProjectsLocationsEntryGroupsService) Delete(name string) *ProjectsLocat
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteEntryGroupRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsEntryGroupsDeleteCall) Etag(etag string) *ProjectsLocationsEntryGroupsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -13731,7 +13713,7 @@ type ProjectsLocationsEntryGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a EntryGroup resource.
+// Get: Gets an EntryGroup.
 //
 //   - name: The resource name of the EntryGroup:
 //     projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_
@@ -13973,7 +13955,7 @@ type ProjectsLocationsEntryGroupsListCall struct {
 //
 //   - parent: The resource name of the entryGroup location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryGroupsService) List(parent string) *ProjectsLocationsEntryGroupsListCall {
 	c := &ProjectsLocationsEntryGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13995,8 +13977,8 @@ func (c *ProjectsLocationsEntryGroupsListCall) OrderBy(orderBy string) *Projects
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // EntryGroups to return. The service may return fewer than this value. If
-// unspecified, at most 10 EntryGroups will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, the service returns at most 10 EntryGroups. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsEntryGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -14004,8 +13986,8 @@ func (c *ProjectsLocationsEntryGroupsListCall) PageSize(pageSize int64) *Project
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListEntryGroups call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListEntryGroups must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provide to ListEntryGroups
+// must match the call that provided the page token.
 func (c *ProjectsLocationsEntryGroupsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14131,7 +14113,7 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 	header_                         http.Header
 }
 
-// Patch: Updates a EntryGroup resource.
+// Patch: Updates an EntryGroup.
 //
 //   - name: Output only. The relative resource name of the EntryGroup, of the
 //     form:
@@ -14151,8 +14133,9 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) UpdateMask(updateMask string) *P
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request, without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryGroupsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryGroupsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -14478,16 +14461,16 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googl
 
 // EntryId sets the optional parameter "entryId": Required. Entry identifier.
 // It has to be unique within an Entry Group.Entries corresponding to Google
-// Cloud resources use Entry ID format based on Full Resource Names
+// Cloud resources use an Entry ID format based on full resource names
 // (https://cloud.google.com/apis/design/resource_names#full_resource_name).
-// The format is a Full Resource Name of the resource without the prefix double
-// slashes in the API Service Name part of Full Resource Name. This allows
-// retrieval of entries using their associated resource name.For example if the
-// Full Resource Name of a resource is
+// The format is a full resource name of the resource without the prefix double
+// slashes in the API service name part of the full resource name. This allows
+// retrieval of entries using their associated resource name.For example, if
+// the full resource name of a resource is
 // //library.googleapis.com/shelves/shelf1/books/book2, then the suggested
 // entry_id is library.googleapis.com/shelves/shelf1/books/book2.It is also
 // suggested to follow the same convention for entries corresponding to
-// resources from other providers or systems than Google Cloud.The maximum size
+// resources from providers or systems other than Google Cloud.The maximum size
 // of the field is 4000 characters.
 func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) EntryId(entryId string) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c.urlParams_.Set("entryId", entryId)
@@ -14684,7 +14667,7 @@ type ProjectsLocationsEntryGroupsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a single entry.
+// Get: Gets an Entry.
 //
 //   - name: The resource name of the Entry:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{
@@ -14696,23 +14679,22 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Get(name string) *ProjectsL
 }
 
 // AspectTypes sets the optional parameter "aspectTypes": Limits the aspects
-// returned to the provided aspect types. Only works if the CUSTOM view is
-// selected.
+// returned to the provided aspect types. It only works for CUSTOM view.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) AspectTypes(aspectTypes ...string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.SetMulti("aspectTypes", append([]string{}, aspectTypes...))
 	return c
 }
 
 // Paths sets the optional parameter "paths": Limits the aspects returned to
-// those associated with the provided paths within the Entry. Only works if the
-// CUSTOM view is selected.
+// those associated with the provided paths within the Entry. It only works for
+// CUSTOM view.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Paths(paths ...string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.SetMulti("paths", append([]string{}, paths...))
 	return c
 }
 
-// View sets the optional parameter "view": View for controlling which parts of
-// an entry are to be returned.
+// View sets the optional parameter "view": View to control which parts of an
+// entry the service should return.
 //
 // Possible values:
 //
@@ -14724,11 +14706,11 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Paths(paths ...string) *Pro
 //
 //	"CUSTOM" - Returns aspects matching custom fields in GetEntryRequest. If
 //
-// the number of aspects would exceed 100, the first 100 will be returned.
+// the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects would exceed 100,
+//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
 //
-// the first 100 will be returned.
+// first 100 will be returned.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) View(view string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -14833,7 +14815,7 @@ type ProjectsLocationsEntryGroupsEntriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists entries within an entry group.
+// List: Lists Entries within an EntryGroup.
 //
 //   - parent: The resource name of the parent Entry Group:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}.
@@ -14844,12 +14826,12 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": A filter on the entries to
-// return. Filters are case-sensitive. The request can be filtered by the
-// following fields: entry_type, entry_source.display_name. The comparison
-// operators are =, !=, <, >, <=, >= (strings are compared according to lexical
-// order) The logical operators AND, OR, NOT can be used in the filter.
-// Wildcard "*" can be used, but for entry_type the full project id or number
-// needs to be provided. Example filter expressions:
+// return. Filters are case-sensitive. You can filter the request by the
+// following fields: entry_type entry_source.display_nameThe comparison
+// operators are =, !=, <, >, <=, >=. The service compares strings according to
+// lexical order.You can use the logical operators AND, OR, NOT in the
+// filter.You can use Wildcard "*", but for entry_type you need to provide the
+// full project id or number.Example filter expressions:
 // "entry_source.display_name=AnExampleDisplayName"
 // "entry_type=projects/example-project/locations/global/entryTypes/example-entr
 // y_type" "entry_type=projects/example-project/locations/us/entryTypes/a* OR
@@ -14860,14 +14842,17 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Filter(filter string) *Pro
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize":
+// PageSize sets the optional parameter "pageSize": Number of items to return
+// per page. If there are remaining results, the service returns a
+// next_page_token. If unspecified, the service returns at most 10 Entries. The
+// maximum value is 100; values above 100 will be coerced to 100.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination token
-// returned by a previous request.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListEntries call. Provide this to retrieve the subsequent page.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15006,28 +14991,29 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googlecl
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true and
-// the entry does not exist, it will be created.
+// the entry doesn't exist, the service will create it.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // AspectKeys sets the optional parameter "aspectKeys": The map keys of the
-// Aspects which should be modified. Supports the following syntaxes: * -
-// matches aspect on given type and empty path * @path - matches aspect on
-// given type and specified path * * - matches aspects on given type for all
-// paths * *@path - matches aspects of all types on the given pathExisting
-// aspects matching the syntax will not be removed unless
-// delete_missing_aspects is set to true.If this field is left empty, it will
-// be treated as specifying exactly those Aspects present in the request.
+// Aspects which the service should modify. It supports the following syntaxes:
+// - matches an aspect of the given type and empty path. @path - matches an
+// aspect of the given type and specified path. * - matches aspects of the
+// given type for all paths. *@path - matches aspects of all types on the given
+// path.The service will not remove existing aspects matching the syntax unless
+// delete_missing_aspects is set to true.If this field is left empty, the
+// service treats it as specifying exactly those Aspects present in the
+// request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AspectKeys(aspectKeys ...string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.SetMulti("aspectKeys", append([]string{}, aspectKeys...))
 	return c
 }
 
 // DeleteMissingAspects sets the optional parameter "deleteMissingAspects": If
-// set to true and the aspect_keys specify aspect ranges, any existing aspects
-// from that range not provided in the request will be deleted.
+// set to true and the aspect_keys specify aspect ranges, the service deletes
+// any existing aspects from that range that weren't provided in the request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) DeleteMissingAspects(deleteMissingAspects bool) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("deleteMissingAspects", fmt.Sprint(deleteMissingAspects))
 	return c
@@ -15035,8 +15021,8 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) DeleteMissingAspects(dele
 
 // UpdateMask sets the optional parameter "updateMask": Mask of fields to
 // update. To update Aspects, the update_mask must contain the value
-// "aspects".If the update_mask is empty, all modifiable fields present in the
-// request will be updated.
+// "aspects".If the update_mask is empty, the service will update all
+// modifiable fields present in the request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15134,11 +15120,11 @@ type ProjectsLocationsEntryTypesCreateCall struct {
 	header_                        http.Header
 }
 
-// Create: Creates an EntryType
+// Create: Creates an EntryType.
 //
 //   - parent: The resource name of the EntryType, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryTypesService) Create(parent string, googleclouddataplexv1entrytype *GoogleCloudDataplexV1EntryType) *ProjectsLocationsEntryTypesCreateCall {
 	c := &ProjectsLocationsEntryTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15153,8 +15139,9 @@ func (c *ProjectsLocationsEntryTypesCreateCall) EntryTypeId(entryTypeId string) 
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryTypesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15251,7 +15238,7 @@ type ProjectsLocationsEntryTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a EntryType resource.
+// Delete: Deletes an EntryType.
 //
 //   - name: The resource name of the EntryType:
 //     projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id
@@ -15264,7 +15251,7 @@ func (r *ProjectsLocationsEntryTypesService) Delete(name string) *ProjectsLocati
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteEntryTypeRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsEntryTypesDeleteCall) Etag(etag string) *ProjectsLocationsEntryTypesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -15358,7 +15345,7 @@ type ProjectsLocationsEntryTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a EntryType resource.
+// Get: Gets an EntryType.
 //
 //   - name: The resource name of the EntryType:
 //     projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id
@@ -15600,7 +15587,7 @@ type ProjectsLocationsEntryTypesListCall struct {
 //
 //   - parent: The resource name of the EntryType location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryTypesService) List(parent string) *ProjectsLocationsEntryTypesListCall {
 	c := &ProjectsLocationsEntryTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15608,16 +15595,16 @@ func (r *ProjectsLocationsEntryTypesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": Filter request. Filters are
-// case-sensitive. The following formats are supported:labels.key1 = "value1"
-// labels:key1 name = "value" These restrictions can be coinjoined with AND, OR
-// and NOT conjunctions.
+// case-sensitive. The service supports the following formats: labels.key1 =
+// "value1" labels:key1 name = "value"These restrictions can be conjoined with
+// AND, OR, and NOT conjunctions.
 func (c *ProjectsLocationsEntryTypesListCall) Filter(filter string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Order by fields (name or
-// create_time) for the result. If not specified, the ordering is undefined.
+// OrderBy sets the optional parameter "orderBy": Orders the result by name or
+// create_time fields. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsEntryTypesListCall) OrderBy(orderBy string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -15625,7 +15612,7 @@ func (c *ProjectsLocationsEntryTypesListCall) OrderBy(orderBy string) *ProjectsL
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // EntryTypes to return. The service may return fewer than this value. If
-// unspecified, at most 10 EntryTypes will be returned. The maximum value is
+// unspecified, the service returns at most 10 EntryTypes. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsEntryTypesListCall) PageSize(pageSize int64) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -15634,8 +15621,8 @@ func (c *ProjectsLocationsEntryTypesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListEntryTypes call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListEntryTypes must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provided to ListEntryTypes
+// must match the call that provided the page token.
 func (c *ProjectsLocationsEntryTypesListCall) PageToken(pageToken string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15761,7 +15748,7 @@ type ProjectsLocationsEntryTypesPatchCall struct {
 	header_                        http.Header
 }
 
-// Patch: Updates a EntryType resource.
+// Patch: Updates an EntryType.
 //
 //   - name: Output only. The relative resource name of the EntryType, of the
 //     form:
@@ -15781,8 +15768,9 @@ func (c *ProjectsLocationsEntryTypesPatchCall) UpdateMask(updateMask string) *Pr
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryTypesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryTypesPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c

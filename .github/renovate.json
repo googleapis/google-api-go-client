@@ -19,7 +19,7 @@
     {
       "matchPackagePatterns": [
         "^github.com/google/go-github/v",
-        "^go.opentelemetry.io/contrib/instrumentation/",
+        "^go.opentelemetry.io/contrib/instrumentation/"
       ],
       "enabled": false
     }

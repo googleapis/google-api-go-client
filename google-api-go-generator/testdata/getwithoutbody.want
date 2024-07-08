@@ -165,9 +165,9 @@ type ListMetricRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMetricRequest) MarshalJSON() ([]byte, error) {
+func (s ListMetricRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMetricRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMetricResponse: The response of getwithoutbody.metricDescriptors.list.
@@ -195,9 +195,9 @@ type ListMetricResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMetricResponse) MarshalJSON() ([]byte, error) {
+func (s ListMetricResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMetricResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MetricDescriptorsListCall struct {

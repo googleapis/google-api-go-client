@@ -240,9 +240,9 @@ type DataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSource) MarshalJSON() ([]byte, error) {
+func (s DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -318,9 +318,9 @@ type FetchSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchSettings) MarshalJSON() ([]byte, error) {
+func (s FetchSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileInput: The data specific for file data sources. This field is empty for
@@ -356,9 +356,9 @@ type FileInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileInput) MarshalJSON() ([]byte, error) {
+func (s FileInput) MarshalJSON() ([]byte, error) {
 	type NoMethod FileInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDataSourcesResponse: Response message for the ListDataSources method.
@@ -384,9 +384,9 @@ type ListDataSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalInventoryDataSource: The local inventory data source.
@@ -413,9 +413,9 @@ type LocalInventoryDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalInventoryDataSource) MarshalJSON() ([]byte, error) {
+func (s LocalInventoryDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalInventoryDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrimaryProductDataSource: The primary data source for local and online
@@ -463,9 +463,9 @@ type PrimaryProductDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrimaryProductDataSource) MarshalJSON() ([]byte, error) {
+func (s PrimaryProductDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod PrimaryProductDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -523,9 +523,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -572,9 +572,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PromotionDataSource: The promotion data source.
@@ -601,9 +601,9 @@ type PromotionDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PromotionDataSource) MarshalJSON() ([]byte, error) {
+func (s PromotionDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod PromotionDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalInventoryDataSource: The regional inventory data source.
@@ -630,9 +630,9 @@ type RegionalInventoryDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalInventoryDataSource) MarshalJSON() ([]byte, error) {
+func (s RegionalInventoryDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalInventoryDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SupplementalProductDataSource: The supplemental data source for local and
@@ -668,9 +668,9 @@ type SupplementalProductDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupplementalProductDataSource) MarshalJSON() ([]byte, error) {
+func (s SupplementalProductDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SupplementalProductDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -701,9 +701,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsDataSourcesCreateCall struct {

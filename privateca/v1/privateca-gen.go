@@ -269,9 +269,9 @@ type AccessUrls struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessUrls) MarshalJSON() ([]byte, error) {
+func (s AccessUrls) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessUrls
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivateCertificateAuthorityRequest: Request message for
@@ -308,9 +308,9 @@ type ActivateCertificateAuthorityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivateCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
+func (s ActivateCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivateCertificateAuthorityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AllowedKeyType: Describes a "type" of key that may be used in a Certificate
@@ -335,9 +335,9 @@ type AllowedKeyType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllowedKeyType) MarshalJSON() ([]byte, error) {
+func (s AllowedKeyType) MarshalJSON() ([]byte, error) {
 	type NoMethod AllowedKeyType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -376,9 +376,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -411,9 +411,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -510,9 +510,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CaOptions: Describes the X.509 basic constraints extension, per RFC 5280
@@ -541,9 +541,9 @@ type CaOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CaOptions) MarshalJSON() ([]byte, error) {
+func (s CaOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CaOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CaPool: A CaPool represents a group of CertificateAuthorities that form a
@@ -585,9 +585,9 @@ type CaPool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CaPool) MarshalJSON() ([]byte, error) {
+func (s CaPool) MarshalJSON() ([]byte, error) {
 	type NoMethod CaPool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -611,9 +611,9 @@ type CertChain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertChain) MarshalJSON() ([]byte, error) {
+func (s CertChain) MarshalJSON() ([]byte, error) {
 	type NoMethod CertChain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Certificate: A Certificate corresponds to a signed X.509 certificate issued
@@ -694,9 +694,9 @@ type Certificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Certificate) MarshalJSON() ([]byte, error) {
+func (s Certificate) MarshalJSON() ([]byte, error) {
 	type NoMethod Certificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateAuthority: A CertificateAuthority represents an individual
@@ -815,9 +815,9 @@ type CertificateAuthority struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateAuthority) MarshalJSON() ([]byte, error) {
+func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateAuthority
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateConfig: A CertificateConfig describes an X.509 certificate or CSR
@@ -851,9 +851,9 @@ type CertificateConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateConfig) MarshalJSON() ([]byte, error) {
+func (s CertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateConfigKeyId: A KeyId identifies a specific public key, usually by
@@ -875,9 +875,9 @@ type CertificateConfigKeyId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateConfigKeyId) MarshalJSON() ([]byte, error) {
+func (s CertificateConfigKeyId) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateConfigKeyId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateDescription: A CertificateDescription describes an X.509
@@ -922,9 +922,9 @@ type CertificateDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateDescription) MarshalJSON() ([]byte, error) {
+func (s CertificateDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateExtensionConstraints: Describes a set of X.509 extensions that
@@ -976,9 +976,9 @@ type CertificateExtensionConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateExtensionConstraints) MarshalJSON() ([]byte, error) {
+func (s CertificateExtensionConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateExtensionConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateFingerprint: A group of fingerprints for the x509 certificate.
@@ -999,9 +999,9 @@ type CertificateFingerprint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateFingerprint) MarshalJSON() ([]byte, error) {
+func (s CertificateFingerprint) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateFingerprint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateIdentityConstraints: Describes constraints on a Certificate's
@@ -1035,9 +1035,9 @@ type CertificateIdentityConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateIdentityConstraints) MarshalJSON() ([]byte, error) {
+func (s CertificateIdentityConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateIdentityConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateRevocationList: A CertificateRevocationList corresponds to a
@@ -1093,9 +1093,9 @@ type CertificateRevocationList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateRevocationList) MarshalJSON() ([]byte, error) {
+func (s CertificateRevocationList) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateRevocationList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateTemplate: A CertificateTemplate refers to a managed template for
@@ -1160,9 +1160,9 @@ type CertificateTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateTemplate) MarshalJSON() ([]byte, error) {
+func (s CertificateTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableCertificateAuthorityRequest: Request message for
@@ -1198,9 +1198,9 @@ type DisableCertificateAuthorityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
+func (s DisableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DisableCertificateAuthorityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EcKeyType: Describes an Elliptic Curve key that may be used in a Certificate
@@ -1232,9 +1232,9 @@ type EcKeyType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EcKeyType) MarshalJSON() ([]byte, error) {
+func (s EcKeyType) MarshalJSON() ([]byte, error) {
 	type NoMethod EcKeyType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1274,9 +1274,9 @@ type EnableCertificateAuthorityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
+func (s EnableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableCertificateAuthorityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -1322,9 +1322,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtendedKeyUsageOptions: KeyUsage.ExtendedKeyUsageOptions has fields that
@@ -1362,9 +1362,9 @@ type ExtendedKeyUsageOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtendedKeyUsageOptions) MarshalJSON() ([]byte, error) {
+func (s ExtendedKeyUsageOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtendedKeyUsageOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchCaCertsRequest: Request message for
@@ -1395,9 +1395,9 @@ type FetchCaCertsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchCaCertsRequest) MarshalJSON() ([]byte, error) {
+func (s FetchCaCertsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchCaCertsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchCaCertsResponse: Response message for
@@ -1422,9 +1422,9 @@ type FetchCaCertsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchCaCertsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchCaCertsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchCaCertsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchCertificateAuthorityCsrResponse: Response message for
@@ -1449,9 +1449,9 @@ type FetchCertificateAuthorityCsrResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchCertificateAuthorityCsrResponse) MarshalJSON() ([]byte, error) {
+func (s FetchCertificateAuthorityCsrResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchCertificateAuthorityCsrResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IssuanceModes: IssuanceModes specifies the allowed ways in which
@@ -1476,9 +1476,9 @@ type IssuanceModes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssuanceModes) MarshalJSON() ([]byte, error) {
+func (s IssuanceModes) MarshalJSON() ([]byte, error) {
 	type NoMethod IssuanceModes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IssuancePolicy: Defines controls over all certificate issuance within a
@@ -1530,9 +1530,9 @@ type IssuancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IssuancePolicy) MarshalJSON() ([]byte, error) {
+func (s IssuancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IssuancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyId: A KeyId identifies a specific public key, usually by hashing the
@@ -1554,9 +1554,9 @@ type KeyId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyId) MarshalJSON() ([]byte, error) {
+func (s KeyId) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyUsage: A KeyUsage describes key usage values that may appear in an X.509
@@ -1582,9 +1582,9 @@ type KeyUsage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyUsage) MarshalJSON() ([]byte, error) {
+func (s KeyUsage) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyUsage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyUsageOptions: KeyUsage.KeyUsageOptions corresponds to the key usage
@@ -1622,9 +1622,9 @@ type KeyUsageOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyUsageOptions) MarshalJSON() ([]byte, error) {
+func (s KeyUsageOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyUsageOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyVersionSpec: A Cloud KMS key configuration that a CertificateAuthority
@@ -1669,9 +1669,9 @@ type KeyVersionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyVersionSpec) MarshalJSON() ([]byte, error) {
+func (s KeyVersionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyVersionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCaPoolsResponse: Response message for
@@ -1702,9 +1702,9 @@ type ListCaPoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCaPoolsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCaPoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCaPoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificateAuthoritiesResponse: Response message for
@@ -1735,9 +1735,9 @@ type ListCertificateAuthoritiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCertificateAuthoritiesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCertificateAuthoritiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateAuthoritiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificateRevocationListsResponse: Response message for
@@ -1768,9 +1768,9 @@ type ListCertificateRevocationListsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCertificateRevocationListsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCertificateRevocationListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateRevocationListsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificateTemplatesResponse: Response message for
@@ -1801,9 +1801,9 @@ type ListCertificateTemplatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCertificateTemplatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCertificateTemplatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateTemplatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificatesResponse: Response message for
@@ -1834,9 +1834,9 @@ type ListCertificatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCertificatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCertificatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1862,9 +1862,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1890,9 +1890,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1928,9 +1928,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NameConstraints: Describes the X.509 name constraints extension, per
@@ -1989,9 +1989,9 @@ type NameConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NameConstraints) MarshalJSON() ([]byte, error) {
+func (s NameConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod NameConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObjectId: An ObjectId specifies an object identifier (OID). These provide
@@ -2013,9 +2013,9 @@ type ObjectId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObjectId) MarshalJSON() ([]byte, error) {
+func (s ObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2060,9 +2060,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -2098,9 +2098,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -2190,9 +2190,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublicKey: A PublicKey describes a public key.
@@ -2230,9 +2230,9 @@ type PublicKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublicKey) MarshalJSON() ([]byte, error) {
+func (s PublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PublicKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishingOptions: Options relating to the publication of each
@@ -2278,9 +2278,9 @@ type PublishingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishingOptions) MarshalJSON() ([]byte, error) {
+func (s PublishingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReconciliationOperationMetadata: Operation metadata returned by the CLH
@@ -2313,9 +2313,9 @@ type ReconciliationOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ReconciliationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevocationDetails: Describes fields that are relavent to the revocation of a
@@ -2357,9 +2357,9 @@ type RevocationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevocationDetails) MarshalJSON() ([]byte, error) {
+func (s RevocationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RevocationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevokeCertificateRequest: Request message for
@@ -2411,9 +2411,9 @@ type RevokeCertificateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevokeCertificateRequest) MarshalJSON() ([]byte, error) {
+func (s RevokeCertificateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RevokeCertificateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevokedCertificate: Describes a revoked Certificate.
@@ -2457,9 +2457,9 @@ type RevokedCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevokedCertificate) MarshalJSON() ([]byte, error) {
+func (s RevokedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod RevokedCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RsaKeyType: Describes an RSA key that may be used in a Certificate issued
@@ -2486,9 +2486,9 @@ type RsaKeyType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RsaKeyType) MarshalJSON() ([]byte, error) {
+func (s RsaKeyType) MarshalJSON() ([]byte, error) {
 	type NoMethod RsaKeyType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2515,9 +2515,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2549,9 +2549,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subject: Subject describes parts of a distinguished name that, in turn,
@@ -2586,9 +2586,9 @@ type Subject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subject) MarshalJSON() ([]byte, error) {
+func (s Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod Subject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubjectAltNames: SubjectAltNames corresponds to a more modern way of listing
@@ -2620,9 +2620,9 @@ type SubjectAltNames struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubjectAltNames) MarshalJSON() ([]byte, error) {
+func (s SubjectAltNames) MarshalJSON() ([]byte, error) {
 	type NoMethod SubjectAltNames
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubjectConfig: These values are used to create the distinguished name and
@@ -2646,9 +2646,9 @@ type SubjectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubjectConfig) MarshalJSON() ([]byte, error) {
+func (s SubjectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SubjectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubjectDescription: These values describe fields in an issued X.509
@@ -2684,9 +2684,9 @@ type SubjectDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubjectDescription) MarshalJSON() ([]byte, error) {
+func (s SubjectDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod SubjectDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubordinateConfig: Describes a subordinate CA's issuers. This is either a
@@ -2714,9 +2714,9 @@ type SubordinateConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubordinateConfig) MarshalJSON() ([]byte, error) {
+func (s SubordinateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SubordinateConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubordinateConfigChain: This message describes a subordinate CA's issuer
@@ -2738,9 +2738,9 @@ type SubordinateConfigChain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubordinateConfigChain) MarshalJSON() ([]byte, error) {
+func (s SubordinateConfigChain) MarshalJSON() ([]byte, error) {
 	type NoMethod SubordinateConfigChain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -2763,9 +2763,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2790,9 +2790,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteCertificateAuthorityRequest: Request message for
@@ -2823,9 +2823,9 @@ type UndeleteCertificateAuthorityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteCertificateAuthorityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // X509Extension: An X509Extension specifies an X.509 extension, which may be
@@ -2852,9 +2852,9 @@ type X509Extension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *X509Extension) MarshalJSON() ([]byte, error) {
+func (s X509Extension) MarshalJSON() ([]byte, error) {
 	type NoMethod X509Extension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // X509Parameters: An X509Parameters is used to describe certain fields of an
@@ -2892,9 +2892,9 @@ type X509Parameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *X509Parameters) MarshalJSON() ([]byte, error) {
+func (s X509Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod X509Parameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

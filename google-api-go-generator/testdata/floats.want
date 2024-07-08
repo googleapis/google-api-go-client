@@ -157,9 +157,9 @@ type Utilization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Utilization) MarshalJSON() ([]byte, error) {
+func (s Utilization) MarshalJSON() ([]byte, error) {
 	type NoMethod Utilization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Utilization) UnmarshalJSON(data []byte) error {

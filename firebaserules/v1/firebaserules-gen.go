@@ -219,9 +219,9 @@ type Arg struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Arg) MarshalJSON() ([]byte, error) {
+func (s Arg) MarshalJSON() ([]byte, error) {
 	type NoMethod Arg
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -255,9 +255,9 @@ type ExpressionReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpressionReport) MarshalJSON() ([]byte, error) {
+func (s ExpressionReport) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpressionReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: `File` containing source content.
@@ -281,9 +281,9 @@ type File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *File) MarshalJSON() ([]byte, error) {
+func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FunctionCall: Represents a service-defined function call that was invoked
@@ -306,9 +306,9 @@ type FunctionCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FunctionCall) MarshalJSON() ([]byte, error) {
+func (s FunctionCall) MarshalJSON() ([]byte, error) {
 	type NoMethod FunctionCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FunctionMock: Mock function definition. Mocks must refer to a function
@@ -341,9 +341,9 @@ type FunctionMock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FunctionMock) MarshalJSON() ([]byte, error) {
+func (s FunctionMock) MarshalJSON() ([]byte, error) {
 	type NoMethod FunctionMock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetReleaseExecutableResponse: The response for
@@ -392,9 +392,9 @@ type GetReleaseExecutableResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetReleaseExecutableResponse) MarshalJSON() ([]byte, error) {
+func (s GetReleaseExecutableResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetReleaseExecutableResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Issue: Issues include warnings, errors, and deprecation notices.
@@ -425,9 +425,9 @@ type Issue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Issue) MarshalJSON() ([]byte, error) {
+func (s Issue) MarshalJSON() ([]byte, error) {
 	type NoMethod Issue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReleasesResponse: The response for FirebaseRulesService.ListReleases.
@@ -453,9 +453,9 @@ type ListReleasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReleasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRulesetsResponse: The response for FirebaseRulesService.ListRulesets.
@@ -481,9 +481,9 @@ type ListRulesetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRulesetsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRulesetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRulesetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metadata: Metadata for a Ruleset.
@@ -504,9 +504,9 @@ type Metadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metadata) MarshalJSON() ([]byte, error) {
+func (s Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Release: `Release` is a named reference to a `Ruleset`. Once a `Release`
@@ -538,9 +538,9 @@ type Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Release) MarshalJSON() ([]byte, error) {
+func (s Release) MarshalJSON() ([]byte, error) {
 	type NoMethod Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Result: Possible result values from the function mock invocation.
@@ -564,9 +564,9 @@ type Result struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Result) MarshalJSON() ([]byte, error) {
+func (s Result) MarshalJSON() ([]byte, error) {
 	type NoMethod Result
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Ruleset: `Ruleset` is an immutable copy of `Source` with a globally unique
@@ -602,9 +602,9 @@ type Ruleset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Ruleset) MarshalJSON() ([]byte, error) {
+func (s Ruleset) MarshalJSON() ([]byte, error) {
 	type NoMethod Ruleset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: `Source` is one or more `File` messages comprising a logical set of
@@ -625,9 +625,9 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Source) MarshalJSON() ([]byte, error) {
+func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourcePosition: Position in the `Source` content including its line, column
@@ -657,9 +657,9 @@ type SourcePosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourcePosition) MarshalJSON() ([]byte, error) {
+func (s SourcePosition) MarshalJSON() ([]byte, error) {
 	type NoMethod SourcePosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestCase: `TestCase` messages provide the request context and an expectation
@@ -726,9 +726,9 @@ type TestCase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestCase) MarshalJSON() ([]byte, error) {
+func (s TestCase) MarshalJSON() ([]byte, error) {
 	type NoMethod TestCase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestResult: Test result message containing the state of the test as well as
@@ -782,9 +782,9 @@ type TestResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestResult) MarshalJSON() ([]byte, error) {
+func (s TestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod TestResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestRulesetRequest: The request for FirebaseRulesService.TestRuleset.
@@ -809,9 +809,9 @@ type TestRulesetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestRulesetRequest) MarshalJSON() ([]byte, error) {
+func (s TestRulesetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestRulesetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestRulesetResponse: The response for FirebaseRulesService.TestRuleset.
@@ -839,9 +839,9 @@ type TestRulesetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestRulesetResponse) MarshalJSON() ([]byte, error) {
+func (s TestRulesetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestRulesetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestSuite: `TestSuite` is a collection of `TestCase` instances that validate
@@ -864,9 +864,9 @@ type TestSuite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestSuite) MarshalJSON() ([]byte, error) {
+func (s TestSuite) MarshalJSON() ([]byte, error) {
 	type NoMethod TestSuite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateReleaseRequest: The request for FirebaseRulesService.UpdateRelease.
@@ -888,9 +888,9 @@ type UpdateReleaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateReleaseRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateReleaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValueCount: Tuple for how many times an Expression was evaluated to a
@@ -913,9 +913,9 @@ type ValueCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValueCount) MarshalJSON() ([]byte, error) {
+func (s ValueCount) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VisitedExpression: Store the position and access outcome for an expression
@@ -939,9 +939,9 @@ type VisitedExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VisitedExpression) MarshalJSON() ([]byte, error) {
+func (s VisitedExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod VisitedExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsTestCall struct {

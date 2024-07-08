@@ -206,9 +206,9 @@ type CreateAuthUriResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
+func (s CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAuthUriResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteAccountResponse: Respone of deleting account.
@@ -231,9 +231,9 @@ type DeleteAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteAccountResponse) MarshalJSON() ([]byte, error) {
+func (s DeleteAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DownloadAccountResponse: Response of downloading accounts in batch.
@@ -261,9 +261,9 @@ type DownloadAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadAccountResponse) MarshalJSON() ([]byte, error) {
+func (s DownloadAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailLinkSigninResponse: Response of email signIn.
@@ -298,9 +298,9 @@ type EmailLinkSigninResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailLinkSigninResponse) MarshalJSON() ([]byte, error) {
+func (s EmailLinkSigninResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailLinkSigninResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailTemplate: Template for an email template.
@@ -330,9 +330,9 @@ type EmailTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailTemplate) MarshalJSON() ([]byte, error) {
+func (s EmailTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetAccountInfoResponse: Response of getting account information.
@@ -357,9 +357,9 @@ type GetAccountInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+func (s GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetAccountInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetOobConfirmationCodeResponse: Response of getting a code for user
@@ -387,9 +387,9 @@ type GetOobConfirmationCodeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetOobConfirmationCodeResponse) MarshalJSON() ([]byte, error) {
+func (s GetOobConfirmationCodeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetOobConfirmationCodeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetRecaptchaParamResponse: Response of getting recaptcha param.
@@ -417,9 +417,9 @@ type GetRecaptchaParamResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
+func (s GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetRecaptchaParamResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyCreateAuthUriRequest: Request to get the IDP
@@ -485,9 +485,9 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyCreateAuthUriRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyCreateAuthUriRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyCreateAuthUriRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyDeleteAccountRequest: Request to delete account.
@@ -512,9 +512,9 @@ type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyDeleteAccountRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyDeleteAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyDeleteAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyDownloadAccountRequest: Request to download user
@@ -544,9 +544,9 @@ type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyDownloadAccountRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyDownloadAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyDownloadAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyEmailLinkSigninRequest: Request to sign in with
@@ -571,9 +571,9 @@ type IdentitytoolkitRelyingpartyEmailLinkSigninRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyEmailLinkSigninRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyEmailLinkSigninRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyEmailLinkSigninRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyGetAccountInfoRequest: Request to get the account
@@ -603,9 +603,9 @@ type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyGetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyGetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyGetAccountInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyGetProjectConfigResponse: Response of getting the
@@ -650,9 +650,9 @@ type IdentitytoolkitRelyingpartyGetProjectConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyGetProjectConfigResponse) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyGetProjectConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyGetProjectConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyResetPasswordRequest: Request to reset the
@@ -679,9 +679,9 @@ type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyResetPasswordRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyResetPasswordRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyResetPasswordRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySendVerificationCodeRequest: Request for
@@ -709,9 +709,9 @@ type IdentitytoolkitRelyingpartySendVerificationCodeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySendVerificationCodeRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySendVerificationCodeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySendVerificationCodeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySendVerificationCodeResponse: Response for
@@ -735,9 +735,9 @@ type IdentitytoolkitRelyingpartySendVerificationCodeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySendVerificationCodeResponse) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySendVerificationCodeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySendVerificationCodeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySetAccountInfoRequest: Request to set the account
@@ -804,9 +804,9 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySetAccountInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySetProjectConfigRequest: Request to set the
@@ -848,9 +848,9 @@ type IdentitytoolkitRelyingpartySetProjectConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySetProjectConfigRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySetProjectConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySetProjectConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySetProjectConfigResponse: Response of setting the
@@ -874,9 +874,9 @@ type IdentitytoolkitRelyingpartySetProjectConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySetProjectConfigResponse) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySetProjectConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySetProjectConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySignOutUserRequest: Request to sign out user.
@@ -898,9 +898,9 @@ type IdentitytoolkitRelyingpartySignOutUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySignOutUserRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySignOutUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySignOutUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySignOutUserResponse: Response of signing out
@@ -924,9 +924,9 @@ type IdentitytoolkitRelyingpartySignOutUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySignOutUserResponse) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySignOutUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySignOutUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartySignupNewUserRequest: Request to signup new user,
@@ -976,9 +976,9 @@ type IdentitytoolkitRelyingpartySignupNewUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartySignupNewUserRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartySignupNewUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartySignupNewUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyUploadAccountRequest: Request to upload user
@@ -1027,9 +1027,9 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyUploadAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify the IDP
@@ -1084,9 +1084,9 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyVerifyAssertionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyCustomTokenRequest: Request to verify a
@@ -1115,9 +1115,9 @@ type IdentitytoolkitRelyingpartyVerifyCustomTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyVerifyCustomTokenRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyVerifyCustomTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyVerifyCustomTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyPasswordRequest: Request to verify the
@@ -1163,9 +1163,9 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyVerifyPasswordRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyVerifyPasswordRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyVerifyPasswordRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyPhoneNumberRequest: Request for
@@ -1193,9 +1193,9 @@ type IdentitytoolkitRelyingpartyVerifyPhoneNumberRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyVerifyPhoneNumberRequest) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyVerifyPhoneNumberRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyVerifyPhoneNumberRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse: Response for
@@ -1227,9 +1227,9 @@ type IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse) MarshalJSON() ([]byte, error) {
+func (s IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdpConfig: Template for a single idp configuration.
@@ -1260,9 +1260,9 @@ type IdpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdpConfig) MarshalJSON() ([]byte, error) {
+func (s IdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Relyingparty: Request of getting a code for user confirmation (reset
@@ -1317,9 +1317,9 @@ type Relyingparty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Relyingparty) MarshalJSON() ([]byte, error) {
+func (s Relyingparty) MarshalJSON() ([]byte, error) {
 	type NoMethod Relyingparty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetPasswordResponse: Response of resetting the password.
@@ -1350,9 +1350,9 @@ type ResetPasswordResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResetPasswordResponse) MarshalJSON() ([]byte, error) {
+func (s ResetPasswordResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetPasswordResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetAccountInfoResponse: Respone of setting the account information.
@@ -1399,9 +1399,9 @@ type SetAccountInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+func (s SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SetAccountInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SetAccountInfoResponseProviderUserInfo struct {
@@ -1428,9 +1428,9 @@ type SetAccountInfoResponseProviderUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
+func (s SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SetAccountInfoResponseProviderUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignupNewUserResponse: Response of signing up new user, creating anonymous
@@ -1468,9 +1468,9 @@ type SignupNewUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignupNewUserResponse) MarshalJSON() ([]byte, error) {
+func (s SignupNewUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SignupNewUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadAccountResponse: Respone of uploading accounts in batch.
@@ -1495,9 +1495,9 @@ type UploadAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadAccountResponse) MarshalJSON() ([]byte, error) {
+func (s UploadAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UploadAccountResponseError struct {
@@ -1518,9 +1518,9 @@ type UploadAccountResponseError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadAccountResponseError) MarshalJSON() ([]byte, error) {
+func (s UploadAccountResponseError) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAccountResponseError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserInfo: Template for an individual account info.
@@ -1576,9 +1576,9 @@ type UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInfo) MarshalJSON() ([]byte, error) {
+func (s UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *UserInfo) UnmarshalJSON(data []byte) error {
@@ -1627,9 +1627,9 @@ type UserInfoProviderUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInfoProviderUserInfo) MarshalJSON() ([]byte, error) {
+func (s UserInfoProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInfoProviderUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyAssertionResponse: Response of verifying the IDP assertion.
@@ -1745,9 +1745,9 @@ type VerifyAssertionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
+func (s VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyAssertionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyCustomTokenResponse: Response from verifying a custom token
@@ -1780,9 +1780,9 @@ type VerifyCustomTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyCustomTokenResponse) MarshalJSON() ([]byte, error) {
+func (s VerifyCustomTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyCustomTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyPasswordResponse: Request of verifying the password.
@@ -1831,9 +1831,9 @@ type VerifyPasswordResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyPasswordResponse) MarshalJSON() ([]byte, error) {
+func (s VerifyPasswordResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyPasswordResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RelyingpartyCreateAuthUriCall struct {

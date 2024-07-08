@@ -303,9 +303,9 @@ type Blog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Blog) MarshalJSON() ([]byte, error) {
+func (s Blog) MarshalJSON() ([]byte, error) {
 	type NoMethod Blog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogLocale: The locale this Blog is set to.
@@ -329,9 +329,9 @@ type BlogLocale struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogLocale) MarshalJSON() ([]byte, error) {
+func (s BlogLocale) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogLocale
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogPages: The container of pages in this blog.
@@ -353,9 +353,9 @@ type BlogPages struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogPages) MarshalJSON() ([]byte, error) {
+func (s BlogPages) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPages
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogPosts: The container of posts in this blog.
@@ -379,9 +379,9 @@ type BlogPosts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogPosts) MarshalJSON() ([]byte, error) {
+func (s BlogPosts) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPosts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogList struct {
@@ -407,9 +407,9 @@ type BlogList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogList) MarshalJSON() ([]byte, error) {
+func (s BlogList) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogPerUserInfo struct {
@@ -446,9 +446,9 @@ type BlogPerUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogPerUserInfo) MarshalJSON() ([]byte, error) {
+func (s BlogPerUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPerUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogUserInfo struct {
@@ -474,9 +474,9 @@ type BlogUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlogUserInfo) MarshalJSON() ([]byte, error) {
+func (s BlogUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Comment struct {
@@ -524,9 +524,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentAuthor: The author of this Comment.
@@ -552,9 +552,9 @@ type CommentAuthor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentAuthor) MarshalJSON() ([]byte, error) {
+func (s CommentAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentAuthor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentAuthorImage: The creator's avatar.
@@ -574,9 +574,9 @@ type CommentAuthorImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentAuthorImage) MarshalJSON() ([]byte, error) {
+func (s CommentAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentAuthorImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentBlog: Data about the blog containing this comment.
@@ -596,9 +596,9 @@ type CommentBlog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentBlog) MarshalJSON() ([]byte, error) {
+func (s CommentBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentBlog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentInReplyTo: Data about the comment this is in reply to.
@@ -618,9 +618,9 @@ type CommentInReplyTo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentInReplyTo) MarshalJSON() ([]byte, error) {
+func (s CommentInReplyTo) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentInReplyTo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentPost: Data about the post containing this comment.
@@ -640,9 +640,9 @@ type CommentPost struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentPost) MarshalJSON() ([]byte, error) {
+func (s CommentPost) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentPost
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CommentList struct {
@@ -672,9 +672,9 @@ type CommentList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentList) MarshalJSON() ([]byte, error) {
+func (s CommentList) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Page struct {
@@ -726,9 +726,9 @@ type Page struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Page) MarshalJSON() ([]byte, error) {
+func (s Page) MarshalJSON() ([]byte, error) {
 	type NoMethod Page
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageAuthor: The author of this Page.
@@ -754,9 +754,9 @@ type PageAuthor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageAuthor) MarshalJSON() ([]byte, error) {
+func (s PageAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod PageAuthor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageAuthorImage: The creator's avatar.
@@ -776,9 +776,9 @@ type PageAuthorImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageAuthorImage) MarshalJSON() ([]byte, error) {
+func (s PageAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PageAuthorImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageBlog: Data about the blog containing this Page.
@@ -798,9 +798,9 @@ type PageBlog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageBlog) MarshalJSON() ([]byte, error) {
+func (s PageBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod PageBlog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PageList struct {
@@ -828,9 +828,9 @@ type PageList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageList) MarshalJSON() ([]byte, error) {
+func (s PageList) MarshalJSON() ([]byte, error) {
 	type NoMethod PageList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Pageviews struct {
@@ -856,9 +856,9 @@ type Pageviews struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pageviews) MarshalJSON() ([]byte, error) {
+func (s Pageviews) MarshalJSON() ([]byte, error) {
 	type NoMethod Pageviews
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PageviewsCounts struct {
@@ -884,9 +884,9 @@ type PageviewsCounts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageviewsCounts) MarshalJSON() ([]byte, error) {
+func (s PageviewsCounts) MarshalJSON() ([]byte, error) {
 	type NoMethod PageviewsCounts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Post struct {
@@ -958,9 +958,9 @@ type Post struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Post) MarshalJSON() ([]byte, error) {
+func (s Post) MarshalJSON() ([]byte, error) {
 	type NoMethod Post
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostAuthor: The author of this Post.
@@ -986,9 +986,9 @@ type PostAuthor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostAuthor) MarshalJSON() ([]byte, error) {
+func (s PostAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod PostAuthor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostAuthorImage: The creator's avatar.
@@ -1008,9 +1008,9 @@ type PostAuthorImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostAuthorImage) MarshalJSON() ([]byte, error) {
+func (s PostAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PostAuthorImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostBlog: Data about the blog containing this Post.
@@ -1030,9 +1030,9 @@ type PostBlog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostBlog) MarshalJSON() ([]byte, error) {
+func (s PostBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod PostBlog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PostImages struct {
@@ -1050,9 +1050,9 @@ type PostImages struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostImages) MarshalJSON() ([]byte, error) {
+func (s PostImages) MarshalJSON() ([]byte, error) {
 	type NoMethod PostImages
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostLocation: The location for geotagged posts.
@@ -1078,9 +1078,9 @@ type PostLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostLocation) MarshalJSON() ([]byte, error) {
+func (s PostLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PostLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PostLocation) UnmarshalJSON(data []byte) error {
@@ -1120,9 +1120,9 @@ type PostReplies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostReplies) MarshalJSON() ([]byte, error) {
+func (s PostReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod PostReplies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PostList struct {
@@ -1152,9 +1152,9 @@ type PostList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostList) MarshalJSON() ([]byte, error) {
+func (s PostList) MarshalJSON() ([]byte, error) {
 	type NoMethod PostList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PostPerUserInfo struct {
@@ -1181,9 +1181,9 @@ type PostPerUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostPerUserInfo) MarshalJSON() ([]byte, error) {
+func (s PostPerUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PostPerUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PostUserInfo struct {
@@ -1209,9 +1209,9 @@ type PostUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostUserInfo) MarshalJSON() ([]byte, error) {
+func (s PostUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PostUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PostUserInfosList struct {
@@ -1237,9 +1237,9 @@ type PostUserInfosList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostUserInfosList) MarshalJSON() ([]byte, error) {
+func (s PostUserInfosList) MarshalJSON() ([]byte, error) {
 	type NoMethod PostUserInfosList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type User struct {
@@ -1278,9 +1278,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserBlogs: The container of blogs for this user.
@@ -1300,9 +1300,9 @@ type UserBlogs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserBlogs) MarshalJSON() ([]byte, error) {
+func (s UserBlogs) MarshalJSON() ([]byte, error) {
 	type NoMethod UserBlogs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserLocale: This user's locale
@@ -1326,9 +1326,9 @@ type UserLocale struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserLocale) MarshalJSON() ([]byte, error) {
+func (s UserLocale) MarshalJSON() ([]byte, error) {
 	type NoMethod UserLocale
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogUserInfosGetCall struct {

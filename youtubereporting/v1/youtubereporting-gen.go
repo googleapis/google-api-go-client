@@ -242,9 +242,9 @@ type GdataBlobstore2Info struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataBlobstore2Info) MarshalJSON() ([]byte, error) {
+func (s GdataBlobstore2Info) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataBlobstore2Info
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataCompositeMedia: gdata
@@ -291,9 +291,9 @@ type GdataCompositeMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataCompositeMedia) MarshalJSON() ([]byte, error) {
+func (s GdataCompositeMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataCompositeMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataContentTypeInfo: gdata
@@ -321,9 +321,9 @@ type GdataContentTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataContentTypeInfo) MarshalJSON() ([]byte, error) {
+func (s GdataContentTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataContentTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffChecksumsResponse: gdata
@@ -351,9 +351,9 @@ type GdataDiffChecksumsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffChecksumsResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffChecksumsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffChecksumsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffDownloadResponse: gdata
@@ -373,9 +373,9 @@ type GdataDiffDownloadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffDownloadResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffDownloadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffDownloadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffUploadRequest: gdata
@@ -399,9 +399,9 @@ type GdataDiffUploadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffUploadRequest) MarshalJSON() ([]byte, error) {
+func (s GdataDiffUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffUploadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffUploadResponse: gdata
@@ -423,9 +423,9 @@ type GdataDiffUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffUploadResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffVersionResponse: gdata
@@ -447,9 +447,9 @@ type GdataDiffVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDownloadParameters: gdata
@@ -471,9 +471,9 @@ type GdataDownloadParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDownloadParameters) MarshalJSON() ([]byte, error) {
+func (s GdataDownloadParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDownloadParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataMedia: gdata
@@ -569,9 +569,9 @@ type GdataMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataMedia) MarshalJSON() ([]byte, error) {
+func (s GdataMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataObjectId: gdata
@@ -595,9 +595,9 @@ type GdataObjectId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataObjectId) MarshalJSON() ([]byte, error) {
+func (s GdataObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataObjectId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Job: A job creating reports of a specific type.
@@ -633,9 +633,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobsResponse: Response message for ReportingService.ListJobs.
@@ -662,9 +662,9 @@ type ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReportTypesResponse: Response message for
@@ -692,9 +692,9 @@ type ListReportTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReportTypesResponse) MarshalJSON() ([]byte, error) {
+func (s ListReportTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReportTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReportsResponse: Response message for ReportingService.ListReports.
@@ -721,9 +721,9 @@ type ListReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Report: A report's metadata including the URL from which the report itself
@@ -763,9 +763,9 @@ type Report struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportType: A report type.
@@ -793,9 +793,9 @@ type ReportType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportType) MarshalJSON() ([]byte, error) {
+func (s ReportType) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JobsCreateCall struct {

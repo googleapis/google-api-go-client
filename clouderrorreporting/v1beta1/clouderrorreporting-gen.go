@@ -241,9 +241,9 @@ type ErrorContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorContext) MarshalJSON() ([]byte, error) {
+func (s ErrorContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorEvent: An error event which is returned by the Error Reporting system.
@@ -271,9 +271,9 @@ type ErrorEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorEvent) MarshalJSON() ([]byte, error) {
+func (s ErrorEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorGroup: Description of a group of similar error events.
@@ -328,9 +328,9 @@ type ErrorGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorGroup) MarshalJSON() ([]byte, error) {
+func (s ErrorGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorGroupStats: Data extracted for a specific group based on certain filter
@@ -389,9 +389,9 @@ type ErrorGroupStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorGroupStats) MarshalJSON() ([]byte, error) {
+func (s ErrorGroupStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorGroupStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRequestContext: HTTP request data that is related to a reported error.
@@ -426,9 +426,9 @@ type HttpRequestContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRequestContext) MarshalJSON() ([]byte, error) {
+func (s HttpRequestContext) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRequestContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEventsResponse: Contains a set of requested error events.
@@ -458,9 +458,9 @@ type ListEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEventsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupStatsResponse: Contains a set of requested error group stats.
@@ -492,9 +492,9 @@ type ListGroupStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupStatsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportErrorEventResponse: Response for reporting an individual error event.
@@ -554,9 +554,9 @@ type ReportedErrorEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportedErrorEvent) MarshalJSON() ([]byte, error) {
+func (s ReportedErrorEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportedErrorEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceContext: Describes a running service that sends errors. Its version
@@ -591,9 +591,9 @@ type ServiceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceContext) MarshalJSON() ([]byte, error) {
+func (s ServiceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceLocation: Indicates a location in the source code of the service for
@@ -624,9 +624,9 @@ type SourceLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceLocation) MarshalJSON() ([]byte, error) {
+func (s SourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source tree
@@ -651,9 +651,9 @@ type SourceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceReference) MarshalJSON() ([]byte, error) {
+func (s SourceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimedCount: The number of errors in a given time period. All numbers are
@@ -678,9 +678,9 @@ type TimedCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimedCount) MarshalJSON() ([]byte, error) {
+func (s TimedCount) MarshalJSON() ([]byte, error) {
 	type NoMethod TimedCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackingIssue: Information related to tracking the progress on resolving the
@@ -702,9 +702,9 @@ type TrackingIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackingIssue) MarshalJSON() ([]byte, error) {
+func (s TrackingIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackingIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsDeleteEventsCall struct {

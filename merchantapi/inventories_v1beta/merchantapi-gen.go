@@ -222,9 +222,9 @@ type CustomAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -262,9 +262,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocalInventoriesResponse: Response message for the
@@ -292,9 +292,9 @@ type ListLocalInventoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocalInventoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocalInventoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocalInventoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRegionalInventoriesResponse: Response message for the
@@ -322,9 +322,9 @@ type ListRegionalInventoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRegionalInventoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRegionalInventoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRegionalInventoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalInventory: Local inventory information for the product. Represents
@@ -392,9 +392,9 @@ type LocalInventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalInventory) MarshalJSON() ([]byte, error) {
+func (s LocalInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalInventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: The price represented as a number and currency.
@@ -419,9 +419,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -479,9 +479,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -528,9 +528,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalInventory: Regional inventory information for the product.
@@ -581,9 +581,9 @@ type RegionalInventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalInventory) MarshalJSON() ([]byte, error) {
+func (s RegionalInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalInventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsProductsLocalInventoriesDeleteCall struct {

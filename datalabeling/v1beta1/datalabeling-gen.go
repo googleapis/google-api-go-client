@@ -392,9 +392,9 @@ type GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata: Metadata of an
@@ -425,9 +425,9 @@ type GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse: Response used
@@ -459,9 +459,9 @@ type GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1GcsDestination: Export destination of the
@@ -485,9 +485,9 @@ type GoogleCloudDatalabelingV1alpha1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1GcsFolderDestination: Export folder
@@ -508,9 +508,9 @@ type GoogleCloudDatalabelingV1alpha1GcsFolderDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1GcsFolderDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig: Configuration for how
@@ -563,9 +563,9 @@ type GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata: Metadata of an
@@ -592,9 +592,9 @@ type GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse: Response used
@@ -619,9 +619,9 @@ type GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata:
@@ -642,9 +642,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata:
@@ -665,9 +665,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata:
@@ -688,9 +688,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata
@@ -711,9 +711,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetada
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata: Details
@@ -734,9 +734,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata:
@@ -757,9 +757,9 @@ type GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelOperationMetadata: Metadata of a
@@ -820,9 +820,9 @@ type GoogleCloudDatalabelingV1alpha1LabelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelStats: Statistics about annotation
@@ -847,9 +847,9 @@ type GoogleCloudDatalabelingV1alpha1LabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata:
@@ -870,9 +870,9 @@ type GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata:
@@ -893,9 +893,9 @@ type GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata:
@@ -916,9 +916,9 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata: Details of
@@ -939,9 +939,9 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata:
@@ -962,9 +962,9 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata:
@@ -985,9 +985,9 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1OutputConfig: The configuration of output
@@ -1012,9 +1012,9 @@ type GoogleCloudDatalabelingV1alpha1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotatedDataset: AnnotatedDataset is a set
@@ -1094,9 +1094,9 @@ type GoogleCloudDatalabelingV1beta1AnnotatedDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotatedDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotatedDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotatedDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata: Metadata on
@@ -1139,9 +1139,9 @@ type GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Annotation: Annotation for Example. Each
@@ -1185,9 +1185,9 @@ type GoogleCloudDatalabelingV1beta1Annotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Annotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Annotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotationMetadata: Additional information
@@ -1208,9 +1208,9 @@ type GoogleCloudDatalabelingV1beta1AnnotationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotationSpec: Container of information
@@ -1246,9 +1246,9 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotationSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotationSpecSet: An AnnotationSpecSet is a
@@ -1288,9 +1288,9 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpecSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotationSpecSet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotationSpecSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpecSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig: Annotation spec set
@@ -1314,9 +1314,9 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotationValue: Annotation value for an
@@ -1361,9 +1361,9 @@ type GoogleCloudDatalabelingV1beta1AnnotationValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1AnnotationValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1AnnotationValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Attempt: Records a failed evaluation job run.
@@ -1384,9 +1384,9 @@ type GoogleCloudDatalabelingV1beta1Attempt struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Attempt) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Attempt) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Attempt
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1BigQuerySource: The BigQuery location for
@@ -1416,9 +1416,9 @@ type GoogleCloudDatalabelingV1beta1BigQuerySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1BigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1BigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions: Options
@@ -1442,9 +1442,9 @@ type GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) UnmarshalJSON(data []byte) error {
@@ -1478,9 +1478,9 @@ type GoogleCloudDatalabelingV1beta1BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1BoundingPolyConfig: Config for image bounding
@@ -1503,9 +1503,9 @@ type GoogleCloudDatalabelingV1beta1BoundingPolyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1BoundingPolyConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1BoundingPolyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingPolyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ClassificationMetadata: Metadata for
@@ -1526,9 +1526,9 @@ type GoogleCloudDatalabelingV1beta1ClassificationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ClassificationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ClassificationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ClassificationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ClassificationMetrics: Metrics calculated for
@@ -1553,9 +1553,9 @@ type GoogleCloudDatalabelingV1beta1ClassificationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ClassificationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ClassificationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ClassificationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
@@ -1599,9 +1599,9 @@ type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) UnmarshalJSON(data []byte) error {
@@ -1655,9 +1655,9 @@ type GoogleCloudDatalabelingV1beta1ConfusionMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ConfusionMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ConfusionMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfusionMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry struct {
@@ -1679,9 +1679,9 @@ type GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest: Request
@@ -1704,9 +1704,9 @@ type GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateDatasetRequest: Request message for
@@ -1727,9 +1727,9 @@ type GoogleCloudDatalabelingV1beta1CreateDatasetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CreateDatasetRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CreateDatasetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateDatasetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest: Request message
@@ -1750,9 +1750,9 @@ type GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateInstructionMetadata: Metadata of a
@@ -1780,9 +1780,9 @@ type GoogleCloudDatalabelingV1beta1CreateInstructionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateInstructionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateInstructionRequest: Request message for
@@ -1803,9 +1803,9 @@ type GoogleCloudDatalabelingV1beta1CreateInstructionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CreateInstructionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CreateInstructionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateInstructionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CsvInstruction: Deprecated: this instruction
@@ -1826,9 +1826,9 @@ type GoogleCloudDatalabelingV1beta1CsvInstruction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1CsvInstruction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1CsvInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CsvInstruction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1DataItem: DataItem is a piece of data, without
@@ -1859,9 +1859,9 @@ type GoogleCloudDatalabelingV1beta1DataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1DataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1DataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1DataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Dataset: Dataset is the resource to hold your
@@ -1908,9 +1908,9 @@ type GoogleCloudDatalabelingV1beta1Dataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Dataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Dataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Evaluation: Describes an evaluation between a
@@ -1979,9 +1979,9 @@ type GoogleCloudDatalabelingV1beta1Evaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Evaluation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Evaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Evaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1EvaluationConfig: Configuration details used
@@ -2004,9 +2004,9 @@ type GoogleCloudDatalabelingV1beta1EvaluationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EvaluationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EvaluationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1EvaluationJob: Defines an evaluation job that
@@ -2103,9 +2103,9 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EvaluationJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EvaluationJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig: Provides details for
@@ -2132,9 +2132,9 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) UnmarshalJSON(data []byte) error {
@@ -2235,9 +2235,9 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EvaluationJobConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EvaluationJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJobConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobConfig) UnmarshalJSON(data []byte) error {
@@ -2270,9 +2270,9 @@ type GoogleCloudDatalabelingV1beta1EvaluationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1EventConfig: Config for video event human
@@ -2302,9 +2302,9 @@ type GoogleCloudDatalabelingV1beta1EventConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1EventConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1EventConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EventConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Example: An Example is a piece of data and its
@@ -2339,9 +2339,9 @@ type GoogleCloudDatalabelingV1beta1Example struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Example) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Example) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Example
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExampleComparison: Example comparisons
@@ -2364,9 +2364,9 @@ type GoogleCloudDatalabelingV1beta1ExampleComparison struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ExampleComparison) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ExampleComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExampleComparison
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata: Metadata of an
@@ -2397,9 +2397,9 @@ type GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExportDataOperationResponse: Response used for
@@ -2431,9 +2431,9 @@ type GoogleCloudDatalabelingV1beta1ExportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExportDataRequest: Request message for
@@ -2465,9 +2465,9 @@ type GoogleCloudDatalabelingV1beta1ExportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ExportDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ExportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1FeedbackMessage: A feedback message inside a
@@ -2503,9 +2503,9 @@ type GoogleCloudDatalabelingV1beta1FeedbackMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1FeedbackMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1FeedbackMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1FeedbackThread: A feedback thread of a certain
@@ -2533,9 +2533,9 @@ type GoogleCloudDatalabelingV1beta1FeedbackThread struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1FeedbackThread) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1FeedbackThread) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackThread
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata struct {
@@ -2563,9 +2563,9 @@ type GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1GcsDestination: Export destination of the
@@ -2589,9 +2589,9 @@ type GoogleCloudDatalabelingV1beta1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1GcsFolderDestination: Export folder
@@ -2612,9 +2612,9 @@ type GoogleCloudDatalabelingV1beta1GcsFolderDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1GcsFolderDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsFolderDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1GcsSource: Source of the Cloud Storage file to
@@ -2639,9 +2639,9 @@ type GoogleCloudDatalabelingV1beta1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1HumanAnnotationConfig: Configuration for how
@@ -2694,9 +2694,9 @@ type GoogleCloudDatalabelingV1beta1HumanAnnotationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1HumanAnnotationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation: Image bounding
@@ -2720,9 +2720,9 @@ type GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation: Image
@@ -2743,9 +2743,9 @@ type GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageClassificationConfig: Config for image
@@ -2777,9 +2777,9 @@ type GoogleCloudDatalabelingV1beta1ImageClassificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImageClassificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImageClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageClassificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImagePayload: Container of information about
@@ -2806,9 +2806,9 @@ type GoogleCloudDatalabelingV1beta1ImagePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImagePayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImagePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImagePayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation: A polyline for the
@@ -2831,9 +2831,9 @@ type GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation: Image
@@ -2860,9 +2860,9 @@ type GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata: Metadata of an
@@ -2889,9 +2889,9 @@ type GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImportDataOperationResponse: Response used for
@@ -2916,9 +2916,9 @@ type GoogleCloudDatalabelingV1beta1ImportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImportDataRequest: Request message for
@@ -2942,9 +2942,9 @@ type GoogleCloudDatalabelingV1beta1ImportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ImportDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ImportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1InputConfig: The configuration of input data,
@@ -3010,9 +3010,9 @@ type GoogleCloudDatalabelingV1beta1InputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1InputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1InputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Instruction: Instruction of how to perform the
@@ -3069,9 +3069,9 @@ type GoogleCloudDatalabelingV1beta1Instruction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Instruction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Instruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Instruction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata:
@@ -3092,9 +3092,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata:
@@ -3115,9 +3115,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata:
@@ -3138,9 +3138,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata:
@@ -3162,9 +3162,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata: Details
@@ -3185,9 +3185,9 @@ type GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageRequest: Request message for
@@ -3240,9 +3240,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata:
@@ -3263,9 +3263,9 @@ type GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelOperationMetadata: Metadata of a labeling
@@ -3326,9 +3326,9 @@ type GoogleCloudDatalabelingV1beta1LabelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelStats: Statistics about annotation specs.
@@ -3352,9 +3352,9 @@ type GoogleCloudDatalabelingV1beta1LabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata:
@@ -3375,9 +3375,9 @@ type GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata:
@@ -3398,9 +3398,9 @@ type GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelTextRequest: Request message for
@@ -3434,9 +3434,9 @@ type GoogleCloudDatalabelingV1beta1LabelTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelTextRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata:
@@ -3457,9 +3457,9 @@ type GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata: Details of a
@@ -3480,9 +3480,9 @@ type GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata:
@@ -3503,9 +3503,9 @@ type GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata:
@@ -3526,9 +3526,9 @@ type GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoRequest: Request message for
@@ -3576,9 +3576,9 @@ type GoogleCloudDatalabelingV1beta1LabelVideoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1LabelVideoRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1LabelVideoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse: Results of
@@ -3604,9 +3604,9 @@ type GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse: Results of
@@ -3632,9 +3632,9 @@ type GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListDataItemsResponse: Results of listing data
@@ -3660,9 +3660,9 @@ type GoogleCloudDatalabelingV1beta1ListDataItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListDataItemsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListDataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListDataItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListDatasetsResponse: Results of listing
@@ -3688,9 +3688,9 @@ type GoogleCloudDatalabelingV1beta1ListDatasetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListDatasetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListDatasetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse: Results for
@@ -3716,9 +3716,9 @@ type GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListExamplesResponse: Results of listing
@@ -3744,9 +3744,9 @@ type GoogleCloudDatalabelingV1beta1ListExamplesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListExamplesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListExamplesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListExamplesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse: Results for
@@ -3772,9 +3772,9 @@ type GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse: Results for
@@ -3800,9 +3800,9 @@ type GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListInstructionsResponse: Results of listing
@@ -3828,9 +3828,9 @@ type GoogleCloudDatalabelingV1beta1ListInstructionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ListInstructionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ListInstructionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListInstructionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly: Normalized bounding
@@ -3851,9 +3851,9 @@ type GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1NormalizedPolyline: Normalized polyline.
@@ -3873,9 +3873,9 @@ type GoogleCloudDatalabelingV1beta1NormalizedPolyline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1NormalizedPolyline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1NormalizedPolyline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedPolyline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1NormalizedVertex: A vertex represents a 2D
@@ -3899,9 +3899,9 @@ type GoogleCloudDatalabelingV1beta1NormalizedVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -3944,9 +3944,9 @@ type GoogleCloudDatalabelingV1beta1ObjectDetectionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectDetectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) UnmarshalJSON(data []byte) error {
@@ -3981,9 +3981,9 @@ type GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ObjectTrackingConfig: Config for video object
@@ -4011,9 +4011,9 @@ type GoogleCloudDatalabelingV1beta1ObjectTrackingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ObjectTrackingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ObjectTrackingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectTrackingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ObjectTrackingFrame: Video frame level
@@ -4037,9 +4037,9 @@ type GoogleCloudDatalabelingV1beta1ObjectTrackingFrame struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1ObjectTrackingFrame) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1ObjectTrackingFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectTrackingFrame
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata: Metadata describing
@@ -4073,9 +4073,9 @@ type GoogleCloudDatalabelingV1beta1OperatorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1OperatorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1OperatorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1OperatorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1OperatorMetadata) UnmarshalJSON(data []byte) error {
@@ -4114,9 +4114,9 @@ type GoogleCloudDatalabelingV1beta1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest: Request message for
@@ -4141,9 +4141,9 @@ type GoogleCloudDatalabelingV1beta1PdfInstruction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1PdfInstruction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1PdfInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PdfInstruction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Polyline: A line with multiple line segments.
@@ -4163,9 +4163,9 @@ type GoogleCloudDatalabelingV1beta1Polyline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Polyline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Polyline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Polyline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1PolylineConfig: Config for image polyline
@@ -4188,9 +4188,9 @@ type GoogleCloudDatalabelingV1beta1PolylineConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1PolylineConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1PolylineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PolylineConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1PrCurve struct {
@@ -4220,9 +4220,9 @@ type GoogleCloudDatalabelingV1beta1PrCurve struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1PrCurve) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1PrCurve) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PrCurve
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1PrCurve) UnmarshalJSON(data []byte) error {
@@ -4272,9 +4272,9 @@ type GoogleCloudDatalabelingV1beta1Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Row) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Row) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse: Results of
@@ -4300,9 +4300,9 @@ type GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest: Request
@@ -4329,9 +4329,9 @@ type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse: Results of
@@ -4358,9 +4358,9 @@ type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SegmentationConfig: Config for image
@@ -4384,9 +4384,9 @@ type GoogleCloudDatalabelingV1beta1SegmentationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SegmentationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SegmentationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SegmentationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SentimentConfig: Config for setting up
@@ -4409,9 +4409,9 @@ type GoogleCloudDatalabelingV1beta1SentimentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SentimentConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SentimentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SentimentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SequentialSegment: Start and end position in a
@@ -4434,9 +4434,9 @@ type GoogleCloudDatalabelingV1beta1SequentialSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1SequentialSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1SequentialSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SequentialSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextClassificationAnnotation: Text
@@ -4457,9 +4457,9 @@ type GoogleCloudDatalabelingV1beta1TextClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextClassificationConfig: Config for text
@@ -4486,9 +4486,9 @@ type GoogleCloudDatalabelingV1beta1TextClassificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextClassificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextClassificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation: Text entity
@@ -4511,9 +4511,9 @@ type GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig: Config for text
@@ -4534,9 +4534,9 @@ type GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextMetadata: Metadata for the text.
@@ -4557,9 +4557,9 @@ type GoogleCloudDatalabelingV1beta1TextMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextPayload: Container of information about a
@@ -4580,9 +4580,9 @@ type GoogleCloudDatalabelingV1beta1TextPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TextPayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TextPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TimeSegment: A time period inside of an
@@ -4607,9 +4607,9 @@ type GoogleCloudDatalabelingV1beta1TimeSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1TimeSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1TimeSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TimeSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1Vertex: A vertex represents a 2D point in the
@@ -4633,9 +4633,9 @@ type GoogleCloudDatalabelingV1beta1Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1Vertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Vertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation: Video
@@ -4658,9 +4658,9 @@ type GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoClassificationConfig: Config for video
@@ -4691,9 +4691,9 @@ type GoogleCloudDatalabelingV1beta1VideoClassificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoClassificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoClassificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoEventAnnotation: Video event annotation.
@@ -4715,9 +4715,9 @@ type GoogleCloudDatalabelingV1beta1VideoEventAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoEventAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoEventAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoEventAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation: Video object
@@ -4742,9 +4742,9 @@ type GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoPayload: Container of information of a
@@ -4773,9 +4773,9 @@ type GoogleCloudDatalabelingV1beta1VideoPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoPayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoPayload) UnmarshalJSON(data []byte) error {
@@ -4814,9 +4814,9 @@ type GoogleCloudDatalabelingV1beta1VideoThumbnail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1beta1VideoThumbnail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1beta1VideoThumbnail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoThumbnail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata: Metadata of a
@@ -4844,9 +4844,9 @@ type GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata: Metadata of an
@@ -4877,9 +4877,9 @@ type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse: Response used
@@ -4911,9 +4911,9 @@ type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1GcsDestination: Export destination of the
@@ -4937,9 +4937,9 @@ type GoogleCloudDatalabelingV1p1alpha1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination: Export folder
@@ -4960,9 +4960,9 @@ type GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata:
@@ -4986,9 +4986,9 @@ type GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig: Configuration for
@@ -5041,9 +5041,9 @@ type GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata: Metadata of an
@@ -5070,9 +5070,9 @@ type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse: Response used
@@ -5097,9 +5097,9 @@ type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata:
@@ -5120,9 +5120,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata:
@@ -5143,9 +5143,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata:
@@ -5166,9 +5166,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetada
@@ -5189,9 +5189,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMeta
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata:
@@ -5212,9 +5212,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata:
@@ -5235,9 +5235,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata: Metadata of a
@@ -5298,9 +5298,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelStats: Statistics about annotation
@@ -5325,9 +5325,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata:
@@ -5348,9 +5348,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata:
@@ -5371,9 +5371,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata:
@@ -5394,9 +5394,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata: Details
@@ -5417,9 +5417,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata:
@@ -5440,9 +5440,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata:
@@ -5463,9 +5463,9 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1OutputConfig: The configuration of output
@@ -5490,9 +5490,9 @@ type GoogleCloudDatalabelingV1p1alpha1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata: Metadata of a
@@ -5520,9 +5520,9 @@ type GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata: Metadata of an
@@ -5553,9 +5553,9 @@ type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse: Response used
@@ -5587,9 +5587,9 @@ type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1GcsDestination: Export destination of the
@@ -5613,9 +5613,9 @@ type GoogleCloudDatalabelingV1p2alpha1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination: Export folder
@@ -5636,9 +5636,9 @@ type GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig: Configuration for
@@ -5691,9 +5691,9 @@ type GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata: Metadata of an
@@ -5720,9 +5720,9 @@ type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse: Response used
@@ -5747,9 +5747,9 @@ type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata:
@@ -5770,9 +5770,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata:
@@ -5793,9 +5793,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata:
@@ -5816,9 +5816,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetada
@@ -5839,9 +5839,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMeta
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata:
@@ -5862,9 +5862,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata:
@@ -5885,9 +5885,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata: Metadata of a
@@ -5948,9 +5948,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelStats: Statistics about annotation
@@ -5975,9 +5975,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata:
@@ -5998,9 +5998,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata:
@@ -6021,9 +6021,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata:
@@ -6044,9 +6044,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata: Details
@@ -6067,9 +6067,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata:
@@ -6090,9 +6090,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata:
@@ -6113,9 +6113,9 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1OutputConfig: The configuration of output
@@ -6140,9 +6140,9 @@ type GoogleCloudDatalabelingV1p2alpha1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatalabelingV1p2alpha1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatalabelingV1p2alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -6169,9 +6169,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -6216,9 +6216,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -6260,9 +6260,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsAnnotationSpecSetsCreateCall struct {

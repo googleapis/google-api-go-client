@@ -263,9 +263,9 @@ type ActiveConference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActiveConference) MarshalJSON() ([]byte, error) {
+func (s ActiveConference) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveConference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnonymousUser: User who joins anonymously (meaning not signed into a Google
@@ -287,9 +287,9 @@ type AnonymousUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnonymousUser) MarshalJSON() ([]byte, error) {
+func (s AnonymousUser) MarshalJSON() ([]byte, error) {
 	type NoMethod AnonymousUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConferenceRecord: Single instance of a meeting held in a space.
@@ -325,9 +325,9 @@ type ConferenceRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConferenceRecord) MarshalJSON() ([]byte, error) {
+func (s ConferenceRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod ConferenceRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocsDestination: Google Docs location where the transcript file is saved.
@@ -355,9 +355,9 @@ type DocsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocsDestination) MarshalJSON() ([]byte, error) {
+func (s DocsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod DocsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveDestination: Export location where a recording file is saved in Google
@@ -385,9 +385,9 @@ type DriveDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveDestination) MarshalJSON() ([]byte, error) {
+func (s DriveDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -427,9 +427,9 @@ type ListConferenceRecordsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListConferenceRecordsResponse) MarshalJSON() ([]byte, error) {
+func (s ListConferenceRecordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConferenceRecordsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListParticipantSessionsResponse: Response of ListParticipants method.
@@ -456,9 +456,9 @@ type ListParticipantSessionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListParticipantSessionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListParticipantSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListParticipantSessionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListParticipantsResponse: Response of ListParticipants method.
@@ -490,9 +490,9 @@ type ListParticipantsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListParticipantsResponse) MarshalJSON() ([]byte, error) {
+func (s ListParticipantsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListParticipantsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRecordingsResponse: Response for ListRecordings method.
@@ -519,9 +519,9 @@ type ListRecordingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRecordingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRecordingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRecordingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTranscriptEntriesResponse: Response for ListTranscriptEntries method.
@@ -548,9 +548,9 @@ type ListTranscriptEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTranscriptEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTranscriptEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTranscriptEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTranscriptsResponse: Response for ListTranscripts method.
@@ -577,9 +577,9 @@ type ListTranscriptsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTranscriptsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTranscriptsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTranscriptsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Participant: User who attended or is attending a conference.
@@ -615,9 +615,9 @@ type Participant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Participant) MarshalJSON() ([]byte, error) {
+func (s Participant) MarshalJSON() ([]byte, error) {
 	type NoMethod Participant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParticipantSession: Refers to each unique join or leave session when a user
@@ -649,9 +649,9 @@ type ParticipantSession struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParticipantSession) MarshalJSON() ([]byte, error) {
+func (s ParticipantSession) MarshalJSON() ([]byte, error) {
 	type NoMethod ParticipantSession
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhoneUser: User dialing in from a phone where the user's identity is unknown
@@ -673,9 +673,9 @@ type PhoneUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhoneUser) MarshalJSON() ([]byte, error) {
+func (s PhoneUser) MarshalJSON() ([]byte, error) {
 	type NoMethod PhoneUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Recording: Metadata about a recording created during a conference.
@@ -718,9 +718,9 @@ type Recording struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Recording) MarshalJSON() ([]byte, error) {
+func (s Recording) MarshalJSON() ([]byte, error) {
 	type NoMethod Recording
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignedinUser: A signed-in user can be: a) An individual joining from a
@@ -747,9 +747,9 @@ type SignedinUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignedinUser) MarshalJSON() ([]byte, error) {
+func (s SignedinUser) MarshalJSON() ([]byte, error) {
 	type NoMethod SignedinUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Space: Virtual place where conferences are held. Only one active conference
@@ -784,9 +784,9 @@ type Space struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Space) MarshalJSON() ([]byte, error) {
+func (s Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpaceConfig: The configuration pertaining to a meeting space.
@@ -829,9 +829,9 @@ type SpaceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpaceConfig) MarshalJSON() ([]byte, error) {
+func (s SpaceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SpaceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Transcript: Metadata for a transcript generated from a conference. It refers
@@ -874,9 +874,9 @@ type Transcript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Transcript) MarshalJSON() ([]byte, error) {
+func (s Transcript) MarshalJSON() ([]byte, error) {
 	type NoMethod Transcript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranscriptEntry: Single entry for one user’s speech during a transcript
@@ -914,9 +914,9 @@ type TranscriptEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranscriptEntry) MarshalJSON() ([]byte, error) {
+func (s TranscriptEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod TranscriptEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ConferenceRecordsGetCall struct {

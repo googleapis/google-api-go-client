@@ -248,9 +248,9 @@ type AccessSecretVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessSecretVersionResponse) MarshalJSON() ([]byte, error) {
+func (s AccessSecretVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSecretVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSecretVersionRequest: Request message for
@@ -271,9 +271,9 @@ type AddSecretVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddSecretVersionRequest) MarshalJSON() ([]byte, error) {
+func (s AddSecretVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSecretVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -312,9 +312,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -347,9 +347,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Automatic: A replication policy that replicates the Secret payload without
@@ -374,9 +374,9 @@ type Automatic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Automatic) MarshalJSON() ([]byte, error) {
+func (s Automatic) MarshalJSON() ([]byte, error) {
 	type NoMethod Automatic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutomaticStatus: The replication status of a SecretVersion using automatic
@@ -400,9 +400,9 @@ type AutomaticStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutomaticStatus) MarshalJSON() ([]byte, error) {
+func (s AutomaticStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod AutomaticStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -499,9 +499,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerManagedEncryption: Configuration for encrypting secret payloads
@@ -527,9 +527,9 @@ type CustomerManagedEncryption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerManagedEncryption) MarshalJSON() ([]byte, error) {
+func (s CustomerManagedEncryption) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerManagedEncryption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerManagedEncryptionStatus: Describes the status of customer-managed
@@ -552,9 +552,9 @@ type CustomerManagedEncryptionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerManagedEncryptionStatus) MarshalJSON() ([]byte, error) {
+func (s CustomerManagedEncryptionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerManagedEncryptionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestroySecretVersionRequest: Request message for
@@ -577,9 +577,9 @@ type DestroySecretVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestroySecretVersionRequest) MarshalJSON() ([]byte, error) {
+func (s DestroySecretVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DestroySecretVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableSecretVersionRequest: Request message for
@@ -602,9 +602,9 @@ type DisableSecretVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+func (s DisableSecretVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DisableSecretVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -636,9 +636,9 @@ type EnableSecretVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+func (s EnableSecretVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableSecretVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -684,9 +684,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -712,9 +712,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSecretVersionsResponse: Response message for
@@ -745,9 +745,9 @@ type ListSecretVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSecretVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSecretVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSecretVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSecretsResponse: Response message for SecretManagerService.ListSecrets.
@@ -777,9 +777,9 @@ type ListSecretsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSecretsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSecretsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSecretsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -815,9 +815,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -907,9 +907,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Replica: Represents a Replica for this Secret.
@@ -936,9 +936,9 @@ type Replica struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Replica) MarshalJSON() ([]byte, error) {
+func (s Replica) MarshalJSON() ([]byte, error) {
 	type NoMethod Replica
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicaStatus: Describes the status of a user-managed replica for the
@@ -964,9 +964,9 @@ type ReplicaStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicaStatus) MarshalJSON() ([]byte, error) {
+func (s ReplicaStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicaStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Replication: A policy that defines the replication and encryption
@@ -991,9 +991,9 @@ type Replication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Replication) MarshalJSON() ([]byte, error) {
+func (s Replication) MarshalJSON() ([]byte, error) {
 	type NoMethod Replication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicationStatus: The replication status of a SecretVersion.
@@ -1019,9 +1019,9 @@ type ReplicationStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicationStatus) MarshalJSON() ([]byte, error) {
+func (s ReplicationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Rotation: The rotation time and period for a Secret. At next_rotation_time,
@@ -1052,9 +1052,9 @@ type Rotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Rotation) MarshalJSON() ([]byte, error) {
+func (s Rotation) MarshalJSON() ([]byte, error) {
 	type NoMethod Rotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Secret: A Secret is a logical secret whose value and versions can be
@@ -1139,9 +1139,9 @@ type Secret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Secret) MarshalJSON() ([]byte, error) {
+func (s Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecretPayload: A secret payload resource in the Secret Manager API. This
@@ -1173,9 +1173,9 @@ type SecretPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecretPayload) MarshalJSON() ([]byte, error) {
+func (s SecretPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecretVersion: A secret version resource in the Secret Manager API.
@@ -1234,9 +1234,9 @@ type SecretVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecretVersion) MarshalJSON() ([]byte, error) {
+func (s SecretVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1263,9 +1263,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1288,9 +1288,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1315,9 +1315,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: A Pub/Sub topic which Secret Manager will publish to when control
@@ -1342,9 +1342,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserManaged: A replication policy that replicates the Secret payload into
@@ -1365,9 +1365,9 @@ type UserManaged struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserManaged) MarshalJSON() ([]byte, error) {
+func (s UserManaged) MarshalJSON() ([]byte, error) {
 	type NoMethod UserManaged
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserManagedStatus: The replication status of a SecretVersion using
@@ -1389,9 +1389,9 @@ type UserManagedStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserManagedStatus) MarshalJSON() ([]byte, error) {
+func (s UserManagedStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod UserManagedStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

@@ -201,9 +201,9 @@ type AdministrationRegion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministrationRegion) MarshalJSON() ([]byte, error) {
+func (s AdministrationRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministrationRegion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdministrativeBody: Information about an election administrative body (e.g.
@@ -264,9 +264,9 @@ type AdministrativeBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministrativeBody) MarshalJSON() ([]byte, error) {
+func (s AdministrativeBody) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministrativeBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Candidate: Information about a candidate running for elected office.
@@ -303,9 +303,9 @@ type Candidate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Candidate) MarshalJSON() ([]byte, error) {
+func (s Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod Candidate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A social media or web channel for a candidate.
@@ -329,9 +329,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Contest: Information about a contest that appears on a voter's ballot.
@@ -453,9 +453,9 @@ type Contest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Contest) MarshalJSON() ([]byte, error) {
+func (s Contest) MarshalJSON() ([]byte, error) {
 	type NoMethod Contest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DivisionSearchResponse: The result of a division search query.
@@ -480,9 +480,9 @@ type DivisionSearchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DivisionSearchResponse) MarshalJSON() ([]byte, error) {
+func (s DivisionSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DivisionSearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DivisionSearchResult: Represents a political geographic division that
@@ -512,9 +512,9 @@ type DivisionSearchResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DivisionSearchResult) MarshalJSON() ([]byte, error) {
+func (s DivisionSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod DivisionSearchResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Election: Information about the election that was queried.
@@ -549,9 +549,9 @@ type Election struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Election) MarshalJSON() ([]byte, error) {
+func (s Election) MarshalJSON() ([]byte, error) {
 	type NoMethod Election
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ElectionOfficial: Information about individual election officials.
@@ -579,9 +579,9 @@ type ElectionOfficial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
+func (s ElectionOfficial) MarshalJSON() ([]byte, error) {
 	type NoMethod ElectionOfficial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ElectionsQueryResponse: The list of elections available for this version of
@@ -608,9 +608,9 @@ type ElectionsQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
+func (s ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ElectionsQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ElectoralDistrict: Describes the geographic scope of a contest.
@@ -654,9 +654,9 @@ type ElectoralDistrict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
+func (s ElectoralDistrict) MarshalJSON() ([]byte, error) {
 	type NoMethod ElectoralDistrict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeographicDivision: Describes a political geography.
@@ -690,9 +690,9 @@ type GeographicDivision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
+func (s GeographicDivision) MarshalJSON() ([]byte, error) {
 	type NoMethod GeographicDivision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Office: Information about an Office held by one or more Officials.
@@ -756,9 +756,9 @@ type Office struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Office) MarshalJSON() ([]byte, error) {
+func (s Office) MarshalJSON() ([]byte, error) {
 	type NoMethod Office
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Official: Information about a person holding an elected office.
@@ -792,9 +792,9 @@ type Official struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Official) MarshalJSON() ([]byte, error) {
+func (s Official) MarshalJSON() ([]byte, error) {
 	type NoMethod Official
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PollingLocation: A location where a voter can vote. This may be an early
@@ -842,9 +842,9 @@ type PollingLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PollingLocation) MarshalJSON() ([]byte, error) {
+func (s PollingLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PollingLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PollingLocation) UnmarshalJSON(data []byte) error {
@@ -911,9 +911,9 @@ type Precinct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Precinct) MarshalJSON() ([]byte, error) {
+func (s Precinct) MarshalJSON() ([]byte, error) {
 	type NoMethod Precinct
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RepresentativeInfoData struct {
@@ -943,9 +943,9 @@ type RepresentativeInfoData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
+func (s RepresentativeInfoData) MarshalJSON() ([]byte, error) {
 	type NoMethod RepresentativeInfoData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RepresentativeInfoResponse: The result of a representative info lookup
@@ -982,9 +982,9 @@ type RepresentativeInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
+func (s RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RepresentativeInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimpleAddressType: A simple representation of an address.
@@ -1016,9 +1016,9 @@ type SimpleAddressType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimpleAddressType) MarshalJSON() ([]byte, error) {
+func (s SimpleAddressType) MarshalJSON() ([]byte, error) {
 	type NoMethod SimpleAddressType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: Contains information about the data source for the element
@@ -1041,9 +1041,9 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Source) MarshalJSON() ([]byte, error) {
+func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoterInfoResponse: The result of a voter info lookup query.
@@ -1107,9 +1107,9 @@ type VoterInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
+func (s VoterInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VoterInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DivisionsSearchCall struct {

@@ -560,9 +560,9 @@ type AddOnAttachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddOnAttachment) MarshalJSON() ([]byte, error) {
+func (s AddOnAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod AddOnAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AddOnAttachment) UnmarshalJSON(data []byte) error {
@@ -612,9 +612,9 @@ type AddOnAttachmentStudentSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddOnAttachmentStudentSubmission) MarshalJSON() ([]byte, error) {
+func (s AddOnAttachmentStudentSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod AddOnAttachmentStudentSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AddOnAttachmentStudentSubmission) UnmarshalJSON(data []byte) error {
@@ -668,9 +668,9 @@ type AddOnContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddOnContext) MarshalJSON() ([]byte, error) {
+func (s AddOnContext) MarshalJSON() ([]byte, error) {
 	type NoMethod AddOnContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Announcement: Announcement created by a teacher for students of the course
@@ -744,9 +744,9 @@ type Announcement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Announcement) MarshalJSON() ([]byte, error) {
+func (s Announcement) MarshalJSON() ([]byte, error) {
 	type NoMethod Announcement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Assignment: Additional details for assignments.
@@ -767,9 +767,9 @@ type Assignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Assignment) MarshalJSON() ([]byte, error) {
+func (s Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignmentSubmission: Student work for an assignment.
@@ -794,9 +794,9 @@ type AssignmentSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignmentSubmission) MarshalJSON() ([]byte, error) {
+func (s AssignmentSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignmentSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attachment: Attachment added to student assignment work. When creating
@@ -823,9 +823,9 @@ type Attachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attachment) MarshalJSON() ([]byte, error) {
+func (s Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudPubsubTopic: A reference to a Cloud Pub/Sub topic. To register for
@@ -849,9 +849,9 @@ type CloudPubsubTopic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudPubsubTopic) MarshalJSON() ([]byte, error) {
+func (s CloudPubsubTopic) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudPubsubTopic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyHistory: Identifier of a previous copy of a given attachment.
@@ -878,9 +878,9 @@ type CopyHistory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyHistory) MarshalJSON() ([]byte, error) {
+func (s CopyHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyHistory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Course: A Course in Classroom.
@@ -996,9 +996,9 @@ type Course struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Course) MarshalJSON() ([]byte, error) {
+func (s Course) MarshalJSON() ([]byte, error) {
 	type NoMethod Course
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseAlias: Alternative identifier for a course. An alias uniquely
@@ -1035,9 +1035,9 @@ type CourseAlias struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseAlias) MarshalJSON() ([]byte, error) {
+func (s CourseAlias) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseAlias
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseMaterial: A material attached to a course as part of a material set.
@@ -1063,9 +1063,9 @@ type CourseMaterial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseMaterial) MarshalJSON() ([]byte, error) {
+func (s CourseMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseMaterial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseMaterialSet: A set of materials that appears on the "About" page of
@@ -1089,9 +1089,9 @@ type CourseMaterialSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseMaterialSet) MarshalJSON() ([]byte, error) {
+func (s CourseMaterialSet) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseMaterialSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseRosterChangesInfo: Information about a `Feed` with a `feed_type` of
@@ -1112,9 +1112,9 @@ type CourseRosterChangesInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseRosterChangesInfo) MarshalJSON() ([]byte, error) {
+func (s CourseRosterChangesInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseRosterChangesInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseWork: Course work created by a teacher for students of the course.
@@ -1242,9 +1242,9 @@ type CourseWork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseWork) MarshalJSON() ([]byte, error) {
+func (s CourseWork) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CourseWork) UnmarshalJSON(data []byte) error {
@@ -1279,9 +1279,9 @@ type CourseWorkChangesInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseWorkChangesInfo) MarshalJSON() ([]byte, error) {
+func (s CourseWorkChangesInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWorkChangesInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseWorkMaterial: Course work material created by a teacher for students
@@ -1364,9 +1364,9 @@ type CourseWorkMaterial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CourseWorkMaterial) MarshalJSON() ([]byte, error) {
+func (s CourseWorkMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWorkMaterial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -1402,9 +1402,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveFile: Representation of a Google Drive file.
@@ -1430,9 +1430,9 @@ type DriveFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveFile) MarshalJSON() ([]byte, error) {
+func (s DriveFile) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveFolder: Representation of a Google Drive folder.
@@ -1456,9 +1456,9 @@ type DriveFolder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveFolder) MarshalJSON() ([]byte, error) {
+func (s DriveFolder) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveFolder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmbedUri: URI to be iframed after being populated with query parameters.
@@ -1480,9 +1480,9 @@ type EmbedUri struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmbedUri) MarshalJSON() ([]byte, error) {
+func (s EmbedUri) MarshalJSON() ([]byte, error) {
 	type NoMethod EmbedUri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1539,9 +1539,9 @@ type Feed struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Feed) MarshalJSON() ([]byte, error) {
+func (s Feed) MarshalJSON() ([]byte, error) {
 	type NoMethod Feed
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Form: Google Forms item.
@@ -1569,9 +1569,9 @@ type Form struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Form) MarshalJSON() ([]byte, error) {
+func (s Form) MarshalJSON() ([]byte, error) {
 	type NoMethod Form
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlobalPermission: Global user permission description.
@@ -1596,9 +1596,9 @@ type GlobalPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlobalPermission) MarshalJSON() ([]byte, error) {
+func (s GlobalPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GlobalPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GradeCategory: Details for a grade category in a course. Coursework may have
@@ -1631,9 +1631,9 @@ type GradeCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GradeCategory) MarshalJSON() ([]byte, error) {
+func (s GradeCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GradeCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GradeHistory: The history of each grade on this submission.
@@ -1673,9 +1673,9 @@ type GradeHistory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GradeHistory) MarshalJSON() ([]byte, error) {
+func (s GradeHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod GradeHistory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GradeHistory) UnmarshalJSON(data []byte) error {
@@ -1735,9 +1735,9 @@ type GradebookSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GradebookSettings) MarshalJSON() ([]byte, error) {
+func (s GradebookSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GradebookSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Guardian: Association between a student and a guardian of that student. The
@@ -1769,9 +1769,9 @@ type Guardian struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Guardian) MarshalJSON() ([]byte, error) {
+func (s Guardian) MarshalJSON() ([]byte, error) {
 	type NoMethod Guardian
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuardianInvitation: An invitation to become the guardian of a specified
@@ -1810,9 +1810,9 @@ type GuardianInvitation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuardianInvitation) MarshalJSON() ([]byte, error) {
+func (s GuardianInvitation) MarshalJSON() ([]byte, error) {
 	type NoMethod GuardianInvitation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndividualStudentsOptions: Assignee details about a coursework/announcement.
@@ -1834,9 +1834,9 @@ type IndividualStudentsOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndividualStudentsOptions) MarshalJSON() ([]byte, error) {
+func (s IndividualStudentsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod IndividualStudentsOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Invitation: An invitation to join a course.
@@ -1875,9 +1875,9 @@ type Invitation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Invitation) MarshalJSON() ([]byte, error) {
+func (s Invitation) MarshalJSON() ([]byte, error) {
 	type NoMethod Invitation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Link: URL item.
@@ -1902,9 +1902,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAddOnAttachmentsResponse: Response when listing add-on attachments.
@@ -1930,9 +1930,9 @@ type ListAddOnAttachmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAddOnAttachmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAddOnAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAddOnAttachmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAnnouncementsResponse: Response when listing course work.
@@ -1958,9 +1958,9 @@ type ListAnnouncementsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAnnouncementsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAnnouncementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnnouncementsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCourseAliasesResponse: Response when listing course aliases.
@@ -1986,9 +1986,9 @@ type ListCourseAliasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCourseAliasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCourseAliasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseAliasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCourseWorkMaterialResponse: Response when listing course work material.
@@ -2014,9 +2014,9 @@ type ListCourseWorkMaterialResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCourseWorkMaterialResponse) MarshalJSON() ([]byte, error) {
+func (s ListCourseWorkMaterialResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseWorkMaterialResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCourseWorkResponse: Response when listing course work.
@@ -2042,9 +2042,9 @@ type ListCourseWorkResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCourseWorkResponse) MarshalJSON() ([]byte, error) {
+func (s ListCourseWorkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseWorkResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCoursesResponse: Response when listing courses.
@@ -2070,9 +2070,9 @@ type ListCoursesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCoursesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCoursesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCoursesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGuardianInvitationsResponse: Response when listing guardian invitations.
@@ -2098,9 +2098,9 @@ type ListGuardianInvitationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGuardianInvitationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGuardianInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuardianInvitationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGuardiansResponse: Response when listing guardians.
@@ -2127,9 +2127,9 @@ type ListGuardiansResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGuardiansResponse) MarshalJSON() ([]byte, error) {
+func (s ListGuardiansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuardiansResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInvitationsResponse: Response when listing invitations.
@@ -2155,9 +2155,9 @@ type ListInvitationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInvitationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvitationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStudentSubmissionsResponse: Response when listing student submissions.
@@ -2183,9 +2183,9 @@ type ListStudentSubmissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStudentSubmissionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListStudentSubmissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStudentSubmissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStudentsResponse: Response when listing students.
@@ -2211,9 +2211,9 @@ type ListStudentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStudentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListStudentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStudentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTeachersResponse: Response when listing teachers.
@@ -2239,9 +2239,9 @@ type ListTeachersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTeachersResponse) MarshalJSON() ([]byte, error) {
+func (s ListTeachersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTeachersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicResponse: Response when listing topics.
@@ -2267,9 +2267,9 @@ type ListTopicResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Material: Material attached to course work. When creating attachments,
@@ -2297,9 +2297,9 @@ type Material struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Material) MarshalJSON() ([]byte, error) {
+func (s Material) MarshalJSON() ([]byte, error) {
 	type NoMethod Material
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAnnouncementAssigneesRequest: Request to modify assignee mode and
@@ -2330,9 +2330,9 @@ type ModifyAnnouncementAssigneesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyAnnouncementAssigneesRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyAnnouncementAssigneesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAnnouncementAssigneesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAttachmentsRequest: Request to modify the attachments of a student
@@ -2354,9 +2354,9 @@ type ModifyAttachmentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyAttachmentsRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyAttachmentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAttachmentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyCourseWorkAssigneesRequest: Request to modify assignee mode and
@@ -2387,9 +2387,9 @@ type ModifyCourseWorkAssigneesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyCourseWorkAssigneesRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyCourseWorkAssigneesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyCourseWorkAssigneesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyIndividualStudentsOptions: Contains fields to add or remove students
@@ -2415,9 +2415,9 @@ type ModifyIndividualStudentsOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyIndividualStudentsOptions) MarshalJSON() ([]byte, error) {
+func (s ModifyIndividualStudentsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyIndividualStudentsOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultipleChoiceQuestion: Additional details for multiple-choice questions.
@@ -2437,9 +2437,9 @@ type MultipleChoiceQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultipleChoiceQuestion) MarshalJSON() ([]byte, error) {
+func (s MultipleChoiceQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod MultipleChoiceQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultipleChoiceSubmission: Student work for a multiple-choice question.
@@ -2459,9 +2459,9 @@ type MultipleChoiceSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultipleChoiceSubmission) MarshalJSON() ([]byte, error) {
+func (s MultipleChoiceSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod MultipleChoiceSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Name: Details of the user's name.
@@ -2486,9 +2486,9 @@ type Name struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Name) MarshalJSON() ([]byte, error) {
+func (s Name) MarshalJSON() ([]byte, error) {
 	type NoMethod Name
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReclaimStudentSubmissionRequest: Request to reclaim a student submission.
@@ -2526,9 +2526,9 @@ type Registration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Registration) MarshalJSON() ([]byte, error) {
+func (s Registration) MarshalJSON() ([]byte, error) {
 	type NoMethod Registration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReturnStudentSubmissionRequest: Request to return a student submission.
@@ -2561,9 +2561,9 @@ type SharedDriveFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SharedDriveFile) MarshalJSON() ([]byte, error) {
+func (s SharedDriveFile) MarshalJSON() ([]byte, error) {
 	type NoMethod SharedDriveFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShortAnswerSubmission: Student work for a short answer question.
@@ -2583,9 +2583,9 @@ type ShortAnswerSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShortAnswerSubmission) MarshalJSON() ([]byte, error) {
+func (s ShortAnswerSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod ShortAnswerSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateHistory: The history of each state this submission has been in.
@@ -2623,9 +2623,9 @@ type StateHistory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateHistory) MarshalJSON() ([]byte, error) {
+func (s StateHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod StateHistory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Student: Student in a course.
@@ -2659,9 +2659,9 @@ type Student struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Student) MarshalJSON() ([]byte, error) {
+func (s Student) MarshalJSON() ([]byte, error) {
 	type NoMethod Student
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StudentContext: Role-specific context if the requesting user is a student.
@@ -2683,9 +2683,9 @@ type StudentContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StudentContext) MarshalJSON() ([]byte, error) {
+func (s StudentContext) MarshalJSON() ([]byte, error) {
 	type NoMethod StudentContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StudentSubmission: Student submission for course work. `StudentSubmission`
@@ -2775,9 +2775,9 @@ type StudentSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StudentSubmission) MarshalJSON() ([]byte, error) {
+func (s StudentSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod StudentSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StudentSubmission) UnmarshalJSON(data []byte) error {
@@ -2816,9 +2816,9 @@ type SubmissionHistory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubmissionHistory) MarshalJSON() ([]byte, error) {
+func (s SubmissionHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod SubmissionHistory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Teacher: Teacher of a course.
@@ -2848,9 +2848,9 @@ type Teacher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Teacher) MarshalJSON() ([]byte, error) {
+func (s Teacher) MarshalJSON() ([]byte, error) {
 	type NoMethod Teacher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeacherContext: Role-specific context if the requesting user is a teacher.
@@ -2885,9 +2885,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: Topic created by a teacher for the course
@@ -2919,9 +2919,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TurnInStudentSubmissionRequest: Request to turn in a student submission.
@@ -2965,9 +2965,9 @@ type UserProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserProfile) MarshalJSON() ([]byte, error) {
+func (s UserProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod UserProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YouTubeVideo: YouTube video item.
@@ -2993,9 +2993,9 @@ type YouTubeVideo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YouTubeVideo) MarshalJSON() ([]byte, error) {
+func (s YouTubeVideo) MarshalJSON() ([]byte, error) {
 	type NoMethod YouTubeVideo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CoursesCreateCall struct {

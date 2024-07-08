@@ -233,9 +233,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -268,9 +268,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsAccessRole: Authentication method for Amazon Web Services (AWS) that uses
@@ -295,9 +295,9 @@ type AwsAccessRole struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsAccessRole) MarshalJSON() ([]byte, error) {
+func (s AwsAccessRole) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsAccessRole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsProperties: Connection properties specific to Amazon Web Services (AWS).
@@ -318,9 +318,9 @@ type AwsProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsProperties) MarshalJSON() ([]byte, error) {
+func (s AwsProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureProperties: Container for connection properties specific to Azure.
@@ -359,9 +359,9 @@ type AzureProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureProperties) MarshalJSON() ([]byte, error) {
+func (s AzureProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -458,9 +458,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudResourceProperties: Container for connection properties for delegation
@@ -487,9 +487,9 @@ type CloudResourceProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudResourceProperties) MarshalJSON() ([]byte, error) {
+func (s CloudResourceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudResourceProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSpannerProperties: Connection properties specific to Cloud Spanner.
@@ -534,9 +534,9 @@ type CloudSpannerProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSpannerProperties) MarshalJSON() ([]byte, error) {
+func (s CloudSpannerProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSpannerProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSqlCredential: Credential info for the Cloud SQL.
@@ -558,9 +558,9 @@ type CloudSqlCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSqlCredential) MarshalJSON() ([]byte, error) {
+func (s CloudSqlCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSqlCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSqlProperties: Connection properties specific to the Cloud SQL.
@@ -596,9 +596,9 @@ type CloudSqlProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSqlProperties) MarshalJSON() ([]byte, error) {
+func (s CloudSqlProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSqlProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Connection: Configuration parameters to establish connection with an
@@ -657,9 +657,9 @@ type Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Connection) MarshalJSON() ([]byte, error) {
+func (s Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfiguration: Represents concrete parameter values for Connector
@@ -690,9 +690,9 @@ type ConnectorConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfiguration) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationAsset: Data Asset - a resource within instance of the
@@ -718,9 +718,9 @@ type ConnectorConfigurationAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationAuthentication: Client authentication.
@@ -746,9 +746,9 @@ type ConnectorConfigurationAuthentication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationAuthentication) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationAuthentication) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationAuthentication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationEndpoint: Remote endpoint specification.
@@ -770,9 +770,9 @@ type ConnectorConfigurationEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationEndpoint) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationNetwork: Network related configuration.
@@ -792,9 +792,9 @@ type ConnectorConfigurationNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationNetwork) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationPrivateServiceConnect: Private Service Connect
@@ -816,9 +816,9 @@ type ConnectorConfigurationPrivateServiceConnect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationPrivateServiceConnect) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationPrivateServiceConnect) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationPrivateServiceConnect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationSecret: Secret value parameter.
@@ -845,9 +845,9 @@ type ConnectorConfigurationSecret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationSecret) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationSecret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectorConfigurationUsernamePassword: Username and Password
@@ -870,9 +870,9 @@ type ConnectorConfigurationUsernamePassword struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectorConfigurationUsernamePassword) MarshalJSON() ([]byte, error) {
+func (s ConnectorConfigurationUsernamePassword) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationUsernamePassword
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -927,9 +927,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -950,9 +950,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -982,9 +982,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListConnectionsResponse: The response for ConnectionService.ListConnections.
@@ -1009,9 +1009,9 @@ type ListConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetastoreServiceConfig: Configuration of the Dataproc Metastore Service.
@@ -1033,9 +1033,9 @@ type MetastoreServiceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetastoreServiceConfig) MarshalJSON() ([]byte, error) {
+func (s MetastoreServiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MetastoreServiceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1125,9 +1125,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SalesforceDataCloudProperties: Connection properties specific to Salesforce
@@ -1153,9 +1153,9 @@ type SalesforceDataCloudProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SalesforceDataCloudProperties) MarshalJSON() ([]byte, error) {
+func (s SalesforceDataCloudProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SalesforceDataCloudProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1182,9 +1182,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkHistoryServerConfig: Configuration of the Spark History Server.
@@ -1206,9 +1206,9 @@ type SparkHistoryServerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkHistoryServerConfig) MarshalJSON() ([]byte, error) {
+func (s SparkHistoryServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkHistoryServerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkProperties: Container for connection properties to execute stored
@@ -1242,9 +1242,9 @@ type SparkProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkProperties) MarshalJSON() ([]byte, error) {
+func (s SparkProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1267,9 +1267,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1294,9 +1294,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsConnectionsCreateCall struct {

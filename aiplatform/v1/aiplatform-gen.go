@@ -1361,9 +1361,9 @@ type CloudAiLargeModelsVisionGenerateVideoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionGenerateVideoResponse) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionGenerateVideoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionImage: Image.
@@ -1395,9 +1395,9 @@ type CloudAiLargeModelsVisionImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionImage) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionImage) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionImageRAIScores: RAI scores for generated image
@@ -1418,9 +1418,9 @@ type CloudAiLargeModelsVisionImageRAIScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionImageRAIScores) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionImageRAIScores) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionImageRAIScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CloudAiLargeModelsVisionImageRAIScores) UnmarshalJSON(data []byte) error {
@@ -1456,9 +1456,9 @@ type CloudAiLargeModelsVisionMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionMedia) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CloudAiLargeModelsVisionNamedBoundingBox struct {
@@ -1482,9 +1482,9 @@ type CloudAiLargeModelsVisionNamedBoundingBox struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionNamedBoundingBox) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionNamedBoundingBox) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionNamedBoundingBox
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CloudAiLargeModelsVisionNamedBoundingBox) UnmarshalJSON(data []byte) error {
@@ -1538,9 +1538,9 @@ type CloudAiLargeModelsVisionRaiInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionRaiInfo) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionRaiInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionRaiInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CloudAiLargeModelsVisionRaiInfo) UnmarshalJSON(data []byte) error {
@@ -1580,9 +1580,9 @@ type CloudAiLargeModelsVisionRaiInfoDetectedLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabels) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionRaiInfoDetectedLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionRaiInfoDetectedLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionRaiInfoDetectedLabelsBoundingBox: An integer
@@ -1609,9 +1609,9 @@ type CloudAiLargeModelsVisionRaiInfoDetectedLabelsBoundingBox struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabelsBoundingBox) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionRaiInfoDetectedLabelsBoundingBox) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionRaiInfoDetectedLabelsBoundingBox
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity: The properties for a
@@ -1641,9 +1641,9 @@ type CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabelsEntity) UnmarshalJSON(data []byte) error {
@@ -1684,9 +1684,9 @@ type CloudAiLargeModelsVisionSemanticFilterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionSemanticFilterResponse) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionSemanticFilterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionSemanticFilterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionVideo: Video
@@ -1708,9 +1708,9 @@ type CloudAiLargeModelsVisionVideo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiLargeModelsVisionVideo) MarshalJSON() ([]byte, error) {
+func (s CloudAiLargeModelsVisionVideo) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionVideo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiPlatformCommonCreatePipelineJobApiErrorDetail: Create API error
@@ -1762,9 +1762,9 @@ type CloudAiPlatformCommonCreatePipelineJobApiErrorDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAiPlatformCommonCreatePipelineJobApiErrorDetail) MarshalJSON() ([]byte, error) {
+func (s CloudAiPlatformCommonCreatePipelineJobApiErrorDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiPlatformCommonCreatePipelineJobApiErrorDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
@@ -1809,9 +1809,9 @@ type GoogleApiHttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
+func (s GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ActiveLearningConfig: Parameters that configure the
@@ -1844,9 +1844,9 @@ type GoogleCloudAiplatformV1ActiveLearningConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ActiveLearningConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ActiveLearningConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ActiveLearningConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsRequest: Request
@@ -1875,9 +1875,9 @@ type GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AddContextArtifactsAndExecutionsResponse: Response
@@ -1905,9 +1905,9 @@ type GoogleCloudAiplatformV1AddContextChildrenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AddContextChildrenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AddContextChildrenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AddContextChildrenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AddContextChildrenResponse: Response message for
@@ -1935,9 +1935,9 @@ type GoogleCloudAiplatformV1AddExecutionEventsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AddExecutionEventsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AddExecutionEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AddExecutionEventsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AddExecutionEventsResponse: Response message for
@@ -1965,9 +1965,9 @@ type GoogleCloudAiplatformV1AddTrialMeasurementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AddTrialMeasurementRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AddTrialMeasurementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AddTrialMeasurementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Annotation: Used to assign specific AnnotationSpec to
@@ -2020,9 +2020,9 @@ type GoogleCloudAiplatformV1Annotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Annotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Annotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AnnotationSpec: Identifies a concept with which
@@ -2056,9 +2056,9 @@ type GoogleCloudAiplatformV1AnnotationSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AnnotationSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AnnotationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AnnotationSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Artifact: Instance of a general artifact.
@@ -2129,9 +2129,9 @@ type GoogleCloudAiplatformV1Artifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Artifact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Artifact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Artifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata: Metadata
@@ -2155,9 +2155,9 @@ type GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AssignNotebookRuntimeRequest: Request message for
@@ -2185,9 +2185,9 @@ type GoogleCloudAiplatformV1AssignNotebookRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AssignNotebookRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AssignNotebookRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AssignNotebookRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Attribution: Attribution that explains a particular
@@ -2262,9 +2262,9 @@ type GoogleCloudAiplatformV1Attribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Attribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Attribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Attribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Attribution) UnmarshalJSON(data []byte) error {
@@ -2319,9 +2319,9 @@ type GoogleCloudAiplatformV1AutomaticResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AutomaticResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AutomaticResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AutomaticResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AutoscalingMetricSpec: The metric specification that
@@ -2351,9 +2351,9 @@ type GoogleCloudAiplatformV1AutoscalingMetricSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AutoscalingMetricSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AutoscalingMetricSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AutoscalingMetricSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1AvroSource: The storage details for Avro input
@@ -2374,9 +2374,9 @@ type GoogleCloudAiplatformV1AvroSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1AvroSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1AvroSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AvroSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCancelPipelineJobsRequest: Request message for
@@ -2399,9 +2399,9 @@ type GoogleCloudAiplatformV1BatchCancelPipelineJobsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCancelPipelineJobsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCancelPipelineJobsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCancelPipelineJobsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateFeaturesOperationMetadata: Details of
@@ -2422,9 +2422,9 @@ type GoogleCloudAiplatformV1BatchCreateFeaturesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateFeaturesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateFeaturesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateFeaturesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateFeaturesRequest: Request message for
@@ -2449,9 +2449,9 @@ type GoogleCloudAiplatformV1BatchCreateFeaturesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateFeaturesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateFeaturesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateFeaturesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateFeaturesResponse: Response message for
@@ -2472,9 +2472,9 @@ type GoogleCloudAiplatformV1BatchCreateFeaturesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateFeaturesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateFeaturesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateFeaturesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateTensorboardRunsRequest: Request message
@@ -2496,9 +2496,9 @@ type GoogleCloudAiplatformV1BatchCreateTensorboardRunsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateTensorboardRunsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateTensorboardRunsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateTensorboardRunsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateTensorboardRunsResponse: Response message
@@ -2522,9 +2522,9 @@ type GoogleCloudAiplatformV1BatchCreateTensorboardRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateTensorboardRunsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateTensorboardRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateTensorboardRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesRequest: Request
@@ -2547,9 +2547,9 @@ type GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesResponse: Response
@@ -2573,9 +2573,9 @@ type GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchCreateTensorboardTimeSeriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchDedicatedResources: A description of resources
@@ -2604,9 +2604,9 @@ type GoogleCloudAiplatformV1BatchDedicatedResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchDedicatedResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchDedicatedResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchDedicatedResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest: Request message for
@@ -2629,9 +2629,9 @@ type GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest: Request
@@ -2653,9 +2653,9 @@ type GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsResponse: Response
@@ -2682,9 +2682,9 @@ type GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesRequest: Request
@@ -2706,9 +2706,9 @@ type GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesResponse: Response
@@ -2730,9 +2730,9 @@ type GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchImportModelEvaluationSlicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadata: Runtime
@@ -2756,9 +2756,9 @@ type GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadataPartialResult:
@@ -2787,9 +2787,9 @@ type GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadataPartialResult 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadataPartialResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadataPartialResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchMigrateResourcesOperationMetadataPartialResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchMigrateResourcesRequest: Request message for
@@ -2812,9 +2812,9 @@ type GoogleCloudAiplatformV1BatchMigrateResourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchMigrateResourcesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchMigrateResourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchMigrateResourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchMigrateResourcesResponse: Response message for
@@ -2835,9 +2835,9 @@ type GoogleCloudAiplatformV1BatchMigrateResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchMigrateResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchMigrateResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchMigrateResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchPredictionJob: A job that uses a Model to
@@ -3004,9 +3004,9 @@ type GoogleCloudAiplatformV1BatchPredictionJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchPredictionJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchPredictionJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchPredictionJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchPredictionJobInputConfig: Configures the input
@@ -3037,9 +3037,9 @@ type GoogleCloudAiplatformV1BatchPredictionJobInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchPredictionJobInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchPredictionJobInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchPredictionJobInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchPredictionJobInstanceConfig: Configuration
@@ -3105,9 +3105,9 @@ type GoogleCloudAiplatformV1BatchPredictionJobInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchPredictionJobInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchPredictionJobInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchPredictionJobInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchPredictionJobOutputConfig: Configures the output
@@ -3159,9 +3159,9 @@ type GoogleCloudAiplatformV1BatchPredictionJobOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchPredictionJobOutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchPredictionJobOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchPredictionJobOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchPredictionJobOutputInfo: Further describes this
@@ -3191,9 +3191,9 @@ type GoogleCloudAiplatformV1BatchPredictionJobOutputInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchPredictionJobOutputInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchPredictionJobOutputInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchPredictionJobOutputInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchReadFeatureValuesOperationMetadata: Details of
@@ -3215,9 +3215,9 @@ type GoogleCloudAiplatformV1BatchReadFeatureValuesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchReadFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchReadFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchReadFeatureValuesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchReadFeatureValuesRequest: Request message for
@@ -3269,9 +3269,9 @@ type GoogleCloudAiplatformV1BatchReadFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchReadFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchReadFeatureValuesRequestEntityTypeSpec: Selects
@@ -3298,9 +3298,9 @@ type GoogleCloudAiplatformV1BatchReadFeatureValuesRequestEntityTypeSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchReadFeatureValuesRequestEntityTypeSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchReadFeatureValuesRequestEntityTypeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchReadFeatureValuesRequestEntityTypeSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchReadFeatureValuesRequestPassThroughField:
@@ -3323,9 +3323,9 @@ type GoogleCloudAiplatformV1BatchReadFeatureValuesRequestPassThroughField struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchReadFeatureValuesRequestPassThroughField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchReadFeatureValuesRequestPassThroughField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchReadFeatureValuesRequestPassThroughField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BatchReadFeatureValuesResponse: Response message for
@@ -3354,9 +3354,9 @@ type GoogleCloudAiplatformV1BatchReadTensorboardTimeSeriesDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BatchReadTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BatchReadTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchReadTensorboardTimeSeriesDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BigQueryDestination: The BigQuery location for the
@@ -3382,9 +3382,9 @@ type GoogleCloudAiplatformV1BigQueryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BigQuerySource: The BigQuery location for the input
@@ -3407,9 +3407,9 @@ type GoogleCloudAiplatformV1BigQuerySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BleuInput: Input for bleu metric.
@@ -3431,9 +3431,9 @@ type GoogleCloudAiplatformV1BleuInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BleuInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BleuInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BleuInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BleuInstance: Spec for bleu instance.
@@ -3455,9 +3455,9 @@ type GoogleCloudAiplatformV1BleuInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BleuInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BleuInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BleuInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BleuMetricValue: Bleu metric value for an instance.
@@ -3477,9 +3477,9 @@ type GoogleCloudAiplatformV1BleuMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BleuMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BleuMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BleuMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1BleuMetricValue) UnmarshalJSON(data []byte) error {
@@ -3513,9 +3513,9 @@ type GoogleCloudAiplatformV1BleuResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BleuResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BleuResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BleuResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BleuSpec: Spec for bleu score metric - calculates the
@@ -3538,9 +3538,9 @@ type GoogleCloudAiplatformV1BleuSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BleuSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BleuSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BleuSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Blob: Content blob. It's preferred to send as text
@@ -3563,9 +3563,9 @@ type GoogleCloudAiplatformV1Blob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Blob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Blob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Blob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1BlurBaselineConfig: Config for blur baseline. When
@@ -3592,9 +3592,9 @@ type GoogleCloudAiplatformV1BlurBaselineConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BlurBaselineConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BlurBaselineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BlurBaselineConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1BlurBaselineConfig) UnmarshalJSON(data []byte) error {
@@ -3628,9 +3628,9 @@ type GoogleCloudAiplatformV1BoolArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1BoolArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1BoolArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BoolArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CancelBatchPredictionJobRequest: Request message for
@@ -3727,9 +3727,9 @@ type GoogleCloudAiplatformV1Candidate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Candidate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Candidate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata: This message
@@ -3755,9 +3755,9 @@ type GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateRequest: Request message
@@ -3783,9 +3783,9 @@ type GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Citation: Source attributions for content.
@@ -3815,9 +3815,9 @@ type GoogleCloudAiplatformV1Citation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Citation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Citation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Citation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CitationMetadata: A collection of source attributions
@@ -3838,9 +3838,9 @@ type GoogleCloudAiplatformV1CitationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CitationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CitationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CitationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CoherenceInput: Input for coherence metric.
@@ -3862,9 +3862,9 @@ type GoogleCloudAiplatformV1CoherenceInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CoherenceInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CoherenceInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CoherenceInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CoherenceInstance: Spec for coherence instance.
@@ -3884,9 +3884,9 @@ type GoogleCloudAiplatformV1CoherenceInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CoherenceInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CoherenceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CoherenceInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CoherenceResult: Spec for coherence result.
@@ -3910,9 +3910,9 @@ type GoogleCloudAiplatformV1CoherenceResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CoherenceResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CoherenceResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CoherenceResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1CoherenceResult) UnmarshalJSON(data []byte) error {
@@ -3948,9 +3948,9 @@ type GoogleCloudAiplatformV1CoherenceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CoherenceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CoherenceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CoherenceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CompleteTrialRequest: Request message for
@@ -3979,9 +3979,9 @@ type GoogleCloudAiplatformV1CompleteTrialRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CompleteTrialRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CompleteTrialRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CompleteTrialRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CompletionStats: Success and error statistics of
@@ -4018,9 +4018,9 @@ type GoogleCloudAiplatformV1CompletionStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CompletionStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CompletionStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CompletionStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ComputeTokensRequest: Request message for
@@ -4049,9 +4049,9 @@ type GoogleCloudAiplatformV1ComputeTokensRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ComputeTokensRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ComputeTokensRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ComputeTokensRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ComputeTokensResponse: Response message for
@@ -4077,9 +4077,9 @@ type GoogleCloudAiplatformV1ComputeTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ComputeTokensResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ComputeTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ComputeTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ContainerRegistryDestination: The Container Registry
@@ -4105,9 +4105,9 @@ type GoogleCloudAiplatformV1ContainerRegistryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ContainerRegistryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ContainerRegistryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ContainerRegistryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ContainerSpec: The spec of a Container.
@@ -4136,9 +4136,9 @@ type GoogleCloudAiplatformV1ContainerSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ContainerSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ContainerSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ContainerSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Content: The base structured datatype containing
@@ -4166,9 +4166,9 @@ type GoogleCloudAiplatformV1Content struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Content) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Content) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Content
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Context: Instance of a general context.
@@ -4227,9 +4227,9 @@ type GoogleCloudAiplatformV1Context struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Context) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Context) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Context
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CopyModelOperationMetadata: Details of
@@ -4250,9 +4250,9 @@ type GoogleCloudAiplatformV1CopyModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CopyModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CopyModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CopyModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CopyModelRequest: Request message for
@@ -4287,9 +4287,9 @@ type GoogleCloudAiplatformV1CopyModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CopyModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CopyModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CopyModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CopyModelResponse: Response message of
@@ -4313,9 +4313,9 @@ type GoogleCloudAiplatformV1CopyModelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CopyModelResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CopyModelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CopyModelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CountTokensRequest: Request message for
@@ -4343,9 +4343,9 @@ type GoogleCloudAiplatformV1CountTokensRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CountTokensRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CountTokensRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CountTokensRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CountTokensResponse: Response message for
@@ -4373,9 +4373,9 @@ type GoogleCloudAiplatformV1CountTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CountTokensResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CountTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CountTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateDatasetOperationMetadata: Runtime operation
@@ -4396,9 +4396,9 @@ type GoogleCloudAiplatformV1CreateDatasetOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateDatasetOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateDatasetVersionOperationMetadata: Runtime
@@ -4419,9 +4419,9 @@ type GoogleCloudAiplatformV1CreateDatasetVersionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateDatasetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateDatasetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateDatasetVersionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateDeploymentResourcePoolOperationMetadata:
@@ -4442,9 +4442,9 @@ type GoogleCloudAiplatformV1CreateDeploymentResourcePoolOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateDeploymentResourcePoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateDeploymentResourcePoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateDeploymentResourcePoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateDeploymentResourcePoolRequest: Request message
@@ -4470,9 +4470,9 @@ type GoogleCloudAiplatformV1CreateDeploymentResourcePoolRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateDeploymentResourcePoolRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateDeploymentResourcePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateDeploymentResourcePoolRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateEndpointOperationMetadata: Runtime operation
@@ -4493,9 +4493,9 @@ type GoogleCloudAiplatformV1CreateEndpointOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateEndpointOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateEndpointOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateEndpointOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateEntityTypeOperationMetadata: Details of
@@ -4516,9 +4516,9 @@ type GoogleCloudAiplatformV1CreateEntityTypeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateEntityTypeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateEntityTypeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateEntityTypeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeatureGroupOperationMetadata: Details of
@@ -4539,9 +4539,9 @@ type GoogleCloudAiplatformV1CreateFeatureGroupOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeatureGroupOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeatureGroupOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeatureGroupOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeatureOnlineStoreOperationMetadata: Details of
@@ -4562,9 +4562,9 @@ type GoogleCloudAiplatformV1CreateFeatureOnlineStoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeatureOnlineStoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeatureOnlineStoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeatureOnlineStoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeatureOperationMetadata: Details of operations
@@ -4585,9 +4585,9 @@ type GoogleCloudAiplatformV1CreateFeatureOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeatureOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeatureRequest: Request message for
@@ -4620,9 +4620,9 @@ type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeatureRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeatureRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeatureRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeatureViewOperationMetadata: Details of
@@ -4643,9 +4643,9 @@ type GoogleCloudAiplatformV1CreateFeatureViewOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeatureViewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeatureViewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeatureViewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata: Details of
@@ -4666,9 +4666,9 @@ type GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata: Runtime
@@ -4689,9 +4689,9 @@ type GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateIndexOperationMetadata: Runtime operation
@@ -4715,9 +4715,9 @@ type GoogleCloudAiplatformV1CreateIndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateIndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateIndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateIndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata: Details of
@@ -4738,9 +4738,9 @@ type GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata:
@@ -4761,9 +4761,9 @@ type GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreatePersistentResourceOperationMetadata: Details of
@@ -4786,9 +4786,9 @@ type GoogleCloudAiplatformV1CreatePersistentResourceOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreatePersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreatePersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreatePersistentResourceOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreatePipelineJobRequest: Request message for
@@ -4817,9 +4817,9 @@ type GoogleCloudAiplatformV1CreatePipelineJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreatePipelineJobRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreatePipelineJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreatePipelineJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateRegistryFeatureOperationMetadata: Details of
@@ -4840,9 +4840,9 @@ type GoogleCloudAiplatformV1CreateRegistryFeatureOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateRegistryFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateRegistryFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateRegistryFeatureOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateSpecialistPoolOperationMetadata: Runtime
@@ -4863,9 +4863,9 @@ type GoogleCloudAiplatformV1CreateSpecialistPoolOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateSpecialistPoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateSpecialistPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateSpecialistPoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateTensorboardOperationMetadata: Details of
@@ -4886,9 +4886,9 @@ type GoogleCloudAiplatformV1CreateTensorboardOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateTensorboardOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateTensorboardOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateTensorboardOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateTensorboardRunRequest: Request message for
@@ -4918,9 +4918,9 @@ type GoogleCloudAiplatformV1CreateTensorboardRunRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateTensorboardRunRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateTensorboardRunRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateTensorboardRunRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CreateTensorboardTimeSeriesRequest: Request message
@@ -4951,9 +4951,9 @@ type GoogleCloudAiplatformV1CreateTensorboardTimeSeriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CreateTensorboardTimeSeriesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CreateTensorboardTimeSeriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateTensorboardTimeSeriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CsvDestination: The storage details for CSV output
@@ -4974,9 +4974,9 @@ type GoogleCloudAiplatformV1CsvDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CsvDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CsvDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CsvDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CsvSource: The storage details for CSV input content.
@@ -4996,9 +4996,9 @@ type GoogleCloudAiplatformV1CsvSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CsvSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CsvSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CsvSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CustomJob: Represents a job that runs custom
@@ -5084,9 +5084,9 @@ type GoogleCloudAiplatformV1CustomJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CustomJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CustomJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CustomJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1CustomJobSpec: Represents the spec of a CustomJob.
@@ -5193,9 +5193,9 @@ type GoogleCloudAiplatformV1CustomJobSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1CustomJobSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1CustomJobSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CustomJobSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DataItem: A piece of data in a Dataset. Could be an
@@ -5236,9 +5236,9 @@ type GoogleCloudAiplatformV1DataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DataItemView: A container for a single DataItem and
@@ -5271,9 +5271,9 @@ type GoogleCloudAiplatformV1DataItemView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DataItemView) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DataItemView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DataItemView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DataLabelingJob: DataLabelingJob is used to trigger a
@@ -5387,9 +5387,9 @@ type GoogleCloudAiplatformV1DataLabelingJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DataLabelingJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DataLabelingJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DataLabelingJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Dataset: A collection of DataItems and Annotations on
@@ -5467,9 +5467,9 @@ type GoogleCloudAiplatformV1Dataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Dataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Dataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DatasetVersion: Describes the dataset version.
@@ -5511,9 +5511,9 @@ type GoogleCloudAiplatformV1DatasetVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DatasetVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DatasetVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DatasetVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DedicatedResources: A description of resources that
@@ -5570,9 +5570,9 @@ type GoogleCloudAiplatformV1DedicatedResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DedicatedResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DedicatedResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DedicatedResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesOperationMetadata: Details of
@@ -5593,9 +5593,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesRequest: Request message for
@@ -5619,9 +5619,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectEntity: Message to
@@ -5644,9 +5644,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectTimeRangeAndFeature:
@@ -5680,9 +5680,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectTimeRangeAndFeature 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectTimeRangeAndFeature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectTimeRangeAndFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesRequestSelectTimeRangeAndFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesResponse: Response message for
@@ -5706,9 +5706,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectEntity: Response
@@ -5736,9 +5736,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeature:
@@ -5770,9 +5770,9 @@ type GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeature
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata: Details of
@@ -5793,9 +5793,9 @@ type GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeleteOperationMetadata: Details of operations that
@@ -5816,9 +5816,9 @@ type GoogleCloudAiplatformV1DeleteOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeleteOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeleteOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeleteOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployIndexOperationMetadata: Runtime operation
@@ -5841,9 +5841,9 @@ type GoogleCloudAiplatformV1DeployIndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployIndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployIndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployIndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployIndexRequest: Request message for
@@ -5865,9 +5865,9 @@ type GoogleCloudAiplatformV1DeployIndexRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployIndexRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployIndexRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployIndexRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployIndexResponse: Response message for
@@ -5889,9 +5889,9 @@ type GoogleCloudAiplatformV1DeployIndexResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployIndexResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployIndexResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployIndexResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployModelOperationMetadata: Runtime operation
@@ -5912,9 +5912,9 @@ type GoogleCloudAiplatformV1DeployModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployModelRequest: Request message for
@@ -5946,9 +5946,9 @@ type GoogleCloudAiplatformV1DeployModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployModelResponse: Response message for
@@ -5969,9 +5969,9 @@ type GoogleCloudAiplatformV1DeployModelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployModelResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployModelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployModelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedIndex: A deployment of an Index.
@@ -6070,9 +6070,9 @@ type GoogleCloudAiplatformV1DeployedIndex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedIndex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedIndex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedIndex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedIndexAuthConfig: Used to set up the auth on
@@ -6094,9 +6094,9 @@ type GoogleCloudAiplatformV1DeployedIndexAuthConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedIndexAuthConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedIndexAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedIndexAuthConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedIndexAuthConfigAuthProvider: Configuration
@@ -6125,9 +6125,9 @@ type GoogleCloudAiplatformV1DeployedIndexAuthConfigAuthProvider struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedIndexAuthConfigAuthProvider) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedIndexAuthConfigAuthProvider) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedIndexAuthConfigAuthProvider
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedIndexRef: Points to a DeployedIndex.
@@ -6152,9 +6152,9 @@ type GoogleCloudAiplatformV1DeployedIndexRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedIndexRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedIndexRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedIndexRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedModel: A deployment of a Model. Endpoints
@@ -6239,9 +6239,9 @@ type GoogleCloudAiplatformV1DeployedModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeployedModelRef: Points to a DeployedModel.
@@ -6263,9 +6263,9 @@ type GoogleCloudAiplatformV1DeployedModelRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeployedModelRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeployedModelRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeployedModelRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DeploymentResourcePool: A description of resources
@@ -6317,9 +6317,9 @@ type GoogleCloudAiplatformV1DeploymentResourcePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DeploymentResourcePool) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DeploymentResourcePool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DeploymentResourcePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1DestinationFeatureSetting struct {
@@ -6341,9 +6341,9 @@ type GoogleCloudAiplatformV1DestinationFeatureSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DestinationFeatureSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DestinationFeatureSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DestinationFeatureSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DirectPredictRequest: Request message for
@@ -6366,9 +6366,9 @@ type GoogleCloudAiplatformV1DirectPredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DirectPredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DirectPredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DirectPredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DirectPredictResponse: Response message for
@@ -6394,9 +6394,9 @@ type GoogleCloudAiplatformV1DirectPredictResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DirectPredictResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DirectPredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DirectPredictResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DirectRawPredictRequest: Request message for
@@ -6421,9 +6421,9 @@ type GoogleCloudAiplatformV1DirectRawPredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DirectRawPredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DirectRawPredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DirectRawPredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DirectRawPredictResponse: Response message for
@@ -6447,9 +6447,9 @@ type GoogleCloudAiplatformV1DirectRawPredictResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DirectRawPredictResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DirectRawPredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DirectRawPredictResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DiskSpec: Represents the spec of disk options.
@@ -6473,9 +6473,9 @@ type GoogleCloudAiplatformV1DiskSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DiskSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DiskSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DiskSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1DoubleArray: A list of double values.
@@ -6495,9 +6495,9 @@ type GoogleCloudAiplatformV1DoubleArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1DoubleArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1DoubleArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DoubleArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1DoubleArray) UnmarshalJSON(data []byte) error {
@@ -6539,9 +6539,9 @@ type GoogleCloudAiplatformV1EncryptionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EncryptionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EncryptionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EncryptionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Endpoint: Models are deployed into it, and afterwards
@@ -6623,9 +6623,9 @@ type GoogleCloudAiplatformV1Endpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Endpoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Endpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Endpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EntityIdSelector: Selector for entityId. Getting ids
@@ -6649,9 +6649,9 @@ type GoogleCloudAiplatformV1EntityIdSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EntityIdSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EntityIdSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EntityIdSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EntityType: An entity type is a type of object in a
@@ -6715,9 +6715,9 @@ type GoogleCloudAiplatformV1EntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EnvVar: Represents an environment variable present in
@@ -6746,9 +6746,9 @@ type GoogleCloudAiplatformV1EnvVar struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EnvVar) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EnvVar) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EnvVar
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ErrorAnalysisAnnotation: Model error analysis for
@@ -6787,9 +6787,9 @@ type GoogleCloudAiplatformV1ErrorAnalysisAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ErrorAnalysisAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ErrorAnalysisAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ErrorAnalysisAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ErrorAnalysisAnnotation) UnmarshalJSON(data []byte) error {
@@ -6830,9 +6830,9 @@ type GoogleCloudAiplatformV1ErrorAnalysisAnnotationAttributedItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ErrorAnalysisAnnotationAttributedItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ErrorAnalysisAnnotationAttributedItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ErrorAnalysisAnnotationAttributedItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ErrorAnalysisAnnotationAttributedItem) UnmarshalJSON(data []byte) error {
@@ -6915,9 +6915,9 @@ type GoogleCloudAiplatformV1EvaluateInstancesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EvaluateInstancesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EvaluateInstancesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EvaluateInstancesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EvaluateInstancesResponse: Response message for
@@ -6991,9 +6991,9 @@ type GoogleCloudAiplatformV1EvaluateInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EvaluateInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EvaluateInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EvaluateInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EvaluatedAnnotation: True positive, false positive,
@@ -7061,9 +7061,9 @@ type GoogleCloudAiplatformV1EvaluatedAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EvaluatedAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EvaluatedAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EvaluatedAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1EvaluatedAnnotationExplanation: Explanation result of
@@ -7087,9 +7087,9 @@ type GoogleCloudAiplatformV1EvaluatedAnnotationExplanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1EvaluatedAnnotationExplanation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1EvaluatedAnnotationExplanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1EvaluatedAnnotationExplanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Event: An edge describing the relationship between an
@@ -7131,9 +7131,9 @@ type GoogleCloudAiplatformV1Event struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Event) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Event) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Event
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExactMatchInput: Input for exact match metric.
@@ -7155,9 +7155,9 @@ type GoogleCloudAiplatformV1ExactMatchInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExactMatchInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExactMatchInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExactMatchInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExactMatchInstance: Spec for exact match instance.
@@ -7179,9 +7179,9 @@ type GoogleCloudAiplatformV1ExactMatchInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExactMatchInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExactMatchInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExactMatchInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExactMatchMetricValue: Exact match metric value for
@@ -7202,9 +7202,9 @@ type GoogleCloudAiplatformV1ExactMatchMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExactMatchMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExactMatchMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExactMatchMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ExactMatchMetricValue) UnmarshalJSON(data []byte) error {
@@ -7238,9 +7238,9 @@ type GoogleCloudAiplatformV1ExactMatchResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExactMatchResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExactMatchResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExactMatchResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExactMatchSpec: Spec for exact match metric - returns
@@ -7277,9 +7277,9 @@ type GoogleCloudAiplatformV1Examples struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Examples) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Examples) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Examples
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExamplesExampleGcsSource: The Cloud Storage input
@@ -7307,9 +7307,9 @@ type GoogleCloudAiplatformV1ExamplesExampleGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExamplesExampleGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExamplesExampleGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExamplesExampleGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExamplesOverride: Overrides for example-based
@@ -7345,9 +7345,9 @@ type GoogleCloudAiplatformV1ExamplesOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExamplesOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExamplesOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExamplesOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExamplesRestrictionsNamespace: Restrictions namespace
@@ -7372,9 +7372,9 @@ type GoogleCloudAiplatformV1ExamplesRestrictionsNamespace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExamplesRestrictionsNamespace) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExamplesRestrictionsNamespace) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExamplesRestrictionsNamespace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Execution: Instance of a general execution.
@@ -7444,9 +7444,9 @@ type GoogleCloudAiplatformV1Execution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Execution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Execution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplainRequest: Request message for
@@ -7487,9 +7487,9 @@ type GoogleCloudAiplatformV1ExplainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplainRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplainResponse: Response message for
@@ -7520,9 +7520,9 @@ type GoogleCloudAiplatformV1ExplainResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplainResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplainResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplainResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Explanation: Explanation of a prediction (provided in
@@ -7565,9 +7565,9 @@ type GoogleCloudAiplatformV1Explanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Explanation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Explanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Explanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationMetadata: Metadata describing the Model's
@@ -7613,9 +7613,9 @@ type GoogleCloudAiplatformV1ExplanationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationMetadataInputMetadata: Metadata of the
@@ -7718,9 +7718,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataInputMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataInputMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataInputMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataInputMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain:
@@ -7758,9 +7758,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ExplanationMetadataInputMetadataFeatureValueDomain) UnmarshalJSON(data []byte) error {
@@ -7858,9 +7858,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataInputMetadataVisualization struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataInputMetadataVisualization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataInputMetadataVisualization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataInputMetadataVisualization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ExplanationMetadataInputMetadataVisualization) UnmarshalJSON(data []byte) error {
@@ -7914,9 +7914,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataOutputMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataOutputMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataOutputMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataOutputMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationMetadataOverride: The ExplanationMetadata
@@ -7940,9 +7940,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationMetadataOverrideInputMetadataOverride: The
@@ -7966,9 +7966,9 @@ type GoogleCloudAiplatformV1ExplanationMetadataOverrideInputMetadataOverride str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationMetadataOverrideInputMetadataOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationMetadataOverrideInputMetadataOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationMetadataOverrideInputMetadataOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationParameters: Parameters to configure
@@ -8023,9 +8023,9 @@ type GoogleCloudAiplatformV1ExplanationParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationSpec: Specification of Model explanation.
@@ -8049,9 +8049,9 @@ type GoogleCloudAiplatformV1ExplanationSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExplanationSpecOverride: The ExplanationSpec entries
@@ -8078,9 +8078,9 @@ type GoogleCloudAiplatformV1ExplanationSpecOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExplanationSpecOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExplanationSpecOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExplanationSpecOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportDataConfig: Describes what part of the Dataset
@@ -8147,9 +8147,9 @@ type GoogleCloudAiplatformV1ExportDataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportDataConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportDataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportDataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportDataOperationMetadata: Runtime operation
@@ -8173,9 +8173,9 @@ type GoogleCloudAiplatformV1ExportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportDataRequest: Request message for
@@ -8196,9 +8196,9 @@ type GoogleCloudAiplatformV1ExportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportDataResponse: Response message for
@@ -8226,9 +8226,9 @@ type GoogleCloudAiplatformV1ExportDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFeatureValuesOperationMetadata: Details of
@@ -8249,9 +8249,9 @@ type GoogleCloudAiplatformV1ExportFeatureValuesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFeatureValuesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFeatureValuesRequest: Request message for
@@ -8282,9 +8282,9 @@ type GoogleCloudAiplatformV1ExportFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFeatureValuesRequestFullExport: Describes
@@ -8312,9 +8312,9 @@ type GoogleCloudAiplatformV1ExportFeatureValuesRequestFullExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFeatureValuesRequestFullExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFeatureValuesRequestFullExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFeatureValuesRequestFullExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport: Describes
@@ -8342,9 +8342,9 @@ type GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFeatureValuesResponse: Response message for
@@ -8393,9 +8393,9 @@ type GoogleCloudAiplatformV1ExportFilterSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFilterSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFilterSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFilterSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFractionSplit: Assigns the input data to
@@ -8428,9 +8428,9 @@ type GoogleCloudAiplatformV1ExportFractionSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportFractionSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportFractionSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportFractionSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ExportFractionSplit) UnmarshalJSON(data []byte) error {
@@ -8472,9 +8472,9 @@ type GoogleCloudAiplatformV1ExportModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportModelOperationMetadataOutputInfo: Further
@@ -8502,9 +8502,9 @@ type GoogleCloudAiplatformV1ExportModelOperationMetadataOutputInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportModelOperationMetadataOutputInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportModelOperationMetadataOutputInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportModelOperationMetadataOutputInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportModelRequest: Request message for
@@ -8525,9 +8525,9 @@ type GoogleCloudAiplatformV1ExportModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportModelRequestOutputConfig: Output configuration
@@ -8564,9 +8564,9 @@ type GoogleCloudAiplatformV1ExportModelRequestOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportModelRequestOutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportModelRequestOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportModelRequestOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportModelResponse: Response message of
@@ -8606,9 +8606,9 @@ type GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse: Response
@@ -8635,9 +8635,9 @@ type GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Feature: Feature Metadata information. For example,
@@ -8721,9 +8721,9 @@ type GoogleCloudAiplatformV1Feature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Feature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Feature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Feature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureGroup: Vertex AI Feature Group.
@@ -8770,9 +8770,9 @@ type GoogleCloudAiplatformV1FeatureGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureGroupBigQuery: Input source type for BigQuery
@@ -8797,9 +8797,9 @@ type GoogleCloudAiplatformV1FeatureGroupBigQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureGroupBigQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureGroupBigQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureGroupBigQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly: A list of historical
@@ -8831,9 +8831,9 @@ type GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureNoiseSigma: Noise sigma by features. Noise
@@ -8856,9 +8856,9 @@ type GoogleCloudAiplatformV1FeatureNoiseSigma struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureNoiseSigma) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureNoiseSigma) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureNoiseSigma
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature: Noise sigma
@@ -8885,9 +8885,9 @@ type GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FeatureNoiseSigmaNoiseSigmaForFeature) UnmarshalJSON(data []byte) error {
@@ -8973,9 +8973,9 @@ type GoogleCloudAiplatformV1FeatureOnlineStore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureOnlineStore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureOnlineStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureOnlineStore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1FeatureOnlineStoreBigtable struct {
@@ -8994,9 +8994,9 @@ type GoogleCloudAiplatformV1FeatureOnlineStoreBigtable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureOnlineStoreBigtable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureOnlineStoreBigtable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureOnlineStoreBigtable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1FeatureOnlineStoreBigtableAutoScaling struct {
@@ -9026,9 +9026,9 @@ type GoogleCloudAiplatformV1FeatureOnlineStoreBigtableAutoScaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureOnlineStoreBigtableAutoScaling) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureOnlineStoreBigtableAutoScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureOnlineStoreBigtableAutoScaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureOnlineStoreDedicatedServingEndpoint: The
@@ -9063,9 +9063,9 @@ type GoogleCloudAiplatformV1FeatureOnlineStoreDedicatedServingEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureOnlineStoreDedicatedServingEndpoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureOnlineStoreDedicatedServingEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureOnlineStoreDedicatedServingEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureOnlineStoreOptimized: Optimized storage type
@@ -9090,9 +9090,9 @@ type GoogleCloudAiplatformV1FeatureSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureStatsAnomaly: Stats and Anomaly generated at
@@ -9156,9 +9156,9 @@ type GoogleCloudAiplatformV1FeatureStatsAnomaly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureStatsAnomaly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureStatsAnomaly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureStatsAnomaly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FeatureStatsAnomaly) UnmarshalJSON(data []byte) error {
@@ -9216,9 +9216,9 @@ type GoogleCloudAiplatformV1FeatureValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FeatureValue) UnmarshalJSON(data []byte) error {
@@ -9265,9 +9265,9 @@ type GoogleCloudAiplatformV1FeatureValueDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureValueDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureValueDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureValueDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureValueList: Container for list of values.
@@ -9287,9 +9287,9 @@ type GoogleCloudAiplatformV1FeatureValueList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureValueList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureValueList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureValueList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureValueMetadata: Metadata of feature value.
@@ -9313,9 +9313,9 @@ type GoogleCloudAiplatformV1FeatureValueMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureValueMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureValueMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureValueMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureView: FeatureView is representation of values
@@ -9372,9 +9372,9 @@ type GoogleCloudAiplatformV1FeatureView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureView) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1FeatureViewBigQuerySource struct {
@@ -9396,9 +9396,9 @@ type GoogleCloudAiplatformV1FeatureViewBigQuerySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewBigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewBigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewBigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewDataKey: Lookup key for a feature view.
@@ -9421,9 +9421,9 @@ type GoogleCloudAiplatformV1FeatureViewDataKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewDataKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewDataKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewDataKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewDataKeyCompositeKey: ID that is comprised
@@ -9445,9 +9445,9 @@ type GoogleCloudAiplatformV1FeatureViewDataKeyCompositeKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewDataKeyCompositeKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewDataKeyCompositeKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewDataKeyCompositeKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewFeatureRegistrySource: A Feature Registry
@@ -9472,9 +9472,9 @@ type GoogleCloudAiplatformV1FeatureViewFeatureRegistrySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewFeatureRegistrySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewFeatureRegistrySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewFeatureRegistrySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewFeatureRegistrySourceFeatureGroup:
@@ -9498,9 +9498,9 @@ type GoogleCloudAiplatformV1FeatureViewFeatureRegistrySourceFeatureGroup struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewFeatureRegistrySourceFeatureGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewFeatureRegistrySourceFeatureGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewFeatureRegistrySourceFeatureGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewIndexConfig: Configuration for vector
@@ -9559,9 +9559,9 @@ type GoogleCloudAiplatformV1FeatureViewIndexConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewIndexConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewIndexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewIndexConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewIndexConfigBruteForceConfig: Configuration
@@ -9588,9 +9588,9 @@ type GoogleCloudAiplatformV1FeatureViewIndexConfigTreeAHConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewIndexConfigTreeAHConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewIndexConfigTreeAHConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewIndexConfigTreeAHConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewSync: FeatureViewSync is a representation
@@ -9627,9 +9627,9 @@ type GoogleCloudAiplatformV1FeatureViewSync struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewSync) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewSync) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewSync
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewSyncConfig: Configuration for Sync. Only
@@ -9655,9 +9655,9 @@ type GoogleCloudAiplatformV1FeatureViewSyncConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewSyncConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewSyncConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewSyncConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeatureViewSyncSyncSummary: Summary from the Sync
@@ -9682,9 +9682,9 @@ type GoogleCloudAiplatformV1FeatureViewSyncSyncSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeatureViewSyncSyncSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeatureViewSyncSyncSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureViewSyncSyncSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Featurestore: Vertex AI Feature Store provides a
@@ -9760,9 +9760,9 @@ type GoogleCloudAiplatformV1Featurestore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Featurestore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Featurestore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Featurestore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeaturestoreMonitoringConfig: Configuration of how
@@ -9796,9 +9796,9 @@ type GoogleCloudAiplatformV1FeaturestoreMonitoringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreMonitoringConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreMonitoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreMonitoringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeaturestoreMonitoringConfigImportFeaturesAnalysis:
@@ -9849,9 +9849,9 @@ type GoogleCloudAiplatformV1FeaturestoreMonitoringConfigImportFeaturesAnalysis s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreMonitoringConfigImportFeaturesAnalysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreMonitoringConfigImportFeaturesAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreMonitoringConfigImportFeaturesAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeaturestoreMonitoringConfigSnapshotAnalysis:
@@ -9889,9 +9889,9 @@ type GoogleCloudAiplatformV1FeaturestoreMonitoringConfigSnapshotAnalysis struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreMonitoringConfigSnapshotAnalysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreMonitoringConfigSnapshotAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreMonitoringConfigSnapshotAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig: The
@@ -9917,9 +9917,9 @@ type GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FeaturestoreMonitoringConfigThresholdConfig) UnmarshalJSON(data []byte) error {
@@ -9961,9 +9961,9 @@ type GoogleCloudAiplatformV1FeaturestoreOnlineServingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreOnlineServingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreOnlineServingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreOnlineServingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FeaturestoreOnlineServingConfigScaling: Online
@@ -9998,9 +9998,9 @@ type GoogleCloudAiplatformV1FeaturestoreOnlineServingConfigScaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FeaturestoreOnlineServingConfigScaling) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FeaturestoreOnlineServingConfigScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeaturestoreOnlineServingConfigScaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FetchFeatureValuesRequest: Request message for
@@ -10031,9 +10031,9 @@ type GoogleCloudAiplatformV1FetchFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FetchFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FetchFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FetchFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FetchFeatureValuesResponse: Response message for
@@ -10062,9 +10062,9 @@ type GoogleCloudAiplatformV1FetchFeatureValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FetchFeatureValuesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FetchFeatureValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FetchFeatureValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList:
@@ -10086,9 +10086,9 @@ type GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairListFeat
@@ -10111,9 +10111,9 @@ type GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairListFe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairListFeatureNameValuePair) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairListFeatureNameValuePair) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairListFeatureNameValuePair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FileData: URI based data.
@@ -10135,9 +10135,9 @@ type GoogleCloudAiplatformV1FileData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FileData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FileData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FileData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FilterSplit: Assigns input data to training,
@@ -10181,9 +10181,9 @@ type GoogleCloudAiplatformV1FilterSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FilterSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FilterSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FilterSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FindNeighborsRequest: The request message for
@@ -10216,9 +10216,9 @@ type GoogleCloudAiplatformV1FindNeighborsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FindNeighborsRequestQuery: A query to find a number
@@ -10264,9 +10264,9 @@ type GoogleCloudAiplatformV1FindNeighborsRequestQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsRequestQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsRequestQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FindNeighborsRequestQuery) UnmarshalJSON(data []byte) error {
@@ -10303,9 +10303,9 @@ type GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) UnmarshalJSON(data []byte) error {
@@ -10343,9 +10343,9 @@ type GoogleCloudAiplatformV1FindNeighborsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FindNeighborsResponseNearestNeighbors: Nearest
@@ -10368,9 +10368,9 @@ type GoogleCloudAiplatformV1FindNeighborsResponseNearestNeighbors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsResponseNearestNeighbors) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsResponseNearestNeighbors) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsResponseNearestNeighbors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FindNeighborsResponseNeighbor: A neighbor of the
@@ -10398,9 +10398,9 @@ type GoogleCloudAiplatformV1FindNeighborsResponseNeighbor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsResponseNeighbor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) UnmarshalJSON(data []byte) error {
@@ -10438,9 +10438,9 @@ type GoogleCloudAiplatformV1FluencyInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FluencyInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FluencyInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FluencyInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FluencyInstance: Spec for fluency instance.
@@ -10460,9 +10460,9 @@ type GoogleCloudAiplatformV1FluencyInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FluencyInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FluencyInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FluencyInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FluencyResult: Spec for fluency result.
@@ -10486,9 +10486,9 @@ type GoogleCloudAiplatformV1FluencyResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FluencyResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FluencyResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FluencyResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FluencyResult) UnmarshalJSON(data []byte) error {
@@ -10524,9 +10524,9 @@ type GoogleCloudAiplatformV1FluencySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FluencySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FluencySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FluencySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FractionSplit: Assigns the input data to training,
@@ -10559,9 +10559,9 @@ type GoogleCloudAiplatformV1FractionSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FractionSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FractionSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FractionSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FractionSplit) UnmarshalJSON(data []byte) error {
@@ -10601,9 +10601,9 @@ type GoogleCloudAiplatformV1FulfillmentInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FulfillmentInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FulfillmentInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FulfillmentInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FulfillmentInstance: Spec for fulfillment instance.
@@ -10626,9 +10626,9 @@ type GoogleCloudAiplatformV1FulfillmentInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FulfillmentInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FulfillmentInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FulfillmentInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FulfillmentResult: Spec for fulfillment result.
@@ -10652,9 +10652,9 @@ type GoogleCloudAiplatformV1FulfillmentResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FulfillmentResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FulfillmentResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FulfillmentResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1FulfillmentResult) UnmarshalJSON(data []byte) error {
@@ -10690,9 +10690,9 @@ type GoogleCloudAiplatformV1FulfillmentSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FulfillmentSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FulfillmentSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FulfillmentSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FunctionCall: A predicted [FunctionCall] returned
@@ -10719,9 +10719,9 @@ type GoogleCloudAiplatformV1FunctionCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FunctionCall) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FunctionCall) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FunctionCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FunctionCallingConfig: Function calling config.
@@ -10758,9 +10758,9 @@ type GoogleCloudAiplatformV1FunctionCallingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FunctionCallingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FunctionCallingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FunctionCallingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FunctionDeclaration: Structured representation of a
@@ -10800,9 +10800,9 @@ type GoogleCloudAiplatformV1FunctionDeclaration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FunctionDeclaration) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FunctionDeclaration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FunctionDeclaration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1FunctionResponse: The result output from a
@@ -10829,9 +10829,9 @@ type GoogleCloudAiplatformV1FunctionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1FunctionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1FunctionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FunctionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GcsDestination: The Google Cloud Storage location
@@ -10854,9 +10854,9 @@ type GoogleCloudAiplatformV1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GcsSource: The Google Cloud Storage location for the
@@ -10879,9 +10879,9 @@ type GoogleCloudAiplatformV1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenerateContentRequest: Request message for
@@ -10922,9 +10922,9 @@ type GoogleCloudAiplatformV1GenerateContentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenerateContentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenerateContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerateContentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenerateContentResponse: Response message for
@@ -10954,9 +10954,9 @@ type GoogleCloudAiplatformV1GenerateContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenerateContentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenerateContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerateContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback: Content filter
@@ -10989,9 +10989,9 @@ type GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata: Usage metadata
@@ -11015,9 +11015,9 @@ type GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenerationConfig: Generation config.
@@ -11065,9 +11065,9 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenerationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenerationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1GenerationConfig) UnmarshalJSON(data []byte) error {
@@ -11118,9 +11118,9 @@ type GoogleCloudAiplatformV1GenericOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenericOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenericOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenericOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenieSource: Contains information about the source of
@@ -11141,9 +11141,9 @@ type GoogleCloudAiplatformV1GenieSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GenieSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GenieSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenieSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GoogleSearchRetrieval: Tool to retrieve public web
@@ -11170,9 +11170,9 @@ type GoogleCloudAiplatformV1GroundednessInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundednessInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundednessInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundednessInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundednessInstance: Spec for groundedness instance.
@@ -11195,9 +11195,9 @@ type GoogleCloudAiplatformV1GroundednessInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundednessInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundednessInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundednessInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundednessResult: Spec for groundedness result.
@@ -11221,9 +11221,9 @@ type GoogleCloudAiplatformV1GroundednessResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundednessResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundednessResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundednessResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1GroundednessResult) UnmarshalJSON(data []byte) error {
@@ -11259,9 +11259,9 @@ type GoogleCloudAiplatformV1GroundednessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundednessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundednessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundednessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingAttribution: Grounding attribution.
@@ -11286,9 +11286,9 @@ type GoogleCloudAiplatformV1GroundingAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1GroundingAttribution) UnmarshalJSON(data []byte) error {
@@ -11324,9 +11324,9 @@ type GoogleCloudAiplatformV1GroundingAttributionWeb struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingAttributionWeb) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingAttributionWeb) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingAttributionWeb
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingChunk: Grounding chunk.
@@ -11349,9 +11349,9 @@ type GoogleCloudAiplatformV1GroundingChunk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingChunk) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingChunk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingChunkRetrievedContext: Chunk from context
@@ -11374,9 +11374,9 @@ type GoogleCloudAiplatformV1GroundingChunkRetrievedContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingChunkRetrievedContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingChunkRetrievedContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingChunkRetrievedContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingChunkWeb: Chunk from the web.
@@ -11398,9 +11398,9 @@ type GoogleCloudAiplatformV1GroundingChunkWeb struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingChunkWeb) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingChunkWeb) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingChunkWeb
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingMetadata: Metadata returned to client when
@@ -11432,9 +11432,9 @@ type GoogleCloudAiplatformV1GroundingMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GroundingSupport: Grounding support.
@@ -11463,9 +11463,9 @@ type GoogleCloudAiplatformV1GroundingSupport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1GroundingSupport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1GroundingSupport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GroundingSupport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1GroundingSupport) UnmarshalJSON(data []byte) error {
@@ -11574,9 +11574,9 @@ type GoogleCloudAiplatformV1HyperparameterTuningJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1HyperparameterTuningJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1HyperparameterTuningJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1HyperparameterTuningJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IdMatcher: Matcher for Features of an EntityType by
@@ -11600,9 +11600,9 @@ type GoogleCloudAiplatformV1IdMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IdMatcher) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IdMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IdMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportDataConfig: Describes the location from where
@@ -11648,9 +11648,9 @@ type GoogleCloudAiplatformV1ImportDataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportDataConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportDataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportDataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportDataOperationMetadata: Runtime operation
@@ -11671,9 +11671,9 @@ type GoogleCloudAiplatformV1ImportDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportDataRequest: Request message for
@@ -11695,9 +11695,9 @@ type GoogleCloudAiplatformV1ImportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportDataResponse: Response message for
@@ -11741,9 +11741,9 @@ type GoogleCloudAiplatformV1ImportFeatureValuesOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportFeatureValuesOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportFeatureValuesOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportFeatureValuesRequest: Request message for
@@ -11792,9 +11792,9 @@ type GoogleCloudAiplatformV1ImportFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportFeatureValuesRequestFeatureSpec: Defines the
@@ -11819,9 +11819,9 @@ type GoogleCloudAiplatformV1ImportFeatureValuesRequestFeatureSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportFeatureValuesRequestFeatureSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportFeatureValuesRequestFeatureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportFeatureValuesRequestFeatureSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportFeatureValuesResponse: Response message for
@@ -11853,9 +11853,9 @@ type GoogleCloudAiplatformV1ImportFeatureValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportFeatureValuesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportFeatureValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportFeatureValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ImportModelEvaluationRequest: Request message for
@@ -11876,9 +11876,9 @@ type GoogleCloudAiplatformV1ImportModelEvaluationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ImportModelEvaluationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ImportModelEvaluationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ImportModelEvaluationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Index: A representation of a collection of database
@@ -11960,9 +11960,9 @@ type GoogleCloudAiplatformV1Index struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Index) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Index) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Index
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IndexDatapoint: A datapoint of Index.
@@ -11999,9 +11999,9 @@ type GoogleCloudAiplatformV1IndexDatapoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexDatapoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexDatapoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexDatapoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1IndexDatapoint) UnmarshalJSON(data []byte) error {
@@ -12045,9 +12045,9 @@ type GoogleCloudAiplatformV1IndexDatapointCrowdingTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexDatapointCrowdingTag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexDatapointCrowdingTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexDatapointCrowdingTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IndexDatapointNumericRestriction: This field allows
@@ -12087,9 +12087,9 @@ type GoogleCloudAiplatformV1IndexDatapointNumericRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexDatapointNumericRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexDatapointNumericRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexDatapointNumericRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1IndexDatapointNumericRestriction) UnmarshalJSON(data []byte) error {
@@ -12131,9 +12131,9 @@ type GoogleCloudAiplatformV1IndexDatapointRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexDatapointRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexDatapointRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexDatapointRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IndexDatapointSparseEmbedding: Feature embedding
@@ -12158,9 +12158,9 @@ type GoogleCloudAiplatformV1IndexDatapointSparseEmbedding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexDatapointSparseEmbedding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) UnmarshalJSON(data []byte) error {
@@ -12252,9 +12252,9 @@ type GoogleCloudAiplatformV1IndexEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexEndpoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IndexPrivateEndpoints: IndexPrivateEndpoints proto is
@@ -12285,9 +12285,9 @@ type GoogleCloudAiplatformV1IndexPrivateEndpoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexPrivateEndpoints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexPrivateEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexPrivateEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IndexStats: Stats of the Index.
@@ -12311,9 +12311,9 @@ type GoogleCloudAiplatformV1IndexStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IndexStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IndexStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IndexStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1InputDataConfig: Specifies Vertex AI owned input data
@@ -12411,9 +12411,9 @@ type GoogleCloudAiplatformV1InputDataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1InputDataConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1InputDataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1InputDataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Int64Array: A list of int64 values.
@@ -12433,9 +12433,9 @@ type GoogleCloudAiplatformV1Int64Array struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Int64Array) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Int64Array) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Int64Array
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1IntegratedGradientsAttribution: An attribution method
@@ -12472,9 +12472,9 @@ type GoogleCloudAiplatformV1IntegratedGradientsAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1IntegratedGradientsAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1IntegratedGradientsAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1IntegratedGradientsAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1LargeModelReference: Contains information about the
@@ -12497,9 +12497,9 @@ type GoogleCloudAiplatformV1LargeModelReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1LargeModelReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1LargeModelReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1LargeModelReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1LineageSubgraph: A subgraph of the overall lineage
@@ -12527,9 +12527,9 @@ type GoogleCloudAiplatformV1LineageSubgraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1LineageSubgraph) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1LineageSubgraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1LineageSubgraph
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListAnnotationsResponse: Response message for
@@ -12556,9 +12556,9 @@ type GoogleCloudAiplatformV1ListAnnotationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListAnnotationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListAnnotationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListArtifactsResponse: Response message for
@@ -12586,9 +12586,9 @@ type GoogleCloudAiplatformV1ListArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListBatchPredictionJobsResponse: Response message for
@@ -12615,9 +12615,9 @@ type GoogleCloudAiplatformV1ListBatchPredictionJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListBatchPredictionJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListBatchPredictionJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListBatchPredictionJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListContextsResponse: Response message for
@@ -12645,9 +12645,9 @@ type GoogleCloudAiplatformV1ListContextsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListContextsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListContextsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListContextsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListCustomJobsResponse: Response message for
@@ -12674,9 +12674,9 @@ type GoogleCloudAiplatformV1ListCustomJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListCustomJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListCustomJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListCustomJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListDataItemsResponse: Response message for
@@ -12703,9 +12703,9 @@ type GoogleCloudAiplatformV1ListDataItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListDataItemsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListDataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDataItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListDataLabelingJobsResponse: Response message for
@@ -12732,9 +12732,9 @@ type GoogleCloudAiplatformV1ListDataLabelingJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListDataLabelingJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListDataLabelingJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDataLabelingJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListDatasetVersionsResponse: Response message for
@@ -12761,9 +12761,9 @@ type GoogleCloudAiplatformV1ListDatasetVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListDatasetVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListDatasetVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDatasetVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListDatasetsResponse: Response message for
@@ -12790,9 +12790,9 @@ type GoogleCloudAiplatformV1ListDatasetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListDatasetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDatasetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListDeploymentResourcePoolsResponse: Response message
@@ -12820,9 +12820,9 @@ type GoogleCloudAiplatformV1ListDeploymentResourcePoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListDeploymentResourcePoolsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListDeploymentResourcePoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDeploymentResourcePoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListEndpointsResponse: Response message for
@@ -12849,9 +12849,9 @@ type GoogleCloudAiplatformV1ListEndpointsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListEndpointsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListEndpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListEndpointsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListEntityTypesResponse: Response message for
@@ -12879,9 +12879,9 @@ type GoogleCloudAiplatformV1ListEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListExecutionsResponse: Response message for
@@ -12909,9 +12909,9 @@ type GoogleCloudAiplatformV1ListExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeatureGroupsResponse: Response message for
@@ -12939,9 +12939,9 @@ type GoogleCloudAiplatformV1ListFeatureGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeatureGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeatureGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeatureGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeatureOnlineStoresResponse: Response message for
@@ -12969,9 +12969,9 @@ type GoogleCloudAiplatformV1ListFeatureOnlineStoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeatureOnlineStoresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeatureOnlineStoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeatureOnlineStoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeatureViewSyncsResponse: Response message for
@@ -12999,9 +12999,9 @@ type GoogleCloudAiplatformV1ListFeatureViewSyncsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeatureViewSyncsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeatureViewSyncsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeatureViewSyncsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeatureViewsResponse: Response message for
@@ -13029,9 +13029,9 @@ type GoogleCloudAiplatformV1ListFeatureViewsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeatureViewsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeatureViewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeatureViewsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeaturesResponse: Response message for
@@ -13060,9 +13060,9 @@ type GoogleCloudAiplatformV1ListFeaturesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeaturesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeaturesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeaturesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListFeaturestoresResponse: Response message for
@@ -13090,9 +13090,9 @@ type GoogleCloudAiplatformV1ListFeaturestoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListFeaturestoresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListFeaturestoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeaturestoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListHyperparameterTuningJobsResponse: Response
@@ -13120,9 +13120,9 @@ type GoogleCloudAiplatformV1ListHyperparameterTuningJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListHyperparameterTuningJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListHyperparameterTuningJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListHyperparameterTuningJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListIndexEndpointsResponse: Response message for
@@ -13149,9 +13149,9 @@ type GoogleCloudAiplatformV1ListIndexEndpointsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListIndexEndpointsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListIndexEndpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListIndexEndpointsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListIndexesResponse: Response message for
@@ -13178,9 +13178,9 @@ type GoogleCloudAiplatformV1ListIndexesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListIndexesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListIndexesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListMetadataSchemasResponse: Response message for
@@ -13208,9 +13208,9 @@ type GoogleCloudAiplatformV1ListMetadataSchemasResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListMetadataSchemasResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListMetadataSchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListMetadataSchemasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListMetadataStoresResponse: Response message for
@@ -13238,9 +13238,9 @@ type GoogleCloudAiplatformV1ListMetadataStoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListMetadataStoresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListMetadataStoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListMetadataStoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListModelDeploymentMonitoringJobsResponse: Response
@@ -13267,9 +13267,9 @@ type GoogleCloudAiplatformV1ListModelDeploymentMonitoringJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListModelDeploymentMonitoringJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListModelDeploymentMonitoringJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListModelDeploymentMonitoringJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListModelEvaluationSlicesResponse: Response message
@@ -13296,9 +13296,9 @@ type GoogleCloudAiplatformV1ListModelEvaluationSlicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListModelEvaluationSlicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListModelEvaluationSlicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListModelEvaluationSlicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListModelEvaluationsResponse: Response message for
@@ -13325,9 +13325,9 @@ type GoogleCloudAiplatformV1ListModelEvaluationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListModelEvaluationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListModelEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListModelEvaluationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListModelVersionsResponse: Response message for
@@ -13355,9 +13355,9 @@ type GoogleCloudAiplatformV1ListModelVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListModelVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListModelVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListModelVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListModelsResponse: Response message for
@@ -13384,9 +13384,9 @@ type GoogleCloudAiplatformV1ListModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListModelsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListNasJobsResponse: Response message for
@@ -13414,9 +13414,9 @@ type GoogleCloudAiplatformV1ListNasJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListNasJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListNasJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListNasJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListNasTrialDetailsResponse: Response message for
@@ -13443,9 +13443,9 @@ type GoogleCloudAiplatformV1ListNasTrialDetailsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListNasTrialDetailsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListNasTrialDetailsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListNasTrialDetailsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse: Response
@@ -13473,9 +13473,9 @@ type GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListNotebookRuntimesResponse: Response message for
@@ -13502,9 +13502,9 @@ type GoogleCloudAiplatformV1ListNotebookRuntimesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListNotebookRuntimesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListNotebookRuntimesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListNotebookRuntimesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListOptimalTrialsRequest: Request message for
@@ -13535,9 +13535,9 @@ type GoogleCloudAiplatformV1ListOptimalTrialsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListOptimalTrialsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListOptimalTrialsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListOptimalTrialsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListPersistentResourcesResponse: Response message for
@@ -13563,9 +13563,9 @@ type GoogleCloudAiplatformV1ListPersistentResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListPersistentResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListPersistentResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListPersistentResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListPipelineJobsResponse: Response message for
@@ -13592,9 +13592,9 @@ type GoogleCloudAiplatformV1ListPipelineJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListPipelineJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListPipelineJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListPipelineJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListSavedQueriesResponse: Response message for
@@ -13621,9 +13621,9 @@ type GoogleCloudAiplatformV1ListSavedQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListSavedQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListSchedulesResponse: Response message for
@@ -13650,9 +13650,9 @@ type GoogleCloudAiplatformV1ListSchedulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListSchedulesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListSchedulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListSchedulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListSpecialistPoolsResponse: Response message for
@@ -13679,9 +13679,9 @@ type GoogleCloudAiplatformV1ListSpecialistPoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListSpecialistPoolsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListSpecialistPoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListSpecialistPoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListStudiesResponse: Response message for
@@ -13709,9 +13709,9 @@ type GoogleCloudAiplatformV1ListStudiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListStudiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListStudiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListStudiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTensorboardExperimentsResponse: Response message
@@ -13739,9 +13739,9 @@ type GoogleCloudAiplatformV1ListTensorboardExperimentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTensorboardExperimentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTensorboardExperimentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTensorboardExperimentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTensorboardRunsResponse: Response message for
@@ -13769,9 +13769,9 @@ type GoogleCloudAiplatformV1ListTensorboardRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTensorboardRunsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTensorboardRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTensorboardRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTensorboardTimeSeriesResponse: Response message
@@ -13799,9 +13799,9 @@ type GoogleCloudAiplatformV1ListTensorboardTimeSeriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTensorboardTimeSeriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTensorboardTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTensorboardTimeSeriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTensorboardsResponse: Response message for
@@ -13829,9 +13829,9 @@ type GoogleCloudAiplatformV1ListTensorboardsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTensorboardsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTensorboardsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTensorboardsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTrainingPipelinesResponse: Response message for
@@ -13858,9 +13858,9 @@ type GoogleCloudAiplatformV1ListTrainingPipelinesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTrainingPipelinesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTrainingPipelinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTrainingPipelinesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTrialsResponse: Response message for
@@ -13887,9 +13887,9 @@ type GoogleCloudAiplatformV1ListTrialsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTrialsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTrialsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTrialsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ListTuningJobsResponse: Response message for
@@ -13916,9 +13916,9 @@ type GoogleCloudAiplatformV1ListTuningJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ListTuningJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ListTuningJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListTuningJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1LookupStudyRequest: Request message for
@@ -13939,9 +13939,9 @@ type GoogleCloudAiplatformV1LookupStudyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1LookupStudyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1LookupStudyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1LookupStudyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MachineSpec: Specification of a single machine.
@@ -13993,9 +13993,9 @@ type GoogleCloudAiplatformV1MachineSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MachineSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MachineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MachineSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ManualBatchTuningParameters: Manual batch tuning
@@ -14021,9 +14021,9 @@ type GoogleCloudAiplatformV1ManualBatchTuningParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ManualBatchTuningParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ManualBatchTuningParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ManualBatchTuningParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Measurement: A message representing a Measurement of
@@ -14052,9 +14052,9 @@ type GoogleCloudAiplatformV1Measurement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Measurement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Measurement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Measurement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MeasurementMetric: A message representing a metric in
@@ -14078,9 +14078,9 @@ type GoogleCloudAiplatformV1MeasurementMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MeasurementMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MeasurementMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MeasurementMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1MeasurementMetric) UnmarshalJSON(data []byte) error {
@@ -14123,9 +14123,9 @@ type GoogleCloudAiplatformV1MergeVersionAliasesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MergeVersionAliasesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MergeVersionAliasesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MergeVersionAliasesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MetadataSchema: Instance of a general MetadataSchema.
@@ -14175,9 +14175,9 @@ type GoogleCloudAiplatformV1MetadataSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MetadataSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MetadataSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MetadataSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MetadataStore: Instance of a metadata store. Contains
@@ -14215,9 +14215,9 @@ type GoogleCloudAiplatformV1MetadataStore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MetadataStore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MetadataStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MetadataStore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MetadataStoreDataplexConfig: Represents Dataplex
@@ -14239,9 +14239,9 @@ type GoogleCloudAiplatformV1MetadataStoreDataplexConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MetadataStoreDataplexConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MetadataStoreDataplexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MetadataStoreDataplexConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MetadataStoreMetadataStoreState: Represents state
@@ -14262,9 +14262,9 @@ type GoogleCloudAiplatformV1MetadataStoreMetadataStoreState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MetadataStoreMetadataStoreState) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MetadataStoreMetadataStoreState) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MetadataStoreMetadataStoreState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResource: Represents one resource that
@@ -14301,9 +14301,9 @@ type GoogleCloudAiplatformV1MigratableResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResourceAutomlDataset: Represents one
@@ -14327,9 +14327,9 @@ type GoogleCloudAiplatformV1MigratableResourceAutomlDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResourceAutomlDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResourceAutomlDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResourceAutomlDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResourceAutomlModel: Represents one Model
@@ -14353,9 +14353,9 @@ type GoogleCloudAiplatformV1MigratableResourceAutomlModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResourceAutomlModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResourceAutomlModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResourceAutomlModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResourceDataLabelingDataset: Represents one
@@ -14383,9 +14383,9 @@ type GoogleCloudAiplatformV1MigratableResourceDataLabelingDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResourceDataLabelingDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResourceDataLabelingDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResourceDataLabelingDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResourceDataLabelingDatasetDataLabelingAnnot
@@ -14412,9 +14412,9 @@ type GoogleCloudAiplatformV1MigratableResourceDataLabelingDatasetDataLabelingAnn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResourceDataLabelingDatasetDataLabelingAnnotatedDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResourceDataLabelingDatasetDataLabelingAnnotatedDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResourceDataLabelingDatasetDataLabelingAnnotatedDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigratableResourceMlEngineModelVersion: Represents
@@ -14441,9 +14441,9 @@ type GoogleCloudAiplatformV1MigratableResourceMlEngineModelVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigratableResourceMlEngineModelVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigratableResourceMlEngineModelVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigratableResourceMlEngineModelVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequest: Config of migrating one
@@ -14475,9 +14475,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlDatasetConfig:
@@ -14503,9 +14503,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlDatasetConfig str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlDatasetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlDatasetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlDatasetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlModelConfig:
@@ -14530,9 +14530,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlModelConfig struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlModelConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlModelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequestMigrateAutomlModelConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfig
@@ -14562,9 +14562,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfig
@@ -14589,9 +14589,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfigMigrateDataLabelingAnnotatedDatasetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfigMigrateDataLabelingAnnotatedDatasetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequestMigrateDataLabelingDatasetConfigMigrateDataLabelingAnnotatedDatasetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceRequestMigrateMlEngineModelVersionConfi
@@ -14621,9 +14621,9 @@ type GoogleCloudAiplatformV1MigrateResourceRequestMigrateMlEngineModelVersionCon
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceRequestMigrateMlEngineModelVersionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceRequestMigrateMlEngineModelVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceRequestMigrateMlEngineModelVersionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MigrateResourceResponse: Describes a successfully
@@ -14649,9 +14649,9 @@ type GoogleCloudAiplatformV1MigrateResourceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MigrateResourceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MigrateResourceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MigrateResourceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Model: A trained machine learning Model.
@@ -14852,9 +14852,9 @@ type GoogleCloudAiplatformV1Model struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Model) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Model) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Model
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelBaseModelSource: User input field to specify the
@@ -14878,9 +14878,9 @@ type GoogleCloudAiplatformV1ModelBaseModelSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelBaseModelSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelBaseModelSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelBaseModelSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelContainerSpec: Specification of a container for
@@ -15056,9 +15056,9 @@ type GoogleCloudAiplatformV1ModelContainerSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelContainerSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelContainerSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelContainerSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDataStats: Stats of data used for train or
@@ -15099,9 +15099,9 @@ type GoogleCloudAiplatformV1ModelDataStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDataStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDataStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDataStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDeploymentMonitoringBigQueryTable:
@@ -15142,9 +15142,9 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringBigQueryTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDeploymentMonitoringBigQueryTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDeploymentMonitoringBigQueryTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDeploymentMonitoringBigQueryTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDeploymentMonitoringJob: Represents a job that
@@ -15284,9 +15284,9 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDeploymentMonitoringJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDeploymentMonitoringJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDeploymentMonitoringJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDeploymentMonitoringJobLatestMonitoringPipelineMe
@@ -15310,9 +15310,9 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringJobLatestMonitoringPipeline
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDeploymentMonitoringJobLatestMonitoringPipelineMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDeploymentMonitoringJobLatestMonitoringPipelineMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDeploymentMonitoringJobLatestMonitoringPipelineMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDeploymentMonitoringObjectiveConfig:
@@ -15337,9 +15337,9 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringObjectiveConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDeploymentMonitoringObjectiveConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDeploymentMonitoringObjectiveConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDeploymentMonitoringObjectiveConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelDeploymentMonitoringScheduleConfig: The config
@@ -15370,9 +15370,9 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringScheduleConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelDeploymentMonitoringScheduleConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelDeploymentMonitoringScheduleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelDeploymentMonitoringScheduleConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluation: A collection of metrics calculated
@@ -15444,9 +15444,9 @@ type GoogleCloudAiplatformV1ModelEvaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1ModelEvaluationModelEvaluationExplanationSpec struct {
@@ -15468,9 +15468,9 @@ type GoogleCloudAiplatformV1ModelEvaluationModelEvaluationExplanationSpec struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationModelEvaluationExplanationSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationModelEvaluationExplanationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationModelEvaluationExplanationSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluationSlice: A collection of metrics
@@ -15514,9 +15514,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSlice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSlice) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSlice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSlice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluationSliceSlice: Definition of a slice.
@@ -15543,9 +15543,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSliceSlice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSlice) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSliceSlice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSliceSlice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpec: Specification for
@@ -15568,9 +15568,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange: A range of
@@ -15593,9 +15593,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecRange) UnmarshalJSON(data []byte) error {
@@ -15662,9 +15662,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecSliceConfig struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecSliceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecSliceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecSliceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue: Single value
@@ -15687,9 +15687,9 @@ type GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ModelEvaluationSliceSliceSliceSpecValue) UnmarshalJSON(data []byte) error {
@@ -15735,9 +15735,9 @@ type GoogleCloudAiplatformV1ModelExplanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelExplanation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelExplanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelExplanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelExportFormat: Represents export format supported
@@ -15776,9 +15776,9 @@ type GoogleCloudAiplatformV1ModelExportFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelExportFormat) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelExportFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelExportFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelGardenSource: Contains information about the
@@ -15799,9 +15799,9 @@ type GoogleCloudAiplatformV1ModelGardenSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelGardenSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelGardenSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelGardenSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringAlertConfig: The alert config for
@@ -15831,9 +15831,9 @@ type GoogleCloudAiplatformV1ModelMonitoringAlertConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringAlertConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringAlertConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringAlertConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringAlertConfigEmailAlertConfig: The
@@ -15854,9 +15854,9 @@ type GoogleCloudAiplatformV1ModelMonitoringAlertConfigEmailAlertConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringAlertConfigEmailAlertConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringAlertConfigEmailAlertConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringAlertConfigEmailAlertConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfig: The objective
@@ -15886,9 +15886,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfig: The
@@ -15916,9 +15916,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfig stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfigExplana
@@ -15950,9 +15950,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfigExpla
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfigExplanationBaseline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfigExplanationBaseline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigExplanationConfigExplanationBaseline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigPredictionDriftDetection
@@ -15985,9 +15985,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigPredictionDriftDetecti
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigPredictionDriftDetectionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigPredictionDriftDetectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigPredictionDriftDetectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingDataset:
@@ -16025,9 +16025,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingDataset struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingPredictionSkewDe
@@ -16061,9 +16061,9 @@ type GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingPredictionSkew
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingPredictionSkewDetectionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingPredictionSkewDetectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringObjectiveConfigTrainingPredictionSkewDetectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringStatsAnomalies: Statistics and
@@ -16104,9 +16104,9 @@ type GoogleCloudAiplatformV1ModelMonitoringStatsAnomalies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringStatsAnomalies) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringStatsAnomalies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringStatsAnomalies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelMonitoringStatsAnomaliesFeatureHistoricStatsAnoma
@@ -16134,9 +16134,9 @@ type GoogleCloudAiplatformV1ModelMonitoringStatsAnomaliesFeatureHistoricStatsAno
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelMonitoringStatsAnomaliesFeatureHistoricStatsAnomalies) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelMonitoringStatsAnomaliesFeatureHistoricStatsAnomalies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelMonitoringStatsAnomaliesFeatureHistoricStatsAnomalies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelOriginalModelInfo: Contains information about
@@ -16159,9 +16159,9 @@ type GoogleCloudAiplatformV1ModelOriginalModelInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelOriginalModelInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelOriginalModelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelOriginalModelInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ModelSourceInfo: Detail description of the source
@@ -16196,9 +16196,9 @@ type GoogleCloudAiplatformV1ModelSourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ModelSourceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ModelSourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ModelSourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MutateDeployedIndexOperationMetadata: Runtime
@@ -16221,9 +16221,9 @@ type GoogleCloudAiplatformV1MutateDeployedIndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MutateDeployedIndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MutateDeployedIndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MutateDeployedIndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MutateDeployedIndexResponse: Response message for
@@ -16244,9 +16244,9 @@ type GoogleCloudAiplatformV1MutateDeployedIndexResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MutateDeployedIndexResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MutateDeployedIndexResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MutateDeployedIndexResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MutateDeployedModelOperationMetadata: Runtime
@@ -16267,9 +16267,9 @@ type GoogleCloudAiplatformV1MutateDeployedModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MutateDeployedModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MutateDeployedModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MutateDeployedModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MutateDeployedModelRequest: Request message for
@@ -16298,9 +16298,9 @@ type GoogleCloudAiplatformV1MutateDeployedModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MutateDeployedModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MutateDeployedModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MutateDeployedModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1MutateDeployedModelResponse: Response message for
@@ -16321,9 +16321,9 @@ type GoogleCloudAiplatformV1MutateDeployedModelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1MutateDeployedModelResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1MutateDeployedModelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MutateDeployedModelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJob: Represents a Neural Architecture Search (NAS)
@@ -16402,9 +16402,9 @@ type GoogleCloudAiplatformV1NasJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobOutput: Represents a uCAIP NasJob output.
@@ -16425,9 +16425,9 @@ type GoogleCloudAiplatformV1NasJobOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobOutputMultiTrialJobOutput: The output of a
@@ -16452,9 +16452,9 @@ type GoogleCloudAiplatformV1NasJobOutputMultiTrialJobOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobOutputMultiTrialJobOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobOutputMultiTrialJobOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobOutputMultiTrialJobOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobSpec: Represents the spec of a NasJob.
@@ -16482,9 +16482,9 @@ type GoogleCloudAiplatformV1NasJobSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpec: The spec of
@@ -16523,9 +16523,9 @@ type GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecMetricSpec:
@@ -16553,9 +16553,9 @@ type GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecMetricSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecMetricSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecMetricSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecMetricSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecSearchTrialSpec:
@@ -16587,9 +16587,9 @@ type GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecSearchTrialSpec str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecSearchTrialSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecSearchTrialSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecSearchTrialSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecTrainTrialSpec:
@@ -16618,9 +16618,9 @@ type GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecTrainTrialSpec stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecTrainTrialSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecTrainTrialSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasJobSpecMultiTrialAlgorithmSpecTrainTrialSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasTrial: Represents a uCAIP NasJob trial.
@@ -16662,9 +16662,9 @@ type GoogleCloudAiplatformV1NasTrial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasTrial) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasTrial) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasTrial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NasTrialDetail: Represents a NasTrial details along
@@ -16696,9 +16696,9 @@ type GoogleCloudAiplatformV1NasTrialDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NasTrialDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NasTrialDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NasTrialDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NearestNeighborQuery: A query to find a number of
@@ -16735,9 +16735,9 @@ type GoogleCloudAiplatformV1NearestNeighborQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NearestNeighborQueryEmbedding: The embedding vector.
@@ -16757,9 +16757,9 @@ type GoogleCloudAiplatformV1NearestNeighborQueryEmbedding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborQueryEmbedding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborQueryEmbedding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborQueryEmbedding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1NearestNeighborQueryEmbedding) UnmarshalJSON(data []byte) error {
@@ -16804,9 +16804,9 @@ type GoogleCloudAiplatformV1NearestNeighborQueryParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborQueryParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborQueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborQueryParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1NearestNeighborQueryParameters) UnmarshalJSON(data []byte) error {
@@ -16850,9 +16850,9 @@ type GoogleCloudAiplatformV1NearestNeighborQueryStringFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborQueryStringFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborQueryStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborQueryStringFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadata: Runtime
@@ -16879,9 +16879,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidationStats struct {
@@ -16917,9 +16917,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidationStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidationStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidationStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError struct {
@@ -16973,9 +16973,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NearestNeighbors: Nearest neighbors for one query.
@@ -16995,9 +16995,9 @@ type GoogleCloudAiplatformV1NearestNeighbors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighbors) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighbors) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighbors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NearestNeighborsNeighbor: A neighbor of the query
@@ -17025,9 +17025,9 @@ type GoogleCloudAiplatformV1NearestNeighborsNeighbor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NearestNeighborsNeighbor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NearestNeighborsNeighbor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NearestNeighborsNeighbor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1NearestNeighborsNeighbor) UnmarshalJSON(data []byte) error {
@@ -17063,9 +17063,9 @@ type GoogleCloudAiplatformV1Neighbor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Neighbor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Neighbor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Neighbor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Neighbor) UnmarshalJSON(data []byte) error {
@@ -17107,9 +17107,9 @@ type GoogleCloudAiplatformV1NetworkSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NetworkSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NetworkSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NetworkSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NfsMount: Represents a mount configuration for
@@ -17137,9 +17137,9 @@ type GoogleCloudAiplatformV1NfsMount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NfsMount) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NfsMount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NfsMount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NotebookEucConfig: The euc configuration of
@@ -17170,9 +17170,9 @@ type GoogleCloudAiplatformV1NotebookEucConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NotebookEucConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NotebookEucConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookEucConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NotebookIdleShutdownConfig: The idle shutdown
@@ -17199,9 +17199,9 @@ type GoogleCloudAiplatformV1NotebookIdleShutdownConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NotebookIdleShutdownConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NotebookIdleShutdownConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookIdleShutdownConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NotebookRuntime: A runtime is a virtual machine
@@ -17317,9 +17317,9 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NotebookRuntime) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NotebookRuntime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookRuntime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NotebookRuntimeTemplate: A template that specifies
@@ -17408,9 +17408,9 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NotebookRuntimeTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NotebookRuntimeTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookRuntimeTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1NotebookRuntimeTemplateRef: Points to a
@@ -17432,9 +17432,9 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplateRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1NotebookRuntimeTemplateRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1NotebookRuntimeTemplateRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookRuntimeTemplateRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput: Input for
@@ -17458,9 +17458,9 @@ type GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInstance: Spec for
@@ -17489,9 +17489,9 @@ type GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult: Spec for
@@ -17522,9 +17522,9 @@ type GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult) UnmarshalJSON(data []byte) error {
@@ -17562,9 +17562,9 @@ type GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualitySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualitySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualitySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseSummarizationQualityInput: Input for pairwise
@@ -17587,9 +17587,9 @@ type GoogleCloudAiplatformV1PairwiseSummarizationQualityInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseSummarizationQualityInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseSummarizationQualityInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseSummarizationQualityInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseSummarizationQualityInstance: Spec for
@@ -17618,9 +17618,9 @@ type GoogleCloudAiplatformV1PairwiseSummarizationQualityInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseSummarizationQualityInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseSummarizationQualityInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseSummarizationQualityInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PairwiseSummarizationQualityResult: Spec for pairwise
@@ -17651,9 +17651,9 @@ type GoogleCloudAiplatformV1PairwiseSummarizationQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseSummarizationQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseSummarizationQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseSummarizationQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1PairwiseSummarizationQualityResult) UnmarshalJSON(data []byte) error {
@@ -17691,9 +17691,9 @@ type GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Part: A datatype containing media that is part of a
@@ -17734,9 +17734,9 @@ type GoogleCloudAiplatformV1Part struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Part) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Part) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Part
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PauseModelDeploymentMonitoringJobRequest: Request
@@ -17772,9 +17772,9 @@ type GoogleCloudAiplatformV1PersistentDiskSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PersistentDiskSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PersistentDiskSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PersistentDiskSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PersistentResource: Represents long-lasting resources
@@ -17867,9 +17867,9 @@ type GoogleCloudAiplatformV1PersistentResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PersistentResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PersistentResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PersistentResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineJob: An instance of a machine learning
@@ -17983,9 +17983,9 @@ type GoogleCloudAiplatformV1PipelineJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineJobDetail: The runtime detail of PipelineJob.
@@ -18010,9 +18010,9 @@ type GoogleCloudAiplatformV1PipelineJobDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineJobDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineJobDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineJobDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineJobRuntimeConfig: The runtime config of a
@@ -18070,9 +18070,9 @@ type GoogleCloudAiplatformV1PipelineJobRuntimeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineJobRuntimeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineJobRuntimeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineJobRuntimeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineJobRuntimeConfigInputArtifact: The type of an
@@ -18097,9 +18097,9 @@ type GoogleCloudAiplatformV1PipelineJobRuntimeConfigInputArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineJobRuntimeConfigInputArtifact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineJobRuntimeConfigInputArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineJobRuntimeConfigInputArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskDetail: The runtime detail of a task
@@ -18162,9 +18162,9 @@ type GoogleCloudAiplatformV1PipelineTaskDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskDetailArtifactList: A list of artifact
@@ -18185,9 +18185,9 @@ type GoogleCloudAiplatformV1PipelineTaskDetailArtifactList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskDetailArtifactList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskDetailArtifactList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskDetailArtifactList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskDetailPipelineTaskStatus: A single record
@@ -18230,9 +18230,9 @@ type GoogleCloudAiplatformV1PipelineTaskDetailPipelineTaskStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskDetailPipelineTaskStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskDetailPipelineTaskStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskDetailPipelineTaskStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskExecutorDetail: The runtime detail of a
@@ -18255,9 +18255,9 @@ type GoogleCloudAiplatformV1PipelineTaskExecutorDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskExecutorDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskExecutorDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskExecutorDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskExecutorDetailContainerDetail: The detail
@@ -18295,9 +18295,9 @@ type GoogleCloudAiplatformV1PipelineTaskExecutorDetailContainerDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskExecutorDetailContainerDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskExecutorDetailContainerDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskExecutorDetailContainerDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTaskExecutorDetailCustomJobDetail: The
@@ -18321,9 +18321,9 @@ type GoogleCloudAiplatformV1PipelineTaskExecutorDetailCustomJobDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTaskExecutorDetailCustomJobDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTaskExecutorDetailCustomJobDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTaskExecutorDetailCustomJobDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineTemplateMetadata: Pipeline template metadata
@@ -18347,9 +18347,9 @@ type GoogleCloudAiplatformV1PipelineTemplateMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PipelineTemplateMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PipelineTemplateMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTemplateMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Port: Represents a network port in a container.
@@ -18370,9 +18370,9 @@ type GoogleCloudAiplatformV1Port struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Port) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Port) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Port
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PredefinedSplit: Assigns input data to training,
@@ -18398,9 +18398,9 @@ type GoogleCloudAiplatformV1PredefinedSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PredefinedSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PredefinedSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PredefinedSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PredictRequest: Request message for
@@ -18431,9 +18431,9 @@ type GoogleCloudAiplatformV1PredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig: Configuration
@@ -18463,9 +18463,9 @@ type GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1PredictRequestResponseLoggingConfig) UnmarshalJSON(data []byte) error {
@@ -18520,9 +18520,9 @@ type GoogleCloudAiplatformV1PredictResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PredictResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PredictResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PredictSchemata: Contains the schemata used in
@@ -18576,9 +18576,9 @@ type GoogleCloudAiplatformV1PredictSchemata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PredictSchemata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PredictSchemata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PredictSchemata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Presets: Preset configuration for example-based
@@ -18616,9 +18616,9 @@ type GoogleCloudAiplatformV1Presets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Presets) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Presets) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Presets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PrivateEndpoints: PrivateEndpoints proto is used to
@@ -18649,9 +18649,9 @@ type GoogleCloudAiplatformV1PrivateEndpoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PrivateEndpoints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PrivateEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PrivateEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PrivateServiceConnectConfig: Represents configuration
@@ -18676,9 +18676,9 @@ type GoogleCloudAiplatformV1PrivateServiceConnectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PrivateServiceConnectConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PrivateServiceConnectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PrivateServiceConnectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Probe: Probe describes a health check to be performed
@@ -18708,9 +18708,9 @@ type GoogleCloudAiplatformV1Probe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Probe) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Probe) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Probe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ProbeExecAction: ExecAction specifies a command to
@@ -18736,9 +18736,9 @@ type GoogleCloudAiplatformV1ProbeExecAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ProbeExecAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ProbeExecAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ProbeExecAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PscAutomatedEndpoints: PscAutomatedEndpoints defines
@@ -18764,9 +18764,9 @@ type GoogleCloudAiplatformV1PscAutomatedEndpoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PscAutomatedEndpoints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PscAutomatedEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PscAutomatedEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModel: A Model Garden Publisher Model.
@@ -18845,9 +18845,9 @@ type GoogleCloudAiplatformV1PublisherModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToAction: Actions could take on
@@ -18896,9 +18896,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionDeploy: Model metadata that
@@ -18949,9 +18949,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionDeploy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionDeploy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionDeploy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionDeploy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionDeployDeployMetadata:
@@ -18973,9 +18973,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionDeployDeployMetadata struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionDeployDeployMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionDeployDeployMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionDeployDeployMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke: Configurations
@@ -18996,9 +18996,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionOpenFineTuningPipelines:
@@ -19020,9 +19020,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionOpenFineTuningPipelines st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionOpenFineTuningPipelines) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionOpenFineTuningPipelines) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionOpenFineTuningPipelines
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionOpenNotebooks: Open
@@ -19043,9 +19043,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionOpenNotebooks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionOpenNotebooks) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionOpenNotebooks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionOpenNotebooks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences:
@@ -19075,9 +19075,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelCallToActionViewRestApi: Rest API docs.
@@ -19099,9 +19099,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionViewRestApi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelCallToActionViewRestApi) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelCallToActionViewRestApi) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelCallToActionViewRestApi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelDocumentation: A named piece of
@@ -19125,9 +19125,9 @@ type GoogleCloudAiplatformV1PublisherModelDocumentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelDocumentation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelDocumentation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelDocumentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PublisherModelResourceReference: Reference to a
@@ -19154,9 +19154,9 @@ type GoogleCloudAiplatformV1PublisherModelResourceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PublisherModelResourceReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PublisherModelResourceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PublisherModelResourceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeArtifactsMetadata: Details of operations that
@@ -19177,9 +19177,9 @@ type GoogleCloudAiplatformV1PurgeArtifactsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeArtifactsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeArtifactsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeArtifactsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeArtifactsRequest: Request message for
@@ -19205,9 +19205,9 @@ type GoogleCloudAiplatformV1PurgeArtifactsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeArtifactsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeArtifactsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeArtifactsResponse: Response message for
@@ -19234,9 +19234,9 @@ type GoogleCloudAiplatformV1PurgeArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeContextsMetadata: Details of operations that
@@ -19257,9 +19257,9 @@ type GoogleCloudAiplatformV1PurgeContextsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeContextsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeContextsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeContextsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeContextsRequest: Request message for
@@ -19285,9 +19285,9 @@ type GoogleCloudAiplatformV1PurgeContextsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeContextsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeContextsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeContextsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeContextsResponse: Response message for
@@ -19314,9 +19314,9 @@ type GoogleCloudAiplatformV1PurgeContextsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeContextsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeContextsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeContextsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeExecutionsMetadata: Details of operations that
@@ -19337,9 +19337,9 @@ type GoogleCloudAiplatformV1PurgeExecutionsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeExecutionsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeExecutionsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeExecutionsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeExecutionsRequest: Request message for
@@ -19365,9 +19365,9 @@ type GoogleCloudAiplatformV1PurgeExecutionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeExecutionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeExecutionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeExecutionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PurgeExecutionsResponse: Response message for
@@ -19394,9 +19394,9 @@ type GoogleCloudAiplatformV1PurgeExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PurgeExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PurgeExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PurgeExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PythonPackageSpec: The spec of a Python packaged
@@ -19434,9 +19434,9 @@ type GoogleCloudAiplatformV1PythonPackageSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1PythonPackageSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1PythonPackageSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PythonPackageSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QueryDeployedModelsResponse: Response message for
@@ -19472,9 +19472,9 @@ type GoogleCloudAiplatformV1QueryDeployedModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QueryDeployedModelsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QueryDeployedModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QueryDeployedModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput: Input for question
@@ -19497,9 +19497,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInstance: Spec for
@@ -19527,9 +19527,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult: Spec for question
@@ -19556,9 +19556,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult) UnmarshalJSON(data []byte) error {
@@ -19598,9 +19598,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringCorrectnessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringCorrectnessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringCorrectnessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInput: Input for question
@@ -19623,9 +19623,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInstance: Spec for
@@ -19653,9 +19653,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult: Spec for question
@@ -19682,9 +19682,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessResult) UnmarshalJSON(data []byte) error {
@@ -19724,9 +19724,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringHelpfulnessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringQualityInput: Input for question
@@ -19749,9 +19749,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringQualityInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringQualityInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringQualityInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringQualityInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringQualityInstance: Spec for question
@@ -19778,9 +19778,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringQualityInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringQualityInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringQualityInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringQualityInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringQualityResult: Spec for question
@@ -19805,9 +19805,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1QuestionAnsweringQualityResult) UnmarshalJSON(data []byte) error {
@@ -19847,9 +19847,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringQualitySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringQualitySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringQualitySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringRelevanceInput: Input for question
@@ -19872,9 +19872,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringRelevanceInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringRelevanceInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringRelevanceInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringRelevanceInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringRelevanceInstance: Spec for question
@@ -19902,9 +19902,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringRelevanceInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringRelevanceInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringRelevanceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringRelevanceInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult: Spec for question
@@ -19930,9 +19930,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1QuestionAnsweringRelevanceResult) UnmarshalJSON(data []byte) error {
@@ -19972,9 +19972,9 @@ type GoogleCloudAiplatformV1QuestionAnsweringRelevanceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1QuestionAnsweringRelevanceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1QuestionAnsweringRelevanceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1QuestionAnsweringRelevanceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RawPredictRequest: Request message for
@@ -20003,9 +20003,9 @@ type GoogleCloudAiplatformV1RawPredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RawPredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RawPredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RawPredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RayMetricSpec: Configuration for the Ray metrics.
@@ -20025,9 +20025,9 @@ type GoogleCloudAiplatformV1RayMetricSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RayMetricSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RayMetricSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RayMetricSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RaySpec: Configuration information for the Ray
@@ -20070,9 +20070,9 @@ type GoogleCloudAiplatformV1RaySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RaySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RaySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RaySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesRequest: Request message for
@@ -20098,9 +20098,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesResponse: Response message for
@@ -20129,9 +20129,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityView: Entity view with
@@ -20157,9 +20157,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityView) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityViewData: Container to
@@ -20185,9 +20185,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityViewData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityViewData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityViewData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesResponseEntityViewData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesResponseFeatureDescriptor: Metadata
@@ -20208,9 +20208,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesResponseFeatureDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesResponseFeatureDescriptor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesResponseFeatureDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesResponseFeatureDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesResponseHeader: Response header with
@@ -20238,9 +20238,9 @@ type GoogleCloudAiplatformV1ReadFeatureValuesResponseHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadFeatureValuesResponseHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadFeatureValuesResponseHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadFeatureValuesResponseHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadIndexDatapointsRequest: The request message for
@@ -20263,9 +20263,9 @@ type GoogleCloudAiplatformV1ReadIndexDatapointsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadIndexDatapointsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadIndexDatapointsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadIndexDatapointsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadIndexDatapointsResponse: The response message for
@@ -20289,9 +20289,9 @@ type GoogleCloudAiplatformV1ReadIndexDatapointsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadIndexDatapointsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadIndexDatapointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadIndexDatapointsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardBlobDataResponse: Response message for
@@ -20315,9 +20315,9 @@ type GoogleCloudAiplatformV1ReadTensorboardBlobDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardBlobDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardBlobDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardBlobDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardSizeResponse: Response message for
@@ -20341,9 +20341,9 @@ type GoogleCloudAiplatformV1ReadTensorboardSizeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardSizeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardSizeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardSizeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardTimeSeriesDataResponse: Response
@@ -20367,9 +20367,9 @@ type GoogleCloudAiplatformV1ReadTensorboardTimeSeriesDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardTimeSeriesDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardTimeSeriesDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardUsageResponse: Response message for
@@ -20393,9 +20393,9 @@ type GoogleCloudAiplatformV1ReadTensorboardUsageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardUsageResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardUsageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardUsageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerMonthUsageData: Per
@@ -20416,9 +20416,9 @@ type GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerMonthUsageData struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerMonthUsageData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerMonthUsageData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerMonthUsageData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerUserUsageData: Per
@@ -20441,9 +20441,9 @@ type GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerUserUsageData struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerUserUsageData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerUserUsageData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ReadTensorboardUsageResponsePerUserUsageData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata: Details of
@@ -20466,9 +20466,9 @@ type GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RebootPersistentResourceRequest: Request message for
@@ -20494,9 +20494,9 @@ type GoogleCloudAiplatformV1RemoveContextChildrenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RemoveContextChildrenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RemoveContextChildrenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RemoveContextChildrenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RemoveContextChildrenResponse: Response message for
@@ -20524,9 +20524,9 @@ type GoogleCloudAiplatformV1RemoveDatapointsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RemoveDatapointsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RemoveDatapointsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RemoveDatapointsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RemoveDatapointsResponse: Response message for
@@ -20569,9 +20569,9 @@ type GoogleCloudAiplatformV1ResourcePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResourcePool) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResourcePool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResourcePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec: The min/max number of
@@ -20596,9 +20596,9 @@ type GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResourceRuntime: Persistent Cluster runtime
@@ -20621,9 +20621,9 @@ type GoogleCloudAiplatformV1ResourceRuntime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResourceRuntime) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResourceRuntime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResourceRuntime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResourceRuntimeSpec: Configuration for the runtime on
@@ -20650,9 +20650,9 @@ type GoogleCloudAiplatformV1ResourceRuntimeSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResourceRuntimeSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResourceRuntimeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResourceRuntimeSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResourcesConsumed: Statistics information about
@@ -20675,9 +20675,9 @@ type GoogleCloudAiplatformV1ResourcesConsumed struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResourcesConsumed) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResourcesConsumed) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResourcesConsumed
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ResourcesConsumed) UnmarshalJSON(data []byte) error {
@@ -20712,9 +20712,9 @@ type GoogleCloudAiplatformV1RestoreDatasetVersionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RestoreDatasetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RestoreDatasetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RestoreDatasetVersionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResumeModelDeploymentMonitoringJobRequest: Request
@@ -20743,9 +20743,9 @@ type GoogleCloudAiplatformV1ResumeScheduleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ResumeScheduleRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ResumeScheduleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ResumeScheduleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Retrieval: Defines a retrieval tool that model can
@@ -20770,9 +20770,9 @@ type GoogleCloudAiplatformV1Retrieval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Retrieval) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Retrieval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Retrieval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RougeInput: Input for rouge metric.
@@ -20794,9 +20794,9 @@ type GoogleCloudAiplatformV1RougeInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RougeInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RougeInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RougeInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RougeInstance: Spec for rouge instance.
@@ -20818,9 +20818,9 @@ type GoogleCloudAiplatformV1RougeInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RougeInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RougeInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RougeInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RougeMetricValue: Rouge metric value for an instance.
@@ -20840,9 +20840,9 @@ type GoogleCloudAiplatformV1RougeMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RougeMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RougeMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RougeMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1RougeMetricValue) UnmarshalJSON(data []byte) error {
@@ -20876,9 +20876,9 @@ type GoogleCloudAiplatformV1RougeResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RougeResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RougeResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RougeResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RougeSpec: Spec for rouge score metric - calculates
@@ -20905,9 +20905,9 @@ type GoogleCloudAiplatformV1RougeSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1RougeSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1RougeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1RougeSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SafetyInput: Input for safety metric.
@@ -20929,9 +20929,9 @@ type GoogleCloudAiplatformV1SafetyInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetyInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetyInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetyInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SafetyInstance: Spec for safety instance.
@@ -20951,9 +20951,9 @@ type GoogleCloudAiplatformV1SafetyInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetyInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetyInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetyInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SafetyRating: Safety rating corresponding to the
@@ -21008,9 +21008,9 @@ type GoogleCloudAiplatformV1SafetyRating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetyRating) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetyRating) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetyRating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SafetyRating) UnmarshalJSON(data []byte) error {
@@ -21050,9 +21050,9 @@ type GoogleCloudAiplatformV1SafetyResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetyResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetyResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetyResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SafetyResult) UnmarshalJSON(data []byte) error {
@@ -21116,9 +21116,9 @@ type GoogleCloudAiplatformV1SafetySetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetySetting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetySetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetySetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SafetySpec: Spec for safety metric.
@@ -21138,9 +21138,9 @@ type GoogleCloudAiplatformV1SafetySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SafetySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SafetySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SafetySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SampleConfig: Active learning data sampling config.
@@ -21174,9 +21174,9 @@ type GoogleCloudAiplatformV1SampleConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SampleConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SampleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SampleConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SampledShapleyAttribution: An attribution method that
@@ -21201,9 +21201,9 @@ type GoogleCloudAiplatformV1SampledShapleyAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SampledShapleyAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SampledShapleyAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SampledShapleyAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SamplingStrategy: Sampling Strategy for logging, can
@@ -21225,9 +21225,9 @@ type GoogleCloudAiplatformV1SamplingStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SamplingStrategy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SamplingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SamplingStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig: Requests are
@@ -21248,9 +21248,9 @@ type GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SamplingStrategyRandomSampleConfig) UnmarshalJSON(data []byte) error {
@@ -21311,9 +21311,9 @@ type GoogleCloudAiplatformV1SavedQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SavedQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SavedQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SavedQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Scalar: One point viewable on a scalar metric plot.
@@ -21333,9 +21333,9 @@ type GoogleCloudAiplatformV1Scalar struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Scalar) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Scalar) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Scalar
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Scalar) UnmarshalJSON(data []byte) error {
@@ -21450,9 +21450,9 @@ type GoogleCloudAiplatformV1Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Schedule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ScheduleRunResponse: Status of a scheduled run.
@@ -21475,9 +21475,9 @@ type GoogleCloudAiplatformV1ScheduleRunResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ScheduleRunResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ScheduleRunResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ScheduleRunResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Scheduling: All parameters related to queuing and
@@ -21506,9 +21506,9 @@ type GoogleCloudAiplatformV1Scheduling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Scheduling) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Scheduling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Scheduling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Schema: Schema is used to define the format of
@@ -21588,9 +21588,9 @@ type GoogleCloudAiplatformV1Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Schema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Schema) UnmarshalJSON(data []byte) error {
@@ -21633,9 +21633,9 @@ type GoogleCloudAiplatformV1SchemaAnnotationSpecColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaAnnotationSpecColor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaAnnotationSpecColor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaAnnotationSpecColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation: Annotation details
@@ -21668,9 +21668,9 @@ type GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaImageBoundingBoxAnnotation) UnmarshalJSON(data []byte) error {
@@ -21715,9 +21715,9 @@ type GoogleCloudAiplatformV1SchemaImageClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageDataItem: Payload of Image DataItem.
@@ -21742,9 +21742,9 @@ type GoogleCloudAiplatformV1SchemaImageDataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageDataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageDataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageDataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageDatasetMetadata: The metadata of Datasets
@@ -21769,9 +21769,9 @@ type GoogleCloudAiplatformV1SchemaImageDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageSegmentationAnnotation: Annotation details
@@ -21797,9 +21797,9 @@ type GoogleCloudAiplatformV1SchemaImageSegmentationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageSegmentationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageSegmentationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageSegmentationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationMaskAnnotation: The
@@ -21827,9 +21827,9 @@ type GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationMaskAnnotation stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationMaskAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationMaskAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationMaskAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolygonAnnotation:
@@ -21857,9 +21857,9 @@ type GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolygonAnnotation s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolygonAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolygonAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolygonAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolylineAnnotation:
@@ -21887,9 +21887,9 @@ type GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolylineAnnotation 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolylineAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolylineAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaImageSegmentationAnnotationPolylineAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics:
@@ -21919,9 +21919,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetrics) UnmarshalJSON(data []byte) error {
@@ -21965,9 +21965,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetricsConfid
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetricsConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsBoundingBoxMetricsConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -22023,9 +22023,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22109,9 +22109,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetricsConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsClassificationEvaluationMetricsConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -22179,9 +22179,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrixAnnotationSpecRef struct {
@@ -22202,9 +22202,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrixAnnotatio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrixAnnotationSpecRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrixAnnotationSpecRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsConfusionMatrixAnnotationSpecRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetri
@@ -22246,9 +22246,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMet
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22304,9 +22304,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMet
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetricsQuantileMetricsEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetricsQuantileMetricsEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetricsQuantileMetricsEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsForecastingEvaluationMetricsQuantileMetricsEntry) UnmarshalJSON(data []byte) error {
@@ -22346,9 +22346,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsGeneralTextGenerationEva
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsGeneralTextGenerationEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsGeneralTextGenerationEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsGeneralTextGenerationEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsGeneralTextGenerationEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22395,9 +22395,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageObjectDetectionEval
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageObjectDetectionEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageObjectDetectionEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageObjectDetectionEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageObjectDetectionEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22434,9 +22434,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetricsConfidenceMetricsEntry struct {
@@ -22468,9 +22468,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetricsConfidenceMetricsEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetricsConfidenceMetricsEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetricsConfidenceMetricsEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsImageSegmentationEvaluationMetricsConfidenceMetricsEntry) UnmarshalJSON(data []byte) error {
@@ -22552,9 +22552,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsPairwiseTextGenerationEv
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsPairwiseTextGenerationEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsPairwiseTextGenerationEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsPairwiseTextGenerationEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsPairwiseTextGenerationEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22604,9 +22604,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsQuestionAnsweringEvaluat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsQuestionAnsweringEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsQuestionAnsweringEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsQuestionAnsweringEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsQuestionAnsweringEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22652,9 +22652,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsRegressionEvaluationMetr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsRegressionEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsRegressionEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsRegressionEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsRegressionEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22695,9 +22695,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsSummarizationEvaluationM
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsSummarizationEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsSummarizationEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsSummarizationEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsSummarizationEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22737,9 +22737,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetricsConfidenceMetrics struct {
@@ -22765,9 +22765,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetricsConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextExtractionEvaluationMetricsConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -22827,9 +22827,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextSentimentEvaluationM
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextSentimentEvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextSentimentEvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextSentimentEvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTextSentimentEvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -22890,9 +22890,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetrics) UnmarshalJSON(data []byte) error {
@@ -22945,9 +22945,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetricsConfidenceMe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetricsConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsTrackMetricsConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -22998,9 +22998,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetrics struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetrics) UnmarshalJSON(data []byte) error {
@@ -23042,9 +23042,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetricsConfid
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetricsConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetricsConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionMetricsConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -23089,9 +23089,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionRecognitionMe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionRecognitionMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionRecognitionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoActionRecognitionMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetrics
@@ -23147,9 +23147,9 @@ type GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetri
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaModelevaluationMetricsVideoObjectTrackingMetrics) UnmarshalJSON(data []byte) error {
@@ -23194,9 +23194,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceImageClassificationPredictionIn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceImageClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceImageClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceImageClassificationPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceImageObjectDetectionPredictionIns
@@ -23221,9 +23221,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceImageObjectDetectionPredictionI
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceImageObjectDetectionPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceImageObjectDetectionPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceImageObjectDetectionPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceImageSegmentationPredictionInstan
@@ -23247,9 +23247,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceImageSegmentationPredictionInst
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceImageSegmentationPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceImageSegmentationPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceImageSegmentationPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceTextClassificationPredictionInsta
@@ -23273,9 +23273,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceTextClassificationPredictionIns
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceTextClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceTextClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceTextClassificationPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceTextExtractionPredictionInstance:
@@ -23306,9 +23306,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceTextExtractionPredictionInstanc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceTextExtractionPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceTextExtractionPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceTextExtractionPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceTextSentimentPredictionInstance:
@@ -23332,9 +23332,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceTextSentimentPredictionInstance
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceTextSentimentPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceTextSentimentPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceTextSentimentPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceVideoActionRecognitionPredictionI
@@ -23370,9 +23370,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceVideoActionRecognitionPredictio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceVideoActionRecognitionPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceVideoActionRecognitionPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceVideoActionRecognitionPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceVideoClassificationPredictionInst
@@ -23408,9 +23408,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceVideoClassificationPredictionIn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceVideoClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceVideoClassificationPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceVideoClassificationPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredictionInst
@@ -23446,9 +23446,9 @@ type GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredictionIn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredictionInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredictionInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredictionInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig: The configuration
@@ -23472,9 +23472,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry: Single
@@ -23511,9 +23511,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams
@@ -23539,9 +23539,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionPara
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23581,9 +23581,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsImageObjectDetectionPredictionPar
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageObjectDetectionPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsImageObjectDetectionPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsImageObjectDetectionPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageObjectDetectionPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23621,9 +23621,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsImageSegmentationPredictionParams
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageSegmentationPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsImageSegmentationPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsImageSegmentationPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsImageSegmentationPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23663,9 +23663,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsVideoActionRecognitionPredictionP
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoActionRecognitionPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsVideoActionRecognitionPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsVideoActionRecognitionPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoActionRecognitionPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23727,9 +23727,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsVideoClassificationPredictionPara
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoClassificationPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsVideoClassificationPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsVideoClassificationPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoClassificationPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23773,9 +23773,9 @@ type GoogleCloudAiplatformV1SchemaPredictParamsVideoObjectTrackingPredictionPara
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoObjectTrackingPredictionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictParamsVideoObjectTrackingPredictionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsVideoObjectTrackingPredictionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictParamsVideoObjectTrackingPredictionParams) UnmarshalJSON(data []byte) error {
@@ -23819,9 +23819,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionClassificationPredictionResul
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionClassificationPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionClassificationPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionClassificationPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionClassificationPredictionResult) UnmarshalJSON(data []byte) error {
@@ -23872,9 +23872,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionImageObjectDetectionPredictio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionImageObjectDetectionPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionImageObjectDetectionPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionImageObjectDetectionPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionImageObjectDetectionPredictionResult) UnmarshalJSON(data []byte) error {
@@ -23924,9 +23924,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionImageSegmentationPredictionRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionImageSegmentationPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionImageSegmentationPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionImageSegmentationPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPrediction
@@ -23952,9 +23952,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPredicti
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTabularClassificationPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24001,9 +24001,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTabularRegressionPredictionRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTabularRegressionPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTabularRegressionPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTabularRegressionPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTabularRegressionPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24068,9 +24068,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTextExtractionPredictionResul
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTextExtractionPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTextExtractionPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTextExtractionPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTextExtractionPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24112,9 +24112,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTextSentimentPredictionResult
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTextSentimentPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTextSentimentPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTextSentimentPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance struct {
@@ -24140,9 +24140,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTftFeatureImportance) UnmarshalJSON(data []byte) error {
@@ -24197,9 +24197,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionTimeSeriesForecastingPredicti
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTimeSeriesForecastingPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionTimeSeriesForecastingPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionTimeSeriesForecastingPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionTimeSeriesForecastingPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24260,9 +24260,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionVideoActionRecognitionPredict
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoActionRecognitionPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionVideoActionRecognitionPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionVideoActionRecognitionPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoActionRecognitionPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24323,9 +24323,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionVideoClassificationPrediction
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoClassificationPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionVideoClassificationPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionVideoClassificationPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoClassificationPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24379,9 +24379,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPrediction
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResult) UnmarshalJSON(data []byte) error {
@@ -24430,9 +24430,9 @@ type GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPrediction
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResultFrame) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResultFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResultFrame
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaPredictPredictionVideoObjectTrackingPredictionResultFrame) UnmarshalJSON(data []byte) error {
@@ -24484,9 +24484,9 @@ type GoogleCloudAiplatformV1SchemaPredictionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaPredictionResultError struct {
@@ -24588,9 +24588,9 @@ type GoogleCloudAiplatformV1SchemaPredictionResultError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaPredictionResultError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaPredictionResultError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaPredictionResultError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTablesDatasetMetadata: The metadata of Datasets
@@ -24610,9 +24610,9 @@ type GoogleCloudAiplatformV1SchemaTablesDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTablesDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTablesDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTablesDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTablesDatasetMetadataBigQuerySource struct {
@@ -24631,9 +24631,9 @@ type GoogleCloudAiplatformV1SchemaTablesDatasetMetadataBigQuerySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTablesDatasetMetadataBigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTablesDatasetMetadataBigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTablesDatasetMetadataBigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTablesDatasetMetadataGcsSource struct {
@@ -24655,9 +24655,9 @@ type GoogleCloudAiplatformV1SchemaTablesDatasetMetadataGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTablesDatasetMetadataGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTablesDatasetMetadataGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTablesDatasetMetadataGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTablesDatasetMetadataInputConfig: The tables
@@ -24679,9 +24679,9 @@ type GoogleCloudAiplatformV1SchemaTablesDatasetMetadataInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTablesDatasetMetadataInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTablesDatasetMetadataInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTablesDatasetMetadataInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextClassificationAnnotation: Annotation
@@ -24706,9 +24706,9 @@ type GoogleCloudAiplatformV1SchemaTextClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextDataItem: Payload of Text DataItem.
@@ -24729,9 +24729,9 @@ type GoogleCloudAiplatformV1SchemaTextDataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextDataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextDataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextDataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextDatasetMetadata: The metadata of Datasets
@@ -24756,9 +24756,9 @@ type GoogleCloudAiplatformV1SchemaTextDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextExtractionAnnotation: Annotation details
@@ -24785,9 +24785,9 @@ type GoogleCloudAiplatformV1SchemaTextExtractionAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextExtractionAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextExtractionAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextExtractionAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata: The metadata of
@@ -24841,9 +24841,9 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata) UnmarshalJSON(data []byte) error {
@@ -24887,9 +24887,9 @@ type GoogleCloudAiplatformV1SchemaTextSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextSentimentAnnotation: Annotation details
@@ -24918,9 +24918,9 @@ type GoogleCloudAiplatformV1SchemaTextSentimentAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextSentimentAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextSentimentAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextSentimentAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTextSentimentSavedQueryMetadata: The metadata
@@ -24942,9 +24942,9 @@ type GoogleCloudAiplatformV1SchemaTextSentimentSavedQueryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTextSentimentSavedQueryMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTextSentimentSavedQueryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTextSentimentSavedQueryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTimeSegment: A time period inside of a DataItem
@@ -24969,9 +24969,9 @@ type GoogleCloudAiplatformV1SchemaTimeSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTimeSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTimeSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTimeSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadata: The metadata of
@@ -24997,9 +24997,9 @@ type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataBigQuerySource struct {
@@ -25018,9 +25018,9 @@ type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataBigQuerySource struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataBigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataBigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataBigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataGcsSource struct {
@@ -25042,9 +25042,9 @@ type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataInputConfig: The time
@@ -25066,9 +25066,9 @@ type GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTimeSeriesDatasetMetadataInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecasting: A
@@ -25091,9 +25091,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecasting struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecasting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecasting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecasting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs struct {
@@ -25216,9 +25216,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputs) UnmarshalJSON(data []byte) error {
@@ -25261,9 +25261,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsGr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsGranularity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformation struct {
@@ -25285,9 +25285,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTran
@@ -25308,9 +25308,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationAutoTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTran
@@ -25336,9 +25336,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationCategoricalTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTran
@@ -25365,9 +25365,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationNumericTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTran
@@ -25390,9 +25390,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTextTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTran
@@ -25425,9 +25425,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTr
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingInputsTransformationTimestampTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingMetadata:
@@ -25453,9 +25453,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingMetadata
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlForecastingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification:
@@ -25478,9 +25478,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationInputs struct {
@@ -25568,9 +25568,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationMetadata struct {
@@ -25600,9 +25600,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassification
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageClassificationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetection:
@@ -25628,9 +25628,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionInputs struct {
@@ -25709,9 +25709,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionMetadata struct {
@@ -25741,9 +25741,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageObjectDetectionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentation: A
@@ -25766,9 +25766,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentation s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationInputs struct {
@@ -25816,9 +25816,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationIn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationMetadata struct {
@@ -25848,9 +25848,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationMe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlImageSegmentationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTables: A
@@ -25873,9 +25873,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTables struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTables) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTables) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTables
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs struct {
@@ -25958,9 +25958,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputs) UnmarshalJSON(data []byte) error {
@@ -26001,9 +26001,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26024,9 +26024,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationAutoTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26051,9 +26051,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalArrayTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalArrayTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalArrayTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26079,9 +26079,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationCategoricalTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26109,9 +26109,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericArrayTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericArrayTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericArrayTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26143,9 +26143,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationNumericTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26169,9 +26169,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextArrayTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextArrayTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextArrayTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26198,9 +26198,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTextTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransform
@@ -26238,9 +26238,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransfo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesInputsTransformationTimestampTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesMetadata:
@@ -26266,9 +26266,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesMetadata stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTablesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassification:
@@ -26289,9 +26289,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassification 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassificationInputs struct {
@@ -26309,9 +26309,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassificationI
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassificationInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassificationInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextClassificationInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtraction: A
@@ -26332,9 +26332,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtraction stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtraction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtraction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtraction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextExtractionInputs struct {
@@ -26358,9 +26358,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentiment struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentimentInputs struct {
@@ -26384,9 +26384,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentimentInputs
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentimentInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentimentInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlTextSentimentInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognitio
@@ -26408,9 +26408,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognit
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognitionInputs struct {
@@ -26442,9 +26442,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognit
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognitionInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognitionInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoActionRecognitionInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification:
@@ -26465,9 +26465,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassificationInputs struct {
@@ -26496,9 +26496,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassification
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassificationInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassificationInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoClassificationInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking:
@@ -26519,9 +26519,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTrackingInputs struct {
@@ -26557,9 +26557,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTracking
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTrackingInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTrackingInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutoMlVideoObjectTrackingInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutomlImageTrainingTunableP
@@ -26596,9 +26596,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutomlImageTrainingTunabl
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutomlImageTrainingTunableParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutomlImageTrainingTunableParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionAutomlImageTrainingTunableParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomJobMetadata struct {
@@ -26618,9 +26618,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomJobMetadata struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomJobMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomJobMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomJobMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomTask: A TrainingJob
@@ -26643,9 +26643,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomTask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomTask) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomTask) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionCustomTask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionExportEvaluatedDataItemsCon
@@ -26674,9 +26674,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionExportEvaluatedDataItemsC
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionExportEvaluatedDataItemsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionExportEvaluatedDataItemsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionExportEvaluatedDataItemsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig:
@@ -26713,9 +26713,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHierarchyConfig) UnmarshalJSON(data []byte) error {
@@ -26758,9 +26758,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobMe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobSpec struct {
@@ -26790,9 +26790,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobSp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningJobSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningTask:
@@ -26815,9 +26815,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningTask 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningTask) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningTask) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionHyperparameterTuningTask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecasting: A
@@ -26840,9 +26840,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecasting st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecasting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecasting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecasting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputs struct {
@@ -26958,9 +26958,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputs) UnmarshalJSON(data []byte) error {
@@ -27003,9 +27003,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsGranularity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformation struct {
@@ -27027,9 +27027,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInput
@@ -27050,9 +27050,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationAutoTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInput
@@ -27078,9 +27078,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationCategoricalTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInput
@@ -27106,9 +27106,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationNumericTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInput
@@ -27131,9 +27131,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTextTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInput
@@ -27166,9 +27166,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingInputsTransformationTimestampTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingMetad
@@ -27194,9 +27194,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingMet
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionSeq2SeqPlusForecastingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecasting: A
@@ -27219,9 +27219,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecasting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecasting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecasting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecasting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs struct {
@@ -27337,9 +27337,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputs) UnmarshalJSON(data []byte) error {
@@ -27382,9 +27382,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsGranu
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsGranularity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsGranularity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformation struct {
@@ -27406,9 +27406,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransfo
@@ -27429,9 +27429,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationAutoTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationAutoTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransfo
@@ -27457,9 +27457,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationCategoricalTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationCategoricalTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransfo
@@ -27485,9 +27485,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationNumericTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationNumericTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransfo
@@ -27510,9 +27510,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTextTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTextTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransfo
@@ -27545,9 +27545,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTrans
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTimestampTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingInputsTransformationTimestampTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingMetadata:
@@ -27573,9 +27573,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionTftForecastingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaTrainingjobDefinitionWindowConfig: Config that
@@ -27610,9 +27610,9 @@ type GoogleCloudAiplatformV1SchemaTrainingjobDefinitionWindowConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaTrainingjobDefinitionWindowConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaTrainingjobDefinitionWindowConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaTrainingjobDefinitionWindowConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaVertex: A vertex represents a 2D point in the
@@ -27636,9 +27636,9 @@ type GoogleCloudAiplatformV1SchemaVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaVertex) UnmarshalJSON(data []byte) error {
@@ -27682,9 +27682,9 @@ type GoogleCloudAiplatformV1SchemaVideoActionRecognitionAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVideoActionRecognitionAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVideoActionRecognitionAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVideoActionRecognitionAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaVideoClassificationAnnotation: Annotation
@@ -27712,9 +27712,9 @@ type GoogleCloudAiplatformV1SchemaVideoClassificationAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVideoClassificationAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVideoClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVideoClassificationAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaVideoDataItem: Payload of Video DataItem.
@@ -27740,9 +27740,9 @@ type GoogleCloudAiplatformV1SchemaVideoDataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVideoDataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVideoDataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVideoDataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaVideoDatasetMetadata: The metadata of Datasets
@@ -27767,9 +27767,9 @@ type GoogleCloudAiplatformV1SchemaVideoDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVideoDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVideoDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVideoDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation: Annotation
@@ -27808,9 +27808,9 @@ type GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SchemaVideoObjectTrackingAnnotation) UnmarshalJSON(data []byte) error {
@@ -27849,9 +27849,9 @@ type GoogleCloudAiplatformV1SchemaVisualInspectionClassificationLabelSavedQueryM
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SchemaVisualInspectionClassificationLabelSavedQueryMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SchemaVisualInspectionClassificationLabelSavedQueryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SchemaVisualInspectionClassificationLabelSavedQueryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudAiplatformV1SchemaVisualInspectionMaskSavedQueryMetadata struct {
@@ -27881,9 +27881,9 @@ type GoogleCloudAiplatformV1SearchDataItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchDataItemsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchDataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchDataItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchEntryPoint: Google search entry point.
@@ -27906,9 +27906,9 @@ type GoogleCloudAiplatformV1SearchEntryPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchEntryPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchEntryPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchEntryPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchFeaturesResponse: Response message for
@@ -27937,9 +27937,9 @@ type GoogleCloudAiplatformV1SearchFeaturesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchFeaturesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchFeaturesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchFeaturesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchMigratableResourcesRequest: Request message for
@@ -27971,9 +27971,9 @@ type GoogleCloudAiplatformV1SearchMigratableResourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchMigratableResourcesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchMigratableResourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchMigratableResourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchMigratableResourcesResponse: Response message
@@ -28002,9 +28002,9 @@ type GoogleCloudAiplatformV1SearchMigratableResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchMigratableResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchMigratableResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchMigratableResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest:
@@ -28045,9 +28045,9 @@ type GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequestSt
@@ -28085,9 +28085,9 @@ type GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequest
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequestStatsAnomaliesObjective) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequestStatsAnomaliesObjective) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRequestStatsAnomaliesObjective
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesResponse:
@@ -28120,9 +28120,9 @@ type GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesRespons
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchModelDeploymentMonitoringStatsAnomaliesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchNearestEntitiesRequest: The request message for
@@ -28149,9 +28149,9 @@ type GoogleCloudAiplatformV1SearchNearestEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchNearestEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchNearestEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchNearestEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SearchNearestEntitiesResponse: Response message for
@@ -28175,9 +28175,9 @@ type GoogleCloudAiplatformV1SearchNearestEntitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SearchNearestEntitiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SearchNearestEntitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchNearestEntitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Segment: Segment of the content.
@@ -28206,9 +28206,9 @@ type GoogleCloudAiplatformV1Segment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Segment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Segment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Segment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ServiceAccountSpec: Configuration for the use of
@@ -28240,9 +28240,9 @@ type GoogleCloudAiplatformV1ServiceAccountSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ServiceAccountSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ServiceAccountSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ServiceAccountSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ShieldedVmConfig: A set of Shielded Instance options.
@@ -28268,9 +28268,9 @@ type GoogleCloudAiplatformV1ShieldedVmConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ShieldedVmConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ShieldedVmConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ShieldedVmConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SmoothGradConfig: Config for SmoothGrad approximation
@@ -28315,9 +28315,9 @@ type GoogleCloudAiplatformV1SmoothGradConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SmoothGradConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SmoothGradConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SmoothGradConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SmoothGradConfig) UnmarshalJSON(data []byte) error {
@@ -28376,9 +28376,9 @@ type GoogleCloudAiplatformV1SpecialistPool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SpecialistPool) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SpecialistPool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SpecialistPool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata: Metadata
@@ -28402,9 +28402,9 @@ type GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StartNotebookRuntimeRequest: Request message for
@@ -28456,9 +28456,9 @@ type GoogleCloudAiplatformV1StratifiedSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StratifiedSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StratifiedSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StratifiedSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1StratifiedSplit) UnmarshalJSON(data []byte) error {
@@ -28498,9 +28498,9 @@ type GoogleCloudAiplatformV1StreamRawPredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StreamRawPredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StreamRawPredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StreamRawPredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StreamingPredictRequest: Request message for
@@ -28524,9 +28524,9 @@ type GoogleCloudAiplatformV1StreamingPredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StreamingPredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StreamingPredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StreamingPredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StreamingPredictResponse: Response message for
@@ -28552,9 +28552,9 @@ type GoogleCloudAiplatformV1StreamingPredictResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StreamingPredictResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StreamingPredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StreamingPredictResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StreamingReadFeatureValuesRequest: Request message
@@ -28580,9 +28580,9 @@ type GoogleCloudAiplatformV1StreamingReadFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StreamingReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StreamingReadFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StreamingReadFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StringArray: A list of string values.
@@ -28602,9 +28602,9 @@ type GoogleCloudAiplatformV1StringArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StringArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StringArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StringArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StructFieldValue: One field of a Struct (or object)
@@ -28627,9 +28627,9 @@ type GoogleCloudAiplatformV1StructFieldValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StructFieldValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StructFieldValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StructFieldValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StructValue: Struct (or object) type feature value.
@@ -28649,9 +28649,9 @@ type GoogleCloudAiplatformV1StructValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StructValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StructValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StructValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Study: A message representing a Study.
@@ -28694,9 +28694,9 @@ type GoogleCloudAiplatformV1Study struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Study) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Study) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Study
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpec: Represents specification of a Study.
@@ -28763,9 +28763,9 @@ type GoogleCloudAiplatformV1StudySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecConvexAutomatedStoppingSpec: Configuration
@@ -28830,9 +28830,9 @@ type GoogleCloudAiplatformV1StudySpecConvexAutomatedStoppingSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecConvexAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecConvexAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecConvexAutomatedStoppingSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecDecayCurveAutomatedStoppingSpec: The decay
@@ -28859,9 +28859,9 @@ type GoogleCloudAiplatformV1StudySpecDecayCurveAutomatedStoppingSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecDecayCurveAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecDecayCurveAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecDecayCurveAutomatedStoppingSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecMedianAutomatedStoppingSpec: The median
@@ -28889,9 +28889,9 @@ type GoogleCloudAiplatformV1StudySpecMedianAutomatedStoppingSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecMedianAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecMedianAutomatedStoppingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecMedianAutomatedStoppingSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecMetricSpec: Represents a metric to optimize.
@@ -28922,9 +28922,9 @@ type GoogleCloudAiplatformV1StudySpecMetricSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecMetricSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecMetricSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecMetricSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig: Used in safe
@@ -28954,9 +28954,9 @@ type GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1StudySpecMetricSpecSafetyMetricConfig) UnmarshalJSON(data []byte) error {
@@ -29020,9 +29020,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecParameterSpecCategoricalValueSpec: Value
@@ -29048,9 +29048,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecCategoricalValueSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecCategoricalValueSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecCategoricalValueSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecCategoricalValueSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpec:
@@ -29080,9 +29080,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpec struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecCategori
@@ -29105,9 +29105,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecCatego
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecCategoricalValueCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecCategoricalValueCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecCategoricalValueCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscrete
@@ -29131,9 +29131,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscre
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscreteValueCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscreteValueCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscreteValueCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecDiscreteValueCondition) UnmarshalJSON(data []byte) error {
@@ -29173,9 +29173,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecIntVal
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecIntValueCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecIntValueCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecConditionalParameterSpecIntValueCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec: Value
@@ -29205,9 +29205,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1StudySpecParameterSpecDiscreteValueSpec) UnmarshalJSON(data []byte) error {
@@ -29254,9 +29254,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecDoubleValueSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecDoubleValueSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecDoubleValueSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecDoubleValueSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1StudySpecParameterSpecDoubleValueSpec) UnmarshalJSON(data []byte) error {
@@ -29302,9 +29302,9 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudySpecStudyStoppingConfig: The configuration
@@ -29364,9 +29364,9 @@ type GoogleCloudAiplatformV1StudySpecStudyStoppingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudySpecStudyStoppingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudySpecStudyStoppingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecStudyStoppingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1StudyTimeConstraint: Time-based Constraint for Study
@@ -29389,9 +29389,9 @@ type GoogleCloudAiplatformV1StudyTimeConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1StudyTimeConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1StudyTimeConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudyTimeConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SuggestTrialsMetadata: Details of operations that
@@ -29417,9 +29417,9 @@ type GoogleCloudAiplatformV1SuggestTrialsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SuggestTrialsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SuggestTrialsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SuggestTrialsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SuggestTrialsRequest: Request message for
@@ -29474,9 +29474,9 @@ type GoogleCloudAiplatformV1SuggestTrialsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SuggestTrialsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SuggestTrialsResponse: Response message for
@@ -29510,9 +29510,9 @@ type GoogleCloudAiplatformV1SuggestTrialsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SuggestTrialsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationHelpfulnessInput: Input for
@@ -29535,9 +29535,9 @@ type GoogleCloudAiplatformV1SummarizationHelpfulnessInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationHelpfulnessInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationHelpfulnessInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationHelpfulnessInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationHelpfulnessInstance: Spec for
@@ -29564,9 +29564,9 @@ type GoogleCloudAiplatformV1SummarizationHelpfulnessInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationHelpfulnessInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationHelpfulnessInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationHelpfulnessInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationHelpfulnessResult: Spec for
@@ -29591,9 +29591,9 @@ type GoogleCloudAiplatformV1SummarizationHelpfulnessResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationHelpfulnessResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationHelpfulnessResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationHelpfulnessResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SummarizationHelpfulnessResult) UnmarshalJSON(data []byte) error {
@@ -29633,9 +29633,9 @@ type GoogleCloudAiplatformV1SummarizationHelpfulnessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationHelpfulnessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationHelpfulnessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationHelpfulnessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationQualityInput: Input for summarization
@@ -29658,9 +29658,9 @@ type GoogleCloudAiplatformV1SummarizationQualityInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationQualityInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationQualityInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationQualityInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationQualityInstance: Spec for summarization
@@ -29687,9 +29687,9 @@ type GoogleCloudAiplatformV1SummarizationQualityInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationQualityInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationQualityInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationQualityInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationQualityResult: Spec for summarization
@@ -29714,9 +29714,9 @@ type GoogleCloudAiplatformV1SummarizationQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SummarizationQualityResult) UnmarshalJSON(data []byte) error {
@@ -29756,9 +29756,9 @@ type GoogleCloudAiplatformV1SummarizationQualitySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationQualitySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationQualitySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationVerbosityInput: Input for summarization
@@ -29781,9 +29781,9 @@ type GoogleCloudAiplatformV1SummarizationVerbosityInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationVerbosityInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationVerbosityInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationVerbosityInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationVerbosityInstance: Spec for
@@ -29810,9 +29810,9 @@ type GoogleCloudAiplatformV1SummarizationVerbosityInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationVerbosityInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationVerbosityInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationVerbosityInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SummarizationVerbosityResult: Spec for summarization
@@ -29837,9 +29837,9 @@ type GoogleCloudAiplatformV1SummarizationVerbosityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationVerbosityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationVerbosityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationVerbosityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SummarizationVerbosityResult) UnmarshalJSON(data []byte) error {
@@ -29879,9 +29879,9 @@ type GoogleCloudAiplatformV1SummarizationVerbositySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SummarizationVerbositySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SummarizationVerbositySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SummarizationVerbositySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SupervisedHyperParameters: Hyperparameters for SFT.
@@ -29914,9 +29914,9 @@ type GoogleCloudAiplatformV1SupervisedHyperParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SupervisedHyperParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SupervisedHyperParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SupervisedHyperParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SupervisedHyperParameters) UnmarshalJSON(data []byte) error {
@@ -29972,9 +29972,9 @@ type GoogleCloudAiplatformV1SupervisedTuningDataStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SupervisedTuningDataStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SupervisedTuningDataStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SupervisedTuningDataStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution: Dataset
@@ -30012,9 +30012,9 @@ type GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SupervisedTuningDatasetDistribution) UnmarshalJSON(data []byte) error {
@@ -30064,9 +30064,9 @@ type GoogleCloudAiplatformV1SupervisedTuningDatasetDistributionDatasetBucket str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SupervisedTuningDatasetDistributionDatasetBucket) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SupervisedTuningDatasetDistributionDatasetBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SupervisedTuningDatasetDistributionDatasetBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1SupervisedTuningDatasetDistributionDatasetBucket) UnmarshalJSON(data []byte) error {
@@ -30112,9 +30112,9 @@ type GoogleCloudAiplatformV1SupervisedTuningSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SupervisedTuningSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SupervisedTuningSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SupervisedTuningSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1SyncFeatureViewRequest: Request message for
@@ -30145,9 +30145,9 @@ type GoogleCloudAiplatformV1SyncFeatureViewResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1SyncFeatureViewResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1SyncFeatureViewResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SyncFeatureViewResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TFRecordDestination: The storage details for TFRecord
@@ -30168,9 +30168,9 @@ type GoogleCloudAiplatformV1TFRecordDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TFRecordDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TFRecordDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TFRecordDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Tensor: A tensor value type.
@@ -30236,9 +30236,9 @@ type GoogleCloudAiplatformV1Tensor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Tensor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Tensor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Tensor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Tensor) UnmarshalJSON(data []byte) error {
@@ -30323,9 +30323,9 @@ type GoogleCloudAiplatformV1Tensorboard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Tensorboard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Tensorboard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Tensorboard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardBlob: One blob (e.g, image, graph)
@@ -30350,9 +30350,9 @@ type GoogleCloudAiplatformV1TensorboardBlob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardBlob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardBlob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardBlob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardBlobSequence: One point viewable on a blob
@@ -30374,9 +30374,9 @@ type GoogleCloudAiplatformV1TensorboardBlobSequence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardBlobSequence) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardBlobSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardBlobSequence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardExperiment: A TensorboardExperiment is a
@@ -30431,9 +30431,9 @@ type GoogleCloudAiplatformV1TensorboardExperiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardExperiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardExperiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardExperiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardRun: TensorboardRun maps to a specific
@@ -30488,9 +30488,9 @@ type GoogleCloudAiplatformV1TensorboardRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardRun) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardRun) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardTensor: One point viewable on a tensor
@@ -30515,9 +30515,9 @@ type GoogleCloudAiplatformV1TensorboardTensor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardTensor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardTensor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardTensor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardTimeSeries: TensorboardTimeSeries maps to
@@ -30575,9 +30575,9 @@ type GoogleCloudAiplatformV1TensorboardTimeSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardTimeSeries) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardTimeSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TensorboardTimeSeriesMetadata: Describes metadata for
@@ -30606,9 +30606,9 @@ type GoogleCloudAiplatformV1TensorboardTimeSeriesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TensorboardTimeSeriesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TensorboardTimeSeriesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TensorboardTimeSeriesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ThresholdConfig: The config for feature monitoring
@@ -30635,9 +30635,9 @@ type GoogleCloudAiplatformV1ThresholdConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ThresholdConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ThresholdConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ThresholdConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ThresholdConfig) UnmarshalJSON(data []byte) error {
@@ -30688,9 +30688,9 @@ type GoogleCloudAiplatformV1TimeSeriesData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TimeSeriesData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TimeSeriesData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TimeSeriesData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TimeSeriesDataPoint: A TensorboardTimeSeries data
@@ -30720,9 +30720,9 @@ type GoogleCloudAiplatformV1TimeSeriesDataPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TimeSeriesDataPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TimeSeriesDataPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TimeSeriesDataPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TimestampSplit: Assigns input data to training,
@@ -30758,9 +30758,9 @@ type GoogleCloudAiplatformV1TimestampSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TimestampSplit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TimestampSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TimestampSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1TimestampSplit) UnmarshalJSON(data []byte) error {
@@ -30803,9 +30803,9 @@ type GoogleCloudAiplatformV1TokensInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TokensInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TokensInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TokensInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Tool: Tool details that the model may use to generate
@@ -30842,9 +30842,9 @@ type GoogleCloudAiplatformV1Tool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Tool) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Tool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Tool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolCallValidInput: Input for tool call valid metric.
@@ -30866,9 +30866,9 @@ type GoogleCloudAiplatformV1ToolCallValidInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolCallValidInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolCallValidInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolCallValidInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolCallValidInstance: Spec for tool call valid
@@ -30891,9 +30891,9 @@ type GoogleCloudAiplatformV1ToolCallValidInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolCallValidInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolCallValidInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolCallValidInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolCallValidMetricValue: Tool call valid metric
@@ -30914,9 +30914,9 @@ type GoogleCloudAiplatformV1ToolCallValidMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolCallValidMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolCallValidMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolCallValidMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ToolCallValidMetricValue) UnmarshalJSON(data []byte) error {
@@ -30951,9 +30951,9 @@ type GoogleCloudAiplatformV1ToolCallValidResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolCallValidResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolCallValidResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolCallValidResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolCallValidSpec: Spec for tool call valid metric.
@@ -30978,9 +30978,9 @@ type GoogleCloudAiplatformV1ToolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolNameMatchInput: Input for tool name match metric.
@@ -31002,9 +31002,9 @@ type GoogleCloudAiplatformV1ToolNameMatchInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolNameMatchInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolNameMatchInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolNameMatchInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolNameMatchInstance: Spec for tool name match
@@ -31027,9 +31027,9 @@ type GoogleCloudAiplatformV1ToolNameMatchInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolNameMatchInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolNameMatchInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolNameMatchInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolNameMatchMetricValue: Tool name match metric
@@ -31050,9 +31050,9 @@ type GoogleCloudAiplatformV1ToolNameMatchMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolNameMatchMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolNameMatchMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolNameMatchMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ToolNameMatchMetricValue) UnmarshalJSON(data []byte) error {
@@ -31087,9 +31087,9 @@ type GoogleCloudAiplatformV1ToolNameMatchResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolNameMatchResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolNameMatchResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolNameMatchResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolNameMatchSpec: Spec for tool name match metric.
@@ -31116,9 +31116,9 @@ type GoogleCloudAiplatformV1ToolParameterKVMatchInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKVMatchInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKVMatchInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKVMatchInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKVMatchInstance: Spec for tool parameter
@@ -31141,9 +31141,9 @@ type GoogleCloudAiplatformV1ToolParameterKVMatchInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKVMatchInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKVMatchInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKVMatchInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue: Tool parameter key
@@ -31164,9 +31164,9 @@ type GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ToolParameterKVMatchMetricValue) UnmarshalJSON(data []byte) error {
@@ -31204,9 +31204,9 @@ type GoogleCloudAiplatformV1ToolParameterKVMatchResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKVMatchResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKVMatchResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKVMatchResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKVMatchSpec: Spec for tool parameter key
@@ -31228,9 +31228,9 @@ type GoogleCloudAiplatformV1ToolParameterKVMatchSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKVMatchSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKVMatchSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKVMatchSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKeyMatchInput: Input for tool parameter
@@ -31253,9 +31253,9 @@ type GoogleCloudAiplatformV1ToolParameterKeyMatchInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKeyMatchInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKeyMatchInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKeyMatchInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKeyMatchInstance: Spec for tool
@@ -31278,9 +31278,9 @@ type GoogleCloudAiplatformV1ToolParameterKeyMatchInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKeyMatchInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKeyMatchInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKeyMatchInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue: Tool parameter key
@@ -31301,9 +31301,9 @@ type GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1ToolParameterKeyMatchMetricValue) UnmarshalJSON(data []byte) error {
@@ -31341,9 +31341,9 @@ type GoogleCloudAiplatformV1ToolParameterKeyMatchResults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1ToolParameterKeyMatchResults) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1ToolParameterKeyMatchResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ToolParameterKeyMatchResults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ToolParameterKeyMatchSpec: Spec for tool parameter
@@ -31372,9 +31372,9 @@ type GoogleCloudAiplatformV1TrainingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TrainingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TrainingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TrainingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TrainingPipeline: The TrainingPipeline orchestrates
@@ -31494,9 +31494,9 @@ type GoogleCloudAiplatformV1TrainingPipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TrainingPipeline) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TrainingPipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TrainingPipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Trial: A message representing a Trial. A Trial
@@ -31576,9 +31576,9 @@ type GoogleCloudAiplatformV1Trial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Trial) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Trial) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Trial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TrialContext: Next ID: 3
@@ -31608,9 +31608,9 @@ type GoogleCloudAiplatformV1TrialContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TrialContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TrialContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TrialContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TrialParameter: A message representing a parameter to
@@ -31637,9 +31637,9 @@ type GoogleCloudAiplatformV1TrialParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TrialParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TrialParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TrialParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TunedModel: The Model Registry Model and Online
@@ -31664,9 +31664,9 @@ type GoogleCloudAiplatformV1TunedModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TunedModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TunedModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TunedModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TuningDataStats: The tuning data statistic values for
@@ -31687,9 +31687,9 @@ type GoogleCloudAiplatformV1TuningDataStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TuningDataStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TuningDataStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TuningDataStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1TuningJob: Represents a TuningJob that runs with
@@ -31779,9 +31779,9 @@ type GoogleCloudAiplatformV1TuningJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1TuningJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1TuningJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1TuningJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UndeployIndexOperationMetadata: Runtime operation
@@ -31802,9 +31802,9 @@ type GoogleCloudAiplatformV1UndeployIndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UndeployIndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UndeployIndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UndeployIndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UndeployIndexRequest: Request message for
@@ -31826,9 +31826,9 @@ type GoogleCloudAiplatformV1UndeployIndexRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UndeployIndexRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UndeployIndexRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UndeployIndexRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UndeployIndexResponse: Response message for
@@ -31854,9 +31854,9 @@ type GoogleCloudAiplatformV1UndeployModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UndeployModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UndeployModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UndeployModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UndeployModelRequest: Request message for
@@ -31885,9 +31885,9 @@ type GoogleCloudAiplatformV1UndeployModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UndeployModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UndeployModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UndeployModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UndeployModelResponse: Response message for
@@ -31920,9 +31920,9 @@ type GoogleCloudAiplatformV1UnmanagedContainerModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UnmanagedContainerModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UnmanagedContainerModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UnmanagedContainerModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateDeploymentResourcePoolOperationMetadata:
@@ -31943,9 +31943,9 @@ type GoogleCloudAiplatformV1UpdateDeploymentResourcePoolOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateDeploymentResourcePoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateDeploymentResourcePoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateDeploymentResourcePoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateExplanationDatasetOperationMetadata: Runtime
@@ -31966,9 +31966,9 @@ type GoogleCloudAiplatformV1UpdateExplanationDatasetOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateExplanationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateExplanationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateExplanationDatasetOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateExplanationDatasetRequest: Request message for
@@ -31989,9 +31989,9 @@ type GoogleCloudAiplatformV1UpdateExplanationDatasetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateExplanationDatasetRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateExplanationDatasetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateExplanationDatasetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateExplanationDatasetResponse: Response message of
@@ -32017,9 +32017,9 @@ type GoogleCloudAiplatformV1UpdateFeatureGroupOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateFeatureGroupOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateFeatureGroupOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateFeatureGroupOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateFeatureOnlineStoreOperationMetadata: Details of
@@ -32040,9 +32040,9 @@ type GoogleCloudAiplatformV1UpdateFeatureOnlineStoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateFeatureOnlineStoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateFeatureOnlineStoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateFeatureOnlineStoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateFeatureOperationMetadata: Details of operations
@@ -32063,9 +32063,9 @@ type GoogleCloudAiplatformV1UpdateFeatureOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateFeatureOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateFeatureOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateFeatureViewOperationMetadata: Details of
@@ -32086,9 +32086,9 @@ type GoogleCloudAiplatformV1UpdateFeatureViewOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateFeatureViewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateFeatureViewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateFeatureViewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateFeaturestoreOperationMetadata: Details of
@@ -32109,9 +32109,9 @@ type GoogleCloudAiplatformV1UpdateFeaturestoreOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateFeaturestoreOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateFeaturestoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateFeaturestoreOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateIndexOperationMetadata: Runtime operation
@@ -32135,9 +32135,9 @@ type GoogleCloudAiplatformV1UpdateIndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateIndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateIndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateIndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateModelDeploymentMonitoringJobOperationMetadata:
@@ -32159,9 +32159,9 @@ type GoogleCloudAiplatformV1UpdateModelDeploymentMonitoringJobOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateModelDeploymentMonitoringJobOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateModelDeploymentMonitoringJobOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateModelDeploymentMonitoringJobOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdatePersistentResourceOperationMetadata: Details of
@@ -32184,9 +32184,9 @@ type GoogleCloudAiplatformV1UpdatePersistentResourceOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdatePersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdatePersistentResourceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdatePersistentResourceOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateSpecialistPoolOperationMetadata: Runtime
@@ -32212,9 +32212,9 @@ type GoogleCloudAiplatformV1UpdateSpecialistPoolOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateSpecialistPoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateSpecialistPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateSpecialistPoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpdateTensorboardOperationMetadata: Details of
@@ -32235,9 +32235,9 @@ type GoogleCloudAiplatformV1UpdateTensorboardOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpdateTensorboardOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpdateTensorboardOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpdateTensorboardOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpgradeNotebookRuntimeOperationMetadata: Metadata
@@ -32261,9 +32261,9 @@ type GoogleCloudAiplatformV1UpgradeNotebookRuntimeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpgradeNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpgradeNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpgradeNotebookRuntimeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpgradeNotebookRuntimeRequest: Request message for
@@ -32289,9 +32289,9 @@ type GoogleCloudAiplatformV1UploadModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UploadModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UploadModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UploadModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UploadModelRequest: Request message for
@@ -32328,9 +32328,9 @@ type GoogleCloudAiplatformV1UploadModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UploadModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UploadModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UploadModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UploadModelResponse: Response message of
@@ -32354,9 +32354,9 @@ type GoogleCloudAiplatformV1UploadModelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UploadModelResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UploadModelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UploadModelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpsertDatapointsRequest: Request message for
@@ -32383,9 +32383,9 @@ type GoogleCloudAiplatformV1UpsertDatapointsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UpsertDatapointsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UpsertDatapointsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UpsertDatapointsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1UpsertDatapointsResponse: Response message for
@@ -32424,9 +32424,9 @@ type GoogleCloudAiplatformV1UserActionReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1UserActionReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1UserActionReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1UserActionReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1Value: Value is the value of the field.
@@ -32450,9 +32450,9 @@ type GoogleCloudAiplatformV1Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1Value) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudAiplatformV1Value) UnmarshalJSON(data []byte) error {
@@ -32491,9 +32491,9 @@ type GoogleCloudAiplatformV1VertexAISearch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1VertexAISearch) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1VertexAISearch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1VertexAISearch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1VideoMetadata: Metadata describes the input video
@@ -32516,9 +32516,9 @@ type GoogleCloudAiplatformV1VideoMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1VideoMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1VideoMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1VideoMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WorkerPoolSpec: Represents the spec of a worker pool
@@ -32550,9 +32550,9 @@ type GoogleCloudAiplatformV1WorkerPoolSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1WorkerPoolSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1WorkerPoolSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1WorkerPoolSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WriteFeatureValuesPayload: Contains Feature values to
@@ -32579,9 +32579,9 @@ type GoogleCloudAiplatformV1WriteFeatureValuesPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1WriteFeatureValuesPayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1WriteFeatureValuesPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1WriteFeatureValuesPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WriteFeatureValuesRequest: Request message for
@@ -32603,9 +32603,9 @@ type GoogleCloudAiplatformV1WriteFeatureValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1WriteFeatureValuesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1WriteFeatureValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1WriteFeatureValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WriteFeatureValuesResponse: Response message for
@@ -32634,9 +32634,9 @@ type GoogleCloudAiplatformV1WriteTensorboardExperimentDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1WriteTensorboardExperimentDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1WriteTensorboardExperimentDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1WriteTensorboardExperimentDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WriteTensorboardExperimentDataResponse: Response
@@ -32672,9 +32672,9 @@ type GoogleCloudAiplatformV1WriteTensorboardRunDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1WriteTensorboardRunDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1WriteTensorboardRunDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1WriteTensorboardRunDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1WriteTensorboardRunDataResponse: Response message for
@@ -32719,9 +32719,9 @@ type GoogleCloudAiplatformV1XraiAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAiplatformV1XraiAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAiplatformV1XraiAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1XraiAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -32748,9 +32748,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -32787,9 +32787,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -32886,9 +32886,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -32976,9 +32976,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -33001,9 +33001,9 @@ type GoogleIamV1SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsResponse: Response message for
@@ -33028,9 +33028,9 @@ type GoogleIamV1TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -33057,9 +33057,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -33104,9 +33104,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -33148,9 +33148,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
@@ -33231,9 +33231,9 @@ type GoogleTypeColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeColor) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeColor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeColor) UnmarshalJSON(data []byte) error {
@@ -33289,9 +33289,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -33337,9 +33337,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeInterval: Represents a time interval, encoded as a Timestamp start
@@ -33368,9 +33368,9 @@ type GoogleTypeInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeInterval) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -33399,9 +33399,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IntelligenceCloudAutomlXpsMetricEntry struct {
@@ -33431,9 +33431,9 @@ type IntelligenceCloudAutomlXpsMetricEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntelligenceCloudAutomlXpsMetricEntry) MarshalJSON() ([]byte, error) {
+func (s IntelligenceCloudAutomlXpsMetricEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod IntelligenceCloudAutomlXpsMetricEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *IntelligenceCloudAutomlXpsMetricEntry) UnmarshalJSON(data []byte) error {
@@ -33468,9 +33468,9 @@ type IntelligenceCloudAutomlXpsMetricEntryLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntelligenceCloudAutomlXpsMetricEntryLabel) MarshalJSON() ([]byte, error) {
+func (s IntelligenceCloudAutomlXpsMetricEntryLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod IntelligenceCloudAutomlXpsMetricEntryLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IntelligenceCloudAutomlXpsReportingMetrics struct {
@@ -33494,9 +33494,9 @@ type IntelligenceCloudAutomlXpsReportingMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntelligenceCloudAutomlXpsReportingMetrics) MarshalJSON() ([]byte, error) {
+func (s IntelligenceCloudAutomlXpsReportingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod IntelligenceCloudAutomlXpsReportingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsEvaluateInstancesCall struct {

@@ -396,9 +396,9 @@ type CVSSv3 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CVSSv3) MarshalJSON() ([]byte, error) {
+func (s CVSSv3) MarshalJSON() ([]byte, error) {
 	type NoMethod CVSSv3
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CVSSv3) UnmarshalJSON(data []byte) error {
@@ -456,9 +456,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -491,9 +491,9 @@ type FixedOrPercent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
+func (s FixedOrPercent) MarshalJSON() ([]byte, error) {
 	type NoMethod FixedOrPercent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata: OS policy
@@ -539,9 +539,9 @@ type GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceOSPoliciesCompliance: This API resource represents the OS policies
@@ -612,9 +612,9 @@ type InstanceOSPoliciesCompliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceOSPoliciesCompliance) MarshalJSON() ([]byte, error) {
+func (s InstanceOSPoliciesCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceOSPoliciesCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceOSPoliciesComplianceOSPolicyCompliance: Compliance data for an OS
@@ -654,9 +654,9 @@ type InstanceOSPoliciesComplianceOSPolicyCompliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceOSPoliciesComplianceOSPolicyCompliance) MarshalJSON() ([]byte, error) {
+func (s InstanceOSPoliciesComplianceOSPolicyCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceOSPoliciesComplianceOSPolicyCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Inventory: This API resource represents the available inventory data for a
@@ -695,9 +695,9 @@ type Inventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Inventory) MarshalJSON() ([]byte, error) {
+func (s Inventory) MarshalJSON() ([]byte, error) {
 	type NoMethod Inventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryItem: A single piece of inventory on a VM.
@@ -742,9 +742,9 @@ type InventoryItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryItem) MarshalJSON() ([]byte, error) {
+func (s InventoryItem) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryOsInfo: Operating system information for the VM.
@@ -781,9 +781,9 @@ type InventoryOsInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryOsInfo) MarshalJSON() ([]byte, error) {
+func (s InventoryOsInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryOsInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySoftwarePackage: Software package information of the operating
@@ -829,9 +829,9 @@ type InventorySoftwarePackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySoftwarePackage) MarshalJSON() ([]byte, error) {
+func (s InventorySoftwarePackage) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySoftwarePackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryVersionedPackage: Information related to the a standard versioned
@@ -857,9 +857,9 @@ type InventoryVersionedPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryVersionedPackage) MarshalJSON() ([]byte, error) {
+func (s InventoryVersionedPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryVersionedPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryWindowsApplication: Contains information about a Windows
@@ -892,9 +892,9 @@ type InventoryWindowsApplication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryWindowsApplication) MarshalJSON() ([]byte, error) {
+func (s InventoryWindowsApplication) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryWindowsApplication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryWindowsQuickFixEngineeringPackage: Information related to a Quick
@@ -924,9 +924,9 @@ type InventoryWindowsQuickFixEngineeringPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryWindowsQuickFixEngineeringPackage) MarshalJSON() ([]byte, error) {
+func (s InventoryWindowsQuickFixEngineeringPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryWindowsQuickFixEngineeringPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryWindowsUpdatePackage: Details related to a Windows Update package.
@@ -971,9 +971,9 @@ type InventoryWindowsUpdatePackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryWindowsUpdatePackage) MarshalJSON() ([]byte, error) {
+func (s InventoryWindowsUpdatePackage) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryWindowsUpdatePackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryWindowsUpdatePackageWindowsUpdateCategory: Categories specified by
@@ -996,9 +996,9 @@ type InventoryWindowsUpdatePackageWindowsUpdateCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryWindowsUpdatePackageWindowsUpdateCategory) MarshalJSON() ([]byte, error) {
+func (s InventoryWindowsUpdatePackageWindowsUpdateCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryWindowsUpdatePackageWindowsUpdateCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventoryZypperPatch: Details related to a Zypper Patch.
@@ -1024,9 +1024,9 @@ type InventoryZypperPatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventoryZypperPatch) MarshalJSON() ([]byte, error) {
+func (s InventoryZypperPatch) MarshalJSON() ([]byte, error) {
 	type NoMethod InventoryZypperPatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstanceOSPoliciesCompliancesResponse: A response message for listing OS
@@ -1054,9 +1054,9 @@ type ListInstanceOSPoliciesCompliancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstanceOSPoliciesCompliancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstanceOSPoliciesCompliancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstanceOSPoliciesCompliancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInventoriesResponse: A response message for listing inventory data for
@@ -1083,9 +1083,9 @@ type ListInventoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInventoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInventoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInventoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOSPolicyAssignmentReportsResponse: A response message for listing OS
@@ -1112,9 +1112,9 @@ type ListOSPolicyAssignmentReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOSPolicyAssignmentReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOSPolicyAssignmentReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOSPolicyAssignmentReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOSPolicyAssignmentRevisionsResponse: A response message for listing all
@@ -1141,9 +1141,9 @@ type ListOSPolicyAssignmentRevisionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOSPolicyAssignmentRevisionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOSPolicyAssignmentRevisionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOSPolicyAssignmentRevisionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOSPolicyAssignmentsResponse: A response message for listing all
@@ -1170,9 +1170,9 @@ type ListOSPolicyAssignmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOSPolicyAssignmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOSPolicyAssignmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOSPolicyAssignmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVulnerabilityReportsResponse: A response message for listing
@@ -1199,9 +1199,9 @@ type ListVulnerabilityReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVulnerabilityReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVulnerabilityReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVulnerabilityReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicy: An OS policy defines the desired state configuration for a VM.
@@ -1249,9 +1249,9 @@ type OSPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicy) MarshalJSON() ([]byte, error) {
+func (s OSPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignment: OS policy assignment is an API resource that is used to
@@ -1330,9 +1330,9 @@ type OSPolicyAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignment) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentInstanceFilter: Filters to select target VMs for an
@@ -1369,9 +1369,9 @@ type OSPolicyAssignmentInstanceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentInstanceFilter) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentInstanceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentInstanceFilterInventory: VM inventory details.
@@ -1396,9 +1396,9 @@ type OSPolicyAssignmentInstanceFilterInventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentInstanceFilterInventory) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentInstanceFilterInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentInstanceFilterInventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentLabelSet: Message representing label set. * A label is a
@@ -1424,9 +1424,9 @@ type OSPolicyAssignmentLabelSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentLabelSet) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentLabelSet) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentLabelSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentOperationMetadata: OS policy assignment operation metadata
@@ -1472,9 +1472,9 @@ type OSPolicyAssignmentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentReport: A report of the OS policy assignment status for a
@@ -1519,9 +1519,9 @@ type OSPolicyAssignmentReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentReport) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentReport) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentReportOSPolicyCompliance: Compliance data for an OS policy
@@ -1575,9 +1575,9 @@ type OSPolicyAssignmentReportOSPolicyCompliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentReportOSPolicyCompliance) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentReportOSPolicyCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentReportOSPolicyCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceCompliance:
@@ -1624,9 +1624,9 @@ type OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceCompliance struct
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceCompliance) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceExecResou
@@ -1648,9 +1648,9 @@ type OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceExecRes
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceExecResourceOutput) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceExecResourceOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceExecResourceOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceOSPolicyR
@@ -1689,9 +1689,9 @@ type OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceOSPolic
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceOSPolicyResourceConfigStep) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceOSPolicyResourceConfigStep) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentReportOSPolicyComplianceOSPolicyResourceComplianceOSPolicyResourceConfigStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentRollout: Message to configure the rollout at the zonal
@@ -1719,9 +1719,9 @@ type OSPolicyAssignmentRollout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentRollout) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentRollout) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentRollout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyInventoryFilter: Filtering criteria to select VMs based on inventory
@@ -1747,9 +1747,9 @@ type OSPolicyInventoryFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyInventoryFilter) MarshalJSON() ([]byte, error) {
+func (s OSPolicyInventoryFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyInventoryFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyOSFilter: Filtering criteria to select VMs based on OS details.
@@ -1775,9 +1775,9 @@ type OSPolicyOSFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyOSFilter) MarshalJSON() ([]byte, error) {
+func (s OSPolicyOSFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyOSFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResource: An OS policy resource is used to define the desired state
@@ -1812,9 +1812,9 @@ type OSPolicyResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResource) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResource) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceCompliance: Compliance data for an OS policy resource.
@@ -1850,9 +1850,9 @@ type OSPolicyResourceCompliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceCompliance) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceComplianceExecResourceOutput: ExecResource specific output.
@@ -1873,9 +1873,9 @@ type OSPolicyResourceComplianceExecResourceOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceComplianceExecResourceOutput) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceComplianceExecResourceOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceComplianceExecResourceOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceConfigStep: Step performed by the OS Config agent for
@@ -1921,9 +1921,9 @@ type OSPolicyResourceConfigStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceConfigStep) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceConfigStep) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceConfigStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceExecResource: A resource that allows executing scripts on
@@ -1968,9 +1968,9 @@ type OSPolicyResourceExecResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceExecResource) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceExecResource) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceExecResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceExecResourceExec: A file or script to execute.
@@ -2012,9 +2012,9 @@ type OSPolicyResourceExecResourceExec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceExecResourceExec) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceExecResourceExec) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceExecResourceExec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceFile: A remote or local file.
@@ -2042,9 +2042,9 @@ type OSPolicyResourceFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceFile) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceFile) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceFileGcs: Specifies a file available as a Cloud Storage
@@ -2069,9 +2069,9 @@ type OSPolicyResourceFileGcs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceFileGcs) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceFileGcs) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceFileGcs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceFileRemote: Specifies a file available via some URI.
@@ -2094,9 +2094,9 @@ type OSPolicyResourceFileRemote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceFileRemote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceFileResource: A resource that manages the state of a file.
@@ -2139,9 +2139,9 @@ type OSPolicyResourceFileResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceFileResource) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceFileResource) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceFileResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceGroup: Resource groups provide a mechanism to group OS
@@ -2179,9 +2179,9 @@ type OSPolicyResourceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceGroup) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResource: A resource that manages a system package.
@@ -2222,9 +2222,9 @@ type OSPolicyResourcePackageResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResource) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResource) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceAPT: A package managed by APT. - install:
@@ -2246,9 +2246,9 @@ type OSPolicyResourcePackageResourceAPT struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceAPT) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceAPT) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceAPT
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceDeb: A deb package file. dpkg packages only
@@ -2273,9 +2273,9 @@ type OSPolicyResourcePackageResourceDeb struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceDeb) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceDeb) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceDeb
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceGooGet: A package managed by GooGet. -
@@ -2297,9 +2297,9 @@ type OSPolicyResourcePackageResourceGooGet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceGooGet) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceGooGet) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceGooGet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceMSI: An MSI package. MSI packages only
@@ -2324,9 +2324,9 @@ type OSPolicyResourcePackageResourceMSI struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceMSI) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceMSI) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceMSI
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceRPM: An RPM package file. RPM packages only
@@ -2351,9 +2351,9 @@ type OSPolicyResourcePackageResourceRPM struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceRPM) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceRPM) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceRPM
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceYUM: A package managed by YUM. - install:
@@ -2374,9 +2374,9 @@ type OSPolicyResourcePackageResourceYUM struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceYUM) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceYUM) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceYUM
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourcePackageResourceZypper: A package managed by Zypper. -
@@ -2397,9 +2397,9 @@ type OSPolicyResourcePackageResourceZypper struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourcePackageResourceZypper) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourcePackageResourceZypper) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourcePackageResourceZypper
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceRepositoryResource: A resource that manages a package
@@ -2426,9 +2426,9 @@ type OSPolicyResourceRepositoryResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceRepositoryResource) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceRepositoryResource) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceRepositoryResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceRepositoryResourceAptRepository: Represents a single apt
@@ -2465,9 +2465,9 @@ type OSPolicyResourceRepositoryResourceAptRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceRepositoryResourceAptRepository) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceRepositoryResourceAptRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceRepositoryResourceAptRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceRepositoryResourceGooRepository: Represents a Goo package
@@ -2491,9 +2491,9 @@ type OSPolicyResourceRepositoryResourceGooRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceRepositoryResourceGooRepository) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceRepositoryResourceGooRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceRepositoryResourceGooRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceRepositoryResourceYumRepository: Represents a single yum
@@ -2524,9 +2524,9 @@ type OSPolicyResourceRepositoryResourceYumRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceRepositoryResourceYumRepository) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceRepositoryResourceYumRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceRepositoryResourceYumRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyResourceRepositoryResourceZypperRepository: Represents a single
@@ -2557,9 +2557,9 @@ type OSPolicyResourceRepositoryResourceZypperRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyResourceRepositoryResourceZypperRepository) MarshalJSON() ([]byte, error) {
+func (s OSPolicyResourceRepositoryResourceZypperRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyResourceRepositoryResourceZypperRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2604,9 +2604,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2638,9 +2638,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityReport: This API resource represents the vulnerability report
@@ -2673,9 +2673,9 @@ type VulnerabilityReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityReport) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityReport) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityReportVulnerability: A vulnerability affecting the VM instance.
@@ -2715,9 +2715,9 @@ type VulnerabilityReportVulnerability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityReportVulnerability) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityReportVulnerability) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityReportVulnerability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityReportVulnerabilityDetails: Contains metadata information for
@@ -2754,9 +2754,9 @@ type VulnerabilityReportVulnerabilityDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityReportVulnerabilityDetails) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityReportVulnerabilityDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityReportVulnerabilityDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VulnerabilityReportVulnerabilityDetails) UnmarshalJSON(data []byte) error {
@@ -2793,9 +2793,9 @@ type VulnerabilityReportVulnerabilityDetailsReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityReportVulnerabilityDetailsReference) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityReportVulnerabilityDetailsReference) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityReportVulnerabilityDetailsReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityReportVulnerabilityItem: OS inventory item that is affected by
@@ -2833,9 +2833,9 @@ type VulnerabilityReportVulnerabilityItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityReportVulnerabilityItem) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityReportVulnerabilityItem) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityReportVulnerabilityItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsInstanceOSPoliciesCompliancesGetCall struct {

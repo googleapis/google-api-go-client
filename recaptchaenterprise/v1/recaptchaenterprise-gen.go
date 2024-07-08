@@ -266,9 +266,9 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo: Information about
@@ -321,9 +321,9 @@ type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific to
@@ -352,9 +352,9 @@ type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1AndroidKeySettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1AndroidKeySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AndroidKeySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest: The request
@@ -443,9 +443,9 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentResponse: Empty response
@@ -480,9 +480,9 @@ type GoogleCloudRecaptchaenterpriseV1AppleDeveloperId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AppleDeveloperId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1Assessment: A reCAPTCHA Enterprise
@@ -539,9 +539,9 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1Assessment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1Assessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Assessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ChallengeMetrics: Metrics related to
@@ -573,9 +573,9 @@ type GoogleCloudRecaptchaenterpriseV1ChallengeMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ChallengeMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ChallengeMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ChallengeMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo: Information about
@@ -605,9 +605,9 @@ type GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1Event: The event being assessed.
@@ -686,9 +686,9 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Event
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallAction: An individual action. Each
@@ -725,9 +725,9 @@ type GoogleCloudRecaptchaenterpriseV1FirewallAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FirewallAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FirewallAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction: An allow action
@@ -777,9 +777,9 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction: A substitute
@@ -801,9 +801,9 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallPolicy: A FirewallPolicy represents
@@ -853,9 +853,9 @@ type GoogleCloudRecaptchaenterpriseV1FirewallPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FirewallPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment: Policy config
@@ -881,9 +881,9 @@ type GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment: Assessment for
@@ -915,9 +915,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) UnmarshalJSON(data []byte) error {
@@ -954,9 +954,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVer
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict) UnmarshalJSON(data []byte) error {
@@ -993,9 +993,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict) UnmarshalJSON(data []byte) error {
@@ -1032,9 +1032,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict) UnmarshalJSON(data []byte) error {
@@ -1073,9 +1073,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals: Signals describing
@@ -1105,9 +1105,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals: Signals describing
@@ -1134,9 +1134,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) UnmarshalJSON(data []byte) error {
@@ -1181,9 +1181,9 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1IOSKeySettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1IOSKeySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1IOSKeySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1Key: A key used to identify and configure
@@ -1227,9 +1227,9 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1Key) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1Key) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Key
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse: Response to
@@ -1256,9 +1256,9 @@ type GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ListKeysResponse: Response to request to
@@ -1285,9 +1285,9 @@ type GoogleCloudRecaptchaenterpriseV1ListKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ListKeysResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ListKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ListKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse:
@@ -1314,9 +1314,9 @@ type GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse: The
@@ -1343,9 +1343,9 @@ type GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1Metrics: Metrics for a single Key.
@@ -1378,9 +1378,9 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Metrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest: The migrate key request
@@ -1408,9 +1408,9 @@ type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment: Assessment for Phone
@@ -1432,9 +1432,9 @@ type GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification: Private
@@ -1470,9 +1470,9 @@ type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of related
@@ -1495,9 +1495,9 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership: A membership
@@ -1530,9 +1530,9 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest: The reorder
@@ -1555,9 +1555,9 @@ type GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse: The reorder
@@ -1592,9 +1592,9 @@ type GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result for an
@@ -1638,9 +1638,9 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1RiskAnalysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1RiskAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RiskAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1RiskAnalysis) UnmarshalJSON(data []byte) error {
@@ -1676,9 +1676,9 @@ type GoogleCloudRecaptchaenterpriseV1ScoreDistribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ScoreDistribution) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ScoreDistribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ScoreDistribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1ScoreMetrics: Metrics related to scoring.
@@ -1701,9 +1701,9 @@ type GoogleCloudRecaptchaenterpriseV1ScoreMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ScoreMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest:
@@ -1743,9 +1743,9 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse:
@@ -1773,9 +1773,9 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRespons
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict: Information about SMS
@@ -1803,9 +1803,9 @@ type GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) UnmarshalJSON(data []byte) error {
@@ -1854,9 +1854,9 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TestingOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TestingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TestingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1TestingOptions) UnmarshalJSON(data []byte) error {
@@ -1922,9 +1922,9 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1TransactionData: Transaction data associated
@@ -1983,9 +1983,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1TransactionData) UnmarshalJSON(data []byte) error {
@@ -2036,9 +2036,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionDataAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionDataAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo: Details about
@@ -2069,9 +2069,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1TransactionDataItem: Line items being
@@ -2100,9 +2100,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionDataItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionDataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data []byte) error {
@@ -2151,9 +2151,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataUser) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionDataUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1TransactionEvent: Describes an event in the
@@ -2248,9 +2248,9 @@ type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1TransactionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) UnmarshalJSON(data []byte) error {
@@ -2291,9 +2291,9 @@ type GoogleCloudRecaptchaenterpriseV1UserId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1UserId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1UserId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1UserId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1UserInfo: User information associated with a
@@ -2324,9 +2324,9 @@ type GoogleCloudRecaptchaenterpriseV1UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1UserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1WafSettings: Settings specific to keys that
@@ -2364,9 +2364,9 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1WafSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1WafSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1WafSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1WebKeySettings: Settings specific to keys
@@ -2423,9 +2423,9 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRecaptchaenterpriseV1WebKeySettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRecaptchaenterpriseV1WebKeySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1WebKeySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -2467,9 +2467,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsAssessmentsAnnotateCall struct {

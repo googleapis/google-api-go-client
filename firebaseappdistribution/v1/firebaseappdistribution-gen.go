@@ -279,9 +279,9 @@ type GdataBlobstore2Info struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataBlobstore2Info) MarshalJSON() ([]byte, error) {
+func (s GdataBlobstore2Info) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataBlobstore2Info
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataCompositeMedia: A sequence of media data references representing
@@ -342,9 +342,9 @@ type GdataCompositeMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataCompositeMedia) MarshalJSON() ([]byte, error) {
+func (s GdataCompositeMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataCompositeMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataContentTypeInfo: Detailed Content-Type information from Scotty. The
@@ -381,9 +381,9 @@ type GdataContentTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataContentTypeInfo) MarshalJSON() ([]byte, error) {
+func (s GdataContentTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataContentTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffChecksumsResponse: Backend response for a Diff get checksums
@@ -420,9 +420,9 @@ type GdataDiffChecksumsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffChecksumsResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffChecksumsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffChecksumsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffDownloadResponse: Backend response for a Diff download response.
@@ -444,9 +444,9 @@ type GdataDiffDownloadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffDownloadResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffDownloadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffDownloadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffUploadRequest: A Diff upload request. For details on the Scotty
@@ -478,9 +478,9 @@ type GdataDiffUploadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffUploadRequest) MarshalJSON() ([]byte, error) {
+func (s GdataDiffUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffUploadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffUploadResponse: Backend response for a Diff upload request. For
@@ -507,9 +507,9 @@ type GdataDiffUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffUploadResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDiffVersionResponse: Backend response for a Diff get version response.
@@ -533,9 +533,9 @@ type GdataDiffVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDiffVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GdataDiffVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDiffVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataDownloadParameters: Parameters specific to media downloads.
@@ -561,9 +561,9 @@ type GdataDownloadParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataDownloadParameters) MarshalJSON() ([]byte, error) {
+func (s GdataDownloadParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataDownloadParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataMedia: A reference to data stored on the filesystem, on GFS or in
@@ -704,9 +704,9 @@ type GdataMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataMedia) MarshalJSON() ([]byte, error) {
+func (s GdataMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GdataObjectId: This is a copy of the tech.blob.ObjectId proto, which could
@@ -735,9 +735,9 @@ type GdataObjectId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GdataObjectId) MarshalJSON() ([]byte, error) {
+func (s GdataObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod GdataObjectId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1AabInfo: Android App Bundle (AAB) information for a
@@ -779,9 +779,9 @@ type GoogleFirebaseAppdistroV1AabInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1AabInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1AabInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1AabInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchAddTestersRequest: The Request message for
@@ -803,9 +803,9 @@ type GoogleFirebaseAppdistroV1BatchAddTestersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchAddTestersRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchAddTestersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchAddTestersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchAddTestersResponse: The Response message for
@@ -829,9 +829,9 @@ type GoogleFirebaseAppdistroV1BatchAddTestersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchAddTestersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchAddTestersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchAddTestersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest: The request message for
@@ -854,9 +854,9 @@ type GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchJoinGroupRequest: The request message for
@@ -881,9 +881,9 @@ type GoogleFirebaseAppdistroV1BatchJoinGroupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchJoinGroupRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchJoinGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchJoinGroupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchLeaveGroupRequest: Request message for
@@ -906,9 +906,9 @@ type GoogleFirebaseAppdistroV1BatchLeaveGroupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchLeaveGroupRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchLeaveGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchLeaveGroupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchRemoveTestersRequest: The request message for
@@ -930,9 +930,9 @@ type GoogleFirebaseAppdistroV1BatchRemoveTestersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchRemoveTestersRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchRemoveTestersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchRemoveTestersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1BatchRemoveTestersResponse: The response message
@@ -956,9 +956,9 @@ type GoogleFirebaseAppdistroV1BatchRemoveTestersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1BatchRemoveTestersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1BatchRemoveTestersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1BatchRemoveTestersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1DistributeReleaseRequest: The request message for
@@ -985,9 +985,9 @@ type GoogleFirebaseAppdistroV1DistributeReleaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1DistributeReleaseRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1DistributeReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1DistributeReleaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1DistributeReleaseResponse: The response message for
@@ -1033,9 +1033,9 @@ type GoogleFirebaseAppdistroV1FeedbackReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1FeedbackReport) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1FeedbackReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1FeedbackReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1Group: A group which can contain testers. A group
@@ -1070,9 +1070,9 @@ type GoogleFirebaseAppdistroV1Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1Group) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1Group) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ListFeedbackReportsResponse: The response message
@@ -1100,9 +1100,9 @@ type GoogleFirebaseAppdistroV1ListFeedbackReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ListFeedbackReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ListFeedbackReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ListFeedbackReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ListGroupsResponse: The response message for
@@ -1130,9 +1130,9 @@ type GoogleFirebaseAppdistroV1ListGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ListGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ListGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ListReleasesResponse: The response message for
@@ -1160,9 +1160,9 @@ type GoogleFirebaseAppdistroV1ListReleasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ListReleasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ListReleasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ListTestersResponse: The response message for
@@ -1190,9 +1190,9 @@ type GoogleFirebaseAppdistroV1ListTestersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ListTestersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ListTestersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ListTestersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
@@ -1238,9 +1238,9 @@ type GoogleFirebaseAppdistroV1Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1Release) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1Release) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1ReleaseNotes: Notes that belong to a release.
@@ -1260,9 +1260,9 @@ type GoogleFirebaseAppdistroV1ReleaseNotes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1ReleaseNotes) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1ReleaseNotes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ReleaseNotes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1TestCertificate: App bundle test certificate
@@ -1289,9 +1289,9 @@ type GoogleFirebaseAppdistroV1TestCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1TestCertificate) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1TestCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1TestCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1Tester: A person that can be invited to test apps
@@ -1326,9 +1326,9 @@ type GoogleFirebaseAppdistroV1Tester struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1Tester) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1Tester) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1Tester
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1UploadReleaseMetadata: Operation metadata for
@@ -1354,9 +1354,9 @@ type GoogleFirebaseAppdistroV1UploadReleaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1UploadReleaseRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1UploadReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1UploadReleaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1UploadReleaseResponse: Response message for
@@ -1386,9 +1386,9 @@ type GoogleFirebaseAppdistroV1UploadReleaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppdistroV1UploadReleaseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppdistroV1UploadReleaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1UploadReleaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -1420,9 +1420,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -1467,9 +1467,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningWaitOperationRequest: The request message for
@@ -1492,9 +1492,9 @@ type GoogleLongrunningWaitOperationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningWaitOperationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningWaitOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningWaitOperationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -1536,9 +1536,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MediaUploadCall struct {

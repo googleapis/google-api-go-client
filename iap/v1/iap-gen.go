@@ -261,9 +261,9 @@ type AccessDeniedPageSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
+func (s AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessDeniedPageSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessSettings: Access related settings for IAP protected apps.
@@ -312,9 +312,9 @@ type AccessSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessSettings) MarshalJSON() ([]byte, error) {
+func (s AccessSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AllowedDomainsSettings: Configuration for IAP allowed domains. Lets you to
@@ -338,9 +338,9 @@ type AllowedDomainsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllowedDomainsSettings) MarshalJSON() ([]byte, error) {
+func (s AllowedDomainsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AllowedDomainsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationSettings: Wrapper over application specific settings for IAP.
@@ -370,9 +370,9 @@ type ApplicationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationSettings) MarshalJSON() ([]byte, error) {
+func (s ApplicationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttributePropagationSettings: Configuration for propagating attributes to
@@ -425,9 +425,9 @@ type AttributePropagationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributePropagationSettings) MarshalJSON() ([]byte, error) {
+func (s AttributePropagationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributePropagationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -524,9 +524,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Brand: OAuth brand data. NOTE: Only contains a portion of the data that
@@ -559,9 +559,9 @@ type Brand struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Brand) MarshalJSON() ([]byte, error) {
+func (s Brand) MarshalJSON() ([]byte, error) {
 	type NoMethod Brand
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CorsSettings: Allows customers to configure HTTP request paths that'll allow
@@ -584,9 +584,9 @@ type CorsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CorsSettings) MarshalJSON() ([]byte, error) {
+func (s CorsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CorsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CsmSettings: Configuration for RCToken generated for service mesh workloads
@@ -611,9 +611,9 @@ type CsmSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CsmSettings) MarshalJSON() ([]byte, error) {
+func (s CsmSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CsmSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -668,9 +668,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcipSettings: Allows customers to configure tenant_id for GCIP instance
@@ -700,9 +700,9 @@ type GcipSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcipSettings) MarshalJSON() ([]byte, error) {
+func (s GcipSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GcipSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -723,9 +723,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -755,9 +755,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IapSettings: The IAP configurable settings.
@@ -786,9 +786,9 @@ type IapSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IapSettings) MarshalJSON() ([]byte, error) {
+func (s IapSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod IapSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdentityAwareProxyClient: Contains the data that describes an Identity Aware
@@ -816,9 +816,9 @@ type IdentityAwareProxyClient struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentityAwareProxyClient) MarshalJSON() ([]byte, error) {
+func (s IdentityAwareProxyClient) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityAwareProxyClient
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBrandsResponse: Response message for ListBrands.
@@ -841,9 +841,9 @@ type ListBrandsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBrandsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBrandsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBrandsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListIdentityAwareProxyClientsResponse: Response message for
@@ -870,9 +870,9 @@ type ListIdentityAwareProxyClientsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListIdentityAwareProxyClientsResponse) MarshalJSON() ([]byte, error) {
+func (s ListIdentityAwareProxyClientsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListIdentityAwareProxyClientsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTunnelDestGroupsResponse: The response from ListTunnelDestGroups.
@@ -898,9 +898,9 @@ type ListTunnelDestGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTunnelDestGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTunnelDestGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTunnelDestGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NextStateOfTags: Used for calculating the next state of tags on the resource
@@ -924,9 +924,9 @@ type NextStateOfTags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NextStateOfTags) MarshalJSON() ([]byte, error) {
+func (s NextStateOfTags) MarshalJSON() ([]byte, error) {
 	type NoMethod NextStateOfTags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuth2: The OAuth 2.0 Settings
@@ -953,9 +953,9 @@ type OAuth2 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OAuth2) MarshalJSON() ([]byte, error) {
+func (s OAuth2) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuth2
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuthSettings: Configuration for OAuth login&consent flow behavior as well
@@ -983,9 +983,9 @@ type OAuthSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OAuthSettings) MarshalJSON() ([]byte, error) {
+func (s OAuthSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1073,9 +1073,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyDelegationSettings: PolicyDelegationConfig allows google-internal
@@ -1109,9 +1109,9 @@ type PolicyDelegationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyDelegationSettings) MarshalJSON() ([]byte, error) {
+func (s PolicyDelegationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyDelegationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyName: An internal name for an IAM policy, based on the resource to
@@ -1146,9 +1146,9 @@ type PolicyName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyName) MarshalJSON() ([]byte, error) {
+func (s PolicyName) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReauthSettings: Configuration for IAP reauthentication policies.
@@ -1189,9 +1189,9 @@ type ReauthSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReauthSettings) MarshalJSON() ([]byte, error) {
+func (s ReauthSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ReauthSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetIdentityAwareProxyClientSecretRequest: The request sent to
@@ -1282,9 +1282,9 @@ type Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Resource) MarshalJSON() ([]byte, error) {
+func (s Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1307,9 +1307,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TagsFullState struct {
@@ -1332,9 +1332,9 @@ type TagsFullState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TagsFullState) MarshalJSON() ([]byte, error) {
+func (s TagsFullState) MarshalJSON() ([]byte, error) {
 	type NoMethod TagsFullState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TagsFullStateForChildResource struct {
@@ -1358,9 +1358,9 @@ type TagsFullStateForChildResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TagsFullStateForChildResource) MarshalJSON() ([]byte, error) {
+func (s TagsFullStateForChildResource) MarshalJSON() ([]byte, error) {
 	type NoMethod TagsFullStateForChildResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TagsPartialState struct {
@@ -1387,9 +1387,9 @@ type TagsPartialState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TagsPartialState) MarshalJSON() ([]byte, error) {
+func (s TagsPartialState) MarshalJSON() ([]byte, error) {
 	type NoMethod TagsPartialState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1412,9 +1412,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1439,9 +1439,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TunnelDestGroup: A TunnelDestGroup.
@@ -1469,9 +1469,9 @@ type TunnelDestGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TunnelDestGroup) MarshalJSON() ([]byte, error) {
+func (s TunnelDestGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod TunnelDestGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateIapAttributeExpressionResponse: IAP Expression Linter endpoint
@@ -1504,9 +1504,9 @@ type WorkforceIdentitySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkforceIdentitySettings) MarshalJSON() ([]byte, error) {
+func (s WorkforceIdentitySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkforceIdentitySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsBrandsCreateCall struct {

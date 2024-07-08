@@ -265,9 +265,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -323,9 +323,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DayInfo: This object contains the daily forecast information for each day
@@ -352,9 +352,9 @@ type DayInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DayInfo) MarshalJSON() ([]byte, error) {
+func (s DayInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DayInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
@@ -399,9 +399,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndexInfo: This object contains data representing specific pollen index
@@ -440,9 +440,9 @@ type IndexInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexInfo) MarshalJSON() ([]byte, error) {
+func (s IndexInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LookupForecastResponse struct {
@@ -472,9 +472,9 @@ type LookupForecastResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupForecastResponse) MarshalJSON() ([]byte, error) {
+func (s LookupForecastResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupForecastResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlantDescription: Contains general information about plants, including
@@ -522,9 +522,9 @@ type PlantDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlantDescription) MarshalJSON() ([]byte, error) {
+func (s PlantDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod PlantDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlantInfo: This object contains the daily information on specific plant.
@@ -575,9 +575,9 @@ type PlantInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlantInfo) MarshalJSON() ([]byte, error) {
+func (s PlantInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PlantInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PollenTypeInfo: This object contains the pollen type index and health
@@ -615,9 +615,9 @@ type PollenTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PollenTypeInfo) MarshalJSON() ([]byte, error) {
+func (s PollenTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PollenTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ForecastLookupCall struct {

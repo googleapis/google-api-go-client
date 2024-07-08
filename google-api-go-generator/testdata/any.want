@@ -269,9 +269,9 @@ type ListLogServiceIndexesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogServiceIndexesResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogServiceIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogServiceIndexesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogServiceSinksResponse: Result returned from `ListLogServiceSinks`.
@@ -296,9 +296,9 @@ type ListLogServiceSinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogServiceSinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogServiceSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogServiceSinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogServicesResponse: Result returned from `ListLogServicesRequest`.
@@ -326,9 +326,9 @@ type ListLogServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogServicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogSinksResponse: Result returned from `ListLogSinks`.
@@ -353,9 +353,9 @@ type ListLogSinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogSinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogSinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogsResponse: Result returned from ListLogs.
@@ -383,9 +383,9 @@ type ListLogsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Log: A log object.
@@ -411,9 +411,9 @@ type Log struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Log) MarshalJSON() ([]byte, error) {
+func (s Log) MarshalJSON() ([]byte, error) {
 	type NoMethod Log
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntry: An individual entry in a log.
@@ -449,9 +449,9 @@ type LogEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntry) MarshalJSON() ([]byte, error) {
+func (s LogEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntryMetadata: Additional data that is associated with a log entry, set
@@ -515,9 +515,9 @@ type LogEntryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntryMetadata) MarshalJSON() ([]byte, error) {
+func (s LogEntryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogError: A problem in a sink or the sink's configuration.
@@ -544,9 +544,9 @@ type LogError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogError) MarshalJSON() ([]byte, error) {
+func (s LogError) MarshalJSON() ([]byte, error) {
 	type NoMethod LogError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogService: A log service object.
@@ -570,9 +570,9 @@ type LogService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogService) MarshalJSON() ([]byte, error) {
+func (s LogService) MarshalJSON() ([]byte, error) {
 	type NoMethod LogService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogSink: An object that describes where a log may be written.
@@ -605,9 +605,9 @@ type LogSink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogSink) MarshalJSON() ([]byte, error) {
+func (s LogSink) MarshalJSON() ([]byte, error) {
 	type NoMethod LogSink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: Represents the RPC error status for Google APIs. See
@@ -635,9 +635,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
@@ -662,9 +662,9 @@ type WriteLogEntriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
+func (s WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteLogEntriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteLogEntriesResponse: Result returned from WriteLogEntries. empty

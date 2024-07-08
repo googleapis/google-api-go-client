@@ -189,9 +189,9 @@ type SiteVerificationWebResourceGettokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceGettokenRequest) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceGettokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteVerificationWebResourceGettokenRequestSite: The site for which a
@@ -217,9 +217,9 @@ type SiteVerificationWebResourceGettokenRequestSite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceGettokenRequestSite) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceGettokenRequestSite) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenRequestSite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
@@ -248,9 +248,9 @@ type SiteVerificationWebResourceGettokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceGettokenResponse) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceGettokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceListResponse struct {
@@ -272,9 +272,9 @@ type SiteVerificationWebResourceListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceListResponse) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceResource struct {
@@ -301,9 +301,9 @@ type SiteVerificationWebResourceResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceResource) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteVerificationWebResourceResourceSite: The address and type of a site that
@@ -328,9 +328,9 @@ type SiteVerificationWebResourceResourceSite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteVerificationWebResourceResourceSite) MarshalJSON() ([]byte, error) {
+func (s SiteVerificationWebResourceResourceSite) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceResourceSite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type WebResourceDeleteCall struct {

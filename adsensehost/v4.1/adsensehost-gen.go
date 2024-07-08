@@ -282,9 +282,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Accounts struct {
@@ -310,9 +310,9 @@ type Accounts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accounts) MarshalJSON() ([]byte, error) {
+func (s Accounts) MarshalJSON() ([]byte, error) {
 	type NoMethod Accounts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdClient struct {
@@ -343,9 +343,9 @@ type AdClient struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdClient) MarshalJSON() ([]byte, error) {
+func (s AdClient) MarshalJSON() ([]byte, error) {
 	type NoMethod AdClient
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdClients struct {
@@ -375,9 +375,9 @@ type AdClients struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdClients) MarshalJSON() ([]byte, error) {
+func (s AdClients) MarshalJSON() ([]byte, error) {
 	type NoMethod AdClients
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdCode struct {
@@ -401,9 +401,9 @@ type AdCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdCode) MarshalJSON() ([]byte, error) {
+func (s AdCode) MarshalJSON() ([]byte, error) {
 	type NoMethod AdCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdStyle struct {
@@ -431,9 +431,9 @@ type AdStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdStyle) MarshalJSON() ([]byte, error) {
+func (s AdStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod AdStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdStyleColors: The colors included in the style. These are represented as
@@ -463,9 +463,9 @@ type AdStyleColors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdStyleColors) MarshalJSON() ([]byte, error) {
+func (s AdStyleColors) MarshalJSON() ([]byte, error) {
 	type NoMethod AdStyleColors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdStyleFont: The font which is included in the style.
@@ -489,9 +489,9 @@ type AdStyleFont struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdStyleFont) MarshalJSON() ([]byte, error) {
+func (s AdStyleFont) MarshalJSON() ([]byte, error) {
 	type NoMethod AdStyleFont
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdUnit struct {
@@ -539,9 +539,9 @@ type AdUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnit) MarshalJSON() ([]byte, error) {
+func (s AdUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnitContentAdsSettings: Settings specific to content ads (AFC) and highend
@@ -569,9 +569,9 @@ type AdUnitContentAdsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnitContentAdsSettings) MarshalJSON() ([]byte, error) {
+func (s AdUnitContentAdsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitContentAdsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnitContentAdsSettingsBackupOption: The backup option to be used in
@@ -598,9 +598,9 @@ type AdUnitContentAdsSettingsBackupOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnitContentAdsSettingsBackupOption) MarshalJSON() ([]byte, error) {
+func (s AdUnitContentAdsSettingsBackupOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitContentAdsSettingsBackupOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnitMobileContentAdsSettings: Settings specific to WAP mobile content ads
@@ -627,9 +627,9 @@ type AdUnitMobileContentAdsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnitMobileContentAdsSettings) MarshalJSON() ([]byte, error) {
+func (s AdUnitMobileContentAdsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitMobileContentAdsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdUnits struct {
@@ -658,9 +658,9 @@ type AdUnits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnits) MarshalJSON() ([]byte, error) {
+func (s AdUnits) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AssociationSession struct {
@@ -703,9 +703,9 @@ type AssociationSession struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssociationSession) MarshalJSON() ([]byte, error) {
+func (s AssociationSession) MarshalJSON() ([]byte, error) {
 	type NoMethod AssociationSession
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomChannel struct {
@@ -735,9 +735,9 @@ type CustomChannel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomChannel) MarshalJSON() ([]byte, error) {
+func (s CustomChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomChannels struct {
@@ -767,9 +767,9 @@ type CustomChannels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomChannels) MarshalJSON() ([]byte, error) {
+func (s CustomChannels) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomChannels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Report struct {
@@ -812,9 +812,9 @@ type Report struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReportHeaders struct {
@@ -839,9 +839,9 @@ type ReportHeaders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportHeaders) MarshalJSON() ([]byte, error) {
+func (s ReportHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportHeaders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UrlChannel struct {
@@ -870,9 +870,9 @@ type UrlChannel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlChannel) MarshalJSON() ([]byte, error) {
+func (s UrlChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UrlChannels struct {
@@ -902,9 +902,9 @@ type UrlChannels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlChannels) MarshalJSON() ([]byte, error) {
+func (s UrlChannels) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlChannels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsGetCall struct {

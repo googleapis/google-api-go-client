@@ -337,9 +337,9 @@ type GoogleFirebaseAppcheckV1AppAttestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppAttestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1AppCheckToken: Encapsulates an *App Check token*,
@@ -374,9 +374,9 @@ type GoogleFirebaseAppcheckV1AppCheckToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1AppCheckToken) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1AppCheckToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppCheckToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse: Response message
@@ -400,9 +400,9 @@ type GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse: Response message
@@ -426,9 +426,9 @@ type GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse: Response
@@ -452,9 +452,9 @@ type GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse: Response
@@ -478,9 +478,9 @@ type GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse: Response message
@@ -504,9 +504,9 @@ type GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse: Response message
@@ -530,9 +530,9 @@ type GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchUpdateServicesRequest: Request message for the
@@ -559,9 +559,9 @@ type GoogleFirebaseAppcheckV1BatchUpdateServicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchUpdateServicesResponse: Response message for
@@ -585,9 +585,9 @@ type GoogleFirebaseAppcheckV1BatchUpdateServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchUpdateServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1DebugToken: A *debug token* is a secret used during
@@ -629,9 +629,9 @@ type GoogleFirebaseAppcheckV1DebugToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1DebugToken) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1DebugToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DebugToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1DeviceCheckConfig: An app's DeviceCheck
@@ -678,9 +678,9 @@ type GoogleFirebaseAppcheckV1DeviceCheckConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1DeviceCheckConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1DeviceCheckConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DeviceCheckConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest: Request message
@@ -713,9 +713,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest: Request message
@@ -748,9 +748,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse: Response
@@ -777,9 +777,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest: Request message for the
@@ -806,9 +806,9 @@ type GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest: Request message for the
@@ -835,9 +835,9 @@ type GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest: Request message for
@@ -866,9 +866,9 @@ type GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest: Request message
@@ -897,9 +897,9 @@ type GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest: Request
@@ -927,9 +927,9 @@ type GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest: Request message for
@@ -956,9 +956,9 @@ type GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest: Request message for
@@ -981,9 +981,9 @@ type GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest: Request message
@@ -1018,9 +1018,9 @@ type GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest: Request
@@ -1056,9 +1056,9 @@ type GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for the
@@ -1088,9 +1088,9 @@ type GoogleFirebaseAppcheckV1ListDebugTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ListDebugTokensResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ListDebugTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListDebugTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ListServicesResponse: Response message for the
@@ -1120,9 +1120,9 @@ type GoogleFirebaseAppcheckV1ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PlayIntegrityConfig: An app's Play Integrity
@@ -1157,9 +1157,9 @@ type GoogleFirebaseAppcheckV1PlayIntegrityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PublicJwk: A JWK as specified by section 4 of RFC
@@ -1197,9 +1197,9 @@ type GoogleFirebaseAppcheckV1PublicJwk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PublicJwkSet: The currently active set of public
@@ -1227,9 +1227,9 @@ type GoogleFirebaseAppcheckV1PublicJwkSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PublicJwkSet) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PublicJwkSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwkSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig: An app's reCAPTCHA
@@ -1269,9 +1269,9 @@ type GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaV3Config: An app's reCAPTCHA v3
@@ -1312,9 +1312,9 @@ type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaV3Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1SafetyNetConfig: An app's SafetyNet configuration
@@ -1349,9 +1349,9 @@ type GoogleFirebaseAppcheckV1SafetyNetConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1SafetyNetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1SafetyNetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1SafetyNetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1Service: The enforcement configuration for a
@@ -1418,9 +1418,9 @@ type GoogleFirebaseAppcheckV1Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1Service) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1Service
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1UpdateServiceRequest: Request message for the
@@ -1451,9 +1451,9 @@ type GoogleFirebaseAppcheckV1UpdateServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1UpdateServiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1UpdateServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1UpdateServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid

@@ -374,9 +374,9 @@ type AchievementDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementDefinition) MarshalJSON() ([]byte, error) {
+func (s AchievementDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementDefinitionsListResponse: A list of achievement definition
@@ -405,9 +405,9 @@ type AchievementDefinitionsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementDefinitionsListResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementDefinitionsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementDefinitionsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementIncrementResponse: An achievement increment response
@@ -436,9 +436,9 @@ type AchievementIncrementResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementIncrementResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementRevealResponse: An achievement reveal response
@@ -469,9 +469,9 @@ type AchievementRevealResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementRevealResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementRevealResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementRevealResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementSetStepsAtLeastResponse: An achievement set steps at least
@@ -501,9 +501,9 @@ type AchievementSetStepsAtLeastResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementSetStepsAtLeastResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementUnlockResponse: An achievement unlock response
@@ -530,9 +530,9 @@ type AchievementUnlockResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementUnlockResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementUnlockResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementUnlockResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementUpdateMultipleRequest: A list of achievement update requests.
@@ -555,9 +555,9 @@ type AchievementUpdateMultipleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
+func (s AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementUpdateMultipleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementUpdateMultipleResponse: Response message for
@@ -584,9 +584,9 @@ type AchievementUpdateMultipleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementUpdateMultipleResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementUpdateMultipleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementUpdateMultipleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementUpdateRequest: A request to update an achievement.
@@ -624,9 +624,9 @@ type AchievementUpdateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s AchievementUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementUpdateResponse: An updated achievement.
@@ -665,9 +665,9 @@ type AchievementUpdateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementUpdateResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementUpdateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementUpdateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Application: The Application resource.
@@ -722,9 +722,9 @@ type Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Application) MarshalJSON() ([]byte, error) {
+func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationCategory: An application category object.
@@ -749,9 +749,9 @@ type ApplicationCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
+func (s ApplicationCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationPlayerId: Primary scoped player identifier for an application.
@@ -773,9 +773,9 @@ type ApplicationPlayerId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationPlayerId) MarshalJSON() ([]byte, error) {
+func (s ApplicationPlayerId) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationPlayerId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationVerifyResponse: A third party application verification response
@@ -807,9 +807,9 @@ type ApplicationVerifyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationVerifyResponse) MarshalJSON() ([]byte, error) {
+func (s ApplicationVerifyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationVerifyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Category: Data related to individual game categories.
@@ -834,9 +834,9 @@ type Category struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Category) MarshalJSON() ([]byte, error) {
+func (s Category) MarshalJSON() ([]byte, error) {
 	type NoMethod Category
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CategoryListResponse: A third party list metagame categories response.
@@ -864,9 +864,9 @@ type CategoryListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoryListResponse) MarshalJSON() ([]byte, error) {
+func (s CategoryListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoryListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndPoint: Container for a URL end point of the requested type.
@@ -889,9 +889,9 @@ type EndPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndPoint) MarshalJSON() ([]byte, error) {
+func (s EndPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod EndPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventBatchRecordFailure: A batch update failure resource.
@@ -929,9 +929,9 @@ type EventBatchRecordFailure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventBatchRecordFailure) MarshalJSON() ([]byte, error) {
+func (s EventBatchRecordFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod EventBatchRecordFailure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventChild: An event child relationship resource.
@@ -954,9 +954,9 @@ type EventChild struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventChild) MarshalJSON() ([]byte, error) {
+func (s EventChild) MarshalJSON() ([]byte, error) {
 	type NoMethod EventChild
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventDefinition: An event definition resource.
@@ -997,9 +997,9 @@ type EventDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventDefinition) MarshalJSON() ([]byte, error) {
+func (s EventDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod EventDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventDefinitionListResponse: A ListDefinitions response.
@@ -1027,9 +1027,9 @@ type EventDefinitionListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventDefinitionListResponse) MarshalJSON() ([]byte, error) {
+func (s EventDefinitionListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventDefinitionListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventPeriodRange: An event period time range.
@@ -1056,9 +1056,9 @@ type EventPeriodRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventPeriodRange) MarshalJSON() ([]byte, error) {
+func (s EventPeriodRange) MarshalJSON() ([]byte, error) {
 	type NoMethod EventPeriodRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventPeriodUpdate: An event period update resource.
@@ -1083,9 +1083,9 @@ type EventPeriodUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventPeriodUpdate) MarshalJSON() ([]byte, error) {
+func (s EventPeriodUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod EventPeriodUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventRecordFailure: An event update failure resource.
@@ -1115,9 +1115,9 @@ type EventRecordFailure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventRecordFailure) MarshalJSON() ([]byte, error) {
+func (s EventRecordFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod EventRecordFailure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventRecordRequest: An event period update resource.
@@ -1145,9 +1145,9 @@ type EventRecordRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventRecordRequest) MarshalJSON() ([]byte, error) {
+func (s EventRecordRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EventRecordRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventUpdateRequest: An event period update resource.
@@ -1172,9 +1172,9 @@ type EventUpdateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s EventUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EventUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventUpdateResponse: An event period update resource.
@@ -1204,9 +1204,9 @@ type EventUpdateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
+func (s EventUpdateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventUpdateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GamePlayerToken: Recall tokens for a game.
@@ -1228,9 +1228,9 @@ type GamePlayerToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GamePlayerToken) MarshalJSON() ([]byte, error) {
+func (s GamePlayerToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GamePlayerToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GamesAchievementIncrement: The payload to request to increment an
@@ -1256,9 +1256,9 @@ type GamesAchievementIncrement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GamesAchievementIncrement) MarshalJSON() ([]byte, error) {
+func (s GamesAchievementIncrement) MarshalJSON() ([]byte, error) {
 	type NoMethod GamesAchievementIncrement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GamesAchievementSetStepsAtLeast: The payload to request to increment an
@@ -1282,9 +1282,9 @@ type GamesAchievementSetStepsAtLeast struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
+func (s GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
 	type NoMethod GamesAchievementSetStepsAtLeast
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratePlayGroupingApiTokenResponse: Response for the
@@ -1308,9 +1308,9 @@ type GeneratePlayGroupingApiTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratePlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
+func (s GeneratePlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratePlayGroupingApiTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateRecallPlayGroupingApiTokenResponse: Response for the
@@ -1334,9 +1334,9 @@ type GenerateRecallPlayGroupingApiTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateRecallPlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateRecallPlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateRecallPlayGroupingApiTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetMultipleApplicationPlayerIdsResponse: Response message for
@@ -1362,9 +1362,9 @@ type GetMultipleApplicationPlayerIdsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetMultipleApplicationPlayerIdsResponse) MarshalJSON() ([]byte, error) {
+func (s GetMultipleApplicationPlayerIdsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetMultipleApplicationPlayerIdsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageAsset: An image asset object.
@@ -1393,9 +1393,9 @@ type ImageAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageAsset) MarshalJSON() ([]byte, error) {
+func (s ImageAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: The Instance resource.
@@ -1437,9 +1437,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceAndroidDetails: The Android instance details resource.
@@ -1467,9 +1467,9 @@ type InstanceAndroidDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceAndroidDetails) MarshalJSON() ([]byte, error) {
+func (s InstanceAndroidDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceAndroidDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceIosDetails: The iOS details resource.
@@ -1504,9 +1504,9 @@ type InstanceIosDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceIosDetails) MarshalJSON() ([]byte, error) {
+func (s InstanceIosDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceIosDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceWebDetails: The Web details resource.
@@ -1532,9 +1532,9 @@ type InstanceWebDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceWebDetails) MarshalJSON() ([]byte, error) {
+func (s InstanceWebDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceWebDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Leaderboard: The Leaderboard resource.
@@ -1575,9 +1575,9 @@ type Leaderboard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Leaderboard) MarshalJSON() ([]byte, error) {
+func (s Leaderboard) MarshalJSON() ([]byte, error) {
 	type NoMethod Leaderboard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardEntry: The Leaderboard Entry resource.
@@ -1622,9 +1622,9 @@ type LeaderboardEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardEntry) MarshalJSON() ([]byte, error) {
+func (s LeaderboardEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardListResponse: A list of leaderboard objects.
@@ -1652,9 +1652,9 @@ type LeaderboardListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardListResponse) MarshalJSON() ([]byte, error) {
+func (s LeaderboardListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardScoreRank: A score rank in a leaderboard.
@@ -1683,9 +1683,9 @@ type LeaderboardScoreRank struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardScoreRank) MarshalJSON() ([]byte, error) {
+func (s LeaderboardScoreRank) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardScoreRank
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardScores: A ListScores response.
@@ -1723,9 +1723,9 @@ type LeaderboardScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
+func (s LeaderboardScores) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkPersonaRequest: Request to link an in-game account with a PGS principal
@@ -1801,9 +1801,9 @@ type LinkPersonaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkPersonaRequest) MarshalJSON() ([]byte, error) {
+func (s LinkPersonaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkPersonaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkPersonaResponse: Outcome of a persona linking attempt.
@@ -1832,9 +1832,9 @@ type LinkPersonaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkPersonaResponse) MarshalJSON() ([]byte, error) {
+func (s LinkPersonaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkPersonaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetagameConfig: The metagame config resource
@@ -1863,9 +1863,9 @@ type MetagameConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetagameConfig) MarshalJSON() ([]byte, error) {
+func (s MetagameConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MetagameConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayGroupingApiToken: Token data returned from GeneratePlayGroupingApiToken
@@ -1886,9 +1886,9 @@ type PlayGroupingApiToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayGroupingApiToken) MarshalJSON() ([]byte, error) {
+func (s PlayGroupingApiToken) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayGroupingApiToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Player: A Player resource.
@@ -1947,9 +1947,9 @@ type Player struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Player) MarshalJSON() ([]byte, error) {
+func (s Player) MarshalJSON() ([]byte, error) {
 	type NoMethod Player
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerName: A representation of the individual components of the name.
@@ -1973,9 +1973,9 @@ type PlayerName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerName) MarshalJSON() ([]byte, error) {
+func (s PlayerName) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerAchievement: An achievement object.
@@ -2017,9 +2017,9 @@ type PlayerAchievement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerAchievement) MarshalJSON() ([]byte, error) {
+func (s PlayerAchievement) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerAchievement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerAchievementListResponse: A list of achievement objects.
@@ -2047,9 +2047,9 @@ type PlayerAchievementListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerAchievementListResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerAchievementListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerAchievementListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerEvent: An event status resource.
@@ -2080,9 +2080,9 @@ type PlayerEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerEvent) MarshalJSON() ([]byte, error) {
+func (s PlayerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerEventListResponse: A ListByPlayer response.
@@ -2110,9 +2110,9 @@ type PlayerEventListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerEventListResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerEventListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerEventListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerExperienceInfo: 1P/3P metadata about the player's experience.
@@ -2144,9 +2144,9 @@ type PlayerExperienceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerExperienceInfo) MarshalJSON() ([]byte, error) {
+func (s PlayerExperienceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerExperienceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerLeaderboardScore: A player leaderboard score object.
@@ -2194,9 +2194,9 @@ type PlayerLeaderboardScore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerLeaderboardScore) MarshalJSON() ([]byte, error) {
+func (s PlayerLeaderboardScore) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerLeaderboardScore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerLeaderboardScoreListResponse: A list of player leaderboard scores.
@@ -2226,9 +2226,9 @@ type PlayerLeaderboardScoreListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerLeaderboardScoreListResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerLeaderboardScoreListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerLeaderboardScoreListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerLevel: 1P/3P metadata about a user's level.
@@ -2255,9 +2255,9 @@ type PlayerLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerLevel) MarshalJSON() ([]byte, error) {
+func (s PlayerLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerListResponse: A third party player list response.
@@ -2285,9 +2285,9 @@ type PlayerListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerListResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerScore: A player score.
@@ -2322,9 +2322,9 @@ type PlayerScore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerScore) MarshalJSON() ([]byte, error) {
+func (s PlayerScore) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerScore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerScoreListResponse: A list of score submission statuses.
@@ -2350,9 +2350,9 @@ type PlayerScoreListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerScoreListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerScoreResponse: A list of leaderboard entry resources.
@@ -2396,9 +2396,9 @@ type PlayerScoreResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerScoreResponse) MarshalJSON() ([]byte, error) {
+func (s PlayerScoreResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerScoreResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlayerScoreSubmissionList: A list of score submission requests.
@@ -2421,9 +2421,9 @@ type PlayerScoreSubmissionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
+func (s PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
 	type NoMethod PlayerScoreSubmissionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileSettings: Profile settings
@@ -2457,9 +2457,9 @@ type ProfileSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
+func (s ProfileSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecallToken: Recall token data returned from RetrievePlayerTokens RPC
@@ -2485,9 +2485,9 @@ type RecallToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecallToken) MarshalJSON() ([]byte, error) {
+func (s RecallToken) MarshalJSON() ([]byte, error) {
 	type NoMethod RecallToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetPersonaRequest: Request to remove all Recall tokens associated with a
@@ -2509,9 +2509,9 @@ type ResetPersonaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResetPersonaRequest) MarshalJSON() ([]byte, error) {
+func (s ResetPersonaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetPersonaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetPersonaResponse: Response for the ResetPersona RPC
@@ -2535,9 +2535,9 @@ type ResetPersonaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResetPersonaResponse) MarshalJSON() ([]byte, error) {
+func (s ResetPersonaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetPersonaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveDeveloperGamesLastPlayerTokenResponse: Recall token data returned
@@ -2563,9 +2563,9 @@ type RetrieveDeveloperGamesLastPlayerTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveDeveloperGamesLastPlayerTokenResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveDeveloperGamesLastPlayerTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveDeveloperGamesLastPlayerTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveGamesPlayerTokensResponse: A list of recall token data returned from
@@ -2591,9 +2591,9 @@ type RetrieveGamesPlayerTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveGamesPlayerTokensResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveGamesPlayerTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveGamesPlayerTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrievePlayerTokensResponse: Response for the RetrievePlayerTokens RPC
@@ -2617,9 +2617,9 @@ type RetrievePlayerTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrievePlayerTokensResponse) MarshalJSON() ([]byte, error) {
+func (s RetrievePlayerTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrievePlayerTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevisionCheckResponse: A third party checking a revision response.
@@ -2655,9 +2655,9 @@ type RevisionCheckResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevisionCheckResponse) MarshalJSON() ([]byte, error) {
+func (s RevisionCheckResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RevisionCheckResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScopedPlayerIds: Scoped player identifiers.
@@ -2687,9 +2687,9 @@ type ScopedPlayerIds struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScopedPlayerIds) MarshalJSON() ([]byte, error) {
+func (s ScopedPlayerIds) MarshalJSON() ([]byte, error) {
 	type NoMethod ScopedPlayerIds
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScoreSubmission: A request to submit a score to leaderboards.
@@ -2720,9 +2720,9 @@ type ScoreSubmission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScoreSubmission) MarshalJSON() ([]byte, error) {
+func (s ScoreSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod ScoreSubmission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Snapshot: An snapshot object.
@@ -2774,9 +2774,9 @@ type Snapshot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Snapshot) MarshalJSON() ([]byte, error) {
+func (s Snapshot) MarshalJSON() ([]byte, error) {
 	type NoMethod Snapshot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SnapshotImage: An image of a snapshot.
@@ -2806,9 +2806,9 @@ type SnapshotImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SnapshotImage) MarshalJSON() ([]byte, error) {
+func (s SnapshotImage) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SnapshotListResponse: A third party list snapshots response.
@@ -2837,9 +2837,9 @@ type SnapshotListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SnapshotListResponse) MarshalJSON() ([]byte, error) {
+func (s SnapshotListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatsResponse: A third party stats resource.
@@ -2902,9 +2902,9 @@ type StatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatsResponse) MarshalJSON() ([]byte, error) {
+func (s StatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StatsResponse) UnmarshalJSON(data []byte) error {
@@ -2959,9 +2959,9 @@ type UnlinkPersonaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnlinkPersonaRequest) MarshalJSON() ([]byte, error) {
+func (s UnlinkPersonaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnlinkPersonaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnlinkPersonaResponse: Response for the UnlinkPersona RPC
@@ -2986,9 +2986,9 @@ type UnlinkPersonaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnlinkPersonaResponse) MarshalJSON() ([]byte, error) {
+func (s UnlinkPersonaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UnlinkPersonaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccesstokensGeneratePlayGroupingApiTokenCall struct {

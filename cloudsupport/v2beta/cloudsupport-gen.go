@@ -246,9 +246,9 @@ type Actor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Actor) MarshalJSON() ([]byte, error) {
+func (s Actor) MarshalJSON() ([]byte, error) {
 	type NoMethod Actor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attachment: An Attachment contains metadata about a file that was uploaded
@@ -288,9 +288,9 @@ type Attachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attachment) MarshalJSON() ([]byte, error) {
+func (s Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Blobstore2Info: # gdata.* are outside protos with mising documentation
@@ -319,9 +319,9 @@ type Blobstore2Info struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
+func (s Blobstore2Info) MarshalJSON() ([]byte, error) {
 	type NoMethod Blobstore2Info
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Case: A Case is an object that contains the details of a support case. It
@@ -432,9 +432,9 @@ type Case struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Case) MarshalJSON() ([]byte, error) {
+func (s Case) MarshalJSON() ([]byte, error) {
 	type NoMethod Case
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CaseClassification: A Case Classification represents the topic that a case
@@ -470,9 +470,9 @@ type CaseClassification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CaseClassification) MarshalJSON() ([]byte, error) {
+func (s CaseClassification) MarshalJSON() ([]byte, error) {
 	type NoMethod CaseClassification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloseCaseRequest: The request message for the CloseCase endpoint.
@@ -512,9 +512,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompositeMedia: # gdata.* are outside protos with mising documentation
@@ -562,9 +562,9 @@ type CompositeMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompositeMedia) MarshalJSON() ([]byte, error) {
+func (s CompositeMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentTypeInfo: # gdata.* are outside protos with mising documentation
@@ -592,9 +592,9 @@ type ContentTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentTypeInfo) MarshalJSON() ([]byte, error) {
+func (s ContentTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAttachmentRequest: The request message for the CreateAttachment
@@ -615,9 +615,9 @@ type CreateAttachmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateAttachmentRequest) MarshalJSON() ([]byte, error) {
+func (s CreateAttachmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAttachmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffChecksumsResponse: # gdata.* are outside protos with mising
@@ -646,9 +646,9 @@ type DiffChecksumsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffChecksumsResponse) MarshalJSON() ([]byte, error) {
+func (s DiffChecksumsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffChecksumsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffDownloadResponse: # gdata.* are outside protos with mising documentation
@@ -668,9 +668,9 @@ type DiffDownloadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffDownloadResponse) MarshalJSON() ([]byte, error) {
+func (s DiffDownloadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffDownloadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffUploadRequest: # gdata.* are outside protos with mising documentation
@@ -694,9 +694,9 @@ type DiffUploadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffUploadRequest) MarshalJSON() ([]byte, error) {
+func (s DiffUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffUploadResponse: # gdata.* are outside protos with mising documentation
@@ -718,9 +718,9 @@ type DiffUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffUploadResponse) MarshalJSON() ([]byte, error) {
+func (s DiffUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffVersionResponse: # gdata.* are outside protos with mising documentation
@@ -742,9 +742,9 @@ type DiffVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiffVersionResponse) MarshalJSON() ([]byte, error) {
+func (s DiffVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DownloadParameters: # gdata.* are outside protos with mising documentation
@@ -766,9 +766,9 @@ type DownloadParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadParameters) MarshalJSON() ([]byte, error) {
+func (s DownloadParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailMessage: An email associated with a support case.
@@ -802,9 +802,9 @@ type EmailMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailMessage) MarshalJSON() ([]byte, error) {
+func (s EmailMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EscalateCaseRequest: The request message for the EscalateCase endpoint.
@@ -825,9 +825,9 @@ type EscalateCaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EscalateCaseRequest) MarshalJSON() ([]byte, error) {
+func (s EscalateCaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EscalateCaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Escalation: An escalation of a support case.
@@ -858,9 +858,9 @@ type Escalation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Escalation) MarshalJSON() ([]byte, error) {
+func (s Escalation) MarshalJSON() ([]byte, error) {
 	type NoMethod Escalation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FeedItem: A feed item associated with a support case.
@@ -889,9 +889,9 @@ type FeedItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FeedItem) MarshalJSON() ([]byte, error) {
+func (s FeedItem) MarshalJSON() ([]byte, error) {
 	type NoMethod FeedItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAttachmentsResponse: The response message for the ListAttachments
@@ -919,9 +919,9 @@ type ListAttachmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttachmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCasesResponse: The response message for the ListCases endpoint.
@@ -949,9 +949,9 @@ type ListCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCommentsResponse: The response message for the ListComments endpoint.
@@ -978,9 +978,9 @@ type ListCommentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCommentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCommentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCommentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Media: # gdata.* are outside protos with mising documentation
@@ -1083,9 +1083,9 @@ type Media struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Media) MarshalJSON() ([]byte, error) {
+func (s Media) MarshalJSON() ([]byte, error) {
 	type NoMethod Media
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObjectId: # gdata.* are outside protos with mising documentation
@@ -1109,9 +1109,9 @@ type ObjectId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObjectId) MarshalJSON() ([]byte, error) {
+func (s ObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: The product a case may be associated with.
@@ -1136,9 +1136,9 @@ type Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Product) MarshalJSON() ([]byte, error) {
+func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchCaseClassificationsResponse: The response message for
@@ -1166,9 +1166,9 @@ type SearchCaseClassificationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchCaseClassificationsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchCaseClassificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCaseClassificationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchCasesResponse: The response message for the SearchCases endpoint.
@@ -1196,9 +1196,9 @@ type SearchCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchCasesResponse) MarshalJSON() ([]byte, error) {
+func (s SearchCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShowFeedResponse: The response message for the ShowFeed endpoint.
@@ -1225,9 +1225,9 @@ type ShowFeedResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShowFeedResponse) MarshalJSON() ([]byte, error) {
+func (s ShowFeedResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ShowFeedResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextContent: Stores text attached to a support object.
@@ -1247,9 +1247,9 @@ type TextContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextContent) MarshalJSON() ([]byte, error) {
+func (s TextContent) MarshalJSON() ([]byte, error) {
 	type NoMethod TextContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkflowOperationMetadata: Metadata about the operation. Used to lookup the
@@ -1290,9 +1290,9 @@ type WorkflowOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkflowOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CaseClassificationsSearchCall struct {

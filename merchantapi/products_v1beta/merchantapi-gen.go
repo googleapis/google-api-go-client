@@ -464,9 +464,9 @@ type Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attributes) MarshalJSON() ([]byte, error) {
+func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Attributes) UnmarshalJSON(data []byte) error {
@@ -512,9 +512,9 @@ type Certification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Certification) MarshalJSON() ([]byte, error) {
+func (s Certification) MarshalJSON() ([]byte, error) {
 	type NoMethod Certification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudExportAdditionalProperties: Product property for the Cloud Retail API.
@@ -562,9 +562,9 @@ type CloudExportAdditionalProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudExportAdditionalProperties) MarshalJSON() ([]byte, error) {
+func (s CloudExportAdditionalProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudExportAdditionalProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CloudExportAdditionalProperties) UnmarshalJSON(data []byte) error {
@@ -612,9 +612,9 @@ type CustomAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationStatus: The destination status of the product status.
@@ -674,9 +674,9 @@ type DestinationStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
+func (s DestinationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -711,9 +711,9 @@ type FreeShippingThreshold struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FreeShippingThreshold) MarshalJSON() ([]byte, error) {
+func (s FreeShippingThreshold) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeShippingThreshold
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Installment: A message that represents installment.
@@ -740,9 +740,9 @@ type Installment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Installment) MarshalJSON() ([]byte, error) {
+func (s Installment) MarshalJSON() ([]byte, error) {
 	type NoMethod Installment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -771,9 +771,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemLevelIssue: The ItemLevelIssue of the product status.
@@ -850,9 +850,9 @@ type ItemLevelIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ItemLevelIssue) MarshalJSON() ([]byte, error) {
+func (s ItemLevelIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemLevelIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListProductsResponse: Response message for the ListProducts method.
@@ -879,9 +879,9 @@ type ListProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListProductsResponse) MarshalJSON() ([]byte, error) {
+func (s ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoyaltyPoints: A message that represents loyalty points.
@@ -908,9 +908,9 @@ type LoyaltyPoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
+func (s LoyaltyPoints) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyPoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
@@ -958,9 +958,9 @@ type LoyaltyProgram struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyProgram) MarshalJSON() ([]byte, error) {
+func (s LoyaltyProgram) MarshalJSON() ([]byte, error) {
 	type NoMethod LoyaltyProgram
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: The price represented as a number and currency.
@@ -985,9 +985,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: The processed product, built from multiple product inputs after
@@ -1062,9 +1062,9 @@ type Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Product) MarshalJSON() ([]byte, error) {
+func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductChange: The change that happened to the product including old value,
@@ -1122,9 +1122,9 @@ type ProductChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductChange) MarshalJSON() ([]byte, error) {
+func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductDetail: The product details.
@@ -1148,9 +1148,9 @@ type ProductDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductDetail) MarshalJSON() ([]byte, error) {
+func (s ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductDimension: The dimension of the product.
@@ -1174,9 +1174,9 @@ type ProductDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductDimension) MarshalJSON() ([]byte, error) {
+func (s ProductDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ProductDimension) UnmarshalJSON(data []byte) error {
@@ -1271,9 +1271,9 @@ type ProductInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductInput) MarshalJSON() ([]byte, error) {
+func (s ProductInput) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatus: The status of a product, data validation issues, that is,
@@ -1305,9 +1305,9 @@ type ProductStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatus) MarshalJSON() ([]byte, error) {
+func (s ProductStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
@@ -1354,9 +1354,9 @@ type ProductStatusChangeMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
+func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusChangeMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStructuredDescription: Structured description, for algorithmically
@@ -1382,9 +1382,9 @@ type ProductStructuredDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStructuredDescription) MarshalJSON() ([]byte, error) {
+func (s ProductStructuredDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStructuredDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductStructuredTitle: Structured title, for algorithmically (AI)-generated
@@ -1410,9 +1410,9 @@ type ProductStructuredTitle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductStructuredTitle) MarshalJSON() ([]byte, error) {
+func (s ProductStructuredTitle) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStructuredTitle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductWeight: The weight of the product.
@@ -1436,9 +1436,9 @@ type ProductWeight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductWeight) MarshalJSON() ([]byte, error) {
+func (s ProductWeight) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductWeight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ProductWeight) UnmarshalJSON(data []byte) error {
@@ -1517,9 +1517,9 @@ type Shipping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Shipping) MarshalJSON() ([]byte, error) {
+func (s Shipping) MarshalJSON() ([]byte, error) {
 	type NoMethod Shipping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShippingDimension: The ShippingDimension of the product.
@@ -1542,9 +1542,9 @@ type ShippingDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShippingDimension) MarshalJSON() ([]byte, error) {
+func (s ShippingDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod ShippingDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ShippingDimension) UnmarshalJSON(data []byte) error {
@@ -1581,9 +1581,9 @@ type ShippingWeight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShippingWeight) MarshalJSON() ([]byte, error) {
+func (s ShippingWeight) MarshalJSON() ([]byte, error) {
 	type NoMethod ShippingWeight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ShippingWeight) UnmarshalJSON(data []byte) error {
@@ -1628,9 +1628,9 @@ type SubscriptionCost struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionCost) MarshalJSON() ([]byte, error) {
+func (s SubscriptionCost) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionCost
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tax: The Tax of the product.
@@ -1667,9 +1667,9 @@ type Tax struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tax) MarshalJSON() ([]byte, error) {
+func (s Tax) MarshalJSON() ([]byte, error) {
 	type NoMethod Tax
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Tax) UnmarshalJSON(data []byte) error {
@@ -1705,9 +1705,9 @@ type UnitPricingBaseMeasure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnitPricingBaseMeasure) MarshalJSON() ([]byte, error) {
+func (s UnitPricingBaseMeasure) MarshalJSON() ([]byte, error) {
 	type NoMethod UnitPricingBaseMeasure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnitPricingMeasure: The UnitPricingMeasure of the product.
@@ -1729,9 +1729,9 @@ type UnitPricingMeasure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnitPricingMeasure) MarshalJSON() ([]byte, error) {
+func (s UnitPricingMeasure) MarshalJSON() ([]byte, error) {
 	type NoMethod UnitPricingMeasure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *UnitPricingMeasure) UnmarshalJSON(data []byte) error {

@@ -528,3 +528,58 @@ func TestParseMalformedJSONTag(t *testing.T) {
 		}
 	}
 }
+
+type ContainerType struct {
+	Map map[string]InnerType `json:"map,omitempty"`
+}
+
+type InnerType struct {
+	Name string `json:"name,omitempty"`
+	B    bool   `json:"b,omitempty"`
+
+	ForceSendFields []string `json:"-"`
+	NullFields      []string `json:"-"`
+}
+
+func (s InnerType) MarshalJSON() ([]byte, error) {
+	type NoMethod InnerType
+	return MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func TestMapForceSend(t *testing.T) {
+	test := &ContainerType{
+		Map: map[string]InnerType{
+			"bar": {
+				Name: "no bool",
+				B:    false,
+			},
+		},
+	}
+
+	b, err := json.Marshal(test)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := string(b)
+	if want := `{"map":{"bar":{"name":"no bool"}}}`; got != want {
+		t.Fatalf("got %q, want %q", got, want)
+	}
+
+	test2 := &ContainerType{
+		Map: map[string]InnerType{
+			"bar": {
+				Name:            "no bool",
+				B:               false,
+				ForceSendFields: []string{"B"},
+			},
+		},
+	}
+	b, err = json.Marshal(test2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got = string(b)
+	if want := `{"map":{"bar":{"b":false,"name":"no bool"}}}`; got != want {
+		t.Fatalf("got %q, want %q", got, want)
+	}
+}

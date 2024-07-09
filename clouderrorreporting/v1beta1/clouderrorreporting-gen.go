@@ -159,6 +159,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.Events = NewProjectsEventsService(s)
 	rs.GroupStats = NewProjectsGroupStatsService(s)
 	rs.Groups = NewProjectsGroupsService(s)
+	rs.Locations = NewProjectsLocationsService(s)
 	return rs
 }
 
@@ -170,6 +171,8 @@ type ProjectsService struct {
 	GroupStats *ProjectsGroupStatsService
 
 	Groups *ProjectsGroupsService
+
+	Locations *ProjectsLocationsService
 }
 
 func NewProjectsEventsService(s *Service) *ProjectsEventsService {
@@ -196,6 +199,51 @@ func NewProjectsGroupsService(s *Service) *ProjectsGroupsService {
 }
 
 type ProjectsGroupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Events = NewProjectsLocationsEventsService(s)
+	rs.GroupStats = NewProjectsLocationsGroupStatsService(s)
+	rs.Groups = NewProjectsLocationsGroupsService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Events *ProjectsLocationsEventsService
+
+	GroupStats *ProjectsLocationsGroupStatsService
+
+	Groups *ProjectsLocationsGroupsService
+}
+
+func NewProjectsLocationsEventsService(s *Service) *ProjectsLocationsEventsService {
+	rs := &ProjectsLocationsEventsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEventsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGroupStatsService(s *Service) *ProjectsLocationsGroupStatsService {
+	rs := &ProjectsLocationsGroupStatsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGroupStatsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGroupsService(s *Service) *ProjectsLocationsGroupsService {
+	rs := &ProjectsLocationsGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGroupsService struct {
 	s *Service
 }
 
@@ -287,13 +335,18 @@ type ErrorGroup struct {
 	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	GroupId string `json:"groupId,omitempty"`
 	// Name: The group resource name. Written as
-	// `projects/{projectID}/groups/{group_id}`. Example:
-	// `projects/my-project-123/groups/my-group` In the group resource name, the
-	// `group_id` is a unique identifier for a particular error group. The
-	// identifier is derived from key parts of the error-log content and is treated
-	// as Service Data. For information about how Service Data is handled, see
-	// Google Cloud Privacy Notice
-	// (https://cloud.google.com/terms/cloud-privacy-notice).
+	// `projects/{projectID}/groups/{group_id}` or
+	// `projects/{projectID}/locations/{location}/groups/{group_id}` Examples:
+	// `projects/my-project-123/groups/my-group`,
+	// `projects/my-project-123/locations/us-central1/groups/my-group` In the group
+	// resource name, the `group_id` is a unique identifier for a particular error
+	// group. The identifier is derived from key parts of the error-log content and
+	// is treated as Service Data. For information about how Service Data is
+	// handled, see Google Cloud Privacy Notice
+	// (https://cloud.google.com/terms/cloud-privacy-notice). For a list of
+	// supported locations, see Supported Regions
+	// (https://cloud.google.com/logging/docs/region-support). `global` is the
+	// default when unspecified.
 	Name string `json:"name,omitempty"`
 	// ResolutionStatus: Error group's resolution status. An unspecified resolution
 	// status will be interpreted as OPEN
@@ -718,9 +771,15 @@ type ProjectsDeleteEventsCall struct {
 // DeleteEvents: Deletes all error events of a given project.
 //
 //   - projectName: The resource name of the Google Cloud Platform project.
-//     Written as `projects/{projectID}`, where `{projectID}` is the Google Cloud
-//     Platform project ID (https://support.google.com/cloud/answer/6158840).
-//     Example: `projects/my-project-123`.
+//     Written as `projects/{projectID}` or
+//     `projects/{projectID}/locations/{location}`, where `{projectID}` is the
+//     Google Cloud Platform project ID
+//     (https://support.google.com/cloud/answer/6158840) and `{location}` is a
+//     Cloud region. Examples: `projects/my-project-123`,
+//     `projects/my-project-123/locations/global`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
 func (r *ProjectsService) DeleteEvents(projectName string) *ProjectsDeleteEventsCall {
 	c := &ProjectsDeleteEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -818,9 +877,15 @@ type ProjectsEventsListCall struct {
 // List: Lists the specified events.
 //
 //   - projectName: The resource name of the Google Cloud Platform project.
-//     Written as `projects/{projectID}`, where `{projectID}` is the Google Cloud
-//     Platform project ID (https://support.google.com/cloud/answer/6158840).
-//     Example: `projects/my-project-123`.
+//     Written as `projects/{projectID}` or
+//     `projects/{projectID}/locations/{location}`, where `{projectID}` is the
+//     Google Cloud Platform project ID
+//     (https://support.google.com/cloud/answer/6158840) and `{location}` is a
+//     Cloud region. Examples: `projects/my-project-123`,
+//     `projects/my-project-123/locations/global`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
 func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall {
 	c := &ProjectsEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1035,13 +1100,12 @@ type ProjectsEventsReportCall struct {
 // example: `POST
 // https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`
 // **Note:** [Error Reporting] (https://cloud.google.com/error-reporting) is a
-// global service built on Cloud Logging and can analyze log entries when all
-// of the following are true: * The log entries are stored in a log bucket in
-// the `global` location. * Customer-managed encryption keys (CMEK) are
-// disabled on the log bucket. * The log bucket satisfies one of the following:
-// * The log bucket is stored in the same project where the logs originated. *
-// The logs were routed to a project, and then that project stored those logs
-// in a log bucket that it owns.
+// service built on Cloud Logging and can analyze log entries when all of the
+// following are true: * Customer-managed encryption keys (CMEK) are disabled
+// on the log bucket. * The log bucket satisfies one of the following: * The
+// log bucket is stored in the same project where the logs originated. * The
+// logs were routed to a project, and then that project stored those logs in a
+// log bucket that it owns.
 //
 //   - projectName: The resource name of the Google Cloud Platform project.
 //     Written as `projects/{projectId}`, where `{projectId}` is the Google Cloud
@@ -1151,8 +1215,15 @@ type ProjectsGroupStatsListCall struct {
 //   - projectName: The resource name of the Google Cloud Platform project.
 //     Written as `projects/{projectID}` or `projects/{projectNumber}`, where
 //     `{projectID}` and `{projectNumber}` can be found in the Google Cloud
-//     console (https://support.google.com/cloud/answer/6158840). Examples:
-//     `projects/my-project-123`, `projects/5551234`.
+//     console (https://support.google.com/cloud/answer/6158840). It may also
+//     include a location, such as `projects/{projectID}/locations/{location}`
+//     where `{location}` is a cloud region. Examples: `projects/my-project-123`,
+//     `projects/5551234`, `projects/my-project-123/locations/us-central1`,
+//     `projects/5551234/locations/us-central1`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified. Use `-` as a wildcard to request group stats
+//     from all regions.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
 	c := &ProjectsGroupStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1426,15 +1497,20 @@ type ProjectsGroupsGetCall struct {
 
 // Get: Get the specified group.
 //
-//   - groupName: The group resource name. Written as
-//     `projects/{projectID}/groups/{group_id}`. Call groupStats.list to return a
-//     list of groups belonging to this project. Example:
-//     `projects/my-project-123/groups/my-group` In the group resource name, the
-//     `group_id` is a unique identifier for a particular error group. The
-//     identifier is derived from key parts of the error-log content and is
-//     treated as Service Data. For information about how Service Data is
-//     handled, see Google Cloud Privacy Notice
-//     (https://cloud.google.com/terms/cloud-privacy-notice).
+//   - groupName: The group resource name. Written as either
+//     `projects/{projectID}/groups/{group_id}` or
+//     `projects/{projectID}/locations/{location}/groups/{group_id}`. Call
+//     groupStats.list to return a list of groups belonging to this project.
+//     Examples: `projects/my-project-123/groups/my-group`,
+//     `projects/my-project-123/locations/global/groups/my-group` In the group
+//     resource name, the `group_id` is a unique identifier for a particular
+//     error group. The identifier is derived from key parts of the error-log
+//     content and is treated as Service Data. For information about how Service
+//     Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice). For a list of
+//     supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
 func (r *ProjectsGroupsService) Get(groupNameid string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupNameid = groupNameid
@@ -1543,13 +1619,18 @@ type ProjectsGroupsUpdateCall struct {
 // not exist.
 //
 //   - name: The group resource name. Written as
-//     `projects/{projectID}/groups/{group_id}`. Example:
-//     `projects/my-project-123/groups/my-group` In the group resource name, the
-//     `group_id` is a unique identifier for a particular error group. The
-//     identifier is derived from key parts of the error-log content and is
-//     treated as Service Data. For information about how Service Data is
-//     handled, see Google Cloud Privacy Notice
-//     (https://cloud.google.com/terms/cloud-privacy-notice).
+//     `projects/{projectID}/groups/{group_id}` or
+//     `projects/{projectID}/locations/{location}/groups/{group_id}` Examples:
+//     `projects/my-project-123/groups/my-group`,
+//     `projects/my-project-123/locations/us-central1/groups/my-group` In the
+//     group resource name, the `group_id` is a unique identifier for a
+//     particular error group. The identifier is derived from key parts of the
+//     error-log content and is treated as Service Data. For information about
+//     how Service Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice). For a list of
+//     supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
 func (r *ProjectsGroupsService) Update(nameid string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1608,6 +1689,849 @@ func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error)
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ErrorGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDeleteEventsCall struct {
+	s           *Service
+	projectName string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// DeleteEvents: Deletes all error events of a given project.
+//
+//   - projectName: The resource name of the Google Cloud Platform project.
+//     Written as `projects/{projectID}` or
+//     `projects/{projectID}/locations/{location}`, where `{projectID}` is the
+//     Google Cloud Platform project ID
+//     (https://support.google.com/cloud/answer/6158840) and `{location}` is a
+//     Cloud region. Examples: `projects/my-project-123`,
+//     `projects/my-project-123/locations/global`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
+func (r *ProjectsLocationsService) DeleteEvents(projectName string) *ProjectsLocationsDeleteEventsCall {
+	c := &ProjectsLocationsDeleteEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectName = projectName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeleteEventsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeleteEventsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeleteEventsCall) Context(ctx context.Context) *ProjectsLocationsDeleteEventsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeleteEventsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+projectName}/events")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.locations.deleteEvents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeleteEventsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeleteEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsEventsListCall struct {
+	s            *Service
+	projectName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the specified events.
+//
+//   - projectName: The resource name of the Google Cloud Platform project.
+//     Written as `projects/{projectID}` or
+//     `projects/{projectID}/locations/{location}`, where `{projectID}` is the
+//     Google Cloud Platform project ID
+//     (https://support.google.com/cloud/answer/6158840) and `{location}` is a
+//     Cloud region. Examples: `projects/my-project-123`,
+//     `projects/my-project-123/locations/global`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
+func (r *ProjectsLocationsEventsService) List(projectName string) *ProjectsLocationsEventsListCall {
+	c := &ProjectsLocationsEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectName = projectName
+	return c
+}
+
+// GroupId sets the optional parameter "groupId": Required. The group for which
+// events shall be returned. The `group_id` is a unique identifier for a
+// particular error group. The identifier is derived from key parts of the
+// error-log content and is treated as Service Data. For information about how
+// Service Data is handled, see Google Cloud Privacy Notice
+// (https://cloud.google.com/terms/cloud-privacy-notice).
+func (c *ProjectsLocationsEventsListCall) GroupId(groupId string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("groupId", groupId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return per response.
+func (c *ProjectsLocationsEventsListCall) PageSize(pageSize int64) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A `next_page_token`
+// provided by a previous response.
+func (c *ProjectsLocationsEventsListCall) PageToken(pageToken string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ServiceFilterResourceType sets the optional parameter
+// "serviceFilter.resourceType": The exact value to match against
+// `ServiceContext.resource_type`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type)
+// .
+func (c *ProjectsLocationsEventsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
+	return c
+}
+
+// ServiceFilterService sets the optional parameter "serviceFilter.service":
+// The exact value to match against `ServiceContext.service`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).
+func (c *ProjectsLocationsEventsListCall) ServiceFilterService(serviceFilterService string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
+	return c
+}
+
+// ServiceFilterVersion sets the optional parameter "serviceFilter.version":
+// The exact value to match against `ServiceContext.version`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).
+func (c *ProjectsLocationsEventsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
+	return c
+}
+
+// TimeRangePeriod sets the optional parameter "timeRange.period": Restricts
+// the query to the specified time range.
+//
+// Possible values:
+//
+//	"PERIOD_UNSPECIFIED" - Do not use.
+//	"PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended minimum
+//
+// timed count duration: 1 min.
+//
+//	"PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended minimum
+//
+// timed count duration: 10 min.
+//
+//	"PERIOD_1_DAY" - Retrieve data for the last day. Recommended minimum timed
+//
+// count duration: 1 hour.
+//
+//	"PERIOD_1_WEEK" - Retrieve data for the last week. Recommended minimum
+//
+// timed count duration: 6 hours.
+//
+//	"PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended minimum
+//
+// timed count duration: 1 day.
+func (c *ProjectsLocationsEventsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("timeRange.period", timeRangePeriod)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEventsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsEventsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEventsListCall) Context(ctx context.Context) *ProjectsLocationsEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEventsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEventsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+projectName}/events")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.locations.events.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEventsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEventsListCall) Pages(ctx context.Context, f func(*ListEventsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGroupStatsListCall struct {
+	s            *Service
+	projectName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the specified groups.
+//
+//   - projectName: The resource name of the Google Cloud Platform project.
+//     Written as `projects/{projectID}` or `projects/{projectNumber}`, where
+//     `{projectID}` and `{projectNumber}` can be found in the Google Cloud
+//     console (https://support.google.com/cloud/answer/6158840). It may also
+//     include a location, such as `projects/{projectID}/locations/{location}`
+//     where `{location}` is a cloud region. Examples: `projects/my-project-123`,
+//     `projects/5551234`, `projects/my-project-123/locations/us-central1`,
+//     `projects/5551234/locations/us-central1`. For a list of supported
+//     locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified. Use `-` as a wildcard to request group stats
+//     from all regions.
+func (r *ProjectsLocationsGroupStatsService) List(projectName string) *ProjectsLocationsGroupStatsListCall {
+	c := &ProjectsLocationsGroupStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectName = projectName
+	return c
+}
+
+// Alignment sets the optional parameter "alignment": The alignment of the
+// timed counts to be returned. Default is `ALIGNMENT_EQUAL_AT_END`.
+//
+// Possible values:
+//
+//	"ERROR_COUNT_ALIGNMENT_UNSPECIFIED" - No alignment specified.
+//	"ALIGNMENT_EQUAL_ROUNDED" - The time periods shall be consecutive, have
+//
+// width equal to the requested duration, and be aligned at the alignment_time
+// provided in the request. The alignment_time does not have to be inside the
+// query period but even if it is outside, only time periods are returned which
+// overlap with the query period. A rounded alignment will typically result in
+// a different size of the first or the last time period.
+//
+//	"ALIGNMENT_EQUAL_AT_END" - The time periods shall be consecutive, have
+//
+// width equal to the requested duration, and be aligned at the end of the
+// requested time period. This can result in a different size of the first time
+// period.
+func (c *ProjectsLocationsGroupStatsListCall) Alignment(alignment string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("alignment", alignment)
+	return c
+}
+
+// AlignmentTime sets the optional parameter "alignmentTime": Time where the
+// timed counts shall be aligned if rounded alignment is chosen. Default is
+// 00:00 UTC.
+func (c *ProjectsLocationsGroupStatsListCall) AlignmentTime(alignmentTime string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("alignmentTime", alignmentTime)
+	return c
+}
+
+// GroupId sets the optional parameter "groupId": List all ErrorGroupStats with
+// these IDs. The `group_id` is a unique identifier for a particular error
+// group. The identifier is derived from key parts of the error-log content and
+// is treated as Service Data. For information about how Service Data is
+// handled, see [Google Cloud Privacy Notice]
+// (https://cloud.google.com/terms/cloud-privacy-notice).
+func (c *ProjectsLocationsGroupStatsListCall) GroupId(groupId ...string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.SetMulti("groupId", append([]string{}, groupId...))
+	return c
+}
+
+// Order sets the optional parameter "order": The sort order in which the
+// results are returned. Default is `COUNT_DESC`.
+//
+// Possible values:
+//
+//	"GROUP_ORDER_UNSPECIFIED" - No group order specified.
+//	"COUNT_DESC" - Total count of errors in the given time window in
+//
+// descending order.
+//
+//	"LAST_SEEN_DESC" - Timestamp when the group was last seen in the given
+//
+// time window in descending order.
+//
+//	"CREATED_DESC" - Timestamp when the group was created in descending order.
+//	"AFFECTED_USERS_DESC" - Number of affected users in the given time window
+//
+// in descending order.
+func (c *ProjectsLocationsGroupStatsListCall) Order(order string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("order", order)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return per response. Default is 20.
+func (c *ProjectsLocationsGroupStatsListCall) PageSize(pageSize int64) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A next_page_token
+// provided by a previous response. To view additional results, pass this token
+// along with the identical query parameters as the first request.
+func (c *ProjectsLocationsGroupStatsListCall) PageToken(pageToken string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ServiceFilterResourceType sets the optional parameter
+// "serviceFilter.resourceType": The exact value to match against
+// `ServiceContext.resource_type`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type)
+// .
+func (c *ProjectsLocationsGroupStatsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
+	return c
+}
+
+// ServiceFilterService sets the optional parameter "serviceFilter.service":
+// The exact value to match against `ServiceContext.service`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).
+func (c *ProjectsLocationsGroupStatsListCall) ServiceFilterService(serviceFilterService string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
+	return c
+}
+
+// ServiceFilterVersion sets the optional parameter "serviceFilter.version":
+// The exact value to match against `ServiceContext.version`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).
+func (c *ProjectsLocationsGroupStatsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
+	return c
+}
+
+// TimeRangePeriod sets the optional parameter "timeRange.period": Restricts
+// the query to the specified time range.
+//
+// Possible values:
+//
+//	"PERIOD_UNSPECIFIED" - Do not use.
+//	"PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended minimum
+//
+// timed count duration: 1 min.
+//
+//	"PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended minimum
+//
+// timed count duration: 10 min.
+//
+//	"PERIOD_1_DAY" - Retrieve data for the last day. Recommended minimum timed
+//
+// count duration: 1 hour.
+//
+//	"PERIOD_1_WEEK" - Retrieve data for the last week. Recommended minimum
+//
+// timed count duration: 6 hours.
+//
+//	"PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended minimum
+//
+// timed count duration: 1 day.
+func (c *ProjectsLocationsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("timeRange.period", timeRangePeriod)
+	return c
+}
+
+// TimedCountDuration sets the optional parameter "timedCountDuration": The
+// preferred duration for a single returned TimedCount. If not set, no timed
+// counts are returned.
+func (c *ProjectsLocationsGroupStatsListCall) TimedCountDuration(timedCountDuration string) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("timedCountDuration", timedCountDuration)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGroupStatsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGroupStatsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGroupStatsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGroupStatsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGroupStatsListCall) Context(ctx context.Context) *ProjectsLocationsGroupStatsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGroupStatsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+projectName}/groupStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.locations.groupStats.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGroupStatsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGroupStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGroupStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGroupStatsListCall) Pages(ctx context.Context, f func(*ListGroupStatsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGroupsGetCall struct {
+	s            *Service
+	groupNameid  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the specified group.
+//
+//   - groupName: The group resource name. Written as either
+//     `projects/{projectID}/groups/{group_id}` or
+//     `projects/{projectID}/locations/{location}/groups/{group_id}`. Call
+//     groupStats.list to return a list of groups belonging to this project.
+//     Examples: `projects/my-project-123/groups/my-group`,
+//     `projects/my-project-123/locations/global/groups/my-group` In the group
+//     resource name, the `group_id` is a unique identifier for a particular
+//     error group. The identifier is derived from key parts of the error-log
+//     content and is treated as Service Data. For information about how Service
+//     Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice). For a list of
+//     supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
+func (r *ProjectsLocationsGroupsService) Get(groupNameid string) *ProjectsLocationsGroupsGetCall {
+	c := &ProjectsLocationsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.groupNameid = groupNameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+groupName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"groupName": c.groupNameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.locations.groups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ErrorGroup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ErrorGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsGroupsUpdateCall struct {
+	s          *Service
+	nameid     string
+	errorgroup *ErrorGroup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Replace the data for the specified group. Fails if the group does
+// not exist.
+//
+//   - name: The group resource name. Written as
+//     `projects/{projectID}/groups/{group_id}` or
+//     `projects/{projectID}/locations/{location}/groups/{group_id}` Examples:
+//     `projects/my-project-123/groups/my-group`,
+//     `projects/my-project-123/locations/us-central1/groups/my-group` In the
+//     group resource name, the `group_id` is a unique identifier for a
+//     particular error group. The identifier is derived from key parts of the
+//     error-log content and is treated as Service Data. For information about
+//     how Service Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice). For a list of
+//     supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support). `global` is the
+//     default when unspecified.
+func (r *ProjectsLocationsGroupsService) Update(nameid string, errorgroup *ErrorGroup) *ProjectsLocationsGroupsUpdateCall {
+	c := &ProjectsLocationsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.errorgroup = errorgroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGroupsUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGroupsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGroupsUpdateCall) Context(ctx context.Context) *ProjectsLocationsGroupsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.errorgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouderrorreporting.projects.locations.groups.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ErrorGroup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

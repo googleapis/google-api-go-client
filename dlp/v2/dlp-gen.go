@@ -1518,9 +1518,9 @@ type GooglePrivacyDlpV2CloudStorageDiscoveryTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageDiscoveryTarget) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageDiscoveryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageDiscoveryTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStorageFileSet: Message representing a set of files
@@ -1691,9 +1691,9 @@ type GooglePrivacyDlpV2CloudStorageRegex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageRegex) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageRegex) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageRegex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStorageRegexFileSet: Message representing a set of
@@ -1773,9 +1773,9 @@ type GooglePrivacyDlpV2CloudStorageResourceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageResourceReference) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageResourceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageResourceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Color: Represents a color in the RGB color space.
@@ -3989,9 +3989,9 @@ type GooglePrivacyDlpV2DiscoveryCloudStorageConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudStorageConditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryCloudStorageFilter: Determines which buckets will
@@ -4025,9 +4025,9 @@ type GooglePrivacyDlpV2DiscoveryCloudStorageFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudStorageFilter) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence: How often existing
@@ -4066,9 +4066,9 @@ type GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryConfig: Configuration for discovery to scan
@@ -4166,9 +4166,9 @@ type GooglePrivacyDlpV2DiscoveryFileStoreConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryFileStoreConditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryFileStoreConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryFileStoreConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryGenerationCadence: What must take place for a
@@ -4233,9 +4233,9 @@ type GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoverySchemaModifiedCadence: The cadence at which to
@@ -4915,9 +4915,9 @@ type GooglePrivacyDlpV2FileStoreCollection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FileStoreCollection) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FileStoreCollection) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileStoreCollection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FileStoreDataProfile: The profile for a file store. *
@@ -5063,9 +5063,9 @@ type GooglePrivacyDlpV2FileStoreRegex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FileStoreRegex) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FileStoreRegex) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileStoreRegex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FileStoreRegexes: A collection of regular expressions to
@@ -5088,9 +5088,9 @@ type GooglePrivacyDlpV2FileStoreRegexes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FileStoreRegexes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FileStoreRegexes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileStoreRegexes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Finding: Represents a piece of potentially sensitive

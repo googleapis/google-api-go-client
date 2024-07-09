@@ -1468,7 +1468,8 @@ type GoogleFirestoreAdminV1BackupSchedule struct {
 	// `projects/{project}/databases/{database}/backupSchedules/{backup_schedule}`
 	Name string `json:"name,omitempty"`
 	// Retention: At what relative time in the future, compared to its creation
-	// time, the backup should be deleted, e.g. keep backups for 7 days.
+	// time, the backup should be deleted, e.g. keep backups for 7 days. The
+	// maximum supported retention is 14 weeks.
 	Retention string `json:"retention,omitempty"`
 	// UpdateTime: Output only. The timestamp at which this backup schedule was
 	// most recently updated. When a backup schedule is first created, this is the

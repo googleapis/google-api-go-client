@@ -293,9 +293,9 @@ type AssetLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetLocation) MarshalJSON() ([]byte, error) {
+func (s AssetLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -490,9 +490,9 @@ type BlobstoreLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlobstoreLocation) MarshalJSON() ([]byte, error) {
+func (s BlobstoreLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod BlobstoreLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -515,9 +515,9 @@ type CloudAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAsset) MarshalJSON() ([]byte, error) {
+func (s CloudAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CloudAssetComposition struct {
@@ -535,9 +535,9 @@ type CloudAssetComposition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAssetComposition) MarshalJSON() ([]byte, error) {
+func (s CloudAssetComposition) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAssetComposition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CryptoKeyConfig: The crypto key configuration. This field is used by the
@@ -580,9 +580,9 @@ type DirectLocationAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectLocationAssignment) MarshalJSON() ([]byte, error) {
+func (s DirectLocationAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectLocationAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsPeering: DNS peering configuration. These configurations are used to
@@ -724,9 +724,9 @@ type ExtraParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtraParameter) MarshalJSON() ([]byte, error) {
+func (s ExtraParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtraParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: Represents a Data Fusion instance.
@@ -944,9 +944,9 @@ type IsolationExpectations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IsolationExpectations) MarshalJSON() ([]byte, error) {
+func (s IsolationExpectations) MarshalJSON() ([]byte, error) {
 	type NoMethod IsolationExpectations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAvailableVersionsResponse: Response message for the list available
@@ -1156,9 +1156,9 @@ type LocationAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationAssignment) MarshalJSON() ([]byte, error) {
+func (s LocationAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationData struct {
@@ -1181,9 +1181,9 @@ type LocationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationData) MarshalJSON() ([]byte, error) {
+func (s LocationData) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenancePolicy: Maintenance policy of the instance.
@@ -1399,9 +1399,9 @@ type PlacerLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlacerLocation) MarshalJSON() ([]byte, error) {
+func (s PlacerLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacerLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1594,9 +1594,9 @@ type RegionalMigDistributionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
+func (s RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalMigDistributionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestartInstanceRequest: Request message for restarting a Data Fusion
@@ -1652,9 +1652,9 @@ type SpannerLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpannerLocation) MarshalJSON() ([]byte, error) {
+func (s SpannerLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod SpannerLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1706,9 +1706,9 @@ type TenantProjectProxy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TenantProjectProxy) MarshalJSON() ([]byte, error) {
+func (s TenantProjectProxy) MarshalJSON() ([]byte, error) {
 	type NoMethod TenantProjectProxy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1844,9 +1844,9 @@ type ZoneConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ZoneConfiguration) MarshalJSON() ([]byte, error) {
+func (s ZoneConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ZoneConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

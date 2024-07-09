@@ -1,5 +1,25 @@
 # Changes
 
+## [0.188.0](https://github.com/googleapis/google-api-go-client/compare/v0.187.0...v0.188.0) (2024-07-09)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2665](https://github.com/googleapis/google-api-go-client/issues/2665)) ([e84fa65](https://github.com/googleapis/google-api-go-client/commit/e84fa6508ebc498c3435668c48001185fbc9ce83))
+* **all:** Auto-regenerate discovery clients ([#2669](https://github.com/googleapis/google-api-go-client/issues/2669)) ([6df3749](https://github.com/googleapis/google-api-go-client/commit/6df37492965b6323c6bcefa2a1ccd192b92981b4))
+* **all:** Auto-regenerate discovery clients ([#2671](https://github.com/googleapis/google-api-go-client/issues/2671)) ([0d54a85](https://github.com/googleapis/google-api-go-client/commit/0d54a8540060cc79f830892fdd1fba46d73034c1))
+* **all:** Auto-regenerate discovery clients ([#2673](https://github.com/googleapis/google-api-go-client/issues/2673)) ([88240e3](https://github.com/googleapis/google-api-go-client/commit/88240e3d98f3e944398c50379372eb071ebac0a2))
+* **all:** Auto-regenerate discovery clients ([#2674](https://github.com/googleapis/google-api-go-client/issues/2674)) ([d465cec](https://github.com/googleapis/google-api-go-client/commit/d465cec68dbc2616c665e6ea240cd1e32c01418d))
+* **all:** Auto-regenerate discovery clients ([#2675](https://github.com/googleapis/google-api-go-client/issues/2675)) ([a9177bd](https://github.com/googleapis/google-api-go-client/commit/a9177bdbdbba60c86b22bda4a7061c31d3485e4a))
+* **all:** Auto-regenerate discovery clients ([#2677](https://github.com/googleapis/google-api-go-client/issues/2677)) ([5dd2fb2](https://github.com/googleapis/google-api-go-client/commit/5dd2fb237802349250c97c0ebdbb54cbd088884d))
+* **all:** Auto-regenerate discovery clients ([#2678](https://github.com/googleapis/google-api-go-client/issues/2678)) ([d17f6be](https://github.com/googleapis/google-api-go-client/commit/d17f6beb5a531910b563a4383acaa383dbd3ee43))
+
+
+### Bug Fixes
+
+* Allow ForceSendFields to work for map types ([#2670](https://github.com/googleapis/google-api-go-client/issues/2670)) ([40b5113](https://github.com/googleapis/google-api-go-client/commit/40b5113127c4d66d533df16fe201898855c7c0cc))
+* Check []bytes &gt; 0 instead of nil ([#2667](https://github.com/googleapis/google-api-go-client/issues/2667)) ([711eb91](https://github.com/googleapis/google-api-go-client/commit/711eb913fe455ffe5c9d717b44762801820c0e8c)), refs [#2647](https://github.com/googleapis/google-api-go-client/issues/2647)
+
 ## [0.187.0](https://github.com/googleapis/google-api-go-client/compare/v0.186.0...v0.187.0) (2024-07-01)
 
 

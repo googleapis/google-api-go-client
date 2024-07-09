@@ -3927,7 +3927,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Field mask is used to specify the fields to be overwritten in the FeatureGroup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels`",
+                      "description": "Field mask is used to specify the fields to be overwritten in the FeatureGroup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `description` * `big_query` * `big_query.entity_id_columns`",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -4106,7 +4106,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring` (Not supported for FeatureRegistry Feature)",
+                          "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring` (Not supported for FeatureRegistryService Feature) * `point_of_contact` (Not supported for FeaturestoreService FeatureStore)",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -4534,7 +4534,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Field mask is used to specify the fields to be overwritten in the FeatureOnlineStore resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `big_query_source` * `bigtable` * `labels` * `sync_config`",
+                      "description": "Field mask is used to specify the fields to be overwritten in the FeatureOnlineStore resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `description` * `bigtable` * `bigtable.auto_scaling` * `bigtable.enable_multi_region_replica`",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -4734,7 +4734,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "Field mask is used to specify the fields to be overwritten in the FeatureView resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `serviceAgentType`",
+                          "description": "Field mask is used to specify the fields to be overwritten in the FeatureView resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `service_agent_type` * `big_query_source` * `big_query_source.uri` * `big_query_source.entity_id_columns` * `feature_registry_source` * `feature_registry_source.feature_groups` * `sync_config` * `sync_config.cron`",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -6101,7 +6101,7 @@
                               "type": "string"
                             },
                             "updateMask": {
-                              "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring` (Not supported for FeatureRegistry Feature)",
+                              "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring` (Not supported for FeatureRegistryService Feature) * `point_of_contact` (Not supported for FeaturestoreService FeatureStore)",
                               "format": "google-fieldmask",
                               "location": "query",
                               "type": "string"
@@ -16810,11 +16810,11 @@
       }
     }
   },
-  "revision": "20240628",
+  "revision": "20240703",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
-      "description": "Generate video response.",
+      "description": "Next ID: 8 Generate video response.",
       "id": "CloudAiLargeModelsVisionGenerateVideoResponse",
       "properties": {
         "generatedSamples": {
@@ -25409,6 +25409,22 @@
             "TPU_V4_POD",
             "TPU_V5_LITEPOD"
           ],
+          "enumDeprecated": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
           "enumDescriptions": [
             "Unspecified accelerator type, which means no accelerator.",
             "Nvidia Tesla K80 GPU.",
@@ -25961,12 +25977,12 @@
           "description": "The schemata that describe formats of the Model's predictions and explanations as given and returned via PredictionService.Predict and PredictionService.Explain."
         },
         "satisfiesPzi": {
-          "description": "Output only. A read only boolean field reflecting Zone Isolation status of the model. It's false by default. Since Model is a type ZICY 4.2 resource, the field is an aggregated value of ZI status of its underlying dependencies.",
+          "description": "Output only. Reserved for future use.",
           "readOnly": true,
           "type": "boolean"
         },
         "satisfiesPzs": {
-          "description": "Output only. A read only boolean field reflecting ZS status of the model. It's false by default. Since Model is a type ZICY 4.2 resource, the field is an aggregated value of ZS status of its underlying dependencies.",
+          "description": "Output only. Reserved for future use.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -30238,7 +30254,7 @@
       "properties": {
         "autoscalingSpec": {
           "$ref": "GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec",
-          "description": "Optional. Optional spec to configure GKE autoscaling"
+          "description": "Optional. Optional spec to configure GKE or Ray-on-Vertex autoscaling"
         },
         "diskSpec": {
           "$ref": "GoogleCloudAiplatformV1DiskSpec",
@@ -30276,7 +30292,7 @@
           "type": "string"
         },
         "minReplicaCount": {
-          "description": "Optional. min replicas in the node pool, must be ≤ replica_count and \u003c max_replica_count or will throw error",
+          "description": "Optional. min replicas in the node pool, must be ≤ replica_count and \u003c max_replica_count or will throw error. For autoscaling enabled Ray-on-Vertex, we allow min_replica_count of a resource_pool to be 0 to match the OSS Ray behavior(https://docs.ray.io/en/latest/cluster/vms/user-guides/configuring-autoscaling.html#cluster-config-parameters). As for Persistent Resource, the min_replica_count must be \u003e 0, we added a corresponding validation inside CreatePersistentResourceRequestValidator.java.",
           "format": "int64",
           "type": "string"
         }
@@ -36145,7 +36161,14 @@
       "id": "GoogleCloudAiplatformV1SupervisedTuningDataStats",
       "properties": {
         "totalBillableCharacterCount": {
+          "deprecated": true,
           "description": "Output only. Number of billable characters in the tuning dataset.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "totalBillableTokenCount": {
+          "description": "Output only. Number of billable tokens in the tuning dataset.",
           "format": "int64",
           "readOnly": true,
           "type": "string"
@@ -36519,6 +36542,16 @@
           "format": "int32",
           "readOnly": true,
           "type": "integer"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Reserved for future use.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Reserved for future use.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. Timestamp when this Tensorboard was last updated.",

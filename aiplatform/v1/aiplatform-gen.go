@@ -1337,7 +1337,8 @@ type PublishersModelsService struct {
 	s *Service
 }
 
-// CloudAiLargeModelsVisionGenerateVideoResponse: Generate video response.
+// CloudAiLargeModelsVisionGenerateVideoResponse: Next ID: 8 Generate video
+// response.
 type CloudAiLargeModelsVisionGenerateVideoResponse struct {
 	// GeneratedSamples: The generates samples.
 	GeneratedSamples []*CloudAiLargeModelsVisionMedia `json:"generatedSamples,omitempty"`
@@ -14743,15 +14744,9 @@ type GoogleCloudAiplatformV1Model struct {
 	// predictions and explanations as given and returned via
 	// PredictionService.Predict and PredictionService.Explain.
 	PredictSchemata *GoogleCloudAiplatformV1PredictSchemata `json:"predictSchemata,omitempty"`
-	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
-	// Isolation status of the model. It's false by default. Since Model is a type
-	// ZICY 4.2 resource, the field is an aggregated value of ZI status of its
-	// underlying dependencies.
+	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. A read only boolean field reflecting ZS status of
-	// the model. It's false by default. Since Model is a type ZICY 4.2 resource,
-	// the field is an aggregated value of ZS status of its underlying
-	// dependencies.
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SupportedDeploymentResourcesTypes: Output only. When this Model is deployed,
 	// its prediction resources are described by the `prediction_resources` field
@@ -20540,7 +20535,8 @@ type GoogleCloudAiplatformV1RemoveDatapointsResponse struct {
 // resources of the same type, for example machine type, disk, and
 // accelerators, in a PersistentResource.
 type GoogleCloudAiplatformV1ResourcePool struct {
-	// AutoscalingSpec: Optional. Optional spec to configure GKE autoscaling
+	// AutoscalingSpec: Optional. Optional spec to configure GKE or Ray-on-Vertex
+	// autoscaling
 	AutoscalingSpec *GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec `json:"autoscalingSpec,omitempty"`
 	// DiskSpec: Optional. Disk spec for the machine in this node pool.
 	DiskSpec *GoogleCloudAiplatformV1DiskSpec `json:"diskSpec,omitempty"`
@@ -20581,7 +20577,13 @@ type GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec struct {
 	// replica_count and > min_replica_count or will throw error
 	MaxReplicaCount int64 `json:"maxReplicaCount,omitempty,string"`
 	// MinReplicaCount: Optional. min replicas in the node pool, must be ≤
-	// replica_count and < max_replica_count or will throw error
+	// replica_count and < max_replica_count or will throw error. For autoscaling
+	// enabled Ray-on-Vertex, we allow min_replica_count of a resource_pool to be 0
+	// to match the OSS Ray
+	// behavior(https://docs.ray.io/en/latest/cluster/vms/user-guides/configuring-au
+	// toscaling.html#cluster-config-parameters). As for Persistent Resource, the
+	// min_replica_count must be > 0, we added a corresponding validation inside
+	// CreatePersistentResourceRequestValidator.java.
 	MinReplicaCount int64 `json:"minReplicaCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxReplicaCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -29939,6 +29941,9 @@ type GoogleCloudAiplatformV1SupervisedTuningDataStats struct {
 	// TotalBillableCharacterCount: Output only. Number of billable characters in
 	// the tuning dataset.
 	TotalBillableCharacterCount int64 `json:"totalBillableCharacterCount,omitempty,string"`
+	// TotalBillableTokenCount: Output only. Number of billable tokens in the
+	// tuning dataset.
+	TotalBillableTokenCount int64 `json:"totalBillableTokenCount,omitempty,string"`
 	// TotalTuningCharacterCount: Output only. Number of tuning characters in the
 	// tuning dataset.
 	TotalTuningCharacterCount int64 `json:"totalTuningCharacterCount,omitempty,string"`
@@ -30305,6 +30310,10 @@ type GoogleCloudAiplatformV1Tensorboard struct {
 	Name string `json:"name,omitempty"`
 	// RunCount: Output only. The number of Runs stored in this Tensorboard.
 	RunCount int64 `json:"runCount,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Timestamp when this Tensorboard was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -46598,7 +46607,8 @@ func (r *ProjectsLocationsFeatureGroupsService) Patch(name string, googlecloudai
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the user does not provide a mask then only the non-empty fields
 // present in the request will be overwritten. Set the update_mask to `*` to
-// override all fields. Updatable fields: * `labels`
+// override all fields. Updatable fields: * `labels` * `description` *
+// `big_query` * `big_query.entity_id_columns`
 func (c *ProjectsLocationsFeatureGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeatureGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -47243,7 +47253,8 @@ func (r *ProjectsLocationsFeatureGroupsFeaturesService) Patch(name string, googl
 // user does not provide a mask then only the non-empty fields present in the
 // request will be overwritten. Set the update_mask to `*` to override all
 // fields. Updatable fields: * `description` * `labels` * `disable_monitoring`
-// (Not supported for FeatureRegistry Feature)
+// (Not supported for FeatureRegistryService Feature) * `point_of_contact` (Not
+// supported for FeaturestoreService FeatureStore)
 func (c *ProjectsLocationsFeatureGroupsFeaturesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeatureGroupsFeaturesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -48806,8 +48817,9 @@ func (r *ProjectsLocationsFeatureOnlineStoresService) Patch(name string, googlec
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the user does not provide a mask then only the non-empty fields
 // present in the request will be overwritten. Set the update_mask to `*` to
-// override all fields. Updatable fields: * `big_query_source` * `bigtable` *
-// `labels` * `sync_config`
+// override all fields. Updatable fields: * `labels` * `description` *
+// `bigtable` * `bigtable.auto_scaling` *
+// `bigtable.enable_multi_region_replica`
 func (c *ProjectsLocationsFeatureOnlineStoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeatureOnlineStoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -49534,7 +49546,11 @@ func (r *ProjectsLocationsFeatureOnlineStoresFeatureViewsService) Patch(name str
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the user does not provide a mask then only the non-empty fields
 // present in the request will be overwritten. Set the update_mask to `*` to
-// override all fields. Updatable fields: * `labels` * `serviceAgentType`
+// override all fields. Updatable fields: * `labels` * `service_agent_type` *
+// `big_query_source` * `big_query_source.uri` *
+// `big_query_source.entity_id_columns` * `feature_registry_source` *
+// `feature_registry_source.feature_groups` * `sync_config` *
+// `sync_config.cron`
 func (c *ProjectsLocationsFeatureOnlineStoresFeatureViewsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeatureOnlineStoresFeatureViewsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -54606,7 +54622,8 @@ func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Patch(name st
 // user does not provide a mask then only the non-empty fields present in the
 // request will be overwritten. Set the update_mask to `*` to override all
 // fields. Updatable fields: * `description` * `labels` * `disable_monitoring`
-// (Not supported for FeatureRegistry Feature)
+// (Not supported for FeatureRegistryService Feature) * `point_of_contact` (Not
+// supported for FeaturestoreService FeatureStore)
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -2309,36 +2309,6 @@ func (s ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation: Represents a storage
-// location in Cloud Storage
-type ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation struct {
-	// Bucket: Cloud Storage bucket. See
-	// https://cloud.google.com/storage/docs/naming#requirements
-	Bucket string `json:"bucket,omitempty"`
-	// Generation: Cloud Storage generation for the object. If the generation is
-	// omitted, the latest generation will be used.
-	Generation int64 `json:"generation,omitempty,string"`
-	// Object: Cloud Storage object. See
-	// https://cloud.google.com/storage/docs/naming#objectnames
-	Object string `json:"object,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a
 // configuration for git operations.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig struct {
@@ -2366,11 +2336,11 @@ func (s ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]b
 // is a configuration for HTTP related git operations.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
-	// proxy URL should be in format protocol://@]proxyhost[:port].
+	// Service Account used in the build (either the default Service Account or
+	// user-specified Service Account) should have `secretmanager.versions.access`
+	// permissions on this secret. The proxy URL should be in format
+	// `protocol://@]proxyhost[:port]`.
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
-	// ProxySslCaInfo: Optional. Cloud Storage object storing the certificate to
-	// use with the HTTP proxy.
-	ProxySslCaInfo *ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation `json:"proxySslCaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3286,9 +3256,6 @@ type DiscoveryOccurrence struct {
 	LastScanTime string `json:"lastScanTime,omitempty"`
 	// SbomStatus: The status of an SBOM generation.
 	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
-	// VulnerabilityAttestation: The status of an vulnerability attestation
-	// generation.
-	VulnerabilityAttestation *VulnerabilityAttestation `json:"vulnerabilityAttestation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6094,39 +6061,6 @@ type VulnerabilityAssessmentNote struct {
 
 func (s VulnerabilityAssessmentNote) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityAssessmentNote
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// VulnerabilityAttestation: The status of an vulnerability attestation
-// generation.
-type VulnerabilityAttestation struct {
-	// Error: If failure, the error reason for why the attestation generation
-	// failed.
-	Error string `json:"error,omitempty"`
-	// LastAttemptTime: The last time we attempted to generate an attestation.
-	LastAttemptTime string `json:"lastAttemptTime,omitempty"`
-	// State: The success/failure state of the latest attestation attempt.
-	//
-	// Possible values:
-	//   "VULNERABILITY_ATTESTATION_STATE_UNSPECIFIED" - Default unknown state.
-	//   "SUCCESS" - Attestation was successfully generated and stored.
-	//   "FAILURE" - Attestation was unsuccessfully generated and stored.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VulnerabilityAttestation) MarshalJSON() ([]byte, error) {
-	type NoMethod VulnerabilityAttestation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

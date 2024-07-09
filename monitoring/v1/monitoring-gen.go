@@ -1195,6 +1195,8 @@ type EventAnnotation struct {
 	//   "CLOUD_SQL_START_STOP" - Start/stop of a Cloud SQL instance.
 	//   "CLOUD_SQL_STORAGE" - Storage event for a Cloud SQL instance.
 	//   "UPTIME_CHECK_FAILURE" - Failure of a Cloud Monitoring uptime check.
+	//   "CLOUD_ALERTING_ALERT" - Alerts from Cloud Alerting
+	//   "SERVICE_HEALTH_INCIDENT" - Incidents from Service Health
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"

@@ -3556,9 +3556,9 @@ type TrialMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrialMetadata) MarshalJSON() ([]byte, error) {
+func (s TrialMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod TrialMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Message describing User object.

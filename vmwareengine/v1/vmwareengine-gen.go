@@ -506,9 +506,9 @@ type AutoscalingPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
+func (s AutoscalingPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoscalingSettings: Autoscaling settings define the rules used by VMware
@@ -548,9 +548,9 @@ type AutoscalingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingSettings) MarshalJSON() ([]byte, error) {
+func (s AutoscalingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -3265,9 +3265,9 @@ type Thresholds struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Thresholds) MarshalJSON() ([]byte, error) {
+func (s Thresholds) MarshalJSON() ([]byte, error) {
 	type NoMethod Thresholds
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeletePrivateCloudRequest: Request message for

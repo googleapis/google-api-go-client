@@ -5063,9 +5063,9 @@ type RayClusterLoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RayClusterLoggingConfig) MarshalJSON() ([]byte, error) {
+func (s RayClusterLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RayClusterLoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RayClusterMonitoringConfig: RayClusterMonitoringConfig specifies monitoring
@@ -5086,9 +5086,9 @@ type RayClusterMonitoringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RayClusterMonitoringConfig) MarshalJSON() ([]byte, error) {
+func (s RayClusterMonitoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RayClusterMonitoringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RayOperatorConfig: Configuration options for the Ray Operator add-on.
@@ -5113,9 +5113,9 @@ type RayOperatorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RayOperatorConfig) MarshalJSON() ([]byte, error) {
+func (s RayOperatorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RayOperatorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecurringTimeWindow: Represents an arbitrary window of time that recurs.

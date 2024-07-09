@@ -1778,9 +1778,9 @@ type ExportContextSqlExportOptionsPostgresExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextSqlExportOptionsPostgresExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportContextSqlExportOptionsPostgresExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContextSqlExportOptionsPostgresExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FailoverContext: Database instance failover context.
@@ -2279,9 +2279,9 @@ type ImportContextSqlImportOptionsPostgresImportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportContextSqlImportOptionsPostgresImportOptions) MarshalJSON() ([]byte, error) {
+func (s ImportContextSqlImportOptionsPostgresImportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportContextSqlImportOptionsPostgresImportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsightsConfig: Insights configuration. This specifies when Cloud SQL

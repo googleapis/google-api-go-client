@@ -2718,13 +2718,13 @@ type ExternalTransaction struct {
 	// Google will not charge for a test transaction.
 	TestPurchase *ExternalTransactionTestPurchase `json:"testPurchase,omitempty"`
 	// TransactionProgramCode: Optional. The transaction program code, used to help
-	// determine service fee for apps partcipating in special partner programs.
-	// This field can not be used for external offers transactions. Developers
-	// participating in the Play Media Experience Program
+	// determine service fee for eligible apps participating in partner programs.
+	// Developers participating in the Play Media Experience Program
 	// (https://play.google.com/console/about/programs/mediaprogram/) must provide
-	// the program code when reporting alternative billing external transactions.
-	// If you are an eligible developer, please contact your BDM for more
-	// information on how to set this field.
+	// the program code when reporting alternative billing transactions. If you are
+	// an eligible developer, please contact your BDM for more information on how
+	// to set this field. Note: this field can not be used for external offers
+	// transactions.
 	TransactionProgramCode int64 `json:"transactionProgramCode,omitempty"`
 	// TransactionState: Output only. The current state of the transaction.
 	//
@@ -8130,111 +8130,6 @@ func (c *ApprecoveryAddTargetingCall) Do(opts ...googleapi.CallOption) (*AddTarg
 	return ret, nil
 }
 
-type ApprecoveryAppRecoveriesCall struct {
-	s           *Service
-	packageName string
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// AppRecoveries: List all app recovery action resources associated with a
-// particular package name and app version.
-//
-//   - packageName: Package name of the app for which list of recovery actions is
-//     requested.
-func (r *ApprecoveryService) AppRecoveries(packageName string) *ApprecoveryAppRecoveriesCall {
-	c := &ApprecoveryAppRecoveriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.packageName = packageName
-	return c
-}
-
-// VersionCode sets the optional parameter "versionCode": Required. Version
-// code targeted by the list of recovery actions.
-func (c *ApprecoveryAppRecoveriesCall) VersionCode(versionCode int64) *ApprecoveryAppRecoveriesCall {
-	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ApprecoveryAppRecoveriesCall) Fields(s ...googleapi.Field) *ApprecoveryAppRecoveriesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ApprecoveryAppRecoveriesCall) Context(ctx context.Context) *ApprecoveryAppRecoveriesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ApprecoveryAppRecoveriesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ApprecoveryAppRecoveriesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"packageName": c.packageName,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidpublisher.apprecovery.appRecoveries" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ApprecoveryAppRecoveriesCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListAppRecoveriesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ApprecoveryCancelCall struct {
 	s                        *Service
 	packageName              string
@@ -8544,6 +8439,123 @@ func (c *ApprecoveryDeployCall) Do(opts ...googleapi.CallOption) (*DeployAppReco
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeployAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ApprecoveryListCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all app recovery action resources associated with a particular
+// package name and app version.
+//
+//   - packageName: Package name of the app for which list of recovery actions is
+//     requested.
+func (r *ApprecoveryService) List(packageName string) *ApprecoveryListCall {
+	c := &ApprecoveryListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// VersionCode sets the optional parameter "versionCode": Required. Version
+// code targeted by the list of recovery actions.
+func (c *ApprecoveryListCall) VersionCode(versionCode int64) *ApprecoveryListCall {
+	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ApprecoveryListCall) Fields(s ...googleapi.Field) *ApprecoveryListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApprecoveryListCall) IfNoneMatch(entityTag string) *ApprecoveryListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ApprecoveryListCall) Context(ctx context.Context) *ApprecoveryListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ApprecoveryListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ApprecoveryListCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAppRecoveriesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

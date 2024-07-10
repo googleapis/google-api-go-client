@@ -341,7 +341,8 @@ func (s AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 // AddDataSourceRequest: Adds a data source. After the data source is added
 // successfully, an associated DATA_SOURCE sheet is created and an execution is
 // triggered to refresh the sheet to read data from the data source. The
-// request requires an additional `bigquery.readonly` OAuth scope.
+// request requires an additional `bigquery.readonly` OAuth scope if you are
+// adding a BigQuery data source.
 type AddDataSourceRequest struct {
 	// DataSource: The data source to add.
 	DataSource *DataSource `json:"dataSource,omitempty"`
@@ -2228,7 +2229,9 @@ func (s *BubbleChartSpec) UnmarshalJSON(data []byte) error {
 }
 
 // CancelDataSourceRefreshRequest: Cancels one or multiple refreshes of data
-// source objects in the spreadsheet by the specified references.
+// source objects in the spreadsheet by the specified references. The request
+// requires an additional `bigquery.readonly` OAuth scope if you are cancelling
+// a refresh on a BigQuery data source.
 type CancelDataSourceRefreshRequest struct {
 	// DataSourceId: Reference to a DataSource. If specified, cancels all
 	// associated data source object refreshes for this data source.
@@ -7004,10 +7007,10 @@ func (s RefreshDataSourceObjectExecutionStatus) MarshalJSON() ([]byte, error) {
 
 // RefreshDataSourceRequest: Refreshes one or multiple data source objects in
 // the spreadsheet by the specified references. The request requires an
-// additional `bigquery.readonly` OAuth scope. If there are multiple refresh
-// requests referencing the same data source objects in one batch, only the
-// last refresh request is processed, and all those requests will have the same
-// response accordingly.
+// additional `bigquery.readonly` OAuth scope if you are refreshing a BigQuery
+// data source. If there are multiple refresh requests referencing the same
+// data source objects in one batch, only the last refresh request is
+// processed, and all those requests will have the same response accordingly.
 type RefreshDataSourceRequest struct {
 	// DataSourceId: Reference to a DataSource. If specified, refreshes all
 	// associated data source objects for the data source.
@@ -8606,7 +8609,8 @@ func (s UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 // UpdateDataSourceRequest: Updates a data source. After the data source is
 // updated successfully, an execution is triggered to refresh the associated
 // DATA_SOURCE sheet to read data from the updated data source. The request
-// requires an additional `bigquery.readonly` OAuth scope.
+// requires an additional `bigquery.readonly` OAuth scope if you are updating a
+// BigQuery data source.
 type UpdateDataSourceRequest struct {
 	// DataSource: The data source to update.
 	DataSource *DataSource `json:"dataSource,omitempty"`

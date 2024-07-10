@@ -2091,6 +2091,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "css:v1",
+      "name": "css",
+      "version": "v1",
+      "title": "CSS API",
+      "description": "Programmatically manage your Comparison Shopping Service (CSS) account data at scale.",
+      "discoveryRestUrl": "https://css.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/comparison-shopping-services/api/overview",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "customsearch:v1",
       "name": "customsearch",
       "version": "v1",
@@ -5584,7 +5599,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/webmaster-tools/search-console-api/",
+      "documentationLink": "https://developers.google.com/webmaster-tools/about",
       "preferred": true
     },
     {

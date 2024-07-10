@@ -6,7 +6,7 @@
 
 // Package searchconsole provides access to the Google Search Console API.
 //
-// For product documentation, see: https://developers.google.com/webmaster-tools/search-console-api/
+// For product documentation, see: https://developers.google.com/webmaster-tools/about
 //
 // # Library status
 //

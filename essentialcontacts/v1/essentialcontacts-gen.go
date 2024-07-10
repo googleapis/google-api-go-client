@@ -298,8 +298,9 @@ type GoogleCloudEssentialcontactsV1Contact struct {
 	// manually or automatically. A contact is considered stale if its validation
 	// state was updated more than 1 year ago.
 	ValidateTime string `json:"validateTime,omitempty"`
-	// ValidationState: The validity of the contact. A contact is considered valid
-	// if it is the correct recipient for notifications for a particular resource.
+	// ValidationState: Output only. The validity of the contact. A contact is
+	// considered valid if it is the correct recipient for notifications for a
+	// particular resource.
 	//
 	// Possible values:
 	//   "VALIDATION_STATE_UNSPECIFIED" - The validation state is unknown or

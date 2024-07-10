@@ -588,8 +588,7 @@ type ReportedErrorEvent struct {
 	// **PHP**: Must be prefixed with "PHP (Notice|Parse error|Fatal
 	// error|Warning): " and contain the result of `(string)$exception`
 	// (https://php.net/manual/en/exception.tostring.php). * **Go**: Must be the
-	// return value of `runtime.Stack()`
-	// (https://golang.org/pkg/runtime/debug/#Stack).
+	// return value of `debug.Stack()` (https://pkg.go.dev/runtime/debug#Stack).
 	Message string `json:"message,omitempty"`
 	// ServiceContext: Required. The service context in which this error has
 	// occurred.

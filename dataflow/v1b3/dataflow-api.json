@@ -44,6 +44,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://dataflow.us-east7.rep.googleapis.com/",
       "location": "us-east7"
     }
@@ -2197,7 +2202,7 @@
       }
     }
   },
-  "revision": "20240624",
+  "revision": "20240626",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {

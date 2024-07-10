@@ -952,10 +952,8 @@ func (s BiEngineStatistics) MarshalJSON() ([]byte, error) {
 type BigLakeConfiguration struct {
 	// ConnectionId: Required. The connection specifying the credentials to be used
 	// to read and write to external storage, such as Cloud Storage. The
-	// connection_id can have the form
-	// "<project\_id>.<location\_id>.<connection\_id>" or
-	// "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>
-	// ".
+	// connection_id can have the form `{project}.{location}.{connection_id}` or
+	// `projects/{project}/locations/{location}/connections/{connection_id}".
 	ConnectionId string `json:"connectionId,omitempty"`
 	// FileFormat: Required. The file format the table data is stored in.
 	//
@@ -965,7 +963,7 @@ type BigLakeConfiguration struct {
 	FileFormat string `json:"fileFormat,omitempty"`
 	// StorageUri: Required. The fully qualified location prefix of the external
 	// folder where table data is stored. The '*' wildcard character is not
-	// allowed. The URI should be in the format "gs://bucket/path_to_table/"
+	// allowed. The URI should be in the format `gs://bucket/path_to_table/`
 	StorageUri string `json:"storageUri,omitempty"`
 	// TableFormat: Required. The table format the metadata only snapshots are
 	// stored in.
@@ -1034,7 +1032,7 @@ type BigtableColumn struct {
 	// 'onlyReadLatest' is set at both levels.
 	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
 	// QualifierEncoded: [Required] Qualifier of the column. Columns in the parent
-	// column family that has this exact qualifier are exposed as . field. If the
+	// column family that has this exact qualifier are exposed as `.` field. If the
 	// qualifier is valid UTF-8 string, it can be specified in the qualifier_string
 	// field. Otherwise, a base-64 encoded value must be set to qualifier_encoded.
 	// The column field name is the same as the column qualifier. However, if the
@@ -1073,8 +1071,8 @@ func (s BigtableColumn) MarshalJSON() ([]byte, error) {
 type BigtableColumnFamily struct {
 	// Columns: Optional. Lists of columns that should be exposed as individual
 	// fields as opposed to a list of (column name, value) pairs. All columns whose
-	// qualifier matches a qualifier in this list can be accessed as .. Other
-	// columns can be accessed as a list through .Column field.
+	// qualifier matches a qualifier in this list can be accessed as `.`. Other
+	// columns can be accessed as a list through the `.Column` field.
 	Columns []*BigtableColumn `json:"columns,omitempty"`
 	// Encoding: Optional. The encoding of the values when the type is not STRING.
 	// Acceptable encoding values are: TEXT - indicates values are alphanumeric
@@ -1928,6 +1926,7 @@ func (s DataSplitResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Dataset: Represents a BigQuery dataset.
 type Dataset struct {
 	// Access: Optional. An array of objects that define dataset access for one or
 	// more entities. You can set this property when inserting or updating a
@@ -2029,8 +2028,9 @@ type Dataset struct {
 	Kind string `json:"kind,omitempty"`
 	// Labels: The labels associated with this dataset. You can use these to
 	// organize and group your datasets. You can set this property when inserting
-	// or updating a dataset. See Creating and Updating Dataset Labels for more
-	// information.
+	// or updating a dataset. See Creating and Updating Dataset Labels
+	// (https://cloud.google.com/bigquery/docs/creating-managing-labels#creating_and_updating_dataset_labels)
+	// for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LastModifiedTime: Output only. The date when this dataset was last modified,
 	// in milliseconds since the epoch.
@@ -2126,9 +2126,9 @@ type DatasetAccess struct {
 	IamMember string `json:"iamMember,omitempty"`
 	// Role: An IAM role ID that should be granted to the user, group, or domain
 	// specified in this access entry. The following legacy mappings will be
-	// applied: OWNER <=> roles/bigquery.dataOwner WRITER <=>
-	// roles/bigquery.dataEditor READER <=> roles/bigquery.dataViewer This field
-	// will accept any of the above formats, but will return only the legacy
+	// applied: * `OWNER`: `roles/bigquery.dataOwner` * `WRITER`:
+	// `roles/bigquery.dataEditor` * `READER`: `roles/bigquery.dataViewer` This
+	// field will accept any of the above formats, but will return only the legacy
 	// format. For example, if you set this field to "roles/bigquery.dataOwner", it
 	// will be returned back as "OWNER".
 	Role string `json:"role,omitempty"`
@@ -2140,9 +2140,9 @@ type DatasetAccess struct {
 	// update operation.
 	Routine *RoutineReference `json:"routine,omitempty"`
 	// SpecialGroup: [Pick one] A special group to grant access to. Possible values
-	// include: projectOwners: Owners of the enclosing project. projectReaders:
-	// Readers of the enclosing project. projectWriters: Writers of the enclosing
-	// project. allAuthenticatedUsers: All authenticated BigQuery users. Maps to
+	// include: * projectOwners: Owners of the enclosing project. * projectReaders:
+	// Readers of the enclosing project. * projectWriters: Writers of the enclosing
+	// project. * allAuthenticatedUsers: All authenticated BigQuery users. Maps to
 	// similarly-named IAM members.
 	SpecialGroup string `json:"specialGroup,omitempty"`
 	// UserByEmail: [Pick one] An email address of a user to grant access to. For
@@ -2314,6 +2314,7 @@ func (s DatasetListDatasets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DatasetReference: Identifier for a dataset.
 type DatasetReference struct {
 	// DatasetId: Required. A unique ID for this dataset, without the project name.
 	// The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores
@@ -2647,6 +2648,7 @@ func (s *DoubleRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// EncryptionConfiguration: Configuration for Cloud KMS encryption settings.
 type EncryptionConfiguration struct {
 	// KmsKeyName: Optional. Describes the Cloud KMS encryption key that will be
 	// used to protect destination BigQuery table. The BigQuery Service Account
@@ -3108,10 +3110,9 @@ type ExternalDataConfiguration struct {
 	Compression string `json:"compression,omitempty"`
 	// ConnectionId: Optional. The connection specifying the credentials to be used
 	// to read external storage, such as Azure Blob, Cloud Storage, or S3. The
-	// connection_id can have the form
-	// "<project\_id>.<location\_id>.<connection\_id>" or
-	// "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>
-	// ".
+	// connection_id can have the form `{project_id}.{location_id};{connection_id}`
+	// or
+	// `projects/{project_id}/locations/{location_id}/connections/{connection_id}`.
 	ConnectionId string `json:"connectionId,omitempty"`
 	// CsvOptions: Optional. Additional properties to set if sourceFormat is set to
 	// CSV.
@@ -6009,8 +6010,8 @@ type MlStatistics struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
-	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
-	// transform clause.
+	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
+	// clause along with statistics useful for ML analytic functions.
 	ModelType string `json:"modelType,omitempty"`
 	// TrainingType: Output only. Training type of the job.
 	//
@@ -6126,8 +6127,8 @@ type Model struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
-	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
-	// transform clause.
+	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
+	// clause along with statistics useful for ML analytic functions.
 	ModelType string `json:"modelType,omitempty"`
 	// OptimalTrialIds: Output only. For single-objective hyperparameter tuning
 	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overvie
@@ -9220,6 +9221,9 @@ type TableMetadataCacheUsage struct {
 	// Explanation: Free form human-readable reason metadata caching was unused for
 	// the job.
 	Explanation string `json:"explanation,omitempty"`
+	// Staleness: Duration since last refresh as of this job for managed tables
+	// (indicates metadata cache staleness as seen by this job).
+	Staleness string `json:"staleness,omitempty"`
 	// TableReference: Metadata caching eligible table referenced in the query.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 	// TableType: Table type
@@ -10644,11 +10648,12 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request by label. The syntax is \"labels.<name>[:<value>]\".
-// Multiple filters can be ANDed together by connecting with a space. Example:
-// \"labels.department:receiving labels.active\". See Filtering datasets using
-// labels (/bigquery/docs/filtering-labels#filtering_datasets_using_labels) for
-// details.
+// results of the request by label. The syntax is `labels.[:]`. Multiple
+// filters can be ANDed together by connecting with a space. Example:
+// `labels.department:receiving labels.active`. See Filtering datasets using
+// labels
+// (https://cloud.google.com/bigquery/docs/filtering-labels#filtering_datasets_using_labels)
+// for details.
 func (c *DatasetsListCall) Filter(filter string) *DatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -11125,8 +11130,8 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
@@ -11327,8 +11332,8 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
@@ -11457,8 +11462,8 @@ func (c *JobsGetQueryResultsCall) FormatOptionsUseInt64Timestamp(formatOptionsUs
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {

@@ -4896,6 +4896,60 @@ func (s GoogleCloudDiscoveryengineV1alphaEstimateDataSizeResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata: Metadata related
+// to the progress of the Export operation. This is returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse: Response of the
+// ExportUserEventsRequest. If the long running operation was successful, then
+// this message is returned by the google.longrunning.Operations.response
+// field.
+type GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse struct {
+	// OutputResult: Output result indicating where the data were exported to.
+	OutputResult *GoogleCloudDiscoveryengineV1alphaOutputResult `json:"outputResult,omitempty"`
+	// Status: The status of the export operation.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaFieldConfig: Configurations for fields of a
 // schema. For example, configuring a field is indexable, or searchable.
 type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
@@ -5434,6 +5488,54 @@ type GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaOutputResult: Output result that stores the
+// information about where the exported data is stored.
+type GoogleCloudDiscoveryengineV1alphaOutputResult struct {
+	// BigqueryResult: The BigQuery location where the result is stored.
+	BigqueryResult *GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult `json:"bigqueryResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryResult") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOutputResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult: A
+// BigQuery output result.
+type GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult struct {
+	// DatasetId: The ID of a BigQuery Dataset.
+	DatasetId string `json:"datasetId,omitempty"`
+	// TableId: The ID of a BigQuery Table.
+	TableId string `json:"tableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -330,32 +330,22 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
-	// protection controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
-	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
-	// and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
@@ -874,32 +864,22 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
-	// protection controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
-	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
-	// and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`

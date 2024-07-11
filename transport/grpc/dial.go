@@ -218,11 +218,6 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
-	tokenURL, oauth2Client, err := internal.GetOAuth2Configuration(ctx, ds)
-	if err != nil {
-		return nil, err
-	}
-
 	pool, err := grpctransport.Dial(ctx, secure, &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
@@ -237,8 +232,6 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 			Audience:        aud,
 			CredentialsFile: ds.CredentialsFile,
 			CredentialsJSON: ds.CredentialsJSON,
-			TokenURL:        tokenURL,
-			Client:          oauth2Client,
 		},
 		InternalOptions: &grpctransport.InternalOptions{
 			EnableNonDefaultSAForDirectPath: ds.AllowNonDefaultServiceAccount,

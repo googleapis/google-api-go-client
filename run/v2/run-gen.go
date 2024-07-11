@@ -1003,8 +1003,7 @@ func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2GCSVolumeSource: Represents a volume backed by a Cloud
 // Storage bucket using Cloud Storage FUSE.
 type GoogleCloudRunV2GCSVolumeSource struct {
-	// Bucket: Cloud Storage Bucket name. TODO (b/344678062) Fix the error
-	// validation once dynamic mounting is public.
+	// Bucket: Cloud Storage Bucket name.
 	Bucket string `json:"bucket,omitempty"`
 	// ReadOnly: If true, the volume will be mounted as read only for all mounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
@@ -3619,9 +3618,9 @@ func (s GoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
 type GoogleDevtoolsCloudbuildV1HttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
 	// Service Account used in the build (either the default Service Account or
-	// user-specified Service Account) should have secretmanager.versions.access
+	// user-specified Service Account) should have `secretmanager.versions.access`
 	// permissions on this secret. The proxy URL should be in format
-	// protocol://@]proxyhost[:port].
+	// `protocol://@]proxyhost[:port]`.
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or

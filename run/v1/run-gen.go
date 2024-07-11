@@ -2437,9 +2437,9 @@ func (s GoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
 type GoogleDevtoolsCloudbuildV1HttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
 	// Service Account used in the build (either the default Service Account or
-	// user-specified Service Account) should have secretmanager.versions.access
+	// user-specified Service Account) should have `secretmanager.versions.access`
 	// permissions on this secret. The proxy URL should be in format
-	// protocol://@]proxyhost[:port].
+	// `protocol://@]proxyhost[:port]`.
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or

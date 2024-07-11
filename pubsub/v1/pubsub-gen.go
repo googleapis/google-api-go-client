@@ -589,6 +589,9 @@ type CloudStorageConfig struct {
 	// Cloud Storage file is created. Min 1 minute, max 10 minutes, default 5
 	// minutes. May not exceed the subscription's acknowledgement deadline.
 	MaxDuration string `json:"maxDuration,omitempty"`
+	// MaxMessages: Optional. The maximum number of messages that can be written to
+	// a Cloud Storage file before a new file is created. Min 1000 messages.
+	MaxMessages int64 `json:"maxMessages,omitempty,string"`
 	// ServiceAccountEmail: Optional. The service account to use to write to Cloud
 	// Storage. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not

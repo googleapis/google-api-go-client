@@ -1826,25 +1826,31 @@ func (s GoogleBigtableAdminV2AuthorizedViewSubsetView) MarshalJSON() ([]byte, er
 // using type `Aggregate`. Writes will provide either the `input_type` or
 // `state_type`, and reads will always return the `state_type` .
 type GoogleBigtableAdminV2TypeAggregate struct {
+	// HllppUniqueCount: HyperLogLogPlusPlusUniqueCount aggregator.
+	HllppUniqueCount *GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount `json:"hllppUniqueCount,omitempty"`
 	// InputType: Type of the inputs that are accumulated by this `Aggregate`,
 	// which must specify a full encoding. Use `AddInput` mutations to accumulate
 	// new inputs.
 	InputType *Type `json:"inputType,omitempty"`
+	// Max: Max aggregator.
+	Max *GoogleBigtableAdminV2TypeAggregateMax `json:"max,omitempty"`
+	// Min: Min aggregator.
+	Min *GoogleBigtableAdminV2TypeAggregateMin `json:"min,omitempty"`
 	// StateType: Output only. Type that holds the internal accumulator state for
 	// the `Aggregate`. This is a function of the `input_type` and `aggregator`
 	// chosen, and will always specify a full encoding.
 	StateType *Type `json:"stateType,omitempty"`
 	// Sum: Sum aggregator.
 	Sum *GoogleBigtableAdminV2TypeAggregateSum `json:"sum,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InputType") to
+	// ForceSendFields is a list of field names (e.g. "HllppUniqueCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InputType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "HllppUniqueCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1854,9 +1860,57 @@ func (s GoogleBigtableAdminV2TypeAggregate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount: Computes
+// an approximate unique count over the input values. When using raw data as
+// input, be careful to use a consistent encoding. Otherwise the same value
+// encoded differently could count more than once, or two distinct values could
+// count as identical. Input: Any, or omit for Raw State: TBD Special state
+// conversions: `Int64` (the unique count estimate)
+type GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount struct {
+}
+
+// GoogleBigtableAdminV2TypeAggregateMax: Computes the max of the input values.
+// Allowed input: `Int64` State: same as input
+type GoogleBigtableAdminV2TypeAggregateMax struct {
+}
+
+// GoogleBigtableAdminV2TypeAggregateMin: Computes the min of the input values.
+// Allowed input: `Int64` State: same as input
+type GoogleBigtableAdminV2TypeAggregateMin struct {
+}
+
 // GoogleBigtableAdminV2TypeAggregateSum: Computes the sum of the input values.
 // Allowed input: `Int64` State: same as input
 type GoogleBigtableAdminV2TypeAggregateSum struct {
+}
+
+// GoogleBigtableAdminV2TypeArray: An ordered list of elements of a given type.
+// Values of type `Array` are stored in `Value.array_value`.
+type GoogleBigtableAdminV2TypeArray struct {
+	// ElementType: The type of the elements in the array. This must not be
+	// `Array`.
+	ElementType *Type `json:"elementType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ElementType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ElementType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeArray) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeArray
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBool: bool Values of type `Bool` are stored in
+// `Value.bool_value`.
+type GoogleBigtableAdminV2TypeBool struct {
 }
 
 // GoogleBigtableAdminV2TypeBytes: Bytes Values of type `Bytes` are stored in
@@ -1908,6 +1962,21 @@ func (s GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
 // GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value "as-is" *
 // Order-preserving? Yes * Self-delimiting? No * Compatibility? N/A
 type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
+}
+
+// GoogleBigtableAdminV2TypeDate: Date Values of type `Date` are stored in
+// `Value.date_value`.
+type GoogleBigtableAdminV2TypeDate struct {
+}
+
+// GoogleBigtableAdminV2TypeFloat32: Float32 Values of type `Float32` are
+// stored in `Value.float_value`.
+type GoogleBigtableAdminV2TypeFloat32 struct {
+}
+
+// GoogleBigtableAdminV2TypeFloat64: Float64 Values of type `Float64` are
+// stored in `Value.float_value`.
+type GoogleBigtableAdminV2TypeFloat64 struct {
 }
 
 // GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are stored in
@@ -1980,6 +2049,144 @@ type GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes struct {
 func (s GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeMap: A mapping of keys to values of a given type.
+// Values of type `Map` are stored in a `Value.array_value` where each entry is
+// another `Value.array_value` with two elements (the key and the value, in
+// that order). Normally encoded Map values won't have repeated keys, however,
+// clients are expected to handle the case in which they do. If the same key
+// appears multiple times, the _last_ value takes precedence.
+type GoogleBigtableAdminV2TypeMap struct {
+	// KeyType: The type of a map key. Only `Bytes`, `String`, and `Int64` are
+	// allowed as key types.
+	KeyType *Type `json:"keyType,omitempty"`
+	// ValueType: The type of the values in a map.
+	ValueType *Type `json:"valueType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeMap) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeMap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeString: String Values of type `String` are stored
+// in `Value.string_value`.
+type GoogleBigtableAdminV2TypeString struct {
+	// Encoding: The encoding to use when converting to/from lower level types.
+	Encoding *GoogleBigtableAdminV2TypeStringEncoding `json:"encoding,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeString) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeString
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStringEncoding: Rules used to convert to/from lower
+// level types.
+type GoogleBigtableAdminV2TypeStringEncoding struct {
+	// Utf8Bytes: Use `Utf8Bytes` encoding.
+	Utf8Bytes *GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes `json:"utf8Bytes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Utf8Bytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Utf8Bytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStringEncoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStringEncoding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes: UTF-8 encoding *
+// Order-preserving? Yes (code point order) * Self-delimiting? No *
+// Compatibility? - BigQuery Federation `TEXT` encoding - HBase `Bytes.toBytes`
+// - Java `String#getBytes(StandardCharsets.UTF_8)`
+type GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes struct {
+}
+
+// GoogleBigtableAdminV2TypeStruct: A structured data value, consisting of
+// fields which map to dynamically typed values. Values of type `Struct` are
+// stored in `Value.array_value` where entries are in the same order and number
+// as `field_types`.
+type GoogleBigtableAdminV2TypeStruct struct {
+	// Fields: The names and types of the fields in this struct.
+	Fields []*GoogleBigtableAdminV2TypeStructField `json:"fields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStruct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeStructField: A struct field and its type.
+type GoogleBigtableAdminV2TypeStructField struct {
+	// FieldName: The field name (optional). Fields without a `field_name` are
+	// considered anonymous and cannot be referenced by name.
+	FieldName string `json:"fieldName,omitempty"`
+	// Type: The type of values in this field.
+	Type *Type `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeStructField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeStructField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeTimestamp: Timestamp Values of type `Timestamp` are
+// stored in `Value.timestamp_value`.
+type GoogleBigtableAdminV2TypeTimestamp struct {
 }
 
 // HotTablet: A tablet is a defined by a start and end key and is explained in
@@ -3300,10 +3507,28 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 type Type struct {
 	// AggregateType: Aggregate
 	AggregateType *GoogleBigtableAdminV2TypeAggregate `json:"aggregateType,omitempty"`
+	// ArrayType: Array
+	ArrayType *GoogleBigtableAdminV2TypeArray `json:"arrayType,omitempty"`
+	// BoolType: Bool
+	BoolType *GoogleBigtableAdminV2TypeBool `json:"boolType,omitempty"`
 	// BytesType: Bytes
 	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
+	// DateType: Date
+	DateType *GoogleBigtableAdminV2TypeDate `json:"dateType,omitempty"`
+	// Float32Type: Float32
+	Float32Type *GoogleBigtableAdminV2TypeFloat32 `json:"float32Type,omitempty"`
+	// Float64Type: Float64
+	Float64Type *GoogleBigtableAdminV2TypeFloat64 `json:"float64Type,omitempty"`
 	// Int64Type: Int64
 	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
+	// MapType: Map
+	MapType *GoogleBigtableAdminV2TypeMap `json:"mapType,omitempty"`
+	// StringType: String
+	StringType *GoogleBigtableAdminV2TypeString `json:"stringType,omitempty"`
+	// StructType: Struct
+	StructType *GoogleBigtableAdminV2TypeStruct `json:"structType,omitempty"`
+	// TimestampType: Timestamp
+	TimestampType *GoogleBigtableAdminV2TypeTimestamp `json:"timestampType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregateType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6058,7 +6283,7 @@ type ProjectsInstancesClustersBackupsCopyCall struct {
 // cluster located in the destination instance and project.
 //
 //   - parent: The name of the destination cluster that will contain the backup
-//     copy. The cluster must already exists. Values are of the form:
+//     copy. The cluster must already exist. Values are of the form:
 //     `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesClustersBackupsCopyCall {
 	c := &ProjectsInstancesClustersBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}

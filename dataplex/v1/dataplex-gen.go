@@ -560,9 +560,9 @@ type GoogleCloudDataplexV1Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Action) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Action) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ActionFailedSecurityPolicyApply: Failed to apply
@@ -586,9 +586,9 @@ type GoogleCloudDataplexV1ActionFailedSecurityPolicyApply struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ActionFailedSecurityPolicyApply) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ActionFailedSecurityPolicyApply) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ActionFailedSecurityPolicyApply
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ActionIncompatibleDataSchema: Action details for
@@ -628,9 +628,9 @@ type GoogleCloudDataplexV1ActionIncompatibleDataSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ActionIncompatibleDataSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ActionIncompatibleDataSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ActionIncompatibleDataSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ActionInvalidDataFormat: Action details for invalid or
@@ -656,9 +656,9 @@ type GoogleCloudDataplexV1ActionInvalidDataFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ActionInvalidDataFormat) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ActionInvalidDataFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ActionInvalidDataFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ActionInvalidDataOrganization: Action details for
@@ -690,9 +690,9 @@ type GoogleCloudDataplexV1ActionInvalidDataPartition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ActionInvalidDataPartition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ActionInvalidDataPartition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ActionInvalidDataPartition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ActionMissingData: Action details for absence of data
@@ -722,8 +722,7 @@ type GoogleCloudDataplexV1Aspect struct {
 	// CreateTime: Output only. The time when the Aspect was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Data: Required. The content of the aspect, according to its aspect type
-	// schema. This will replace content. The maximum size of the field is 120KB
-	// (encoded as UTF-8).
+	// schema. The maximum size of the field is 120KB (encoded as UTF-8).
 	Data googleapi.RawMessage `json:"data,omitempty"`
 	// Path: Output only. The path in the entry under which the aspect is attached.
 	Path string `json:"path,omitempty"`
@@ -742,13 +741,13 @@ type GoogleCloudDataplexV1Aspect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Aspect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Aspect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Aspect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectSource: AspectSource contains source system
-// related information for the aspect.
+// GoogleCloudDataplexV1AspectSource: AspectSource contains information related
+// to the source system of the Aspect.
 type GoogleCloudDataplexV1AspectSource struct {
 	// CreateTime: The create time of the aspect in the source system.
 	CreateTime string `json:"createTime,omitempty"`
@@ -767,16 +766,16 @@ type GoogleCloudDataplexV1AspectSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectType: Aspect Type is a template for creating
-// Aspects, and represents the JSON-schema for a given Entry, e.g., BigQuery
-// Table Schema.
+// GoogleCloudDataplexV1AspectType: AspectType is a template for creating
+// Aspects, and represents the JSON-schema for a given Entry, for example,
+// BigQuery Table Schema.
 type GoogleCloudDataplexV1AspectType struct {
-	// Authorization: Immutable. Authorization defined for this type.
+	// Authorization: Immutable. Defines the Authorization for this type.
 	Authorization *GoogleCloudDataplexV1AspectTypeAuthorization `json:"authorization,omitempty"`
 	// CreateTime: Output only. The time when the AspectType was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -784,9 +783,8 @@ type GoogleCloudDataplexV1AspectType struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: The service computes this checksum. The client may send it on update
+	// and delete requests to ensure it has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the AspectType.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -797,22 +795,9 @@ type GoogleCloudDataplexV1AspectType struct {
 	// projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_id
 	// }.
 	Name string `json:"name,omitempty"`
-	// TransferStatus: Output only. Denotes the transfer status of the Aspect Type.
-	// It is unspecified for Aspect Types created from Dataplex API.
-	//
-	// Possible values:
-	//   "TRANSFER_STATUS_UNSPECIFIED" - The default value. It is set for resources
-	// that were not subject for migration from Data Catalog service.
-	//   "TRANSFER_STATUS_MIGRATED" - Indicates that a resource was migrated from
-	// Data Catalog service but it hasn't been transferred yet. In particular the
-	// resource cannot be updated from Dataplex API.
-	//   "TRANSFER_STATUS_TRANSFERRED" - Indicates that a resource was transferred
-	// from Data Catalog service. The resource can only be updated from Dataplex
-	// API.
-	TransferStatus string `json:"transferStatus,omitempty"`
-	// Uid: Output only. System generated globally unique ID for the AspectType.
-	// This ID will be different if the AspectType is deleted and re-created with
-	// the same name.
+	// Uid: Output only. System generated globally unique ID for the AspectType. If
+	// you delete and recreate the AspectType with the same name, then this ID will
+	// be different.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time when the AspectType was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -832,17 +817,17 @@ type GoogleCloudDataplexV1AspectType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1AspectTypeAuthorization: Autorization for an Aspect
-// Type.
+// GoogleCloudDataplexV1AspectTypeAuthorization: Autorization for an
+// AspectType.
 type GoogleCloudDataplexV1AspectTypeAuthorization struct {
-	// AlternateUsePermission: Immutable. The IAM permission grantable on the Entry
-	// Group to allow access to instantiate Aspects of Dataplex owned Aspect Types,
-	// only settable for Dataplex owned Types.
+	// AlternateUsePermission: Immutable. The IAM permission grantable on the
+	// EntryGroup to allow access to instantiate Aspects of Dataplex owned
+	// AspectTypes, only settable for Dataplex owned Types.
 	AlternateUsePermission string `json:"alternateUsePermission,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlternateUsePermission") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -857,26 +842,26 @@ type GoogleCloudDataplexV1AspectTypeAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectTypeAuthorization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectTypeAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectTypeAuthorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplate: MetadataTemplate definition
-// for AspectType
+// for an AspectType.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// Annotations: Optional. Specifies annotations on this field.
 	Annotations *GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations `json:"annotations,omitempty"`
-	// ArrayItems: Optional. array_items needs to be set if the type is array.
-	// array_items can refer to a primitive field or a complex (record only) field.
-	// To specify a primitive field, just name and type needs to be set in the
-	// nested MetadataTemplate. The recommended value for the name field is item,
-	// as this is not used in the actual payload.
+	// ArrayItems: Optional. If the type is array, set array_items. array_items can
+	// refer to a primitive field or a complex (record only) field. To specify a
+	// primitive field, you only need to set name and type in the nested
+	// MetadataTemplate. The recommended value for the name field is item, as this
+	// isn't used in the actual payload.
 	ArrayItems *GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"arrayItems,omitempty"`
 	// Constraints: Optional. Specifies the constraints on this field.
 	Constraints *GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints `json:"constraints,omitempty"`
-	// EnumValues: Optional. The list of values for an enum type. Needs to be
-	// defined if the type is enum.
+	// EnumValues: Optional. The list of values for an enum type. You must define
+	// it if the type is enum.
 	EnumValues []*GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue `json:"enumValues,omitempty"`
 	// Index: Optional. Index is used to encode Template messages. The value of
 	// index can range between 1 and 2,147,483,647. Index must be unique within all
@@ -885,31 +870,30 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// the actual storage format. Index is a mandatory field, but it is optional
 	// for top level fields, and map/array "values" definitions.
 	Index int64 `json:"index,omitempty"`
-	// MapItems: Optional. map_items needs to be set if the type is map. map_items
-	// can refer to a primitive field or a complex (record only) field. To specify
-	// a primitive field, just name and type needs to be set in the nested
+	// MapItems: Optional. If the type is map, set map_items. map_items can refer
+	// to a primitive field or a complex (record only) field. To specify a
+	// primitive field, you only need to set name and type in the nested
 	// MetadataTemplate. The recommended value for the name field is item, as this
-	// is not used in the actual payload.
+	// isn't used in the actual payload.
 	MapItems *GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"mapItems,omitempty"`
 	// Name: Required. The name of the field.
 	Name string `json:"name,omitempty"`
-	// RecordFields: Optional. Field definition, needs to be specified if the type
-	// is record. Defines the nested fields.
+	// RecordFields: Optional. Field definition. You must specify it if the type is
+	// record. It defines the nested fields.
 	RecordFields []*GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"recordFields,omitempty"`
 	// Type: Required. The datatype of this field. The following values are
-	// supported: Primitive types (string, integer, boolean, double, datetime);
-	// datetime must be of the format RFC3339 UTC "Zulu" (Examples:
-	// "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z"). Complex types
-	// (enum, array, map, record).
+	// supported:Primitive types: string integer boolean double datetime. Must be
+	// of the format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
+	// "2014-10-02T15:01:23.045123456Z").Complex types: enum array map record
 	Type string `json:"type,omitempty"`
-	// TypeId: Optional. Id can be used if this definition of the field needs to be
-	// reused later. Id needs to be unique across the entire template. Id can only
-	// be specified if the field type is record.
+	// TypeId: Optional. You can use type id if this definition of the field needs
+	// to be reused later. The type id must be unique across the entire template.
+	// You can only specify it if the field type is record.
 	TypeId string `json:"typeId,omitempty"`
-	// TypeRef: Optional. A reference to another field definition (instead of an
-	// inline definition). The value must be equal to the value of an id field
-	// defined elsewhere in the MetadataTemplate. Only fields with type as record
-	// can refer to other fields.
+	// TypeRef: Optional. A reference to another field definition (not an inline
+	// definition). The value must be equal to the value of an id field defined
+	// elsewhere in the MetadataTemplate. Only fields with record type can refer to
+	// other fields.
 	TypeRef string `json:"typeRef,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -924,31 +908,31 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectTypeMetadataTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectTypeMetadataTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations: Definition of
-// the annotations of a field
+// the annotations of a field.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations struct {
-	// Deprecated -- Optional. Marks a field as deprecated, a deprecation message
-	// can be included.
+	// Deprecated -- Optional. Marks a field as deprecated. You can include a
+	// deprecation message.
 	Deprecated string `json:"deprecated,omitempty"`
-	// Description: Optional. Specify a description for a field
+	// Description: Optional. Description for a field.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. Specify a displayname for a field.
+	// DisplayName: Optional. Display name for a field.
 	DisplayName string `json:"displayName,omitempty"`
-	// DisplayOrder: Optional. Specify a display order for a field. Display order
-	// can be used to reorder where a field is rendered
+	// DisplayOrder: Optional. Display order for a field. You can use this to
+	// reorder where a field is rendered.
 	DisplayOrder int64 `json:"displayOrder,omitempty"`
-	// StringType: Optional. String Type annotations can be used to specify special
+	// StringType: Optional. You can use String Type annotations to specify special
 	// meaning to string fields. The following values are supported: richText: The
-	// field must be interpreted as a rich text field. url: A fully qualified url
+	// field must be interpreted as a rich text field. url: A fully qualified URL
 	// link. resource: A service qualified resource reference.
 	StringType string `json:"stringType,omitempty"`
-	// StringValues: Optional. Suggested hints for string fields. These can be used
-	// to suggest values to users, through an UI for example.
+	// StringValues: Optional. Suggested hints for string fields. You can use them
+	// to suggest values to users through console.
 	StringValues []string `json:"stringValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -963,15 +947,15 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints: Definition of
-// the constraints of a field
+// the constraints of a field.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints struct {
-	// Required: Optional. Marks this as an optional/required field.
+	// Required: Optional. Marks this field as optional or required.
 	Required bool `json:"required,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Required") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -986,21 +970,21 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectTypeMetadataTemplateConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue: Definition of
-// Enumvalue (to be used by enum fields)
+// Enumvalue, to be used for enum fields.
 type GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue struct {
-	// Deprecated -- Optional. Optional deprecation message to be set if an enum
-	// value needs to be deprecated.
+	// Deprecated -- Optional. You can set this message if you need to deprecate an
+	// enum value.
 	Deprecated string `json:"deprecated,omitempty"`
-	// Index: Required. Index for the enum. Cannot be modified.
+	// Index: Required. Index for the enum value. It can't be modified.
 	Index int64 `json:"index,omitempty"`
 	// Name: Required. Name of the enumvalue. This is the actual value that the
-	// aspect will contain.
+	// aspect can contain.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1015,9 +999,9 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AspectTypeMetadataTemplateEnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Asset: An asset represents a cloud resource that is
@@ -1081,9 +1065,9 @@ type GoogleCloudDataplexV1Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Asset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetDiscoverySpec: Settings to manage the metadata
@@ -1128,9 +1112,9 @@ type GoogleCloudDataplexV1AssetDiscoverySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetDiscoverySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetDiscoverySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetDiscoverySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetDiscoverySpecCsvOptions: Describe CSV and similar
@@ -1161,9 +1145,9 @@ type GoogleCloudDataplexV1AssetDiscoverySpecCsvOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetDiscoverySpecCsvOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetDiscoverySpecCsvOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetDiscoverySpecCsvOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetDiscoverySpecJsonOptions: Describe JSON data
@@ -1189,9 +1173,9 @@ type GoogleCloudDataplexV1AssetDiscoverySpecJsonOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetDiscoverySpecJsonOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetDiscoverySpecJsonOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetDiscoverySpecJsonOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetDiscoveryStatus: Status of discovery for an asset.
@@ -1229,9 +1213,9 @@ type GoogleCloudDataplexV1AssetDiscoveryStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetDiscoveryStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetDiscoveryStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetDiscoveryStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetDiscoveryStatusStats: The aggregated data
@@ -1258,9 +1242,9 @@ type GoogleCloudDataplexV1AssetDiscoveryStatusStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetDiscoveryStatusStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetDiscoveryStatusStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetDiscoveryStatusStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetResourceSpec: Identifies the cloud resource that
@@ -1301,9 +1285,9 @@ type GoogleCloudDataplexV1AssetResourceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetResourceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetResourceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetResourceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetResourceStatus: Status of the resource referenced
@@ -1336,9 +1320,9 @@ type GoogleCloudDataplexV1AssetResourceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetResourceStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetResourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetResourceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetSecurityStatus: Security policy status of the
@@ -1374,9 +1358,9 @@ type GoogleCloudDataplexV1AssetSecurityStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetSecurityStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetSecurityStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetSecurityStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1AssetStatus: Aggregated status of the underlying assets
@@ -1402,9 +1386,9 @@ type GoogleCloudDataplexV1AssetStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1AssetStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1AssetStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1AssetStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1CancelJobRequest: Cancel task jobs.
@@ -1456,9 +1440,9 @@ type GoogleCloudDataplexV1Content struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Content) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Content) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Content
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ContentNotebook: Configuration for Notebook content.
@@ -1482,9 +1466,9 @@ type GoogleCloudDataplexV1ContentNotebook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ContentNotebook) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ContentNotebook) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ContentNotebook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ContentSqlScript: Configuration for the Sql Script
@@ -1509,9 +1493,9 @@ type GoogleCloudDataplexV1ContentSqlScript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ContentSqlScript) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ContentSqlScript) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ContentSqlScript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataAccessSpec: DataAccessSpec holds the access control
@@ -1538,9 +1522,9 @@ type GoogleCloudDataplexV1DataAccessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataAccessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataAccessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataAccessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataAttribute: Denotes one dataAttribute in a
@@ -1602,9 +1586,9 @@ type GoogleCloudDataplexV1DataAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataAttribute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataAttributeBinding: DataAttributeBinding represents
@@ -1667,9 +1651,9 @@ type GoogleCloudDataplexV1DataAttributeBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataAttributeBinding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataAttributeBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataAttributeBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataAttributeBindingPath: Represents a subresource of
@@ -1697,9 +1681,9 @@ type GoogleCloudDataplexV1DataAttributeBindingPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataAttributeBindingPath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResult: DataProfileResult defines the output
@@ -1727,9 +1711,9 @@ type GoogleCloudDataplexV1DataProfileResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResultPostScanActionsResult: The result of
@@ -1751,9 +1735,9 @@ type GoogleCloudDataplexV1DataProfileResultPostScanActionsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultPostScanActionsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResu
@@ -1783,9 +1767,9 @@ type GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfile: Contains name, type, mode and
@@ -1807,9 +1791,9 @@ type GoogleCloudDataplexV1DataProfileResultProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileField: A field within a table.
@@ -1841,9 +1825,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo: The profile
@@ -1879,9 +1863,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo) UnmarshalJSON(data []byte) error {
@@ -1940,9 +1924,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo) UnmarshalJSON(data []byte) error {
@@ -2009,9 +1993,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldIn
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo) UnmarshalJSON(data []byte) error {
@@ -2053,9 +2037,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo) UnmarshalJSON(data []byte) error {
@@ -2095,9 +2079,9 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue) UnmarshalJSON(data []byte) error {
@@ -2148,9 +2132,9 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataProfileSpec) UnmarshalJSON(data []byte) error {
@@ -2186,9 +2170,9 @@ type GoogleCloudDataplexV1DataProfileSpecPostScanActions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileSpecPostScanActions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileSpecPostScanActions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileSpecPostScanActions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport: The
@@ -2212,9 +2196,9 @@ type GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileSpecSelectedFields: The specification for
@@ -2239,9 +2223,9 @@ type GoogleCloudDataplexV1DataProfileSpecSelectedFields struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProfileSpecSelectedFields
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityColumnResult: DataQualityColumnResult
@@ -2266,9 +2250,9 @@ type GoogleCloudDataplexV1DataQualityColumnResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityColumnResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityColumnResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityColumnResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte) error {
@@ -2305,9 +2289,9 @@ type GoogleCloudDataplexV1DataQualityDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityDimensionResult: DataQualityDimensionResult
@@ -2335,9 +2319,9 @@ type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityDimensionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityDimensionResult) UnmarshalJSON(data []byte) error {
@@ -2390,9 +2374,9 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityResult) UnmarshalJSON(data []byte) error {
@@ -2428,9 +2412,9 @@ type GoogleCloudDataplexV1DataQualityResultPostScanActionsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResultPostScanActionsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResu
@@ -2460,9 +2444,9 @@ type GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRule: A rule captures data quality intent
@@ -2530,9 +2514,9 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityRule) UnmarshalJSON(data []byte) error {
@@ -2584,9 +2568,9 @@ type GoogleCloudDataplexV1DataQualityRuleRangeExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleRangeExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleRangeExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleRangeExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleRegexExpectation: Evaluates whether each
@@ -2607,9 +2591,9 @@ type GoogleCloudDataplexV1DataQualityRuleRegexExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleRegexExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleResult: DataQualityRuleResult provides a
@@ -2653,9 +2637,9 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityRuleResult) UnmarshalJSON(data []byte) error {
@@ -2692,9 +2676,9 @@ type GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleSetExpectation: Evaluates whether each
@@ -2715,9 +2699,9 @@ type GoogleCloudDataplexV1DataQualityRuleSetExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleSetExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleSqlAssertion: A SQL statement that is
@@ -2746,9 +2730,9 @@ type GoogleCloudDataplexV1DataQualityRuleSqlAssertion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleSqlAssertion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleSqlAssertion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleSqlAssertion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation: Evaluates
@@ -2791,9 +2775,9 @@ type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation: Evaluates
@@ -2816,9 +2800,9 @@ type GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation: Evaluates whether
@@ -2897,9 +2881,9 @@ type GoogleCloudDataplexV1DataQualityScanRuleResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualityScanRuleResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityScanRuleResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) UnmarshalJSON(data []byte) error {
@@ -2945,9 +2929,9 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualitySpec) UnmarshalJSON(data []byte) error {
@@ -2986,9 +2970,9 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpecPostScanActions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport: The
@@ -3012,9 +2996,9 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger: This
@@ -3055,9 +3039,9 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients: The
@@ -3080,9 +3064,9 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger:
@@ -3104,9 +3088,9 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) UnmarshalJSON(data []byte) error {
@@ -3197,9 +3181,9 @@ type GoogleCloudDataplexV1DataScan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanEvent: These messages contain information about
@@ -3275,9 +3259,9 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs: Applied configs
@@ -3306,9 +3290,9 @@ type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs) UnmarshalJSON(data []byte) error {
@@ -3343,9 +3327,9 @@ type GoogleCloudDataplexV1DataScanEventDataProfileResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventDataProfileResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventDataProfileResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataProfileResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs: Applied configs
@@ -3371,9 +3355,9 @@ type GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs) UnmarshalJSON(data []byte) error {
@@ -3426,9 +3410,9 @@ type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) UnmarshalJSON(data []byte) error {
@@ -3463,9 +3447,9 @@ type GoogleCloudDataplexV1DataScanEventPostScanActionsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventPostScanActionsResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventPostScanActionsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventPostScanActionsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult:
@@ -3495,9 +3479,9 @@ type GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanExecutionSpec: DataScan execution settings.
@@ -3523,39 +3507,44 @@ type GoogleCloudDataplexV1DataScanExecutionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanExecutionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanExecutionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanExecutionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanExecutionStatus: Status of the data scan
 // execution.
 type GoogleCloudDataplexV1DataScanExecutionStatus struct {
+	// LatestJobCreateTime: Optional. The time when the DataScanJob execution was
+	// created.
+	LatestJobCreateTime string `json:"latestJobCreateTime,omitempty"`
 	// LatestJobEndTime: The time when the latest DataScanJob ended.
 	LatestJobEndTime string `json:"latestJobEndTime,omitempty"`
 	// LatestJobStartTime: The time when the latest DataScanJob started.
 	LatestJobStartTime string `json:"latestJobStartTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LatestJobEndTime") to
+	// ForceSendFields is a list of field names (e.g. "LatestJobCreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LatestJobEndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LatestJobCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanExecutionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScanJob: A DataScanJob represents an instance of
 // DataScan execution.
 type GoogleCloudDataplexV1DataScanJob struct {
+	// CreateTime: Output only. The time when the DataScanJob was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// DataProfileResult: Output only. The result of the data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Output only. DataProfileScan related setting.
@@ -3599,22 +3588,22 @@ type GoogleCloudDataplexV1DataScanJob struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataProfileResult") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataProfileResult") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataScanJob) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataScanJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataSource: The data source for DataScan.
@@ -3643,9 +3632,9 @@ type GoogleCloudDataplexV1DataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataTaxonomy: DataTaxonomy represents a set of
@@ -3696,9 +3685,9 @@ type GoogleCloudDataplexV1DataTaxonomy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataTaxonomy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DataTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataTaxonomy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DiscoveryEvent: The payload associated with Discovery
@@ -3747,9 +3736,9 @@ type GoogleCloudDataplexV1DiscoveryEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DiscoveryEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DiscoveryEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DiscoveryEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DiscoveryEventActionDetails: Details about the action.
@@ -3769,9 +3758,9 @@ type GoogleCloudDataplexV1DiscoveryEventActionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DiscoveryEventActionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DiscoveryEventActionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DiscoveryEventActionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DiscoveryEventConfigDetails: Details about
@@ -3794,9 +3783,9 @@ type GoogleCloudDataplexV1DiscoveryEventConfigDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DiscoveryEventConfigDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DiscoveryEventConfigDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DiscoveryEventConfigDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DiscoveryEventEntityDetails: Details about the entity.
@@ -3824,9 +3813,9 @@ type GoogleCloudDataplexV1DiscoveryEventEntityDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DiscoveryEventEntityDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DiscoveryEventEntityDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DiscoveryEventEntityDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DiscoveryEventPartitionDetails: Details about the
@@ -3861,9 +3850,9 @@ type GoogleCloudDataplexV1DiscoveryEventPartitionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DiscoveryEventPartitionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1DiscoveryEventPartitionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DiscoveryEventPartitionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Entity: Represents tables and fileset metadata
@@ -3955,9 +3944,9 @@ type GoogleCloudDataplexV1Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Entity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntityCompatibilityStatus: Provides compatibility
@@ -3981,9 +3970,9 @@ type GoogleCloudDataplexV1EntityCompatibilityStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntityCompatibilityStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntityCompatibilityStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntityCompatibilityStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility: Provides
@@ -4008,23 +3997,24 @@ type GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Entry: An entry is a representation of a data asset
 // which can be described by various metadata.
 type GoogleCloudDataplexV1Entry struct {
 	// Aspects: Optional. The Aspects attached to the Entry. The format for the key
-	// can be one of the following: 1. {projectId}.{locationId}.{aspectTypeId} (if
-	// the aspect is attached directly to the entry) 2.
+	// can be one of the following: {projectId}.{locationId}.{aspectTypeId} (if the
+	// aspect is attached directly to the entry)
 	// {projectId}.{locationId}.{aspectTypeId}@{path} (if the aspect is attached to
 	// an entry's path)
 	Aspects map[string]GoogleCloudDataplexV1Aspect `json:"aspects,omitempty"`
 	// CreateTime: Output only. The time when the Entry was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// EntrySource: Optional. Source system related information for an entry.
+	// EntrySource: Optional. Information related to the source system for an
+	// entry.
 	EntrySource *GoogleCloudDataplexV1EntrySource `json:"entrySource,omitempty"`
 	// EntryType: Required. Immutable. The resource name of the EntryType used to
 	// create this Entry.
@@ -4056,9 +4046,9 @@ type GoogleCloudDataplexV1Entry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Entry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Entry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Entry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntryGroup: An Entry Group represents a logical
@@ -4070,9 +4060,9 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: This checksum is computed by the service, and might be sent on update
+	// and delete requests to ensure the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the EntryGroup.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -4081,22 +4071,9 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	// projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_id
 	// }.
 	Name string `json:"name,omitempty"`
-	// TransferStatus: Output only. Denotes the transfer status of the Entry Group.
-	// It is unspecified for Entry Group created from Dataplex API.
-	//
-	// Possible values:
-	//   "TRANSFER_STATUS_UNSPECIFIED" - The default value. It is set for resources
-	// that were not subject for migration from Data Catalog service.
-	//   "TRANSFER_STATUS_MIGRATED" - Indicates that a resource was migrated from
-	// Data Catalog service but it hasn't been transferred yet. In particular the
-	// resource cannot be updated from Dataplex API.
-	//   "TRANSFER_STATUS_TRANSFERRED" - Indicates that a resource was transferred
-	// from Data Catalog service. The resource can only be updated from Dataplex
-	// API.
-	TransferStatus string `json:"transferStatus,omitempty"`
-	// Uid: Output only. System generated globally unique ID for the EntryGroup.
-	// This ID will be different if the EntryGroup is deleted and re-created with
-	// the same name.
+	// Uid: Output only. System generated globally unique ID for the EntryGroup. If
+	// you delete and recreate the EntryGroup with the same name, this ID will be
+	// different.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time when the EntryGroup was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4116,13 +4093,13 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1EntrySource: EntrySource contains source system related
-// information for the entry.
+// GoogleCloudDataplexV1EntrySource: EntrySource contains information related
+// to the source system of the Entry.
 type GoogleCloudDataplexV1EntrySource struct {
 	// Ancestors: Immutable. The ancestors of the Entry in the source system.
 	Ancestors []*GoogleCloudDataplexV1EntrySourceAncestor `json:"ancestors,omitempty"`
@@ -4137,6 +4114,11 @@ type GoogleCloudDataplexV1EntrySource struct {
 	// Labels: User-defined labels. The maximum size of keys and values is 128
 	// characters each.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Location: Output only. Location of the resource in the source system. You
+	// can search the Entry by this location. By default, this should match the
+	// location of the EntryGroup containing this entry. A different value allows
+	// capturing the source location for data external to Google Cloud.
+	Location string `json:"location,omitempty"`
 	// Platform: The platform containing the source system. The maximum size of the
 	// field is 64 characters.
 	Platform string `json:"platform,omitempty"`
@@ -4161,9 +4143,9 @@ type GoogleCloudDataplexV1EntrySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntrySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntrySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntrySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntrySourceAncestor: Ancestor contains information
@@ -4186,9 +4168,9 @@ type GoogleCloudDataplexV1EntrySourceAncestor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntrySourceAncestor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntrySourceAncestor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntrySourceAncestor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntryType: Entry Type is a template for creating
@@ -4202,9 +4184,9 @@ type GoogleCloudDataplexV1EntryType struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: Optional. This checksum is computed by the server based on the value
-	// of other fields, and may be sent on update and delete requests to ensure the
-	// client has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the service, and might be sent
+	// on update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels for the EntryType.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -4218,7 +4200,7 @@ type GoogleCloudDataplexV1EntryType struct {
 	// System: Optional. The system that Entries of this type belongs to. Examples
 	// include CloudSQL, MariaDB etc
 	System string `json:"system,omitempty"`
-	// TypeAliases: Optional. Indicates the class this Entry Type belongs to, for
+	// TypeAliases: Optional. Indicates the classes this Entry Type belongs to, for
 	// example, TABLE, DATABASE, MODEL.
 	TypeAliases []string `json:"typeAliases,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the EntryType.
@@ -4243,9 +4225,9 @@ type GoogleCloudDataplexV1EntryType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntryType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntryType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDataplexV1EntryTypeAspectInfo struct {
@@ -4264,9 +4246,9 @@ type GoogleCloudDataplexV1EntryTypeAspectInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntryTypeAspectInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntryTypeAspectInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryTypeAspectInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EntryTypeAuthorization: Authorization for an Entry
@@ -4289,9 +4271,9 @@ type GoogleCloudDataplexV1EntryTypeAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EntryTypeAuthorization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EntryTypeAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryTypeAuthorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Environment: Environment represents a user-visible
@@ -4352,9 +4334,9 @@ type GoogleCloudDataplexV1Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Environment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentEndpoints: URI Endpoints to access sessions
@@ -4377,9 +4359,9 @@ type GoogleCloudDataplexV1EnvironmentEndpoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentEndpoints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentInfrastructureSpec: Configuration for the
@@ -4404,9 +4386,9 @@ type GoogleCloudDataplexV1EnvironmentInfrastructureSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentInfrastructureSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentInfrastructureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentInfrastructureSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources: Compute
@@ -4433,9 +4415,9 @@ type GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime: Software
@@ -4469,9 +4451,9 @@ type GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentSessionSpec: Configuration for sessions
@@ -4499,9 +4481,9 @@ type GoogleCloudDataplexV1EnvironmentSessionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentSessionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentSessionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentSessionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1EnvironmentSessionStatus: Status of sessions created
@@ -4523,20 +4505,21 @@ type GoogleCloudDataplexV1EnvironmentSessionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1EnvironmentSessionStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1EnvironmentSessionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EnvironmentSessionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1GenerateDataQualityRulesRequest: Generate recommended
-// DataQualityRules request.
+// GoogleCloudDataplexV1GenerateDataQualityRulesRequest: Request details for
+// generating data quality rule recommendations.
 type GoogleCloudDataplexV1GenerateDataQualityRulesRequest struct {
 }
 
-// GoogleCloudDataplexV1GenerateDataQualityRulesResponse: Generate recommended
-// DataQualityRules response.
+// GoogleCloudDataplexV1GenerateDataQualityRulesResponse: Response details for
+// data quality rule recommendations.
 type GoogleCloudDataplexV1GenerateDataQualityRulesResponse struct {
-	// Rule: Generated recommended {@link DataQualityRule}s.
+	// Rule: The data quality rules that Dataplex generates based on the results of
+	// a data profiling scan.
 	Rule []*GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4554,9 +4537,9 @@ type GoogleCloudDataplexV1GenerateDataQualityRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1GenerateDataQualityRulesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1GenerateDataQualityRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1GenerateDataQualityRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1GovernanceEvent: Payload associated with Governance
@@ -4604,9 +4587,9 @@ type GoogleCloudDataplexV1GovernanceEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1GovernanceEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1GovernanceEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1GovernanceEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1GovernanceEventEntity: Information about Entity
@@ -4636,9 +4619,9 @@ type GoogleCloudDataplexV1GovernanceEventEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1GovernanceEventEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1GovernanceEventEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1GovernanceEventEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Job: A job represents an instance of a task.
@@ -4706,9 +4689,9 @@ type GoogleCloudDataplexV1Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Job) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Job) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1JobEvent: The payload associated with Job logs that
@@ -4771,9 +4754,9 @@ type GoogleCloudDataplexV1JobEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1JobEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1JobEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1JobEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Lake: A lake is a centralized repository for managing
@@ -4839,9 +4822,9 @@ type GoogleCloudDataplexV1Lake struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Lake) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Lake) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Lake
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1LakeMetastore: Settings to manage association of
@@ -4865,9 +4848,9 @@ type GoogleCloudDataplexV1LakeMetastore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1LakeMetastore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1LakeMetastore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1LakeMetastore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1LakeMetastoreStatus: Status of Lake and Dataproc
@@ -4901,9 +4884,9 @@ type GoogleCloudDataplexV1LakeMetastoreStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1LakeMetastoreStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1LakeMetastoreStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1LakeMetastoreStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListActionsResponse: List actions response.
@@ -4929,19 +4912,19 @@ type GoogleCloudDataplexV1ListActionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListActionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListActionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListActionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListAspectTypesResponse: List AspectTypes response
+// GoogleCloudDataplexV1ListAspectTypesResponse: List AspectTypes response.
 type GoogleCloudDataplexV1ListAspectTypesResponse struct {
-	// AspectTypes: ListAspectTypes under the given parent location.
+	// AspectTypes: AspectTypes under the given parent location.
 	AspectTypes []*GoogleCloudDataplexV1AspectType `json:"aspectTypes,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4959,9 +4942,9 @@ type GoogleCloudDataplexV1ListAspectTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListAspectTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListAspectTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListAspectTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListAssetsResponse: List assets response.
@@ -4987,9 +4970,9 @@ type GoogleCloudDataplexV1ListAssetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListAssetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListAssetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListContentResponse: List content response.
@@ -5015,9 +4998,9 @@ type GoogleCloudDataplexV1ListContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListContentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListDataAttributeBindingsResponse: List
@@ -5047,9 +5030,9 @@ type GoogleCloudDataplexV1ListDataAttributeBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListDataAttributeBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListDataAttributeBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListDataAttributeBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListDataAttributesResponse: List DataAttributes
@@ -5078,9 +5061,9 @@ type GoogleCloudDataplexV1ListDataAttributesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListDataAttributesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListDataAttributesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListDataAttributesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListDataScanJobsResponse: List DataScanJobs response.
@@ -5106,9 +5089,9 @@ type GoogleCloudDataplexV1ListDataScanJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListDataScanJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListDataScanJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListDataScanJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListDataScansResponse: List dataScans response.
@@ -5136,9 +5119,9 @@ type GoogleCloudDataplexV1ListDataScansResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListDataScansResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListDataScansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListDataScansResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListDataTaxonomiesResponse: List DataTaxonomies
@@ -5167,9 +5150,9 @@ type GoogleCloudDataplexV1ListDataTaxonomiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListDataTaxonomiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListDataTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListDataTaxonomiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListEntitiesResponse: List metadata entities response.
@@ -5195,15 +5178,17 @@ type GoogleCloudDataplexV1ListEntitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListEntitiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListEntitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEntitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1ListEntriesResponse: List Entries response.
 type GoogleCloudDataplexV1ListEntriesResponse struct {
-	// Entries: The list of entries.
+	// Entries: The list of entries under the given parent location.
 	Entries []*GoogleCloudDataplexV1Entry `json:"entries,omitempty"`
-	// NextPageToken: Pagination token.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5221,19 +5206,19 @@ type GoogleCloudDataplexV1ListEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListEntryGroupsResponse: List ListEntryGroups response.
+// GoogleCloudDataplexV1ListEntryGroupsResponse: List entry groups response.
 type GoogleCloudDataplexV1ListEntryGroupsResponse struct {
-	// EntryGroups: ListEntryGroups under the given parent location.
+	// EntryGroups: Entry groups under the given parent location.
 	EntryGroups []*GoogleCloudDataplexV1EntryGroup `json:"entryGroups,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5251,19 +5236,19 @@ type GoogleCloudDataplexV1ListEntryGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListEntryGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListEntryGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEntryGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1ListEntryTypesResponse: List EntryTypes response
+// GoogleCloudDataplexV1ListEntryTypesResponse: List EntryTypes response.
 type GoogleCloudDataplexV1ListEntryTypesResponse struct {
-	// EntryTypes: ListEntryTypes under the given parent location.
+	// EntryTypes: EntryTypes under the given parent location.
 	EntryTypes []*GoogleCloudDataplexV1EntryType `json:"entryTypes,omitempty"`
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UnreachableLocations: Locations that could not be reached.
+	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5281,9 +5266,9 @@ type GoogleCloudDataplexV1ListEntryTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListEntryTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListEntryTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEntryTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListEnvironmentsResponse: List environments response.
@@ -5309,9 +5294,9 @@ type GoogleCloudDataplexV1ListEnvironmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListEnvironmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListJobsResponse: List jobs response.
@@ -5337,9 +5322,9 @@ type GoogleCloudDataplexV1ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListLakesResponse: List lakes response.
@@ -5367,9 +5352,9 @@ type GoogleCloudDataplexV1ListLakesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListLakesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListLakesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListLakesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListPartitionsResponse: List metadata partitions
@@ -5396,9 +5381,9 @@ type GoogleCloudDataplexV1ListPartitionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListPartitionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListPartitionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListPartitionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListSessionsResponse: List sessions response.
@@ -5424,9 +5409,9 @@ type GoogleCloudDataplexV1ListSessionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListSessionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListSessionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListTasksResponse: List tasks response.
@@ -5454,9 +5439,9 @@ type GoogleCloudDataplexV1ListTasksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListTasksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListTasksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ListZonesResponse: List zones response.
@@ -5482,9 +5467,9 @@ type GoogleCloudDataplexV1ListZonesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListZonesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1OperationMetadata: Represents the metadata of a
@@ -5521,9 +5506,9 @@ type GoogleCloudDataplexV1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Partition: Represents partition metadata contained
@@ -5560,9 +5545,9 @@ type GoogleCloudDataplexV1Partition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Partition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Partition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Partition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ResourceAccessSpec: ResourceAccessSpec holds the access
@@ -5592,9 +5577,9 @@ type GoogleCloudDataplexV1ResourceAccessSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ResourceAccessSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ResourceAccessSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ResourceAccessSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1RunDataScanRequest: Run DataScan Request
@@ -5621,9 +5606,9 @@ type GoogleCloudDataplexV1RunDataScanResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1RunDataScanResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1RunDataScanResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1RunDataScanResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDataplexV1RunTaskRequest struct {
@@ -5656,9 +5641,9 @@ type GoogleCloudDataplexV1RunTaskRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1RunTaskRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1RunTaskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1RunTaskRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDataplexV1RunTaskResponse struct {
@@ -5680,9 +5665,9 @@ type GoogleCloudDataplexV1RunTaskResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1RunTaskResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1RunTaskResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1RunTaskResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ScannedData: The data scanned during processing (e.g.
@@ -5703,9 +5688,9 @@ type GoogleCloudDataplexV1ScannedData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ScannedData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ScannedData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ScannedData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ScannedDataIncrementalField: A data range denoted by a
@@ -5731,9 +5716,9 @@ type GoogleCloudDataplexV1ScannedDataIncrementalField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ScannedDataIncrementalField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ScannedDataIncrementalField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ScannedDataIncrementalField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Schema: Schema information describing the structure and
@@ -5778,9 +5763,9 @@ type GoogleCloudDataplexV1Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Schema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SchemaPartitionField: Represents a key field within the
@@ -5826,9 +5811,9 @@ type GoogleCloudDataplexV1SchemaPartitionField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SchemaPartitionField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SchemaPartitionField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SchemaPartitionField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SchemaSchemaField: Represents a column field within a
@@ -5886,21 +5871,22 @@ type GoogleCloudDataplexV1SchemaSchemaField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SchemaSchemaField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SchemaSchemaField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SchemaSchemaField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDataplexV1SearchEntriesResponse struct {
-	// NextPageToken: Pagination token.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Results: The results matching the search query.
 	Results []*GoogleCloudDataplexV1SearchEntriesResult `json:"results,omitempty"`
-	// TotalSize: The estimated total number of matching entries. Not guaranteed to
-	// be accurate.
+	// TotalSize: The estimated total number of matching entries. This number isn't
+	// guaranteed to be accurate.
 	TotalSize int64 `json:"totalSize,omitempty"`
-	// Unreachable: Unreachable locations. Search results don't include data from
-	// those locations.
+	// Unreachable: Locations that the service couldn't reach. Search results don't
+	// include data from these locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5918,9 +5904,9 @@ type GoogleCloudDataplexV1SearchEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SearchEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SearchEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SearchEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SearchEntriesResult: A single result of a SearchEntries
@@ -5944,9 +5930,9 @@ type GoogleCloudDataplexV1SearchEntriesResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SearchEntriesResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SearchEntriesResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SearchEntriesResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SearchEntriesResultSnippets: Snippets for the entry,
@@ -5967,9 +5953,9 @@ type GoogleCloudDataplexV1SearchEntriesResultSnippets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SearchEntriesResultSnippets) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SearchEntriesResultSnippets) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SearchEntriesResultSnippets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Session: Represents an active analyze session running
@@ -6005,9 +5991,9 @@ type GoogleCloudDataplexV1Session struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Session) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Session) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Session
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SessionEvent: These messages contain information about
@@ -6053,9 +6039,9 @@ type GoogleCloudDataplexV1SessionEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SessionEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SessionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SessionEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1SessionEventQueryDetail: Execution details of the
@@ -6091,9 +6077,9 @@ type GoogleCloudDataplexV1SessionEventQueryDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1SessionEventQueryDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1SessionEventQueryDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SessionEventQueryDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1StorageAccess: Describes the access mechanism of the
@@ -6121,9 +6107,9 @@ type GoogleCloudDataplexV1StorageAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1StorageAccess) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1StorageAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1StorageFormat: Describes the format of the data within
@@ -6182,9 +6168,9 @@ type GoogleCloudDataplexV1StorageFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1StorageFormat) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1StorageFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1StorageFormatCsvOptions: Describes CSV and similar
@@ -6215,9 +6201,9 @@ type GoogleCloudDataplexV1StorageFormatCsvOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1StorageFormatCsvOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1StorageFormatCsvOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageFormatCsvOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1StorageFormatIcebergOptions: Describes Iceberg data
@@ -6239,9 +6225,9 @@ type GoogleCloudDataplexV1StorageFormatIcebergOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1StorageFormatIcebergOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1StorageFormatIcebergOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageFormatIcebergOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1StorageFormatJsonOptions: Describes JSON data format.
@@ -6262,9 +6248,9 @@ type GoogleCloudDataplexV1StorageFormatJsonOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1StorageFormatJsonOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1StorageFormatJsonOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageFormatJsonOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Task: A task represents a user-visible job.
@@ -6322,9 +6308,9 @@ type GoogleCloudDataplexV1Task struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Task) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Task) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Task
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskExecutionSpec: Execution related settings, like
@@ -6367,9 +6353,9 @@ type GoogleCloudDataplexV1TaskExecutionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskExecutionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskExecutionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskExecutionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskExecutionStatus: Status of the task execution (e.g.
@@ -6392,9 +6378,9 @@ type GoogleCloudDataplexV1TaskExecutionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskExecutionStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskExecutionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskExecutionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskInfrastructureSpec: Configuration for the
@@ -6419,9 +6405,9 @@ type GoogleCloudDataplexV1TaskInfrastructureSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskInfrastructureSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskInfrastructureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskInfrastructureSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources: Batch
@@ -6447,9 +6433,9 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime: Container
@@ -6485,9 +6471,9 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork: Cloud VPC Network
@@ -6513,9 +6499,9 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskNotebookTaskConfig: Config for running scheduled
@@ -6548,9 +6534,9 @@ type GoogleCloudDataplexV1TaskNotebookTaskConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskNotebookTaskConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskNotebookTaskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskNotebookTaskConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskSparkTaskConfig: User-specified config for running
@@ -6600,9 +6586,9 @@ type GoogleCloudDataplexV1TaskSparkTaskConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskSparkTaskConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskSparkTaskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskSparkTaskConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TaskTriggerSpec: Task scheduling and trigger settings.
@@ -6646,9 +6632,9 @@ type GoogleCloudDataplexV1TaskTriggerSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TaskTriggerSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TaskTriggerSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskTriggerSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Trigger: DataScan scheduling and trigger settings.
@@ -6670,9 +6656,9 @@ type GoogleCloudDataplexV1Trigger struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Trigger) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Trigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Trigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TriggerOnDemand: The scan runs once via RunDataScan
@@ -6705,9 +6691,9 @@ type GoogleCloudDataplexV1TriggerSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1TriggerSchedule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1TriggerSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TriggerSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1Zone: A zone represents a logical group of related
@@ -6777,9 +6763,9 @@ type GoogleCloudDataplexV1Zone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1Zone) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1Zone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Zone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ZoneDiscoverySpec: Settings to manage the metadata
@@ -6824,9 +6810,9 @@ type GoogleCloudDataplexV1ZoneDiscoverySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ZoneDiscoverySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ZoneDiscoverySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ZoneDiscoverySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ZoneDiscoverySpecCsvOptions: Describe CSV and similar
@@ -6857,9 +6843,9 @@ type GoogleCloudDataplexV1ZoneDiscoverySpecCsvOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ZoneDiscoverySpecCsvOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ZoneDiscoverySpecCsvOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ZoneDiscoverySpecCsvOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ZoneDiscoverySpecJsonOptions: Describe JSON data
@@ -6885,9 +6871,9 @@ type GoogleCloudDataplexV1ZoneDiscoverySpecJsonOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ZoneDiscoverySpecJsonOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ZoneDiscoverySpecJsonOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ZoneDiscoverySpecJsonOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1ZoneResourceSpec: Settings for resources attached as
@@ -6915,9 +6901,9 @@ type GoogleCloudDataplexV1ZoneResourceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1ZoneResourceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDataplexV1ZoneResourceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ZoneResourceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -6944,9 +6930,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -6982,9 +6968,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -7023,9 +7009,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -7058,9 +7044,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates members, or principals, with a role.
@@ -7154,9 +7140,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -7245,9 +7231,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1SetIamPolicyRequest: Request message for SetIamPolicy method.
@@ -7274,9 +7260,9 @@ type GoogleIamV1SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsRequest: Request message for TestIamPermissions
@@ -7300,9 +7286,9 @@ type GoogleIamV1TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsResponse: Response message for
@@ -7327,9 +7313,9 @@ type GoogleIamV1TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -7361,9 +7347,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -7407,9 +7393,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The Status type defines a logical error model that is
@@ -7441,9 +7427,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -7489,9 +7475,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -7764,7 +7750,8 @@ type ProjectsLocationsLookupEntryCall struct {
 	header_      http.Header
 }
 
-// LookupEntry: Looks up a single entry.
+// LookupEntry: Looks up a single Entry by name using the permission on the
+// source system.
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -7775,8 +7762,7 @@ func (r *ProjectsLocationsService) LookupEntry(name string) *ProjectsLocationsLo
 }
 
 // AspectTypes sets the optional parameter "aspectTypes": Limits the aspects
-// returned to the provided aspect types. Only works if the CUSTOM view is
-// selected.
+// returned to the provided aspect types. It only works for CUSTOM view.
 func (c *ProjectsLocationsLookupEntryCall) AspectTypes(aspectTypes ...string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.SetMulti("aspectTypes", append([]string{}, aspectTypes...))
 	return c
@@ -7792,15 +7778,15 @@ func (c *ProjectsLocationsLookupEntryCall) Entry(entry string) *ProjectsLocation
 }
 
 // Paths sets the optional parameter "paths": Limits the aspects returned to
-// those associated with the provided paths within the Entry. Only works if the
-// CUSTOM view is selected.
+// those associated with the provided paths within the Entry. It only works for
+// CUSTOM view.
 func (c *ProjectsLocationsLookupEntryCall) Paths(paths ...string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.SetMulti("paths", append([]string{}, paths...))
 	return c
 }
 
-// View sets the optional parameter "view": View for controlling which parts of
-// an entry are to be returned.
+// View sets the optional parameter "view": View to control which parts of an
+// entry the service should return.
 //
 // Possible values:
 //
@@ -7812,11 +7798,11 @@ func (c *ProjectsLocationsLookupEntryCall) Paths(paths ...string) *ProjectsLocat
 //
 //	"CUSTOM" - Returns aspects matching custom fields in GetEntryRequest. If
 //
-// the number of aspects would exceed 100, the first 100 will be returned.
+// the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects would exceed 100,
+//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
 //
-// the first 100 will be returned.
+// first 100 will be returned.
 func (c *ProjectsLocationsLookupEntryCall) View(view string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7920,7 +7906,7 @@ type ProjectsLocationsSearchEntriesCall struct {
 	header_    http.Header
 }
 
-// SearchEntries: Searches for entries matching given query and scope.
+// SearchEntries: Searches for Entries matching the given query and scope.
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -7930,20 +7916,23 @@ func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocations
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Ordering of the results.
-// Supported options to be added later.
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering of
+// results.
 func (c *ProjectsLocationsSearchEntriesCall) OrderBy(orderBy string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Pagination.
+// PageSize sets the optional parameter "pageSize": Number of results in the
+// search page. If <=0, then defaults to 10. Max limit for page_size is 1000.
+// Throws an invalid argument for page_size > 1000.
 func (c *ProjectsLocationsSearchEntriesCall) PageSize(pageSize int64) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous SearchEntries call. Provide this to retrieve the subsequent page.
 func (c *ProjectsLocationsSearchEntriesCall) PageToken(pageToken string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7957,9 +7946,9 @@ func (c *ProjectsLocationsSearchEntriesCall) Query(query string) *ProjectsLocati
 }
 
 // Scope sets the optional parameter "scope": The scope under which the search
-// should be operating. Should either be organizations/ or projects/. If left
-// unspecified, it will default to the organization where the project provided
-// in name is located.
+// should be operating. It must either be organizations/ or projects/. If it is
+// unspecified, it defaults to the organization where the project provided in
+// name is located.
 func (c *ProjectsLocationsSearchEntriesCall) Scope(scope string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("scope", scope)
 	return c
@@ -8074,11 +8063,11 @@ type ProjectsLocationsAspectTypesCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an AspectType
+// Create: Creates an AspectType.
 //
 //   - parent: The resource name of the AspectType, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsAspectTypesService) Create(parent string, googleclouddataplexv1aspecttype *GoogleCloudDataplexV1AspectType) *ProjectsLocationsAspectTypesCreateCall {
 	c := &ProjectsLocationsAspectTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8093,8 +8082,9 @@ func (c *ProjectsLocationsAspectTypesCreateCall) AspectTypeId(aspectTypeId strin
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsAspectTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsAspectTypesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -8191,7 +8181,7 @@ type ProjectsLocationsAspectTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a AspectType resource.
+// Delete: Deletes an AspectType.
 //
 //   - name: The resource name of the AspectType:
 //     projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_
@@ -8204,7 +8194,7 @@ func (r *ProjectsLocationsAspectTypesService) Delete(name string) *ProjectsLocat
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteAspectTypeRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsAspectTypesDeleteCall) Etag(etag string) *ProjectsLocationsAspectTypesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -8298,7 +8288,7 @@ type ProjectsLocationsAspectTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a AspectType resource.
+// Get: Gets an AspectType.
 //
 //   - name: The resource name of the AspectType:
 //     projects/{project_number}/locations/{location_id}/aspectTypes/{aspect_type_
@@ -8540,7 +8530,7 @@ type ProjectsLocationsAspectTypesListCall struct {
 //
 //   - parent: The resource name of the AspectType location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsAspectTypesService) List(parent string) *ProjectsLocationsAspectTypesListCall {
 	c := &ProjectsLocationsAspectTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8548,16 +8538,16 @@ func (r *ProjectsLocationsAspectTypesService) List(parent string) *ProjectsLocat
 }
 
 // Filter sets the optional parameter "filter": Filter request. Filters are
-// case-sensitive. The following formats are supported:labels.key1 = "value1"
-// labels:key1 name = "value" These restrictions can be coinjoined with AND, OR
-// and NOT conjunctions.
+// case-sensitive. The service supports the following formats: labels.key1 =
+// "value1" labels:key1 name = "value"These restrictions can be conjoined with
+// AND, OR, and NOT conjunctions.
 func (c *ProjectsLocationsAspectTypesListCall) Filter(filter string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Order by fields (name or
-// create_time) for the result. If not specified, the ordering is undefined.
+// OrderBy sets the optional parameter "orderBy": Orders the result by name or
+// create_time fields. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsAspectTypesListCall) OrderBy(orderBy string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -8565,8 +8555,8 @@ func (c *ProjectsLocationsAspectTypesListCall) OrderBy(orderBy string) *Projects
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // AspectTypes to return. The service may return fewer than this value. If
-// unspecified, at most 10 AspectTypes will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, the service returns at most 10 AspectTypes. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsAspectTypesListCall) PageSize(pageSize int64) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8574,8 +8564,8 @@ func (c *ProjectsLocationsAspectTypesListCall) PageSize(pageSize int64) *Project
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListAspectTypes call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListAspectTypes must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provide to ListAspectTypes
+// must match the call that provided the page token.
 func (c *ProjectsLocationsAspectTypesListCall) PageToken(pageToken string) *ProjectsLocationsAspectTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8701,7 +8691,7 @@ type ProjectsLocationsAspectTypesPatchCall struct {
 	header_                         http.Header
 }
 
-// Patch: Updates a AspectType resource.
+// Patch: Updates an AspectType.
 //
 //   - name: Output only. The relative resource name of the AspectType, of the
 //     form:
@@ -10221,12 +10211,14 @@ type ProjectsLocationsDataScansGenerateDataQualityRulesCall struct {
 	header_                                              http.Header
 }
 
-// GenerateDataQualityRules: Generates recommended DataQualityRule from a data
-// profiling DataScan.
+// GenerateDataQualityRules: Generates recommended data quality rules based on
+// the results of a data profiling scan.Use the recommendations to build rules
+// for a data quality scan.
 //
-//   - name: The name should be either * the name of a datascan with at least one
-//     successful completed data profiling job, or * the name of a successful
-//     completed data profiling datascan job.
+//   - name: The name must be one of the following: The name of a data scan with
+//     at least one successful, completed data profiling job The name of a
+//     successful, completed data profiling job (a data scan job where the job
+//     type is data profiling).
 func (r *ProjectsLocationsDataScansService) GenerateDataQualityRules(name string, googleclouddataplexv1generatedataqualityrulesrequest *GoogleCloudDataplexV1GenerateDataQualityRulesRequest) *ProjectsLocationsDataScansGenerateDataQualityRulesCall {
 	c := &ProjectsLocationsDataScansGenerateDataQualityRulesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11179,12 +11171,14 @@ type ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall struct {
 	header_                                              http.Header
 }
 
-// GenerateDataQualityRules: Generates recommended DataQualityRule from a data
-// profiling DataScan.
+// GenerateDataQualityRules: Generates recommended data quality rules based on
+// the results of a data profiling scan.Use the recommendations to build rules
+// for a data quality scan.
 //
-//   - name: The name should be either * the name of a datascan with at least one
-//     successful completed data profiling job, or * the name of a successful
-//     completed data profiling datascan job.
+//   - name: The name must be one of the following: The name of a data scan with
+//     at least one successful, completed data profiling job The name of a
+//     successful, completed data profiling job (a data scan job where the job
+//     type is data profiling).
 func (r *ProjectsLocationsDataScansJobsService) GenerateDataQualityRules(name string, googleclouddataplexv1generatedataqualityrulesrequest *GoogleCloudDataplexV1GenerateDataQualityRulesRequest) *ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall {
 	c := &ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13494,7 +13488,7 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an EntryGroup
+// Create: Creates an EntryGroup.
 //
 //   - parent: The resource name of the entryGroup, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
@@ -13513,8 +13507,9 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) EntryGroupId(entryGroupId strin
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryGroupsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryGroupsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -13611,7 +13606,7 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a EntryGroup resource.
+// Delete: Deletes an EntryGroup.
 //
 //   - name: The resource name of the EntryGroup:
 //     projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_
@@ -13624,7 +13619,7 @@ func (r *ProjectsLocationsEntryGroupsService) Delete(name string) *ProjectsLocat
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteEntryGroupRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsEntryGroupsDeleteCall) Etag(etag string) *ProjectsLocationsEntryGroupsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -13718,7 +13713,7 @@ type ProjectsLocationsEntryGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a EntryGroup resource.
+// Get: Gets an EntryGroup.
 //
 //   - name: The resource name of the EntryGroup:
 //     projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_
@@ -13960,7 +13955,7 @@ type ProjectsLocationsEntryGroupsListCall struct {
 //
 //   - parent: The resource name of the entryGroup location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryGroupsService) List(parent string) *ProjectsLocationsEntryGroupsListCall {
 	c := &ProjectsLocationsEntryGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13982,8 +13977,8 @@ func (c *ProjectsLocationsEntryGroupsListCall) OrderBy(orderBy string) *Projects
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // EntryGroups to return. The service may return fewer than this value. If
-// unspecified, at most 10 EntryGroups will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, the service returns at most 10 EntryGroups. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsEntryGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -13991,8 +13986,8 @@ func (c *ProjectsLocationsEntryGroupsListCall) PageSize(pageSize int64) *Project
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListEntryGroups call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListEntryGroups must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provide to ListEntryGroups
+// must match the call that provided the page token.
 func (c *ProjectsLocationsEntryGroupsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14118,7 +14113,7 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 	header_                         http.Header
 }
 
-// Patch: Updates a EntryGroup resource.
+// Patch: Updates an EntryGroup.
 //
 //   - name: Output only. The relative resource name of the EntryGroup, of the
 //     form:
@@ -14138,8 +14133,9 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) UpdateMask(updateMask string) *P
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request, without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryGroupsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryGroupsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -14465,16 +14461,16 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googl
 
 // EntryId sets the optional parameter "entryId": Required. Entry identifier.
 // It has to be unique within an Entry Group.Entries corresponding to Google
-// Cloud resources use Entry ID format based on Full Resource Names
+// Cloud resources use an Entry ID format based on full resource names
 // (https://cloud.google.com/apis/design/resource_names#full_resource_name).
-// The format is a Full Resource Name of the resource without the prefix double
-// slashes in the API Service Name part of Full Resource Name. This allows
-// retrieval of entries using their associated resource name.For example if the
-// Full Resource Name of a resource is
+// The format is a full resource name of the resource without the prefix double
+// slashes in the API service name part of the full resource name. This allows
+// retrieval of entries using their associated resource name.For example, if
+// the full resource name of a resource is
 // //library.googleapis.com/shelves/shelf1/books/book2, then the suggested
 // entry_id is library.googleapis.com/shelves/shelf1/books/book2.It is also
 // suggested to follow the same convention for entries corresponding to
-// resources from other providers or systems than Google Cloud.The maximum size
+// resources from providers or systems other than Google Cloud.The maximum size
 // of the field is 4000 characters.
 func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) EntryId(entryId string) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c.urlParams_.Set("entryId", entryId)
@@ -14671,7 +14667,7 @@ type ProjectsLocationsEntryGroupsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a single entry.
+// Get: Gets an Entry.
 //
 //   - name: The resource name of the Entry:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{
@@ -14683,23 +14679,22 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Get(name string) *ProjectsL
 }
 
 // AspectTypes sets the optional parameter "aspectTypes": Limits the aspects
-// returned to the provided aspect types. Only works if the CUSTOM view is
-// selected.
+// returned to the provided aspect types. It only works for CUSTOM view.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) AspectTypes(aspectTypes ...string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.SetMulti("aspectTypes", append([]string{}, aspectTypes...))
 	return c
 }
 
 // Paths sets the optional parameter "paths": Limits the aspects returned to
-// those associated with the provided paths within the Entry. Only works if the
-// CUSTOM view is selected.
+// those associated with the provided paths within the Entry. It only works for
+// CUSTOM view.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Paths(paths ...string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.SetMulti("paths", append([]string{}, paths...))
 	return c
 }
 
-// View sets the optional parameter "view": View for controlling which parts of
-// an entry are to be returned.
+// View sets the optional parameter "view": View to control which parts of an
+// entry the service should return.
 //
 // Possible values:
 //
@@ -14711,11 +14706,11 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Paths(paths ...string) *Pro
 //
 //	"CUSTOM" - Returns aspects matching custom fields in GetEntryRequest. If
 //
-// the number of aspects would exceed 100, the first 100 will be returned.
+// the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects would exceed 100,
+//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
 //
-// the first 100 will be returned.
+// first 100 will be returned.
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) View(view string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -14820,7 +14815,7 @@ type ProjectsLocationsEntryGroupsEntriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists entries within an entry group.
+// List: Lists Entries within an EntryGroup.
 //
 //   - parent: The resource name of the parent Entry Group:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}.
@@ -14831,12 +14826,12 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": A filter on the entries to
-// return. Filters are case-sensitive. The request can be filtered by the
-// following fields: entry_type, entry_source.display_name. The comparison
-// operators are =, !=, <, >, <=, >= (strings are compared according to lexical
-// order) The logical operators AND, OR, NOT can be used in the filter.
-// Wildcard "*" can be used, but for entry_type the full project id or number
-// needs to be provided. Example filter expressions:
+// return. Filters are case-sensitive. You can filter the request by the
+// following fields: entry_type entry_source.display_nameThe comparison
+// operators are =, !=, <, >, <=, >=. The service compares strings according to
+// lexical order.You can use the logical operators AND, OR, NOT in the
+// filter.You can use Wildcard "*", but for entry_type you need to provide the
+// full project id or number.Example filter expressions:
 // "entry_source.display_name=AnExampleDisplayName"
 // "entry_type=projects/example-project/locations/global/entryTypes/example-entr
 // y_type" "entry_type=projects/example-project/locations/us/entryTypes/a* OR
@@ -14847,14 +14842,17 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Filter(filter string) *Pro
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize":
+// PageSize sets the optional parameter "pageSize": Number of items to return
+// per page. If there are remaining results, the service returns a
+// next_page_token. If unspecified, the service returns at most 10 Entries. The
+// maximum value is 100; values above 100 will be coerced to 100.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination token
-// returned by a previous request.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListEntries call. Provide this to retrieve the subsequent page.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14993,28 +14991,29 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googlecl
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true and
-// the entry does not exist, it will be created.
+// the entry doesn't exist, the service will create it.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // AspectKeys sets the optional parameter "aspectKeys": The map keys of the
-// Aspects which should be modified. Supports the following syntaxes: * -
-// matches aspect on given type and empty path * @path - matches aspect on
-// given type and specified path * * - matches aspects on given type for all
-// paths * *@path - matches aspects of all types on the given pathExisting
-// aspects matching the syntax will not be removed unless
-// delete_missing_aspects is set to true.If this field is left empty, it will
-// be treated as specifying exactly those Aspects present in the request.
+// Aspects which the service should modify. It supports the following syntaxes:
+// - matches an aspect of the given type and empty path. @path - matches an
+// aspect of the given type and specified path. * - matches aspects of the
+// given type for all paths. *@path - matches aspects of all types on the given
+// path.The service will not remove existing aspects matching the syntax unless
+// delete_missing_aspects is set to true.If this field is left empty, the
+// service treats it as specifying exactly those Aspects present in the
+// request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AspectKeys(aspectKeys ...string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.SetMulti("aspectKeys", append([]string{}, aspectKeys...))
 	return c
 }
 
 // DeleteMissingAspects sets the optional parameter "deleteMissingAspects": If
-// set to true and the aspect_keys specify aspect ranges, any existing aspects
-// from that range not provided in the request will be deleted.
+// set to true and the aspect_keys specify aspect ranges, the service deletes
+// any existing aspects from that range that weren't provided in the request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) DeleteMissingAspects(deleteMissingAspects bool) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("deleteMissingAspects", fmt.Sprint(deleteMissingAspects))
 	return c
@@ -15022,8 +15021,8 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) DeleteMissingAspects(dele
 
 // UpdateMask sets the optional parameter "updateMask": Mask of fields to
 // update. To update Aspects, the update_mask must contain the value
-// "aspects".If the update_mask is empty, all modifiable fields present in the
-// request will be updated.
+// "aspects".If the update_mask is empty, the service will update all
+// modifiable fields present in the request.
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15121,11 +15120,11 @@ type ProjectsLocationsEntryTypesCreateCall struct {
 	header_                        http.Header
 }
 
-// Create: Creates an EntryType
+// Create: Creates an EntryType.
 //
 //   - parent: The resource name of the EntryType, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryTypesService) Create(parent string, googleclouddataplexv1entrytype *GoogleCloudDataplexV1EntryType) *ProjectsLocationsEntryTypesCreateCall {
 	c := &ProjectsLocationsEntryTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15140,8 +15139,9 @@ func (c *ProjectsLocationsEntryTypesCreateCall) EntryTypeId(entryTypeId string) 
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryTypesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15238,7 +15238,7 @@ type ProjectsLocationsEntryTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a EntryType resource.
+// Delete: Deletes an EntryType.
 //
 //   - name: The resource name of the EntryType:
 //     projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id
@@ -15251,7 +15251,7 @@ func (r *ProjectsLocationsEntryTypesService) Delete(name string) *ProjectsLocati
 
 // Etag sets the optional parameter "etag": If the client provided etag value
 // does not match the current etag value, the DeleteEntryTypeRequest method
-// returns an ABORTED error response
+// returns an ABORTED error response.
 func (c *ProjectsLocationsEntryTypesDeleteCall) Etag(etag string) *ProjectsLocationsEntryTypesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -15345,7 +15345,7 @@ type ProjectsLocationsEntryTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a EntryType resource.
+// Get: Gets an EntryType.
 //
 //   - name: The resource name of the EntryType:
 //     projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id
@@ -15587,7 +15587,7 @@ type ProjectsLocationsEntryTypesListCall struct {
 //
 //   - parent: The resource name of the EntryType location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryTypesService) List(parent string) *ProjectsLocationsEntryTypesListCall {
 	c := &ProjectsLocationsEntryTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15595,16 +15595,16 @@ func (r *ProjectsLocationsEntryTypesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": Filter request. Filters are
-// case-sensitive. The following formats are supported:labels.key1 = "value1"
-// labels:key1 name = "value" These restrictions can be coinjoined with AND, OR
-// and NOT conjunctions.
+// case-sensitive. The service supports the following formats: labels.key1 =
+// "value1" labels:key1 name = "value"These restrictions can be conjoined with
+// AND, OR, and NOT conjunctions.
 func (c *ProjectsLocationsEntryTypesListCall) Filter(filter string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Order by fields (name or
-// create_time) for the result. If not specified, the ordering is undefined.
+// OrderBy sets the optional parameter "orderBy": Orders the result by name or
+// create_time fields. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsEntryTypesListCall) OrderBy(orderBy string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -15612,7 +15612,7 @@ func (c *ProjectsLocationsEntryTypesListCall) OrderBy(orderBy string) *ProjectsL
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // EntryTypes to return. The service may return fewer than this value. If
-// unspecified, at most 10 EntryTypes will be returned. The maximum value is
+// unspecified, the service returns at most 10 EntryTypes. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsEntryTypesListCall) PageSize(pageSize int64) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -15621,8 +15621,8 @@ func (c *ProjectsLocationsEntryTypesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous ListEntryTypes call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListEntryTypes must
-// match the call that provided the page token.
+// page. When paginating, all other parameters you provided to ListEntryTypes
+// must match the call that provided the page token.
 func (c *ProjectsLocationsEntryTypesListCall) PageToken(pageToken string) *ProjectsLocationsEntryTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15748,7 +15748,7 @@ type ProjectsLocationsEntryTypesPatchCall struct {
 	header_                        http.Header
 }
 
-// Patch: Updates a EntryType resource.
+// Patch: Updates an EntryType.
 //
 //   - name: Output only. The relative resource name of the EntryType, of the
 //     form:
@@ -15768,8 +15768,9 @@ func (c *ProjectsLocationsEntryTypesPatchCall) UpdateMask(updateMask string) *Pr
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Only validate the
-// request, but do not perform mutations. The default is false.
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
 func (c *ProjectsLocationsEntryTypesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEntryTypesPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c

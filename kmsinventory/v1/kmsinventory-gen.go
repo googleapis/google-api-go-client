@@ -259,9 +259,9 @@ type GoogleCloudKmsInventoryV1ListCryptoKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ListCryptoKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1ProtectedResource: Metadata about a resource
@@ -314,9 +314,9 @@ type GoogleCloudKmsInventoryV1ProtectedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ProtectedResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ProtectedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ProtectedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1ProtectedResourcesSummary: Aggregate information
@@ -357,9 +357,9 @@ type GoogleCloudKmsInventoryV1ProtectedResourcesSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1ProtectedResourcesSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1ProtectedResourcesSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1ProtectedResourcesSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse: Response message
@@ -386,9 +386,9 @@ type GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKey: A CryptoKey represents a logical key that can be
@@ -408,11 +408,20 @@ type GoogleCloudKmsV1CryptoKey struct {
 	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// DestroyScheduledDuration: Immutable. The period of time that versions of
 	// this key spend in the DESTROY_SCHEDULED state before transitioning to
-	// DESTROYED. If not specified at creation time, the default duration is 24
-	// hours.
+	// DESTROYED. If not specified at creation time, the default duration is 30
+	// days.
 	DestroyScheduledDuration string `json:"destroyScheduledDuration,omitempty"`
 	// ImportOnly: Immutable. Whether this key may contain imported versions only.
 	ImportOnly bool `json:"importOnly,omitempty"`
+	// KeyAccessJustificationsPolicy: Optional. The policy used for Key Access
+	// Justifications Policy Enforcement. If this field is present and this key is
+	// enrolled in Key Access Justifications Policy Enforcement, the policy will be
+	// evaluated in encrypt, decrypt, and sign operations, and the operation will
+	// fail if rejected by the policy. The policy is defined by specifying zero or
+	// more allowed justification codes.
+	// https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes
+	// By default, this field is absent, and all justification codes are allowed.
+	KeyAccessJustificationsPolicy *GoogleCloudKmsV1KeyAccessJustificationsPolicy `json:"keyAccessJustificationsPolicy,omitempty"`
 	// Labels: Labels with user-defined metadata. For more information, see
 	// Labeling Keys (https://cloud.google.com/kms/docs/labeling-keys).
 	Labels map[string]string `json:"labels,omitempty"`
@@ -472,9 +481,9 @@ type GoogleCloudKmsV1CryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKeyVersion: A CryptoKeyVersion represents an
@@ -651,9 +660,9 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKeyVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKeyVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKeyVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1CryptoKeyVersionTemplate: A CryptoKeyVersionTemplate
@@ -748,9 +757,9 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1CryptoKeyVersionTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1ExternalProtectionLevelOptions:
@@ -778,9 +787,75 @@ type GoogleCloudKmsV1ExternalProtectionLevelOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1ExternalProtectionLevelOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1ExternalProtectionLevelOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1ExternalProtectionLevelOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudKmsV1KeyAccessJustificationsPolicy: A
+// KeyAccessJustificationsPolicy specifies zero or more allowed AccessReason
+// values for encrypt, decrypt, and sign operations on a CryptoKey.
+type GoogleCloudKmsV1KeyAccessJustificationsPolicy struct {
+	// AllowedAccessReasons: The list of allowed reasons for access to a CryptoKey.
+	// Zero allowed access reasons means all encrypt, decrypt, and sign operations
+	// for the CryptoKey associated with this policy will fail.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified access reason.
+	//   "CUSTOMER_INITIATED_SUPPORT" - Customer-initiated support.
+	//   "GOOGLE_INITIATED_SERVICE" - Google-initiated access for system management
+	// and troubleshooting.
+	//   "THIRD_PARTY_DATA_REQUEST" - Google-initiated access in response to a
+	// legal request or legal process.
+	//   "GOOGLE_INITIATED_REVIEW" - Google-initiated access for security, fraud,
+	// abuse, or compliance purposes.
+	//   "CUSTOMER_INITIATED_ACCESS" - Customer uses their account to perform any
+	// access to their own data which their IAM policy authorizes.
+	//   "GOOGLE_INITIATED_SYSTEM_OPERATION" - Google systems access customer data
+	// to help optimize the structure of the data or quality for future uses by the
+	// customer.
+	//   "REASON_NOT_EXPECTED" - No reason is expected for this key request.
+	//   "MODIFIED_CUSTOMER_INITIATED_ACCESS" - Customer uses their account to
+	// perform any access to their own data which their IAM policy authorizes, and
+	// one of the following is true: * A Google administrator has reset the
+	// root-access account associated with the user's organization within the past
+	// 7 days. * A Google-initiated emergency access operation has interacted with
+	// a resource in the same project or folder as the currently accessed resource
+	// within the past 7 days.
+	//   "MODIFIED_GOOGLE_INITIATED_SYSTEM_OPERATION" - Google systems access
+	// customer data to help optimize the structure of the data or quality for
+	// future uses by the customer, and one of the following is true: * A Google
+	// administrator has reset the root-access account associated with the user's
+	// organization within the past 7 days. * A Google-initiated emergency access
+	// operation has interacted with a resource in the same project or folder as
+	// the currently accessed resource within the past 7 days.
+	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - Google-initiated access to
+	// maintain system reliability.
+	//   "CUSTOMER_AUTHORIZED_WORKFLOW_SERVICING" - One of the following operations
+	// is being executed while simultaneously encountering an internal technical
+	// issue which prevented a more precise justification code from being
+	// generated: * Your account has been used to perform any access to your own
+	// data which your IAM policy authorizes. * An automated Google system operates
+	// on encrypted customer data which your IAM policy authorizes. *
+	// Customer-initiated Google support access. * Google-initiated support access
+	// to protect system reliability.
+	AllowedAccessReasons []string `json:"allowedAccessReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedAccessReasons") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedAccessReasons") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudKmsV1KeyAccessJustificationsPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudKmsV1KeyAccessJustificationsPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1KeyOperationAttestation: Contains an HSM-generated
@@ -816,9 +891,9 @@ type GoogleCloudKmsV1KeyOperationAttestation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1KeyOperationAttestation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1KeyOperationAttestation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1KeyOperationAttestation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudKmsV1KeyOperationAttestationCertificateChains: Certificate chains
@@ -846,9 +921,9 @@ type GoogleCloudKmsV1KeyOperationAttestationCertificateChains struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudKmsV1KeyOperationAttestationCertificateChains) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudKmsV1KeyOperationAttestationCertificateChains) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsV1KeyOperationAttestationCertificateChains
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsProtectedResourcesSearchCall struct {

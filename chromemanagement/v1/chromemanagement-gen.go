@@ -315,9 +315,9 @@ type GoogleChromeManagementV1AndroidAppInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AndroidAppInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AndroidAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AndroidAppInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1AndroidAppPermission: Permission requested by an
@@ -338,9 +338,9 @@ type GoogleChromeManagementV1AndroidAppPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AndroidAppPermission) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AndroidAppPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AndroidAppPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1AppDetails: Resource representing app details.
@@ -416,9 +416,9 @@ type GoogleChromeManagementV1AppDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AppDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AppDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AppDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
@@ -454,9 +454,9 @@ type GoogleChromeManagementV1AppReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AppReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AppReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AppReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1AppUsageData: App usage data.
@@ -504,9 +504,9 @@ type GoogleChromeManagementV1AppUsageData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AppUsageData) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AppUsageData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AppUsageData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1AudioStatusReport: Status data for storage. * This
@@ -548,9 +548,9 @@ type GoogleChromeManagementV1AudioStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1AudioStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1AudioStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1AudioStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BatteryInfo: Information about the battery. * This
@@ -589,9 +589,9 @@ type GoogleChromeManagementV1BatteryInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1BatteryInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1BatteryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BatteryInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BatterySampleReport: Sampling data for battery. *
@@ -635,9 +635,9 @@ type GoogleChromeManagementV1BatterySampleReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1BatterySampleReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1BatterySampleReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BatterySampleReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BatteryStatusReport: Status data for battery. * This
@@ -687,9 +687,9 @@ type GoogleChromeManagementV1BatteryStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1BatteryStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1BatteryStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BatteryStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BootPerformanceReport: Boot performance report of a
@@ -735,9 +735,9 @@ type GoogleChromeManagementV1BootPerformanceReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1BootPerformanceReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1BootPerformanceReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BootPerformanceReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BrowserVersion: Describes a browser version and its
@@ -784,9 +784,9 @@ type GoogleChromeManagementV1BrowserVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1BrowserVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1BrowserVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BrowserVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ChromeAppInfo: Chrome Web Store app information.
@@ -845,9 +845,9 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ChromeAppInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ChromeAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ChromeAppInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ChromeAppPermission: Permission requested by a
@@ -874,9 +874,9 @@ type GoogleChromeManagementV1ChromeAppPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ChromeAppPermission) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ChromeAppPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ChromeAppPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ChromeAppRequest: Details of an app installation
@@ -914,9 +914,9 @@ type GoogleChromeManagementV1ChromeAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ChromeAppRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ChromeAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ChromeAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ChromeAppSiteAccess: Represent one host permission.
@@ -937,9 +937,9 @@ type GoogleChromeManagementV1ChromeAppSiteAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ChromeAppSiteAccess) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ChromeAppSiteAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ChromeAppSiteAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeAppRequestsResponse: Response containing
@@ -967,9 +967,9 @@ type GoogleChromeManagementV1CountChromeAppRequestsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeAppRequestsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeAppRequestsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeAppRequestsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse:
@@ -998,9 +998,9 @@ type GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeCrashEventsResponse: Response contains a
@@ -1025,9 +1025,9 @@ type GoogleChromeManagementV1CountChromeCrashEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeCrashEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeCrashEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeCrashEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount: The
@@ -1052,9 +1052,9 @@ type GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse:
@@ -1082,9 +1082,9 @@ type GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateRespons
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse:
@@ -1120,9 +1120,9 @@ type GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse: Response
@@ -1157,9 +1157,9 @@ type GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountChromeVersionsResponse: Response containing
@@ -1187,9 +1187,9 @@ type GoogleChromeManagementV1CountChromeVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountChromeVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountChromeVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountInstalledAppsResponse: Response containing
@@ -1217,9 +1217,9 @@ type GoogleChromeManagementV1CountInstalledAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountInstalledAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountInstalledAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountInstalledAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountPrintJobsByPrinterResponse: Response containing
@@ -1248,9 +1248,9 @@ type GoogleChromeManagementV1CountPrintJobsByPrinterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountPrintJobsByPrinterResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountPrintJobsByPrinterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountPrintJobsByPrinterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CountPrintJobsByUserResponse: Response containing a
@@ -1280,9 +1280,9 @@ type GoogleChromeManagementV1CountPrintJobsByUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CountPrintJobsByUserResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CountPrintJobsByUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountPrintJobsByUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CpuInfo: CPU specifications for the device * This
@@ -1331,9 +1331,9 @@ type GoogleChromeManagementV1CpuInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CpuInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CpuInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CpuInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CpuStatusReport: Provides information about the
@@ -1370,9 +1370,9 @@ type GoogleChromeManagementV1CpuStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CpuStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CpuStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CpuStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1CpuTemperatureInfo: CPU temperature of a device.
@@ -1402,9 +1402,9 @@ type GoogleChromeManagementV1CpuTemperatureInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1CpuTemperatureInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1CpuTemperatureInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CpuTemperatureInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1Device: Describes a device reporting Chrome browser
@@ -1428,9 +1428,9 @@ type GoogleChromeManagementV1Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1Device) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1Device) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DeviceActivityReport: Device activity report. *
@@ -1460,9 +1460,9 @@ type GoogleChromeManagementV1DeviceActivityReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DeviceActivityReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DeviceActivityReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DeviceActivityReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DeviceAueCountReport: Report for
@@ -1510,9 +1510,9 @@ type GoogleChromeManagementV1DeviceAueCountReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DeviceAueCountReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DeviceAueCountReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DeviceAueCountReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DeviceHardwareCountReport: Report for
@@ -1536,9 +1536,9 @@ type GoogleChromeManagementV1DeviceHardwareCountReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DeviceHardwareCountReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DeviceHardwareCountReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DeviceHardwareCountReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DeviceRequestingExtensionDetails: Details of a
@@ -1562,9 +1562,9 @@ type GoogleChromeManagementV1DeviceRequestingExtensionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DeviceRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DeviceRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DeviceRequestingExtensionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DiskInfo: Status of the single storage device.
@@ -1615,9 +1615,9 @@ type GoogleChromeManagementV1DiskInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DiskInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DiskInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DiskInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DisplayDevice: Information of a display device.
@@ -1649,9 +1649,9 @@ type GoogleChromeManagementV1DisplayDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DisplayDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DisplayDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DisplayDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1DisplayInfo: Information for a display.
@@ -1681,9 +1681,9 @@ type GoogleChromeManagementV1DisplayInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1DisplayInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1DisplayInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DisplayInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1EnumeratePrintJobsResponse: Response containing a
@@ -1713,9 +1713,9 @@ type GoogleChromeManagementV1EnumeratePrintJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1EnumeratePrintJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1EnumeratePrintJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1EnumeratePrintJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse: Response
@@ -1744,9 +1744,9 @@ type GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1FetchUsersRequestingExtensionResponse: Response
@@ -1774,9 +1774,9 @@ type GoogleChromeManagementV1FetchUsersRequestingExtensionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1FetchUsersRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1FetchUsersRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1FetchUsersRequestingExtensionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1FindInstalledAppDevicesResponse: Response containing
@@ -1805,9 +1805,9 @@ type GoogleChromeManagementV1FindInstalledAppDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1FindInstalledAppDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1FindInstalledAppDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1FindInstalledAppDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1GraphicsAdapterInfo: Information of a graphics
@@ -1833,9 +1833,9 @@ type GoogleChromeManagementV1GraphicsAdapterInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1GraphicsAdapterInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1GraphicsAdapterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1GraphicsAdapterInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1GraphicsInfo: Information of the graphics subsystem.
@@ -1871,9 +1871,9 @@ type GoogleChromeManagementV1GraphicsInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1GraphicsInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1GraphicsInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1GraphicsInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1GraphicsStatusReport: Information of the graphics
@@ -1904,9 +1904,9 @@ type GoogleChromeManagementV1GraphicsStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1GraphicsStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1GraphicsStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1GraphicsStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1HeartbeatStatusReport: Heartbeat status report of a
@@ -1946,9 +1946,9 @@ type GoogleChromeManagementV1HeartbeatStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1HeartbeatStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1HeartbeatStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1HeartbeatStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1HttpsLatencyRoutineData: Data that describes the
@@ -1984,9 +1984,9 @@ type GoogleChromeManagementV1HttpsLatencyRoutineData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1HttpsLatencyRoutineData) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1HttpsLatencyRoutineData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1HttpsLatencyRoutineData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1InstalledApp: Describes an installed app.
@@ -2051,9 +2051,9 @@ type GoogleChromeManagementV1InstalledApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1InstalledApp) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1InstalledApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1InstalledApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1KioskAppStatusReport: Kiosk app status report of a
@@ -2087,9 +2087,9 @@ type GoogleChromeManagementV1KioskAppStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1KioskAppStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1KioskAppStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1KioskAppStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleChromeManagementV1ListTelemetryDevicesResponse struct {
@@ -2113,9 +2113,9 @@ type GoogleChromeManagementV1ListTelemetryDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ListTelemetryDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ListTelemetryDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ListTelemetryDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ListTelemetryEventsResponse: Response message for
@@ -2141,9 +2141,9 @@ type GoogleChromeManagementV1ListTelemetryEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ListTelemetryEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ListTelemetryEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ListTelemetryEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ListTelemetryNotificationConfigsResponse: Response
@@ -2171,9 +2171,9 @@ type GoogleChromeManagementV1ListTelemetryNotificationConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ListTelemetryNotificationConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ListTelemetryNotificationConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ListTelemetryNotificationConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ListTelemetryUsersResponse: Response message for
@@ -2199,9 +2199,9 @@ type GoogleChromeManagementV1ListTelemetryUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ListTelemetryUsersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ListTelemetryUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ListTelemetryUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1MemoryInfo: Memory information of a device. * This
@@ -2239,9 +2239,9 @@ type GoogleChromeManagementV1MemoryInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1MemoryInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1MemoryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1MemoryInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1MemoryStatusReport: Contains samples of memory
@@ -2279,9 +2279,9 @@ type GoogleChromeManagementV1MemoryStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1MemoryStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1NetworkBandwidthReport: Network bandwidth report. *
@@ -2304,9 +2304,9 @@ type GoogleChromeManagementV1NetworkBandwidthReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1NetworkBandwidthReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1NetworkBandwidthReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1NetworkBandwidthReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1NetworkDevice: Details about the network device. *
@@ -2353,9 +2353,9 @@ type GoogleChromeManagementV1NetworkDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1NetworkDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1NetworkDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1NetworkDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1NetworkDiagnosticsReport: Network testing results to
@@ -2380,9 +2380,9 @@ type GoogleChromeManagementV1NetworkDiagnosticsReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1NetworkDiagnosticsReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1NetworkDiagnosticsReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1NetworkDiagnosticsReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1NetworkInfo: Network device information. * This
@@ -2411,9 +2411,9 @@ type GoogleChromeManagementV1NetworkInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1NetworkInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1NetworkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1NetworkInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1NetworkStatusReport: State of visible/configured
@@ -2492,9 +2492,9 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1NetworkStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1NetworkStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1NetworkStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1OsUpdateStatus: Contains information regarding the
@@ -2544,9 +2544,9 @@ type GoogleChromeManagementV1OsUpdateStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1OsUpdateStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1OsUpdateStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1OsUpdateStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1PeripheralsReport: Peripherals report. * Granular
@@ -2569,9 +2569,9 @@ type GoogleChromeManagementV1PeripheralsReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1PeripheralsReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1PeripheralsReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1PeripheralsReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1PrintJob: Represents a request to print a document
@@ -2634,9 +2634,9 @@ type GoogleChromeManagementV1PrintJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1PrintJob) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1PrintJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1PrintJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1PrinterReport: Report for CountPrintJobsByPrinter,
@@ -2670,9 +2670,9 @@ type GoogleChromeManagementV1PrinterReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1PrinterReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1RuntimeCountersReport: Runtime counters retrieved
@@ -2706,9 +2706,9 @@ type GoogleChromeManagementV1RuntimeCountersReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1RuntimeCountersReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1RuntimeCountersReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1RuntimeCountersReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1StorageInfo: Status data for storage. * This field
@@ -2743,9 +2743,9 @@ type GoogleChromeManagementV1StorageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1StorageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1StorageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1StorageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1StorageInfoDiskVolume: Information for disk volumes
@@ -2769,9 +2769,9 @@ type GoogleChromeManagementV1StorageInfoDiskVolume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1StorageInfoDiskVolume
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1StorageStatusReport: Status data for storage. * This
@@ -2803,9 +2803,9 @@ type GoogleChromeManagementV1StorageStatusReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1StorageStatusReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryAppInstallEvent: App installation data.
@@ -2893,9 +2893,9 @@ type GoogleChromeManagementV1TelemetryAppInstallEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryAppInstallEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryAppInstallEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryAppInstallEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryAppLaunchEvent: App launch data.
@@ -2982,6 +2982,8 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	// welcome tour.
 	//   "APPLICATION_LAUNCH_SOURCE_FOCUS_MODE" - Applicationed launched from focus
 	// panel.
+	//   "APPLICATION_LAUNCH_SOURCE_SPARKY" - Application launched from
+	// experimental feature Sparky.
 	AppLaunchSource string `json:"appLaunchSource,omitempty"`
 	// AppType: Type of app.
 	//
@@ -3019,9 +3021,9 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryAppLaunchEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryAppLaunchEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryAppLaunchEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryAppUninstallEvent: App uninstall data.
@@ -3079,9 +3081,9 @@ type GoogleChromeManagementV1TelemetryAppUninstallEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryAppUninstallEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryAppUninstallEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryAppUninstallEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent:
@@ -3183,9 +3185,9 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryDeviceInfo: Information about a device
@@ -3211,9 +3213,9 @@ type GoogleChromeManagementV1TelemetryDeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryDeviceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryDeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryDeviceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryEvent: Telemetry data reported by a managed
@@ -3254,6 +3256,7 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	//   "APP_INSTALLED" - Triggered when an app is installed.
 	//   "APP_UNINSTALLED" - Triggered when an app is uninstalled.
 	//   "APP_LAUNCHED" - Triggered when an app is launched.
+	//   "OS_CRASH" - Triggered when a crash occurs.
 	EventType string `json:"eventType,omitempty"`
 	// HttpsLatencyChangeEvent: Output only. Payload for HTTPS latency change
 	// event. Present only when `event_type` is `NETWORK_HTTPS_LATENCY_CHANGE`.
@@ -3291,9 +3294,9 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryEventNotificationFilter: Configures how the
@@ -3321,6 +3324,7 @@ type GoogleChromeManagementV1TelemetryEventNotificationFilter struct {
 	//   "APP_INSTALLED" - Triggered when an app is installed.
 	//   "APP_UNINSTALLED" - Triggered when an app is uninstalled.
 	//   "APP_LAUNCHED" - Triggered when an app is launched.
+	//   "OS_CRASH" - Triggered when a crash occurs.
 	EventTypes []string `json:"eventTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3335,9 +3339,9 @@ type GoogleChromeManagementV1TelemetryEventNotificationFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryEventNotificationFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryEventNotificationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryEventNotificationFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent: Https latency
@@ -3369,9 +3373,9 @@ type GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent:
@@ -3408,9 +3412,9 @@ type GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent:
@@ -3434,9 +3438,9 @@ type GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryNotificationConfig: Configuration to
@@ -3467,9 +3471,9 @@ type GoogleChromeManagementV1TelemetryNotificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryNotificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryNotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryNotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryNotificationFilter: Configures how the
@@ -3503,9 +3507,9 @@ type GoogleChromeManagementV1TelemetryNotificationFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryNotificationFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryNotificationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryNotificationFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryUsbPeripheralsEvent:
@@ -3527,9 +3531,9 @@ type GoogleChromeManagementV1TelemetryUsbPeripheralsEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryUsbPeripheralsEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryUsbPeripheralsEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryUsbPeripheralsEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryUser: Telemetry data collected from a
@@ -3563,9 +3567,9 @@ type GoogleChromeManagementV1TelemetryUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryUser) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryUserDevice: Telemetry data collected for a
@@ -3602,9 +3606,9 @@ type GoogleChromeManagementV1TelemetryUserDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryUserDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryUserDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryUserDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TelemetryUserInfo: Information about a user
@@ -3628,9 +3632,9 @@ type GoogleChromeManagementV1TelemetryUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryUserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TelemetryUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1ThunderboltInfo: Thunderbolt bus info. * This field
@@ -3676,9 +3680,9 @@ type GoogleChromeManagementV1ThunderboltInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1ThunderboltInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1ThunderboltInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ThunderboltInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TotalMemoryEncryptionInfo: Memory encryption
@@ -3736,9 +3740,9 @@ type GoogleChromeManagementV1TotalMemoryEncryptionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TotalMemoryEncryptionInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TotalMemoryEncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TotalMemoryEncryptionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TouchScreenDevice: Information of an internal touch
@@ -3764,9 +3768,9 @@ type GoogleChromeManagementV1TouchScreenDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TouchScreenDevice) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TouchScreenDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TouchScreenDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1TouchScreenInfo: Information on the device touch
@@ -3789,9 +3793,9 @@ type GoogleChromeManagementV1TouchScreenInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TouchScreenInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1TouchScreenInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TouchScreenInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1UsbPeripheralReport: USB connected peripheral
@@ -3827,9 +3831,9 @@ type GoogleChromeManagementV1UsbPeripheralReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1UsbPeripheralReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1UsbPeripheralReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1UsbPeripheralReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1UserPrintReport: Report for CountPrintJobsByUser,
@@ -3861,9 +3865,9 @@ type GoogleChromeManagementV1UserPrintReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1UserPrintReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1UserPrintReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1UserPrintReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1UserRequestingExtensionDetails: Details of a user
@@ -3886,9 +3890,9 @@ type GoogleChromeManagementV1UserRequestingExtensionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1UserRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChromeManagementV1UserRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1UserRequestingExtensionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -3930,9 +3934,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDate: Represents a whole or partial calendar date, such as a
@@ -3968,9 +3972,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersAppsCountChromeAppRequestsCall struct {
@@ -6820,7 +6824,7 @@ func (c *CustomersTelemetryEventsListCall) PageToken(pageToken string) *Customer
 // audio_severe_underrun_event - usb_peripherals_event -
 // https_latency_change_event - network_state_change_event -
 // wifi_signal_strength_event - vpn_connection_state_change_event -
-// app_install_event - app_uninstall_event - app_launch_event
+// app_install_event - app_uninstall_event - app_launch_event - os_crash_event
 func (c *CustomersTelemetryEventsListCall) ReadMask(readMask string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c

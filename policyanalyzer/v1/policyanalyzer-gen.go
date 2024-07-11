@@ -321,9 +321,9 @@ type GoogleCloudPolicyanalyzerV1Activity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicyanalyzerV1Activity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicyanalyzerV1Activity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicyanalyzerV1Activity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicyanalyzerV1ObservationPeriod: Represents data observation
@@ -348,9 +348,9 @@ type GoogleCloudPolicyanalyzerV1ObservationPeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicyanalyzerV1ObservationPeriod) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicyanalyzerV1ObservationPeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicyanalyzerV1ObservationPeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicyanalyzerV1QueryActivityResponse: Response to the
@@ -379,9 +379,9 @@ type GoogleCloudPolicyanalyzerV1QueryActivityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicyanalyzerV1QueryActivityResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicyanalyzerV1QueryActivityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicyanalyzerV1QueryActivityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersLocationsActivityTypesActivitiesQueryCall struct {

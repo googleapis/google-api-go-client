@@ -250,9 +250,9 @@ type AccountCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountCount) MarshalJSON() ([]byte, error) {
+func (s AccountCount) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountCountError: An error that occurred when querying a specific account
@@ -284,9 +284,9 @@ type AccountCountError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountCountError) MarshalJSON() ([]byte, error) {
+func (s AccountCountError) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountCountError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountInfo: The accounts to search
@@ -306,9 +306,9 @@ type AccountInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountInfo) MarshalJSON() ([]byte, error) {
+func (s AccountInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddHeldAccountResult: The status of each account creation, and the
@@ -331,9 +331,9 @@ type AddHeldAccountResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddHeldAccountResult) MarshalJSON() ([]byte, error) {
+func (s AddHeldAccountResult) MarshalJSON() ([]byte, error) {
 	type NoMethod AddHeldAccountResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddHeldAccountsRequest: Add a list of accounts to a hold.
@@ -357,9 +357,9 @@ type AddHeldAccountsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddHeldAccountsRequest) MarshalJSON() ([]byte, error) {
+func (s AddHeldAccountsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddHeldAccountsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddHeldAccountsResponse: Response for batch create held accounts.
@@ -382,9 +382,9 @@ type AddHeldAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddHeldAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s AddHeldAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddHeldAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddMatterPermissionsRequest: Add an account with the permission specified.
@@ -412,9 +412,9 @@ type AddMatterPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddMatterPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s AddMatterPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddMatterPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CalendarExportOptions: The options for Calendar exports.
@@ -442,9 +442,9 @@ type CalendarExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CalendarExportOptions) MarshalJSON() ([]byte, error) {
+func (s CalendarExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CalendarExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CalendarOptions: Additional options for Calendar search
@@ -495,9 +495,9 @@ type CalendarOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CalendarOptions) MarshalJSON() ([]byte, error) {
+func (s CalendarOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CalendarOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -528,9 +528,9 @@ type CloseMatterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloseMatterResponse) MarshalJSON() ([]byte, error) {
+func (s CloseMatterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CloseMatterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudStorageFile: The export file in Cloud Storage
@@ -565,9 +565,9 @@ type CloudStorageFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudStorageFile) MarshalJSON() ([]byte, error) {
+func (s CloudStorageFile) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudStorageSink: Export sink for Cloud Storage files.
@@ -587,13 +587,16 @@ type CloudStorageSink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudStorageSink) MarshalJSON() ([]byte, error) {
+func (s CloudStorageSink) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageSink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CorpusQuery: Service-specific options for holds.
 type CorpusQuery struct {
+	// CalendarQuery: Service-specific options for Calendar holds. If set,
+	// **CorpusType** must be **CALENDAR**.
+	CalendarQuery *HeldCalendarQuery `json:"calendarQuery,omitempty"`
 	// DriveQuery: Service-specific options for Drive holds. If set, **CorpusType**
 	// must be **DRIVE**.
 	DriveQuery *HeldDriveQuery `json:"driveQuery,omitempty"`
@@ -609,22 +612,22 @@ type CorpusQuery struct {
 	// VoiceQuery: Service-specific options for Voice holds. If set, **CorpusType**
 	// must be **VOICE**.
 	VoiceQuery *HeldVoiceQuery `json:"voiceQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DriveQuery") to
+	// ForceSendFields is a list of field names (e.g. "CalendarQuery") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DriveQuery") to include in API
+	// NullFields is a list of field names (e.g. "CalendarQuery") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CorpusQuery) MarshalJSON() ([]byte, error) {
+func (s CorpusQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod CorpusQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CountArtifactsMetadata: Long running operation metadata for CountArtifacts.
@@ -650,9 +653,9 @@ type CountArtifactsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CountArtifactsMetadata) MarshalJSON() ([]byte, error) {
+func (s CountArtifactsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CountArtifactsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CountArtifactsRequest: Count artifacts request.
@@ -682,9 +685,9 @@ type CountArtifactsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CountArtifactsRequest) MarshalJSON() ([]byte, error) {
+func (s CountArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CountArtifactsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CountArtifactsResponse: Definition of the response for method
@@ -709,9 +712,9 @@ type CountArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CountArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s CountArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CountArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveExportOptions: Options for Drive exports.
@@ -733,9 +736,9 @@ type DriveExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveExportOptions) MarshalJSON() ([]byte, error) {
+func (s DriveExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveOptions: Additional options for Drive search
@@ -777,9 +780,9 @@ type DriveOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveOptions) MarshalJSON() ([]byte, error) {
+func (s DriveOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -843,9 +846,9 @@ type Export struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Export) MarshalJSON() ([]byte, error) {
+func (s Export) MarshalJSON() ([]byte, error) {
 	type NoMethod Export
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportOptions: Additional options for exports
@@ -883,9 +886,9 @@ type ExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportOptions) MarshalJSON() ([]byte, error) {
+func (s ExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportStats: Progress information for an export.
@@ -910,9 +913,9 @@ type ExportStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportStats) MarshalJSON() ([]byte, error) {
+func (s ExportStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupsCountResult: Groups specific count metrics.
@@ -945,9 +948,9 @@ type GroupsCountResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupsCountResult) MarshalJSON() ([]byte, error) {
+func (s GroupsCountResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupsCountResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupsExportOptions: Options for Groups exports.
@@ -975,9 +978,9 @@ type GroupsExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupsExportOptions) MarshalJSON() ([]byte, error) {
+func (s GroupsExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupsExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HangoutsChatExportOptions: Options for Chat exports.
@@ -1005,9 +1008,9 @@ type HangoutsChatExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HangoutsChatExportOptions) MarshalJSON() ([]byte, error) {
+func (s HangoutsChatExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HangoutsChatExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HangoutsChatInfo: The Chat spaces to search
@@ -1029,9 +1032,9 @@ type HangoutsChatInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HangoutsChatInfo) MarshalJSON() ([]byte, error) {
+func (s HangoutsChatInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod HangoutsChatInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HangoutsChatOptions: Additional options for Google Chat search
@@ -1052,9 +1055,9 @@ type HangoutsChatOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HangoutsChatOptions) MarshalJSON() ([]byte, error) {
+func (s HangoutsChatOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HangoutsChatOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldAccount: An account covered by a hold. This structure is immutable. It
@@ -1093,9 +1096,13 @@ type HeldAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldAccount) MarshalJSON() ([]byte, error) {
+func (s HeldAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HeldCalendarQuery: Options for Calendar holds.
+type HeldCalendarQuery struct {
 }
 
 // HeldDriveQuery: Options for Drive holds.
@@ -1119,9 +1126,9 @@ type HeldDriveQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldDriveQuery) MarshalJSON() ([]byte, error) {
+func (s HeldDriveQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldDriveQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldGroupsQuery: Query options for group holds.
@@ -1149,9 +1156,9 @@ type HeldGroupsQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldGroupsQuery) MarshalJSON() ([]byte, error) {
+func (s HeldGroupsQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldGroupsQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldHangoutsChatQuery: Options for Chat holds.
@@ -1172,9 +1179,9 @@ type HeldHangoutsChatQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldHangoutsChatQuery) MarshalJSON() ([]byte, error) {
+func (s HeldHangoutsChatQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldHangoutsChatQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldMailQuery: Query options for Gmail holds.
@@ -1202,9 +1209,9 @@ type HeldMailQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldMailQuery) MarshalJSON() ([]byte, error) {
+func (s HeldMailQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldMailQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldOrgUnit: The organizational unit covered by a hold. This structure is
@@ -1229,9 +1236,9 @@ type HeldOrgUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldOrgUnit) MarshalJSON() ([]byte, error) {
+func (s HeldOrgUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldOrgUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HeldVoiceQuery: Options for Voice holds.
@@ -1258,9 +1265,9 @@ type HeldVoiceQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HeldVoiceQuery) MarshalJSON() ([]byte, error) {
+func (s HeldVoiceQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldVoiceQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hold: A hold. A hold prevents the specified Google Workspace service from
@@ -1315,9 +1322,9 @@ type Hold struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hold) MarshalJSON() ([]byte, error) {
+func (s Hold) MarshalJSON() ([]byte, error) {
 	type NoMethod Hold
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExportsResponse: The exports for a matter.
@@ -1342,9 +1349,9 @@ type ListExportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListHeldAccountsResponse: Returns a list of the accounts covered by a hold.
@@ -1367,9 +1374,9 @@ type ListHeldAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHeldAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListHeldAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHeldAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListHoldsResponse: The holds for a matter.
@@ -1395,9 +1402,9 @@ type ListHoldsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHoldsResponse) MarshalJSON() ([]byte, error) {
+func (s ListHoldsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHoldsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMattersResponse: Provides the list of matters.
@@ -1422,9 +1429,9 @@ type ListMattersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMattersResponse) MarshalJSON() ([]byte, error) {
+func (s ListMattersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMattersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1450,9 +1457,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSavedQueriesResponse: Definition of the response for method
@@ -1479,9 +1486,9 @@ type ListSavedQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSavedQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MailCountResult: Gmail and classic Hangouts-specific count metrics.
@@ -1515,9 +1522,9 @@ type MailCountResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MailCountResult) MarshalJSON() ([]byte, error) {
+func (s MailCountResult) MarshalJSON() ([]byte, error) {
 	type NoMethod MailCountResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MailExportOptions: Options for Gmail exports.
@@ -1553,9 +1560,9 @@ type MailExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MailExportOptions) MarshalJSON() ([]byte, error) {
+func (s MailExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod MailExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MailOptions: Additional options for Gmail search
@@ -1589,9 +1596,9 @@ type MailOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MailOptions) MarshalJSON() ([]byte, error) {
+func (s MailOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod MailOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Matter: Represents a matter. To work with Vault resources, the account must
@@ -1635,9 +1642,9 @@ type Matter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Matter) MarshalJSON() ([]byte, error) {
+func (s Matter) MarshalJSON() ([]byte, error) {
 	type NoMethod Matter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MatterPermission: Users can be matter owners or collaborators. Each matter
@@ -1671,9 +1678,9 @@ type MatterPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MatterPermission) MarshalJSON() ([]byte, error) {
+func (s MatterPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod MatterPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1718,9 +1725,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrgUnitInfo: The organizational unit to search
@@ -1742,9 +1749,9 @@ type OrgUnitInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrgUnitInfo) MarshalJSON() ([]byte, error) {
+func (s OrgUnitInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgUnitInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Query: The query definition used for search and export.
@@ -1876,9 +1883,9 @@ type Query struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Query) MarshalJSON() ([]byte, error) {
+func (s Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveHeldAccountsRequest: Remove a list of accounts from a hold.
@@ -1898,9 +1905,9 @@ type RemoveHeldAccountsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveHeldAccountsRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveHeldAccountsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveHeldAccountsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveHeldAccountsResponse: Response for batch delete held accounts.
@@ -1924,9 +1931,9 @@ type RemoveHeldAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveHeldAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s RemoveHeldAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveHeldAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveMatterPermissionsRequest: Remove an account as a matter collaborator.
@@ -1946,9 +1953,9 @@ type RemoveMatterPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveMatterPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveMatterPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveMatterPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReopenMatterRequest: Reopen a matter by ID.
@@ -1975,9 +1982,9 @@ type ReopenMatterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReopenMatterResponse) MarshalJSON() ([]byte, error) {
+func (s ReopenMatterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReopenMatterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SavedQuery: The definition of a saved query. To work with Vault resources,
@@ -2015,9 +2022,9 @@ type SavedQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedQuery) MarshalJSON() ([]byte, error) {
+func (s SavedQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SharedDriveInfo: The shared drives to search
@@ -2038,9 +2045,9 @@ type SharedDriveInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SharedDriveInfo) MarshalJSON() ([]byte, error) {
+func (s SharedDriveInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SharedDriveInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SitesUrlInfo: The published site URLs of new Google Sites to search
@@ -2060,9 +2067,9 @@ type SitesUrlInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SitesUrlInfo) MarshalJSON() ([]byte, error) {
+func (s SitesUrlInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SitesUrlInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2094,9 +2101,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDriveInfo: Team Drives to search
@@ -2117,9 +2124,9 @@ type TeamDriveInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveInfo) MarshalJSON() ([]byte, error) {
+func (s TeamDriveInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteMatterRequest: Undelete a matter by ID.
@@ -2145,9 +2152,9 @@ type UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInfo) MarshalJSON() ([]byte, error) {
+func (s UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoiceExportOptions: The options for Voice exports.
@@ -2175,9 +2182,9 @@ type VoiceExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoiceExportOptions) MarshalJSON() ([]byte, error) {
+func (s VoiceExportOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod VoiceExportOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoiceOptions: Additional options for Voice search
@@ -2203,9 +2210,9 @@ type VoiceOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoiceOptions) MarshalJSON() ([]byte, error) {
+func (s VoiceOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod VoiceOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MattersAddPermissionsCall struct {

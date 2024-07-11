@@ -209,9 +209,9 @@ type ListPlaceActionLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPlaceActionLinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListPlaceActionLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlaceActionLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPlaceActionTypeMetadataResponse: Response message for
@@ -241,9 +241,9 @@ type ListPlaceActionTypeMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPlaceActionTypeMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s ListPlaceActionTypeMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlaceActionTypeMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaceActionLink: Represents a place action link and its attributes.
@@ -314,9 +314,9 @@ type PlaceActionLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaceActionLink) MarshalJSON() ([]byte, error) {
+func (s PlaceActionLink) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaceActionLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaceActionTypeMetadata: Metadata for supported place action types.
@@ -351,9 +351,9 @@ type PlaceActionTypeMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaceActionTypeMetadata) MarshalJSON() ([]byte, error) {
+func (s PlaceActionTypeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaceActionTypeMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationsPlaceActionLinksCreateCall struct {

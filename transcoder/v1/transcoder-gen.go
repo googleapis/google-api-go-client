@@ -217,9 +217,9 @@ type AdBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdBreak) MarshalJSON() ([]byte, error) {
+func (s AdBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod AdBreak
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Aes128Encryption: Configuration for AES-128 encryption.
@@ -247,9 +247,9 @@ type Animation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Animation) MarshalJSON() ([]byte, error) {
+func (s Animation) MarshalJSON() ([]byte, error) {
 	type NoMethod Animation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnimationEnd: End previous overlay animation from the video. Without
@@ -271,9 +271,9 @@ type AnimationEnd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnimationEnd) MarshalJSON() ([]byte, error) {
+func (s AnimationEnd) MarshalJSON() ([]byte, error) {
 	type NoMethod AnimationEnd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnimationFade: Display overlay object with fade animation.
@@ -309,9 +309,9 @@ type AnimationFade struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnimationFade) MarshalJSON() ([]byte, error) {
+func (s AnimationFade) MarshalJSON() ([]byte, error) {
 	type NoMethod AnimationFade
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnimationStatic: Display static overlay object.
@@ -337,9 +337,9 @@ type AnimationStatic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnimationStatic) MarshalJSON() ([]byte, error) {
+func (s AnimationStatic) MarshalJSON() ([]byte, error) {
 	type NoMethod AnimationStatic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Audio: Audio preprocessing configuration.
@@ -371,9 +371,9 @@ type Audio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Audio) MarshalJSON() ([]byte, error) {
+func (s Audio) MarshalJSON() ([]byte, error) {
 	type NoMethod Audio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Audio) UnmarshalJSON(data []byte) error {
@@ -422,9 +422,9 @@ type AudioMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioMapping) MarshalJSON() ([]byte, error) {
+func (s AudioMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AudioMapping) UnmarshalJSON(data []byte) error {
@@ -485,9 +485,9 @@ type AudioStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioStream) MarshalJSON() ([]byte, error) {
+func (s AudioStream) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BwdifConfig: Bob Weaver Deinterlacing Filter Configuration.
@@ -517,9 +517,9 @@ type BwdifConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BwdifConfig) MarshalJSON() ([]byte, error) {
+func (s BwdifConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BwdifConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Clearkey: Clearkey configuration.
@@ -554,9 +554,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -602,9 +602,9 @@ type Crop struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Crop) MarshalJSON() ([]byte, error) {
+func (s Crop) MarshalJSON() ([]byte, error) {
 	type NoMethod Crop
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DashConfig: `DASH` manifest configuration.
@@ -636,9 +636,9 @@ type DashConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DashConfig) MarshalJSON() ([]byte, error) {
+func (s DashConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DashConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Deblock: Deblock preprocessing configuration. **Note:** This configuration
@@ -663,9 +663,9 @@ type Deblock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Deblock) MarshalJSON() ([]byte, error) {
+func (s Deblock) MarshalJSON() ([]byte, error) {
 	type NoMethod Deblock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Deblock) UnmarshalJSON(data []byte) error {
@@ -701,9 +701,9 @@ type Deinterlace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Deinterlace) MarshalJSON() ([]byte, error) {
+func (s Deinterlace) MarshalJSON() ([]byte, error) {
 	type NoMethod Deinterlace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Denoise: Denoise preprocessing configuration. **Note:** This configuration
@@ -729,9 +729,9 @@ type Denoise struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Denoise) MarshalJSON() ([]byte, error) {
+func (s Denoise) MarshalJSON() ([]byte, error) {
 	type NoMethod Denoise
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Denoise) UnmarshalJSON(data []byte) error {
@@ -771,9 +771,9 @@ type DrmSystems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DrmSystems) MarshalJSON() ([]byte, error) {
+func (s DrmSystems) MarshalJSON() ([]byte, error) {
 	type NoMethod DrmSystems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditAtom: Edit atom.
@@ -804,9 +804,9 @@ type EditAtom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditAtom) MarshalJSON() ([]byte, error) {
+func (s EditAtom) MarshalJSON() ([]byte, error) {
 	type NoMethod EditAtom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ElementaryStream: Encoding of an input file such as an audio, video, or text
@@ -835,9 +835,9 @@ type ElementaryStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ElementaryStream) MarshalJSON() ([]byte, error) {
+func (s ElementaryStream) MarshalJSON() ([]byte, error) {
 	type NoMethod ElementaryStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -877,9 +877,9 @@ type Encryption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Encryption) MarshalJSON() ([]byte, error) {
+func (s Encryption) MarshalJSON() ([]byte, error) {
 	type NoMethod Encryption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Fairplay: Fairplay configuration.
@@ -905,9 +905,9 @@ type Fmp4Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Fmp4Config) MarshalJSON() ([]byte, error) {
+func (s Fmp4Config) MarshalJSON() ([]byte, error) {
 	type NoMethod Fmp4Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // H264CodecSettings: H264 codec settings.
@@ -1034,9 +1034,9 @@ type H264CodecSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *H264CodecSettings) MarshalJSON() ([]byte, error) {
+func (s H264CodecSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod H264CodecSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *H264CodecSettings) UnmarshalJSON(data []byte) error {
@@ -1192,9 +1192,9 @@ type H265CodecSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *H265CodecSettings) MarshalJSON() ([]byte, error) {
+func (s H265CodecSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod H265CodecSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *H265CodecSettings) UnmarshalJSON(data []byte) error {
@@ -1254,9 +1254,9 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Image) UnmarshalJSON(data []byte) error {
@@ -1299,9 +1299,9 @@ type Input struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Input) MarshalJSON() ([]byte, error) {
+func (s Input) MarshalJSON() ([]byte, error) {
 	type NoMethod Input
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Job: Transcoding job resource.
@@ -1394,9 +1394,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobConfig: Job configuration
@@ -1441,9 +1441,9 @@ type JobConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfig) MarshalJSON() ([]byte, error) {
+func (s JobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobTemplate: Transcoding job template resource.
@@ -1472,9 +1472,9 @@ type JobTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobTemplate) MarshalJSON() ([]byte, error) {
+func (s JobTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod JobTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobTemplatesResponse: Response message for
@@ -1502,9 +1502,9 @@ type ListJobTemplatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobTemplatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobTemplatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobTemplatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobsResponse: Response message for `TranscoderService.ListJobs`.
@@ -1531,9 +1531,9 @@ type ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Manifest: Manifest configuration.
@@ -1570,9 +1570,9 @@ type Manifest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Manifest) MarshalJSON() ([]byte, error) {
+func (s Manifest) MarshalJSON() ([]byte, error) {
 	type NoMethod Manifest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MpegCommonEncryption: Configuration for MPEG Common Encryption (MPEG-CENC).
@@ -1593,9 +1593,9 @@ type MpegCommonEncryption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MpegCommonEncryption) MarshalJSON() ([]byte, error) {
+func (s MpegCommonEncryption) MarshalJSON() ([]byte, error) {
 	type NoMethod MpegCommonEncryption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MuxStream: Multiplexing settings for output stream.
@@ -1635,9 +1635,9 @@ type MuxStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MuxStream) MarshalJSON() ([]byte, error) {
+func (s MuxStream) MarshalJSON() ([]byte, error) {
 	type NoMethod MuxStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NormalizedCoordinate: 2D normalized coordinates. Default: `{0.0, 0.0}`
@@ -1659,9 +1659,9 @@ type NormalizedCoordinate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NormalizedCoordinate) MarshalJSON() ([]byte, error) {
+func (s NormalizedCoordinate) MarshalJSON() ([]byte, error) {
 	type NoMethod NormalizedCoordinate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
@@ -1682,9 +1682,9 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 
 // Output: Location of output file(s) in a Cloud Storage bucket.
 type Output struct {
-	// Uri: URI for the output file(s). For example, `gs://my-bucket/outputs/`. If
-	// empty, the value is populated from Job.output_uri. See Supported input and
-	// output formats
+	// Uri: URI for the output file(s). For example, `gs://my-bucket/outputs/`.
+	// Must be a directory and not a top-level bucket. If empty, the value is
+	// populated from Job.output_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1700,9 +1700,9 @@ type Output struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Output) MarshalJSON() ([]byte, error) {
+func (s Output) MarshalJSON() ([]byte, error) {
 	type NoMethod Output
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Overlay: Overlay configuration.
@@ -1725,9 +1725,9 @@ type Overlay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Overlay) MarshalJSON() ([]byte, error) {
+func (s Overlay) MarshalJSON() ([]byte, error) {
 	type NoMethod Overlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pad: Pad filter configuration for the input video. The padded input video is
@@ -1754,9 +1754,9 @@ type Pad struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pad) MarshalJSON() ([]byte, error) {
+func (s Pad) MarshalJSON() ([]byte, error) {
 	type NoMethod Pad
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Playready: Playready configuration.
@@ -1792,9 +1792,9 @@ type PreprocessingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PreprocessingConfig) MarshalJSON() ([]byte, error) {
+func (s PreprocessingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PreprocessingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubDestination: A Pub/Sub destination.
@@ -1815,9 +1815,9 @@ type PubsubDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
+func (s PubsubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SampleAesEncryption: Configuration for SAMPLE-AES encryption.
@@ -1846,9 +1846,9 @@ type SecretManagerSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecretManagerSource) MarshalJSON() ([]byte, error) {
+func (s SecretManagerSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretManagerSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentSettings: Segment settings for `ts`, `fmp4` and `vtt`.
@@ -1874,9 +1874,9 @@ type SegmentSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentSettings) MarshalJSON() ([]byte, error) {
+func (s SegmentSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpriteSheet: Sprite sheet configuration.
@@ -1946,9 +1946,9 @@ type SpriteSheet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpriteSheet) MarshalJSON() ([]byte, error) {
+func (s SpriteSheet) MarshalJSON() ([]byte, error) {
 	type NoMethod SpriteSheet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1980,9 +1980,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextMapping: The mapping for the JobConfig.edit_list atoms with text
@@ -2008,9 +2008,9 @@ type TextMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextMapping) MarshalJSON() ([]byte, error) {
+func (s TextMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod TextMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextStream: Encoding of a text stream. For example, closed captions or
@@ -2043,9 +2043,9 @@ type TextStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextStream) MarshalJSON() ([]byte, error) {
+func (s TextStream) MarshalJSON() ([]byte, error) {
 	type NoMethod TextStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoStream: Video stream resource.
@@ -2069,9 +2069,9 @@ type VideoStream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoStream) MarshalJSON() ([]byte, error) {
+func (s VideoStream) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoStream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Vp9CodecSettings: VP9 codec settings.
@@ -2160,9 +2160,9 @@ type Vp9CodecSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Vp9CodecSettings) MarshalJSON() ([]byte, error) {
+func (s Vp9CodecSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod Vp9CodecSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
@@ -2223,9 +2223,9 @@ type YadifConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YadifConfig) MarshalJSON() ([]byte, error) {
+func (s YadifConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod YadifConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsJobTemplatesCreateCall struct {

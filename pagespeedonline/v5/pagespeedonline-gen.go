@@ -188,9 +188,9 @@ type AuditRefs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditRefs) MarshalJSON() ([]byte, error) {
+func (s AuditRefs) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditRefs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AuditRefs) UnmarshalJSON(data []byte) error {
@@ -230,9 +230,9 @@ type Bucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Bucket) MarshalJSON() ([]byte, error) {
+func (s Bucket) MarshalJSON() ([]byte, error) {
 	type NoMethod Bucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Bucket) UnmarshalJSON(data []byte) error {
@@ -279,9 +279,9 @@ type Categories struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Categories) MarshalJSON() ([]byte, error) {
+func (s Categories) MarshalJSON() ([]byte, error) {
 	type NoMethod Categories
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CategoryGroupV5: Message containing a category
@@ -303,9 +303,9 @@ type CategoryGroupV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoryGroupV5) MarshalJSON() ([]byte, error) {
+func (s CategoryGroupV5) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoryGroupV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigSettings: Message containing the configuration settings for the
@@ -337,9 +337,9 @@ type ConfigSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigSettings) MarshalJSON() ([]byte, error) {
+func (s ConfigSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Environment: Message containing environment configuration for a Lighthouse
@@ -368,9 +368,9 @@ type Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Environment) MarshalJSON() ([]byte, error) {
+func (s Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Environment) UnmarshalJSON(data []byte) error {
@@ -405,9 +405,9 @@ type I18n struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18n) MarshalJSON() ([]byte, error) {
+func (s I18n) MarshalJSON() ([]byte, error) {
 	type NoMethod I18n
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LhrEntity: Message containing an Entity.
@@ -439,9 +439,9 @@ type LhrEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LhrEntity) MarshalJSON() ([]byte, error) {
+func (s LhrEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod LhrEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LighthouseAuditResultV5: An audit's result object in a Lighthouse result.
@@ -486,9 +486,9 @@ type LighthouseAuditResultV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LighthouseAuditResultV5) MarshalJSON() ([]byte, error) {
+func (s LighthouseAuditResultV5) MarshalJSON() ([]byte, error) {
 	type NoMethod LighthouseAuditResultV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LighthouseAuditResultV5) UnmarshalJSON(data []byte) error {
@@ -533,9 +533,9 @@ type LighthouseCategoryV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LighthouseCategoryV5) MarshalJSON() ([]byte, error) {
+func (s LighthouseCategoryV5) MarshalJSON() ([]byte, error) {
 	type NoMethod LighthouseCategoryV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LighthouseResultV5: The Lighthouse result object.
@@ -595,9 +595,9 @@ type LighthouseResultV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LighthouseResultV5) MarshalJSON() ([]byte, error) {
+func (s LighthouseResultV5) MarshalJSON() ([]byte, error) {
 	type NoMethod LighthouseResultV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PagespeedApiLoadingExperienceV5: The CrUX loading experience object that
@@ -627,9 +627,9 @@ type PagespeedApiLoadingExperienceV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PagespeedApiLoadingExperienceV5) MarshalJSON() ([]byte, error) {
+func (s PagespeedApiLoadingExperienceV5) MarshalJSON() ([]byte, error) {
 	type NoMethod PagespeedApiLoadingExperienceV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PagespeedApiPagespeedResponseV5: The Pagespeed API response object.
@@ -668,9 +668,9 @@ type PagespeedApiPagespeedResponseV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PagespeedApiPagespeedResponseV5) MarshalJSON() ([]byte, error) {
+func (s PagespeedApiPagespeedResponseV5) MarshalJSON() ([]byte, error) {
 	type NoMethod PagespeedApiPagespeedResponseV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PagespeedVersion: The Pagespeed Version object.
@@ -692,9 +692,9 @@ type PagespeedVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PagespeedVersion) MarshalJSON() ([]byte, error) {
+func (s PagespeedVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod PagespeedVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RendererFormattedStrings: Message holding the formatted strings used in the
@@ -863,9 +863,9 @@ type RendererFormattedStrings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RendererFormattedStrings) MarshalJSON() ([]byte, error) {
+func (s RendererFormattedStrings) MarshalJSON() ([]byte, error) {
 	type NoMethod RendererFormattedStrings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeError: Message containing a runtime error config.
@@ -887,9 +887,9 @@ type RuntimeError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeError) MarshalJSON() ([]byte, error) {
+func (s RuntimeError) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackPack: Message containing Stack Pack information.
@@ -915,9 +915,9 @@ type StackPack struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackPack) MarshalJSON() ([]byte, error) {
+func (s StackPack) MarshalJSON() ([]byte, error) {
 	type NoMethod StackPack
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Timing: Message containing the performance timing data for the Lighthouse
@@ -938,9 +938,9 @@ type Timing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Timing) MarshalJSON() ([]byte, error) {
+func (s Timing) MarshalJSON() ([]byte, error) {
 	type NoMethod Timing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Timing) UnmarshalJSON(data []byte) error {
@@ -986,9 +986,9 @@ type UserPageLoadMetricV5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserPageLoadMetricV5) MarshalJSON() ([]byte, error) {
+func (s UserPageLoadMetricV5) MarshalJSON() ([]byte, error) {
 	type NoMethod UserPageLoadMetricV5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PagespeedapiRunpagespeedCall struct {

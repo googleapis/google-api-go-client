@@ -232,6 +232,7 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsSourcesService(s *Service) *ProjectsLocationsSourcesService {
 	rs := &ProjectsLocationsSourcesService{s: s}
 	rs.DatacenterConnectors = NewProjectsLocationsSourcesDatacenterConnectorsService(s)
+	rs.DiskMigrationJobs = NewProjectsLocationsSourcesDiskMigrationJobsService(s)
 	rs.MigratingVms = NewProjectsLocationsSourcesMigratingVmsService(s)
 	rs.UtilizationReports = NewProjectsLocationsSourcesUtilizationReportsService(s)
 	return rs
@@ -241,6 +242,8 @@ type ProjectsLocationsSourcesService struct {
 	s *Service
 
 	DatacenterConnectors *ProjectsLocationsSourcesDatacenterConnectorsService
+
+	DiskMigrationJobs *ProjectsLocationsSourcesDiskMigrationJobsService
 
 	MigratingVms *ProjectsLocationsSourcesMigratingVmsService
 
@@ -253,6 +256,15 @@ func NewProjectsLocationsSourcesDatacenterConnectorsService(s *Service) *Project
 }
 
 type ProjectsLocationsSourcesDatacenterConnectorsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSourcesDiskMigrationJobsService(s *Service) *ProjectsLocationsSourcesDiskMigrationJobsService {
+	rs := &ProjectsLocationsSourcesDiskMigrationJobsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsService struct {
 	s *Service
 }
 
@@ -342,9 +354,9 @@ type AccessKeyCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessKeyCredentials) MarshalJSON() ([]byte, error) {
+func (s AccessKeyCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessKeyCredentials
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptingOSStep: AdaptingOSStep contains specific step details.
@@ -368,9 +380,9 @@ type AddGroupMigrationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddGroupMigrationRequest) MarshalJSON() ([]byte, error) {
+func (s AddGroupMigrationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddGroupMigrationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplianceVersion: Describes an appliance version.
@@ -397,9 +409,9 @@ type ApplianceVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplianceVersion) MarshalJSON() ([]byte, error) {
+func (s ApplianceVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplianceVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppliedLicense: AppliedLicense holds the license data returned by adaptation
@@ -428,9 +440,9 @@ type AppliedLicense struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppliedLicense) MarshalJSON() ([]byte, error) {
+func (s AppliedLicense) MarshalJSON() ([]byte, error) {
 	type NoMethod AppliedLicense
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AvailableUpdates: Holds informatiom about the available versions for
@@ -456,18 +468,18 @@ type AvailableUpdates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
+func (s AvailableUpdates) MarshalJSON() ([]byte, error) {
 	type NoMethod AvailableUpdates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsDiskDetails: The details of an AWS instance disk.
 type AwsDiskDetails struct {
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
-	// VolumeId: AWS volume ID.
+	// VolumeId: Output only. AWS volume ID.
 	VolumeId string `json:"volumeId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -482,9 +494,9 @@ type AwsDiskDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsDiskDetails) MarshalJSON() ([]byte, error) {
+func (s AwsDiskDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsDiskDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsSecurityGroup: AwsSecurityGroup describes a security group of an AWS VM.
@@ -506,9 +518,9 @@ type AwsSecurityGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsSecurityGroup) MarshalJSON() ([]byte, error) {
+func (s AwsSecurityGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsSecurityGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsSourceDetails: AwsSourceDetails message describes a specific source
@@ -533,6 +545,9 @@ type AwsSourceDetails struct {
 	// tags that are set as part of the migration process. The tags must not begin
 	// with the reserved prefix `m2vm`.
 	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
+	// NetworkInsights: Output only. Information about the network coniguration of
+	// the source. Only gatherred upon request.
+	NetworkInsights *NetworkInsights `json:"networkInsights,omitempty"`
 	// PublicIp: Output only. The source's public IP. All communication initiated
 	// by this source will originate from this IP.
 	PublicIp string `json:"publicIp,omitempty"`
@@ -560,18 +575,19 @@ type AwsSourceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsSourceDetails) MarshalJSON() ([]byte, error) {
+func (s AwsSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsSourceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsSourceVmDetails: Represent the source AWS VM details.
 type AwsSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*AwsDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
@@ -594,9 +610,9 @@ type AwsSourceVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
+func (s AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsSourceVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsVmDetails: AwsVmDetails describes a VM in AWS.
@@ -678,9 +694,9 @@ type AwsVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsVmDetails) MarshalJSON() ([]byte, error) {
+func (s AwsVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsVmsDetails: AWSVmsDetails describes VMs in AWS.
@@ -700,18 +716,18 @@ type AwsVmsDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsVmsDetails) MarshalJSON() ([]byte, error) {
+func (s AwsVmsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsVmsDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureDiskDetails: The details of an Azure VM disk.
 type AzureDiskDetails struct {
-	// DiskId: Azure disk ID.
+	// DiskId: Output only. Azure disk ID.
 	DiskId string `json:"diskId,omitempty"`
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DiskId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -726,9 +742,9 @@ type AzureDiskDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureDiskDetails) MarshalJSON() ([]byte, error) {
+func (s AzureDiskDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureDiskDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureSourceDetails: AzureSourceDetails message describes a specific source
@@ -776,18 +792,19 @@ type AzureSourceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureSourceDetails) MarshalJSON() ([]byte, error) {
+func (s AzureSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureSourceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureSourceVmDetails: Represent the source Azure VM details.
 type AzureSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*AzureDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
@@ -810,9 +827,9 @@ type AzureSourceVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureSourceVmDetails) MarshalJSON() ([]byte, error) {
+func (s AzureSourceVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureSourceVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureVmDetails: AzureVmDetails describes a VM in Azure.
@@ -871,9 +888,9 @@ type AzureVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureVmDetails) MarshalJSON() ([]byte, error) {
+func (s AzureVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AzureVmsDetails: AzureVmsDetails describes VMs in Azure.
@@ -893,9 +910,9 @@ type AzureVmsDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AzureVmsDetails) MarshalJSON() ([]byte, error) {
+func (s AzureVmsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureVmsDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BootDiskDefaults: BootDiskDefaults hold information about the boot disk of a
@@ -919,6 +936,8 @@ type BootDiskDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD persistent
 	// disks that balance performance and cost.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
+	// type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. The encryption to apply to the boot disk.
 	Encryption *Encryption `json:"encryption,omitempty"`
@@ -937,9 +956,9 @@ type BootDiskDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BootDiskDefaults) MarshalJSON() ([]byte, error) {
+func (s BootDiskDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod BootDiskDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
@@ -948,6 +967,11 @@ type CancelCloneJobRequest struct {
 
 // CancelCutoverJobRequest: Request message for 'CancelCutoverJob' request.
 type CancelCutoverJobRequest struct {
+}
+
+// CancelDiskMigrationJobRequest: Request message for 'CancelDiskMigrationJob'
+// request.
+type CancelDiskMigrationJobRequest struct {
 }
 
 // CancelImageImportJobRequest: Request message for 'CancelImageImportJob'
@@ -981,9 +1005,9 @@ type ClientSecretCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientSecretCredentials) MarshalJSON() ([]byte, error) {
+func (s ClientSecretCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientSecretCredentials
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloneJob: CloneJob describes the process of creating a clone of a
@@ -1047,9 +1071,9 @@ type CloneJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloneJob) MarshalJSON() ([]byte, error) {
+func (s CloneJob) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloneStep: CloneStep holds information about the clone step progress.
@@ -1077,9 +1101,9 @@ type CloneStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloneStep) MarshalJSON() ([]byte, error) {
+func (s CloneStep) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngineDisksTargetDefaults: ComputeEngineDisksTargetDefaults is a
@@ -1111,9 +1135,9 @@ type ComputeEngineDisksTargetDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeEngineDisksTargetDefaults) MarshalJSON() ([]byte, error) {
+func (s ComputeEngineDisksTargetDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineDisksTargetDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngineDisksTargetDetails: ComputeEngineDisksTargetDetails is a
@@ -1138,9 +1162,9 @@ type ComputeEngineDisksTargetDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeEngineDisksTargetDetails) MarshalJSON() ([]byte, error) {
+func (s ComputeEngineDisksTargetDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineDisksTargetDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngineTargetDefaults: ComputeEngineTargetDefaults is a collection of
@@ -1170,6 +1194,8 @@ type ComputeEngineTargetDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD persistent
 	// disks that balance performance and cost.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
+	// type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. Immutable. The encryption to apply to the VM disks.
 	Encryption *Encryption `json:"encryption,omitempty"`
@@ -1222,9 +1248,9 @@ type ComputeEngineTargetDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeEngineTargetDefaults) MarshalJSON() ([]byte, error) {
+func (s ComputeEngineTargetDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineTargetDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeEngineTargetDetails: ComputeEngineTargetDetails is a collection of
@@ -1253,6 +1279,8 @@ type ComputeEngineTargetDetails struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD persistent
 	// disks that balance performance and cost.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
+	// type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. The encryption to apply to the VM disks.
 	Encryption *Encryption `json:"encryption,omitempty"`
@@ -1304,9 +1332,9 @@ type ComputeEngineTargetDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeEngineTargetDetails) MarshalJSON() ([]byte, error) {
+func (s ComputeEngineTargetDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineTargetDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeScheduling: Scheduling information for VM on maintenance/restart
@@ -1357,9 +1385,9 @@ type ComputeScheduling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeScheduling) MarshalJSON() ([]byte, error) {
+func (s ComputeScheduling) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeScheduling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreatingImageStep: CreatingImageStep contains specific step details.
@@ -1385,9 +1413,9 @@ type CutoverForecast struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CutoverForecast) MarshalJSON() ([]byte, error) {
+func (s CutoverForecast) MarshalJSON() ([]byte, error) {
 	type NoMethod CutoverForecast
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CutoverJob: CutoverJob message describes a cutover of a migrating VM. The
@@ -1451,9 +1479,9 @@ type CutoverJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CutoverJob) MarshalJSON() ([]byte, error) {
+func (s CutoverJob) MarshalJSON() ([]byte, error) {
 	type NoMethod CutoverJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CutoverStep: CutoverStep holds information about the cutover step progress.
@@ -1485,9 +1513,9 @@ type CutoverStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CutoverStep) MarshalJSON() ([]byte, error) {
+func (s CutoverStep) MarshalJSON() ([]byte, error) {
 	type NoMethod CutoverStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CycleStep: CycleStep holds information about a step progress.
@@ -1515,9 +1543,9 @@ type CycleStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CycleStep) MarshalJSON() ([]byte, error) {
+func (s CycleStep) MarshalJSON() ([]byte, error) {
 	type NoMethod CycleStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataDiskImageImport: Mentions that the image import is not using OS
@@ -1600,9 +1628,9 @@ type DatacenterConnector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatacenterConnector) MarshalJSON() ([]byte, error) {
+func (s DatacenterConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod DatacenterConnector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Disk: A message describing a data disk.
@@ -1626,9 +1654,9 @@ type Disk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Disk) MarshalJSON() ([]byte, error) {
+func (s Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiskImageDefaults: Contains details about the image source used to create
@@ -1649,15 +1677,19 @@ type DiskImageDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiskImageDefaults) MarshalJSON() ([]byte, error) {
+func (s DiskImageDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskImageDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiskImageTargetDetails: The target details of the image resource that will
 // be created by the import job.
 type DiskImageTargetDetails struct {
 	// AdditionalLicenses: Optional. Additional licenses to assign to the image.
+	// Format:
+	// https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/licenses/LICENSE_NAME
+	// Or
+	// https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/licenses/LICENSE_NAME
 	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
 	// DataDiskImageImport: Optional. Use to skip OS adaptation process.
 	DataDiskImageImport *DataDiskImageImport `json:"dataDiskImageImport,omitempty"`
@@ -1695,9 +1727,9 @@ type DiskImageTargetDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiskImageTargetDetails) MarshalJSON() ([]byte, error) {
+func (s DiskImageTargetDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskImageTargetDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisksMigrationDisksTargetDefaults: Details for a disk only migration.
@@ -1755,9 +1787,9 @@ type DisksMigrationVmTargetDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisksMigrationVmTargetDefaults) MarshalJSON() ([]byte, error) {
+func (s DisksMigrationVmTargetDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod DisksMigrationVmTargetDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisksMigrationVmTargetDetails: Details for the VM created VM as part of
@@ -1778,9 +1810,9 @@ type DisksMigrationVmTargetDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisksMigrationVmTargetDetails) MarshalJSON() ([]byte, error) {
+func (s DisksMigrationVmTargetDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DisksMigrationVmTargetDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1811,9 +1843,9 @@ type Encryption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Encryption) MarshalJSON() ([]byte, error) {
+func (s Encryption) MarshalJSON() ([]byte, error) {
 	type NoMethod Encryption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchInventoryResponse: Response message for fetchInventory.
@@ -1847,9 +1879,9 @@ type FetchInventoryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchInventoryResponse) MarshalJSON() ([]byte, error) {
+func (s FetchInventoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchInventoryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FinalizeMigrationRequest: Request message for 'FinalizeMigration' request.
@@ -1896,9 +1928,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageImport: ImageImport describes the configuration of the image import to
@@ -1937,9 +1969,9 @@ type ImageImport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageImport) MarshalJSON() ([]byte, error) {
+func (s ImageImport) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageImport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageImportJob: ImageImportJob describes the progress and result of an image
@@ -1995,9 +2027,9 @@ type ImageImportJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageImportJob) MarshalJSON() ([]byte, error) {
+func (s ImageImportJob) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageImportJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageImportOsAdaptationParameters: Parameters affecting the OS adaptation
@@ -2033,9 +2065,9 @@ type ImageImportOsAdaptationParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageImportOsAdaptationParameters) MarshalJSON() ([]byte, error) {
+func (s ImageImportOsAdaptationParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageImportOsAdaptationParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageImportStep: ImageImportStep holds information about the image import
@@ -2066,9 +2098,9 @@ type ImageImportStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageImportStep) MarshalJSON() ([]byte, error) {
+func (s ImageImportStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageImportStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InitializingImageImportStep: InitializingImageImportStep contains specific
@@ -2105,9 +2137,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCloneJobsResponse: Response message for 'ListCloneJobs' request.
@@ -2136,9 +2168,9 @@ type ListCloneJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCloneJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCloneJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCloneJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCutoverJobsResponse: Response message for 'ListCutoverJobs' request.
@@ -2167,9 +2199,9 @@ type ListCutoverJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCutoverJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCutoverJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCutoverJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatacenterConnectorsResponse: Response message for
@@ -2199,9 +2231,9 @@ type ListDatacenterConnectorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatacenterConnectorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatacenterConnectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatacenterConnectorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupsResponse: Response message for 'ListGroups' request.
@@ -2230,9 +2262,9 @@ type ListGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListImageImportJobsResponse: Response message for 'ListImageImportJobs'
@@ -2262,9 +2294,9 @@ type ListImageImportJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListImageImportJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListImageImportJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListImageImportJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListImageImportsResponse: Response message for 'ListImageImports' call.
@@ -2293,9 +2325,9 @@ type ListImageImportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListImageImportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListImageImportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListImageImportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -2321,9 +2353,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMigratingVmsResponse: Response message for 'ListMigratingVms' request.
@@ -2352,9 +2384,9 @@ type ListMigratingVmsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMigratingVmsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMigratingVmsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMigratingVmsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -2380,9 +2412,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReplicationCyclesResponse: Response message for 'ListReplicationCycles'
@@ -2412,9 +2444,9 @@ type ListReplicationCyclesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReplicationCyclesResponse) MarshalJSON() ([]byte, error) {
+func (s ListReplicationCyclesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReplicationCyclesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSourcesResponse: Response message for 'ListSources' request.
@@ -2443,9 +2475,9 @@ type ListSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTargetProjectsResponse: Response message for 'ListTargetProjects' call.
@@ -2474,9 +2506,9 @@ type ListTargetProjectsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTargetProjectsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTargetProjectsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTargetProjectsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUtilizationReportsResponse: Response message for
@@ -2506,9 +2538,9 @@ type ListUtilizationReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUtilizationReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListUtilizationReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUtilizationReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoadingImageSourceFilesStep: LoadingImageSourceFilesStep contains specific
@@ -2538,9 +2570,9 @@ type LocalizedMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedMessage) MarshalJSON() ([]byte, error) {
+func (s LocalizedMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -2576,9 +2608,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigratingVm: MigratingVm describes the VM that will be migrated from a
@@ -2689,9 +2721,9 @@ type MigratingVm struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigratingVm) MarshalJSON() ([]byte, error) {
+func (s MigratingVm) MarshalJSON() ([]byte, error) {
 	type NoMethod MigratingVm
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationError: Represents migration resource error information that can be
@@ -2745,16 +2777,16 @@ type MigrationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrationError) MarshalJSON() ([]byte, error) {
+func (s MigrationError) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationWarning: Represents migration resource warning information that can
 // be used with google.rpc.Status message. MigrationWarning is used to present
 // the user with warning information in migration operations.
 type MigrationWarning struct {
-	// ActionItem: Suggested action for solving the warning.
+	// ActionItem: Output only. Suggested action for solving the warning.
 	ActionItem *LocalizedMessage `json:"actionItem,omitempty"`
 	// Code: The warning code.
 	//
@@ -2762,10 +2794,10 @@ type MigrationWarning struct {
 	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is not used.
 	//   "ADAPTATION_WARNING" - A warning originated from OS Adaptation.
 	Code string `json:"code,omitempty"`
-	// HelpLinks: URL(s) pointing to additional information on handling the current
-	// warning.
+	// HelpLinks: Output only. URL(s) pointing to additional information on
+	// handling the current warning.
 	HelpLinks []*Link `json:"helpLinks,omitempty"`
-	// WarningMessage: The localized warning message.
+	// WarningMessage: Output only. The localized warning message.
 	WarningMessage *LocalizedMessage `json:"warningMessage,omitempty"`
 	// WarningTime: The time the warning occurred.
 	WarningTime string `json:"warningTime,omitempty"`
@@ -2782,17 +2814,44 @@ type MigrationWarning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrationWarning) MarshalJSON() ([]byte, error) {
+func (s MigrationWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationWarning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkInsights: Information about the network coniguration of the source.
+type NetworkInsights struct {
+	// SourceNetworkConfig: Output only. The gathered network configuration of the
+	// source. Presented in json format.
+	SourceNetworkConfig string `json:"sourceNetworkConfig,omitempty"`
+	// SourceNetworkTerraform: Output only. The gathered network configuration of
+	// the source. Presented in terraform format.
+	SourceNetworkTerraform string `json:"sourceNetworkTerraform,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceNetworkConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceNetworkConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkInsights) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkInsights
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkInterface: NetworkInterface represents a NIC of a VM.
 type NetworkInterface struct {
-	// ExternalIp: The external IP to define in the NIC.
+	// ExternalIp: Optional. The external IP to define in the NIC.
 	ExternalIp string `json:"externalIp,omitempty"`
-	// InternalIp: The internal IP to define in the NIC. The formats accepted are:
-	// `ephemeral` \ ipv4 address \ a named address resource full path.
+	// InternalIp: Optional. The internal IP to define in the NIC. The formats
+	// accepted are: `ephemeral` \ ipv4 address \ a named address resource full
+	// path.
 	InternalIp string `json:"internalIp,omitempty"`
 	// Network: The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
@@ -2811,9 +2870,9 @@ type NetworkInterface struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
+func (s NetworkInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInterface
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSDescription: A message describing the VM's OS. Including OS, Publisher,
@@ -2840,9 +2899,9 @@ type OSDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSDescription) MarshalJSON() ([]byte, error) {
+func (s OSDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod OSDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSDisk: A message describing the OS disk.
@@ -2866,9 +2925,9 @@ type OSDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSDisk) MarshalJSON() ([]byte, error) {
+func (s OSDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod OSDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2913,9 +2972,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -2951,9 +3010,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PauseMigrationRequest: Request message for 'PauseMigration' request.
@@ -2979,9 +3038,9 @@ type PersistentDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersistentDisk) MarshalJSON() ([]byte, error) {
+func (s PersistentDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersistentDiskDefaults: Details for creation of a Persistent Disk.
@@ -2999,13 +3058,15 @@ type PersistentDiskDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD persistent
 	// disks that balance performance and cost.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
+	// type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. The encryption to apply to the disk.
 	Encryption *Encryption `json:"encryption,omitempty"`
 	// SourceDiskNumber: Required. The ordinal number of the source VM disk.
 	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
 	// VmAttachmentDetails: Optional. Details for attachment of the disk to a VM.
-	// Used when the disk is set to be attacked to a target VM.
+	// Used when the disk is set to be attached to a target VM.
 	VmAttachmentDetails *VmAttachmentDetails `json:"vmAttachmentDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3020,9 +3081,9 @@ type PersistentDiskDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersistentDiskDefaults) MarshalJSON() ([]byte, error) {
+func (s PersistentDiskDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentDiskDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostProcessingStep: PostProcessingStep contains specific step details.
@@ -3050,9 +3111,9 @@ type RemoveGroupMigrationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveGroupMigrationRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveGroupMigrationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveGroupMigrationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicatingStep: ReplicatingStep contains specific step details.
@@ -3082,9 +3143,9 @@ type ReplicatingStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicatingStep) MarshalJSON() ([]byte, error) {
+func (s ReplicatingStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicatingStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicationCycle: ReplicationCycle contains information about the current
@@ -3094,7 +3155,8 @@ type ReplicationCycle struct {
 	CycleNumber int64 `json:"cycleNumber,omitempty"`
 	// EndTime: The time the replication cycle has ended.
 	EndTime string `json:"endTime,omitempty"`
-	// Error: Provides details on the state of the cycle in case of an error.
+	// Error: Output only. Provides details on the state of the cycle in case of an
+	// error.
 	Error *Status `json:"error,omitempty"`
 	// Name: The identifier of the ReplicationCycle.
 	Name string `json:"name,omitempty"`
@@ -3137,9 +3199,9 @@ type ReplicationCycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicationCycle) MarshalJSON() ([]byte, error) {
+func (s ReplicationCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicationCycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicationSync: ReplicationSync contain information about the last replica
@@ -3161,13 +3223,18 @@ type ReplicationSync struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicationSync) MarshalJSON() ([]byte, error) {
+func (s ReplicationSync) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicationSync
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResumeMigrationRequest: Request message for 'ResumeMigration' request.
 type ResumeMigrationRequest struct {
+}
+
+// RunDiskMigrationJobRequest: Request message for 'RunDiskMigrationJobRequest'
+// request.
+type RunDiskMigrationJobRequest struct {
 }
 
 // SchedulePolicy: A policy for scheduling replications.
@@ -3192,9 +3259,9 @@ type SchedulePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SchedulePolicy) MarshalJSON() ([]byte, error) {
+func (s SchedulePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SchedulingNodeAffinity: Node Affinity: the configuration of desired nodes
@@ -3227,9 +3294,9 @@ type SchedulingNodeAffinity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
+func (s SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulingNodeAffinity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShuttingDownSourceVMStep: ShuttingDownSourceVMStep contains specific step
@@ -3275,9 +3342,9 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Source) MarshalJSON() ([]byte, error) {
+func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartMigrationRequest: Request message for 'StartMigrationRequest' request.
@@ -3313,16 +3380,16 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: Tag is an AWS tag representation.
 type Tag struct {
-	// Key: Key of tag.
+	// Key: Required. Key of tag.
 	Key string `json:"key,omitempty"`
-	// Value: Value of tag.
+	// Value: Required. Value of tag.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3337,9 +3404,9 @@ type Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tag) MarshalJSON() ([]byte, error) {
+func (s Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetProject: TargetProject message represents a target Compute Engine
@@ -3373,9 +3440,9 @@ type TargetProject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetProject) MarshalJSON() ([]byte, error) {
+func (s TargetProject) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetProject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeApplianceRequest: Request message for 'UpgradeAppliance' request.
@@ -3405,16 +3472,16 @@ type UpgradeApplianceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeApplianceRequest) MarshalJSON() ([]byte, error) {
+func (s UpgradeApplianceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeApplianceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeStatus: UpgradeStatus contains information about upgradeAppliance
 // operation.
 type UpgradeStatus struct {
-	// Error: Provides details on the state of the upgrade operation in case of an
-	// error.
+	// Error: Output only. Provides details on the state of the upgrade operation
+	// in case of an error.
 	Error *Status `json:"error,omitempty"`
 	// PreviousVersion: The version from which we upgraded.
 	PreviousVersion string `json:"previousVersion,omitempty"`
@@ -3443,9 +3510,9 @@ type UpgradeStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeStatus) MarshalJSON() ([]byte, error) {
+func (s UpgradeStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UtilizationReport: Utilization report details the utilization (CPU, memory,
@@ -3507,9 +3574,9 @@ type UtilizationReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UtilizationReport) MarshalJSON() ([]byte, error) {
+func (s UtilizationReport) MarshalJSON() ([]byte, error) {
 	type NoMethod UtilizationReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmAttachmentDetails: Details for attachment of the disk to a VM.
@@ -3534,9 +3601,9 @@ type VmAttachmentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmAttachmentDetails) MarshalJSON() ([]byte, error) {
+func (s VmAttachmentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmAttachmentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmCapabilities: Migrating VM source information about the VM capabilities
@@ -3569,9 +3636,9 @@ type VmCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmCapabilities) MarshalJSON() ([]byte, error) {
+func (s VmCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod VmCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmUtilizationInfo: Utilization information of a single VM.
@@ -3595,9 +3662,9 @@ type VmUtilizationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmUtilizationInfo) MarshalJSON() ([]byte, error) {
+func (s VmUtilizationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod VmUtilizationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmUtilizationMetrics: Utilization metrics values for a single VM.
@@ -3633,18 +3700,18 @@ type VmUtilizationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmUtilizationMetrics) MarshalJSON() ([]byte, error) {
+func (s VmUtilizationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod VmUtilizationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareDiskDetails: The details of a Vmware VM disk.
 type VmwareDiskDetails struct {
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// Label: The disk label.
+	// Label: Output only. The disk label.
 	Label string `json:"label,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3659,9 +3726,9 @@ type VmwareDiskDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareDiskDetails) MarshalJSON() ([]byte, error) {
+func (s VmwareDiskDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareDiskDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareSourceDetails: VmwareSourceDetails message describes a specific source
@@ -3691,18 +3758,19 @@ type VmwareSourceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareSourceDetails) MarshalJSON() ([]byte, error) {
+func (s VmwareSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareSourceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareSourceVmDetails: Represent the source Vmware VM details.
 type VmwareSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*VmwareDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
@@ -3725,9 +3793,9 @@ type VmwareSourceVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareSourceVmDetails) MarshalJSON() ([]byte, error) {
+func (s VmwareSourceVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareSourceVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVmDetails: VmwareVmDetails describes a VM in vCenter.
@@ -3786,9 +3854,9 @@ type VmwareVmDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVmDetails) MarshalJSON() ([]byte, error) {
+func (s VmwareVmDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVmDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareVmsDetails: VmwareVmsDetails describes VMs in vCenter.
@@ -3808,9 +3876,9 @@ type VmwareVmsDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmwareVmsDetails) MarshalJSON() ([]byte, error) {
+func (s VmwareVmsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareVmsDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -7612,6 +7680,208 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) doReq
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsCancelCall struct {
+	s                             *Service
+	name                          string
+	canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Cancel: Cancels the disk migration job.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Cancel(name string, canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceldiskmigrationjobrequest = canceldiskmigrationjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceldiskmigrationjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsRunCall struct {
+	s                          *Service
+	name                       string
+	rundiskmigrationjobrequest *RunDiskMigrationJobRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Run: Runs the disk migration job.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Run(name string, rundiskmigrationjobrequest *RunDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rundiskmigrationjobrequest = rundiskmigrationjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rundiskmigrationjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.run" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

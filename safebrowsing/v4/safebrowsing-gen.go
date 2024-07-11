@@ -252,9 +252,9 @@ type GoogleSecuritySafebrowsingV4Checksum struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4Checksum) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4Checksum) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4Checksum
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ClientInfo: The client metadata associated with
@@ -278,9 +278,9 @@ type GoogleSecuritySafebrowsingV4ClientInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ClientInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ClientInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ClientInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest: Describes a Safe
@@ -305,9 +305,9 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest:
@@ -384,9 +384,9 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestCon
@@ -431,9 +431,9 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestC
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse struct {
@@ -462,9 +462,9 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse:
@@ -563,9 +563,9 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FindFullHashesRequest: Request to return full
@@ -594,9 +594,9 @@ type GoogleSecuritySafebrowsingV4FindFullHashesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FindFullHashesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FindFullHashesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindFullHashesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FindFullHashesResponse struct {
@@ -625,9 +625,9 @@ type GoogleSecuritySafebrowsingV4FindFullHashesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FindFullHashesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FindFullHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindFullHashesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4FindThreatMatchesRequest: Request to check
@@ -650,9 +650,9 @@ type GoogleSecuritySafebrowsingV4FindThreatMatchesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FindThreatMatchesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FindThreatMatchesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindThreatMatchesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FindThreatMatchesResponse struct {
@@ -674,9 +674,9 @@ type GoogleSecuritySafebrowsingV4FindThreatMatchesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4FindThreatMatchesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4FindThreatMatchesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindThreatMatchesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4ListThreatListsResponse struct {
@@ -698,9 +698,9 @@ type GoogleSecuritySafebrowsingV4ListThreatListsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ListThreatListsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ListThreatListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ListThreatListsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4RawHashes: The uncompressed threat entries in
@@ -730,9 +730,9 @@ type GoogleSecuritySafebrowsingV4RawHashes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4RawHashes) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4RawHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RawHashes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4RawIndices: A set of raw indices to remove from
@@ -753,9 +753,9 @@ type GoogleSecuritySafebrowsingV4RawIndices struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4RawIndices) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4RawIndices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RawIndices
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4RiceDeltaEncoding: The Rice-Golomb encoded data.
@@ -788,9 +788,9 @@ type GoogleSecuritySafebrowsingV4RiceDeltaEncoding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RiceDeltaEncoding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatEntry: An individual threat; for example,
@@ -819,9 +819,9 @@ type GoogleSecuritySafebrowsingV4ThreatEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatEntryMetadata: The metadata associated
@@ -843,9 +843,9 @@ type GoogleSecuritySafebrowsingV4ThreatEntryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatEntryMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatEntryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry: A single
@@ -869,9 +869,9 @@ type GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatEntrySet: A set of threats that should be
@@ -910,9 +910,9 @@ type GoogleSecuritySafebrowsingV4ThreatEntrySet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatEntrySet) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatEntrySet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntrySet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4ThreatHit struct {
@@ -980,9 +980,9 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatHit) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatHit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatHitThreatSource: A single resource related
@@ -1020,9 +1020,9 @@ type GoogleSecuritySafebrowsingV4ThreatHitThreatSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatHitThreatSource) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatHitThreatSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHitThreatSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatHitUserInfo: Details about the user that
@@ -1045,9 +1045,9 @@ type GoogleSecuritySafebrowsingV4ThreatHitUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatHitUserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatHitUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHitUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatInfo: The information regarding one or
@@ -1122,9 +1122,9 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatListDescriptor: Describes an individual
@@ -1198,9 +1198,9 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatListDescriptor) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatListDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatListDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV4ThreatMatch: A match when checking a threat
@@ -1279,9 +1279,9 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV4ThreatMatch) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV4ThreatMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EncodedFullHashesGetCall struct {

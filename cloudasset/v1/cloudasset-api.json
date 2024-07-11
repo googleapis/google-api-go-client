@@ -1095,7 +1095,7 @@
       }
     }
   },
-  "revision": "20240412",
+  "revision": "20240629",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AccessSelector": {
@@ -2584,7 +2584,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name for the `AccessLevel`. Format: `accessPolicies/{access_policy}/accessLevels/{access_level}`. The `access_level` component must begin with a letter, followed by alphanumeric characters or `_`. Its maximum length is 50 characters. After you create an `AccessLevel`, you cannot change its `name`.",
+          "description": "Identifier. Resource name for the `AccessLevel`. Format: `accessPolicies/{access_policy}/accessLevels/{access_level}`. The `access_level` component must begin with a letter, followed by alphanumeric characters or `_`. Its maximum length is 50 characters. After you create an `AccessLevel`, you cannot change its `name`.",
           "type": "string"
         },
         "title": {
@@ -2599,11 +2599,12 @@
       "id": "GoogleIdentityAccesscontextmanagerV1AccessPolicy",
       "properties": {
         "etag": {
-          "description": "Output only. An opaque identifier for the current version of the `AccessPolicy`. This will always be a strongly validated etag, meaning that two Access Polices will be identical if and only if their etags are identical. Clients should not expect this to be in any specific format.",
+          "description": "Output only. An opaque identifier for the current version of the `AccessPolicy`. This will always be a strongly validated etag, meaning that two Access Policies will be identical if and only if their etags are identical. Clients should not expect this to be in any specific format.",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
-          "description": "Output only. Resource name of the `AccessPolicy`. Format: `accessPolicies/{access_policy}`",
+          "description": "Output only. Identifier. Resource name of the `AccessPolicy`. Format: `accessPolicies/{access_policy}`",
           "type": "string"
         },
         "parent": {
@@ -2835,7 +2836,7 @@
           "type": "string"
         },
         "sources": {
-          "description": "Sources that this EgressPolicy authorizes access from. If this field is not empty, then `source_restriction` must be set to `SOURCE_RESTRICTION_ENABLED`.",
+          "description": "Sources that this EgressPolicy authorizes access from. If this field is not empty, then `source_restriction` must be set to `SOURCE_RESTRICTION_ENABLED`. TODO (b/332744441): annotate this field with custom_org_policy_accessibility when cl/640698580 will be rolled out.",
           "items": {
             "$ref": "GoogleIdentityAccesscontextmanagerV1EgressSource"
           },
@@ -2864,7 +2865,7 @@
       "id": "GoogleIdentityAccesscontextmanagerV1EgressSource",
       "properties": {
         "accessLevel": {
-          "description": "An AccessLevel resource name that allows protected resources inside the ServicePerimeters to access outside the ServicePerimeter boundaries. AccessLevels listed must be in the same policy as this ServicePerimeter. Referencing a nonexistent AccessLevel will cause an error. If an AccessLevel name is not specified, only resources within the perimeter can be accessed through Google Cloud calls with request origins within the perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is specified for `access_level`, then all EgressSources will be allowed.",
+          "description": "An AccessLevel resource name that allows protected resources inside the ServicePerimeters to access outside the ServicePerimeter boundaries. AccessLevels listed must be in the same policy as this ServicePerimeter. Referencing a nonexistent AccessLevel will cause an error. If an AccessLevel name is not specified, only resources within the perimeter can be accessed through Google Cloud calls with request origins within the perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is specified for `access_level`, then all EgressSources will be allowed. TODO (b/332744441): annotate this field with custom_org_policy_accessibility when cl/640698580 will be rolled out.",
           "type": "string"
         }
       },
@@ -3047,7 +3048,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name for the `ServicePerimeter`. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The `service_perimeter` component must begin with a letter, followed by alphanumeric characters or `_`. After you create a `ServicePerimeter`, you cannot change its `name`.",
+          "description": "Identifier. Resource name for the `ServicePerimeter`. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The `service_perimeter` component must begin with a letter, followed by alphanumeric characters or `_`. After you create a `ServicePerimeter`, you cannot change its `name`.",
           "type": "string"
         },
         "perimeterType": {
@@ -3151,7 +3152,7 @@
       "properties": {
         "vpcSubnetwork": {
           "$ref": "GoogleIdentityAccesscontextmanagerV1VpcSubNetwork",
-          "description": "Sub-segment ranges of a VPC network."
+          "description": "Sub-segment ranges of a VPC network. TODO (b/332744441): annotate this field with custom_org_policy_accessibility when cl/640698580 will be rolled out."
         }
       },
       "type": "object"
@@ -4075,7 +4076,7 @@
       "type": "object"
     },
     "ResourceSearchResult": {
-      "description": "A result of Resource Search, containing information of a cloud resource. Next ID: 34",
+      "description": "A result of Resource Search, containing information of a cloud resource.",
       "id": "ResourceSearchResult",
       "properties": {
         "additionalAttributes": {
@@ -4140,7 +4141,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels associated with this resource. See [Labelling and grouping Google Cloud resources](https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources) for more information. This field is available only when the resource's Protobuf contains it. To search against the `labels`: * Use a field query: - query on any label's key or value. Example: `labels:prod` - query by a given label. Example: `labels.env:prod` - query by a given label's existence. Example: `labels.env:*` * Use a free text query. Example: `prod`",
+          "description": "User labels associated with this resource. See [Labelling and grouping Google Cloud resources](https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources) for more information. This field is available only when the resource's Protobuf contains it. To search against the `labels`: * Use a field query: - query on any label's key or value. Example: `labels:prod` - query by a given label. Example: `labels.env:prod` - query by a given label's existence. Example: `labels.env:*` * Use a free text query. Example: `prod`",
           "type": "object"
         },
         "location": {

@@ -326,6 +326,27 @@ type OrgUnitsMembershipsService struct {
 // AddIdpCredentialOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.AddIdpCredential.
 type AddIdpCredentialOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddIdpCredentialOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AddIdpCredentialOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddIdpCredentialRequest: The request for creating an IdpCredential with its
@@ -347,9 +368,9 @@ type AddIdpCredentialRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddIdpCredentialRequest) MarshalJSON() ([]byte, error) {
+func (s AddIdpCredentialRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddIdpCredentialRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidAttributes: Resource representing the Android specific attributes of
@@ -398,9 +419,9 @@ type AndroidAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidAttributes) MarshalJSON() ([]byte, error) {
+func (s AndroidAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveDeviceUserRequest: Request message for approving the device to access
@@ -426,9 +447,9 @@ type ApproveDeviceUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveDeviceUserRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveDeviceUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveDeviceUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveDeviceUserResponse: Response message for approving the device to
@@ -449,9 +470,9 @@ type ApproveDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlockDeviceUserRequest: Request message for blocking account on device.
@@ -476,9 +497,9 @@ type BlockDeviceUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockDeviceUserRequest) MarshalJSON() ([]byte, error) {
+func (s BlockDeviceUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockDeviceUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlockDeviceUserResponse: Response message for blocking the device from
@@ -499,9 +520,9 @@ type BlockDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BrowserAttributes: Contains information about browser profiles reported by
@@ -531,9 +552,9 @@ type BrowserAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BrowserAttributes) MarshalJSON() ([]byte, error) {
+func (s BrowserAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod BrowserAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BrowserInfo: Browser-specific fields reported by the Endpoint Verification
@@ -625,9 +646,9 @@ type BrowserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BrowserInfo) MarshalJSON() ([]byte, error) {
+func (s BrowserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BrowserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelUserInvitationRequest: Request to cancel sent invitation for target
@@ -658,9 +679,9 @@ type CancelWipeDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s CancelWipeDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelWipeDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelWipeDeviceResponse: Response message for cancelling an unfinished
@@ -682,9 +703,9 @@ type CancelWipeDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
+func (s CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelWipeDeviceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelWipeDeviceUserRequest: Request message for cancelling an unfinished
@@ -710,9 +731,9 @@ type CancelWipeDeviceUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+func (s CancelWipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelWipeDeviceUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelWipeDeviceUserResponse: Response message for cancelling an unfinished
@@ -733,9 +754,9 @@ type CancelWipeDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelWipeDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateAttributes: Stores information about a certificate.
@@ -776,9 +797,9 @@ type CertificateAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateAttributes) MarshalJSON() ([]byte, error) {
+func (s CertificateAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateTemplate: CertificateTemplate (v3 Extension in X.509).
@@ -804,9 +825,9 @@ type CertificateTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateTemplate) MarshalJSON() ([]byte, error) {
+func (s CertificateTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckTransitiveMembershipResponse: The response message for
@@ -833,9 +854,9 @@ type CheckTransitiveMembershipResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckTransitiveMembershipResponse) MarshalJSON() ([]byte, error) {
+func (s CheckTransitiveMembershipResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckTransitiveMembershipResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientState: Represents the state associated with an API client calling the
@@ -919,9 +940,9 @@ type ClientState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientState) MarshalJSON() ([]byte, error) {
+func (s ClientState) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDeviceRequest: Request message for creating a Company Owned device.
@@ -953,14 +974,35 @@ type CreateDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s CreateDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInboundSamlSsoProfileOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.CreateInboundSamlSsoProfile.
 type CreateInboundSamlSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateInboundSamlSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInboundSamlSsoProfileOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInboundSsoAssignmentOperationMetadata: LRO response metadata for
@@ -990,9 +1032,9 @@ type CustomAttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttributeValue) MarshalJSON() ([]byte, error) {
+func (s CustomAttributeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttributeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
@@ -1172,9 +1214,9 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
+func (s Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceUser: Represents a user's use of a Device in the Cloud Identity
@@ -1243,9 +1285,9 @@ type DeviceUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceUser) MarshalJSON() ([]byte, error) {
+func (s DeviceUser) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DsaPublicKeyInfo: Information of a DSA public key.
@@ -1265,9 +1307,9 @@ type DsaPublicKeyInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
+func (s DsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DsaPublicKeyInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicGroupMetadata: Dynamic group metadata like queries and status.
@@ -1291,9 +1333,9 @@ type DynamicGroupMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicGroupMetadata) MarshalJSON() ([]byte, error) {
+func (s DynamicGroupMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicGroupMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicGroupQuery: Defines a query on a resource.
@@ -1324,9 +1366,9 @@ type DynamicGroupQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicGroupQuery) MarshalJSON() ([]byte, error) {
+func (s DynamicGroupQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicGroupQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicGroupStatus: The current status of a dynamic group along with
@@ -1360,9 +1402,9 @@ type DynamicGroupStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicGroupStatus) MarshalJSON() ([]byte, error) {
+func (s DynamicGroupStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicGroupStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointVerificationSpecificAttributes: Resource representing the Endpoint
@@ -1394,9 +1436,9 @@ type EndpointVerificationSpecificAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointVerificationSpecificAttributes) MarshalJSON() ([]byte, error) {
+func (s EndpointVerificationSpecificAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointVerificationSpecificAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityKey: A unique identifier for an entity in the Cloud Identity Groups
@@ -1429,9 +1471,9 @@ type EntityKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityKey) MarshalJSON() ([]byte, error) {
+func (s EntityKey) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpiryDetail: The `MembershipRole` expiry details.
@@ -1451,9 +1493,9 @@ type ExpiryDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpiryDetail) MarshalJSON() ([]byte, error) {
+func (s ExpiryDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpiryDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetMembershipGraphResponse: The response message for
@@ -1479,9 +1521,9 @@ type GetMembershipGraphResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetMembershipGraphResponse) MarshalJSON() ([]byte, error) {
+func (s GetMembershipGraphResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetMembershipGraphResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1AndroidAttributes: Resource representing the
@@ -1530,9 +1572,9 @@ type GoogleAppsCloudidentityDevicesV1AndroidAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1AndroidAttributes) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1AndroidAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1AndroidAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1ApproveDeviceUserMetadata: Metadata for
@@ -1558,9 +1600,9 @@ type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1BlockDeviceUserMetadata: Metadata for
@@ -1586,9 +1628,9 @@ type GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1BrowserAttributes: Contains information
@@ -1620,9 +1662,9 @@ type GoogleAppsCloudidentityDevicesV1BrowserAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1BrowserAttributes) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1BrowserAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1BrowserAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1BrowserInfo: Browser-specific fields
@@ -1716,9 +1758,9 @@ type GoogleAppsCloudidentityDevicesV1BrowserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1BrowserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1BrowserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1BrowserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1CancelWipeDeviceMetadata: Metadata for
@@ -1745,9 +1787,9 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserMetadata: Metadata for
@@ -1773,9 +1815,9 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1CertificateAttributes: Stores information
@@ -1817,9 +1859,9 @@ type GoogleAppsCloudidentityDevicesV1CertificateAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1CertificateAttributes) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1CertificateAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CertificateAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1CertificateTemplate: CertificateTemplate (v3
@@ -1846,9 +1888,9 @@ type GoogleAppsCloudidentityDevicesV1CertificateTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1CertificateTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1CertificateTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CertificateTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1ClientState: Represents the state associated
@@ -1942,9 +1984,9 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1ClientState) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1ClientState) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1ClientState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1CreateDeviceMetadata: Metadata for
@@ -1974,9 +2016,9 @@ type GoogleAppsCloudidentityDevicesV1CustomAttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1CustomAttributeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CustomAttributeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) UnmarshalJSON(data []byte) error {
@@ -2137,9 +2179,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1Device) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1Device) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1DeviceUser: Represents a user's use of a
@@ -2205,9 +2247,9 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1DeviceUser) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1DeviceUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1DeviceUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes:
@@ -2242,9 +2284,9 @@ type GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1ListEndpointAppsMetadata: Metadata for
@@ -2291,9 +2333,9 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1WipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCloudidentityDevicesV1WipeDeviceUserMetadata: Metadata for
@@ -2319,9 +2361,9 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Group: A group within the Cloud Identity Groups API. A `Group` is a
@@ -2387,9 +2429,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupRelation: Message representing a transitive group of a user or a group.
@@ -2429,9 +2471,9 @@ type GroupRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupRelation) MarshalJSON() ([]byte, error) {
+func (s GroupRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdpCredential: Credential for verifying signatures produced by the Identity
@@ -2462,9 +2504,9 @@ type IdpCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdpCredential) MarshalJSON() ([]byte, error) {
+func (s IdpCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod IdpCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InboundSamlSsoProfile: A SAML 2.0
@@ -2501,9 +2543,9 @@ type InboundSamlSsoProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InboundSamlSsoProfile) MarshalJSON() ([]byte, error) {
+func (s InboundSamlSsoProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod InboundSamlSsoProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InboundSsoAssignment: Targets with "set" SSO assignments and their
@@ -2560,9 +2602,9 @@ type InboundSsoAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InboundSsoAssignment) MarshalJSON() ([]byte, error) {
+func (s InboundSsoAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod InboundSsoAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IsInvitableUserResponse: Response for IsInvitableUser RPC.
@@ -2585,9 +2627,9 @@ type IsInvitableUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IsInvitableUserResponse) MarshalJSON() ([]byte, error) {
+func (s IsInvitableUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IsInvitableUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListClientStatesResponse: Response message that is returned in LRO result of
@@ -2611,9 +2653,9 @@ type ListClientStatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListClientStatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListClientStatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClientStatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDeviceUsersResponse: Response message that is returned from the
@@ -2640,9 +2682,9 @@ type ListDeviceUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDeviceUsersResponse) MarshalJSON() ([]byte, error) {
+func (s ListDeviceUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDeviceUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDevicesResponse: Response message that is returned from the ListDevices
@@ -2669,9 +2711,9 @@ type ListDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupsResponse: The response message for GroupsService.ListGroups.
@@ -2697,9 +2739,9 @@ type ListGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListIdpCredentialsResponse: Response of the
@@ -2726,9 +2768,9 @@ type ListIdpCredentialsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListIdpCredentialsResponse) MarshalJSON() ([]byte, error) {
+func (s ListIdpCredentialsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListIdpCredentialsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInboundSamlSsoProfilesResponse: Response of the
@@ -2755,9 +2797,9 @@ type ListInboundSamlSsoProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInboundSamlSsoProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInboundSamlSsoProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInboundSamlSsoProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInboundSsoAssignmentsResponse: Response of the
@@ -2784,9 +2826,9 @@ type ListInboundSsoAssignmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInboundSsoAssignmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInboundSsoAssignmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInboundSsoAssignmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMembershipsResponse: The response message for
@@ -2813,9 +2855,9 @@ type ListMembershipsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMembershipsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOrgMembershipsResponse: The response message for
@@ -2842,9 +2884,9 @@ type ListOrgMembershipsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOrgMembershipsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOrgMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOrgMembershipsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUserInvitationsResponse: Response message for UserInvitation listing
@@ -2873,9 +2915,9 @@ type ListUserInvitationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUserInvitationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListUserInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUserInvitationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupGroupNameResponse: The response message for
@@ -2901,9 +2943,9 @@ type LookupGroupNameResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupGroupNameResponse) MarshalJSON() ([]byte, error) {
+func (s LookupGroupNameResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupGroupNameResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupMembershipNameResponse: The response message for
@@ -2930,9 +2972,9 @@ type LookupMembershipNameResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupMembershipNameResponse) MarshalJSON() ([]byte, error) {
+func (s LookupMembershipNameResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupMembershipNameResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupSelfDeviceUsersResponse: Response containing resource names of the
@@ -2965,9 +3007,9 @@ type LookupSelfDeviceUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupSelfDeviceUsersResponse) MarshalJSON() ([]byte, error) {
+func (s LookupSelfDeviceUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupSelfDeviceUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MemberRelation: Message representing a transitive membership of a group.
@@ -3003,9 +3045,9 @@ type MemberRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemberRelation) MarshalJSON() ([]byte, error) {
+func (s MemberRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod MemberRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MemberRestriction: The definition of MemberRestriction
@@ -3036,9 +3078,9 @@ type MemberRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemberRestriction) MarshalJSON() ([]byte, error) {
+func (s MemberRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod MemberRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Membership: A membership within the Cloud Identity Groups API. A
@@ -3104,9 +3146,9 @@ type Membership struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Membership) MarshalJSON() ([]byte, error) {
+func (s Membership) MarshalJSON() ([]byte, error) {
 	type NoMethod Membership
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MembershipAdjacencyList: Membership graph's path information as an adjacency
@@ -3132,9 +3174,9 @@ type MembershipAdjacencyList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipAdjacencyList) MarshalJSON() ([]byte, error) {
+func (s MembershipAdjacencyList) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipAdjacencyList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MembershipRelation: Message containing membership relation.
@@ -3172,9 +3214,9 @@ type MembershipRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipRelation) MarshalJSON() ([]byte, error) {
+func (s MembershipRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MembershipRole: A membership role within the Cloud Identity Groups API. A
@@ -3203,9 +3245,9 @@ type MembershipRole struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipRole) MarshalJSON() ([]byte, error) {
+func (s MembershipRole) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipRole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MembershipRoleRestrictionEvaluation: The evaluated state of this
@@ -3236,9 +3278,9 @@ type MembershipRoleRestrictionEvaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MembershipRoleRestrictionEvaluation) MarshalJSON() ([]byte, error) {
+func (s MembershipRoleRestrictionEvaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipRoleRestrictionEvaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyMembershipRolesRequest: The request message for
@@ -3271,9 +3313,9 @@ type ModifyMembershipRolesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyMembershipRolesRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyMembershipRolesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyMembershipRolesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyMembershipRolesResponse: The response message for
@@ -3297,9 +3339,9 @@ type ModifyMembershipRolesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyMembershipRolesResponse) MarshalJSON() ([]byte, error) {
+func (s ModifyMembershipRolesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyMembershipRolesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveOrgMembershipRequest: The request message for
@@ -3330,9 +3372,9 @@ type MoveOrgMembershipRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveOrgMembershipRequest) MarshalJSON() ([]byte, error) {
+func (s MoveOrgMembershipRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveOrgMembershipRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -3377,9 +3419,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrgMembership: A membership in an OrgUnit. An `OrgMembership` defines a
@@ -3427,9 +3469,9 @@ type OrgMembership struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrgMembership) MarshalJSON() ([]byte, error) {
+func (s OrgMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgMembership
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PosixGroup: POSIX Group definition to represent a group in a POSIX compliant
@@ -3455,9 +3497,9 @@ type PosixGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PosixGroup) MarshalJSON() ([]byte, error) {
+func (s PosixGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod PosixGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestrictionEvaluation: The evaluated state of this restriction.
@@ -3487,9 +3529,9 @@ type RestrictionEvaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictionEvaluation) MarshalJSON() ([]byte, error) {
+func (s RestrictionEvaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictionEvaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestrictionEvaluations: Evaluations of restrictions applied to parent group
@@ -3512,9 +3554,9 @@ type RestrictionEvaluations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictionEvaluations) MarshalJSON() ([]byte, error) {
+func (s RestrictionEvaluations) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictionEvaluations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RsaPublicKeyInfo: Information of a RSA public key.
@@ -3534,9 +3576,9 @@ type RsaPublicKeyInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
+func (s RsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RsaPublicKeyInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SamlIdpConfig: SAML IDP (identity provider) configuration.
@@ -3572,9 +3614,9 @@ type SamlIdpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SamlIdpConfig) MarshalJSON() ([]byte, error) {
+func (s SamlIdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SamlIdpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SamlSpConfig: SAML SP (service provider) configuration.
@@ -3598,9 +3640,9 @@ type SamlSpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SamlSpConfig) MarshalJSON() ([]byte, error) {
+func (s SamlSpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SamlSpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SamlSsoInfo: Details that are applicable when `sso_mode` == `SAML_SSO`.
@@ -3621,9 +3663,9 @@ type SamlSsoInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SamlSsoInfo) MarshalJSON() ([]byte, error) {
+func (s SamlSsoInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SamlSsoInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchDirectGroupsResponse: The response message for
@@ -3650,9 +3692,9 @@ type SearchDirectGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchDirectGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchDirectGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchDirectGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchGroupsResponse: The response message for GroupsService.SearchGroups.
@@ -3678,9 +3720,9 @@ type SearchGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchTransitiveGroupsResponse: The response message for
@@ -3707,9 +3749,9 @@ type SearchTransitiveGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchTransitiveGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchTransitiveGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchTransitiveGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchTransitiveMembershipsResponse: The response message for
@@ -3736,9 +3778,9 @@ type SearchTransitiveMembershipsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchTransitiveMembershipsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchTransitiveMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchTransitiveMembershipsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecuritySettings: The definiion of security settings.
@@ -3764,9 +3806,9 @@ type SecuritySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecuritySettings) MarshalJSON() ([]byte, error) {
+func (s SecuritySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SecuritySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SendUserInvitationRequest: A request to send email for inviting target user
@@ -3799,9 +3841,9 @@ type SignInBehavior struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignInBehavior) MarshalJSON() ([]byte, error) {
+func (s SignInBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod SignInBehavior
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -3833,9 +3875,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransitiveMembershipRole: Message representing the role of a
@@ -3857,14 +3899,35 @@ type TransitiveMembershipRole struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransitiveMembershipRole) MarshalJSON() ([]byte, error) {
+func (s TransitiveMembershipRole) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitiveMembershipRole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInboundSamlSsoProfileOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.UpdateInboundSamlSsoProfile.
 type UpdateInboundSamlSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateInboundSamlSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInboundSamlSsoProfileOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInboundSsoAssignmentOperationMetadata: LRO response metadata for
@@ -3894,9 +3957,9 @@ type UpdateMembershipRolesParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateMembershipRolesParams) MarshalJSON() ([]byte, error) {
+func (s UpdateMembershipRolesParams) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateMembershipRolesParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserInvitation: The `UserInvitation` resource represents an email that can
@@ -3941,9 +4004,9 @@ type UserInvitation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInvitation) MarshalJSON() ([]byte, error) {
+func (s UserInvitation) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInvitation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeDeviceRequest: Request message for wiping all data on the device.
@@ -3974,9 +4037,9 @@ type WipeDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WipeDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s WipeDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeDeviceResponse: Response message for wiping all data on the device.
@@ -3997,9 +4060,9 @@ type WipeDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WipeDeviceResponse) MarshalJSON() ([]byte, error) {
+func (s WipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeDeviceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeDeviceUserRequest: Request message for starting an account wipe on
@@ -4025,9 +4088,9 @@ type WipeDeviceUserRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+func (s WipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeDeviceUserRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeDeviceUserResponse: Response message for wiping the user's account from
@@ -4048,9 +4111,9 @@ type WipeDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+func (s WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeDeviceUserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersUserinvitationsCancelCall struct {
@@ -9253,7 +9316,11 @@ type InboundSamlSsoProfilesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates an InboundSamlSsoProfile for a customer.
+// Create: Creates an InboundSamlSsoProfile for a customer. When the target
+// customer has enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 func (r *InboundSamlSsoProfilesService) Create(inboundsamlssoprofile *InboundSamlSsoProfile) *InboundSamlSsoProfilesCreateCall {
 	c := &InboundSamlSsoProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inboundsamlssoprofile = inboundsamlssoprofile
@@ -9711,7 +9778,11 @@ type InboundSamlSsoProfilesPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates an InboundSamlSsoProfile.
+// Patch: Updates an InboundSamlSsoProfile. When the target customer has
+// enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 //
 //   - name: Output only. Resource name
 //     (https://cloud.google.com/apis/design/resource_names) of the SAML SSO
@@ -9821,7 +9892,11 @@ type InboundSamlSsoProfilesIdpCredentialsAddCall struct {
 	header_                 http.Header
 }
 
-// Add: Adds an IdpCredential. Up to 2 credentials are allowed.
+// Add: Adds an IdpCredential. Up to 2 credentials are allowed. When the target
+// customer has enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 //
 //   - parent: The InboundSamlSsoProfile that owns the IdpCredential. Format:
 //     `inboundSamlSsoProfiles/{sso_profile_id}`.

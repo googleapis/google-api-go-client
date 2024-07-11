@@ -377,9 +377,9 @@ type About struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *About) MarshalJSON() ([]byte, error) {
+func (s About) MarshalJSON() ([]byte, error) {
 	type NoMethod About
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AboutDriveThemes struct {
@@ -402,9 +402,9 @@ type AboutDriveThemes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AboutDriveThemes) MarshalJSON() ([]byte, error) {
+func (s AboutDriveThemes) MarshalJSON() ([]byte, error) {
 	type NoMethod AboutDriveThemes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AboutStorageQuota: The user's storage quota limits and usage. For users that
@@ -438,9 +438,9 @@ type AboutStorageQuota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AboutStorageQuota) MarshalJSON() ([]byte, error) {
+func (s AboutStorageQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod AboutStorageQuota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AboutTeamDriveThemes struct {
@@ -464,9 +464,9 @@ type AboutTeamDriveThemes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AboutTeamDriveThemes) MarshalJSON() ([]byte, error) {
+func (s AboutTeamDriveThemes) MarshalJSON() ([]byte, error) {
 	type NoMethod AboutTeamDriveThemes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // App: The `apps` resource provides a list of apps that a user has installed,
@@ -549,9 +549,9 @@ type App struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *App) MarshalJSON() ([]byte, error) {
+func (s App) MarshalJSON() ([]byte, error) {
 	type NoMethod App
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppIcons struct {
@@ -577,9 +577,9 @@ type AppIcons struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppIcons) MarshalJSON() ([]byte, error) {
+func (s AppIcons) MarshalJSON() ([]byte, error) {
 	type NoMethod AppIcons
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppList: A list of third-party applications which the user has installed or
@@ -611,9 +611,9 @@ type AppList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppList) MarshalJSON() ([]byte, error) {
+func (s AppList) MarshalJSON() ([]byte, error) {
 	type NoMethod AppList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Change: A change to a file or shared drive.
@@ -658,9 +658,9 @@ type Change struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Change) MarshalJSON() ([]byte, error) {
+func (s Change) MarshalJSON() ([]byte, error) {
 	type NoMethod Change
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChangeList: A list of changes for a user.
@@ -695,9 +695,9 @@ type ChangeList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChangeList) MarshalJSON() ([]byte, error) {
+func (s ChangeList) MarshalJSON() ([]byte, error) {
 	type NoMethod ChangeList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A notification channel used to watch for resource changes.
@@ -744,9 +744,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Comment: A comment on a file. Some resource methods (such as
@@ -804,9 +804,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentQuotedFileContent: The file content to which the comment refers,
@@ -831,9 +831,9 @@ type CommentQuotedFileContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentQuotedFileContent) MarshalJSON() ([]byte, error) {
+func (s CommentQuotedFileContent) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentQuotedFileContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentList: A list of comments on a file.
@@ -867,9 +867,9 @@ type CommentList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommentList) MarshalJSON() ([]byte, error) {
+func (s CommentList) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentRestriction: A restriction for accessing the content of the file.
@@ -911,9 +911,9 @@ type ContentRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentRestriction) MarshalJSON() ([]byte, error) {
+func (s ContentRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Drive: Representation of a shared drive. Some resource methods (such as
@@ -980,9 +980,9 @@ type Drive struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Drive) MarshalJSON() ([]byte, error) {
+func (s Drive) MarshalJSON() ([]byte, error) {
 	type NoMethod Drive
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveBackgroundImageFile: An image file and cropping parameters from which a
@@ -1024,9 +1024,9 @@ type DriveBackgroundImageFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveBackgroundImageFile) MarshalJSON() ([]byte, error) {
+func (s DriveBackgroundImageFile) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveBackgroundImageFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DriveBackgroundImageFile) UnmarshalJSON(data []byte) error {
@@ -1127,9 +1127,9 @@ type DriveCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveCapabilities) MarshalJSON() ([]byte, error) {
+func (s DriveCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveRestrictions: A set of restrictions that apply to this shared drive or
@@ -1170,9 +1170,9 @@ type DriveRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveRestrictions) MarshalJSON() ([]byte, error) {
+func (s DriveRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveList: A list of shared drives.
@@ -1206,9 +1206,9 @@ type DriveList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveList) MarshalJSON() ([]byte, error) {
+func (s DriveList) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: The metadata for a file. Some resource methods (such as
@@ -1368,6 +1368,7 @@ type File struct {
 	SharingUser *User `json:"sharingUser,omitempty"`
 	// ShortcutDetails: Shortcut file details. Only populated for shortcut files,
 	// which have the mimeType field set to `application/vnd.google-apps.shortcut`.
+	// Can only be set on `files.create` requests.
 	ShortcutDetails *FileShortcutDetails `json:"shortcutDetails,omitempty"`
 	// Size: Output only. Size in bytes of blobs and first party editor files.
 	// Won't be populated for files that have no size, like shortcuts and folders.
@@ -1439,9 +1440,9 @@ type File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *File) MarshalJSON() ([]byte, error) {
+func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileCapabilities: Output only. Capabilities the current user has on this
@@ -1597,9 +1598,9 @@ type FileCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileCapabilities) MarshalJSON() ([]byte, error) {
+func (s FileCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod FileCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileContentHints: Additional information about the content of the file.
@@ -1624,9 +1625,9 @@ type FileContentHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileContentHints) MarshalJSON() ([]byte, error) {
+func (s FileContentHints) MarshalJSON() ([]byte, error) {
 	type NoMethod FileContentHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileContentHintsThumbnail: A thumbnail for the file. This will only be used
@@ -1649,9 +1650,9 @@ type FileContentHintsThumbnail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileContentHintsThumbnail) MarshalJSON() ([]byte, error) {
+func (s FileContentHintsThumbnail) MarshalJSON() ([]byte, error) {
 	type NoMethod FileContentHintsThumbnail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileImageMediaMetadata: Output only. Additional metadata about image media,
@@ -1716,9 +1717,9 @@ type FileImageMediaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileImageMediaMetadata) MarshalJSON() ([]byte, error) {
+func (s FileImageMediaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FileImageMediaMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FileImageMediaMetadata) UnmarshalJSON(data []byte) error {
@@ -1765,9 +1766,9 @@ type FileImageMediaMetadataLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileImageMediaMetadataLocation) MarshalJSON() ([]byte, error) {
+func (s FileImageMediaMetadataLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod FileImageMediaMetadataLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FileImageMediaMetadataLocation) UnmarshalJSON(data []byte) error {
@@ -1806,9 +1807,9 @@ type FileLabelInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileLabelInfo) MarshalJSON() ([]byte, error) {
+func (s FileLabelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod FileLabelInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileLinkShareMetadata: Contains details about the link URLs that clients are
@@ -1833,16 +1834,18 @@ type FileLinkShareMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileLinkShareMetadata) MarshalJSON() ([]byte, error) {
+func (s FileLinkShareMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FileLinkShareMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileShortcutDetails: Shortcut file details. Only populated for shortcut
 // files, which have the mimeType field set to
-// `application/vnd.google-apps.shortcut`.
+// `application/vnd.google-apps.shortcut`. Can only be set on `files.create`
+// requests.
 type FileShortcutDetails struct {
-	// TargetId: The ID of the file that this shortcut points to.
+	// TargetId: The ID of the file that this shortcut points to. Can only be set
+	// on `files.create` requests.
 	TargetId string `json:"targetId,omitempty"`
 	// TargetMimeType: Output only. The MIME type of the file that this shortcut
 	// points to. The value of this field is a snapshot of the target's MIME type,
@@ -1863,9 +1866,9 @@ type FileShortcutDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileShortcutDetails) MarshalJSON() ([]byte, error) {
+func (s FileShortcutDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FileShortcutDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileVideoMediaMetadata: Output only. Additional metadata about video media.
@@ -1890,9 +1893,9 @@ type FileVideoMediaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileVideoMediaMetadata) MarshalJSON() ([]byte, error) {
+func (s FileVideoMediaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FileVideoMediaMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileList: A list of files.
@@ -1933,9 +1936,9 @@ type FileList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileList) MarshalJSON() ([]byte, error) {
+func (s FileList) MarshalJSON() ([]byte, error) {
 	type NoMethod FileList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedIds: A list of generated file IDs which can be provided in create
@@ -1964,9 +1967,9 @@ type GeneratedIds struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedIds) MarshalJSON() ([]byte, error) {
+func (s GeneratedIds) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedIds
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Label: Representation of label and label fields.
@@ -1992,9 +1995,9 @@ type Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Label) MarshalJSON() ([]byte, error) {
+func (s Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelField: Representation of field, which is a typed key-value pair.
@@ -2031,9 +2034,9 @@ type LabelField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelField) MarshalJSON() ([]byte, error) {
+func (s LabelField) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelFieldModification: A modification to a label's field.
@@ -2070,9 +2073,9 @@ type LabelFieldModification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelFieldModification) MarshalJSON() ([]byte, error) {
+func (s LabelFieldModification) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelFieldModification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelList: A list of labels applied to a file.
@@ -2104,9 +2107,9 @@ type LabelList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelList) MarshalJSON() ([]byte, error) {
+func (s LabelList) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelModification: A modification to a label on a file. A LabelModification
@@ -2134,9 +2137,9 @@ type LabelModification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelModification) MarshalJSON() ([]byte, error) {
+func (s LabelModification) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelModification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyLabelsRequest: A request to modify the set of labels on a file. This
@@ -2161,9 +2164,9 @@ type ModifyLabelsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyLabelsRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyLabelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyLabelsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyLabelsResponse: Response to a ModifyLabels request. This contains only
@@ -2190,9 +2193,9 @@ type ModifyLabelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyLabelsResponse) MarshalJSON() ([]byte, error) {
+func (s ModifyLabelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyLabelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Permission: A permission for a file. A permission grants a user, group,
@@ -2274,9 +2277,9 @@ type Permission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permission) MarshalJSON() ([]byte, error) {
+func (s Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PermissionPermissionDetails struct {
@@ -2307,9 +2310,9 @@ type PermissionPermissionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PermissionPermissionDetails) MarshalJSON() ([]byte, error) {
+func (s PermissionPermissionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionPermissionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PermissionTeamDrivePermissionDetails struct {
@@ -2337,9 +2340,9 @@ type PermissionTeamDrivePermissionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PermissionTeamDrivePermissionDetails) MarshalJSON() ([]byte, error) {
+func (s PermissionTeamDrivePermissionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionTeamDrivePermissionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PermissionList: A list of permissions for a file.
@@ -2374,9 +2377,9 @@ type PermissionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PermissionList) MarshalJSON() ([]byte, error) {
+func (s PermissionList) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reply: A reply to a comment on a file. Some resource methods (such as
@@ -2423,9 +2426,9 @@ type Reply struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reply) MarshalJSON() ([]byte, error) {
+func (s Reply) MarshalJSON() ([]byte, error) {
 	type NoMethod Reply
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplyList: A list of replies to a comment on a file.
@@ -2459,9 +2462,9 @@ type ReplyList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplyList) MarshalJSON() ([]byte, error) {
+func (s ReplyList) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplyList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Revision: The metadata for a revision to a file. Some resource methods (such
@@ -2525,9 +2528,9 @@ type Revision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Revision) MarshalJSON() ([]byte, error) {
+func (s Revision) MarshalJSON() ([]byte, error) {
 	type NoMethod Revision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevisionList: A list of revisions of a file.
@@ -2561,9 +2564,9 @@ type RevisionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevisionList) MarshalJSON() ([]byte, error) {
+func (s RevisionList) MarshalJSON() ([]byte, error) {
 	type NoMethod RevisionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StartPageToken struct {
@@ -2589,9 +2592,9 @@ type StartPageToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartPageToken) MarshalJSON() ([]byte, error) {
+func (s StartPageToken) MarshalJSON() ([]byte, error) {
 	type NoMethod StartPageToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDrive: Deprecated: use the drive collection instead.
@@ -2651,9 +2654,9 @@ type TeamDrive struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDrive) MarshalJSON() ([]byte, error) {
+func (s TeamDrive) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDrive
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDriveBackgroundImageFile: An image file and cropping parameters from
@@ -2695,9 +2698,9 @@ type TeamDriveBackgroundImageFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveBackgroundImageFile) MarshalJSON() ([]byte, error) {
+func (s TeamDriveBackgroundImageFile) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveBackgroundImageFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TeamDriveBackgroundImageFile) UnmarshalJSON(data []byte) error {
@@ -2795,9 +2798,9 @@ type TeamDriveCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveCapabilities) MarshalJSON() ([]byte, error) {
+func (s TeamDriveCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDriveRestrictions: A set of restrictions that apply to this Team Drive
@@ -2836,9 +2839,9 @@ type TeamDriveRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveRestrictions) MarshalJSON() ([]byte, error) {
+func (s TeamDriveRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDriveList: A list of Team Drives.
@@ -2873,9 +2876,9 @@ type TeamDriveList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveList) MarshalJSON() ([]byte, error) {
+func (s TeamDriveList) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Information about a Drive user.
@@ -2908,9 +2911,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AboutGetCall struct {

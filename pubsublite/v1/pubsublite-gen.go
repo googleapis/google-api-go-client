@@ -392,9 +392,9 @@ type Capacity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Capacity) MarshalJSON() ([]byte, error) {
+func (s Capacity) MarshalJSON() ([]byte, error) {
 	type NoMethod Capacity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitCursorRequest: Request for CommitCursor.
@@ -417,9 +417,9 @@ type CommitCursorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitCursorRequest) MarshalJSON() ([]byte, error) {
+func (s CommitCursorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitCursorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitCursorResponse: Response for CommitCursor.
@@ -446,9 +446,9 @@ type ComputeHeadCursorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeHeadCursorRequest) MarshalJSON() ([]byte, error) {
+func (s ComputeHeadCursorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeHeadCursorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeHeadCursorResponse: Response containing the head cursor for the
@@ -472,9 +472,9 @@ type ComputeHeadCursorResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeHeadCursorResponse) MarshalJSON() ([]byte, error) {
+func (s ComputeHeadCursorResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeHeadCursorResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeMessageStatsRequest: Compute statistics about a range of messages in
@@ -502,9 +502,9 @@ type ComputeMessageStatsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeMessageStatsRequest) MarshalJSON() ([]byte, error) {
+func (s ComputeMessageStatsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeMessageStatsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeMessageStatsResponse: Response containing stats for messages in the
@@ -538,9 +538,9 @@ type ComputeMessageStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeMessageStatsResponse) MarshalJSON() ([]byte, error) {
+func (s ComputeMessageStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeMessageStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeTimeCursorRequest: Compute the corresponding cursor for a publish or
@@ -564,9 +564,9 @@ type ComputeTimeCursorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeTimeCursorRequest) MarshalJSON() ([]byte, error) {
+func (s ComputeTimeCursorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeTimeCursorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeTimeCursorResponse: Response containing the cursor corresponding to a
@@ -592,9 +592,9 @@ type ComputeTimeCursorResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeTimeCursorResponse) MarshalJSON() ([]byte, error) {
+func (s ComputeTimeCursorResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeTimeCursorResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cursor: A cursor that describes the position of a message within a topic
@@ -616,9 +616,9 @@ type Cursor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cursor) MarshalJSON() ([]byte, error) {
+func (s Cursor) MarshalJSON() ([]byte, error) {
 	type NoMethod Cursor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeliveryConfig: The settings for a subscription's message delivery.
@@ -646,9 +646,9 @@ type DeliveryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeliveryConfig) MarshalJSON() ([]byte, error) {
+func (s DeliveryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliveryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -713,9 +713,9 @@ type ExportConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportConfig) MarshalJSON() ([]byte, error) {
+func (s ExportConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -741,9 +741,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPartitionCursorsResponse: Response for ListPartitionCursors
@@ -769,9 +769,9 @@ type ListPartitionCursorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPartitionCursorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPartitionCursorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPartitionCursorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReservationTopicsResponse: Response for ListReservationTopics.
@@ -798,9 +798,9 @@ type ListReservationTopicsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReservationTopicsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReservationTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReservationTopicsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReservationsResponse: Response for ListReservations.
@@ -827,9 +827,9 @@ type ListReservationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReservationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReservationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReservationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response for ListSubscriptions.
@@ -856,9 +856,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicSubscriptionsResponse: Response for ListTopicSubscriptions.
@@ -885,9 +885,9 @@ type ListTopicSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicsResponse: Response for ListTopics.
@@ -914,9 +914,9 @@ type ListTopicsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -961,9 +961,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Metadata for long running operations.
@@ -993,9 +993,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionConfig: The settings for a topic's partitions.
@@ -1028,9 +1028,9 @@ type PartitionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionConfig) MarshalJSON() ([]byte, error) {
+func (s PartitionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionCursor: A pair of a Cursor and the partition it is for.
@@ -1052,9 +1052,9 @@ type PartitionCursor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionCursor) MarshalJSON() ([]byte, error) {
+func (s PartitionCursor) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionCursor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubSubConfig: Configuration for exporting to a Pub/Sub topic.
@@ -1075,9 +1075,9 @@ type PubSubConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubSubConfig) MarshalJSON() ([]byte, error) {
+func (s PubSubConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PubSubConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reservation: Metadata about a reservation resource.
@@ -1107,9 +1107,9 @@ type Reservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reservation) MarshalJSON() ([]byte, error) {
+func (s Reservation) MarshalJSON() ([]byte, error) {
 	type NoMethod Reservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReservationConfig: The settings for this topic's Reservation usage.
@@ -1131,9 +1131,9 @@ type ReservationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReservationConfig) MarshalJSON() ([]byte, error) {
+func (s ReservationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetentionConfig: The settings for a topic's message retention.
@@ -1160,9 +1160,9 @@ type RetentionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetentionConfig) MarshalJSON() ([]byte, error) {
+func (s RetentionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RetentionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SeekSubscriptionRequest: Request for SeekSubscription.
@@ -1192,9 +1192,9 @@ type SeekSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SeekSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s SeekSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SeekSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SeekSubscriptionResponse: Response for SeekSubscription long running
@@ -1231,9 +1231,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: Metadata about a subscription resource.
@@ -1266,9 +1266,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeTarget: A target publish or event time. Can be used for seeking to or
@@ -1297,9 +1297,9 @@ type TimeTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeTarget) MarshalJSON() ([]byte, error) {
+func (s TimeTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: Metadata about a topic resource.
@@ -1329,9 +1329,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TopicPartitions: Response for GetTopicPartitions.
@@ -1354,9 +1354,9 @@ type TopicPartitions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TopicPartitions) MarshalJSON() ([]byte, error) {
+func (s TopicPartitions) MarshalJSON() ([]byte, error) {
 	type NoMethod TopicPartitions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdminProjectsLocationsOperationsCancelCall struct {

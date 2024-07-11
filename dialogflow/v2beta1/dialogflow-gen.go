@@ -883,9 +883,9 @@ type GoogleCloudDialogflowCxV3AdvancedSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3AdvancedSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3AdvancedSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings: Define behaviors for
@@ -921,18 +921,17 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings: Define behaviors
 // on logging.
 type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
-	// EnableInteractionLogging: If true, DF Interaction logging is currently
-	// enabled.
+	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: If true, StackDriver logging is currently enabled.
+	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -947,9 +946,9 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings: Define behaviors of
@@ -981,9 +980,9 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3AudioInput: Represents the natural speech audio to
@@ -1012,9 +1011,9 @@ type GoogleCloudDialogflowCxV3AudioInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AudioInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3BargeInConfig: Configuration of the barge-in
@@ -1053,9 +1052,9 @@ type GoogleCloudDialogflowCxV3BargeInConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3BargeInConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3BargeInConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3BargeInConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata: Metadata returned for
@@ -1076,9 +1075,9 @@ type GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3BatchRunTestCasesResponse: The response message for
@@ -1100,9 +1099,9 @@ type GoogleCloudDialogflowCxV3BatchRunTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3BatchRunTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3BatchRunTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3BatchRunTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ContinuousTestResult: Represents a result from
@@ -1138,9 +1137,9 @@ type GoogleCloudDialogflowCxV3ContinuousTestResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ContinuousTestResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ContinuousTestResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ConversationSignals: This message is used to hold
@@ -1162,9 +1161,9 @@ type GoogleCloudDialogflowCxV3ConversationSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ConversationSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ConversationSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ConversationSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ConversationTurn: One interaction between a human
@@ -1188,9 +1187,9 @@ type GoogleCloudDialogflowCxV3ConversationTurn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ConversationTurn) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ConversationTurn) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ConversationTurn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ConversationTurnUserInput: The input from the human
@@ -1220,9 +1219,9 @@ type GoogleCloudDialogflowCxV3ConversationTurnUserInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ConversationTurnUserInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ConversationTurnUserInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ConversationTurnUserInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput: The output from
@@ -1262,9 +1261,9 @@ type GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata: Metadata for
@@ -1285,9 +1284,9 @@ type GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3CreateVersionOperationMetadata: Metadata associated
@@ -1309,9 +1308,9 @@ type GoogleCloudDialogflowCxV3CreateVersionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3CreateVersionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3DataStoreConnection: A data store connection. It
@@ -1346,9 +1345,9 @@ type GoogleCloudDialogflowCxV3DataStoreConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3DataStoreConnection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3DataStoreConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DataStoreConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata: Metadata for
@@ -1369,9 +1368,9 @@ type GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3DeployFlowMetadata: Metadata returned for the
@@ -1392,9 +1391,9 @@ type GoogleCloudDialogflowCxV3DeployFlowMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3DeployFlowMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3DeployFlowMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DeployFlowMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3DeployFlowResponse: The response message for
@@ -1418,9 +1417,9 @@ type GoogleCloudDialogflowCxV3DeployFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3DeployFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3DeployFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DeployFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3DtmfInput: Represents the input for dtmf event.
@@ -1442,9 +1441,9 @@ type GoogleCloudDialogflowCxV3DtmfInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3DtmfInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3DtmfInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DtmfInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Environment: Represents an environment for an
@@ -1489,9 +1488,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Environment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig: The configuration for
@@ -1521,9 +1520,9 @@ type GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3EnvironmentVersionConfig: Configuration for the
@@ -1544,9 +1543,9 @@ type GoogleCloudDialogflowCxV3EnvironmentVersionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EnvironmentVersionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3EnvironmentWebhookConfig: Configuration for
@@ -1569,9 +1568,9 @@ type GoogleCloudDialogflowCxV3EnvironmentWebhookConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EnvironmentWebhookConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3EventHandler: An event handler specifies an event
@@ -1610,9 +1609,9 @@ type GoogleCloudDialogflowCxV3EventHandler struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3EventHandler) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3EventHandler) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EventHandler
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3EventInput: Represents the event to trigger.
@@ -1632,9 +1631,9 @@ type GoogleCloudDialogflowCxV3EventInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3EventInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3EventInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EventInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ExportAgentResponse: The response message for
@@ -1663,9 +1662,9 @@ type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ExportAgentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ExportAgentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ExportEntityTypesMetadata: Metadata returned for
@@ -1697,9 +1696,9 @@ type GoogleCloudDialogflowCxV3ExportEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ExportEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ExportFlowResponse: The response message for
@@ -1723,9 +1722,9 @@ type GoogleCloudDialogflowCxV3ExportFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ExportFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ExportFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ExportFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ExportIntentsMetadata: Metadata returned for the
@@ -1756,9 +1755,9 @@ type GoogleCloudDialogflowCxV3ExportIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ExportIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ExportIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ExportTestCasesMetadata: Metadata returned for the
@@ -1788,9 +1787,9 @@ type GoogleCloudDialogflowCxV3ExportTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ExportTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ExportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ExportTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Form: A form is a data model that groups related
@@ -1814,9 +1813,9 @@ type GoogleCloudDialogflowCxV3Form struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Form) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Form) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Form
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FormParameter: Represents a form parameter.
@@ -1862,9 +1861,9 @@ type GoogleCloudDialogflowCxV3FormParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FormParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FormParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FormParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FormParameterFillBehavior: Configuration for how
@@ -1909,9 +1908,9 @@ type GoogleCloudDialogflowCxV3FormParameterFillBehavior struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FormParameterFillBehavior) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FormParameterFillBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FormParameterFillBehavior
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Fulfillment: A fulfillment can do one or more of
@@ -1968,9 +1967,9 @@ type GoogleCloudDialogflowCxV3Fulfillment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Fulfillment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Fulfillment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Fulfillment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FulfillmentConditionalCases: A list of cascading
@@ -1992,9 +1991,9 @@ type GoogleCloudDialogflowCxV3FulfillmentConditionalCases struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FulfillmentConditionalCases) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FulfillmentConditionalCases) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentConditionalCases
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCase: Each case has a
@@ -2021,9 +2020,9 @@ type GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent: The
@@ -2046,9 +2045,9 @@ type GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3FulfillmentSetParameterAction: Setting a parameter
@@ -2071,9 +2070,9 @@ type GoogleCloudDialogflowCxV3FulfillmentSetParameterAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3FulfillmentSetParameterAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3FulfillmentSetParameterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentSetParameterAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3GcsDestination: Google Cloud Storage location for a
@@ -2097,9 +2096,9 @@ type GoogleCloudDialogflowCxV3GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata: Metadata in
@@ -2126,9 +2125,9 @@ type GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata: Metadata for
@@ -2149,9 +2148,9 @@ type GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportDocumentsResponse: Response message for
@@ -2172,9 +2171,9 @@ type GoogleCloudDialogflowCxV3ImportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportEntityTypesMetadata: Metadata returned for
@@ -2204,9 +2203,9 @@ type GoogleCloudDialogflowCxV3ImportEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources:
@@ -2231,9 +2230,9 @@ type GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportFlowResponse: The response message for
@@ -2255,9 +2254,9 @@ type GoogleCloudDialogflowCxV3ImportFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportIntentsMetadata: Metadata returned for the
@@ -2287,9 +2286,9 @@ type GoogleCloudDialogflowCxV3ImportIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources:
@@ -2314,9 +2313,9 @@ type GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportTestCasesMetadata: Metadata returned for the
@@ -2337,9 +2336,9 @@ type GoogleCloudDialogflowCxV3ImportTestCasesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportTestCasesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportTestCasesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportTestCasesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ImportTestCasesResponse: The response message for
@@ -2361,9 +2360,9 @@ type GoogleCloudDialogflowCxV3ImportTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3InlineDestination: Inline destination for a
@@ -2386,9 +2385,9 @@ type GoogleCloudDialogflowCxV3InlineDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3InlineDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3InlineDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3InlineDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3InputAudioConfig: Instructs the speech recognizer
@@ -2494,9 +2493,9 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3InputAudioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Intent: An intent represents a user's intent to
@@ -2555,9 +2554,9 @@ type GoogleCloudDialogflowCxV3Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3IntentInput: Represents the intent to trigger
@@ -2579,9 +2578,9 @@ type GoogleCloudDialogflowCxV3IntentInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3IntentInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3IntentInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3IntentInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3IntentParameter: Represents an intent parameter.
@@ -2614,9 +2613,9 @@ type GoogleCloudDialogflowCxV3IntentParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3IntentParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3IntentParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3IntentParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3IntentTrainingPhrase: Represents an example that
@@ -2651,9 +2650,9 @@ type GoogleCloudDialogflowCxV3IntentTrainingPhrase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3IntentTrainingPhrase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3IntentTrainingPhrasePart: Represents a part of a
@@ -2677,9 +2676,9 @@ type GoogleCloudDialogflowCxV3IntentTrainingPhrasePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3IntentTrainingPhrasePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3KnowledgeConnectorSettings: The Knowledge Connector
@@ -2715,9 +2714,9 @@ type GoogleCloudDialogflowCxV3KnowledgeConnectorSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3KnowledgeConnectorSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3KnowledgeConnectorSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3KnowledgeConnectorSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3LanguageInfo: Represents the language information
@@ -2744,9 +2743,9 @@ type GoogleCloudDialogflowCxV3LanguageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3LanguageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3LanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3LanguageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3LanguageInfo) UnmarshalJSON(data []byte) error {
@@ -2839,9 +2838,9 @@ type GoogleCloudDialogflowCxV3Page struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Page) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Page) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Page
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3PageInfo: Represents page information communicated
@@ -2870,9 +2869,9 @@ type GoogleCloudDialogflowCxV3PageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3PageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3PageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3PageInfoFormInfo: Represents form information.
@@ -2894,9 +2893,9 @@ type GoogleCloudDialogflowCxV3PageInfoFormInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3PageInfoFormInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3PageInfoFormInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo: Represents parameter
@@ -2945,9 +2944,9 @@ type GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3QueryInput: Represents the query input. It can
@@ -2985,9 +2984,9 @@ type GoogleCloudDialogflowCxV3QueryInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3QueryInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3QueryInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3QueryInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata: Metadata for
@@ -3008,9 +3007,9 @@ type GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessage: Represents a response message that
@@ -3086,9 +3085,9 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess: Indicates that
@@ -3117,9 +3116,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageEndInteraction: Indicates that
@@ -3160,9 +3159,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageMixedAudio: Represents an audio
@@ -3186,9 +3185,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageMixedAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment: Represents one
@@ -3217,9 +3216,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText: A text or ssml
@@ -3248,9 +3247,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessagePlayAudio: Specifies an audio clip
@@ -3276,9 +3275,9 @@ type GoogleCloudDialogflowCxV3ResponseMessagePlayAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessagePlayAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall: Represents
@@ -3301,9 +3300,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3ResponseMessageText: The text response message.
@@ -3327,9 +3326,9 @@ type GoogleCloudDialogflowCxV3ResponseMessageText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3ResponseMessageText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3ResponseMessageText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3RunContinuousTestMetadata: Metadata returned for
@@ -3350,9 +3349,9 @@ type GoogleCloudDialogflowCxV3RunContinuousTestMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3RunContinuousTestMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3RunContinuousTestMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3RunContinuousTestMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3RunContinuousTestResponse: The response message for
@@ -3373,9 +3372,9 @@ type GoogleCloudDialogflowCxV3RunContinuousTestResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3RunContinuousTestResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3RunContinuousTestResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3RunContinuousTestResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3RunTestCaseMetadata: Metadata returned for the
@@ -3402,9 +3401,9 @@ type GoogleCloudDialogflowCxV3RunTestCaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3RunTestCaseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3RunTestCaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3RunTestCaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3SessionInfo: Represents session information
@@ -3435,9 +3434,9 @@ type GoogleCloudDialogflowCxV3SessionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3SessionInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3SessionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3SessionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestCase: Represents a test case.
@@ -3479,9 +3478,9 @@ type GoogleCloudDialogflowCxV3TestCase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestCase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestCase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestCase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestCaseError: Error info for importing a test.
@@ -3503,9 +3502,9 @@ type GoogleCloudDialogflowCxV3TestCaseError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestCaseError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestCaseError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestCaseError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestCaseResult: Represents a result from running a
@@ -3542,9 +3541,9 @@ type GoogleCloudDialogflowCxV3TestCaseResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestCaseResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestConfig: Represents configurations for a test
@@ -3552,15 +3551,13 @@ func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) 
 type GoogleCloudDialogflowCxV3TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.
@@ -3578,9 +3575,9 @@ type GoogleCloudDialogflowCxV3TestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestError: Error info for running a test.
@@ -3604,9 +3601,9 @@ type GoogleCloudDialogflowCxV3TestError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TestRunDifference: The description of differences
@@ -3638,9 +3635,9 @@ type GoogleCloudDialogflowCxV3TestRunDifference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TestRunDifference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TestRunDifference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TestRunDifference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TextInput: Represents the natural language text to
@@ -3661,9 +3658,9 @@ type GoogleCloudDialogflowCxV3TextInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TextInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TextInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TransitionRoute: A transition route specifies a
@@ -3716,9 +3713,9 @@ type GoogleCloudDialogflowCxV3TransitionRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TransitionRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3TurnSignals: Collection of all signals that were
@@ -3765,9 +3762,9 @@ type GoogleCloudDialogflowCxV3TurnSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error {
@@ -3804,9 +3801,9 @@ type GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Webhook: Webhooks host the developer's business
@@ -3845,9 +3842,9 @@ type GoogleCloudDialogflowCxV3Webhook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3Webhook) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3Webhook) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Webhook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookGenericWebService: Represents configuration
@@ -3936,9 +3933,9 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig: Represents
@@ -3968,9 +3965,9 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookRequest: The request message for a webhook
@@ -4034,9 +4031,9 @@ type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo: Represents
@@ -4060,9 +4057,9 @@ type GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookRequestIntentInfo: Represents intent
@@ -4094,9 +4091,9 @@ type GoogleCloudDialogflowCxV3WebhookRequestIntentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo) UnmarshalJSON(data []byte) error {
@@ -4135,9 +4132,9 @@ type GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult: Represents
@@ -4163,9 +4160,9 @@ type GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult) UnmarshalJSON(data []byte) error {
@@ -4218,9 +4215,9 @@ type GoogleCloudDialogflowCxV3WebhookResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse: Represents a
@@ -4250,9 +4247,9 @@ type GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig: Represents
@@ -4279,9 +4276,9 @@ type GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1AdvancedSettings: Hierarchical advanced
@@ -4321,9 +4318,9 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1AdvancedSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings: Define behaviors
@@ -4359,18 +4356,17 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings: Define
 // behaviors on logging.
 type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
-	// EnableInteractionLogging: If true, DF Interaction logging is currently
-	// enabled.
+	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: If true, StackDriver logging is currently enabled.
+	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -4385,9 +4381,9 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings: Define
@@ -4419,9 +4415,9 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1AudioInput: Represents the natural speech
@@ -4450,9 +4446,9 @@ type GoogleCloudDialogflowCxV3beta1AudioInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AudioInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1BargeInConfig: Configuration of the barge-in
@@ -4491,9 +4487,9 @@ type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1BargeInConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1BargeInConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1BargeInConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata: Metadata returned
@@ -4514,9 +4510,9 @@ type GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse: The response
@@ -4538,9 +4534,9 @@ type GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ContinuousTestResult: Represents a result from
@@ -4576,9 +4572,9 @@ type GoogleCloudDialogflowCxV3beta1ContinuousTestResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ContinuousTestResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ContinuousTestResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ConversationSignals: This message is used to
@@ -4600,9 +4596,9 @@ type GoogleCloudDialogflowCxV3beta1ConversationSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ConversationSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ConversationSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ConversationTurn: One interaction between a
@@ -4626,9 +4622,9 @@ type GoogleCloudDialogflowCxV3beta1ConversationTurn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ConversationTurn) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ConversationTurn) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationTurn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput: The input from the
@@ -4658,9 +4654,9 @@ type GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput: The output
@@ -4700,9 +4696,9 @@ type GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata: Metadata for
@@ -4723,9 +4719,9 @@ type GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata: Metadata
@@ -4747,9 +4743,9 @@ type GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1DataStoreConnection: A data store connection.
@@ -4784,9 +4780,9 @@ type GoogleCloudDialogflowCxV3beta1DataStoreConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1DataStoreConnection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1DataStoreConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DataStoreConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata: Metadata for
@@ -4807,9 +4803,9 @@ type GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1DeployFlowMetadata: Metadata returned for the
@@ -4830,9 +4826,9 @@ type GoogleCloudDialogflowCxV3beta1DeployFlowMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1DeployFlowMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1DeployFlowMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DeployFlowMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1DeployFlowResponse: The response message for
@@ -4856,9 +4852,9 @@ type GoogleCloudDialogflowCxV3beta1DeployFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1DeployFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1DeployFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DeployFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1DtmfInput: Represents the input for dtmf
@@ -4881,9 +4877,9 @@ type GoogleCloudDialogflowCxV3beta1DtmfInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1DtmfInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1DtmfInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DtmfInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Environment: Represents an environment for an
@@ -4928,9 +4924,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Environment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig: The configuration
@@ -4960,9 +4956,9 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig: Configuration for
@@ -4983,9 +4979,9 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig: Configuration for
@@ -5008,9 +5004,9 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1EventHandler: An event handler specifies an
@@ -5049,9 +5045,9 @@ type GoogleCloudDialogflowCxV3beta1EventHandler struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1EventHandler) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1EventHandler) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EventHandler
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1EventInput: Represents the event to trigger.
@@ -5071,9 +5067,9 @@ type GoogleCloudDialogflowCxV3beta1EventInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1EventInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1EventInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EventInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ExportAgentResponse: The response message for
@@ -5102,9 +5098,9 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportAgentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata: Metadata returned
@@ -5136,9 +5132,9 @@ type GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ExportFlowResponse: The response message for
@@ -5162,9 +5158,9 @@ type GoogleCloudDialogflowCxV3beta1ExportFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ExportFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ExportFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata: Metadata returned for
@@ -5195,9 +5191,9 @@ type GoogleCloudDialogflowCxV3beta1ExportIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ExportIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata: Metadata returned for
@@ -5227,9 +5223,9 @@ type GoogleCloudDialogflowCxV3beta1ExportTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ExportTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ExportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Form: A form is a data model that groups
@@ -5253,9 +5249,9 @@ type GoogleCloudDialogflowCxV3beta1Form struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Form) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Form) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Form
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FormParameter: Represents a form parameter.
@@ -5301,9 +5297,9 @@ type GoogleCloudDialogflowCxV3beta1FormParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FormParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FormParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FormParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior: Configuration for
@@ -5348,9 +5344,9 @@ type GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Fulfillment: A fulfillment can do one or more
@@ -5407,9 +5403,9 @@ type GoogleCloudDialogflowCxV3beta1Fulfillment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Fulfillment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Fulfillment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Fulfillment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases: A list of
@@ -5431,9 +5427,9 @@ type GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCase: Each case has
@@ -5460,9 +5456,9 @@ type GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent:
@@ -5485,9 +5481,9 @@ type GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction: Setting a
@@ -5510,9 +5506,9 @@ type GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1GcsDestination: Google Cloud Storage location
@@ -5536,9 +5532,9 @@ type GoogleCloudDialogflowCxV3beta1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata: Metadata in
@@ -5565,9 +5561,9 @@ type GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata: Metadata for
@@ -5588,9 +5584,9 @@ type GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse: Response message for
@@ -5611,9 +5607,9 @@ type GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata: Metadata returned
@@ -5643,9 +5639,9 @@ type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources:
@@ -5670,9 +5666,9 @@ type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportFlowResponse: The response message for
@@ -5694,9 +5690,9 @@ type GoogleCloudDialogflowCxV3beta1ImportFlowResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportFlowResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportFlowResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportFlowResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata: Metadata returned for
@@ -5726,9 +5722,9 @@ type GoogleCloudDialogflowCxV3beta1ImportIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources:
@@ -5753,9 +5749,9 @@ type GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata: Metadata returned for
@@ -5776,9 +5772,9 @@ type GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse: The response message
@@ -5800,9 +5796,9 @@ type GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1InlineDestination: Inline destination for a
@@ -5825,9 +5821,9 @@ type GoogleCloudDialogflowCxV3beta1InlineDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1InlineDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1InlineDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1InlineDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1InputAudioConfig: Instructs the speech
@@ -5933,9 +5929,9 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1InputAudioConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1InputAudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1InputAudioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Intent: An intent represents a user's intent
@@ -5994,9 +5990,9 @@ type GoogleCloudDialogflowCxV3beta1Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentInput: Represents the intent to trigger
@@ -6018,9 +6014,9 @@ type GoogleCloudDialogflowCxV3beta1IntentInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1IntentInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1IntentInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1IntentInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentParameter: Represents an intent
@@ -6054,9 +6050,9 @@ type GoogleCloudDialogflowCxV3beta1IntentParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1IntentParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1IntentParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1IntentParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase: Represents an example
@@ -6091,9 +6087,9 @@ type GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart: Represents a part of
@@ -6117,9 +6113,9 @@ type GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings: The Knowledge
@@ -6155,9 +6151,9 @@ type GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1LanguageInfo: Represents the language
@@ -6184,9 +6180,9 @@ type GoogleCloudDialogflowCxV3beta1LanguageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1LanguageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1LanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1LanguageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3beta1LanguageInfo) UnmarshalJSON(data []byte) error {
@@ -6279,9 +6275,9 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Page) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Page) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Page
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1PageInfo: Represents page information
@@ -6310,9 +6306,9 @@ type GoogleCloudDialogflowCxV3beta1PageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1PageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1PageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1PageInfoFormInfo: Represents form information.
@@ -6334,9 +6330,9 @@ type GoogleCloudDialogflowCxV3beta1PageInfoFormInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1PageInfoFormInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1PageInfoFormInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo: Represents
@@ -6385,9 +6381,9 @@ type GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1QueryInput: Represents the query input. It can
@@ -6412,6 +6408,8 @@ type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Text: The natural language text to be processed.
 	Text *GoogleCloudDialogflowCxV3beta1TextInput `json:"text,omitempty"`
+	// ToolCallResult: The results of a tool executed by the client.
+	ToolCallResult *GoogleCloudDialogflowCxV3beta1ToolCallResult `json:"toolCallResult,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6425,9 +6423,9 @@ type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1QueryInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1QueryInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1QueryInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata: Metadata for
@@ -6448,9 +6446,9 @@ type GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessage: Represents a response message
@@ -6504,6 +6502,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
 	TelephonyTransferCall *GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3beta1ResponseMessageText `json:"text,omitempty"`
+	// ToolCall: Returns the definition of a tool call that should be executed by
+	// the client.
+	ToolCall *GoogleCloudDialogflowCxV3beta1ToolCall `json:"toolCall,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6517,9 +6518,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess: Indicates
@@ -6548,9 +6549,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageEndInteraction: Indicates that
@@ -6591,9 +6592,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageLiveAgentHandoff struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageLiveAgentHandoff
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio: Represents an audio
@@ -6617,9 +6618,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment: Represents
@@ -6648,9 +6649,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText: A text or ssml
@@ -6679,9 +6680,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio: Specifies an audio
@@ -6707,9 +6708,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall:
@@ -6732,9 +6733,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1ResponseMessageText: The text response
@@ -6759,9 +6760,9 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1ResponseMessageText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ResponseMessageText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata: Metadata returned
@@ -6782,9 +6783,9 @@ type GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse: The response
@@ -6805,9 +6806,9 @@ type GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1RunTestCaseMetadata: Metadata returned for the
@@ -6834,9 +6835,9 @@ type GoogleCloudDialogflowCxV3beta1RunTestCaseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1RunTestCaseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1RunTestCaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1RunTestCaseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1SessionInfo: Represents session information
@@ -6867,9 +6868,9 @@ type GoogleCloudDialogflowCxV3beta1SessionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1SessionInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1SessionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1SessionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestCase: Represents a test case.
@@ -6911,9 +6912,9 @@ type GoogleCloudDialogflowCxV3beta1TestCase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestCase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestCase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestCase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestCaseError: Error info for importing a
@@ -6936,9 +6937,9 @@ type GoogleCloudDialogflowCxV3beta1TestCaseError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestCaseError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestCaseError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestCaseError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestCaseResult: Represents a result from
@@ -6975,9 +6976,9 @@ type GoogleCloudDialogflowCxV3beta1TestCaseResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestCaseResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestConfig: Represents configurations for a
@@ -6985,15 +6986,13 @@ func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, er
 type GoogleCloudDialogflowCxV3beta1TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.
@@ -7011,9 +7010,9 @@ type GoogleCloudDialogflowCxV3beta1TestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestError: Error info for running a test.
@@ -7037,9 +7036,9 @@ type GoogleCloudDialogflowCxV3beta1TestError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TestRunDifference: The description of
@@ -7071,9 +7070,9 @@ type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TestRunDifference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TestRunDifference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TestRunDifference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TextInput: Represents the natural language
@@ -7094,9 +7093,90 @@ type GoogleCloudDialogflowCxV3beta1TextInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TextInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TextInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ToolCall: Represents a call of a specific
+// tool's action with the specified inputs.
+type GoogleCloudDialogflowCxV3beta1ToolCall struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// InputParameters: Optional. The action's input parameters.
+	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1ToolCall) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ToolCall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ToolCallResult: The result of calling a tool's
+// action that has been executed by the client.
+type GoogleCloudDialogflowCxV3beta1ToolCallResult struct {
+	// Action: Required. The name of the tool's action associated with this call.
+	Action string `json:"action,omitempty"`
+	// Error: The tool call's error.
+	Error *GoogleCloudDialogflowCxV3beta1ToolCallResultError `json:"error,omitempty"`
+	// OutputParameters: The tool call's output parameters.
+	OutputParameters googleapi.RawMessage `json:"outputParameters,omitempty"`
+	// Tool: Required. The tool associated with this call. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1ToolCallResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ToolCallResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ToolCallResultError: An error produced by the
+// tool call.
+type GoogleCloudDialogflowCxV3beta1ToolCallResultError struct {
+	// Message: Optional. The error message of the function.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1ToolCallResultError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ToolCallResultError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TransitionRoute: A transition route specifies
@@ -7149,9 +7229,9 @@ type GoogleCloudDialogflowCxV3beta1TransitionRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TransitionRoute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TransitionRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TransitionRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1TurnSignals: Collection of all signals that
@@ -7198,9 +7278,9 @@ type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) error {
@@ -7237,9 +7317,9 @@ type GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Webhook: Webhooks host the developer's
@@ -7279,9 +7359,9 @@ type GoogleCloudDialogflowCxV3beta1Webhook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1Webhook) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1Webhook) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Webhook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookGenericWebService: Represents
@@ -7370,9 +7450,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig:
@@ -7402,9 +7482,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookRequest: The request message for a
@@ -7468,9 +7548,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo: Represents
@@ -7494,9 +7574,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo: Represents intent
@@ -7528,9 +7608,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo) UnmarshalJSON(data []byte) error {
@@ -7569,9 +7649,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfoIntentParameterValue 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfoIntentParameterValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult:
@@ -7597,9 +7677,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult) UnmarshalJSON(data []byte) error {
@@ -7652,9 +7732,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse: Represents
@@ -7684,9 +7764,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig: Represents
@@ -7713,9 +7793,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2AnnotatedMessagePart: Represents a part of a message
@@ -7747,9 +7827,9 @@ type GoogleCloudDialogflowV2AnnotatedMessagePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2AnnotatedMessagePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2AnnotatedMessagePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2AnnotatedMessagePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ArticleAnswer: Represents article answer.
@@ -7783,9 +7863,9 @@ type GoogleCloudDialogflowV2ArticleAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ArticleAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ArticleAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ArticleAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2ArticleAnswer) UnmarshalJSON(data []byte) error {
@@ -7827,9 +7907,9 @@ type GoogleCloudDialogflowV2ArticleSuggestionModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ArticleSuggestionModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ArticleSuggestionModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ArticleSuggestionModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse: The response message
@@ -7850,9 +7930,9 @@ type GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2BatchUpdateIntentsResponse: The response message for
@@ -7873,9 +7953,9 @@ type GoogleCloudDialogflowV2BatchUpdateIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2BatchUpdateIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata:
@@ -7908,6 +7988,7 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	//   "SMART_REPLY" - Run smart reply model for chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7922,9 +8003,9 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2Context: Dialogflow contexts are similar to natural
@@ -7981,9 +8062,9 @@ type GoogleCloudDialogflowV2Context struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2Context) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2Context) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2Context
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ConversationEvent: Represents a notification sent to
@@ -8031,9 +8112,9 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ConversationEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ConversationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ConversationEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ConversationModel: Represents a conversation model.
@@ -8088,9 +8169,9 @@ type GoogleCloudDialogflowV2ConversationModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ConversationModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ConversationModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ConversationModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata: Metadata
@@ -8112,9 +8193,9 @@ type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata:
@@ -8153,9 +8234,9 @@ type GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2CreateConversationModelOperationMetadata: Metadata
@@ -8193,9 +8274,9 @@ type GoogleCloudDialogflowV2CreateConversationModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2CreateConversationModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata: Metadata
@@ -8225,9 +8306,9 @@ type GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2DeployConversationModelOperationMetadata: Metadata
@@ -8252,9 +8333,9 @@ type GoogleCloudDialogflowV2DeployConversationModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2DeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2DeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2DeployConversationModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2EntityType: Each intent parameter has a type, called
@@ -8314,9 +8395,9 @@ type GoogleCloudDialogflowV2EntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2EntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2EntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2EntityTypeEntity: An **entity entry** for an
@@ -8346,9 +8427,9 @@ type GoogleCloudDialogflowV2EntityTypeEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2EntityTypeEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2EntityTypeEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2EntityTypeEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2EventInput: Events allow for matching intents by
@@ -8391,9 +8472,9 @@ type GoogleCloudDialogflowV2EventInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2EventInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2EventInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2EventInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ExportAgentResponse: The response message for
@@ -8417,9 +8498,9 @@ type GoogleCloudDialogflowV2ExportAgentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ExportAgentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ExportAgentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ExportOperationMetadata: Metadata related to the
@@ -8440,9 +8521,9 @@ type GoogleCloudDialogflowV2ExportOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ExportOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ExportOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ExportOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2FaqAnswer: Represents answer from "frequently asked
@@ -8478,9 +8559,9 @@ type GoogleCloudDialogflowV2FaqAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2FaqAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2FaqAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2FaqAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
@@ -8518,9 +8599,9 @@ type GoogleCloudDialogflowV2GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2HumanAgentAssistantEvent: Represents a notification
@@ -8550,9 +8631,9 @@ type GoogleCloudDialogflowV2HumanAgentAssistantEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2HumanAgentAssistantEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2HumanAgentAssistantEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2HumanAgentAssistantEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ImportConversationDataOperationMetadata: Metadata for
@@ -8580,9 +8661,9 @@ type GoogleCloudDialogflowV2ImportConversationDataOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ImportConversationDataOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ImportConversationDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ImportConversationDataOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ImportConversationDataOperationResponse: Response
@@ -8606,9 +8687,9 @@ type GoogleCloudDialogflowV2ImportConversationDataOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ImportConversationDataOperationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ImportConversationDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ImportConversationDataOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2ImportDocumentsResponse: Response message for
@@ -8629,9 +8710,9 @@ type GoogleCloudDialogflowV2ImportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2InputDataset: InputDataset used to create model or do
@@ -8653,9 +8734,9 @@ type GoogleCloudDialogflowV2InputDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2InputDataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2InputDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2InputDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2Intent: An intent categorizes an end-user's intention
@@ -8782,9 +8863,9 @@ type GoogleCloudDialogflowV2Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentFollowupIntentInfo: Represents a single
@@ -8809,9 +8890,9 @@ type GoogleCloudDialogflowV2IntentFollowupIntentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentFollowupIntentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessage: A rich response message. Corresponds
@@ -8876,9 +8957,9 @@ type GoogleCloudDialogflowV2IntentMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBasicCard: The basic card message.
@@ -8907,9 +8988,9 @@ type GoogleCloudDialogflowV2IntentMessageBasicCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBasicCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBasicCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBasicCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBasicCardButton: The button object that
@@ -8932,9 +9013,9 @@ type GoogleCloudDialogflowV2IntentMessageBasicCardButton struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBasicCardButton) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBasicCardButton) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBasicCardButton
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBasicCardButtonOpenUriAction: Opens the
@@ -8955,9 +9036,9 @@ type GoogleCloudDialogflowV2IntentMessageBasicCardButtonOpenUriAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBasicCardButtonOpenUriAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBasicCardButtonOpenUriAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBasicCardButtonOpenUriAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard: Browse Carousel Card
@@ -8999,9 +9080,9 @@ type GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem:
@@ -9033,9 +9114,9 @@ type GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardIte
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemO
@@ -9065,9 +9146,9 @@ type GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardIte
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageCard: The card response message.
@@ -9093,9 +9174,9 @@ type GoogleCloudDialogflowV2IntentMessageCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageCardButton: Contains information about a
@@ -9119,9 +9200,9 @@ type GoogleCloudDialogflowV2IntentMessageCardButton struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageCardButton) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageCardButton) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageCardButton
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageCarouselSelect: The card for presenting
@@ -9142,9 +9223,9 @@ type GoogleCloudDialogflowV2IntentMessageCarouselSelect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageCarouselSelect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageCarouselSelect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageCarouselSelect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageCarouselSelectItem: An item in the
@@ -9171,9 +9252,9 @@ type GoogleCloudDialogflowV2IntentMessageCarouselSelectItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageCarouselSelectItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageCarouselSelectItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageCarouselSelectItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageColumnProperties: Column properties for
@@ -9204,9 +9285,9 @@ type GoogleCloudDialogflowV2IntentMessageColumnProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageColumnProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageColumnProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageColumnProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageImage: The image response message.
@@ -9229,9 +9310,9 @@ type GoogleCloudDialogflowV2IntentMessageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageLinkOutSuggestion: The suggestion chip
@@ -9257,9 +9338,9 @@ type GoogleCloudDialogflowV2IntentMessageLinkOutSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageLinkOutSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageLinkOutSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageLinkOutSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageListSelect: The card for presenting a
@@ -9284,9 +9365,9 @@ type GoogleCloudDialogflowV2IntentMessageListSelect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageListSelect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageListSelect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageListSelect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageListSelectItem: An item in the list.
@@ -9312,9 +9393,9 @@ type GoogleCloudDialogflowV2IntentMessageListSelectItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageListSelectItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageListSelectItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageListSelectItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageMediaContent: The media content card for
@@ -9341,9 +9422,9 @@ type GoogleCloudDialogflowV2IntentMessageMediaContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageMediaContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageMediaContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageMediaContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject:
@@ -9372,9 +9453,9 @@ type GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageQuickReplies: The quick replies response
@@ -9397,9 +9478,9 @@ type GoogleCloudDialogflowV2IntentMessageQuickReplies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageQuickReplies) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageQuickReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageQuickReplies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageSelectItemInfo: Additional info about
@@ -9424,9 +9505,9 @@ type GoogleCloudDialogflowV2IntentMessageSelectItemInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageSelectItemInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageSelectItemInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageSelectItemInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageSimpleResponse: The simple response
@@ -9454,9 +9535,9 @@ type GoogleCloudDialogflowV2IntentMessageSimpleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageSimpleResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageSimpleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageSimpleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageSimpleResponses: The collection of
@@ -9480,9 +9561,9 @@ type GoogleCloudDialogflowV2IntentMessageSimpleResponses struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageSimpleResponses) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageSimpleResponses) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageSimpleResponses
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageSuggestion: The suggestion chip message
@@ -9503,9 +9584,9 @@ type GoogleCloudDialogflowV2IntentMessageSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageSuggestions: The collection of
@@ -9526,9 +9607,9 @@ type GoogleCloudDialogflowV2IntentMessageSuggestions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageSuggestions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageSuggestions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageSuggestions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageTableCard: Table card for Actions on
@@ -9560,9 +9641,9 @@ type GoogleCloudDialogflowV2IntentMessageTableCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageTableCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageTableCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageTableCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageTableCardCell: Cell of TableCardRow.
@@ -9582,9 +9663,9 @@ type GoogleCloudDialogflowV2IntentMessageTableCardCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageTableCardCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageTableCardCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageTableCardCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageTableCardRow: Row of TableCard.
@@ -9606,9 +9687,9 @@ type GoogleCloudDialogflowV2IntentMessageTableCardRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageTableCardRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageTableCardRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageTableCardRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentMessageText: The text response message.
@@ -9628,9 +9709,9 @@ type GoogleCloudDialogflowV2IntentMessageText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentMessageText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentMessageText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentMessageText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentParameter: Represents intent parameters.
@@ -9675,9 +9756,9 @@ type GoogleCloudDialogflowV2IntentParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentTrainingPhrase: Represents an example that the
@@ -9727,9 +9808,9 @@ type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentTrainingPhrase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2IntentTrainingPhrasePart: Represents a part of a
@@ -9762,9 +9843,165 @@ type GoogleCloudDialogflowV2IntentTrainingPhrasePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2IntentTrainingPhrasePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswer: Represents a Knowledge Assist
+// answer.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswer struct {
+	// AnswerRecord: The name of the answer record. Format:
+	// `projects//locations//answer Records/`.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SuggestedQuery: The query suggested based on the context. Suggestion is made
+	// only if it is different from the previous suggestion.
+	SuggestedQuery *GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
+	// SuggestedQueryAnswer: The answer generated for the suggested query. Whether
+	// or not an answer is generated depends on how confident we are about the
+	// generated query.
+	SuggestedQueryAnswer *GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer `json:"suggestedQueryAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer: Represents an
+// answer from Knowledge. Currently supports FAQ and Generative answers.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer struct {
+	// AnswerText: The piece of text from the `source` that answers this suggested
+	// query.
+	AnswerText string `json:"answerText,omitempty"`
+	// FaqSource: Populated if the prediction came from FAQ.
+	FaqSource *GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerFaqSource `json:"faqSource,omitempty"`
+	// GenerativeSource: Populated if the prediction was Generative.
+	GenerativeSource *GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource `json:"generativeSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerFaqSource:
+// Details about source of FAQ answer.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerFaqSource struct {
+	// Question: The corresponding FAQ question.
+	Question string `json:"question,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Question") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Question") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerFaqSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerFaqSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource:
+// Details about source of Generative answer.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource struct {
+	// Snippets: All snippets used for this Generative Prediction, with their
+	// source URI and data.
+	Snippets []*GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet `json:"snippets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Snippets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Snippets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSn
+// ippet: Snippet Source for a Generative Prediction.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Text: Text taken from that URI.
+	Text string `json:"text,omitempty"`
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+	// Uri: URI the data is sourced from.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery: Represents a
+// suggested query.
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery struct {
+	// QueryText: Suggested query text.
+	QueryText string `json:"queryText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QueryText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QueryText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2KnowledgeOperationMetadata: Metadata in
@@ -9797,9 +10034,9 @@ type GoogleCloudDialogflowV2KnowledgeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2KnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2KnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2KnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2Message: Represents a message posted into a
@@ -9849,9 +10086,9 @@ type GoogleCloudDialogflowV2Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2Message) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2Message) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2MessageAnnotation: Represents the result of
@@ -9876,9 +10113,9 @@ type GoogleCloudDialogflowV2MessageAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2MessageAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2MessageAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2MessageAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2OriginalDetectIntentRequest: Represents the contents
@@ -9913,9 +10150,9 @@ type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2OriginalDetectIntentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2OriginalDetectIntentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2OriginalDetectIntentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2QueryResult: Represents the result of conversational
@@ -10013,9 +10250,9 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2QueryResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2QueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2QueryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2QueryResult) UnmarshalJSON(data []byte) error {
@@ -10059,9 +10296,9 @@ type GoogleCloudDialogflowV2Sentiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2Sentiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2Sentiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2Sentiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2Sentiment) UnmarshalJSON(data []byte) error {
@@ -10105,9 +10342,9 @@ type GoogleCloudDialogflowV2SentimentAnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SentimentAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SentimentAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SentimentAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SessionEntityType: A session represents a
@@ -10160,9 +10397,9 @@ type GoogleCloudDialogflowV2SessionEntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SessionEntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata: Metadata
@@ -10195,6 +10432,7 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	//   "SMART_REPLY" - Run smart reply model for chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10209,9 +10447,9 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SmartReplyAnswer: Represents a smart reply answer.
@@ -10238,9 +10476,9 @@ type GoogleCloudDialogflowV2SmartReplyAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SmartReplyAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SmartReplyAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SmartReplyAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2SmartReplyAnswer) UnmarshalJSON(data []byte) error {
@@ -10282,9 +10520,9 @@ type GoogleCloudDialogflowV2SmartReplyModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SmartReplyModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SmartReplyModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SmartReplyModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SuggestArticlesResponse: The response message for
@@ -10313,9 +10551,9 @@ type GoogleCloudDialogflowV2SuggestArticlesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SuggestArticlesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SuggestArticlesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SuggestArticlesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SuggestFaqAnswersResponse: The request message for
@@ -10344,9 +10582,40 @@ type GoogleCloudDialogflowV2SuggestFaqAnswersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SuggestFaqAnswersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SuggestFaqAnswersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SuggestFaqAnswersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse: The response message
+// for Participants.SuggestKnowledgeAssist.
+type GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse struct {
+	// ContextSize: Number of messages prior to and including latest_message to
+	// compile the suggestion. It may be smaller than the
+	// SuggestKnowledgeAssistRequest.context_size field in the request if there are
+	// fewer messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+	// KnowledgeAssistAnswer: Output only. Knowledge Assist suggestion.
+	KnowledgeAssistAnswer *GoogleCloudDialogflowV2KnowledgeAssistAnswer `json:"knowledgeAssistAnswer,omitempty"`
+	// LatestMessage: The name of the latest conversation message used to compile
+	// suggestion for. Format: `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SuggestSmartRepliesResponse: The response message for
@@ -10377,9 +10646,9 @@ type GoogleCloudDialogflowV2SuggestSmartRepliesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SuggestSmartRepliesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SuggestSmartRepliesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SuggestSmartRepliesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SuggestionResult: One response of different type of
@@ -10395,6 +10664,9 @@ type GoogleCloudDialogflowV2SuggestionResult struct {
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is for
 	// FAQ_ANSWER.
 	SuggestFaqAnswersResponse *GoogleCloudDialogflowV2SuggestFaqAnswersResponse `json:"suggestFaqAnswersResponse,omitempty"`
+	// SuggestKnowledgeAssistResponse: SuggestKnowledgeAssistResponse if request is
+	// for KNOWLEDGE_ASSIST.
+	SuggestKnowledgeAssistResponse *GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse `json:"suggestKnowledgeAssistResponse,omitempty"`
 	// SuggestSmartRepliesResponse: SuggestSmartRepliesResponse if request is for
 	// SMART_REPLY.
 	SuggestSmartRepliesResponse *GoogleCloudDialogflowV2SuggestSmartRepliesResponse `json:"suggestSmartRepliesResponse,omitempty"`
@@ -10411,9 +10683,9 @@ type GoogleCloudDialogflowV2SuggestionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2SuggestionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2SuggestionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SuggestionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata: Metadata
@@ -10438,9 +10710,9 @@ type GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2WebhookRequest: The request message for a webhook
@@ -10473,9 +10745,9 @@ type GoogleCloudDialogflowV2WebhookRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2WebhookRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2WebhookRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2WebhookRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2WebhookResponse: The response message for a webhook
@@ -10539,9 +10811,9 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2WebhookResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2WebhookResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Agent: A Dialogflow agent is a virtual agent
@@ -10636,9 +10908,9 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Agent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Agent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Agent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1Agent) UnmarshalJSON(data []byte) error {
@@ -10689,6 +10961,8 @@ type GoogleCloudDialogflowV2beta1AgentAssistantFeedback struct {
 	//   "INEFFICIENT" - Document is inefficient.
 	//   "EFFICIENT" - Document is efficient.
 	DocumentEfficiency string `json:"documentEfficiency,omitempty"`
+	// KnowledgeAssistFeedback: Optional. Feedback for knowledge assist.
+	KnowledgeAssistFeedback *GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeAssistFeedback `json:"knowledgeAssistFeedback,omitempty"`
 	// KnowledgeSearchFeedback: Optional. Feedback for knowledge search.
 	KnowledgeSearchFeedback *GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback `json:"knowledgeSearchFeedback,omitempty"`
 	// SummarizationFeedback: Feedback for conversation summarization.
@@ -10706,9 +10980,38 @@ type GoogleCloudDialogflowV2beta1AgentAssistantFeedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AgentAssistantFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AgentAssistantFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AgentAssistantFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeAssistFeedback:
+// Feedback for knowledge assist.
+type GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeAssistFeedback struct {
+	// AnswerCopied: Whether the suggested answer was copied by the human agent. If
+	// the value is set to be true, AnswerFeedback.clicked will be updated to be
+	// true.
+	AnswerCopied bool `json:"answerCopied,omitempty"`
+	// ClickedUris: The URIs clicked by the human agent. The value is appended for
+	// each UpdateAnswerRecordRequest. If the value is not empty,
+	// AnswerFeedback.clicked will be updated to be true.
+	ClickedUris []string `json:"clickedUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerCopied") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerCopied") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeAssistFeedback) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeAssistFeedback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback:
@@ -10735,9 +11038,9 @@ type GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AgentAssistantFeedbackKnowledgeSearchFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AgentAssistantFeedbackSummarizationFeedback:
@@ -10764,9 +11067,9 @@ type GoogleCloudDialogflowV2beta1AgentAssistantFeedbackSummarizationFeedback str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AgentAssistantFeedbackSummarizationFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AgentAssistantFeedbackSummarizationFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AgentAssistantFeedbackSummarizationFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AgentAssistantRecord: Represents a record of a
@@ -10791,9 +11094,9 @@ type GoogleCloudDialogflowV2beta1AgentAssistantRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AgentAssistantRecord) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AgentAssistantRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AgentAssistantRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AnalyzeContentRequest: The request message for
@@ -10860,9 +11163,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AnalyzeContentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AnalyzeContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AnalyzeContentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AnalyzeContentResponse: The response message for
@@ -10921,9 +11224,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AnalyzeContentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AnalyzeContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AnalyzeContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AnnotatedMessagePart: Represents a part of a
@@ -10955,9 +11258,9 @@ type GoogleCloudDialogflowV2beta1AnnotatedMessagePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AnnotatedMessagePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AnnotatedMessagePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AnnotatedMessagePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AnswerFeedback: Represents feedback the customer
@@ -10998,9 +11301,9 @@ type GoogleCloudDialogflowV2beta1AnswerFeedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AnswerFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AnswerFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AnswerFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AnswerRecord: Answer records are records to
@@ -11043,9 +11346,9 @@ type GoogleCloudDialogflowV2beta1AnswerRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AnswerRecord) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AnswerRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AnswerRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ArticleAnswer: Represents article answer.
@@ -11075,9 +11378,9 @@ type GoogleCloudDialogflowV2beta1ArticleAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ArticleAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ArticleAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ArticleAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AssistQueryParameters: Represents the parameters
@@ -11105,9 +11408,9 @@ type GoogleCloudDialogflowV2beta1AssistQueryParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AssistQueryParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AssistQueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AssistQueryParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AudioInput: Represents the natural language
@@ -11133,9 +11436,9 @@ type GoogleCloudDialogflowV2beta1AudioInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AudioInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AudioInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AudioInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AutomatedAgentConfig: Defines the Automated
@@ -11170,9 +11473,9 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AutomatedAgentConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AutomatedAgentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AutomatedAgentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1AutomatedAgentReply: Represents a response from
@@ -11192,6 +11495,8 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentReply struct {
 	// WARNING: partial reply is not eligible for barge-in.
 	//   "FINAL" - Final reply.
 	AutomatedAgentReplyType string `json:"automatedAgentReplyType,omitempty"`
+	// CallCompanionAuthCode: The auth code for accessing Call Companion UI.
+	CallCompanionAuthCode string `json:"callCompanionAuthCode,omitempty"`
 	// CxCurrentPage: The unique identifier of the current Dialogflow CX
 	// conversation page. Format: `projects//locations//agents//flows//pages/`.
 	CxCurrentPage string `json:"cxCurrentPage,omitempty"`
@@ -11232,9 +11537,9 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentReply struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1AutomatedAgentReply) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1AutomatedAgentReply) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AutomatedAgentReply
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1AutomatedAgentReply) UnmarshalJSON(data []byte) error {
@@ -11291,9 +11596,9 @@ type GoogleCloudDialogflowV2beta1BargeInConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BargeInConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BargeInConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BargeInConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest: The request message
@@ -11319,9 +11624,9 @@ type GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest: The request message
@@ -11344,9 +11649,9 @@ type GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse: The request message
@@ -11370,9 +11675,9 @@ type GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest: The request message
@@ -11400,9 +11705,9 @@ type GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest: The request
@@ -11424,9 +11729,9 @@ type GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest: The request message
@@ -11448,9 +11753,9 @@ type GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest: The request message
@@ -11478,9 +11783,9 @@ type GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest: The request
@@ -11513,9 +11818,9 @@ type GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse: The response
@@ -11536,9 +11841,9 @@ type GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest: The request message
@@ -11577,9 +11882,9 @@ type GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse: The response message
@@ -11600,9 +11905,9 @@ type GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata:
@@ -11639,6 +11944,7 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11653,9 +11959,9 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest: The request
@@ -11686,6 +11992,7 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest struct {
 	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ParticipantRole") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11700,9 +12007,9 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1CompileSuggestionRequest: The request message
@@ -11729,9 +12036,9 @@ type GoogleCloudDialogflowV2beta1CompileSuggestionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1CompileSuggestionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1CompileSuggestionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1CompileSuggestionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1CompileSuggestionResponse: The response message
@@ -11763,9 +12070,9 @@ type GoogleCloudDialogflowV2beta1CompileSuggestionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1CompileSuggestionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1CompileSuggestionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1CompileSuggestionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1CompleteConversationRequest: The request message
@@ -11832,9 +12139,9 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Context) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Context) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Context
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Conversation: Represents a conversation. A
@@ -11846,14 +12153,15 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	// configure this Conversation. This field cannot be updated. Format:
 	// `projects//locations//conversationProfiles/`.
 	ConversationProfile string `json:"conversationProfile,omitempty"`
-	// ConversationStage: The stage of a conversation. It indicates whether the
-	// virtual agent or a human agent is handling the conversation. If the
+	// ConversationStage: Optional. The stage of a conversation. It indicates
+	// whether the virtual agent or a human agent is handling the conversation. If
+	// the conversation is created with the conversation profile that has
+	// Dialogflow config set, defaults to ConversationStage.VIRTUAL_AGENT_STAGE;
+	// Otherwise, defaults to ConversationStage.HUMAN_ASSIST_STAGE. If the
 	// conversation is created with the conversation profile that has Dialogflow
-	// config set, defaults to ConversationStage.VIRTUAL_AGENT_STAGE; Otherwise,
-	// defaults to ConversationStage.HUMAN_ASSIST_STAGE. If the conversation is
-	// created with the conversation profile that has Dialogflow config set but
-	// explicitly sets conversation_stage to ConversationStage.HUMAN_ASSIST_STAGE,
-	// it skips ConversationStage.VIRTUAL_AGENT_STAGE stage and directly goes to
+	// config set but explicitly sets conversation_stage to
+	// ConversationStage.HUMAN_ASSIST_STAGE, it skips
+	// ConversationStage.VIRTUAL_AGENT_STAGE stage and directly goes to
 	// ConversationStage.HUMAN_ASSIST_STAGE.
 	//
 	// Possible values:
@@ -11873,8 +12181,8 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	//   "IN_PROGRESS" - Conversation is currently open for media analysis.
 	//   "COMPLETED" - Conversation has been completed.
 	LifecycleState string `json:"lifecycleState,omitempty"`
-	// Name: Output only. The unique identifier of this conversation. Format:
-	// `projects//locations//conversations/`.
+	// Name: Output only. Identifier. The unique identifier of this conversation.
+	// Format: `projects//locations//conversations/`.
 	Name string `json:"name,omitempty"`
 	// PhoneNumber: Output only. Required if the conversation is to be connected
 	// over telephony.
@@ -11897,9 +12205,9 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Conversation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Conversation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Conversation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ConversationContext: Context of the
@@ -11920,9 +12228,9 @@ type GoogleCloudDialogflowV2beta1ConversationContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ConversationContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ConversationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ConversationEvent: Represents a notification
@@ -11970,9 +12278,9 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ConversationEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ConversationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ConversationPhoneNumber: Represents a phone
@@ -11994,9 +12302,9 @@ type GoogleCloudDialogflowV2beta1ConversationPhoneNumber struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ConversationPhoneNumber) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ConversationPhoneNumber) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationPhoneNumber
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ConversationProfile: Defines the services to
@@ -12065,9 +12373,9 @@ type GoogleCloudDialogflowV2beta1ConversationProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ConversationProfile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ConversationProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1CreateMessageRequest: The request message to
@@ -12091,9 +12399,9 @@ type GoogleCloudDialogflowV2beta1CreateMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1CreateMessageRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1CreateMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1CreateMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1DetectIntentRequest: The request to detect
@@ -12132,9 +12440,9 @@ type GoogleCloudDialogflowV2beta1DetectIntentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1DetectIntentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1DetectIntentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DetectIntentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1DetectIntentResponse: The message returned from
@@ -12186,9 +12494,9 @@ type GoogleCloudDialogflowV2beta1DetectIntentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1DetectIntentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1DetectIntentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DetectIntentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1DialogflowAssistAnswer: Represents a Dialogflow
@@ -12214,9 +12522,9 @@ type GoogleCloudDialogflowV2beta1DialogflowAssistAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DialogflowAssistAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Document: A knowledge document to be used by a
@@ -12312,9 +12620,9 @@ type GoogleCloudDialogflowV2beta1Document struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Document) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1DocumentReloadStatus: The status of a reload
@@ -12338,9 +12646,9 @@ type GoogleCloudDialogflowV2beta1DocumentReloadStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1DocumentReloadStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1DocumentReloadStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DocumentReloadStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1DtmfParameters: The message in the response that
@@ -12362,9 +12670,9 @@ type GoogleCloudDialogflowV2beta1DtmfParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1DtmfParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1DtmfParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DtmfParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EntityType: Each intent parameter has a type,
@@ -12428,9 +12736,9 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EntityTypeBatch: This message is a wrapper
@@ -12451,9 +12759,9 @@ type GoogleCloudDialogflowV2beta1EntityTypeBatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EntityTypeBatch) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EntityTypeBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EntityTypeBatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EntityTypeEntity: An **entity entry** for an
@@ -12483,9 +12791,9 @@ type GoogleCloudDialogflowV2beta1EntityTypeEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EntityTypeEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Environment: You can create multiple versions of
@@ -12543,9 +12851,9 @@ type GoogleCloudDialogflowV2beta1Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Environment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EnvironmentHistory: The response message for
@@ -12578,9 +12886,9 @@ type GoogleCloudDialogflowV2beta1EnvironmentHistory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EnvironmentHistory) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EnvironmentHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EnvironmentHistory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EnvironmentHistoryEntry: Represents an
@@ -12606,9 +12914,9 @@ type GoogleCloudDialogflowV2beta1EnvironmentHistoryEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EnvironmentHistoryEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EnvironmentHistoryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EnvironmentHistoryEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1EventInput: Events allow for matching intents by
@@ -12651,9 +12959,9 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1EventInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1EventInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1EventInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ExportAgentRequest: The request message for
@@ -12681,9 +12989,9 @@ type GoogleCloudDialogflowV2beta1ExportAgentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ExportAgentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ExportAgentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ExportAgentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ExportAgentResponse: The response message for
@@ -12707,9 +13015,9 @@ type GoogleCloudDialogflowV2beta1ExportAgentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ExportAgentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ExportOperationMetadata: Metadata related to the
@@ -12730,9 +13038,9 @@ type GoogleCloudDialogflowV2beta1ExportOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ExportOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ExportOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ExportOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1FaqAnswer: Represents answer from "frequently
@@ -12768,9 +13076,9 @@ type GoogleCloudDialogflowV2beta1FaqAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1FaqAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1FaqAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1FaqAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1FaqAnswer) UnmarshalJSON(data []byte) error {
@@ -12814,9 +13122,9 @@ type GoogleCloudDialogflowV2beta1FewShotExample struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1FewShotExample) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1FewShotExample) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1FewShotExample
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Fulfillment: By default, your agent responds to
@@ -12859,9 +13167,9 @@ type GoogleCloudDialogflowV2beta1Fulfillment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Fulfillment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Fulfillment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Fulfillment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1FulfillmentFeature: Whether fulfillment is
@@ -12886,9 +13194,9 @@ type GoogleCloudDialogflowV2beta1FulfillmentFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1FulfillmentFeature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1FulfillmentFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1FulfillmentFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1FulfillmentGenericWebService: Represents
@@ -12926,9 +13234,9 @@ type GoogleCloudDialogflowV2beta1FulfillmentGenericWebService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1FulfillmentGenericWebService) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1FulfillmentGenericWebService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1FulfillmentGenericWebService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GcsDestination: Google Cloud Storage location
@@ -12952,9 +13260,9 @@ type GoogleCloudDialogflowV2beta1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GcsSource: Google Cloud Storage location for
@@ -12977,9 +13285,9 @@ type GoogleCloudDialogflowV2beta1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GcsSources: Google Cloud Storage locations for
@@ -13002,9 +13310,9 @@ type GoogleCloudDialogflowV2beta1GcsSources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GcsSources) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GcsSources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GcsSources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest: The request
@@ -13043,9 +13351,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionResponse: The
@@ -13069,9 +13377,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSuggestionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest: The request
@@ -13081,12 +13389,12 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest struct {
 	// required for Summary generation. Required fields: {language_code,
 	// security_settings} Optional fields: {agent_assistant_config}
 	ConversationProfile *GoogleCloudDialogflowV2beta1ConversationProfile `json:"conversationProfile,omitempty"`
-	// LatestMessage: The name of the latest conversation message used as context
-	// for generating a Summary. If empty, the latest message of the conversation
-	// will be used. The format is specific to the user and the names of the
-	// messages provided.
+	// LatestMessage: Optional. The name of the latest conversation message used as
+	// context for generating a Summary. If empty, the latest message of the
+	// conversation will be used. The format is specific to the user and the names
+	// of the messages provided.
 	LatestMessage string `json:"latestMessage,omitempty"`
-	// MaxContextSize: Max number of messages prior to and including
+	// MaxContextSize: Optional. Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By default
 	// 500 and at most 1000.
 	MaxContextSize int64 `json:"maxContextSize,omitempty"`
@@ -13105,9 +13413,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversatio
@@ -13133,9 +13441,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse: The response
@@ -13168,9 +13476,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary:
@@ -13199,9 +13507,9 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Generator: LLM generator.
@@ -13246,9 +13554,9 @@ type GoogleCloudDialogflowV2beta1Generator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Generator) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Generator) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Generator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1GeneratorSuggestion: Suggestion generated using
@@ -13269,9 +13577,9 @@ type GoogleCloudDialogflowV2beta1GeneratorSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1GeneratorSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1GeneratorSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GeneratorSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig: Defines the Human
@@ -13302,9 +13610,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig:
@@ -13333,9 +13641,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfi
@@ -13357,9 +13665,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessCon
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig:
@@ -13400,14 +13708,23 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig:
 // Detail human agent assistant config.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig struct {
+	// DisableHighLatencyFeaturesSyncDelivery: Optional. When
+	// disable_high_latency_features_sync_delivery is true and using the
+	// AnalyzeContent API, we will not deliver the responses from high latency
+	// features in the API response. The
+	// human_agent_assistant_config.notification_config must be configured and
+	// enable_event_based_suggestion must be set to true to receive the responses
+	// from high latency features in Pub/Sub. High latency feature(s):
+	// KNOWLEDGE_ASSIST
+	DisableHighLatencyFeaturesSyncDelivery bool `json:"disableHighLatencyFeaturesSyncDelivery,omitempty"`
 	// FeatureConfigs: Configuration of different suggestion features. One feature
 	// can have only one config.
 	FeatureConfigs []*GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig `json:"featureConfigs,omitempty"`
@@ -13424,22 +13741,24 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig struc
 	// will be grouped into a single Pub/Sub event or
 	// StreamingAnalyzeContentResponse.
 	GroupSuggestionResponses bool `json:"groupSuggestionResponses,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FeatureConfigs") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "DisableHighLatencyFeaturesSyncDelivery") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FeatureConfigs") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "DisableHighLatencyFeaturesSyncDelivery") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig:
@@ -13462,6 +13781,13 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 	// tries to compile suggestions. Supported features: ARTICLE_SUGGESTION, FAQ,
 	// DIALOGFLOW_ASSIST, ENTITY_EXTRACTION, KNOWLEDGE_ASSIST.
 	EnableEventBasedSuggestion bool `json:"enableEventBasedSuggestion,omitempty"`
+	// EnableQuerySuggestionOnly: Optional. Enable query suggestion only. Supported
+	// features: KNOWLEDGE_ASSIST
+	EnableQuerySuggestionOnly bool `json:"enableQuerySuggestionOnly,omitempty"`
+	// EnableQuerySuggestionWhenNoAnswer: Optional. Enable query suggestion even if
+	// we can't find its answer. By default, queries are suggested only if we find
+	// its answer. Supported features: KNOWLEDGE_ASSIST
+	EnableQuerySuggestionWhenNoAnswer bool `json:"enableQuerySuggestionWhenNoAnswer,omitempty"`
 	// QueryConfig: Configs of query.
 	QueryConfig *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig `json:"queryConfig,omitempty"`
 	// SuggestionFeature: The suggestion feature.
@@ -13482,9 +13808,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig:
@@ -13535,9 +13861,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig) UnmarshalJSON(data []byte) error {
@@ -13580,9 +13906,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigC
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDia
@@ -13608,9 +13934,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDia
@@ -13634,9 +13960,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDoc
@@ -13660,9 +13986,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDocumentQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDocumentQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDocumentQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigKno
@@ -13686,9 +14012,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigK
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigKnowledgeBaseQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigKnowledgeBaseQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigKnowledgeBaseQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigSec
@@ -13734,9 +14060,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigS
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigSections) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigSections) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigSections
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSetting
@@ -13760,9 +14086,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSetti
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent: Output only.
@@ -13795,9 +14121,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentHandoffConfig: Defines the hand off to
@@ -13822,9 +14148,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentHandoffConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentHandoffConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentHandoffConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentHandoffConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigLivePersonConfig:
@@ -13846,9 +14172,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigLivePersonConfig struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigLivePersonConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigLivePersonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigLivePersonConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigSalesforceLiveAgentConfig:
@@ -13879,9 +14205,9 @@ type GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigSalesforceLiveAgentConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigSalesforceLiveAgentConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigSalesforceLiveAgentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentHandoffConfigSalesforceLiveAgentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ImportAgentRequest: The request message for
@@ -13909,9 +14235,9 @@ type GoogleCloudDialogflowV2beta1ImportAgentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ImportAgentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ImportAgentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportAgentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ImportDocumentTemplate: The template used for
@@ -13954,9 +14280,9 @@ type GoogleCloudDialogflowV2beta1ImportDocumentTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ImportDocumentTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ImportDocumentTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ImportDocumentsRequest: Request message for
@@ -13985,9 +14311,9 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ImportDocumentsResponse: Response message for
@@ -14008,9 +14334,9 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1InferenceParameter: The parameters of inference.
@@ -14054,9 +14380,9 @@ type GoogleCloudDialogflowV2beta1InferenceParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1InferenceParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1InferenceParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1InferenceParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1InferenceParameter) UnmarshalJSON(data []byte) error {
@@ -14207,9 +14533,9 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1InputAudioConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1InputAudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1InputAudioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Intent: An intent categorizes an end-user's
@@ -14351,9 +14677,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentBatch: This message is a wrapper around a
@@ -14374,9 +14700,9 @@ type GoogleCloudDialogflowV2beta1IntentBatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentBatch) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentBatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo: Represents a single
@@ -14401,9 +14727,9 @@ type GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentInput: Represents the intent to trigger
@@ -14431,9 +14757,9 @@ type GoogleCloudDialogflowV2beta1IntentInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessage: Corresponds to the `Response`
@@ -14515,9 +14841,9 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBasicCard: The basic card message.
@@ -14546,9 +14872,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBasicCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBasicCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBasicCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBasicCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton: The button object
@@ -14571,9 +14897,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction: Opens
@@ -14594,9 +14920,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCard: Browse Carousel
@@ -14638,9 +14964,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCard
@@ -14671,9 +14997,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCa
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCard
@@ -14703,9 +15029,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCa
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageCard: The card response message.
@@ -14731,9 +15057,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageCardButton: Optional. Contains
@@ -14757,9 +15083,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageCardButton struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageCardButton) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageCardButton) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageCardButton
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect: The card for
@@ -14780,9 +15106,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageCarouselSelectItem: An item in the
@@ -14809,9 +15135,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageCarouselSelectItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageCarouselSelectItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageCarouselSelectItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageCarouselSelectItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageColumnProperties: Column properties
@@ -14842,9 +15168,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageColumnProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageColumnProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageColumnProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageColumnProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageImage: The image response message.
@@ -14868,9 +15194,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion: The suggestion
@@ -14896,9 +15222,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageListSelect: The card for presenting
@@ -14923,9 +15249,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageListSelect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageListSelect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageListSelect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageListSelect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageListSelectItem: An item in the
@@ -14952,9 +15278,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageListSelectItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageListSelectItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageListSelectItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageListSelectItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageMediaContent: The media content
@@ -14981,9 +15307,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageMediaContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageMediaContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageMediaContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageMediaContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageMediaContentResponseMediaObject:
@@ -15012,9 +15338,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageMediaContentResponseMediaObject st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageMediaContentResponseMediaObject) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageMediaContentResponseMediaObject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageMediaContentResponseMediaObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageQuickReplies: The quick replies
@@ -15037,9 +15363,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageQuickReplies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageQuickReplies) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageQuickReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageQuickReplies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent: Rich Business
@@ -15069,9 +15395,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia: Rich
@@ -15115,9 +15441,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard: Carousel Rich
@@ -15149,9 +15475,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard: Standalone Rich
@@ -15190,9 +15516,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction: Rich Business
@@ -15224,9 +15550,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedAction
@@ -15250,9 +15576,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedAction
@@ -15276,9 +15602,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedAction
@@ -15310,9 +15636,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion: Rich Business
@@ -15336,9 +15662,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageRbmText: Rich Business Messaging
@@ -15361,9 +15687,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageRbmText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageRbmText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageSelectItemInfo: Additional info
@@ -15388,9 +15714,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageSelectItemInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageSelectItemInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageSelectItemInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageSelectItemInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageSimpleResponse: The simple response
@@ -15418,9 +15744,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageSimpleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageSimpleResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageSimpleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageSimpleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses: The collection of
@@ -15444,9 +15770,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageSuggestion: The suggestion chip
@@ -15467,9 +15793,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageSuggestions: The collection of
@@ -15490,9 +15816,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageSuggestions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageSuggestions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageSuggestions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageSuggestions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTableCard: Table card for Actions
@@ -15524,9 +15850,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTableCard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTableCard) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTableCard) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTableCard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTableCardCell: Cell of
@@ -15547,9 +15873,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTableCardCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTableCardCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTableCardCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTableCardCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTableCardRow: Row of TableCard.
@@ -15571,9 +15897,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTableCardRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTableCardRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTableCardRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTableCardRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio: Plays audio
@@ -15602,9 +15928,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech:
@@ -15631,9 +15957,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall: Transfers
@@ -15656,9 +15982,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageText: The text response message.
@@ -15678,9 +16004,9 @@ type GoogleCloudDialogflowV2beta1IntentMessageText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentMessageText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentMessageText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentParameter: Represents intent parameters.
@@ -15725,9 +16051,9 @@ type GoogleCloudDialogflowV2beta1IntentParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentSuggestion: Represents an intent
@@ -15755,9 +16081,9 @@ type GoogleCloudDialogflowV2beta1IntentSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrase: Represents an example that
@@ -15808,9 +16134,9 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentTrainingPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentTrainingPhrase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart: Represents a part of a
@@ -15843,9 +16169,9 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1KnowledgeAnswers: Represents the result of
@@ -15866,9 +16192,9 @@ type GoogleCloudDialogflowV2beta1KnowledgeAnswers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1KnowledgeAnswers) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1KnowledgeAnswers) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAnswers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer: An answer from Knowledge
@@ -15917,9 +16243,9 @@ type GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer) UnmarshalJSON(data []byte) error {
@@ -15934,6 +16260,162 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer) UnmarshalJSON(data 
 	}
 	s.MatchConfidence = float64(s1.MatchConfidence)
 	return nil
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer: Represents a Knowledge
+// Assist answer.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer struct {
+	// AnswerRecord: The name of the answer record. Format:
+	// `projects//locations//answer Records/`.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SuggestedQuery: The query suggested based on the context. Suggestion is made
+	// only if it is different from the previous suggestion.
+	SuggestedQuery *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
+	// SuggestedQueryAnswer: The answer generated for the suggested query. Whether
+	// or not an answer is generated depends on how confident we are about the
+	// generated query.
+	SuggestedQueryAnswer *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer `json:"suggestedQueryAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer: Represents
+// an answer from Knowledge. Currently supports FAQ and Generative answers.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer struct {
+	// AnswerText: The piece of text from the `source` that answers this suggested
+	// query.
+	AnswerText string `json:"answerText,omitempty"`
+	// FaqSource: Populated if the prediction came from FAQ.
+	FaqSource *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerFaqSource `json:"faqSource,omitempty"`
+	// GenerativeSource: Populated if the prediction was Generative.
+	GenerativeSource *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource `json:"generativeSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerFaqSource:
+// Details about source of FAQ answer.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerFaqSource struct {
+	// Question: The corresponding FAQ question.
+	Question string `json:"question,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Question") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Question") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerFaqSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerFaqSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
+// rce: Details about source of Generative answer.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource struct {
+	// Snippets: All snippets used for this Generative Prediction, with their
+	// source URI and data.
+	Snippets []*GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet `json:"snippets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Snippets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Snippets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
+// rceSnippet: Snippet Source for a Generative Prediction.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Text: Text taken from that URI.
+	Text string `json:"text,omitempty"`
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+	// Uri: URI the data is sourced from.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery: Represents
+// a suggested query.
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery struct {
+	// QueryText: Suggested query text.
+	QueryText string `json:"queryText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QueryText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QueryText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1KnowledgeBase: A knowledge base represents a
@@ -15972,9 +16454,9 @@ type GoogleCloudDialogflowV2beta1KnowledgeBase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1KnowledgeBase) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1KnowledgeBase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeBase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata: Metadata in
@@ -16007,9 +16489,9 @@ type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse: Response message for
@@ -16038,9 +16520,9 @@ type GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListContextsResponse: The response message for
@@ -16068,9 +16550,9 @@ type GoogleCloudDialogflowV2beta1ListContextsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListContextsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListContextsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListContextsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListConversationProfilesResponse: The response
@@ -16099,9 +16581,9 @@ type GoogleCloudDialogflowV2beta1ListConversationProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListConversationProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListConversationProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListConversationProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListConversationsResponse: The response message
@@ -16129,9 +16611,9 @@ type GoogleCloudDialogflowV2beta1ListConversationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListConversationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListConversationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListConversationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListDocumentsResponse: Response message for
@@ -16158,9 +16640,9 @@ type GoogleCloudDialogflowV2beta1ListDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListEntityTypesResponse: The response message
@@ -16188,9 +16670,9 @@ type GoogleCloudDialogflowV2beta1ListEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListEnvironmentsResponse: The response message
@@ -16218,9 +16700,9 @@ type GoogleCloudDialogflowV2beta1ListEnvironmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListEnvironmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListGeneratorsResponse: Response of
@@ -16247,9 +16729,9 @@ type GoogleCloudDialogflowV2beta1ListGeneratorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListGeneratorsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListGeneratorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListGeneratorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListIntentsResponse: The response message for
@@ -16277,9 +16759,9 @@ type GoogleCloudDialogflowV2beta1ListIntentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListIntentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListIntentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListIntentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse: Response message for
@@ -16306,9 +16788,9 @@ type GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListMessagesResponse: The response message for
@@ -16337,9 +16819,9 @@ type GoogleCloudDialogflowV2beta1ListMessagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListMessagesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListMessagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListMessagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListParticipantsResponse: The response message
@@ -16367,9 +16849,9 @@ type GoogleCloudDialogflowV2beta1ListParticipantsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListParticipantsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListParticipantsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListParticipantsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse: The response
@@ -16398,9 +16880,9 @@ type GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListSuggestionsResponse: The response message
@@ -16429,9 +16911,9 @@ type GoogleCloudDialogflowV2beta1ListSuggestionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListSuggestionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListSuggestionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListSuggestionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ListVersionsResponse: The response message for
@@ -16459,9 +16941,9 @@ type GoogleCloudDialogflowV2beta1ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1LoggingConfig: Defines logging behavior for
@@ -16484,9 +16966,9 @@ type GoogleCloudDialogflowV2beta1LoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1LoggingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1LoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1LoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Message: Represents a message posted into a
@@ -16536,9 +17018,9 @@ type GoogleCloudDialogflowV2beta1Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Message) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Message) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1MessageAnnotation: Represents the result of
@@ -16564,9 +17046,9 @@ type GoogleCloudDialogflowV2beta1MessageAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1MessageAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1MessageAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1MessageAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1MessageEntry: Represents a message entry of a
@@ -16603,9 +17085,9 @@ type GoogleCloudDialogflowV2beta1MessageEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1MessageEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1MessageEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1MessageEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1NotificationConfig: Defines notification
@@ -16640,9 +17122,9 @@ type GoogleCloudDialogflowV2beta1NotificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1NotificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1NotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1NotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest: Represents the
@@ -16677,9 +17159,9 @@ type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1OutputAudio: Represents the natural language
@@ -16703,9 +17185,9 @@ type GoogleCloudDialogflowV2beta1OutputAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1OutputAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1OutputAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1OutputAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1OutputAudioConfig: Instructs the speech
@@ -16751,9 +17233,9 @@ type GoogleCloudDialogflowV2beta1OutputAudioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1OutputAudioConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1OutputAudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1OutputAudioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Participant: Represents a conversation
@@ -16814,9 +17296,9 @@ type GoogleCloudDialogflowV2beta1Participant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Participant) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Participant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Participant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1QueryInput: Represents the query input. It can
@@ -16846,9 +17328,9 @@ type GoogleCloudDialogflowV2beta1QueryInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1QueryInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1QueryInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1QueryInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1QueryParameters: Represents the parameters of
@@ -16916,9 +17398,9 @@ type GoogleCloudDialogflowV2beta1QueryParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1QueryParameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1QueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1QueryParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1QueryResult: Represents the result of
@@ -17019,9 +17501,9 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1QueryResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1QueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1QueryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1QueryResult) UnmarshalJSON(data []byte) error {
@@ -17062,9 +17544,9 @@ type GoogleCloudDialogflowV2beta1ReloadDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ReloadDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ReloadDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ReloadDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessage: Response messages from an
@@ -17099,9 +17581,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction: Indicates that
@@ -17134,9 +17616,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio: Represents an audio
@@ -17158,9 +17640,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment: Represents one
@@ -17189,9 +17671,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall: Represents
@@ -17216,9 +17698,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ResponseMessageText: The text response message.
@@ -17238,9 +17720,9 @@ type GoogleCloudDialogflowV2beta1ResponseMessageText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ResponseMessageText) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ResponseMessageText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1RestoreAgentRequest: The request message for
@@ -17268,9 +17750,9 @@ type GoogleCloudDialogflowV2beta1RestoreAgentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1RestoreAgentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1RestoreAgentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1RestoreAgentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SearchAgentsResponse: The response message for
@@ -17298,9 +17780,9 @@ type GoogleCloudDialogflowV2beta1SearchAgentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SearchAgentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SearchAgentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SearchAgentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer: Represents a
@@ -17335,9 +17817,9 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource: The sources
@@ -17362,34 +17844,37 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SearchKnowledgeRequest: The request message for
 // Conversations.SearchKnowledge.
 type GoogleCloudDialogflowV2beta1SearchKnowledgeRequest struct {
-	// Conversation: The conversation (between human agent and end user) where the
-	// search request is triggered. Format: `projects//locations//conversations/`.
+	// Conversation: Optional. The conversation (between human agent and end user)
+	// where the search request is triggered. Format:
+	// `projects//locations//conversations/`.
 	Conversation string `json:"conversation,omitempty"`
 	// ConversationProfile: Required. The conversation profile used to configure
 	// the search. Format: `projects//locations//conversationProfiles/`.
 	ConversationProfile string `json:"conversationProfile,omitempty"`
-	// LatestMessage: The name of the latest conversation message when the request
-	// is triggered. Format: `projects//locations//conversations//messages/`.
+	// LatestMessage: Optional. The name of the latest conversation message when
+	// the request is triggered. Format:
+	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
-	// Parent: The parent resource contains the conversation profile Format:
-	// 'projects/' or `projects//locations/`.
+	// Parent: Required. The parent resource contains the conversation profile
+	// Format: 'projects/' or `projects//locations/`.
 	Parent string `json:"parent,omitempty"`
 	// Query: Required. The natural language text query for knowledge search.
 	Query *GoogleCloudDialogflowV2beta1TextInput `json:"query,omitempty"`
-	// SessionId: The ID of the search session. The session_id can be combined with
-	// Dialogflow V3 Agent ID retrieved from conversation profile or on its own to
-	// identify a search session. The search history of the same session will
-	// impact the search result. It's up to the API caller to choose an appropriate
-	// `Session ID`. It can be a random number or some type of session identifiers
-	// (preferably hashed). The length must not exceed 36 characters.
+	// SessionId: Optional. The ID of the search session. The session_id can be
+	// combined with Dialogflow V3 Agent ID retrieved from conversation profile or
+	// on its own to identify a search session. The search history of the same
+	// session will impact the search result. It's up to the API caller to choose
+	// an appropriate `Session ID`. It can be a random number or some type of
+	// session identifiers (preferably hashed). The length must not exceed 36
+	// characters.
 	SessionId string `json:"sessionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Conversation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17404,9 +17889,9 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SearchKnowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SearchKnowledgeResponse: The response message
@@ -17433,9 +17918,9 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SearchKnowledgeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SearchKnowledgeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SearchKnowledgeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Sentiment: The sentiment, such as
@@ -17464,9 +17949,9 @@ type GoogleCloudDialogflowV2beta1Sentiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Sentiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Sentiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Sentiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1Sentiment) UnmarshalJSON(data []byte) error {
@@ -17505,9 +17990,9 @@ type GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SentimentAnalysisResult: The result of sentiment
@@ -17535,9 +18020,9 @@ type GoogleCloudDialogflowV2beta1SentimentAnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SentimentAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SentimentAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SentimentAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SessionEntityType: A session represents a
@@ -17596,9 +18081,9 @@ type GoogleCloudDialogflowV2beta1SessionEntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SessionEntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SessionEntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SessionEntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata:
@@ -17635,6 +18120,7 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17649,9 +18135,9 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest: The request
@@ -17684,9 +18170,9 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SmartReplyAnswer: Represents a smart reply
@@ -17714,9 +18200,9 @@ type GoogleCloudDialogflowV2beta1SmartReplyAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SmartReplyAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SmartReplyAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SmartReplyAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1SmartReplyAnswer) UnmarshalJSON(data []byte) error {
@@ -17763,9 +18249,9 @@ type GoogleCloudDialogflowV2beta1SpeechContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SpeechContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SpeechContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SpeechContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) error {
@@ -17785,6 +18271,58 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 // GoogleCloudDialogflowV2beta1SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
+	// AlternativeLanguageCodes: Defines the list of other language codes in
+	// addition to the one provided by the conversation profile that may be
+	// detected as the language code for the utterances over the conversation. See
+	// Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
+	// the currently supported language codes.
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
+	// AudioEncoding: Audio encoding of the audio content to process.
+	//
+	// Possible values:
+	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
+	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
+	// samples (Linear PCM).
+	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
+	// (Free Lossless Audio Codec) is the recommended encoding because it is
+	// lossless (therefore recognition is not compromised) and requires only about
+	// half the bandwidth of `LINEAR16`. `FLAC` stream encoding supports 16-bit and
+	// 24-bit samples, however, not all fields in `STREAMINFO` are supported.
+	//   "AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio samples
+	// using G.711 PCMU/mu-law.
+	//   "AUDIO_ENCODING_AMR" - Adaptive Multi-Rate Narrowband codec.
+	// `sample_rate_hertz` must be 8000.
+	//   "AUDIO_ENCODING_AMR_WB" - Adaptive Multi-Rate Wideband codec.
+	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio frames in Ogg container
+	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must be
+	// 16000.
+	//   "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE" - Although the use of lossy
+	// encodings is not recommended, if a very low bitrate encoding is required,
+	// `OGG_OPUS` is highly preferred over Speex encoding. The
+	// [Speex](https://speex.org/) encoding supported by Dialogflow API has a
+	// header byte in each block, as in MIME type `audio/x-speex-with-header-byte`.
+	// It is a variant of the RTP Speex encoding defined in [RFC
+	// 5574](https://tools.ietf.org/html/rfc5574). The stream is a sequence of
+	// blocks, one block per RTP packet. Each block starts with a byte containing
+	// the length of the block, in bytes, followed by one or more frames of Speex
+	// data, padded to an integral number of bytes (octets) as specified in RFC
+	// 5574. In other words, each RTP header is replaced with a single byte
+	// containing the block length. Only Speex wideband is supported.
+	// `sample_rate_hertz` must be 16000.
+	AudioEncoding string `json:"audioEncoding,omitempty"`
+	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo in
+	// StreamingRecognitionResult with information about the recognized speech
+	// words, e.g. start and end time offsets. If false or unspecified, Speech
+	// doesn't return any word-level information.
+	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
+	// LanguageCode: The language of the supplied audio. Dialogflow does not do
+	// translations. See Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
+	// the currently supported language codes. Note that queries in the same
+	// session do not necessarily need to specify the same language.
+	LanguageCode string `json:"languageCode,omitempty"`
 	// Model: Which Speech model to select. Select the model best suited to your
 	// domain to get best results. If a model is not explicitly specified, then
 	// Dialogflow auto-selects a model based on other parameters in the
@@ -17800,6 +18338,10 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/agent#settings-speech)
 	// for model selection.
 	Model string `json:"model,omitempty"`
+	// SampleRateHertz: Sample rate (in Hertz) of the audio content sent in the
+	// query. Refer to Cloud Speech API documentation
+	// (https://cloud.google.com/speech-to-text/docs/basics) for more details.
+	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 	// SpeechModelVariant: The speech model used in speech to text.
 	// `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be treated as
 	// `USE_ENHANCED`. It can be overridden in AnalyzeContentRequest and
@@ -17830,22 +18372,22 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// UseTimeoutBasedEndpointing: Use timeout based endpointing, interpreting
 	// endpointer sensitivy as seconds of timeout value.
 	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AlternativeLanguageCodes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Model") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SpeechToTextConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SpeechToTextConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SpeechToTextConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SubAgent: Contains basic configuration for a
@@ -17871,9 +18413,9 @@ type GoogleCloudDialogflowV2beta1SubAgent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SubAgent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SubAgent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SubAgent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestArticlesRequest: The request message for
@@ -17902,9 +18444,9 @@ type GoogleCloudDialogflowV2beta1SuggestArticlesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestArticlesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestArticlesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestArticlesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestArticlesResponse: The response message
@@ -17936,24 +18478,25 @@ type GoogleCloudDialogflowV2beta1SuggestArticlesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestArticlesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The request
 // message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
-	// AssistQueryParams: Parameters for a human assist query. Only used for
-	// POC/demo purpose.
+	// AssistQueryParams: Optional. Parameters for a human assist query. Only used
+	// for POC/demo purpose.
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
-	// ContextSize: Max number of messages prior to and including [latest_message]
-	// to use as context when compiling the suggestion. By default 500 and at most
-	// 1000.
+	// ContextSize: Optional. Max number of messages prior to and including
+	// [latest_message] to use as context when compiling the suggestion. By default
+	// 500 and at most 1000.
 	ContextSize int64 `json:"contextSize,omitempty"`
-	// LatestMessage: The name of the latest conversation message used as context
-	// for compiling suggestion. If empty, the latest message of the conversation
-	// will be used. Format: `projects//locations//conversations//messages/`.
+	// LatestMessage: Optional. The name of the latest conversation message used as
+	// context for compiling suggestion. If empty, the latest message of the
+	// conversation will be used. Format:
+	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistQueryParams") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17968,9 +18511,9 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse: The response
@@ -18003,9 +18546,9 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary:
@@ -18037,9 +18580,9 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse: The response
@@ -18070,9 +18613,9 @@ type GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest: The request message
@@ -18101,9 +18644,9 @@ type GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse: The request message
@@ -18135,9 +18678,77 @@ type GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest: The request
+// message for Participants.SuggestKnowledgeAssist.
+type GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest struct {
+	// ContextSize: Optional. Max number of messages prior to and including
+	// latest_message to use as context when compiling the suggestion. The context
+	// size is by default 100 and at most 100.
+	ContextSize int64 `json:"contextSize,omitempty"`
+	// LatestMessage: Optional. The name of the latest conversation message to
+	// compile suggestions for. If empty, it will be the latest message of the
+	// conversation. Format: `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+	// PreviousSuggestedQuery: Optional. The previously suggested query for the
+	// given conversation. This helps identify whether the next suggestion we
+	// generate is resonably different from the previous one. This is useful to
+	// avoid similar suggestions within the conversation.
+	PreviousSuggestedQuery string `json:"previousSuggestedQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse: The response
+// message for Participants.SuggestKnowledgeAssist.
+type GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse struct {
+	// ContextSize: Number of messages prior to and including latest_message to
+	// compile the suggestion. It may be smaller than the
+	// SuggestKnowledgeAssistRequest.context_size field in the request if there are
+	// fewer messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+	// KnowledgeAssistAnswer: Output only. Knowledge Assist suggestion.
+	KnowledgeAssistAnswer *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer `json:"knowledgeAssistAnswer,omitempty"`
+	// LatestMessage: The name of the latest conversation message used to compile
+	// suggestion for. Format: `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest: The request message
@@ -18168,9 +18779,9 @@ type GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse: The response
@@ -18204,9 +18815,9 @@ type GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Suggestion: Represents a suggestion for a human
@@ -18237,9 +18848,9 @@ type GoogleCloudDialogflowV2beta1Suggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Suggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Suggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Suggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestionArticle: Represents suggested article.
@@ -18269,9 +18880,9 @@ type GoogleCloudDialogflowV2beta1SuggestionArticle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestionArticle) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestionArticle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionArticle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestionFaqAnswer: Represents suggested answer
@@ -18309,9 +18920,9 @@ type GoogleCloudDialogflowV2beta1SuggestionFaqAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestionFaqAnswer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestionFaqAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionFaqAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1SuggestionFaqAnswer) UnmarshalJSON(data []byte) error {
@@ -18346,6 +18957,7 @@ type GoogleCloudDialogflowV2beta1SuggestionFeature struct {
 	// chat.
 	//   "KNOWLEDGE_SEARCH" - Run knowledge search with text input from agent or
 	// text generated query.
+	//   "KNOWLEDGE_ASSIST" - Run knowledge assist with automatic query generation.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -18360,9 +18972,9 @@ type GoogleCloudDialogflowV2beta1SuggestionFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestionFeature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestionFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestionInput: Represents the selection of a
@@ -18405,9 +19017,9 @@ type GoogleCloudDialogflowV2beta1SuggestionInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestionInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestionInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SuggestionResult: One response of different type
@@ -18429,6 +19041,9 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is for
 	// FAQ_ANSWER.
 	SuggestFaqAnswersResponse *GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse `json:"suggestFaqAnswersResponse,omitempty"`
+	// SuggestKnowledgeAssistResponse: SuggestKnowledgeAssistResponse if request is
+	// for KNOWLEDGE_ASSIST.
+	SuggestKnowledgeAssistResponse *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse `json:"suggestKnowledgeAssistResponse,omitempty"`
 	// SuggestSmartRepliesResponse: SuggestSmartRepliesResponse if request is for
 	// SMART_REPLY.
 	SuggestSmartRepliesResponse *GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse `json:"suggestSmartRepliesResponse,omitempty"`
@@ -18445,9 +19060,9 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SuggestionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SuggestionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SummarizationContext: Summarization context that
@@ -18478,9 +19093,9 @@ type GoogleCloudDialogflowV2beta1SummarizationContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SummarizationContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SummarizationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SummarizationContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SummarizationSection: Represents the section of
@@ -18525,9 +19140,9 @@ type GoogleCloudDialogflowV2beta1SummarizationSection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SummarizationSection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SummarizationSection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SummarizationSection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SummarizationSectionList: List of summarization
@@ -18548,9 +19163,9 @@ type GoogleCloudDialogflowV2beta1SummarizationSectionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SummarizationSectionList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SummarizationSectionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SummarizationSectionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SummarySuggestion: Suggested summary of the
@@ -18571,9 +19186,9 @@ type GoogleCloudDialogflowV2beta1SummarySuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SummarySuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SummarySuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SummarySuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SummarySuggestionSummarySection: A component of
@@ -18596,9 +19211,9 @@ type GoogleCloudDialogflowV2beta1SummarySuggestionSummarySection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SummarySuggestionSummarySection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SummarySuggestionSummarySection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SummarySuggestionSummarySection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig: Configuration of how
@@ -18641,9 +19256,9 @@ type GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig) UnmarshalJSON(data []byte) error {
@@ -18702,9 +19317,9 @@ type GoogleCloudDialogflowV2beta1TelephonyDtmfEvents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1TelephonyDtmfEvents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1TextInput: Represents the natural language text
@@ -18732,9 +19347,9 @@ type GoogleCloudDialogflowV2beta1TextInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1TextInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1TextInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1TextToSpeechSettings: Instructs the speech
@@ -18787,9 +19402,9 @@ type GoogleCloudDialogflowV2beta1TextToSpeechSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1TextToSpeechSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1TextToSpeechSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1TextToSpeechSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1TrainAgentRequest: The request message for
@@ -18833,9 +19448,9 @@ type GoogleCloudDialogflowV2beta1ValidationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ValidationError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ValidationError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ValidationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1ValidationResult: Represents the output of agent
@@ -18859,9 +19474,9 @@ type GoogleCloudDialogflowV2beta1ValidationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1ValidationResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1ValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ValidationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Version: You can create multiple versions of
@@ -18913,9 +19528,9 @@ type GoogleCloudDialogflowV2beta1Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1Version) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1Version) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1VoiceSelectionParams: Description of which voice
@@ -18953,9 +19568,9 @@ type GoogleCloudDialogflowV2beta1VoiceSelectionParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1VoiceSelectionParams) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1VoiceSelectionParams) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1VoiceSelectionParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1WebhookRequest: The request message for a
@@ -18991,9 +19606,9 @@ type GoogleCloudDialogflowV2beta1WebhookRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1WebhookRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1WebhookRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1WebhookRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1WebhookResponse: The response message for a
@@ -19066,9 +19681,9 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1WebhookResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1ConversationSignals: This message is used to
@@ -19090,9 +19705,9 @@ type GoogleCloudDialogflowV3alpha1ConversationSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1ConversationSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1ConversationSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1ConversationSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata: Metadata for
@@ -19113,9 +19728,9 @@ type GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata: Metadata for
@@ -19136,9 +19751,9 @@ type GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata: Metadata in
@@ -19165,9 +19780,9 @@ type GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata: Metadata for
@@ -19188,9 +19803,9 @@ type GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1ImportDocumentsResponse: Response message for
@@ -19211,9 +19826,9 @@ type GoogleCloudDialogflowV3alpha1ImportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata: Metadata for
@@ -19234,9 +19849,9 @@ type GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV3alpha1TurnSignals: Collection of all signals that
@@ -19286,9 +19901,9 @@ type GoogleCloudDialogflowV3alpha1TurnSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) error {
@@ -19325,9 +19940,9 @@ type GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -19354,9 +19969,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -19393,9 +20008,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -19422,9 +20037,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -19469,9 +20084,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -19513,9 +20128,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeLatLng: An object that represents a latitude/longitude pair. This
@@ -19541,9 +20156,9 @@ type GoogleTypeLatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
@@ -30103,16 +30718,10 @@ func (r *ProjectsConversationsService) List(parent string) *ProjectsConversation
 }
 
 // Filter sets the optional parameter "filter": A filter expression that
-// filters conversations listed in the response. In general, the expression
-// must specify the field name, a comparison operator, and the value to use for
-// filtering: - The value must be a string, a number, or a boolean. - The
-// comparison operator must be either `=`,`!=`, `>`, or `<`. - To filter on
-// multiple expressions, separate the expressions with `AND` or `OR` (omitting
-// both implies `AND`). - For clarity, expressions can be enclosed in
-// parentheses. Only `lifecycle_state` can be filtered on in this way. For
-// example, the following expression only returns `COMPLETED` conversations:
-// `lifecycle_state = "COMPLETED" For more information about filtering, see
-// API Filtering (https://aip.dev/160).
+// filters conversations listed in the response. Only `lifecycle_state` can be
+// filtered on in this way. For example, the following expression only returns
+// `COMPLETED` conversations: `lifecycle_state = "COMPLETED" For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsConversationsListCall) Filter(filter string) *ProjectsConversationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -31564,6 +32173,110 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall) Do(o
 	return ret, nil
 }
 
+type ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleclouddialogflowv2beta1suggestknowledgeassistrequest *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// SuggestKnowledgeAssist: Gets knowledge assist suggestions based on
+// historical messages.
+//
+//   - parent: The name of the participant to fetch suggestions for. Format:
+//     `projects//locations//conversations//participants/`.
+func (r *ProjectsConversationsParticipantsSuggestionsService) SuggestKnowledgeAssist(parent string, googleclouddialogflowv2beta1suggestknowledgeassistrequest *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest) *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c := &ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1suggestknowledgeassistrequest = googleclouddialogflowv2beta1suggestknowledgeassistrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Fields(s ...googleapi.Field) *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Context(ctx context.Context) *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1suggestknowledgeassistrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:suggestKnowledgeAssist")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversations.participants.suggestions.suggestKnowledgeAssist" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall struct {
 	s                                                      *Service
 	parent                                                 string
@@ -31680,8 +32393,8 @@ type ProjectsConversationsSuggestionsSearchKnowledgeCall struct {
 // SearchKnowledge: Get answers for the given query based on knowledge
 // documents.
 //
-//   - conversation: The conversation (between human agent and end user) where
-//     the search request is triggered. Format:
+//   - conversation: Optional. The conversation (between human agent and end
+//     user) where the search request is triggered. Format:
 //     `projects//locations//conversations/`.
 func (r *ProjectsConversationsSuggestionsService) SearchKnowledge(conversation string, googleclouddialogflowv2beta1searchknowledgerequest *GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) *ProjectsConversationsSuggestionsSearchKnowledgeCall {
 	c := &ProjectsConversationsSuggestionsSearchKnowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -43048,16 +43761,10 @@ func (r *ProjectsLocationsConversationsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": A filter expression that
-// filters conversations listed in the response. In general, the expression
-// must specify the field name, a comparison operator, and the value to use for
-// filtering: - The value must be a string, a number, or a boolean. - The
-// comparison operator must be either `=`,`!=`, `>`, or `<`. - To filter on
-// multiple expressions, separate the expressions with `AND` or `OR` (omitting
-// both implies `AND`). - For clarity, expressions can be enclosed in
-// parentheses. Only `lifecycle_state` can be filtered on in this way. For
-// example, the following expression only returns `COMPLETED` conversations:
-// `lifecycle_state = "COMPLETED" For more information about filtering, see
-// API Filtering (https://aip.dev/160).
+// filters conversations listed in the response. Only `lifecycle_state` can be
+// filtered on in this way. For example, the following expression only returns
+// `COMPLETED` conversations: `lifecycle_state = "COMPLETED" For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44233,6 +44940,110 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersC
 	return ret, nil
 }
 
+type ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleclouddialogflowv2beta1suggestknowledgeassistrequest *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// SuggestKnowledgeAssist: Gets knowledge assist suggestions based on
+// historical messages.
+//
+//   - parent: The name of the participant to fetch suggestions for. Format:
+//     `projects//locations//conversations//participants/`.
+func (r *ProjectsLocationsConversationsParticipantsSuggestionsService) SuggestKnowledgeAssist(parent string, googleclouddialogflowv2beta1suggestknowledgeassistrequest *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistRequest) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c := &ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1suggestknowledgeassistrequest = googleclouddialogflowv2beta1suggestknowledgeassistrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Context(ctx context.Context) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1suggestknowledgeassistrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:suggestKnowledgeAssist")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversations.participants.suggestions.suggestKnowledgeAssist" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestKnowledgeAssistCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartRepliesCall struct {
 	s                                                      *Service
 	parent                                                 string
@@ -44349,8 +45160,8 @@ type ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall struct {
 // SearchKnowledge: Get answers for the given query based on knowledge
 // documents.
 //
-//   - conversation: The conversation (between human agent and end user) where
-//     the search request is triggered. Format:
+//   - conversation: Optional. The conversation (between human agent and end
+//     user) where the search request is triggered. Format:
 //     `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsSuggestionsService) SearchKnowledge(conversation string, googleclouddialogflowv2beta1searchknowledgerequest *GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) *ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall {
 	c := &ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}

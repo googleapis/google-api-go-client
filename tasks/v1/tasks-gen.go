@@ -183,11 +183,110 @@ type TasksService struct {
 	s *Service
 }
 
+// AssignmentInfo: Information about the source of the task assignment
+// (Document, Chat Space).
+type AssignmentInfo struct {
+	// DriveResourceInfo: Output only. Information about the Drive file where this
+	// task originates from. Currently, the Drive file can only be a document. This
+	// field is read-only.
+	DriveResourceInfo *DriveResourceInfo `json:"driveResourceInfo,omitempty"`
+	// LinkToTask: Output only. An absolute link to the original task in the
+	// surface of assignment (Docs, Chat spaces, etc.).
+	LinkToTask string `json:"linkToTask,omitempty"`
+	// SpaceInfo: Output only. Information about the Chat Space where this task
+	// originates from. This field is read-only.
+	SpaceInfo *SpaceInfo `json:"spaceInfo,omitempty"`
+	// SurfaceType: Output only. The type of surface this assigned task originates
+	// from. Currently limited to DOCUMENT or SPACE.
+	//
+	// Possible values:
+	//   "CONTEXT_TYPE_UNSPECIFIED" - Unknown value for this task's context.
+	//   "GMAIL" - The task is created from Gmail.
+	//   "DOCUMENT" - The task is assigned from a document.
+	//   "SPACE" - The task is assigned from a Chat Space.
+	SurfaceType string `json:"surfaceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DriveResourceInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DriveResourceInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssignmentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AssignmentInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DriveResourceInfo: Information about the Drive resource where a task was
+// assigned from (the document, sheet, etc.).
+type DriveResourceInfo struct {
+	// DriveFileId: Output only. Identifier of the file in the Drive API.
+	DriveFileId string `json:"driveFileId,omitempty"`
+	// ResourceKey: Output only. Resource key required to access files shared via a
+	// shared link. Not required for all files. See also
+	// developers.google.com/drive/api/guides/resource-keys.
+	ResourceKey string `json:"resourceKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DriveFileId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DriveFileId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DriveResourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveResourceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpaceInfo: Information about the Chat Space where a task was assigned from.
+type SpaceInfo struct {
+	// Space: Output only. The Chat space where this task originates from. The
+	// format is "spaces/{space}".
+	Space string `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpaceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Task struct {
+	// AssignmentInfo: Output only. Context information for assigned tasks. A task
+	// can be assigned to a user, currently possible from surfaces like Docs and
+	// Chat Spaces. This field is populated for tasks assigned to the current user
+	// and identifies where the task was assigned from. This field is read-only.
+	AssignmentInfo *AssignmentInfo `json:"assignmentInfo,omitempty"`
 	// Completed: Completion date of the task (as a RFC 3339 timestamp). This field
 	// is omitted if the task has not been completed.
 	Completed *string `json:"completed,omitempty"`
-	// Deleted: Flag indicating whether the task has been deleted. The default is
+	// Deleted: Flag indicating whether the task has been deleted. For assigned
+	// tasks this field is read-only. They can only be deleted by calling
+	// tasks.delete, in which case both the assigned task and the original task (in
+	// Docs or Chat Spaces) are deleted. To delete the assigned task only, navigate
+	// to the assignment surface and unassign the task from there. The default is
 	// False.
 	Deleted bool `json:"deleted,omitempty"`
 	// Due: Due date of the task (as a RFC 3339 timestamp). Optional. The due date
@@ -207,12 +306,13 @@ type Task struct {
 	Kind string `json:"kind,omitempty"`
 	// Links: Output only. Collection of links. This collection is read-only.
 	Links []*TaskLinks `json:"links,omitempty"`
-	// Notes: Notes describing the task. Optional. Maximum length allowed: 8192
-	// characters.
+	// Notes: Notes describing the task. Tasks assigned from Google Docs cannot
+	// have notes. Optional. Maximum length allowed: 8192 characters.
 	Notes string `json:"notes,omitempty"`
 	// Parent: Output only. Parent task identifier. This field is omitted if it is
-	// a top-level task. This field is read-only. Use the "move" method to move the
-	// task under a different parent or to the top level.
+	// a top-level task. Use the "move" method to move the task under a different
+	// parent or to the top level. A parent task can never be an assigned task
+	// (from Chat Spaces, Docs). This field is read-only.
 	Parent string `json:"parent,omitempty"`
 	// Position: Output only. String indicating the position of the task among its
 	// sibling tasks under the same parent task or at the top level. If this string
@@ -237,22 +337,22 @@ type Task struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Completed") to
+	// ForceSendFields is a list of field names (e.g. "AssignmentInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Completed") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AssignmentInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Task) MarshalJSON() ([]byte, error) {
+func (s Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLinks struct {
@@ -276,9 +376,9 @@ type TaskLinks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskLinks) MarshalJSON() ([]byte, error) {
+func (s TaskLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLinks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskList struct {
@@ -312,9 +412,9 @@ type TaskList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskList) MarshalJSON() ([]byte, error) {
+func (s TaskList) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLists struct {
@@ -343,9 +443,9 @@ type TaskLists struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskLists) MarshalJSON() ([]byte, error) {
+func (s TaskLists) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLists
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Tasks struct {
@@ -373,9 +473,9 @@ type Tasks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tasks) MarshalJSON() ([]byte, error) {
+func (s Tasks) MarshalJSON() ([]byte, error) {
 	type NoMethod Tasks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TasklistsDeleteCall struct {
@@ -386,7 +486,9 @@ type TasklistsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the authenticated user's specified task list.
+// Delete: Deletes the authenticated user's specified task list. If the list
+// contains assigned tasks, both the assigned tasks and the original tasks in
+// the assignment surface (Docs, Chat Spaces) are deleted.
 //
 // - tasklist: Task list identifier.
 func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
@@ -1074,7 +1176,10 @@ type TasksDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified task from the task list.
+// Delete: Deletes the specified task from the task list. If the task is
+// assigned, both the assigned task and the original task (in Docs, Chat
+// Spaces) are deleted. To delete the assigned task only, navigate to the
+// assignment surface and unassign the task from there.
 //
 // - task: Task identifier.
 // - tasklist: Task list identifier.
@@ -1261,7 +1366,9 @@ type TasksInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task on the specified task list. A user can have up to
+// Insert: Creates a new task on the specified task list. Tasks assigned from
+// Docs or Chat Spaces cannot be inserted from Tasks Public API; they can only
+// be created by assigning them from Docs or Chat Spaces. A user can have up to
 // 20,000 non-hidden tasks per list and up to 100,000 tasks in total at a time.
 //
 // - tasklist: Task list identifier.
@@ -1273,7 +1380,9 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 }
 
 // Parent sets the optional parameter "parent": Parent task identifier. If the
-// task is created at the top level, this parameter is omitted.
+// task is created at the top level, this parameter is omitted. An assigned
+// task cannot be a parent task, nor can it have a parent. Setting the parent
+// to an assigned task results in failure of the request.
 func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -1378,8 +1487,9 @@ type TasksListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all tasks in the specified task list. A user can have up to
-// 20,000 non-hidden tasks per list and up to 100,000 tasks in total at a time.
+// List: Returns all tasks in the specified task list. Does not return assigned
+// tasks be default (from Docs, Chat Spaces). A user can have up to 20,000
+// non-hidden tasks per list and up to 100,000 tasks in total at a time.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
@@ -1434,10 +1544,18 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 	return c
 }
 
+// ShowAssigned sets the optional parameter "showAssigned": Flag indicating
+// whether tasks assigned to the current user are returned in the result.
+// Optional. The default is False.
+func (c *TasksListCall) ShowAssigned(showAssigned bool) *TasksListCall {
+	c.urlParams_.Set("showAssigned", fmt.Sprint(showAssigned))
+	return c
+}
+
 // ShowCompleted sets the optional parameter "showCompleted": Flag indicating
-// whether completed tasks are returned in the result.  The default is True.
-// Note that showHidden must also be True to show tasks completed in first
-// party clients, such as the web UI and Google's mobile apps.
+// whether completed tasks are returned in the result. Note that showHidden
+// must also be True to show tasks completed in first party clients, such as
+// the web UI and Google's mobile apps.  The default is True.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
@@ -1584,10 +1702,11 @@ type TasksMoveCall struct {
 	header_    http.Header
 }
 
-// Move: Moves the specified task to another position in the task list. This
-// can include putting it as a child task under a new parent and/or move it to
-// a different position among its sibling tasks. A user can have up to 2,000
-// subtasks per task.
+// Move: Moves the specified task to another position in the destination task
+// list. If the destination list is not specified, the task is moved within its
+// current list. This can include putting it as a child task under a new parent
+// and/or move it to a different position among its sibling tasks. A user can
+// have up to 2,000 subtasks per task.
 //
 // - task: Task identifier.
 // - tasklist: Task list identifier.
@@ -1598,8 +1717,19 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 	return c
 }
 
+// DestinationTasklist sets the optional parameter "destinationTasklist":
+// Destination task list identifier. If set, the task is moved from tasklist to
+// the destinationTasklist list. Otherwise the task is moved within its current
+// list. Recurrent tasks cannot currently be moved between lists. Optional.
+func (c *TasksMoveCall) DestinationTasklist(destinationTasklist string) *TasksMoveCall {
+	c.urlParams_.Set("destinationTasklist", destinationTasklist)
+	return c
+}
+
 // Parent sets the optional parameter "parent": New parent task identifier. If
-// the task is moved to the top level, this parameter is omitted.
+// the task is moved to the top level, this parameter is omitted. Assigned
+// tasks can not be set as parent task (have subtasks) or be moved under a
+// parent task (become subtasks).
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 	c.urlParams_.Set("parent", parent)
 	return c

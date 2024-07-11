@@ -250,9 +250,9 @@ type AccessApprovalRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessApprovalRequest) MarshalJSON() ([]byte, error) {
+func (s AccessApprovalRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessApprovalRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessReason: Reason for the access.
@@ -299,9 +299,9 @@ type AccessReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessReason) MarshalJSON() ([]byte, error) {
+func (s AccessReason) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectionError: Information around the error that occurred if the
@@ -324,9 +324,9 @@ type ConnectionError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectionError) MarshalJSON() ([]byte, error) {
+func (s ConnectionError) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Console: Remediation instructions to resolve violation via cloud console
@@ -350,9 +350,9 @@ type Console struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Console) MarshalJSON() ([]byte, error) {
+func (s Console) MarshalJSON() ([]byte, error) {
 	type NoMethod Console
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Customer: Contains metadata around a Cloud Controls Partner Customer
@@ -382,9 +382,9 @@ type Customer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Customer) MarshalJSON() ([]byte, error) {
+func (s Customer) MarshalJSON() ([]byte, error) {
 	type NoMethod Customer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerOnboardingState: Container for customer onboarding steps
@@ -404,9 +404,9 @@ type CustomerOnboardingState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerOnboardingState) MarshalJSON() ([]byte, error) {
+func (s CustomerOnboardingState) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerOnboardingState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerOnboardingStep: Container for customer onboarding information
@@ -444,9 +444,9 @@ type CustomerOnboardingStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerOnboardingStep) MarshalJSON() ([]byte, error) {
+func (s CustomerOnboardingStep) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerOnboardingStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EkmConnection: Details about the EKM connection
@@ -478,9 +478,9 @@ type EkmConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EkmConnection) MarshalJSON() ([]byte, error) {
+func (s EkmConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod EkmConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EkmConnections: The EKM connections associated with a workload
@@ -507,9 +507,9 @@ type EkmConnections struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EkmConnections) MarshalJSON() ([]byte, error) {
+func (s EkmConnections) MarshalJSON() ([]byte, error) {
 	type NoMethod EkmConnections
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EkmMetadata: Holds information needed by Mudbray to use partner EKMs for
@@ -540,9 +540,9 @@ type EkmMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EkmMetadata) MarshalJSON() ([]byte, error) {
+func (s EkmMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod EkmMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Gcloud: Remediation instructions to resolve violation via gcloud cli
@@ -566,9 +566,9 @@ type Gcloud struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Gcloud) MarshalJSON() ([]byte, error) {
+func (s Gcloud) MarshalJSON() ([]byte, error) {
 	type NoMethod Gcloud
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instructions: Instructions to remediate violation
@@ -592,9 +592,9 @@ type Instructions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instructions) MarshalJSON() ([]byte, error) {
+func (s Instructions) MarshalJSON() ([]byte, error) {
 	type NoMethod Instructions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccessApprovalRequestsResponse: Response message for list access
@@ -623,9 +623,9 @@ type ListAccessApprovalRequestsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccessApprovalRequestsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccessApprovalRequestsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccessApprovalRequestsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCustomersResponse: Response message for list customer Customers requests
@@ -653,9 +653,9 @@ type ListCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListViolationsResponse: Response message for list customer violation
@@ -685,9 +685,9 @@ type ListViolationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListViolationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListViolationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListViolationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkloadsResponse: Response message for list customer workloads
@@ -716,9 +716,9 @@ type ListWorkloadsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkloadsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -754,9 +754,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Partner: Message describing Partner resource
@@ -797,9 +797,9 @@ type Partner struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Partner) MarshalJSON() ([]byte, error) {
+func (s Partner) MarshalJSON() ([]byte, error) {
 	type NoMethod Partner
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerPermissions: The permissions granted to the partner for a workload
@@ -836,9 +836,9 @@ type PartnerPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerPermissions) MarshalJSON() ([]byte, error) {
+func (s PartnerPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Remediation: Represents remediation guidance to resolve compliance violation
@@ -879,9 +879,9 @@ type Remediation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Remediation) MarshalJSON() ([]byte, error) {
+func (s Remediation) MarshalJSON() ([]byte, error) {
 	type NoMethod Remediation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sku: Represents the SKU a partner owns inside Google Cloud to sell to
@@ -908,9 +908,9 @@ type Sku struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sku) MarshalJSON() ([]byte, error) {
+func (s Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod Sku
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Violation: Details of resource Violation
@@ -967,9 +967,9 @@ type Violation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Violation) MarshalJSON() ([]byte, error) {
+func (s Violation) MarshalJSON() ([]byte, error) {
 	type NoMethod Violation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Workload: Contains metadata around the Workload resource
@@ -1027,9 +1027,9 @@ type Workload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Workload) MarshalJSON() ([]byte, error) {
+func (s Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod Workload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadOnboardingState: Container for workload onboarding steps.
@@ -1049,9 +1049,9 @@ type WorkloadOnboardingState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadOnboardingState) MarshalJSON() ([]byte, error) {
+func (s WorkloadOnboardingState) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadOnboardingState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadOnboardingStep: Container for workload onboarding information.
@@ -1089,9 +1089,9 @@ type WorkloadOnboardingStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadOnboardingStep) MarshalJSON() ([]byte, error) {
+func (s WorkloadOnboardingStep) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadOnboardingStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsGetPartnerCall struct {
@@ -1965,7 +1965,8 @@ type OrganizationsLocationsCustomersWorkloadsAccessApprovalRequestsListCall stru
 	header_      http.Header
 }
 
-// List: Lists access requests associated with a workload
+// List: Deprecated: Only returns access approval requests directly associated
+// with an assured workload folder.
 //
 //   - parent: Parent resource Format:
 //     `organizations/{organization}/locations/{location}/customers/{customer}/wor

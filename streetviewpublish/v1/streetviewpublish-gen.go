@@ -216,9 +216,9 @@ type BatchDeletePhotosRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeletePhotosRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeletePhotosRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeletePhotosRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeletePhotosResponse: Response to batch delete of one or more Photos.
@@ -242,9 +242,9 @@ type BatchDeletePhotosResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeletePhotosResponse) MarshalJSON() ([]byte, error) {
+func (s BatchDeletePhotosResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeletePhotosResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetPhotosResponse: Response to batch get of Photos.
@@ -268,9 +268,9 @@ type BatchGetPhotosResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetPhotosResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetPhotosResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetPhotosResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdatePhotosRequest: Request to update the metadata of photos. Updating
@@ -291,9 +291,9 @@ type BatchUpdatePhotosRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdatePhotosRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdatePhotosRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdatePhotosRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdatePhotosResponse: Response to batch update of metadata of one or
@@ -318,9 +318,9 @@ type BatchUpdatePhotosResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdatePhotosResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdatePhotosResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdatePhotosResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Connection: A connection is the link from a source photo to a destination
@@ -342,9 +342,9 @@ type Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Connection) MarshalJSON() ([]byte, error) {
+func (s Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -378,9 +378,9 @@ type GpsDataGapFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GpsDataGapFailureDetails) MarshalJSON() ([]byte, error) {
+func (s GpsDataGapFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GpsDataGapFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Imu: IMU data from the device sensors.
@@ -407,9 +407,9 @@ type Imu struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Imu) MarshalJSON() ([]byte, error) {
+func (s Imu) MarshalJSON() ([]byte, error) {
 	type NoMethod Imu
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImuDataGapFailureDetails: Details related to
@@ -434,9 +434,9 @@ type ImuDataGapFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImuDataGapFailureDetails) MarshalJSON() ([]byte, error) {
+func (s ImuDataGapFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ImuDataGapFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsufficientGpsFailureDetails: Details related to
@@ -457,9 +457,9 @@ type InsufficientGpsFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsufficientGpsFailureDetails) MarshalJSON() ([]byte, error) {
+func (s InsufficientGpsFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InsufficientGpsFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -485,9 +485,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -525,9 +525,9 @@ type LatLngBounds struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLngBounds) MarshalJSON() ([]byte, error) {
+func (s LatLngBounds) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLngBounds
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Level: Level information containing level number and its corresponding name.
@@ -553,9 +553,9 @@ type Level struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Level) MarshalJSON() ([]byte, error) {
+func (s Level) MarshalJSON() ([]byte, error) {
 	type NoMethod Level
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Level) UnmarshalJSON(data []byte) error {
@@ -602,9 +602,9 @@ type ListPhotoSequencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPhotoSequencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPhotoSequencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPhotoSequencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPhotosResponse: Response to list all photos that belong to a user.
@@ -631,9 +631,9 @@ type ListPhotosResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPhotosResponse) MarshalJSON() ([]byte, error) {
+func (s ListPhotosResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPhotosResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Measurement3d: A Generic 3d measurement sample.
@@ -659,9 +659,9 @@ type Measurement3d struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Measurement3d) MarshalJSON() ([]byte, error) {
+func (s Measurement3d) MarshalJSON() ([]byte, error) {
 	type NoMethod Measurement3d
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Measurement3d) UnmarshalJSON(data []byte) error {
@@ -706,9 +706,9 @@ type NoOverlapGpsFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NoOverlapGpsFailureDetails) MarshalJSON() ([]byte, error) {
+func (s NoOverlapGpsFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NoOverlapGpsFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotOutdoorsFailureDetails: Details related to
@@ -731,9 +731,9 @@ type NotOutdoorsFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotOutdoorsFailureDetails) MarshalJSON() ([]byte, error) {
+func (s NotOutdoorsFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NotOutdoorsFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -778,9 +778,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Photo: Photo is used to store 360 photos along with photo metadata.
@@ -856,9 +856,9 @@ type Photo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Photo) MarshalJSON() ([]byte, error) {
+func (s Photo) MarshalJSON() ([]byte, error) {
 	type NoMethod Photo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhotoId: Identifier for a Photo.
@@ -878,9 +878,9 @@ type PhotoId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhotoId) MarshalJSON() ([]byte, error) {
+func (s PhotoId) MarshalJSON() ([]byte, error) {
 	type NoMethod PhotoId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhotoResponse: Response payload for a single Photo in batch operations
@@ -904,9 +904,9 @@ type PhotoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhotoResponse) MarshalJSON() ([]byte, error) {
+func (s PhotoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PhotoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhotoSequence: A sequence of 360 photos along with metadata.
@@ -1031,9 +1031,9 @@ type PhotoSequence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhotoSequence) MarshalJSON() ([]byte, error) {
+func (s PhotoSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod PhotoSequence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PhotoSequence) UnmarshalJSON(data []byte) error {
@@ -1074,9 +1074,9 @@ type Place struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Place) MarshalJSON() ([]byte, error) {
+func (s Place) MarshalJSON() ([]byte, error) {
 	type NoMethod Place
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pose: Raw pose measurement for an entity.
@@ -1128,9 +1128,9 @@ type Pose struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pose) MarshalJSON() ([]byte, error) {
+func (s Pose) MarshalJSON() ([]byte, error) {
 	type NoMethod Pose
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Pose) UnmarshalJSON(data []byte) error {
@@ -1183,9 +1183,9 @@ type ProcessingFailureDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProcessingFailureDetails) MarshalJSON() ([]byte, error) {
+func (s ProcessingFailureDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProcessingFailureDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1217,9 +1217,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdatePhotoRequest: Request to update the metadata of a Photo. Updating the
@@ -1251,9 +1251,9 @@ type UpdatePhotoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdatePhotoRequest) MarshalJSON() ([]byte, error) {
+func (s UpdatePhotoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePhotoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadRef: Upload reference for media files.
@@ -1279,9 +1279,9 @@ type UploadRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadRef) MarshalJSON() ([]byte, error) {
+func (s UploadRef) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PhotoCreateCall struct {

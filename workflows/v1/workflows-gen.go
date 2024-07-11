@@ -231,9 +231,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -259,9 +259,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkflowRevisionsResponse: Response for the ListWorkflowRevisions
@@ -289,9 +289,9 @@ type ListWorkflowRevisionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkflowRevisionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkflowRevisionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkflowRevisionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkflowsResponse: Response for the ListWorkflows method.
@@ -319,9 +319,9 @@ type ListWorkflowsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkflowsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkflowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkflowsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -357,9 +357,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -404,9 +404,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -434,9 +434,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateError: Describes an error related to the current state of the workflow.
@@ -462,9 +462,9 @@ type StateError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateError) MarshalJSON() ([]byte, error) {
+func (s StateError) MarshalJSON() ([]byte, error) {
 	type NoMethod StateError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -496,18 +496,18 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
 	// AllKmsKeys: Output only. A list of all KMS crypto keys used to encrypt or
-	// decrpt the data associated with the workflow.
+	// decrypt the data associated with the workflow.
 	AllKmsKeys []string `json:"allKmsKeys,omitempty"`
-	// AllKmsKeysVersions: Output only. A list of all KMS crypto keys versions used
-	// to encrypt or decrpt the data associated with the workflow.
+	// AllKmsKeysVersions: Output only. A list of all KMS crypto key versions used
+	// to encrypt or decrypt the data associated with the workflow.
 	AllKmsKeysVersions []string `json:"allKmsKeysVersions,omitempty"`
 	// CallLogLevel: Optional. Describes the level of platform logging to apply to
 	// calls and call responses during executions of this workflow. If both the
@@ -609,9 +609,9 @@ type Workflow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Workflow) MarshalJSON() ([]byte, error) {
+func (s Workflow) MarshalJSON() ([]byte, error) {
 	type NoMethod Workflow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

@@ -199,9 +199,9 @@ type Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Action) MarshalJSON() ([]byte, error) {
+func (s Action) MarshalJSON() ([]byte, error) {
 	type NoMethod Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActionDetail: Data describing the type and additional information of an
@@ -244,9 +244,9 @@ type ActionDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActionDetail) MarshalJSON() ([]byte, error) {
+func (s ActionDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ActionDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Actor: The actor of a Drive activity.
@@ -274,9 +274,9 @@ type Actor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Actor) MarshalJSON() ([]byte, error) {
+func (s Actor) MarshalJSON() ([]byte, error) {
 	type NoMethod Actor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Administrator: Empty message representing an administrator.
@@ -314,9 +314,9 @@ type ApplicationReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationReference) MarshalJSON() ([]byte, error) {
+func (s ApplicationReference) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppliedLabelChange: Label changes that were made on the Target.
@@ -336,9 +336,9 @@ type AppliedLabelChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppliedLabelChange) MarshalJSON() ([]byte, error) {
+func (s AppliedLabelChange) MarshalJSON() ([]byte, error) {
 	type NoMethod AppliedLabelChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppliedLabelChangeDetail: A change made to a Label on the Target.
@@ -375,9 +375,9 @@ type AppliedLabelChangeDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppliedLabelChangeDetail) MarshalJSON() ([]byte, error) {
+func (s AppliedLabelChangeDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod AppliedLabelChangeDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Assignment: A comment with an assignment.
@@ -409,9 +409,9 @@ type Assignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Assignment) MarshalJSON() ([]byte, error) {
+func (s Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Comment: A change about comments on an object.
@@ -437,9 +437,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConsolidationStrategy: How the individual activities are consolidated. If a
@@ -466,9 +466,9 @@ type ConsolidationStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConsolidationStrategy) MarshalJSON() ([]byte, error) {
+func (s ConsolidationStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsolidationStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Copy: An object was created by copying an existing object.
@@ -488,9 +488,9 @@ type Copy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Copy) MarshalJSON() ([]byte, error) {
+func (s Copy) MarshalJSON() ([]byte, error) {
 	type NoMethod Copy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Create: An object was created.
@@ -517,9 +517,9 @@ type Create struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Create) MarshalJSON() ([]byte, error) {
+func (s Create) MarshalJSON() ([]byte, error) {
 	type NoMethod Create
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataLeakPreventionChange: A change in the object's data leak prevention
@@ -546,9 +546,9 @@ type DataLeakPreventionChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataLeakPreventionChange) MarshalJSON() ([]byte, error) {
+func (s DataLeakPreventionChange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataLeakPreventionChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Wrapper for Date Field value.
@@ -568,9 +568,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Delete: An object was deleted.
@@ -595,9 +595,9 @@ type Delete struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Delete) MarshalJSON() ([]byte, error) {
+func (s Delete) MarshalJSON() ([]byte, error) {
 	type NoMethod Delete
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeletedUser: A user whose account has since been deleted.
@@ -623,9 +623,9 @@ type Domain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Domain) MarshalJSON() ([]byte, error) {
+func (s Domain) MarshalJSON() ([]byte, error) {
 	type NoMethod Domain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Drive: Information about a shared drive.
@@ -651,9 +651,9 @@ type Drive struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Drive) MarshalJSON() ([]byte, error) {
+func (s Drive) MarshalJSON() ([]byte, error) {
 	type NoMethod Drive
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveActivity: A single Drive activity comprising one or more Actions by one
@@ -694,9 +694,9 @@ type DriveActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveActivity) MarshalJSON() ([]byte, error) {
+func (s DriveActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveFile: A Drive item which is a file.
@@ -726,9 +726,9 @@ type DriveFolder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveFolder) MarshalJSON() ([]byte, error) {
+func (s DriveFolder) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveFolder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveItem: A Drive item, such as a file or folder.
@@ -765,9 +765,9 @@ type DriveItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveItem) MarshalJSON() ([]byte, error) {
+func (s DriveItem) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveItemReference: A lightweight reference to a Drive item, such as a file
@@ -800,9 +800,9 @@ type DriveItemReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveItemReference) MarshalJSON() ([]byte, error) {
+func (s DriveItemReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveItemReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveReference: A lightweight reference to a shared drive.
@@ -826,9 +826,9 @@ type DriveReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DriveReference) MarshalJSON() ([]byte, error) {
+func (s DriveReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Edit: An empty message indicating an object was edited.
@@ -866,9 +866,9 @@ type FieldValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldValue) MarshalJSON() ([]byte, error) {
+func (s FieldValue) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldValueChange: Change to a Field value.
@@ -897,9 +897,9 @@ type FieldValueChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldValueChange) MarshalJSON() ([]byte, error) {
+func (s FieldValueChange) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldValueChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: This item is deprecated; please see `DriveFile` instead.
@@ -935,9 +935,9 @@ type FileComment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileComment) MarshalJSON() ([]byte, error) {
+func (s FileComment) MarshalJSON() ([]byte, error) {
 	type NoMethod FileComment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Folder: This item is deprecated; please see `DriveFolder` instead.
@@ -967,9 +967,9 @@ type Folder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Folder) MarshalJSON() ([]byte, error) {
+func (s Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Group: Information about a group.
@@ -991,9 +991,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Impersonation: Information about an impersonation, where an admin acts on
@@ -1015,9 +1015,9 @@ type Impersonation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Impersonation) MarshalJSON() ([]byte, error) {
+func (s Impersonation) MarshalJSON() ([]byte, error) {
 	type NoMethod Impersonation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Integer: Wrapper for Integer Field value.
@@ -1037,9 +1037,9 @@ type Integer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Integer) MarshalJSON() ([]byte, error) {
+func (s Integer) MarshalJSON() ([]byte, error) {
 	type NoMethod Integer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KnownUser: A known user.
@@ -1063,9 +1063,9 @@ type KnownUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KnownUser) MarshalJSON() ([]byte, error) {
+func (s KnownUser) MarshalJSON() ([]byte, error) {
 	type NoMethod KnownUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Legacy: A strategy that consolidates activities using the grouping rules
@@ -1095,9 +1095,9 @@ type Move struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Move) MarshalJSON() ([]byte, error) {
+func (s Move) MarshalJSON() ([]byte, error) {
 	type NoMethod Move
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // New1: An object was created from scratch.
@@ -1132,9 +1132,9 @@ type Owner struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Owner) MarshalJSON() ([]byte, error) {
+func (s Owner) MarshalJSON() ([]byte, error) {
 	type NoMethod Owner
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Permission: The permission setting of an object.
@@ -1183,9 +1183,9 @@ type Permission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permission) MarshalJSON() ([]byte, error) {
+func (s Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PermissionChange: A change of the permission setting on an item.
@@ -1207,9 +1207,9 @@ type PermissionChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PermissionChange) MarshalJSON() ([]byte, error) {
+func (s PermissionChange) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Post: A regular posted comment.
@@ -1238,9 +1238,9 @@ type Post struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Post) MarshalJSON() ([]byte, error) {
+func (s Post) MarshalJSON() ([]byte, error) {
 	type NoMethod Post
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryDriveActivityRequest: The request message for querying Drive activity.
@@ -1291,9 +1291,9 @@ type QueryDriveActivityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryDriveActivityRequest) MarshalJSON() ([]byte, error) {
+func (s QueryDriveActivityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryDriveActivityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryDriveActivityResponse: Response message for querying Drive activity.
@@ -1319,9 +1319,9 @@ type QueryDriveActivityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryDriveActivityResponse) MarshalJSON() ([]byte, error) {
+func (s QueryDriveActivityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryDriveActivityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Rename: An object was renamed.
@@ -1343,9 +1343,9 @@ type Rename struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Rename) MarshalJSON() ([]byte, error) {
+func (s Rename) MarshalJSON() ([]byte, error) {
 	type NoMethod Rename
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Restore: A deleted object was restored.
@@ -1369,9 +1369,9 @@ type Restore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Restore) MarshalJSON() ([]byte, error) {
+func (s Restore) MarshalJSON() ([]byte, error) {
 	type NoMethod Restore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestrictionChange: Information about restriction policy changes to a
@@ -1413,9 +1413,9 @@ type RestrictionChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictionChange) MarshalJSON() ([]byte, error) {
+func (s RestrictionChange) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictionChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Selection: Wrapper for Selection Field value as combined value/display_name
@@ -1438,9 +1438,9 @@ type Selection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Selection) MarshalJSON() ([]byte, error) {
+func (s Selection) MarshalJSON() ([]byte, error) {
 	type NoMethod Selection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SelectionList: Wrapper for SelectionList Field value.
@@ -1460,9 +1460,9 @@ type SelectionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SelectionList) MarshalJSON() ([]byte, error) {
+func (s SelectionList) MarshalJSON() ([]byte, error) {
 	type NoMethod SelectionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SettingsChange: Information about settings changes.
@@ -1482,9 +1482,9 @@ type SettingsChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SettingsChange) MarshalJSON() ([]byte, error) {
+func (s SettingsChange) MarshalJSON() ([]byte, error) {
 	type NoMethod SettingsChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SingleUser: Wrapper for User Field value.
@@ -1504,9 +1504,9 @@ type SingleUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SingleUser) MarshalJSON() ([]byte, error) {
+func (s SingleUser) MarshalJSON() ([]byte, error) {
 	type NoMethod SingleUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Suggestion: A suggestion.
@@ -1537,9 +1537,9 @@ type Suggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Suggestion) MarshalJSON() ([]byte, error) {
+func (s Suggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod Suggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemEvent: Event triggered by system operations instead of end users.
@@ -1566,9 +1566,9 @@ type SystemEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemEvent) MarshalJSON() ([]byte, error) {
+func (s SystemEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Target: Information about the target of activity. For more information on
@@ -1596,9 +1596,9 @@ type Target struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Target) MarshalJSON() ([]byte, error) {
+func (s Target) MarshalJSON() ([]byte, error) {
 	type NoMethod Target
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetReference: A lightweight reference to the target of activity.
@@ -1622,9 +1622,9 @@ type TargetReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetReference) MarshalJSON() ([]byte, error) {
+func (s TargetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDrive: This item is deprecated; please see `Drive` instead.
@@ -1648,9 +1648,9 @@ type TeamDrive struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDrive) MarshalJSON() ([]byte, error) {
+func (s TeamDrive) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDrive
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TeamDriveReference: This item is deprecated; please see `DriveReference`
@@ -1673,9 +1673,9 @@ type TeamDriveReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeamDriveReference) MarshalJSON() ([]byte, error) {
+func (s TeamDriveReference) MarshalJSON() ([]byte, error) {
 	type NoMethod TeamDriveReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Text: Wrapper for Text Field value.
@@ -1695,9 +1695,9 @@ type Text struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Text) MarshalJSON() ([]byte, error) {
+func (s Text) MarshalJSON() ([]byte, error) {
 	type NoMethod Text
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextList: Wrapper for Text List Field value.
@@ -1717,9 +1717,9 @@ type TextList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextList) MarshalJSON() ([]byte, error) {
+func (s TextList) MarshalJSON() ([]byte, error) {
 	type NoMethod TextList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeRange: Information about time ranges.
@@ -1741,9 +1741,9 @@ type TimeRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeRange) MarshalJSON() ([]byte, error) {
+func (s TimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnknownUser: A user about whom nothing is currently known.
@@ -1775,9 +1775,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserList: Wrapper for UserList Field value.
@@ -1797,9 +1797,9 @@ type UserList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserList) MarshalJSON() ([]byte, error) {
+func (s UserList) MarshalJSON() ([]byte, error) {
 	type NoMethod UserList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityQueryCall struct {

@@ -247,9 +247,9 @@ type GoogleCloudResourcesettingsV1ListSettingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1ListSettingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1ListSettingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ListSettingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1Setting: The schema for settings.
@@ -297,9 +297,9 @@ type GoogleCloudResourcesettingsV1Setting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1Setting) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1Setting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1Setting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1SettingMetadata: Metadata about a setting which
@@ -339,9 +339,9 @@ type GoogleCloudResourcesettingsV1SettingMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1SettingMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1SettingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1SettingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1Value: The data in a setting value.
@@ -371,9 +371,9 @@ type GoogleCloudResourcesettingsV1Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1Value) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1ValueEnumValue: A enum value that can hold any
@@ -395,9 +395,9 @@ type GoogleCloudResourcesettingsV1ValueEnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1ValueEnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1ValueEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueEnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1ValueStringMap: A string->string map value that
@@ -420,9 +420,9 @@ type GoogleCloudResourcesettingsV1ValueStringMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1ValueStringMap) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1ValueStringMap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueStringMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1ValueStringSet: A string set value that can
@@ -444,9 +444,9 @@ type GoogleCloudResourcesettingsV1ValueStringSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudResourcesettingsV1ValueStringSet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudResourcesettingsV1ValueStringSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueStringSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersSettingsGetCall struct {

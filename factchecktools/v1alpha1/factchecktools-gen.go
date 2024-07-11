@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	factchecktoolsService, err := factchecktools.NewService(ctx, option.WithScopes(factchecktools.UserinfoEmailScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -95,6 +100,9 @@ const mtlsBasePath = "https://factchecktools.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Read, create, update, and delete your ClaimReview data.
+	FactchecktoolsScope = "https://www.googleapis.com/auth/factchecktools"
+
 	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
@@ -102,6 +110,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/factchecktools",
 		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -199,9 +208,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1Claim struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1Claim) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1Claim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1Claim
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor: Information about the
@@ -229,9 +238,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating: Information about the
@@ -267,9 +276,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview: Information about a
@@ -301,9 +310,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor: Information about
@@ -327,9 +336,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup: Fields for an
@@ -375,9 +384,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage: Holds one or
@@ -422,9 +431,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse:
@@ -452,9 +461,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseRe
@@ -475,9 +484,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse:
@@ -505,9 +514,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse:
@@ -535,9 +544,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFactcheckingFactchecktoolsV1alpha1Publisher: Information about the
@@ -562,9 +571,9 @@ type GoogleFactcheckingFactchecktoolsV1alpha1Publisher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFactcheckingFactchecktoolsV1alpha1Publisher) MarshalJSON() ([]byte, error) {
+func (s GoogleFactcheckingFactchecktoolsV1alpha1Publisher) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1Publisher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid

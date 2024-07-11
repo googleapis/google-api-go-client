@@ -241,9 +241,9 @@ type GoogleCloudBillingBudgetsV1Budget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1Budget) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1Budget) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1Budget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1BudgetAmount: The budgeted amount for each usage
@@ -273,9 +273,9 @@ type GoogleCloudBillingBudgetsV1BudgetAmount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1BudgetAmount) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1BudgetAmount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1BudgetAmount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1CustomPeriod: All date times begin at 12 AM US
@@ -300,9 +300,9 @@ type GoogleCloudBillingBudgetsV1CustomPeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1CustomPeriod) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1CustomPeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1CustomPeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1Filter: A filter for a budget, limiting the scope
@@ -394,9 +394,9 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1Filter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1LastPeriodAmount: Describes a budget amount
@@ -431,9 +431,9 @@ type GoogleCloudBillingBudgetsV1ListBudgetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1ListBudgetsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1ListBudgetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1ListBudgetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1NotificationsRule: NotificationsRule defines
@@ -509,9 +509,9 @@ type GoogleCloudBillingBudgetsV1NotificationsRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1NotificationsRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1NotificationsRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1NotificationsRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBudgetsV1ThresholdRule: ThresholdRule contains the
@@ -558,9 +558,9 @@ type GoogleCloudBillingBudgetsV1ThresholdRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBillingBudgetsV1ThresholdRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBillingBudgetsV1ThresholdRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBudgetsV1ThresholdRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudBillingBudgetsV1ThresholdRule) UnmarshalJSON(data []byte) error {
@@ -620,9 +620,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -651,9 +651,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BillingAccountsBudgetsCreateCall struct {

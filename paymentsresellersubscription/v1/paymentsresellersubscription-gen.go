@@ -220,9 +220,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Amount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Amount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest: Request
@@ -231,7 +231,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the subscription
 	// immediately, and may or may not (based on the contract) issue a prorated
 	// refund for the remainder of the billing cycle. Otherwise, Google defers the
-	// cancelation at renewal_time, and will not issue a refund.
+	// cancelation at renewal_time, and will not issue a refund. - YouTube
+	// subscriptions must use this option currently. However, the user will still
+	// have access to the subscription until the end of the billing cycle.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
 	// CancellationReason: Specifies the reason for the cancellation.
 	//
@@ -267,9 +269,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse:
@@ -293,9 +295,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Duration: Describes the length of a
@@ -325,14 +327,15 @@ type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Duration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest: Partner
-// request for entitling the previously provisioned subscription to an end
-// user. The end user identity is inferred from the request OAuth context.
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest:
+// LINT.IfChange Partner request for entitling the previously provisioned
+// subscription to an end user. The end user identity is inferred from the
+// request OAuth context.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
 	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
 	// unspecified, all line items will be entitled.
@@ -350,9 +353,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEn
@@ -378,9 +381,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItem
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse:
@@ -404,9 +407,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest: Request
@@ -436,9 +439,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse:
@@ -476,9 +479,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the details of
@@ -503,9 +506,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Extension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest:
@@ -546,9 +549,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse:
@@ -575,9 +578,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails: Details
@@ -599,9 +602,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload specific
@@ -652,9 +655,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse: Response that
@@ -681,9 +684,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse: Response
@@ -710,9 +713,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Location: Describes a location of
@@ -736,9 +739,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource that
@@ -788,9 +791,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement:
@@ -812,9 +815,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies product
@@ -838,9 +841,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ProductPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig: Configs the
@@ -864,9 +867,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Promotion: A Promotion resource
@@ -920,9 +923,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Promotion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails:
@@ -945,9 +948,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsI
@@ -977,9 +980,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description of
@@ -1004,9 +1007,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription serves
@@ -1133,9 +1136,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails:
@@ -1175,9 +1178,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem: Individual
@@ -1260,9 +1263,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBun
@@ -1287,9 +1290,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsB
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenc
@@ -1310,9 +1313,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurre
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec:
@@ -1348,9 +1351,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails:
@@ -1387,9 +1390,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetail
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest:
@@ -1418,9 +1421,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload specific to
@@ -1458,9 +1461,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeLocalizedText: Localized variant of a text in a particular
@@ -1485,9 +1488,9 @@ type GoogleTypeLocalizedText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLocalizedText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductBundleDetails: Details for a bundle product.
@@ -1517,9 +1520,9 @@ type ProductBundleDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductBundleDetails) MarshalJSON() ([]byte, error) {
+func (s ProductBundleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductBundleDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionLineItemBundleDetails: The bundle details for a line item
@@ -1541,9 +1544,9 @@ type SubscriptionLineItemBundleDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
+func (s SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionLineItemBundleDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PartnersProductsListCall struct {
@@ -1556,7 +1559,8 @@ type PartnersProductsListCall struct {
 }
 
 // List: To retrieve the products that can be resold by the partner. It should
-// be autenticated with a service account.
+// be autenticated with a service account. - This API doesn't apply to YouTube
+// products currently.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -1847,8 +1851,9 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: To retrieve the promotions, such as free trial, that can be used by
-// the partner. It should be autenticated with a service account.
+// List: Retrieves the promotions, such as free trial, that can be used by the
+// partner. - This API doesn't apply to YouTube promotions currently. It should
+// be autenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2672,10 +2677,11 @@ type PartnersSubscriptionsUndoCancelCall struct {
 	header_                                                                http.Header
 }
 
-// UndoCancel: Used by partners to revoke the pending cancellation of a
-// subscription, which is currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If
-// the subscription is already cancelled, the request will fail. It should be
-// called directly by the partner using service accounts.
+// UndoCancel: Revokes the pending cancellation of a subscription, which is
+// currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If the subscription is
+// already cancelled, the request will fail. - **This API doesn't apply to
+// YouTube subscriptions.** It should be called directly by the partner using
+// service accounts.
 //
 //   - name: The name of the subscription resource whose pending cancellation
 //     needs to be undone. It will have the format of

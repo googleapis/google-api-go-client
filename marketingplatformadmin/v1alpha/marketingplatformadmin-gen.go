@@ -223,9 +223,9 @@ type AnalyticsAccountLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyticsAccountLink) MarshalJSON() ([]byte, error) {
+func (s AnalyticsAccountLink) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsAccountLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -261,9 +261,9 @@ type ListAnalyticsAccountLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAnalyticsAccountLinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListAnalyticsAccountLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnalyticsAccountLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Organization: A resource message representing a Google Marketing Platform
@@ -290,9 +290,9 @@ type Organization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Organization) MarshalJSON() ([]byte, error) {
+func (s Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetPropertyServiceLevelRequest: Request message for SetPropertyServiceLevel
@@ -324,9 +324,9 @@ type SetPropertyServiceLevelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetPropertyServiceLevelRequest) MarshalJSON() ([]byte, error) {
+func (s SetPropertyServiceLevelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetPropertyServiceLevelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetPropertyServiceLevelResponse: Response message for

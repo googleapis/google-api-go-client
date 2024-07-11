@@ -238,9 +238,9 @@ type GoogleGeoTypeViewport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
+func (s GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleGeoTypeViewport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AuthorAttribution: Information about the author of the UGC
@@ -265,9 +265,9 @@ type GoogleMapsPlacesV1AuthorAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AuthorAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AuthorAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AuthorAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesRequest: Request proto for
@@ -355,9 +355,9 @@ type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias: The region to
@@ -380,9 +380,9 @@ type GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction: The region
@@ -405,9 +405,9 @@ type GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponse: Response proto for
@@ -432,9 +432,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion: An Autocomplete
@@ -457,9 +457,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText: Text
@@ -489,9 +489,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction:
@@ -544,9 +544,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction:
@@ -584,9 +584,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange:
@@ -610,9 +610,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat:
@@ -640,9 +640,9 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1Circle: Circle with a LatLng as center and radius.
@@ -667,9 +667,9 @@ type GoogleMapsPlacesV1Circle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1Circle) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1Circle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1Circle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1Circle) UnmarshalJSON(data []byte) error {
@@ -710,9 +710,9 @@ type GoogleMapsPlacesV1ContentBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContentBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContentBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContentBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContent: Experimental: See
@@ -741,9 +741,9 @@ type GoogleMapsPlacesV1ContextualContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContent) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContentJustification: Experimental: See
@@ -774,9 +774,9 @@ type GoogleMapsPlacesV1ContextualContentJustification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContentJustification) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContentJustification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContentJustification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttribute
@@ -804,9 +804,9 @@ type GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttribu
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContentJustificationReviewJustification:
@@ -833,9 +833,9 @@ type GoogleMapsPlacesV1ContextualContentJustificationReviewJustification struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustification) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContentJustificationReviewJustification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlighte
@@ -860,9 +860,9 @@ type GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighligh
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlighte
@@ -883,9 +883,9 @@ type GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighligh
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1EVChargeOptions: Information about the EV Charge Station
@@ -915,9 +915,9 @@ type GoogleMapsPlacesV1EVChargeOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1EVChargeOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1EVChargeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1EVChargeOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation: EV charging
@@ -973,9 +973,9 @@ type GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1EVChargeOptionsConnectorAggregation) UnmarshalJSON(data []byte) error {
@@ -1012,9 +1012,9 @@ type GoogleMapsPlacesV1FuelOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1FuelOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1FuelOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1FuelOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1FuelOptionsFuelPrice: Fuel price information for a given
@@ -1060,9 +1060,9 @@ type GoogleMapsPlacesV1FuelOptionsFuelPrice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1FuelOptionsFuelPrice) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1FuelOptionsFuelPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1FuelOptionsFuelPrice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1Photo: Information about a photo of a place.
@@ -1090,9 +1090,9 @@ type GoogleMapsPlacesV1Photo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1Photo) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1Photo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1Photo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PhotoMedia: A photo media from Places API.
@@ -1118,9 +1118,9 @@ type GoogleMapsPlacesV1PhotoMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PhotoMedia) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PhotoMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PhotoMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1Place: All the information representing a Place.
@@ -1349,9 +1349,9 @@ type GoogleMapsPlacesV1Place struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1Place) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1Place) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1Place
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1Place) UnmarshalJSON(data []byte) error {
@@ -1392,9 +1392,9 @@ type GoogleMapsPlacesV1PlaceAccessibilityOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceAccessibilityOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceAccessibilityOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAccessibilityOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceAddressComponent: The structured components that form
@@ -1425,9 +1425,9 @@ type GoogleMapsPlacesV1PlaceAddressComponent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceAddressComponent) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceAddressComponent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAddressComponent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceAreaSummary: Experimental: See
@@ -1450,9 +1450,9 @@ type GoogleMapsPlacesV1PlaceAreaSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceAreaSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceAreaSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAreaSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceAttribution: Information about data providers of this
@@ -1475,9 +1475,9 @@ type GoogleMapsPlacesV1PlaceAttribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAttribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceGenerativeSummary: Experimental: See
@@ -1503,9 +1503,9 @@ type GoogleMapsPlacesV1PlaceGenerativeSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceGenerativeSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceGenerativeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceGenerativeSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceOpeningHours: Information about business hour of the
@@ -1564,9 +1564,9 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceOpeningHours) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceOpeningHours) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceOpeningHours
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceOpeningHoursPeriod: A period the place remains in
@@ -1589,9 +1589,9 @@ type GoogleMapsPlacesV1PlaceOpeningHoursPeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceOpeningHoursPeriod) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceOpeningHoursPeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceOpeningHoursPeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint: Status changing points.
@@ -1624,9 +1624,9 @@ type GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay: Structured information for
@@ -1649,9 +1649,9 @@ type GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceParkingOptions: Information about parking options for
@@ -1685,9 +1685,9 @@ type GoogleMapsPlacesV1PlaceParkingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceParkingOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceParkingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceParkingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlacePaymentOptions: Payment options the place accepts.
@@ -1714,9 +1714,9 @@ type GoogleMapsPlacesV1PlacePaymentOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlacePaymentOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlacePaymentOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlacePaymentOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlacePlusCode: Plus code (http://plus.codes) is a location
@@ -1744,9 +1744,9 @@ type GoogleMapsPlacesV1PlacePlusCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlacePlusCode) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlacePlusCode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlacePlusCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceSubDestination: Place resource name and id of sub
@@ -1770,9 +1770,9 @@ type GoogleMapsPlacesV1PlaceSubDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1PlaceSubDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1PlaceSubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceSubDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1References: Experimental: See
@@ -1797,9 +1797,9 @@ type GoogleMapsPlacesV1References struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1References) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1References) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1References
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1Review: Information about a review of a place.
@@ -1835,9 +1835,9 @@ type GoogleMapsPlacesV1Review struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1Review) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1Review) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1Review
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1Review) UnmarshalJSON(data []byte) error {
@@ -1952,9 +1952,9 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchNearbyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchNearbyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchNearbyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchNearbyRequestLocationRestriction: The region to
@@ -1975,9 +1975,9 @@ type GoogleMapsPlacesV1SearchNearbyRequestLocationRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchNearbyRequestLocationRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchNearbyRequestLocationRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchNearbyRequestLocationRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchNearbyResponse: Response proto for Search Nearby.
@@ -2001,9 +2001,9 @@ type GoogleMapsPlacesV1SearchNearbyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchNearbyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchNearbyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchNearbyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchTextRequest: Request proto for SearchText.
@@ -2111,9 +2111,9 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchTextRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1SearchTextRequest) UnmarshalJSON(data []byte) error {
@@ -2173,9 +2173,9 @@ type GoogleMapsPlacesV1SearchTextRequestEVOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchTextRequestEVOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchTextRequestEVOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextRequestEVOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlacesV1SearchTextRequestEVOptions) UnmarshalJSON(data []byte) error {
@@ -2218,9 +2218,9 @@ type GoogleMapsPlacesV1SearchTextRequestLocationBias struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchTextRequestLocationBias) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchTextRequestLocationBias) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextRequestLocationBias
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchTextRequestLocationRestriction: The region to
@@ -2247,9 +2247,9 @@ type GoogleMapsPlacesV1SearchTextRequestLocationRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchTextRequestLocationRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchTextRequestLocationRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextRequestLocationRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchTextResponse: Response proto for SearchText.
@@ -2285,9 +2285,9 @@ type GoogleMapsPlacesV1SearchTextResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlacesV1SearchTextResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlacesV1SearchTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDate: Represents a whole or partial calendar date, such as a
@@ -2323,9 +2323,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeLatLng: An object that represents a latitude/longitude pair. This
@@ -2351,9 +2351,9 @@ type GoogleTypeLatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
@@ -2394,9 +2394,9 @@ type GoogleTypeLocalizedText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLocalizedText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -2425,9 +2425,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PlacesAutocompleteCall struct {

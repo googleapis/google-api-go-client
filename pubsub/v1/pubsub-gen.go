@@ -265,14 +265,48 @@ type AcknowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AcknowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnalyticsHubSubscriptionInfo: Information about an associated Analytics Hub
+// subscription
+// (https://cloud.google.com/bigquery/docs/analytics-hub-manage-subscriptions).
+type AnalyticsHubSubscriptionInfo struct {
+	// Listing: Optional. The name of the associated Analytics Hub listing
+	// resource. Pattern:
+	// "projects/{project}/locations/{location}/dataExchanges/{data_exchange}/listin
+	// gs/{listing}"
+	Listing string `json:"listing,omitempty"`
+	// Subscription: Optional. The name of the associated Analytics Hub
+	// subscription resource. Pattern:
+	// "projects/{project}/locations/{location}/subscriptions/{subscription}"
+	Subscription string `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Listing") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Listing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnalyticsHubSubscriptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyticsHubSubscriptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AvroConfig: Configuration for writing message data in Avro format. Message
 // payloads and metadata will be written to files as an Avro binary.
 type AvroConfig struct {
+	// UseTopicSchema: Optional. When true, the output Cloud Storage file will be
+	// serialized using the topic schema, if it exists.
+	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
 	// WriteMetadata: Optional. When true, write the subscription name, message_id,
 	// publish_time, attributes, and ordering_key as additional fields in the
 	// output. The subscription name, message_id, and publish_time fields are put
@@ -280,22 +314,22 @@ type AvroConfig struct {
 	// example, an ordering_key, if present) are added as entries in the attributes
 	// map.
 	WriteMetadata bool `json:"writeMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// ForceSendFields is a list of field names (e.g. "UseTopicSchema") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WriteMetadata") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "UseTopicSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AvroConfig) MarshalJSON() ([]byte, error) {
+func (s AvroConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AvroConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsKinesis: Ingestion settings for Amazon Kinesis Data Streams.
@@ -349,9 +383,9 @@ type AwsKinesis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsKinesis) MarshalJSON() ([]byte, error) {
+func (s AwsKinesis) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsKinesis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryConfig: Configuration for a BigQuery subscription.
@@ -420,9 +454,9 @@ type BigQueryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryConfig) MarshalJSON() ([]byte, error) {
+func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -519,9 +553,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudStorageConfig: Configuration for a Cloud Storage subscription.
@@ -555,6 +589,9 @@ type CloudStorageConfig struct {
 	// Cloud Storage file is created. Min 1 minute, max 10 minutes, default 5
 	// minutes. May not exceed the subscription's acknowledgement deadline.
 	MaxDuration string `json:"maxDuration,omitempty"`
+	// MaxMessages: Optional. The maximum number of messages that can be written to
+	// a Cloud Storage file before a new file is created. Min 1000 messages.
+	MaxMessages int64 `json:"maxMessages,omitempty,string"`
 	// ServiceAccountEmail: Optional. The service account to use to write to Cloud
 	// Storage. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not
@@ -594,9 +631,9 @@ type CloudStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudStorageConfig) MarshalJSON() ([]byte, error) {
+func (s CloudStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitSchemaRequest: Request for CommitSchema method.
@@ -616,9 +653,9 @@ type CommitSchemaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitSchemaRequest) MarshalJSON() ([]byte, error) {
+func (s CommitSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitSchemaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateSnapshotRequest: Request for the `CreateSnapshot` method.
@@ -648,9 +685,9 @@ type CreateSnapshotRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateSnapshotRequest) MarshalJSON() ([]byte, error) {
+func (s CreateSnapshotRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSnapshotRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeadLetterPolicy: Dead lettering is done on a best effort basis. The same
@@ -689,9 +726,9 @@ type DeadLetterPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeadLetterPolicy) MarshalJSON() ([]byte, error) {
+func (s DeadLetterPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod DeadLetterPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DetachSubscriptionResponse: Response for the DetachSubscription method.
@@ -733,9 +770,9 @@ type ExpirationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpirationPolicy) MarshalJSON() ([]byte, error) {
+func (s ExpirationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpirationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -781,9 +818,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngestionDataSourceSettings: Settings for an ingestion data source on a
@@ -804,9 +841,9 @@ type IngestionDataSourceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngestionDataSourceSettings) MarshalJSON() ([]byte, error) {
+func (s IngestionDataSourceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestionDataSourceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSchemaRevisionsResponse: Response for the `ListSchemaRevisions` method.
@@ -832,9 +869,9 @@ type ListSchemaRevisionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSchemaRevisionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSchemaRevisionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSchemaRevisionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSchemasResponse: Response for the `ListSchemas` method.
@@ -861,9 +898,9 @@ type ListSchemasResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSchemasResponse) MarshalJSON() ([]byte, error) {
+func (s ListSchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSchemasResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSnapshotsResponse: Response for the `ListSnapshots` method.
@@ -890,9 +927,9 @@ type ListSnapshotsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSnapshotsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response for the `ListSubscriptions` method.
@@ -919,9 +956,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicSnapshotsResponse: Response for the `ListTopicSnapshots` method.
@@ -948,9 +985,9 @@ type ListTopicSnapshotsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicSnapshotsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicSnapshotsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicSubscriptionsResponse: Response for the `ListTopicSubscriptions`
@@ -979,9 +1016,9 @@ type ListTopicSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicsResponse: Response for the `ListTopics` method.
@@ -1008,9 +1045,9 @@ type ListTopicsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MessageStoragePolicy: A policy constraining the storage of messages
@@ -1042,9 +1079,9 @@ type MessageStoragePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MessageStoragePolicy) MarshalJSON() ([]byte, error) {
+func (s MessageStoragePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MessageStoragePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -1074,9 +1111,9 @@ type ModifyAckDeadlineRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAckDeadlineRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
@@ -1100,9 +1137,9 @@ type ModifyPushConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyPushConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NoWrapper: Sets the `data` field as the HTTP body for delivery.
@@ -1124,9 +1161,9 @@ type NoWrapper struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NoWrapper) MarshalJSON() ([]byte, error) {
+func (s NoWrapper) MarshalJSON() ([]byte, error) {
 	type NoMethod NoWrapper
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OidcToken: Contains information needed for generating an OpenID Connect
@@ -1157,9 +1194,9 @@ type OidcToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OidcToken) MarshalJSON() ([]byte, error) {
+func (s OidcToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OidcToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1247,9 +1284,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishRequest: Request for the Publish method.
@@ -1269,9 +1306,9 @@ type PublishRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishRequest) MarshalJSON() ([]byte, error) {
+func (s PublishRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishResponse: Response for the `Publish` method.
@@ -1296,9 +1333,9 @@ type PublishResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishResponse) MarshalJSON() ([]byte, error) {
+func (s PublishResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message that is published by publishers and consumed by
@@ -1348,9 +1385,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubWrapper: The payload to the push endpoint is in the form of the JSON
@@ -1386,9 +1423,9 @@ type PullRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullRequest) MarshalJSON() ([]byte, error) {
+func (s PullRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullResponse: Response for the `Pull` method.
@@ -1416,9 +1453,9 @@ type PullResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullResponse) MarshalJSON() ([]byte, error) {
+func (s PullResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -1466,9 +1503,9 @@ type PushConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PushConfig) MarshalJSON() ([]byte, error) {
+func (s PushConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PushConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReceivedMessage: A message and its corresponding acknowledgment ID.
@@ -1502,9 +1539,9 @@ type ReceivedMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
+func (s ReceivedMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ReceivedMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetryPolicy: A policy that specifies how Pub/Sub retries message delivery.
@@ -1536,9 +1573,9 @@ type RetryPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetryPolicy) MarshalJSON() ([]byte, error) {
+func (s RetryPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackSchemaRequest: Request for the `RollbackSchema` method.
@@ -1559,9 +1596,9 @@ type RollbackSchemaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackSchemaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Schema: A schema resource.
@@ -1601,9 +1638,9 @@ type Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Schema) MarshalJSON() ([]byte, error) {
+func (s Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SchemaSettings: Settings for validating messages published against a schema.
@@ -1642,9 +1679,9 @@ type SchemaSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SchemaSettings) MarshalJSON() ([]byte, error) {
+func (s SchemaSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SchemaSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SeekRequest: Request for the `Seek` method.
@@ -1677,9 +1714,9 @@ type SeekRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SeekRequest) MarshalJSON() ([]byte, error) {
+func (s SeekRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SeekRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SeekResponse: Response for the `Seek` method (this response is empty).
@@ -1708,9 +1745,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Snapshot: A snapshot resource. Snapshots are used in Seek
@@ -1754,9 +1791,9 @@ type Snapshot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Snapshot) MarshalJSON() ([]byte, error) {
+func (s Snapshot) MarshalJSON() ([]byte, error) {
 	type NoMethod Snapshot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A subscription resource. If none of `push_config`,
@@ -1780,6 +1817,10 @@ type Subscription struct {
 	// the push endpoint. If the subscriber never acknowledges the message, the
 	// Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
+	// AnalyticsHubSubscriptionInfo: Output only. Information about the associated
+	// Analytics Hub subscription. Only set if the subscritpion is created by
+	// Analytics Hub.
+	AnalyticsHubSubscriptionInfo *AnalyticsHubSubscriptionInfo `json:"analyticsHubSubscriptionInfo,omitempty"`
 	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
@@ -1900,9 +1941,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1925,9 +1966,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1952,9 +1993,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextConfig: Configuration for writing message data in text format. Message
@@ -2026,9 +2067,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSnapshotRequest: Request for the UpdateSnapshot method.
@@ -2051,9 +2092,9 @@ type UpdateSnapshotRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSnapshotRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSnapshotRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSnapshotRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSubscriptionRequest: Request for the UpdateSubscription method.
@@ -2076,9 +2117,9 @@ type UpdateSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateTopicRequest: Request for the UpdateTopic method.
@@ -2104,9 +2145,9 @@ type UpdateTopicRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateTopicRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateTopicRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateTopicRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateMessageRequest: Request for the `ValidateMessage` method.
@@ -2139,9 +2180,9 @@ type ValidateMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateMessageRequest) MarshalJSON() ([]byte, error) {
+func (s ValidateMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateMessageResponse: Response for the `ValidateMessage` method. Empty
@@ -2168,9 +2209,9 @@ type ValidateSchemaRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateSchemaRequest) MarshalJSON() ([]byte, error) {
+func (s ValidateSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateSchemaRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateSchemaResponse: Response for the `ValidateSchema` method. Empty for

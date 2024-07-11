@@ -401,9 +401,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -458,9 +458,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -481,9 +481,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -513,9 +513,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1BigQueryConnectionSpec: Specification for the
@@ -545,9 +545,9 @@ type GoogleCloudDatacatalogV1BigQueryConnectionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1BigQueryConnectionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1BigQueryConnectionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1BigQueryConnectionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1BigQueryDateShardedSpec: Specification for a group
@@ -582,9 +582,9 @@ type GoogleCloudDatacatalogV1BigQueryDateShardedSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1BigQueryDateShardedSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1BigQueryDateShardedSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1BigQueryDateShardedSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1BigQueryRoutineSpec: Fields specific for BigQuery
@@ -605,9 +605,9 @@ type GoogleCloudDatacatalogV1BigQueryRoutineSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1BigQueryRoutineSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1BigQueryRoutineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1BigQueryRoutineSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1BigQueryTableSpec: Describes a BigQuery table.
@@ -639,9 +639,9 @@ type GoogleCloudDatacatalogV1BigQueryTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1BigQueryTableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1BigQueryTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1BigQueryTableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1BusinessContext: Business Context of the entry.
@@ -663,9 +663,9 @@ type GoogleCloudDatacatalogV1BusinessContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1BusinessContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1BusinessContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1BusinessContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1CloudBigtableInstanceSpec: Specification that
@@ -687,9 +687,9 @@ type GoogleCloudDatacatalogV1CloudBigtableInstanceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1CloudBigtableInstanceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1CloudBigtableInstanceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1CloudBigtableInstanceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec:
@@ -716,9 +716,9 @@ type GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1CloudBigtableSystemSpec: Specification that applies
@@ -741,9 +741,9 @@ type GoogleCloudDatacatalogV1CloudBigtableSystemSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1CloudBigtableSystemSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1CloudBigtableSystemSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1CloudBigtableSystemSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec: Specification for
@@ -774,9 +774,9 @@ type GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ColumnSchema: A column within a schema. Columns can
@@ -835,9 +835,9 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ColumnSchemaFieldElementType: Represents the type of
@@ -858,9 +858,9 @@ type GoogleCloudDatacatalogV1ColumnSchemaFieldElementType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ColumnSchemaFieldElementType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ColumnSchemaFieldElementType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaFieldElementType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec: Column info specific
@@ -889,9 +889,9 @@ type GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1CommonUsageStats: Common statistics on the entry's
@@ -912,9 +912,9 @@ type GoogleCloudDatacatalogV1CommonUsageStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1CommonUsageStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1CommonUsageStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1CommonUsageStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1Contacts: Contact people for the entry.
@@ -934,9 +934,9 @@ type GoogleCloudDatacatalogV1Contacts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1Contacts) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1Contacts) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Contacts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ContactsPerson: A contact person for the entry.
@@ -959,9 +959,9 @@ type GoogleCloudDatacatalogV1ContactsPerson struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ContactsPerson) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ContactsPerson) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ContactsPerson
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataSource: Physical location of an entry.
@@ -994,9 +994,9 @@ type GoogleCloudDatacatalogV1DataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataSourceConnectionSpec: Specification that applies
@@ -1020,9 +1020,9 @@ type GoogleCloudDatacatalogV1DataSourceConnectionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataSourceConnectionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DatabaseTableSpec: Specification that applies to a
@@ -1054,9 +1054,9 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DatabaseTableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DatabaseTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec: Specification
@@ -1086,9 +1086,9 @@ type GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataplexExternalTable: External table registered by
@@ -1132,9 +1132,9 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataplexExternalTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataplexExternalTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataplexExternalTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specyfication for a
@@ -1155,9 +1155,9 @@ type GoogleCloudDatacatalogV1DataplexFilesetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataplexFilesetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataplexFilesetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataplexFilesetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex fields.
@@ -1187,9 +1187,9 @@ type GoogleCloudDatacatalogV1DataplexSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataplexSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataplexSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataplexSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DataplexTableSpec: Entry specification for a
@@ -1216,9 +1216,9 @@ type GoogleCloudDatacatalogV1DataplexTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DataplexTableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DataplexTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DataplexTableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DatasetSpec: Specification that applies to a
@@ -1239,9 +1239,9 @@ type GoogleCloudDatacatalogV1DatasetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DatasetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DatasetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DatasetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1DumpItem: Wrapper for any item that can be contained
@@ -1262,9 +1262,9 @@ type GoogleCloudDatacatalogV1DumpItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DumpItem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1DumpItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DumpItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1Entry: Entry metadata. A Data Catalog entry
@@ -1445,9 +1445,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1Entry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1Entry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Entry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1EntryOverview: Entry overview fields for rich text
@@ -1471,9 +1471,9 @@ type GoogleCloudDatacatalogV1EntryOverview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1EntryOverview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1EntryOverview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1EntryOverview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1FeatureOnlineStoreSpec: Detail description of the
@@ -1500,9 +1500,9 @@ type GoogleCloudDatacatalogV1FeatureOnlineStoreSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1FeatureOnlineStoreSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1FeatureOnlineStoreSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1FeatureOnlineStoreSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1FilesetSpec: Specification that applies to a
@@ -1524,9 +1524,9 @@ type GoogleCloudDatacatalogV1FilesetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1FilesetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1FilesetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1FilesetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1GcsFileSpec: Specification of a single file in Cloud
@@ -1552,9 +1552,9 @@ type GoogleCloudDatacatalogV1GcsFileSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1GcsFileSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1GcsFileSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1GcsFileSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1GcsFilesetSpec: Describes a Cloud Storage fileset
@@ -1594,9 +1594,9 @@ type GoogleCloudDatacatalogV1GcsFilesetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1GcsFilesetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ImportEntriesMetadata: Metadata message for
@@ -1630,9 +1630,9 @@ type GoogleCloudDatacatalogV1ImportEntriesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ImportEntriesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ImportEntriesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ImportEntriesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ImportEntriesResponse: Response message for
@@ -1657,9 +1657,9 @@ type GoogleCloudDatacatalogV1ImportEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ImportEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ImportEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ImportEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1LookerSystemSpec: Specification that applies to
@@ -1693,9 +1693,9 @@ type GoogleCloudDatacatalogV1LookerSystemSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1LookerSystemSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ModelSpec: Specification that applies to a model.
@@ -1716,9 +1716,9 @@ type GoogleCloudDatacatalogV1ModelSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ModelSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ModelSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ModelSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1PersonalDetails: Entry metadata relevant only to the
@@ -1741,9 +1741,9 @@ type GoogleCloudDatacatalogV1PersonalDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1PersonalDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1PersonalDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PersonalDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1PhysicalSchema: Native schema used by a resource
@@ -1775,9 +1775,9 @@ type GoogleCloudDatacatalogV1PhysicalSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1PhysicalSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1PhysicalSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PhysicalSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema: Schema in Avro JSON
@@ -1798,9 +1798,9 @@ type GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1PhysicalSchemaCsvSchema: Marks a CSV-encoded data
@@ -1836,9 +1836,9 @@ type GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema: Schema in Thrift format.
@@ -1858,9 +1858,9 @@ type GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ReconcileTagsMetadata: Long-running operation
@@ -1891,9 +1891,9 @@ type GoogleCloudDatacatalogV1ReconcileTagsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ReconcileTagsResponse: Long-running operation
@@ -1918,9 +1918,9 @@ type GoogleCloudDatacatalogV1ReconcileTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ReconcileTagsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ReconcileTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1RoutineSpec: Specification that applies to a
@@ -1959,9 +1959,9 @@ type GoogleCloudDatacatalogV1RoutineSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1RoutineSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1RoutineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1RoutineSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1RoutineSpecArgument: Input or output argument of a
@@ -1994,9 +1994,9 @@ type GoogleCloudDatacatalogV1RoutineSpecArgument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1RoutineSpecArgument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1RoutineSpecArgument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1RoutineSpecArgument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1Schema: Represents a schema, for example, a
@@ -2019,9 +2019,9 @@ type GoogleCloudDatacatalogV1Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1Schema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ServiceSpec: Specification that applies to a Service
@@ -2043,9 +2043,9 @@ type GoogleCloudDatacatalogV1ServiceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ServiceSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ServiceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ServiceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1SqlDatabaseSystemSpec: Specification that applies to
@@ -2074,9 +2074,9 @@ type GoogleCloudDatacatalogV1SqlDatabaseSystemSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1SqlDatabaseSystemSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1SqlDatabaseSystemSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1SqlDatabaseSystemSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1StorageProperties: Details the properties of the
@@ -2110,9 +2110,9 @@ type GoogleCloudDatacatalogV1StorageProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1StorageProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1StorageProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1StorageProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1SystemTimestamps: Timestamps associated with this
@@ -2141,9 +2141,9 @@ type GoogleCloudDatacatalogV1SystemTimestamps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1SystemTimestamps) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1SystemTimestamps) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1SystemTimestamps
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1TableSpec: Normal BigQuery table specification.
@@ -2167,9 +2167,9 @@ type GoogleCloudDatacatalogV1TableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1TableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1TableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1TableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1Tag: Tags contain custom metadata and are attached
@@ -2211,9 +2211,9 @@ type GoogleCloudDatacatalogV1Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1Tag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1TagField: Contains the value and additional
@@ -2255,9 +2255,9 @@ type GoogleCloudDatacatalogV1TagField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1TagField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1TagField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1TagField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatacatalogV1TagField) UnmarshalJSON(data []byte) error {
@@ -2291,9 +2291,9 @@ type GoogleCloudDatacatalogV1TagFieldEnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1TagFieldEnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1TagFieldEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1TagFieldEnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1TaggedEntry: Wrapper containing Entry and
@@ -2320,9 +2320,9 @@ type GoogleCloudDatacatalogV1TaggedEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1TaggedEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1TaggedEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1TaggedEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1UsageSignal: The set of all usage signals that Data
@@ -2354,9 +2354,9 @@ type GoogleCloudDatacatalogV1UsageSignal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1UsageSignal) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1UsageSignal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1UsageSignal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1UsageStats: Detailed statistics on the entry's
@@ -2389,9 +2389,9 @@ type GoogleCloudDatacatalogV1UsageStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1UsageStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1UsageStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1UsageStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatacatalogV1UsageStats) UnmarshalJSON(data []byte) error {
@@ -2456,9 +2456,9 @@ type GoogleCloudDatacatalogV1VertexDatasetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1VertexDatasetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1VertexDatasetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1VertexDatasetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1VertexModelSourceInfo: Detail description of the
@@ -2493,9 +2493,9 @@ type GoogleCloudDatacatalogV1VertexModelSourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1VertexModelSourceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1VertexModelSourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1VertexModelSourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1VertexModelSpec: Specification for vertex model
@@ -2526,9 +2526,9 @@ type GoogleCloudDatacatalogV1VertexModelSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1VertexModelSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1VertexModelSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1VertexModelSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ViewSpec: Table view specification.
@@ -2548,9 +2548,9 @@ type GoogleCloudDatacatalogV1ViewSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1ViewSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1ViewSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ViewSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec: Spec for a group of
@@ -2581,9 +2581,9 @@ type GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1BigQueryTableSpec: Describes a BigQuery table.
@@ -2615,9 +2615,9 @@ type GoogleCloudDatacatalogV1beta1BigQueryTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1BigQueryTableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1BigQueryTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1BigQueryTableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ColumnSchema: Representation of a column within
@@ -2650,9 +2650,9 @@ type GoogleCloudDatacatalogV1beta1ColumnSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ColumnSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ColumnSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1Entry: Entry Metadata. A Data Catalog Entry
@@ -2758,9 +2758,9 @@ type GoogleCloudDatacatalogV1beta1Entry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1Entry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1Entry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1Entry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1EntryGroup: EntryGroup Metadata. An EntryGroup
@@ -2799,9 +2799,9 @@ type GoogleCloudDatacatalogV1beta1EntryGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1EntryGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1EntryGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1EntryGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse: Response message for
@@ -2825,9 +2825,9 @@ type GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatacatalogV1beta1FieldType struct {
@@ -2856,9 +2856,9 @@ type GoogleCloudDatacatalogV1beta1FieldType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1FieldType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1FieldType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1FieldType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatacatalogV1beta1FieldTypeEnumType struct {
@@ -2876,9 +2876,9 @@ type GoogleCloudDatacatalogV1beta1FieldTypeEnumType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1FieldTypeEnumType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1FieldTypeEnumType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1FieldTypeEnumType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue struct {
@@ -2898,9 +2898,9 @@ type GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1GcsFileSpec: Specifications of a single file in
@@ -2925,9 +2925,9 @@ type GoogleCloudDatacatalogV1beta1GcsFileSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1GcsFileSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1GcsFileSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1GcsFileSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1GcsFilesetSpec: Describes a Cloud Storage
@@ -2967,9 +2967,9 @@ type GoogleCloudDatacatalogV1beta1GcsFilesetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1GcsFilesetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest: Request message for
@@ -2990,9 +2990,9 @@ type GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse: Response message for
@@ -3016,9 +3016,9 @@ type GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1InlineSource: Inline source used for taxonomies
@@ -3039,9 +3039,9 @@ type GoogleCloudDatacatalogV1beta1InlineSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1InlineSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1InlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1InlineSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ListEntriesResponse: Response message for
@@ -3068,9 +3068,9 @@ type GoogleCloudDatacatalogV1beta1ListEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ListEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ListEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ListEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse: Response message for
@@ -3097,9 +3097,9 @@ type GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse: Response message for
@@ -3126,9 +3126,9 @@ type GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ListTagsResponse: Response message for
@@ -3155,9 +3155,9 @@ type GoogleCloudDatacatalogV1beta1ListTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ListTagsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ListTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse: Response message for
@@ -3184,9 +3184,9 @@ type GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1PolicyTag: Denotes one policy tag in a taxonomy
@@ -3235,9 +3235,9 @@ type GoogleCloudDatacatalogV1beta1PolicyTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1PolicyTag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1PolicyTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1PolicyTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest: Request
@@ -3259,9 +3259,9 @@ type GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest: Request message
@@ -3283,9 +3283,9 @@ type GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1Schema: Represents a schema (e.g. BigQuery,
@@ -3307,9 +3307,9 @@ type GoogleCloudDatacatalogV1beta1Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1Schema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogRequest: Request message for
@@ -3357,9 +3357,9 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SearchCatalogRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SearchCatalogRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SearchCatalogRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope: The criteria that
@@ -3405,9 +3405,9 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogResponse: Response message for
@@ -3441,9 +3441,9 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SearchCatalogResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SearchCatalogResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SearchCatalogResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogResult: A result that appears in
@@ -3490,9 +3490,9 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SearchCatalogResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SearchCatalogResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SearchCatalogResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SerializedPolicyTag: Message representing one
@@ -3523,9 +3523,9 @@ type GoogleCloudDatacatalogV1beta1SerializedPolicyTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SerializedPolicyTag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SerializedPolicyTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SerializedPolicyTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SerializedTaxonomy: Message capturing a
@@ -3562,9 +3562,9 @@ type GoogleCloudDatacatalogV1beta1SerializedTaxonomy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SerializedTaxonomy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SerializedTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SerializedTaxonomy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1SystemTimestamps: Timestamps about this
@@ -3590,9 +3590,9 @@ type GoogleCloudDatacatalogV1beta1SystemTimestamps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1SystemTimestamps) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1SystemTimestamps) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1SystemTimestamps
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1TableSpec: Normal BigQuery table spec.
@@ -3616,9 +3616,9 @@ type GoogleCloudDatacatalogV1beta1TableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TableSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1Tag: Tags are used to attach custom metadata to
@@ -3664,9 +3664,9 @@ type GoogleCloudDatacatalogV1beta1Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1Tag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1TagField: Contains the value and supporting
@@ -3703,9 +3703,9 @@ type GoogleCloudDatacatalogV1beta1TagField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TagField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TagField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TagField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatacatalogV1beta1TagField) UnmarshalJSON(data []byte) error {
@@ -3739,9 +3739,9 @@ type GoogleCloudDatacatalogV1beta1TagFieldEnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TagFieldEnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1TagTemplate: A tag template defines a tag,
@@ -3760,6 +3760,8 @@ type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// its tags are only visible and editable in DataCatalog.
 	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
 	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
+	// Deprecated: Individual TagTemplate migration is deprecated in favor of
+	// organization or project wide TagTemplate migration opt-in.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// DisplayName: The display name for this template. Defaults to an empty
 	// string.
@@ -3794,9 +3796,9 @@ type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TagTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TagTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TagTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1TagTemplateField: The template for an
@@ -3837,9 +3839,9 @@ type GoogleCloudDatacatalogV1beta1TagTemplateField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TagTemplateField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TagTemplateField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TagTemplateField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1Taxonomy: A taxonomy is a collection of policy
@@ -3895,9 +3897,9 @@ type GoogleCloudDatacatalogV1beta1Taxonomy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1Taxonomy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1Taxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1Taxonomy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1TaxonomyService: The source system of the
@@ -3925,9 +3927,9 @@ type GoogleCloudDatacatalogV1beta1TaxonomyService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1TaxonomyService) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1TaxonomyService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1TaxonomyService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1UsageSignal: The set of all usage signals that
@@ -3951,9 +3953,9 @@ type GoogleCloudDatacatalogV1beta1UsageSignal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1UsageSignal) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1UsageSignal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1UsageSignal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1beta1UsageStats: Detailed counts on the entry's
@@ -3987,9 +3989,9 @@ type GoogleCloudDatacatalogV1beta1UsageStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1UsageStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1UsageStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1UsageStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatacatalogV1beta1UsageStats) UnmarshalJSON(data []byte) error {
@@ -4029,9 +4031,9 @@ type GoogleCloudDatacatalogV1beta1ViewSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1beta1ViewSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogV1beta1ViewSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1beta1ViewSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -4119,9 +4121,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -4144,9 +4146,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -4178,9 +4180,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -4203,9 +4205,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -4230,9 +4232,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CatalogSearchCall struct {

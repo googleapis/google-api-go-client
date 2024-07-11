@@ -239,9 +239,9 @@ type AddBandingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddBandingRequest) MarshalJSON() ([]byte, error) {
+func (s AddBandingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddBandingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddBandingResponse: The result of adding a banded range.
@@ -261,9 +261,9 @@ type AddBandingResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddBandingResponse) MarshalJSON() ([]byte, error) {
+func (s AddBandingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddBandingResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddChartRequest: Adds a chart to a sheet in the spreadsheet.
@@ -286,9 +286,9 @@ type AddChartRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddChartRequest) MarshalJSON() ([]byte, error) {
+func (s AddChartRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddChartRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddChartResponse: The result of adding a chart to a spreadsheet.
@@ -308,9 +308,9 @@ type AddChartResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddChartResponse) MarshalJSON() ([]byte, error) {
+func (s AddChartResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddChartResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddConditionalFormatRuleRequest: Adds a new conditional format rule at the
@@ -333,15 +333,16 @@ type AddConditionalFormatRuleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
+func (s AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddConditionalFormatRuleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddDataSourceRequest: Adds a data source. After the data source is added
 // successfully, an associated DATA_SOURCE sheet is created and an execution is
 // triggered to refresh the sheet to read data from the data source. The
-// request requires an additional `bigquery.readonly` OAuth scope.
+// request requires an additional `bigquery.readonly` OAuth scope if you are
+// adding a BigQuery data source.
 type AddDataSourceRequest struct {
 	// DataSource: The data source to add.
 	DataSource *DataSource `json:"dataSource,omitempty"`
@@ -358,9 +359,9 @@ type AddDataSourceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddDataSourceRequest) MarshalJSON() ([]byte, error) {
+func (s AddDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddDataSourceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddDataSourceResponse: The result of adding a data source.
@@ -382,9 +383,9 @@ type AddDataSourceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddDataSourceResponse) MarshalJSON() ([]byte, error) {
+func (s AddDataSourceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddDataSourceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddDimensionGroupRequest: Creates a group over the specified range. If the
@@ -416,9 +417,9 @@ type AddDimensionGroupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+func (s AddDimensionGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddDimensionGroupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddDimensionGroupResponse: The result of adding a group.
@@ -439,9 +440,9 @@ type AddDimensionGroupResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddDimensionGroupResponse) MarshalJSON() ([]byte, error) {
+func (s AddDimensionGroupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddDimensionGroupResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddFilterViewRequest: Adds a filter view.
@@ -463,9 +464,9 @@ type AddFilterViewRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddFilterViewRequest) MarshalJSON() ([]byte, error) {
+func (s AddFilterViewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddFilterViewRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddFilterViewResponse: The result of adding a filter view.
@@ -485,9 +486,9 @@ type AddFilterViewResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddFilterViewResponse) MarshalJSON() ([]byte, error) {
+func (s AddFilterViewResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddFilterViewResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddNamedRangeRequest: Adds a named range to the spreadsheet.
@@ -509,9 +510,9 @@ type AddNamedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddNamedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s AddNamedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddNamedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddNamedRangeResponse: The result of adding a named range.
@@ -531,9 +532,9 @@ type AddNamedRangeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddNamedRangeResponse) MarshalJSON() ([]byte, error) {
+func (s AddNamedRangeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddNamedRangeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddProtectedRangeRequest: Adds a new protected range.
@@ -555,9 +556,9 @@ type AddProtectedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddProtectedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s AddProtectedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddProtectedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddProtectedRangeResponse: The result of adding a new protected range.
@@ -577,9 +578,9 @@ type AddProtectedRangeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddProtectedRangeResponse) MarshalJSON() ([]byte, error) {
+func (s AddProtectedRangeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddProtectedRangeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSheetRequest: Adds a new sheet. When a sheet is added at a given index,
@@ -605,9 +606,9 @@ type AddSheetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddSheetRequest) MarshalJSON() ([]byte, error) {
+func (s AddSheetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSheetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSheetResponse: The result of adding a sheet.
@@ -627,9 +628,9 @@ type AddSheetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddSheetResponse) MarshalJSON() ([]byte, error) {
+func (s AddSheetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSheetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSlicerRequest: Adds a slicer to a sheet in the spreadsheet.
@@ -652,9 +653,9 @@ type AddSlicerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddSlicerRequest) MarshalJSON() ([]byte, error) {
+func (s AddSlicerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSlicerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddSlicerResponse: The result of adding a slicer to a spreadsheet.
@@ -674,9 +675,9 @@ type AddSlicerResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddSlicerResponse) MarshalJSON() ([]byte, error) {
+func (s AddSlicerResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSlicerResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppendCellsRequest: Adds new cells after the last row with data in a sheet,
@@ -703,9 +704,9 @@ type AppendCellsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppendCellsRequest) MarshalJSON() ([]byte, error) {
+func (s AppendCellsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AppendCellsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppendDimensionRequest: Appends rows or columns to the end of a sheet.
@@ -734,9 +735,9 @@ type AppendDimensionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppendDimensionRequest) MarshalJSON() ([]byte, error) {
+func (s AppendDimensionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AppendDimensionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppendValuesResponse: The response when updating a range of values in a
@@ -765,9 +766,9 @@ type AppendValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppendValuesResponse) MarshalJSON() ([]byte, error) {
+func (s AppendValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AppendValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoFillRequest: Fills in more data based on existing data.
@@ -795,9 +796,9 @@ type AutoFillRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoFillRequest) MarshalJSON() ([]byte, error) {
+func (s AutoFillRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoFillRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoResizeDimensionsRequest: Automatically resizes one or more dimensions
@@ -821,9 +822,9 @@ type AutoResizeDimensionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
+func (s AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoResizeDimensionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BandedRange: A banded (alternating colors) range in a sheet.
@@ -853,9 +854,9 @@ type BandedRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BandedRange) MarshalJSON() ([]byte, error) {
+func (s BandedRange) MarshalJSON() ([]byte, error) {
 	type NoMethod BandedRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BandingProperties: Properties referring a single dimension (either row or
@@ -919,9 +920,9 @@ type BandingProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BandingProperties) MarshalJSON() ([]byte, error) {
+func (s BandingProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod BandingProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BaselineValueFormat: Formatting options for baseline value.
@@ -973,9 +974,9 @@ type BaselineValueFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BaselineValueFormat) MarshalJSON() ([]byte, error) {
+func (s BaselineValueFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod BaselineValueFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicChartAxis: An axis of the chart. A chart may not have more than one
@@ -1016,9 +1017,9 @@ type BasicChartAxis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicChartAxis) MarshalJSON() ([]byte, error) {
+func (s BasicChartAxis) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicChartAxis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicChartDomain: The domain of a chart. For example, if charting stock
@@ -1042,9 +1043,9 @@ type BasicChartDomain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicChartDomain) MarshalJSON() ([]byte, error) {
+func (s BasicChartDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicChartDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicChartSeries: A single series of data in a chart. For example, if
@@ -1117,9 +1118,9 @@ type BasicChartSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicChartSeries) MarshalJSON() ([]byte, error) {
+func (s BasicChartSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicChartSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicChartSpec: The specification for a basic chart. See BasicChartType for
@@ -1216,9 +1217,9 @@ type BasicChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicChartSpec) MarshalJSON() ([]byte, error) {
+func (s BasicChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicFilter: The default filter associated with a sheet.
@@ -1249,9 +1250,9 @@ type BasicFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicFilter) MarshalJSON() ([]byte, error) {
+func (s BasicFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicSeriesDataPointStyleOverride: Style override settings for a single
@@ -1283,9 +1284,9 @@ type BasicSeriesDataPointStyleOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicSeriesDataPointStyleOverride) MarshalJSON() ([]byte, error) {
+func (s BasicSeriesDataPointStyleOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicSeriesDataPointStyleOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchClearValuesByDataFilterRequest: The request for clearing more than one
@@ -1306,9 +1307,9 @@ type BatchClearValuesByDataFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
+func (s BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchClearValuesByDataFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchClearValuesByDataFilterResponse: The response when clearing a range of
@@ -1337,9 +1338,9 @@ type BatchClearValuesByDataFilterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
+func (s BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchClearValuesByDataFilterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchClearValuesRequest: The request for clearing more than one range of
@@ -1361,9 +1362,9 @@ type BatchClearValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchClearValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchClearValuesResponse: The response when clearing a range of values in a
@@ -1391,9 +1392,9 @@ type BatchClearValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchClearValuesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchClearValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchClearValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetValuesByDataFilterRequest: The request for retrieving a range of
@@ -1463,9 +1464,9 @@ type BatchGetValuesByDataFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
+func (s BatchGetValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetValuesByDataFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetValuesByDataFilterResponse: The response when retrieving more than
@@ -1492,9 +1493,9 @@ type BatchGetValuesByDataFilterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetValuesByDataFilterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetValuesResponse: The response when retrieving more than one range of
@@ -1521,9 +1522,9 @@ type BatchGetValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetValuesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSpreadsheetRequest: The request for updating any aspect of a
@@ -1556,9 +1557,9 @@ type BatchUpdateSpreadsheetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSpreadsheetRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSpreadsheetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSpreadsheetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSpreadsheetResponse: The reply for batch updating a spreadsheet.
@@ -1588,9 +1589,9 @@ type BatchUpdateSpreadsheetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSpreadsheetResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSpreadsheetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSpreadsheetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateValuesByDataFilterRequest: The request for updating more than one
@@ -1671,9 +1672,9 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateValuesByDataFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateValuesByDataFilterResponse: The response when updating a range of
@@ -1710,9 +1711,9 @@ type BatchUpdateValuesByDataFilterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateValuesByDataFilterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateValuesRequest: The request for updating more than one range of
@@ -1791,9 +1792,9 @@ type BatchUpdateValuesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateValuesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateValuesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateValuesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateValuesResponse: The response when updating a range of values in a
@@ -1831,9 +1832,9 @@ type BatchUpdateValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryDataSourceSpec: The specification of a BigQuery data source that's
@@ -1860,9 +1861,9 @@ type BigQueryDataSourceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryDataSourceSpec) MarshalJSON() ([]byte, error) {
+func (s BigQueryDataSourceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDataSourceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryQuerySpec: Specifies a custom BigQuery query.
@@ -1882,9 +1883,9 @@ type BigQueryQuerySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
+func (s BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryQuerySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryTableSpec: Specifies a BigQuery table definition. Only native tables
@@ -1910,9 +1911,9 @@ type BigQueryTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryTableSpec) MarshalJSON() ([]byte, error) {
+func (s BigQueryTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryTableSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BooleanCondition: A condition that can evaluate to true or false.
@@ -2046,9 +2047,9 @@ type BooleanCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BooleanCondition) MarshalJSON() ([]byte, error) {
+func (s BooleanCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod BooleanCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BooleanRule: A rule that may or may not match, depending on the condition.
@@ -2073,9 +2074,9 @@ type BooleanRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BooleanRule) MarshalJSON() ([]byte, error) {
+func (s BooleanRule) MarshalJSON() ([]byte, error) {
 	type NoMethod BooleanRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Border: A border along a cell.
@@ -2113,9 +2114,9 @@ type Border struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Border) MarshalJSON() ([]byte, error) {
+func (s Border) MarshalJSON() ([]byte, error) {
 	type NoMethod Border
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Borders: The borders of the cell.
@@ -2141,9 +2142,9 @@ type Borders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Borders) MarshalJSON() ([]byte, error) {
+func (s Borders) MarshalJSON() ([]byte, error) {
 	type NoMethod Borders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BubbleChartSpec: A bubble chart.
@@ -2208,9 +2209,9 @@ type BubbleChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BubbleChartSpec) MarshalJSON() ([]byte, error) {
+func (s BubbleChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod BubbleChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BubbleChartSpec) UnmarshalJSON(data []byte) error {
@@ -2228,7 +2229,9 @@ func (s *BubbleChartSpec) UnmarshalJSON(data []byte) error {
 }
 
 // CancelDataSourceRefreshRequest: Cancels one or multiple refreshes of data
-// source objects in the spreadsheet by the specified references.
+// source objects in the spreadsheet by the specified references. The request
+// requires an additional `bigquery.readonly` OAuth scope if you are cancelling
+// a refresh on a BigQuery data source.
 type CancelDataSourceRefreshRequest struct {
 	// DataSourceId: Reference to a DataSource. If specified, cancels all
 	// associated data source object refreshes for this data source.
@@ -2252,9 +2255,9 @@ type CancelDataSourceRefreshRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelDataSourceRefreshRequest) MarshalJSON() ([]byte, error) {
+func (s CancelDataSourceRefreshRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelDataSourceRefreshRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelDataSourceRefreshResponse: The response from cancelling one or
@@ -2278,9 +2281,9 @@ type CancelDataSourceRefreshResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelDataSourceRefreshResponse) MarshalJSON() ([]byte, error) {
+func (s CancelDataSourceRefreshResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelDataSourceRefreshResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelDataSourceRefreshStatus: The status of cancelling a single data source
@@ -2304,9 +2307,9 @@ type CancelDataSourceRefreshStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelDataSourceRefreshStatus) MarshalJSON() ([]byte, error) {
+func (s CancelDataSourceRefreshStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelDataSourceRefreshStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CandlestickChartSpec: A candlestick chart.
@@ -2330,9 +2333,9 @@ type CandlestickChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CandlestickChartSpec) MarshalJSON() ([]byte, error) {
+func (s CandlestickChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod CandlestickChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CandlestickData: The Candlestick chart data, each containing the low, open,
@@ -2365,9 +2368,9 @@ type CandlestickData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CandlestickData) MarshalJSON() ([]byte, error) {
+func (s CandlestickData) MarshalJSON() ([]byte, error) {
 	type NoMethod CandlestickData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CandlestickDomain: The domain of a CandlestickChart.
@@ -2389,9 +2392,9 @@ type CandlestickDomain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CandlestickDomain) MarshalJSON() ([]byte, error) {
+func (s CandlestickDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod CandlestickDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CandlestickSeries: The series of a CandlestickData.
@@ -2411,9 +2414,9 @@ type CandlestickSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CandlestickSeries) MarshalJSON() ([]byte, error) {
+func (s CandlestickSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod CandlestickSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CellData: Data about a specific cell.
@@ -2486,9 +2489,9 @@ type CellData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CellData) MarshalJSON() ([]byte, error) {
+func (s CellData) MarshalJSON() ([]byte, error) {
 	type NoMethod CellData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CellFormat: The format of a cell.
@@ -2583,9 +2586,9 @@ type CellFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CellFormat) MarshalJSON() ([]byte, error) {
+func (s CellFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod CellFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartAxisViewWindowOptions: The options that define a "view window" for a
@@ -2625,9 +2628,9 @@ type ChartAxisViewWindowOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartAxisViewWindowOptions) MarshalJSON() ([]byte, error) {
+func (s ChartAxisViewWindowOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartAxisViewWindowOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ChartAxisViewWindowOptions) UnmarshalJSON(data []byte) error {
@@ -2668,9 +2671,9 @@ type ChartCustomNumberFormatOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartCustomNumberFormatOptions) MarshalJSON() ([]byte, error) {
+func (s ChartCustomNumberFormatOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartCustomNumberFormatOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartData: The data included in a domain or series.
@@ -2708,9 +2711,9 @@ type ChartData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartData) MarshalJSON() ([]byte, error) {
+func (s ChartData) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartDateTimeRule: Allows you to organize the date-time values in a source
@@ -2761,9 +2764,9 @@ type ChartDateTimeRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartDateTimeRule) MarshalJSON() ([]byte, error) {
+func (s ChartDateTimeRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartDateTimeRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartGroupRule: An optional setting on the ChartData of the domain of a data
@@ -2791,9 +2794,9 @@ type ChartGroupRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartGroupRule) MarshalJSON() ([]byte, error) {
+func (s ChartGroupRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartGroupRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartHistogramRule: Allows you to organize numeric values in a source data
@@ -2822,9 +2825,9 @@ type ChartHistogramRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartHistogramRule) MarshalJSON() ([]byte, error) {
+func (s ChartHistogramRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartHistogramRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ChartHistogramRule) UnmarshalJSON(data []byte) error {
@@ -2870,9 +2873,9 @@ type ChartSourceRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartSourceRange) MarshalJSON() ([]byte, error) {
+func (s ChartSourceRange) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartSourceRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartSpec: The specifications of a chart.
@@ -2960,9 +2963,9 @@ type ChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartSpec) MarshalJSON() ([]byte, error) {
+func (s ChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClearBasicFilterRequest: Clears the basic filter, if any exists on the
@@ -2983,9 +2986,9 @@ type ClearBasicFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClearBasicFilterRequest) MarshalJSON() ([]byte, error) {
+func (s ClearBasicFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ClearBasicFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClearValuesRequest: The request for clearing a range of values in a
@@ -3019,9 +3022,9 @@ type ClearValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
+func (s ClearValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ClearValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Color: Represents a color in the RGBA color space. This representation is
@@ -3102,9 +3105,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -3161,9 +3164,9 @@ type ColorStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ColorStyle) MarshalJSON() ([]byte, error) {
+func (s ColorStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod ColorStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConditionValue: The value of the condition.
@@ -3199,9 +3202,9 @@ type ConditionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConditionValue) MarshalJSON() ([]byte, error) {
+func (s ConditionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ConditionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConditionalFormatRule: A rule describing a conditional format.
@@ -3226,9 +3229,9 @@ type ConditionalFormatRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConditionalFormatRule) MarshalJSON() ([]byte, error) {
+func (s ConditionalFormatRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ConditionalFormatRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyPasteRequest: Copies data from the source to the destination.
@@ -3274,9 +3277,9 @@ type CopyPasteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyPasteRequest) MarshalJSON() ([]byte, error) {
+func (s CopyPasteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyPasteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopySheetToAnotherSpreadsheetRequest: The request to copy a sheet across
@@ -3297,9 +3300,9 @@ type CopySheetToAnotherSpreadsheetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopySheetToAnotherSpreadsheetRequest) MarshalJSON() ([]byte, error) {
+func (s CopySheetToAnotherSpreadsheetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopySheetToAnotherSpreadsheetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDeveloperMetadataRequest: A request to create developer metadata.
@@ -3319,9 +3322,9 @@ type CreateDeveloperMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s CreateDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDeveloperMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDeveloperMetadataResponse: The response from creating developer
@@ -3342,9 +3345,9 @@ type CreateDeveloperMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s CreateDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDeveloperMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CutPasteRequest: Moves data from the source to the destination.
@@ -3380,9 +3383,9 @@ type CutPasteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CutPasteRequest) MarshalJSON() ([]byte, error) {
+func (s CutPasteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CutPasteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataExecutionStatus: The data execution status. A data execution is created
@@ -3457,9 +3460,9 @@ type DataExecutionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataExecutionStatus) MarshalJSON() ([]byte, error) {
+func (s DataExecutionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DataExecutionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataFilter: Filter that describes what data should be selected or returned
@@ -3485,9 +3488,9 @@ type DataFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataFilter) MarshalJSON() ([]byte, error) {
+func (s DataFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod DataFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataFilterValueRange: A range of values whose location is specified by a
@@ -3521,9 +3524,9 @@ type DataFilterValueRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataFilterValueRange) MarshalJSON() ([]byte, error) {
+func (s DataFilterValueRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataFilterValueRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataLabel: Settings for one set of data labels. Data labels are annotations
@@ -3581,9 +3584,9 @@ type DataLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataLabel) MarshalJSON() ([]byte, error) {
+func (s DataLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod DataLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSource: Information about an external data source in the spreadsheet.
@@ -3614,9 +3617,9 @@ type DataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSource) MarshalJSON() ([]byte, error) {
+func (s DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceChartProperties: Properties of a data source chart.
@@ -3638,9 +3641,9 @@ type DataSourceChartProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceChartProperties) MarshalJSON() ([]byte, error) {
+func (s DataSourceChartProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceChartProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceColumn: A column in a data source.
@@ -3662,9 +3665,9 @@ type DataSourceColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceColumn) MarshalJSON() ([]byte, error) {
+func (s DataSourceColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceColumnReference: An unique identifier that references a data
@@ -3686,9 +3689,9 @@ type DataSourceColumnReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceColumnReference) MarshalJSON() ([]byte, error) {
+func (s DataSourceColumnReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceColumnReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceFormula: A data source formula.
@@ -3710,9 +3713,9 @@ type DataSourceFormula struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceFormula) MarshalJSON() ([]byte, error) {
+func (s DataSourceFormula) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceFormula
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceObjectReference: Reference to a data source object.
@@ -3742,9 +3745,9 @@ type DataSourceObjectReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceObjectReference) MarshalJSON() ([]byte, error) {
+func (s DataSourceObjectReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceObjectReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceObjectReferences: A list of references to data source objects.
@@ -3764,9 +3767,9 @@ type DataSourceObjectReferences struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
+func (s DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceObjectReferences
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceParameter: A parameter in a data source's query. The parameter
@@ -3794,9 +3797,9 @@ type DataSourceParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceParameter) MarshalJSON() ([]byte, error) {
+func (s DataSourceParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceRefreshDailySchedule: A schedule for data to refresh every day in
@@ -3819,9 +3822,9 @@ type DataSourceRefreshDailySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
+func (s DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceRefreshDailySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceRefreshMonthlySchedule: A monthly schedule for data to refresh on
@@ -3847,9 +3850,9 @@ type DataSourceRefreshMonthlySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
+func (s DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceRefreshMonthlySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceRefreshSchedule: Schedule for refreshing the data source. Data
@@ -3889,9 +3892,9 @@ type DataSourceRefreshSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceRefreshSchedule) MarshalJSON() ([]byte, error) {
+func (s DataSourceRefreshSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceRefreshSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceRefreshWeeklySchedule: A weekly schedule for data to refresh on
@@ -3926,9 +3929,9 @@ type DataSourceRefreshWeeklySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceRefreshWeeklySchedule) MarshalJSON() ([]byte, error) {
+func (s DataSourceRefreshWeeklySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceRefreshWeeklySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceSheetDimensionRange: A range along a single dimension on a
@@ -3951,9 +3954,9 @@ type DataSourceSheetDimensionRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceSheetDimensionRange) MarshalJSON() ([]byte, error) {
+func (s DataSourceSheetDimensionRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceSheetDimensionRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceSheetProperties: Additional properties of a DATA_SOURCE sheet.
@@ -3978,9 +3981,9 @@ type DataSourceSheetProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceSheetProperties) MarshalJSON() ([]byte, error) {
+func (s DataSourceSheetProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceSheetProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceSpec: This specifies the details of the data source. For example,
@@ -4004,9 +4007,9 @@ type DataSourceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceSpec) MarshalJSON() ([]byte, error) {
+func (s DataSourceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceTable: A data source table, which allows the user to import a
@@ -4053,9 +4056,9 @@ type DataSourceTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceTable) MarshalJSON() ([]byte, error) {
+func (s DataSourceTable) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataValidationRule: A data validation rule.
@@ -4082,9 +4085,9 @@ type DataValidationRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataValidationRule) MarshalJSON() ([]byte, error) {
+func (s DataValidationRule) MarshalJSON() ([]byte, error) {
 	type NoMethod DataValidationRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateTimeRule: Allows you to organize the date-time values in a source data
@@ -4142,9 +4145,9 @@ type DateTimeRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateTimeRule) MarshalJSON() ([]byte, error) {
+func (s DateTimeRule) MarshalJSON() ([]byte, error) {
 	type NoMethod DateTimeRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteBandingRequest: Removes the banded range with the given ID from the
@@ -4165,9 +4168,9 @@ type DeleteBandingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteBandingRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteBandingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteBandingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteConditionalFormatRuleRequest: Deletes a conditional format rule at the
@@ -4190,9 +4193,9 @@ type DeleteConditionalFormatRuleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteConditionalFormatRuleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteConditionalFormatRuleResponse: The result of deleting a conditional
@@ -4213,9 +4216,9 @@ type DeleteConditionalFormatRuleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
+func (s DeleteConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteConditionalFormatRuleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDataSourceRequest: Deletes a data source. The request also deletes the
@@ -4237,9 +4240,9 @@ type DeleteDataSourceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDataSourceRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDataSourceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDeveloperMetadataRequest: A request to delete developer metadata.
@@ -4260,9 +4263,9 @@ type DeleteDeveloperMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDeveloperMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDeveloperMetadataResponse: The response from deleting developer
@@ -4283,9 +4286,9 @@ type DeleteDeveloperMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s DeleteDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDeveloperMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDimensionGroupRequest: Deletes a group over the specified range by
@@ -4309,9 +4312,9 @@ type DeleteDimensionGroupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteDimensionGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDimensionGroupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDimensionGroupResponse: The result of deleting a group.
@@ -4332,9 +4335,9 @@ type DeleteDimensionGroupResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDimensionGroupResponse) MarshalJSON() ([]byte, error) {
+func (s DeleteDimensionGroupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDimensionGroupResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDimensionRequest: Deletes the dimensions from the sheet.
@@ -4354,9 +4357,9 @@ type DeleteDimensionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDimensionRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteDimensionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDimensionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDuplicatesRequest: Removes rows within this range that contain values
@@ -4387,9 +4390,9 @@ type DeleteDuplicatesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDuplicatesRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteDuplicatesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDuplicatesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteDuplicatesResponse: The result of removing duplicates in a range.
@@ -4409,9 +4412,9 @@ type DeleteDuplicatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteDuplicatesResponse) MarshalJSON() ([]byte, error) {
+func (s DeleteDuplicatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDuplicatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteEmbeddedObjectRequest: Deletes the embedded object with the given ID.
@@ -4431,9 +4434,9 @@ type DeleteEmbeddedObjectRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteEmbeddedObjectRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteEmbeddedObjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteEmbeddedObjectRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteFilterViewRequest: Deletes a particular filter view.
@@ -4453,9 +4456,9 @@ type DeleteFilterViewRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteFilterViewRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteFilterViewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteFilterViewRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteNamedRangeRequest: Removes the named range with the given ID from the
@@ -4476,9 +4479,9 @@ type DeleteNamedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteNamedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteNamedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteNamedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteProtectedRangeRequest: Deletes the protected range with the given ID.
@@ -4498,9 +4501,9 @@ type DeleteProtectedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteProtectedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteProtectedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteProtectedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteRangeRequest: Deletes a range of cells, shifting other cells into the
@@ -4531,9 +4534,9 @@ type DeleteRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteRangeRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteSheetRequest: Deletes the requested sheet.
@@ -4554,9 +4557,9 @@ type DeleteSheetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteSheetRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteSheetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteSheetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeveloperMetadata: Developer metadata associated with a location or object
@@ -4606,9 +4609,9 @@ type DeveloperMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeveloperMetadata) MarshalJSON() ([]byte, error) {
+func (s DeveloperMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeveloperMetadataLocation: A location where metadata may be associated in a
@@ -4646,9 +4649,9 @@ type DeveloperMetadataLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeveloperMetadataLocation) MarshalJSON() ([]byte, error) {
+func (s DeveloperMetadataLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperMetadataLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeveloperMetadataLookup: Selects DeveloperMetadata that matches all of the
@@ -4740,9 +4743,9 @@ type DeveloperMetadataLookup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeveloperMetadataLookup) MarshalJSON() ([]byte, error) {
+func (s DeveloperMetadataLookup) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperMetadataLookup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionGroup: A group over an interval of rows or columns on a sheet,
@@ -4775,9 +4778,9 @@ type DimensionGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionGroup) MarshalJSON() ([]byte, error) {
+func (s DimensionGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionProperties: Properties about a dimension.
@@ -4809,9 +4812,9 @@ type DimensionProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionProperties) MarshalJSON() ([]byte, error) {
+func (s DimensionProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionRange: A range along a single dimension on a sheet. All indexes are
@@ -4845,9 +4848,9 @@ type DimensionRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionRange) MarshalJSON() ([]byte, error) {
+func (s DimensionRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DuplicateFilterViewRequest: Duplicates a particular filter view.
@@ -4867,9 +4870,9 @@ type DuplicateFilterViewRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateFilterViewRequest) MarshalJSON() ([]byte, error) {
+func (s DuplicateFilterViewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateFilterViewRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DuplicateFilterViewResponse: The result of a filter view being duplicated.
@@ -4889,9 +4892,9 @@ type DuplicateFilterViewResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateFilterViewResponse) MarshalJSON() ([]byte, error) {
+func (s DuplicateFilterViewResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateFilterViewResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DuplicateSheetRequest: Duplicates the contents of a sheet.
@@ -4925,9 +4928,9 @@ type DuplicateSheetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateSheetRequest) MarshalJSON() ([]byte, error) {
+func (s DuplicateSheetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateSheetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DuplicateSheetResponse: The result of duplicating a sheet.
@@ -4947,9 +4950,9 @@ type DuplicateSheetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateSheetResponse) MarshalJSON() ([]byte, error) {
+func (s DuplicateSheetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateSheetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Editors: The editors of a protected range.
@@ -4976,9 +4979,9 @@ type Editors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Editors) MarshalJSON() ([]byte, error) {
+func (s Editors) MarshalJSON() ([]byte, error) {
 	type NoMethod Editors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmbeddedChart: A chart embedded in a sheet.
@@ -5004,9 +5007,9 @@ type EmbeddedChart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmbeddedChart) MarshalJSON() ([]byte, error) {
+func (s EmbeddedChart) MarshalJSON() ([]byte, error) {
 	type NoMethod EmbeddedChart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmbeddedObjectBorder: A border along an embedded object.
@@ -5029,9 +5032,9 @@ type EmbeddedObjectBorder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmbeddedObjectBorder) MarshalJSON() ([]byte, error) {
+func (s EmbeddedObjectBorder) MarshalJSON() ([]byte, error) {
 	type NoMethod EmbeddedObjectBorder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmbeddedObjectPosition: The position of an embedded object such as a chart.
@@ -5058,9 +5061,9 @@ type EmbeddedObjectPosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmbeddedObjectPosition) MarshalJSON() ([]byte, error) {
+func (s EmbeddedObjectPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod EmbeddedObjectPosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorValue: An error in a cell.
@@ -5095,9 +5098,9 @@ type ErrorValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorValue) MarshalJSON() ([]byte, error) {
+func (s ErrorValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtendedValue: The kinds of value that a cell in a spreadsheet can have.
@@ -5128,9 +5131,9 @@ type ExtendedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtendedValue) MarshalJSON() ([]byte, error) {
+func (s ExtendedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtendedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ExtendedValue) UnmarshalJSON(data []byte) error {
@@ -5188,9 +5191,9 @@ type FilterCriteria struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterCriteria) MarshalJSON() ([]byte, error) {
+func (s FilterCriteria) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterCriteria
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterSpec: The filter criteria associated with a specific column.
@@ -5214,9 +5217,9 @@ type FilterSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterSpec) MarshalJSON() ([]byte, error) {
+func (s FilterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterView: A filter view.
@@ -5255,9 +5258,9 @@ type FilterView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterView) MarshalJSON() ([]byte, error) {
+func (s FilterView) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindReplaceRequest: Finds and replaces data in cells over a range, sheet, or
@@ -5302,9 +5305,9 @@ type FindReplaceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindReplaceRequest) MarshalJSON() ([]byte, error) {
+func (s FindReplaceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FindReplaceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindReplaceResponse: The result of the find/replace.
@@ -5335,9 +5338,9 @@ type FindReplaceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindReplaceResponse) MarshalJSON() ([]byte, error) {
+func (s FindReplaceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FindReplaceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetSpreadsheetByDataFilterRequest: The request for retrieving a Spreadsheet.
@@ -5361,9 +5364,9 @@ type GetSpreadsheetByDataFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetSpreadsheetByDataFilterRequest) MarshalJSON() ([]byte, error) {
+func (s GetSpreadsheetByDataFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetSpreadsheetByDataFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GradientRule: A rule that applies a gradient color scale format, based on
@@ -5389,9 +5392,9 @@ type GradientRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GradientRule) MarshalJSON() ([]byte, error) {
+func (s GradientRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GradientRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GridCoordinate: A coordinate in a sheet. All indexes are zero-based.
@@ -5415,9 +5418,9 @@ type GridCoordinate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GridCoordinate) MarshalJSON() ([]byte, error) {
+func (s GridCoordinate) MarshalJSON() ([]byte, error) {
 	type NoMethod GridCoordinate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GridData: Data in the grid, as well as metadata about the dimensions.
@@ -5449,9 +5452,9 @@ type GridData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GridData) MarshalJSON() ([]byte, error) {
+func (s GridData) MarshalJSON() ([]byte, error) {
 	type NoMethod GridData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GridProperties: Properties of a grid.
@@ -5485,9 +5488,9 @@ type GridProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GridProperties) MarshalJSON() ([]byte, error) {
+func (s GridProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GridProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GridRange: A range on a sheet. All indexes are zero-based. Indexes are half
@@ -5530,9 +5533,9 @@ type GridRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GridRange) MarshalJSON() ([]byte, error) {
+func (s GridRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GridRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistogramChartSpec: A histogram chart. A histogram chart groups data items
@@ -5584,9 +5587,9 @@ type HistogramChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramChartSpec) MarshalJSON() ([]byte, error) {
+func (s HistogramChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HistogramChartSpec) UnmarshalJSON(data []byte) error {
@@ -5647,9 +5650,9 @@ type HistogramRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramRule) MarshalJSON() ([]byte, error) {
+func (s HistogramRule) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HistogramRule) UnmarshalJSON(data []byte) error {
@@ -5694,9 +5697,9 @@ type HistogramSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistogramSeries) MarshalJSON() ([]byte, error) {
+func (s HistogramSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod HistogramSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertDimensionRequest: Inserts rows or columns in a sheet at a particular
@@ -5729,9 +5732,9 @@ type InsertDimensionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertDimensionRequest) MarshalJSON() ([]byte, error) {
+func (s InsertDimensionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertDimensionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertRangeRequest: Inserts cells into a range, shifting the existing cells
@@ -5761,9 +5764,9 @@ type InsertRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertRangeRequest) MarshalJSON() ([]byte, error) {
+func (s InsertRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InterpolationPoint: A single interpolation point on a gradient conditional
@@ -5812,9 +5815,9 @@ type InterpolationPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InterpolationPoint) MarshalJSON() ([]byte, error) {
+func (s InterpolationPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod InterpolationPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -5843,9 +5846,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IterativeCalculationSettings: Settings to control how circular dependencies
@@ -5871,9 +5874,9 @@ type IterativeCalculationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IterativeCalculationSettings) MarshalJSON() ([]byte, error) {
+func (s IterativeCalculationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod IterativeCalculationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *IterativeCalculationSettings) UnmarshalJSON(data []byte) error {
@@ -5911,9 +5914,9 @@ type KeyValueFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyValueFormat) MarshalJSON() ([]byte, error) {
+func (s KeyValueFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyValueFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineStyle: Properties that describe the style of a line.
@@ -5949,9 +5952,9 @@ type LineStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LineStyle) MarshalJSON() ([]byte, error) {
+func (s LineStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod LineStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Link: An external or local reference.
@@ -5971,9 +5974,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManualRule: Allows you to manually organize the values in a source data
@@ -6005,9 +6008,9 @@ type ManualRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManualRule) MarshalJSON() ([]byte, error) {
+func (s ManualRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ManualRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManualRuleGroup: A group name and a list of items from the source data that
@@ -6034,9 +6037,9 @@ type ManualRuleGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManualRuleGroup) MarshalJSON() ([]byte, error) {
+func (s ManualRuleGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ManualRuleGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MatchedDeveloperMetadata: A developer metadata entry and the data filters
@@ -6059,9 +6062,9 @@ type MatchedDeveloperMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MatchedDeveloperMetadata) MarshalJSON() ([]byte, error) {
+func (s MatchedDeveloperMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MatchedDeveloperMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MatchedValueRange: A value range that was matched by one or more data
@@ -6085,9 +6088,9 @@ type MatchedValueRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MatchedValueRange) MarshalJSON() ([]byte, error) {
+func (s MatchedValueRange) MarshalJSON() ([]byte, error) {
 	type NoMethod MatchedValueRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MergeCellsRequest: Merges all cells in the range.
@@ -6114,9 +6117,9 @@ type MergeCellsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MergeCellsRequest) MarshalJSON() ([]byte, error) {
+func (s MergeCellsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MergeCellsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveDimensionRequest: Moves one or more rows or columns.
@@ -6146,9 +6149,9 @@ type MoveDimensionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveDimensionRequest) MarshalJSON() ([]byte, error) {
+func (s MoveDimensionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveDimensionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NamedRange: A named range.
@@ -6172,9 +6175,9 @@ type NamedRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NamedRange) MarshalJSON() ([]byte, error) {
+func (s NamedRange) MarshalJSON() ([]byte, error) {
 	type NoMethod NamedRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NumberFormat: The number format of a cell.
@@ -6211,9 +6214,9 @@ type NumberFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NumberFormat) MarshalJSON() ([]byte, error) {
+func (s NumberFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod NumberFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrgChartSpec: An org chart. Org charts require a unique set of labels in
@@ -6269,9 +6272,9 @@ type OrgChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrgChartSpec) MarshalJSON() ([]byte, error) {
+func (s OrgChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OverlayPosition: The location an object is overlaid on top of a grid.
@@ -6301,9 +6304,9 @@ type OverlayPosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OverlayPosition) MarshalJSON() ([]byte, error) {
+func (s OverlayPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod OverlayPosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Padding: The amount of padding around the cell, in pixels. When updating
@@ -6330,9 +6333,9 @@ type Padding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Padding) MarshalJSON() ([]byte, error) {
+func (s Padding) MarshalJSON() ([]byte, error) {
 	type NoMethod Padding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PasteDataRequest: Inserts data into the spreadsheet starting at the
@@ -6372,9 +6375,9 @@ type PasteDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PasteDataRequest) MarshalJSON() ([]byte, error) {
+func (s PasteDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PasteDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PieChartSpec: A pie chart.
@@ -6411,9 +6414,9 @@ type PieChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PieChartSpec) MarshalJSON() ([]byte, error) {
+func (s PieChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod PieChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PieChartSpec) UnmarshalJSON(data []byte) error {
@@ -6465,9 +6468,9 @@ type PivotFilterCriteria struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotFilterCriteria) MarshalJSON() ([]byte, error) {
+func (s PivotFilterCriteria) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotFilterCriteria
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotFilterSpec: The pivot table filter criteria associated with a specific
@@ -6492,9 +6495,9 @@ type PivotFilterSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotFilterSpec) MarshalJSON() ([]byte, error) {
+func (s PivotFilterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotFilterSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotGroup: A single grouping (either row or column) in a pivot table.
@@ -6560,9 +6563,9 @@ type PivotGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroup) MarshalJSON() ([]byte, error) {
+func (s PivotGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotGroupLimit: The count limit on rows or columns in the pivot group.
@@ -6590,9 +6593,9 @@ type PivotGroupLimit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroupLimit) MarshalJSON() ([]byte, error) {
+func (s PivotGroupLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotGroupLimit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotGroupRule: An optional setting on a PivotGroup that defines buckets for
@@ -6620,9 +6623,9 @@ type PivotGroupRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroupRule) MarshalJSON() ([]byte, error) {
+func (s PivotGroupRule) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotGroupRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotGroupSortValueBucket: Information about which values in a pivot group
@@ -6653,9 +6656,9 @@ type PivotGroupSortValueBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroupSortValueBucket) MarshalJSON() ([]byte, error) {
+func (s PivotGroupSortValueBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotGroupSortValueBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotGroupValueMetadata: Metadata about a value in a pivot grouping.
@@ -6678,9 +6681,9 @@ type PivotGroupValueMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroupValueMetadata) MarshalJSON() ([]byte, error) {
+func (s PivotGroupValueMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotGroupValueMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotTable: A pivot table.
@@ -6731,9 +6734,9 @@ type PivotTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotTable) MarshalJSON() ([]byte, error) {
+func (s PivotTable) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotValue: The definition of how a value in a pivot table should be
@@ -6807,9 +6810,9 @@ type PivotValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotValue) MarshalJSON() ([]byte, error) {
+func (s PivotValue) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PointStyle: The style of a point on the chart.
@@ -6842,9 +6845,9 @@ type PointStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PointStyle) MarshalJSON() ([]byte, error) {
+func (s PointStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod PointStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PointStyle) UnmarshalJSON(data []byte) error {
@@ -6905,9 +6908,9 @@ type ProtectedRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProtectedRange) MarshalJSON() ([]byte, error) {
+func (s ProtectedRange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProtectedRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RandomizeRangeRequest: Randomizes the order of the rows in a range.
@@ -6927,9 +6930,9 @@ type RandomizeRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
+func (s RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RandomizeRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshCancellationStatus: The status of a refresh cancellation. You can
@@ -6972,9 +6975,9 @@ type RefreshCancellationStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshCancellationStatus) MarshalJSON() ([]byte, error) {
+func (s RefreshCancellationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshCancellationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshDataSourceObjectExecutionStatus: The execution status of refreshing
@@ -6997,17 +7000,17 @@ type RefreshDataSourceObjectExecutionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshDataSourceObjectExecutionStatus) MarshalJSON() ([]byte, error) {
+func (s RefreshDataSourceObjectExecutionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshDataSourceObjectExecutionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshDataSourceRequest: Refreshes one or multiple data source objects in
 // the spreadsheet by the specified references. The request requires an
-// additional `bigquery.readonly` OAuth scope. If there are multiple refresh
-// requests referencing the same data source objects in one batch, only the
-// last refresh request is processed, and all those requests will have the same
-// response accordingly.
+// additional `bigquery.readonly` OAuth scope if you are refreshing a BigQuery
+// data source. If there are multiple refresh requests referencing the same
+// data source objects in one batch, only the last refresh request is
+// processed, and all those requests will have the same response accordingly.
 type RefreshDataSourceRequest struct {
 	// DataSourceId: Reference to a DataSource. If specified, refreshes all
 	// associated data source objects for the data source.
@@ -7033,9 +7036,9 @@ type RefreshDataSourceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshDataSourceRequest) MarshalJSON() ([]byte, error) {
+func (s RefreshDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshDataSourceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshDataSourceResponse: The response from refreshing one or multiple data
@@ -7058,9 +7061,9 @@ type RefreshDataSourceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshDataSourceResponse) MarshalJSON() ([]byte, error) {
+func (s RefreshDataSourceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshDataSourceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RepeatCellRequest: Updates all cells in the range to the values in the given
@@ -7094,9 +7097,9 @@ type RepeatCellRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RepeatCellRequest) MarshalJSON() ([]byte, error) {
+func (s RepeatCellRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RepeatCellRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Request: A single kind of update to apply to a spreadsheet.
@@ -7254,9 +7257,9 @@ type Request struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Request) MarshalJSON() ([]byte, error) {
+func (s Request) MarshalJSON() ([]byte, error) {
 	type NoMethod Request
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Response: A single response from an update.
@@ -7326,9 +7329,9 @@ type Response struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Response) MarshalJSON() ([]byte, error) {
+func (s Response) MarshalJSON() ([]byte, error) {
 	type NoMethod Response
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowData: Data about each cell in a row.
@@ -7348,9 +7351,9 @@ type RowData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowData) MarshalJSON() ([]byte, error) {
+func (s RowData) MarshalJSON() ([]byte, error) {
 	type NoMethod RowData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScorecardChartSpec: A scorecard chart. Scorecard charts are used to
@@ -7414,9 +7417,9 @@ type ScorecardChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScorecardChartSpec) MarshalJSON() ([]byte, error) {
+func (s ScorecardChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod ScorecardChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ScorecardChartSpec) UnmarshalJSON(data []byte) error {
@@ -7453,9 +7456,9 @@ type SearchDeveloperMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s SearchDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchDeveloperMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchDeveloperMetadataResponse: A reply to a developer metadata search
@@ -7480,9 +7483,9 @@ type SearchDeveloperMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s SearchDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchDeveloperMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetBasicFilterRequest: Sets the basic filter associated with a sheet.
@@ -7502,9 +7505,9 @@ type SetBasicFilterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetBasicFilterRequest) MarshalJSON() ([]byte, error) {
+func (s SetBasicFilterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetBasicFilterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetDataValidationRequest: Sets a data validation rule to every cell in the
@@ -7528,9 +7531,9 @@ type SetDataValidationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetDataValidationRequest) MarshalJSON() ([]byte, error) {
+func (s SetDataValidationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetDataValidationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sheet: A sheet in a spreadsheet.
@@ -7583,9 +7586,9 @@ type Sheet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sheet) MarshalJSON() ([]byte, error) {
+func (s Sheet) MarshalJSON() ([]byte, error) {
 	type NoMethod Sheet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SheetProperties: Properties of a sheet.
@@ -7650,9 +7653,9 @@ type SheetProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SheetProperties) MarshalJSON() ([]byte, error) {
+func (s SheetProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SheetProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Slicer: A slicer in a sheet.
@@ -7678,9 +7681,9 @@ type Slicer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Slicer) MarshalJSON() ([]byte, error) {
+func (s Slicer) MarshalJSON() ([]byte, error) {
 	type NoMethod Slicer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlicerSpec: The specifications of a slicer.
@@ -7729,9 +7732,9 @@ type SlicerSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlicerSpec) MarshalJSON() ([]byte, error) {
+func (s SlicerSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod SlicerSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SortRangeRequest: Sorts data in rows based on a sort order per column.
@@ -7754,9 +7757,9 @@ type SortRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SortRangeRequest) MarshalJSON() ([]byte, error) {
+func (s SortRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SortRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SortSpec: A sort order associated with a specific column or row.
@@ -7803,9 +7806,9 @@ type SortSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SortSpec) MarshalJSON() ([]byte, error) {
+func (s SortSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod SortSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceAndDestination: A combination of a source range and how to extend that
@@ -7837,9 +7840,9 @@ type SourceAndDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceAndDestination) MarshalJSON() ([]byte, error) {
+func (s SourceAndDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceAndDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Spreadsheet: Resource that represents a spreadsheet.
@@ -7876,9 +7879,9 @@ type Spreadsheet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Spreadsheet) MarshalJSON() ([]byte, error) {
+func (s Spreadsheet) MarshalJSON() ([]byte, error) {
 	type NoMethod Spreadsheet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpreadsheetProperties: Properties of a spreadsheet.
@@ -7933,9 +7936,9 @@ type SpreadsheetProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpreadsheetProperties) MarshalJSON() ([]byte, error) {
+func (s SpreadsheetProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SpreadsheetProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpreadsheetTheme: Represents spreadsheet theme
@@ -7958,9 +7961,9 @@ type SpreadsheetTheme struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpreadsheetTheme) MarshalJSON() ([]byte, error) {
+func (s SpreadsheetTheme) MarshalJSON() ([]byte, error) {
 	type NoMethod SpreadsheetTheme
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextFormat: The format of a run of text in a cell. Absent values indicate
@@ -8004,9 +8007,9 @@ type TextFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextFormat) MarshalJSON() ([]byte, error) {
+func (s TextFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod TextFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextFormatRun: A run of a text format. The format of this run continues
@@ -8031,9 +8034,9 @@ type TextFormatRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextFormatRun) MarshalJSON() ([]byte, error) {
+func (s TextFormatRun) MarshalJSON() ([]byte, error) {
 	type NoMethod TextFormatRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextPosition: Position settings for text.
@@ -8060,9 +8063,9 @@ type TextPosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextPosition) MarshalJSON() ([]byte, error) {
+func (s TextPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod TextPosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextRotation: The rotation applied to text in a cell.
@@ -8090,9 +8093,9 @@ type TextRotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextRotation) MarshalJSON() ([]byte, error) {
+func (s TextRotation) MarshalJSON() ([]byte, error) {
 	type NoMethod TextRotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextToColumnsRequest: Splits a column of text into multiple columns, based
@@ -8126,9 +8129,9 @@ type TextToColumnsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextToColumnsRequest) MarshalJSON() ([]byte, error) {
+func (s TextToColumnsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TextToColumnsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThemeColorPair: A pair mapping a spreadsheet theme color type to the
@@ -8163,9 +8166,9 @@ type ThemeColorPair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThemeColorPair) MarshalJSON() ([]byte, error) {
+func (s ThemeColorPair) MarshalJSON() ([]byte, error) {
 	type NoMethod ThemeColorPair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -8196,9 +8199,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TreemapChartColorScale: A color scale for a treemap chart.
@@ -8248,9 +8251,9 @@ type TreemapChartColorScale struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TreemapChartColorScale) MarshalJSON() ([]byte, error) {
+func (s TreemapChartColorScale) MarshalJSON() ([]byte, error) {
 	type NoMethod TreemapChartColorScale
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TreemapChartSpec: A Treemap chart.
@@ -8323,9 +8326,9 @@ type TreemapChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TreemapChartSpec) MarshalJSON() ([]byte, error) {
+func (s TreemapChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod TreemapChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TreemapChartSpec) UnmarshalJSON(data []byte) error {
@@ -8366,9 +8369,9 @@ type TrimWhitespaceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrimWhitespaceRequest) MarshalJSON() ([]byte, error) {
+func (s TrimWhitespaceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TrimWhitespaceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrimWhitespaceResponse: The result of trimming whitespace in cells.
@@ -8388,9 +8391,9 @@ type TrimWhitespaceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrimWhitespaceResponse) MarshalJSON() ([]byte, error) {
+func (s TrimWhitespaceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TrimWhitespaceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnmergeCellsRequest: Unmerges cells in the given range.
@@ -8412,9 +8415,9 @@ type UnmergeCellsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnmergeCellsRequest) MarshalJSON() ([]byte, error) {
+func (s UnmergeCellsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnmergeCellsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateBandingRequest: Updates properties of the supplied banded range.
@@ -8438,9 +8441,9 @@ type UpdateBandingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateBandingRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateBandingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBandingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateBordersRequest: Updates the borders of a range. If a field is not set
@@ -8477,9 +8480,9 @@ type UpdateBordersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateBordersRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateBordersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBordersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateCellsRequest: Updates all cells in a range with new data.
@@ -8510,9 +8513,9 @@ type UpdateCellsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateCellsRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateCellsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateCellsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateChartSpecRequest: Updates a chart's specifications. (This does not
@@ -8536,9 +8539,9 @@ type UpdateChartSpecRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateChartSpecRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateChartSpecRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateChartSpecRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateConditionalFormatRuleRequest: Updates a conditional format rule at the
@@ -8566,9 +8569,9 @@ type UpdateConditionalFormatRuleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateConditionalFormatRuleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateConditionalFormatRuleResponse: The result of updating a conditional
@@ -8598,15 +8601,16 @@ type UpdateConditionalFormatRuleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateConditionalFormatRuleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDataSourceRequest: Updates a data source. After the data source is
 // updated successfully, an execution is triggered to refresh the associated
 // DATA_SOURCE sheet to read data from the updated data source. The request
-// requires an additional `bigquery.readonly` OAuth scope.
+// requires an additional `bigquery.readonly` OAuth scope if you are updating a
+// BigQuery data source.
 type UpdateDataSourceRequest struct {
 	// DataSource: The data source to update.
 	DataSource *DataSource `json:"dataSource,omitempty"`
@@ -8627,9 +8631,9 @@ type UpdateDataSourceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDataSourceRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDataSourceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDataSourceResponse: The response from updating data source.
@@ -8651,9 +8655,9 @@ type UpdateDataSourceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDataSourceResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateDataSourceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDataSourceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDeveloperMetadataRequest: A request to update properties of developer
@@ -8685,9 +8689,9 @@ type UpdateDeveloperMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDeveloperMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeveloperMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDeveloperMetadataResponse: The response from updating developer
@@ -8708,9 +8712,9 @@ type UpdateDeveloperMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeveloperMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDimensionGroupRequest: Updates the state of the specified group.
@@ -8736,9 +8740,9 @@ type UpdateDimensionGroupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDimensionGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDimensionGroupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDimensionPropertiesRequest: Updates properties of dimensions within
@@ -8767,9 +8771,9 @@ type UpdateDimensionPropertiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDimensionPropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDimensionPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDimensionPropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateEmbeddedObjectBorderRequest: Updates an embedded object's border
@@ -8796,9 +8800,9 @@ type UpdateEmbeddedObjectBorderRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateEmbeddedObjectBorderRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateEmbeddedObjectBorderRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEmbeddedObjectBorderRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateEmbeddedObjectPositionRequest: Update an embedded object's position
@@ -8830,9 +8834,9 @@ type UpdateEmbeddedObjectPositionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateEmbeddedObjectPositionRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateEmbeddedObjectPositionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEmbeddedObjectPositionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateEmbeddedObjectPositionResponse: The result of updating an embedded
@@ -8853,9 +8857,9 @@ type UpdateEmbeddedObjectPositionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateEmbeddedObjectPositionResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateEmbeddedObjectPositionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEmbeddedObjectPositionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateFilterViewRequest: Updates properties of the filter view.
@@ -8879,9 +8883,9 @@ type UpdateFilterViewRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateFilterViewRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateFilterViewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateFilterViewRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateNamedRangeRequest: Updates properties of the named range with the
@@ -8906,9 +8910,9 @@ type UpdateNamedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateNamedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateNamedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateNamedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateProtectedRangeRequest: Updates an existing protected range with the
@@ -8933,9 +8937,9 @@ type UpdateProtectedRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateProtectedRangeRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateProtectedRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateProtectedRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSheetPropertiesRequest: Updates properties of the sheet with the
@@ -8960,9 +8964,9 @@ type UpdateSheetPropertiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSheetPropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSheetPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSheetPropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSlicerSpecRequest: Updates a slicer's specifications. (This does not
@@ -8990,9 +8994,9 @@ type UpdateSlicerSpecRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSlicerSpecRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSlicerSpecRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSlicerSpecRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSpreadsheetPropertiesRequest: Updates properties of a spreadsheet.
@@ -9016,9 +9020,9 @@ type UpdateSpreadsheetPropertiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSpreadsheetPropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSpreadsheetPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSpreadsheetPropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateValuesByDataFilterResponse: The response when updating a range of
@@ -9054,9 +9058,9 @@ type UpdateValuesByDataFilterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateValuesByDataFilterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateValuesResponse: The response when updating a range of values in a
@@ -9093,9 +9097,9 @@ type UpdateValuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateValuesResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateValuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateValuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValueRange: Data within a range of the spreadsheet.
@@ -9144,9 +9148,9 @@ type ValueRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValueRange) MarshalJSON() ([]byte, error) {
+func (s ValueRange) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterfallChartColumnStyle: Styles for a waterfall chart column.
@@ -9171,9 +9175,9 @@ type WaterfallChartColumnStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterfallChartColumnStyle) MarshalJSON() ([]byte, error) {
+func (s WaterfallChartColumnStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterfallChartColumnStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterfallChartCustomSubtotal: A custom subtotal column for a waterfall chart
@@ -9206,9 +9210,9 @@ type WaterfallChartCustomSubtotal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterfallChartCustomSubtotal) MarshalJSON() ([]byte, error) {
+func (s WaterfallChartCustomSubtotal) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterfallChartCustomSubtotal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterfallChartDomain: The domain of a waterfall chart.
@@ -9230,9 +9234,9 @@ type WaterfallChartDomain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterfallChartDomain) MarshalJSON() ([]byte, error) {
+func (s WaterfallChartDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterfallChartDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterfallChartSeries: A single series of data for a waterfall chart.
@@ -9270,9 +9274,9 @@ type WaterfallChartSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterfallChartSeries) MarshalJSON() ([]byte, error) {
+func (s WaterfallChartSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterfallChartSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterfallChartSpec: A waterfall chart.
@@ -9313,9 +9317,9 @@ type WaterfallChartSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterfallChartSpec) MarshalJSON() ([]byte, error) {
+func (s WaterfallChartSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterfallChartSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SpreadsheetsBatchUpdateCall struct {

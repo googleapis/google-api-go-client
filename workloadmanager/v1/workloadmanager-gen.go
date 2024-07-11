@@ -259,6 +259,33 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
+// AgentCommand: * An AgentCommand specifies a one-time executable program for
+// the agent to run.
+type AgentCommand struct {
+	// Command: command is the name of the agent one-time executable that will be
+	// invoked.
+	Command string `json:"command,omitempty"`
+	// Parameters: parameters is a map of key/value pairs that can be used to
+	// specify additional one-time executable settings.
+	Parameters map[string]string `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Command") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentCommand
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AssetLocation: Provides the mapping of a cloud asset to a direct physical
 // location or to a proxy that defines the location on its behalf.
 type AssetLocation struct {
@@ -286,9 +313,9 @@ type AssetLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetLocation) MarshalJSON() ([]byte, error) {
+func (s AssetLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryDestination: Message describing big query destination
@@ -311,9 +338,9 @@ type BigQueryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s BigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlobstoreLocation: Policy ID that identified data placement in Blobstore as
@@ -333,9 +360,9 @@ type BlobstoreLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlobstoreLocation) MarshalJSON() ([]byte, error) {
+func (s BlobstoreLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod BlobstoreLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -358,9 +385,9 @@ type CloudAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAsset) MarshalJSON() ([]byte, error) {
+func (s CloudAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CloudAssetComposition struct {
@@ -378,9 +405,34 @@ type CloudAssetComposition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudAssetComposition) MarshalJSON() ([]byte, error) {
+func (s CloudAssetComposition) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAssetComposition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Command: * Command specifies the type of command to execute.
+type Command struct {
+	// AgentCommand: AgentCommand specifies a one-time executable program for the
+	// agent to run.
+	AgentCommand *AgentCommand `json:"agentCommand,omitempty"`
+	// ShellCommand: ShellCommand is invoked via the agent's command line executor.
+	ShellCommand *ShellCommand `json:"shellCommand,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentCommand") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentCommand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Command) MarshalJSON() ([]byte, error) {
+	type NoMethod Command
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DirectLocationAssignment struct {
@@ -398,9 +450,9 @@ type DirectLocationAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectLocationAssignment) MarshalJSON() ([]byte, error) {
+func (s DirectLocationAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectLocationAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -457,9 +509,9 @@ type Evaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Evaluation) MarshalJSON() ([]byte, error) {
+func (s Evaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod Evaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Execution: Message describing Execution object
@@ -512,46 +564,51 @@ type Execution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Execution) MarshalJSON() ([]byte, error) {
+func (s Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod Execution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionResult: Message describing the result of an execution
 type ExecutionResult struct {
-	// DocumentationUrl: the document url of the rule
+	// Commands: The commands to remediate the violation.
+	Commands []*Command `json:"commands,omitempty"`
+	// DocumentationUrl: The URL for the documentation of the rule.
 	DocumentationUrl string `json:"documentationUrl,omitempty"`
-	// Resource: the violate resource
+	// Resource: The resource that violates the rule.
 	Resource *Resource `json:"resource,omitempty"`
-	// Rule: the rule which violate in execution
+	// Rule: The rule that is violated in an evaluation.
 	Rule string `json:"rule,omitempty"`
-	// Severity: severity of violation
+	// Severity: The severity of violation.
 	Severity string `json:"severity,omitempty"`
-	// ViolationDetails: the details of violation in result
+	// ViolationDetails: The details of violation in an evaluation result.
 	ViolationDetails *ViolationDetails `json:"violationDetails,omitempty"`
-	// ViolationMessage: the violation message of an execution
+	// ViolationMessage: The violation message of an execution.
 	ViolationMessage string `json:"violationMessage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentationUrl") to
+	// ForceSendFields is a list of field names (e.g. "Commands") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentationUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Commands") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionResult) MarshalJSON() ([]byte, error) {
+func (s ExecutionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalDataSources: Message for external data sources
 type ExternalDataSources struct {
-	// Name: Required. Name of external data source. The name will be used inside
+	// AssetType: Required. The asset type of the external data source must be one
+	// of go/cai-asset-types
+	AssetType string `json:"assetType,omitempty"`
+	// Name: Optional. Name of external data source. The name will be used inside
 	// the rego/sql to refer the external data
 	Name string `json:"name,omitempty"`
 	// Type: Required. Type of external data source
@@ -563,22 +620,22 @@ type ExternalDataSources struct {
 	// Uri: Required. URI of external data source. example of bq table
 	// {project_ID}.{dataset_ID}.{table_ID}
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AssetType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalDataSources) MarshalJSON() ([]byte, error) {
+func (s ExternalDataSources) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDataSources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtraParameter: Defines parameters that should only be used for specific
@@ -600,9 +657,9 @@ type ExtraParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtraParameter) MarshalJSON() ([]byte, error) {
+func (s ExtraParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtraParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceInstanceFilter: Message describing compute engine instance filter
@@ -622,9 +679,9 @@ type GceInstanceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceInstanceFilter) MarshalJSON() ([]byte, error) {
+func (s GceInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstanceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Insight: A presentation of host resource usage where the workload runs.
@@ -654,9 +711,9 @@ type Insight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Insight) MarshalJSON() ([]byte, error) {
+func (s Insight) MarshalJSON() ([]byte, error) {
 	type NoMethod Insight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IsolationExpectations struct {
@@ -726,9 +783,9 @@ type IsolationExpectations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IsolationExpectations) MarshalJSON() ([]byte, error) {
+func (s IsolationExpectations) MarshalJSON() ([]byte, error) {
 	type NoMethod IsolationExpectations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEvaluationsResponse: Message for response to listing Evaluations
@@ -756,9 +813,9 @@ type ListEvaluationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEvaluationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExecutionResultsResponse: Message for response of list execution results
@@ -784,9 +841,9 @@ type ListExecutionResultsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExecutionResultsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExecutionResultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionResultsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExecutionsResponse: Message for response to listing Executions
@@ -814,9 +871,9 @@ type ListExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -842,9 +899,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -870,9 +927,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRulesResponse: Mesesage of response of list rules
@@ -898,9 +955,9 @@ type ListRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScannedResourcesResponse: Message for response to list scanned resources
@@ -926,9 +983,9 @@ type ListScannedResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListScannedResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListScannedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScannedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -964,9 +1021,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationAssignment struct {
@@ -995,9 +1052,9 @@ type LocationAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationAssignment) MarshalJSON() ([]byte, error) {
+func (s LocationAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationData struct {
@@ -1005,6 +1062,7 @@ type LocationData struct {
 	ChildAssetLocation *CloudAssetComposition    `json:"childAssetLocation,omitempty"`
 	DirectLocation     *DirectLocationAssignment `json:"directLocation,omitempty"`
 	GcpProjectProxy    *TenantProjectProxy       `json:"gcpProjectProxy,omitempty"`
+	PlacerLocation     *PlacerLocation           `json:"placerLocation,omitempty"`
 	SpannerLocation    *SpannerLocation          `json:"spannerLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlobstoreLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1019,9 +1077,9 @@ type LocationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationData) MarshalJSON() ([]byte, error) {
+func (s LocationData) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1066,9 +1124,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1104,9 +1162,33 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlacerLocation: Message describing that the location of the customer
+// resource is tied to placer allocations
+type PlacerLocation struct {
+	// PlacerConfig: Directory with a config related to it in placer (e.g.
+	// "/placer/prod/home/my-root/my-dir")
+	PlacerConfig string `json:"placerConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PlacerConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlacerConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlacerLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacerLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalMigDistributionPolicy: To be used for specifying the intended
@@ -1131,18 +1213,18 @@ type RegionalMigDistributionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
+func (s RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalMigDistributionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Resource: Message represent resource in execution result
 type Resource struct {
-	// Name: the name of the resource
+	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
-	// ServiceAccount: the service account accosiate with resource
+	// ServiceAccount: The service account associated with the resource.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// Type: the type of reresource
+	// Type: The type of resource.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1157,9 +1239,9 @@ type Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Resource) MarshalJSON() ([]byte, error) {
+func (s Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceFilter: Message describing resource filters
@@ -1185,9 +1267,9 @@ type ResourceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
+func (s ResourceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceStatus: Message describing resource status
@@ -1217,9 +1299,9 @@ type ResourceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceStatus) MarshalJSON() ([]byte, error) {
+func (s ResourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Rule: Message represent a rule
@@ -1259,9 +1341,9 @@ type Rule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Rule) MarshalJSON() ([]byte, error) {
+func (s Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunEvaluationRequest: Message for creating a Execution
@@ -1297,9 +1379,9 @@ type RunEvaluationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunEvaluationRequest) MarshalJSON() ([]byte, error) {
+func (s RunEvaluationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunEvaluationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscovery: The schema of SAP system discovery data.
@@ -1334,9 +1416,9 @@ type SapDiscovery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscovery) MarshalJSON() ([]byte, error) {
+func (s SapDiscovery) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscovery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryComponent: Message describing the system component.
@@ -1350,6 +1432,9 @@ type SapDiscoveryComponent struct {
 	HaHosts []string `json:"haHosts,omitempty"`
 	// HostProject: Required. Pantheon Project in which the resources reside.
 	HostProject string `json:"hostProject,omitempty"`
+	// ReplicationSites: Optional. A list of replication sites used in Disaster
+	// Recovery (DR) configurations.
+	ReplicationSites []*SapDiscoveryComponent `json:"replicationSites,omitempty"`
 	// Resources: Optional. The resources in a component.
 	Resources []*SapDiscoveryResource `json:"resources,omitempty"`
 	// Sid: Optional. The SAP identifier, used by the SAP software and helps
@@ -1375,16 +1460,16 @@ type SapDiscoveryComponent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryComponent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryComponentApplicationProperties: A set of properties describing
 // an SAP Application layer.
 type SapDiscoveryComponentApplicationProperties struct {
-	// Abap: Optional. Indicates whether this is a Java or ABAP Netweaver instance.
-	// true means it is ABAP, false means it is Java.
+	// Abap: Optional. Deprecated: ApplicationType now tells you whether this is
+	// ABAP or Java.
 	Abap bool `json:"abap,omitempty"`
 	// AppInstanceNumber: Optional. Instance number of the SAP application
 	// instance.
@@ -1394,6 +1479,8 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// Possible values:
 	//   "APPLICATION_TYPE_UNSPECIFIED" - Unspecified application type
 	//   "NETWEAVER" - SAP Netweaver
+	//   "NETWEAVER_ABAP" - SAP Netweaver ABAP
+	//   "NETWEAVER_JAVA" - SAP Netweaver Java
 	ApplicationType string `json:"applicationType,omitempty"`
 	// AscsInstanceNumber: Optional. Instance number of the ASCS instance.
 	AscsInstanceNumber string `json:"ascsInstanceNumber,omitempty"`
@@ -1420,9 +1507,9 @@ type SapDiscoveryComponentApplicationProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryComponentApplicationProperties) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryComponentApplicationProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryComponentApplicationProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryComponentDatabaseProperties: A set of properties describing an
@@ -1462,9 +1549,9 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryComponentDatabaseProperties) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryComponentDatabaseProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryComponentDatabaseProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryMetadata: Message describing SAP discovery system metadata
@@ -1492,9 +1579,9 @@ type SapDiscoveryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryResource: Message describing a resource.
@@ -1549,9 +1636,9 @@ type SapDiscoveryResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryResourceInstanceProperties: A set of properties only present for
@@ -1589,9 +1676,9 @@ type SapDiscoveryResourceInstanceProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryResourceInstanceProperties) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryResourceInstanceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryResourceInstanceProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryResourceInstancePropertiesAppInstance: Fields to describe an SAP
@@ -1614,9 +1701,9 @@ type SapDiscoveryResourceInstancePropertiesAppInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryResourceInstancePropertiesAppInstance) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryResourceInstancePropertiesAppInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryResourceInstancePropertiesAppInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryWorkloadProperties: A set of properties describing an SAP
@@ -1641,9 +1728,9 @@ type SapDiscoveryWorkloadProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryWorkloadProperties) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryWorkloadProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryWorkloadProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryWorkloadPropertiesProductVersion: A product name and version.
@@ -1665,9 +1752,9 @@ type SapDiscoveryWorkloadPropertiesProductVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryWorkloadPropertiesProductVersion) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryWorkloadPropertiesProductVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryWorkloadPropertiesProductVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapDiscoveryWorkloadPropertiesSoftwareComponentProperties: A SAP software
@@ -1694,9 +1781,9 @@ type SapDiscoveryWorkloadPropertiesSoftwareComponentProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryWorkloadPropertiesSoftwareComponentProperties) MarshalJSON() ([]byte, error) {
+func (s SapDiscoveryWorkloadPropertiesSoftwareComponentProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryWorkloadPropertiesSoftwareComponentProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapValidation: A presentation of SAP workload insight. The schema of SAP
@@ -1722,9 +1809,9 @@ type SapValidation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapValidation) MarshalJSON() ([]byte, error) {
+func (s SapValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod SapValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SapValidationValidationDetail: Message describing the SAP validation
@@ -1771,9 +1858,9 @@ type SapValidationValidationDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapValidationValidationDetail) MarshalJSON() ([]byte, error) {
+func (s SapValidationValidationDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SapValidationValidationDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScannedResource: Message of scanned resource
@@ -1795,29 +1882,61 @@ type ScannedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScannedResource) MarshalJSON() ([]byte, error) {
+func (s ScannedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ScannedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type SpannerLocation struct {
-	DbName []string `json:"dbName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DbName") to unconditionally
+// ShellCommand: * A ShellCommand is invoked via the agent's command line
+// executor
+type ShellCommand struct {
+	// Args: args is a string of arguments to be passed to the command.
+	Args string `json:"args,omitempty"`
+	// Command: command is the name of the command to be executed.
+	Command string `json:"command,omitempty"`
+	// TimeoutSeconds: Optional. If not specified, the default timeout is 60
+	// seconds.
+	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DbName") to include in API
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShellCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod ShellCommand
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type SpannerLocation struct {
+	// BackupName: Set of backups used by the resource with name in the same format
+	// as what is available at http://table/spanner_automon.backup_metadata
+	BackupName []string `json:"backupName,omitempty"`
+	// DbName: Set of databases used by the resource in format /span//
+	DbName []string `json:"dbName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SpannerLocation) MarshalJSON() ([]byte, error) {
+func (s SpannerLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod SpannerLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlserverValidation: A presentation of SQLServer workload insight. The
@@ -1848,9 +1967,9 @@ type SqlserverValidation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlserverValidation) MarshalJSON() ([]byte, error) {
+func (s SqlserverValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlserverValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlserverValidationDetails: Message containing collected data names and
@@ -1871,9 +1990,9 @@ type SqlserverValidationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlserverValidationDetails) MarshalJSON() ([]byte, error) {
+func (s SqlserverValidationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlserverValidationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlserverValidationValidationDetail: Message describing the Sqlserver
@@ -1912,9 +2031,9 @@ type SqlserverValidationValidationDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SqlserverValidationValidationDetail) MarshalJSON() ([]byte, error) {
+func (s SqlserverValidationValidationDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlserverValidationValidationDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1946,9 +2065,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TenantProjectProxy struct {
@@ -1966,18 +2085,18 @@ type TenantProjectProxy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TenantProjectProxy) MarshalJSON() ([]byte, error) {
+func (s TenantProjectProxy) MarshalJSON() ([]byte, error) {
 	type NoMethod TenantProjectProxy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ViolationDetails: Message describing the violdation in execution result
+// ViolationDetails: Message describing the violation in an evaluation result.
 type ViolationDetails struct {
-	// Asset: the name of asset
+	// Asset: The name of the asset.
 	Asset string `json:"asset,omitempty"`
-	// Observed: observed
+	// Observed: Details of the violation.
 	Observed map[string]string `json:"observed,omitempty"`
-	// ServiceAccount: the service account associate with resource
+	// ServiceAccount: The service account associated with the resource.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1992,9 +2111,9 @@ type ViolationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViolationDetails) MarshalJSON() ([]byte, error) {
+func (s ViolationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteInsightRequest: Request for sending the data insights.
@@ -2028,9 +2147,9 @@ type WriteInsightRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteInsightRequest) MarshalJSON() ([]byte, error) {
+func (s WriteInsightRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteInsightRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteInsightResponse: The response for write insights request.
@@ -2054,9 +2173,9 @@ type ZoneConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ZoneConfiguration) MarshalJSON() ([]byte, error) {
+func (s ZoneConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ZoneConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -2687,7 +2806,8 @@ func (r *ProjectsLocationsEvaluationsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter to be applied when
+// listing the evaluation results.
 func (c *ProjectsLocationsEvaluationsListCall) Filter(filter string) *ProjectsLocationsEvaluationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3314,7 +3434,7 @@ type ProjectsLocationsEvaluationsExecutionsResultsListCall struct {
 	header_      http.Header
 }
 
-// List: List the running result of a single Execution.
+// List: Lists the result of a single evaluation.
 //
 //   - parent: The execution results. Format:
 //     {parent}/evaluations/*/executions/*/results.

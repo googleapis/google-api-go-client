@@ -301,9 +301,9 @@ type AdbShellCommandEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
+func (s AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AdbShellCommandEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdbShellInteractiveEvent: An ADB interactive shell was opened via “adb
@@ -408,9 +408,9 @@ type AdvancedSecurityOverrides struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvancedSecurityOverrides) MarshalJSON() ([]byte, error) {
+func (s AdvancedSecurityOverrides) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedSecurityOverrides
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
@@ -432,9 +432,9 @@ type AlwaysOnVpnPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlwaysOnVpnPackage) MarshalJSON() ([]byte, error) {
+func (s AlwaysOnVpnPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod AlwaysOnVpnPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApiLevelCondition: A compliance rule condition which is satisfied if the
@@ -459,9 +459,9 @@ type ApiLevelCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiLevelCondition) MarshalJSON() ([]byte, error) {
+func (s ApiLevelCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiLevelCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppProcessInfo: Information about a process. It contains process name, start
@@ -497,9 +497,9 @@ type AppProcessInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppProcessInfo) MarshalJSON() ([]byte, error) {
+func (s AppProcessInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppProcessInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppProcessStartEvent: An app process was started. This is available
@@ -521,9 +521,9 @@ type AppProcessStartEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppProcessStartEvent) MarshalJSON() ([]byte, error) {
+func (s AppProcessStartEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AppProcessStartEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppTrackInfo: Id to name association of a app track.
@@ -548,9 +548,9 @@ type AppTrackInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
+func (s AppTrackInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppTrackInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppVersion: This represents a single version of the app.
@@ -580,9 +580,9 @@ type AppVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppVersion) MarshalJSON() ([]byte, error) {
+func (s AppVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AppVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Application: Information about an app.
@@ -685,9 +685,9 @@ type Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Application) MarshalJSON() ([]byte, error) {
+func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationEvent: An app-related event.
@@ -722,9 +722,9 @@ type ApplicationEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationEvent) MarshalJSON() ([]byte, error) {
+func (s ApplicationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationPermission: A permission required by the app.
@@ -750,9 +750,9 @@ type ApplicationPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
+func (s ApplicationPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationPolicy: Policy for an individual app. Note: Application
@@ -809,7 +809,8 @@ type ApplicationPolicy struct {
 	// time.
 	//   "AUTO_UPDATE_HIGH_PRIORITY" - The app is updated as soon as possible. No
 	// constraints are applied.The device is notified as soon as possible about a
-	// new update after it becomes available.
+	// new update after it becomes available.*NOTE:* Updates to apps with larger
+	// deployments across Android's ecosystem can take up to 24h.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
 	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate with
 	// itself across a device’s work and personal profiles, subject to user
@@ -1021,9 +1022,9 @@ type ApplicationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationPolicy) MarshalJSON() ([]byte, error) {
+func (s ApplicationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationReport: Information reported about an installed app.
@@ -1091,9 +1092,9 @@ type ApplicationReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationReport) MarshalJSON() ([]byte, error) {
+func (s ApplicationReport) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationReportingSettings: Settings controlling the behavior of
@@ -1115,9 +1116,9 @@ type ApplicationReportingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
+func (s ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationReportingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUsageLogEvents: Batched event logs of events from the device.
@@ -1147,9 +1148,9 @@ type BatchUsageLogEvents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUsageLogEvents) MarshalJSON() ([]byte, error) {
+func (s BatchUsageLogEvents) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUsageLogEvents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlockAction: An action to block access to apps and data on a fully managed
@@ -1186,9 +1187,9 @@ type BlockAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockAction) MarshalJSON() ([]byte, error) {
+func (s BlockAction) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertAuthorityInstalledEvent: A new root certificate was installed into the
@@ -1216,9 +1217,9 @@ type CertAuthorityInstalledEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertAuthorityInstalledEvent) MarshalJSON() ([]byte, error) {
+func (s CertAuthorityInstalledEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CertAuthorityInstalledEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertAuthorityRemovedEvent: A root certificate was removed from the system's
@@ -1246,9 +1247,9 @@ type CertAuthorityRemovedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertAuthorityRemovedEvent) MarshalJSON() ([]byte, error) {
+func (s CertAuthorityRemovedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CertAuthorityRemovedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertValidationFailureEvent: An X.509v3 certificate failed to validate,
@@ -1271,9 +1272,9 @@ type CertValidationFailureEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertValidationFailureEvent) MarshalJSON() ([]byte, error) {
+func (s CertValidationFailureEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CertValidationFailureEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChoosePrivateKeyRule: Controls apps' access to private keys. The rule
@@ -1319,9 +1320,9 @@ type ChoosePrivateKeyRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChoosePrivateKeyRule) MarshalJSON() ([]byte, error) {
+func (s ChoosePrivateKeyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ChoosePrivateKeyRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClearAppsDataParams: Parameters associated with the CLEAR_APP_DATA command
@@ -1343,9 +1344,9 @@ type ClearAppsDataParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClearAppsDataParams) MarshalJSON() ([]byte, error) {
+func (s ClearAppsDataParams) MarshalJSON() ([]byte, error) {
 	type NoMethod ClearAppsDataParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClearAppsDataStatus: Status of the CLEAR_APP_DATA command to clear the data
@@ -1367,9 +1368,9 @@ type ClearAppsDataStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClearAppsDataStatus) MarshalJSON() ([]byte, error) {
+func (s ClearAppsDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ClearAppsDataStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Command: A command.
@@ -1478,9 +1479,9 @@ type Command struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Command) MarshalJSON() ([]byte, error) {
+func (s Command) MarshalJSON() ([]byte, error) {
 	type NoMethod Command
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommonCriteriaModeInfo: Information about Common Criteria Mode—security
@@ -1511,9 +1512,9 @@ type CommonCriteriaModeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommonCriteriaModeInfo) MarshalJSON() ([]byte, error) {
+func (s CommonCriteriaModeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CommonCriteriaModeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplianceRule: A rule declaring which mitigating actions to take when a
@@ -1550,9 +1551,9 @@ type ComplianceRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceRule) MarshalJSON() ([]byte, error) {
+func (s ComplianceRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectEvent: A TCP connect event was initiated through the standard network
@@ -1577,9 +1578,9 @@ type ConnectEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectEvent) MarshalJSON() ([]byte, error) {
+func (s ConnectEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactInfo: Contact details for managed Google Play enterprises.
@@ -1616,9 +1617,9 @@ type ContactInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactInfo) MarshalJSON() ([]byte, error) {
+func (s ContactInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentProviderEndpoint: This feature is not generally available.
@@ -1642,9 +1643,9 @@ type ContentProviderEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
+func (s ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentProviderEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CrossProfilePolicies: Controls the data from the work profile that can be
@@ -1758,9 +1759,9 @@ type CrossProfilePolicies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CrossProfilePolicies) MarshalJSON() ([]byte, error) {
+func (s CrossProfilePolicies) MarshalJSON() ([]byte, error) {
 	type NoMethod CrossProfilePolicies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
@@ -1782,9 +1783,9 @@ type CryptoSelfTestCompletedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CryptoSelfTestCompletedEvent) MarshalJSON() ([]byte, error) {
+func (s CryptoSelfTestCompletedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoSelfTestCompletedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -1819,9 +1820,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Device: A device owned by an enterprise. Unless otherwise noted, all fields
@@ -2023,9 +2024,9 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
+func (s Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceConnectivityManagement: Covers controls for device connectivity such
@@ -2128,9 +2129,9 @@ type DeviceConnectivityManagement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
+func (s DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceConnectivityManagement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceRadioState: Controls for device radio settings.
@@ -2221,9 +2222,9 @@ type DeviceRadioState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceRadioState) MarshalJSON() ([]byte, error) {
+func (s DeviceRadioState) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceRadioState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceSettings: Information about security related device settings on
@@ -2275,9 +2276,9 @@ type DeviceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceSettings) MarshalJSON() ([]byte, error) {
+func (s DeviceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Display: Device display information.
@@ -2316,9 +2317,33 @@ type Display struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Display) MarshalJSON() ([]byte, error) {
+func (s Display) MarshalJSON() ([]byte, error) {
 	type NoMethod Display
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DisplaySettings: Controls for the display settings.
+type DisplaySettings struct {
+	// ScreenBrightnessSettings: Optional. Controls the screen brightness settings.
+	ScreenBrightnessSettings *ScreenBrightnessSettings `json:"screenBrightnessSettings,omitempty"`
+	// ScreenTimeoutSettings: Optional. Controls the screen timeout settings.
+	ScreenTimeoutSettings *ScreenTimeoutSettings `json:"screenTimeoutSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenBrightnessSettings")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenBrightnessSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DisplaySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DisplaySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsEvent: A DNS lookup event was initiated through the standard network
@@ -2348,9 +2373,9 @@ type DnsEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsEvent) MarshalJSON() ([]byte, error) {
+func (s DnsEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DpcMigrationInfo: Information related to whether this device was migrated
@@ -2375,9 +2400,9 @@ type DpcMigrationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DpcMigrationInfo) MarshalJSON() ([]byte, error) {
+func (s DpcMigrationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DpcMigrationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2476,9 +2501,9 @@ type EnrollmentToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollmentToken) MarshalJSON() ([]byte, error) {
+func (s EnrollmentToken) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollmentToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Enterprise: The configuration applied to an enterprise.
@@ -2543,9 +2568,9 @@ type Enterprise struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Enterprise) MarshalJSON() ([]byte, error) {
+func (s Enterprise) MarshalJSON() ([]byte, error) {
 	type NoMethod Enterprise
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtensionConfig: Configuration to enable an app as an extension app, with
@@ -2585,9 +2610,9 @@ type ExtensionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtensionConfig) MarshalJSON() ([]byte, error) {
+func (s ExtensionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtensionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalData: Data hosted at an external location. The data is to be
@@ -2616,9 +2641,9 @@ type ExternalData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalData) MarshalJSON() ([]byte, error) {
+func (s ExternalData) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilePulledEvent: A file was downloaded from the device.
@@ -2638,9 +2663,9 @@ type FilePulledEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilePulledEvent) MarshalJSON() ([]byte, error) {
+func (s FilePulledEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod FilePulledEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilePushedEvent: A file was uploaded onto the device.
@@ -2660,9 +2685,9 @@ type FilePushedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilePushedEvent) MarshalJSON() ([]byte, error) {
+func (s FilePushedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod FilePushedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FreezePeriod: A system freeze period. When a device’s clock is within the
@@ -2700,9 +2725,9 @@ type FreezePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FreezePeriod) MarshalJSON() ([]byte, error) {
+func (s FreezePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod FreezePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAuthenticationSettings: Contains settings for Google-provided user
@@ -2734,9 +2759,9 @@ type GoogleAuthenticationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAuthenticationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HardwareInfo: Information about device hardware. The fields related to
@@ -2799,9 +2824,9 @@ type HardwareInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HardwareInfo) MarshalJSON() ([]byte, error) {
+func (s HardwareInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HardwareInfo) UnmarshalJSON(data []byte) error {
@@ -2893,9 +2918,9 @@ type HardwareStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
+func (s HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
@@ -2983,9 +3008,9 @@ type InstallConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallConstraint) MarshalJSON() ([]byte, error) {
+func (s InstallConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IssueCommandResponse: Response on issuing a command. This is currently empty
@@ -3018,9 +3043,9 @@ type KeyDestructionEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyDestructionEvent) MarshalJSON() ([]byte, error) {
+func (s KeyDestructionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyDestructionEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyGeneratedEvent: A cryptographic key including user installed, admin
@@ -3048,9 +3073,9 @@ type KeyGeneratedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyGeneratedEvent) MarshalJSON() ([]byte, error) {
+func (s KeyGeneratedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyGeneratedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyImportEvent: A cryptographic key including user installed, admin
@@ -3078,9 +3103,9 @@ type KeyImportEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyImportEvent) MarshalJSON() ([]byte, error) {
+func (s KeyImportEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyImportEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyIntegrityViolationEvent: A cryptographic key including user installed,
@@ -3106,9 +3131,9 @@ type KeyIntegrityViolationEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyIntegrityViolationEvent) MarshalJSON() ([]byte, error) {
+func (s KeyIntegrityViolationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyIntegrityViolationEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyedAppState: Keyed app state reported by the app.
@@ -3150,9 +3175,9 @@ type KeyedAppState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyedAppState) MarshalJSON() ([]byte, error) {
+func (s KeyedAppState) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyedAppState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyguardDismissAuthAttemptEvent: An attempt was made to unlock the device.
@@ -3175,9 +3200,9 @@ type KeyguardDismissAuthAttemptEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyguardDismissAuthAttemptEvent) MarshalJSON() ([]byte, error) {
+func (s KeyguardDismissAuthAttemptEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyguardDismissAuthAttemptEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyguardDismissedEvent: The keyguard was dismissed. Intentionally empty.
@@ -3265,9 +3290,9 @@ type KioskCustomization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KioskCustomization) MarshalJSON() ([]byte, error) {
+func (s KioskCustomization) MarshalJSON() ([]byte, error) {
 	type NoMethod KioskCustomization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LaunchAppAction: An action to launch an app.
@@ -3287,9 +3312,9 @@ type LaunchAppAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LaunchAppAction) MarshalJSON() ([]byte, error) {
+func (s LaunchAppAction) MarshalJSON() ([]byte, error) {
 	type NoMethod LaunchAppAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDevicesResponse: Response to a request to list devices for a given
@@ -3316,9 +3341,9 @@ type ListDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEnrollmentTokensResponse: Response to a request to list enrollment
@@ -3345,9 +3370,9 @@ type ListEnrollmentTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEnrollmentTokensResponse) MarshalJSON() ([]byte, error) {
+func (s ListEnrollmentTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEnrollmentTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEnterprisesResponse: Response to a request to list enterprises.
@@ -3373,9 +3398,9 @@ type ListEnterprisesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEnterprisesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEnterprisesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEnterprisesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMigrationTokensResponse: Response to a request to list migration tokens
@@ -3402,9 +3427,9 @@ type ListMigrationTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMigrationTokensResponse) MarshalJSON() ([]byte, error) {
+func (s ListMigrationTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMigrationTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -3430,9 +3455,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPoliciesResponse: Response to a request to list policies for a given
@@ -3459,9 +3484,9 @@ type ListPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWebAppsResponse: Response to a request to list web apps for a given
@@ -3488,9 +3513,9 @@ type ListWebAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWebAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: The device location containing the latitude and longitude.
@@ -3512,9 +3537,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Location) UnmarshalJSON(data []byte) error {
@@ -3567,9 +3592,9 @@ type LostModeLocationEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LostModeLocationEvent) MarshalJSON() ([]byte, error) {
+func (s LostModeLocationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod LostModeLocationEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LostModeOutgoingPhoneCallEvent: An event indicating an outgoing phone call
@@ -3598,9 +3623,9 @@ type ManagedConfigurationTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfigurationTemplate) MarshalJSON() ([]byte, error) {
+func (s ManagedConfigurationTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfigurationTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedProperty: Managed property.
@@ -3649,9 +3674,9 @@ type ManagedProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedProperty) MarshalJSON() ([]byte, error) {
+func (s ManagedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedPropertyEntry: An entry of a managed property.
@@ -3674,9 +3699,9 @@ type ManagedPropertyEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedPropertyEntry) MarshalJSON() ([]byte, error) {
+func (s ManagedPropertyEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedPropertyEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaMountEvent: Removable media was mounted.
@@ -3699,9 +3724,9 @@ type MediaMountEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaMountEvent) MarshalJSON() ([]byte, error) {
+func (s MediaMountEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaMountEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaUnmountEvent: Removable media was unmounted.
@@ -3724,9 +3749,9 @@ type MediaUnmountEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaUnmountEvent) MarshalJSON() ([]byte, error) {
+func (s MediaUnmountEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaUnmountEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MemoryEvent: An event related to memory and storage measurements.To
@@ -3765,9 +3790,9 @@ type MemoryEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemoryEvent) MarshalJSON() ([]byte, error) {
+func (s MemoryEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod MemoryEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MemoryInfo: Information about device memory and storage.
@@ -3789,9 +3814,9 @@ type MemoryInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
+func (s MemoryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MemoryInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationToken: A token to initiate the migration of a device from being
@@ -3866,9 +3891,9 @@ type MigrationToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrationToken) MarshalJSON() ([]byte, error) {
+func (s MigrationToken) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkInfo: Device network info.
@@ -3900,9 +3925,9 @@ type NetworkInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkInfo) MarshalJSON() ([]byte, error) {
+func (s NetworkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NonComplianceDetail: Provides detail about non-compliance with a policy
@@ -4043,9 +4068,9 @@ type NonComplianceDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NonComplianceDetail) MarshalJSON() ([]byte, error) {
+func (s NonComplianceDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod NonComplianceDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NonComplianceDetailCondition: A compliance rule condition which is satisfied
@@ -4101,9 +4126,9 @@ type NonComplianceDetailCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NonComplianceDetailCondition) MarshalJSON() ([]byte, error) {
+func (s NonComplianceDetailCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod NonComplianceDetailCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OncCertificateProvider: This feature is not generally available.
@@ -4125,9 +4150,9 @@ type OncCertificateProvider struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OncCertificateProvider) MarshalJSON() ([]byte, error) {
+func (s OncCertificateProvider) MarshalJSON() ([]byte, error) {
 	type NoMethod OncCertificateProvider
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OncWifiContext: Additional context for non-compliance related to Wi-Fi
@@ -4148,9 +4173,9 @@ type OncWifiContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OncWifiContext) MarshalJSON() ([]byte, error) {
+func (s OncWifiContext) MarshalJSON() ([]byte, error) {
 	type NoMethod OncWifiContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -4194,9 +4219,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OsShutdownEvent: Device was shutdown. Intentionally empty.
@@ -4240,9 +4265,9 @@ type OsStartupEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OsStartupEvent) MarshalJSON() ([]byte, error) {
+func (s OsStartupEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod OsStartupEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PackageNameList: A list of package names.
@@ -4262,9 +4287,9 @@ type PackageNameList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PackageNameList) MarshalJSON() ([]byte, error) {
+func (s PackageNameList) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageNameList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PasswordPoliciesContext: Additional context for non-compliance related to
@@ -4293,9 +4318,9 @@ type PasswordPoliciesContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PasswordPoliciesContext) MarshalJSON() ([]byte, error) {
+func (s PasswordPoliciesContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PasswordPoliciesContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PasswordRequirements: Requirements for the password used to unlock a device.
@@ -4442,9 +4467,9 @@ type PasswordRequirements struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PasswordRequirements) MarshalJSON() ([]byte, error) {
+func (s PasswordRequirements) MarshalJSON() ([]byte, error) {
 	type NoMethod PasswordRequirements
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerAppResult: The result of an attempt to clear the data of a single app.
@@ -4475,9 +4500,9 @@ type PerAppResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerAppResult) MarshalJSON() ([]byte, error) {
+func (s PerAppResult) MarshalJSON() ([]byte, error) {
 	type NoMethod PerAppResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PermissionGrant: Configuration for an Android permission and its grant
@@ -4526,9 +4551,9 @@ type PermissionGrant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PermissionGrant) MarshalJSON() ([]byte, error) {
+func (s PermissionGrant) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionGrant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersistentPreferredActivity: A default activity for handling intents that
@@ -4563,9 +4588,9 @@ type PersistentPreferredActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersistentPreferredActivity) MarshalJSON() ([]byte, error) {
+func (s PersistentPreferredActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentPreferredActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersonalApplicationPolicy: Policies for apps in the personal profile of a
@@ -4595,9 +4620,9 @@ type PersonalApplicationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersonalApplicationPolicy) MarshalJSON() ([]byte, error) {
+func (s PersonalApplicationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonalApplicationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersonalUsagePolicies: Policies controlling personal usage on a
@@ -4651,9 +4676,9 @@ type PersonalUsagePolicies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersonalUsagePolicies) MarshalJSON() ([]byte, error) {
+func (s PersonalUsagePolicies) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonalUsagePolicies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: A policy resource represents a group of settings that govern the
@@ -4837,6 +4862,8 @@ type Policy struct {
 	// DeviceRadioState: Covers controls for radio state such as Wi-Fi, bluetooth,
 	// and more.
 	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
+	// DisplaySettings: Optional. Controls for the display settings.
+	DisplaySettings *DisplaySettings `json:"displaySettings,omitempty"`
 	// EncryptionPolicy: Whether encryption is enabled
 	//
 	// Possible values:
@@ -5178,9 +5205,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyEnforcementRule: A rule that defines the actions to take if a device
@@ -5216,9 +5243,9 @@ type PolicyEnforcementRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyEnforcementRule) MarshalJSON() ([]byte, error) {
+func (s PolicyEnforcementRule) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyEnforcementRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostureDetail: Additional details regarding the security posture of the
@@ -5254,9 +5281,9 @@ type PostureDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostureDetail) MarshalJSON() ([]byte, error) {
+func (s PostureDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod PostureDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PowerManagementEvent: A power management event.
@@ -5292,9 +5319,9 @@ type PowerManagementEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PowerManagementEvent) MarshalJSON() ([]byte, error) {
+func (s PowerManagementEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PowerManagementEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
@@ -5316,6 +5343,9 @@ type ProvisioningInfo struct {
 	// ApiLevel: The API level of the Android platform version running on the
 	// device.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
+	// AuthenticatedUserEmail: The email address of the authenticated user (only
+	// present for Google Account provisioning method).
+	AuthenticatedUserEmail string `json:"authenticatedUserEmail,omitempty"`
 	// Brand: The brand of the device. For example, Google.
 	Brand string `json:"brand,omitempty"`
 	// Enterprise: The name of the enterprise in the form enterprises/{enterprise}.
@@ -5365,9 +5395,9 @@ type ProvisioningInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProvisioningInfo) MarshalJSON() ([]byte, error) {
+func (s ProvisioningInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisioningInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProxyInfo: Configuration info for an HTTP proxy. For a direct proxy, set the
@@ -5396,9 +5426,9 @@ type ProxyInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
+func (s ProxyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProxyInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteLockEvent: The device or profile has been remotely locked via the LOCK
@@ -5424,9 +5454,102 @@ type RemoteLockEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteLockEvent) MarshalJSON() ([]byte, error) {
+func (s RemoteLockEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteLockEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScreenBrightnessSettings: Controls for the screen brightness settings.
+type ScreenBrightnessSettings struct {
+	// ScreenBrightness: Optional. The screen brightness between 1 and 255 where 1
+	// is the lowest and 255 is the highest brightness. A value of 0 (default)
+	// means no screen brightness set. Any other value is rejected.
+	// screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED
+	// to set this. Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenBrightness int64 `json:"screenBrightness,omitempty"`
+	// ScreenBrightnessMode: Optional. Controls the screen brightness mode.
+	//
+	// Possible values:
+	//   "SCREEN_BRIGHTNESS_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// BRIGHTNESS_USER_CHOICE.
+	//   "BRIGHTNESS_USER_CHOICE" - The user is allowed to configure the screen
+	// brightness. screenBrightness must not be set.
+	//   "BRIGHTNESS_AUTOMATIC" - The screen brightness mode is automatic in which
+	// the brightness is automatically adjusted and the user is not allowed to
+	// configure the screen brightness. screenBrightness can still be set and it is
+	// taken into account while the brightness is automatically adjusted. Supported
+	// on Android 9 and above on fully managed devices. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	//   "BRIGHTNESS_FIXED" - The screen brightness mode is fixed in which the
+	// brightness is set to screenBrightness and the user is not allowed to
+	// configure the screen brightness. screenBrightness must be set. Supported on
+	// Android 9 and above on fully managed devices. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	ScreenBrightnessMode string `json:"screenBrightnessMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenBrightness") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenBrightness") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScreenBrightnessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenBrightnessSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScreenTimeoutSettings: Controls the screen timeout settings.
+type ScreenTimeoutSettings struct {
+	// ScreenTimeout: Optional. Controls the screen timeout duration. The screen
+	// timeout duration must be greater than 0, otherwise it is rejected.
+	// Additionally, it should not be greater than maximumTimeToLock, otherwise the
+	// screen timeout is set to maximumTimeToLock and a NonComplianceDetail with
+	// INVALID_VALUE reason and SCREEN_TIMEOUT_GREATER_THAN_MAXIMUM_TIME_TO_LOCK
+	// specific reason is reported. If the screen timeout is less than a certain
+	// lower bound, it is set to the lower bound. The lower bound may vary across
+	// devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED.
+	// Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenTimeout string `json:"screenTimeout,omitempty"`
+	// ScreenTimeoutMode: Optional. Controls whether the user is allowed to
+	// configure the screen timeout.
+	//
+	// Possible values:
+	//   "SCREEN_TIMEOUT_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// SCREEN_TIMEOUT_USER_CHOICE.
+	//   "SCREEN_TIMEOUT_USER_CHOICE" - The user is allowed to configure the screen
+	// timeout. screenTimeout must not be set.
+	//   "SCREEN_TIMEOUT_ENFORCED" - The screen timeout is set to screenTimeout and
+	// the user is not allowed to configure the timeout. screenTimeout must be set.
+	// Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenTimeoutMode string `json:"screenTimeoutMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenTimeout") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScreenTimeoutSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenTimeoutSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityPosture: The security posture of the device, as determined by the
@@ -5459,9 +5582,9 @@ type SecurityPosture struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityPosture) MarshalJSON() ([]byte, error) {
+func (s SecurityPosture) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPosture
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetupAction: An action executed during setup.
@@ -5491,9 +5614,9 @@ type SetupAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetupAction) MarshalJSON() ([]byte, error) {
+func (s SetupAction) MarshalJSON() ([]byte, error) {
 	type NoMethod SetupAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SigninDetail: A resource containing sign in details for an enterprise. Use
@@ -5563,9 +5686,9 @@ type SigninDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SigninDetail) MarshalJSON() ([]byte, error) {
+func (s SigninDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SigninDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignupUrl: An enterprise signup URL.
@@ -5592,9 +5715,9 @@ type SignupUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignupUrl) MarshalJSON() ([]byte, error) {
+func (s SignupUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod SignupUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareInfo: Information about device software.
@@ -5640,9 +5763,9 @@ type SoftwareInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareInfo) MarshalJSON() ([]byte, error) {
+func (s SoftwareInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpecificNonComplianceContext: Additional context for
@@ -5668,9 +5791,9 @@ type SpecificNonComplianceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpecificNonComplianceContext) MarshalJSON() ([]byte, error) {
+func (s SpecificNonComplianceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpecificNonComplianceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartLostModeParams: Parameters associated with the START_LOST_MODE command
@@ -5706,9 +5829,9 @@ type StartLostModeParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartLostModeParams) MarshalJSON() ([]byte, error) {
+func (s StartLostModeParams) MarshalJSON() ([]byte, error) {
 	type NoMethod StartLostModeParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartLostModeStatus: Status of the START_LOST_MODE command to put the device
@@ -5738,9 +5861,9 @@ type StartLostModeStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartLostModeStatus) MarshalJSON() ([]byte, error) {
+func (s StartLostModeStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod StartLostModeStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The Status type defines a logical error model that is suitable for
@@ -5772,9 +5895,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatusReportingSettings: Settings controlling the behavior of status
@@ -5821,9 +5944,9 @@ type StatusReportingSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatusReportingSettings) MarshalJSON() ([]byte, error) {
+func (s StatusReportingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusReportingSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopLostModeParams: Parameters associated with the STOP_LOST_MODE command to
@@ -5854,9 +5977,9 @@ type StopLostModeStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StopLostModeStatus) MarshalJSON() ([]byte, error) {
+func (s StopLostModeStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod StopLostModeStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopLostModeUserAttemptEvent: A lost mode event indicating the user has
@@ -5884,9 +6007,9 @@ type StopLostModeUserAttemptEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
+func (s StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod StopLostModeUserAttemptEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemUpdate: Configuration for managing system updatesNote: Google Play
@@ -5942,9 +6065,9 @@ type SystemUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemUpdate) MarshalJSON() ([]byte, error) {
+func (s SystemUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemUpdateInfo: Information about a potential pending system update.
@@ -5981,9 +6104,9 @@ type SystemUpdateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemUpdateInfo) MarshalJSON() ([]byte, error) {
+func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemUpdateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TelephonyInfo: Telephony information associated with a given SIM card on the
@@ -6007,9 +6130,9 @@ type TelephonyInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TelephonyInfo) MarshalJSON() ([]byte, error) {
+func (s TelephonyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TelephonyInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TermsAndConditions: A terms and conditions page to be accepted during
@@ -6033,9 +6156,9 @@ type TermsAndConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TermsAndConditions) MarshalJSON() ([]byte, error) {
+func (s TermsAndConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod TermsAndConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageLog: Controls types of device activity logs collected from the device
@@ -6096,9 +6219,9 @@ type UsageLog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageLog) MarshalJSON() ([]byte, error) {
+func (s UsageLog) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageLog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageLogEvent: An event logged on the device.
@@ -6263,9 +6386,9 @@ type UsageLogEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageLogEvent) MarshalJSON() ([]byte, error) {
+func (s UsageLogEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageLogEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: A user belonging to an enterprise.
@@ -6289,9 +6412,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserFacingMessage: Provides a user-facing message with locale info. The
@@ -6319,9 +6442,9 @@ type UserFacingMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserFacingMessage) MarshalJSON() ([]byte, error) {
+func (s UserFacingMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod UserFacingMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebApp: A web app.
@@ -6371,9 +6494,9 @@ type WebApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebApp) MarshalJSON() ([]byte, error) {
+func (s WebApp) MarshalJSON() ([]byte, error) {
 	type NoMethod WebApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebAppIcon: An icon for a web app. Supported formats are: png, jpg and webp.
@@ -6396,9 +6519,9 @@ type WebAppIcon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
+func (s WebAppIcon) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAppIcon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebToken: A web token used to access the managed Google Play iframe.
@@ -6460,9 +6583,9 @@ type WebToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebToken) MarshalJSON() ([]byte, error) {
+func (s WebToken) MarshalJSON() ([]byte, error) {
 	type NoMethod WebToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WifiSsid: Represents a Wi-Fi SSID.
@@ -6482,9 +6605,9 @@ type WifiSsid struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WifiSsid) MarshalJSON() ([]byte, error) {
+func (s WifiSsid) MarshalJSON() ([]byte, error) {
 	type NoMethod WifiSsid
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
@@ -6523,9 +6646,9 @@ type WifiSsidPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WifiSsidPolicy) MarshalJSON() ([]byte, error) {
+func (s WifiSsidPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod WifiSsidPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeAction: An action to reset a company owned device or delete a work
@@ -6550,9 +6673,9 @@ type WipeAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WipeAction) MarshalJSON() ([]byte, error) {
+func (s WipeAction) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WipeFailureEvent: The work profile or company-owned device failed to wipe
@@ -8452,12 +8575,12 @@ type EnterprisesEnrollmentTokensGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an active, unexpired enrollment token. Only a partial view of
-// EnrollmentToken is returned: all the fields but name and
-// expiration_timestamp are empty. This method is meant to help manage active
-// enrollment tokens lifecycle. For security reasons, it's recommended to
-// delete active enrollment tokens as soon as they're not intended to be used
-// anymore.
+// Get: Gets an active, unexpired enrollment token. A partial view of the
+// enrollment token is returned. Only the following fields are populated: name,
+// expirationTimestamp, allowPersonalUsage, value, qrCode. This method is meant
+// to help manage active enrollment tokens lifecycle. For security reasons,
+// it's recommended to delete active enrollment tokens as soon as they're not
+// intended to be used anymore.
 //
 //   - name: The name of the enrollment token in the form
 //     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
@@ -8567,11 +8690,12 @@ type EnterprisesEnrollmentTokensListCall struct {
 }
 
 // List: Lists active, unexpired enrollment tokens for a given enterprise. The
-// list items contain only a partial view of EnrollmentToken: all the fields
-// but name and expiration_timestamp are empty. This method is meant to help
-// manage active enrollment tokens lifecycle. For security reasons, it's
-// recommended to delete active enrollment tokens as soon as they're not
-// intended to be used anymore.
+// list items contain only a partial view of EnrollmentToken object. Only the
+// following fields are populated: name, expirationTimestamp,
+// allowPersonalUsage, value, qrCode. This method is meant to help manage
+// active enrollment tokens lifecycle. For security reasons, it's recommended
+// to delete active enrollment tokens as soon as they're not intended to be
+// used anymore.
 //
 // - parent: The name of the enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) List(parent string) *EnterprisesEnrollmentTokensListCall {

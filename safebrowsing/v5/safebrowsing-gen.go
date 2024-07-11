@@ -173,9 +173,9 @@ type GoogleSecuritySafebrowsingV5FullHash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV5FullHash) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV5FullHash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5FullHash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV5FullHashFullHashDetail: Details about a matching
@@ -247,9 +247,9 @@ type GoogleSecuritySafebrowsingV5FullHashFullHashDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5FullHashFullHashDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSecuritySafebrowsingV5SearchHashesResponse: The response returned
@@ -293,9 +293,9 @@ type GoogleSecuritySafebrowsingV5SearchHashesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSecuritySafebrowsingV5SearchHashesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSecuritySafebrowsingV5SearchHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5SearchHashesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HashesSearchCall struct {

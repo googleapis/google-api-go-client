@@ -119,7 +119,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the account. Required.",
+                  "description": "Required. The resource name of the account, with the format `providers/{providerId}/accounts/{accountId}`.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/accounts/[^/]+$",
                   "required": true,
@@ -147,7 +147,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the account to retrieve.",
+                  "description": "Required. The name of the account to retrieve.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/accounts/[^/]+$",
                   "required": true,
@@ -172,7 +172,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The maximum number of entries that are requested The default page size is 25 and the maximum page size is 200.",
+                  "description": "The maximum number of entries that are requested. The default page size is 25 and the maximum page size is 200.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -183,7 +183,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The parent resource name.",
+                  "description": "Required. The parent resource name.",
                   "location": "path",
                   "pattern": "^providers/[^/]+$",
                   "required": true,
@@ -208,7 +208,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the account. Required.",
+                  "description": "Required. The resource name of the account.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/accounts/[^/]+$",
                   "required": true,
@@ -227,7 +227,7 @@
               ]
             },
             "reset": {
-              "description": "Resets an Account and cancel all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.",
+              "description": "Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.",
               "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:reset",
               "httpMethod": "POST",
               "id": "cloudcommerceprocurement.providers.accounts.reset",
@@ -236,7 +236,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the account. Required.",
+                  "description": "Required. The resource name of the account.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/accounts/[^/]+$",
                   "required": true,
@@ -268,7 +268,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the entitlement. Required.",
+                  "description": "Required. The resource name of the entitlement, with the format `providers/{providerId}/entitlements/{entitlementId}`.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -296,7 +296,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the entitlement. Required.",
+                  "description": "Required. The resource name of the entitlement.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -324,7 +324,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the entitlement to retrieve.",
+                  "description": "Required. The name of the entitlement to retrieve.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -349,7 +349,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The filter that can be used to limit the list request. The filter is a query string that can match a selected set of attributes with string values. For example `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and `plan!=foo-plan`. Supported query attributes are * `account` * `customer_billing_account` with value in the format of: `billingAccounts/{id}` * `product_external_name` * `quote_external_name` * `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or `new_pending_plan` * `state` * `consumers.project` Note that the consumers match works on repeated structures, so equality (`consumers.project=projects/123456789`) is not supported. Set membership can be expressed with the `:` operator. For example, `consumers.project:projects/123456789` finds entitlements with at least one consumer with project field equal to `projects/123456789`. Also note that the state name match is case-insensitive and query can omit the prefix \"ENTITLEMENT_\". For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If the query contains some special characters other than letters, underscore, or digits, the phrase must be quoted with double quotes. For example, `product=\"providerId:productId\"`, where the product name needs to be quoted because it contains special character colon. Queries can be combined with `AND`, `OR`, and `NOT` to form more complex queries. They can also be grouped to force a desired evaluation order. For example, `state=active AND (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective `AND` can be omitted between two predicates. For example `account=E-1234 state=active` is equivalent to `account=E-1234 AND state=active`.",
+                  "description": "The filter that can be used to limit the list request. The filter is a query string that can match a selected set of attributes with string values. For example `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and `plan!=foo-plan`. Supported query attributes are * `account` * `customer_billing_account` with value in the format of: `billingAccounts/{id}` * `product_external_name` * `quote_external_name` * `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or `new_pending_plan` * `state` * `consumers.project` * `change_history.new_offer` Note that the consumers and change_history.new_offer match works on repeated structures, so equality (`consumers.project=projects/123456789`) is not supported. Set membership can be expressed with the `:` operator. For example, `consumers.project:projects/123456789` finds entitlements with at least one consumer with project field equal to `projects/123456789`. `change_history.new_offer` retrieves all entitlements that were once associated or are currently active with the offer. Also note that the state name match is case-insensitive and query can omit the prefix \"ENTITLEMENT_\". For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If the query contains some special characters other than letters, underscore, or digits, the phrase must be quoted with double quotes. For example, `product=\"providerId:productId\"`, where the product name needs to be quoted because it contains special character colon. Queries can be combined with `AND`, `OR`, and `NOT` to form more complex queries. They can also be grouped to force a desired evaluation order. For example, `state=active AND (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective `AND` can be omitted between two predicates. For example `account=E-1234 state=active` is equivalent to `account=E-1234 AND state=active`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -365,7 +365,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The parent resource name.",
+                  "description": "Required. The parent resource name.",
                   "location": "path",
                   "pattern": "^providers/[^/]+$",
                   "required": true,
@@ -390,7 +390,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the entitlement to update.",
+                  "description": "Required. The name of the entitlement to update.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -424,7 +424,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the entitlement. Required.",
+                  "description": "Required. The resource name of the entitlement.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -452,7 +452,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the entitlement. Required.",
+                  "description": "Required. The resource name of the entitlement.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -480,7 +480,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the entitlement to suspend.",
+                  "description": "Required. The name of the entitlement to suspend.",
                   "location": "path",
                   "pattern": "^providers/[^/]+/entitlements/[^/]+$",
                   "required": true,
@@ -503,7 +503,7 @@
       }
     }
   },
-  "revision": "20220422",
+  "revision": "20240609",
   "rootUrl": "https://cloudcommerceprocurement.googleapis.com/",
   "schemas": {
     "Account": {
@@ -527,6 +527,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
+          "deprecated": true,
           "description": "Output only. The custom properties that were collected from the user to create this account.",
           "type": "object"
         },
@@ -623,7 +624,7 @@
       "id": "ApproveEntitlementPlanChangeRequest",
       "properties": {
         "pendingPlanName": {
-          "description": "Name of the pending plan that is being approved. Required.",
+          "description": "Required. Name of the pending plan that's being approved.",
           "type": "string"
         }
       },
@@ -634,13 +635,14 @@
       "id": "ApproveEntitlementRequest",
       "properties": {
         "entitlementMigrated": {
-          "description": "Optional. The resource name of the entitlement that was migrated. Format: providers/{provider_id}/entitlements/{entitlement_id}. Should only be sent when resources have been migrated from entitlement_migrated to the new entitlement. Optional.",
+          "description": "Optional. The resource name of the entitlement that was migrated, with the format `providers/{provider_id}/entitlements/{entitlement_id}`. Should only be sent when resources have been migrated from entitlement_migrated to the new entitlement. Optional.",
           "type": "string"
         },
         "properties": {
           "additionalProperties": {
             "type": "string"
           },
+          "deprecated": true,
           "description": "Set of properties that should be associated with the entitlement. Optional.",
           "type": "object"
         }
@@ -672,6 +674,11 @@
           "description": "Output only. The resource name of the account that this entitlement is based on, if any.",
           "type": "string"
         },
+        "cancellationReason": {
+          "description": "Output only. The reason the entitlement was cancelled. If this entitlement wasn't cancelled, this field is empty. Possible values include \"unknown\", \"expired\", \"user-cancelled\", \"account-closed\", \"billing-disabled\" (if the customer has manually disabled billing to their resources), \"user-aborted\", and \"migrated\" (if the entitlement has migrated across products). Values of this field are subject to change, and we recommend that you don't build your technical integration to rely on these fields.",
+          "readOnly": true,
+          "type": "string"
+        },
         "consumers": {
           "description": "Output only. The resources using this entitlement, if applicable.",
           "items": {
@@ -684,11 +691,20 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "entitlementBenefitIds": {
+          "description": "Output only. The entitlement benefit IDs associated with the purchase.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "inputProperties": {
           "additionalProperties": {
             "description": "Properties of the object.",
             "type": "any"
           },
+          "deprecated": true,
           "description": "Output only. The custom properties that were collected from the user to create this entitlement.",
           "type": "object"
         },
@@ -700,13 +716,25 @@
           "description": "Output only. The resource name of the entitlement. Entitlement names have the form `providers/{provider_id}/entitlements/{entitlement_id}`.",
           "type": "string"
         },
+        "newOfferEndTime": {
+          "description": "Output only. The end time of the new offer. If the offer was created with a term instead of a specified end date, this field is empty. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is be empty.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "newOfferStartTime": {
+          "description": "Output only. The timestamp when the new offer becomes effective. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "newPendingOffer": {
-          "description": "Output only. The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the pending plan change is moving to an offer. Format: 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending on whether the offer is private or public.",
+          "description": "Output only. The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the pending plan change is moving to an offer. This field isn't populated for entitlements which aren't active yet. Format: 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending on whether the offer is private or public. The {service} in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this {service} part.",
           "readOnly": true,
           "type": "string"
         },
         "newPendingOfferDuration": {
-          "description": "Output only. The offer duration of the new offer in ISO 8601 duration format. Field is empty if the pending plan change is not moving to an offer since the entitlement is not pending, only the plan change is pending.",
+          "description": "Output only. The duration of the new offer, in ISO 8601 duration format. This field isn't populated for entitlements which aren't active yet, only for pending offer changes. If the offer was created with a specified end date instead of a duration, this field is empty.",
           "readOnly": true,
           "type": "string"
         },
@@ -715,12 +743,12 @@
           "type": "string"
         },
         "offer": {
-          "description": "Output only. The name of the offer that was procured. Field is empty if order was not made using an offer. Format: 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending on whether the offer is private or public.",
+          "description": "Output only. The name of the offer that was procured. Field is empty if order was not made using an offer. Format: 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending on whether the offer is private or public. The {service} in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this {service} part.",
           "readOnly": true,
           "type": "string"
         },
         "offerDuration": {
-          "description": "Output only. The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer.",
+          "description": "Output only. The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer. If the offer was created with a specified end date instead of a duration, this field is empty.",
           "readOnly": true,
           "type": "string"
         },
@@ -730,12 +758,18 @@
           "readOnly": true,
           "type": "string"
         },
+        "orderId": {
+          "description": "Output only. The order ID of this entitlement, without any `orders/` resource name prefix.",
+          "readOnly": true,
+          "type": "string"
+        },
         "plan": {
           "description": "Output only. The identifier of the plan that was procured. Required if the product has plans.",
           "type": "string"
         },
         "product": {
-          "description": "Output only. The identifier of the entity that was purchased. This may actually represent a product, quote, or offer. It is highly recommended to use the more explicit fields productExternalName, quoteExternalName, or offer listed below based on your needs.",
+          "deprecated": true,
+          "description": "Output only. The identifier of the entity that was purchased. This may actually represent a product, quote, or offer. We strongly recommend that you use the following more explicit fields: productExternalName, quoteExternalName, or offer.",
           "type": "string"
         },
         "productExternalName": {
@@ -850,7 +884,7 @@
       "id": "RejectEntitlementPlanChangeRequest",
       "properties": {
         "pendingPlanName": {
-          "description": "Name of the pending plan that is being rejected. Required.",
+          "description": "Required. Name of the pending plan that is being rejected.",
           "type": "string"
         },
         "reason": {
@@ -872,7 +906,7 @@
       "type": "object"
     },
     "ResetAccountRequest": {
-      "description": "Request message for for PartnerProcurementService.ResetAccount.",
+      "description": "Request message for PartnerProcurementService.ResetAccount.",
       "id": "ResetAccountRequest",
       "properties": {},
       "type": "object"

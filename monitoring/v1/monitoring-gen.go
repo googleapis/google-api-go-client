@@ -556,9 +556,9 @@ type Aggregation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Aggregation) MarshalJSON() ([]byte, error) {
+func (s Aggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod Aggregation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AggregationFunction: Preview: An identifier for an aggregation function.
@@ -588,9 +588,9 @@ type AggregationFunction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationFunction) MarshalJSON() ([]byte, error) {
+func (s AggregationFunction) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationFunction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlertChart: A chart that displays alert policy data.
@@ -611,9 +611,9 @@ type AlertChart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlertChart) MarshalJSON() ([]byte, error) {
+func (s AlertChart) MarshalJSON() ([]byte, error) {
 	type NoMethod AlertChart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Axis: A chart axis.
@@ -641,9 +641,9 @@ type Axis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Axis) MarshalJSON() ([]byte, error) {
+func (s Axis) MarshalJSON() ([]byte, error) {
 	type NoMethod Axis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Breakdown: Preview: A breakdown is an aggregation applied to the measures
@@ -684,9 +684,9 @@ type Breakdown struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Breakdown) MarshalJSON() ([]byte, error) {
+func (s Breakdown) MarshalJSON() ([]byte, error) {
 	type NoMethod Breakdown
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChartOptions: Options to control visual rendering of a chart.
@@ -720,9 +720,9 @@ type ChartOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChartOptions) MarshalJSON() ([]byte, error) {
+func (s ChartOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CollapsibleGroup: A widget that groups the other widgets. All widgets that
@@ -744,9 +744,9 @@ type CollapsibleGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CollapsibleGroup) MarshalJSON() ([]byte, error) {
+func (s CollapsibleGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod CollapsibleGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Column: Defines the layout properties and content for a column.
@@ -771,9 +771,9 @@ type Column struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Column) MarshalJSON() ([]byte, error) {
+func (s Column) MarshalJSON() ([]byte, error) {
 	type NoMethod Column
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ColumnLayout: A simplified layout that divides the available space into
@@ -794,9 +794,9 @@ type ColumnLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnLayout) MarshalJSON() ([]byte, error) {
+func (s ColumnLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ColumnSettings: The persistent settings for a table's columns.
@@ -818,9 +818,9 @@ type ColumnSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnSettings) MarshalJSON() ([]byte, error) {
+func (s ColumnSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Dashboard: A Google Stackdriver dashboard. Dashboards define the content and
@@ -873,9 +873,9 @@ type Dashboard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dashboard) MarshalJSON() ([]byte, error) {
+func (s Dashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod Dashboard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DashboardAnnotations: Dashboard-level configuration for annotations
@@ -902,16 +902,14 @@ type DashboardAnnotations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DashboardAnnotations) MarshalJSON() ([]byte, error) {
+func (s DashboardAnnotations) MarshalJSON() ([]byte, error) {
 	type NoMethod DashboardAnnotations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DashboardFilter: A filter to reduce the amount of data charted in relevant
 // widgets.
 type DashboardFilter struct {
-	// ApplyToNewWidgets: Whether to apply this filter to new widgets by default
-	ApplyToNewWidgets bool `json:"applyToNewWidgets,omitempty"`
 	// FilterType: The specified filter type
 	//
 	// Possible values:
@@ -931,22 +929,22 @@ type DashboardFilter struct {
 	// string or MQL query. If omitted, the dashboard filter will be applied to all
 	// relevant widgets in the dashboard.
 	TemplateVariable string `json:"templateVariable,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApplyToNewWidgets") to
+	// ForceSendFields is a list of field names (e.g. "FilterType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplyToNewWidgets") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FilterType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *DashboardFilter) MarshalJSON() ([]byte, error) {
+func (s DashboardFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod DashboardFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSet: Groups a time series query definition with charting options.
@@ -1011,9 +1009,9 @@ type DataSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSet) MarshalJSON() ([]byte, error) {
+func (s DataSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Dimension: A chart dimension. Dimensions are a structured label, class, or
@@ -1068,9 +1066,9 @@ type Dimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dimension) MarshalJSON() ([]byte, error) {
+func (s Dimension) MarshalJSON() ([]byte, error) {
 	type NoMethod Dimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Dimension) UnmarshalJSON(data []byte) error {
@@ -1116,9 +1114,9 @@ type DroppedLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DroppedLabels) MarshalJSON() ([]byte, error) {
+func (s DroppedLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod DroppedLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1163,9 +1161,9 @@ type ErrorReportingPanel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorReportingPanel) MarshalJSON() ([]byte, error) {
+func (s ErrorReportingPanel) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorReportingPanel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventAnnotation: Annotation configuration for one event type on a dashboard
@@ -1197,6 +1195,8 @@ type EventAnnotation struct {
 	//   "CLOUD_SQL_START_STOP" - Start/stop of a Cloud SQL instance.
 	//   "CLOUD_SQL_STORAGE" - Storage event for a Cloud SQL instance.
 	//   "UPTIME_CHECK_FAILURE" - Failure of a Cloud Monitoring uptime check.
+	//   "CLOUD_ALERTING_ALERT" - Alerts from Cloud Alerting
+	//   "SERVICE_HEALTH_INCIDENT" - Incidents from Service Health
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"
@@ -1221,9 +1221,9 @@ type EventAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventAnnotation) MarshalJSON() ([]byte, error) {
+func (s EventAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod EventAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Field: A single field of a message type.
@@ -1292,9 +1292,9 @@ type Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Field) MarshalJSON() ([]byte, error) {
+func (s Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GaugeView: A gauge chart shows where the current value sits within a
@@ -1320,9 +1320,9 @@ type GaugeView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaugeView) MarshalJSON() ([]byte, error) {
+func (s GaugeView) MarshalJSON() ([]byte, error) {
 	type NoMethod GaugeView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GaugeView) UnmarshalJSON(data []byte) error {
@@ -1363,9 +1363,9 @@ type GridLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GridLayout) MarshalJSON() ([]byte, error) {
+func (s GridLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GridLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
@@ -1410,9 +1410,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IncidentList: A widget that displays a list of incidents
@@ -1439,9 +1439,9 @@ type IncidentList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IncidentList) MarshalJSON() ([]byte, error) {
+func (s IncidentList) MarshalJSON() ([]byte, error) {
 	type NoMethod IncidentList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -1470,9 +1470,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDashboardsResponse: The ListDashboards request.
@@ -1499,9 +1499,9 @@ type ListDashboardsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDashboardsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMetricsScopesByMonitoredProjectResponse: Response for the
@@ -1526,9 +1526,9 @@ type ListMetricsScopesByMonitoredProjectResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMetricsScopesByMonitoredProjectResponse) MarshalJSON() ([]byte, error) {
+func (s ListMetricsScopesByMonitoredProjectResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMetricsScopesByMonitoredProjectResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogsPanel: A widget that displays a stream of log.
@@ -1539,8 +1539,8 @@ type LogsPanel struct {
 	// log entries.
 	Filter string `json:"filter,omitempty"`
 	// ResourceNames: The names of logging resources to collect logs for. Currently
-	// only projects are supported. If empty, the widget will default to the host
-	// project.
+	// projects and storage views are supported. If empty, the widget will default
+	// to the host project.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1555,9 +1555,9 @@ type LogsPanel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogsPanel) MarshalJSON() ([]byte, error) {
+func (s LogsPanel) MarshalJSON() ([]byte, error) {
 	type NoMethod LogsPanel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Measure: A chart measure. Measures represent a measured property in your
@@ -1585,9 +1585,9 @@ type Measure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Measure) MarshalJSON() ([]byte, error) {
+func (s Measure) MarshalJSON() ([]byte, error) {
 	type NoMethod Measure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricsScope: Represents a Metrics Scope
@@ -1625,9 +1625,9 @@ type MetricsScope struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricsScope) MarshalJSON() ([]byte, error) {
+func (s MetricsScope) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricsScope
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredProject: A project being monitored
@@ -1655,9 +1655,9 @@ type MonitoredProject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredProject) MarshalJSON() ([]byte, error) {
+func (s MonitoredProject) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredProject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredResource: An object representing a resource that can be used for
@@ -1696,9 +1696,9 @@ type MonitoredResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
+func (s MonitoredResource) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MosaicLayout: A mosaic layout divides the available space into a grid of
@@ -1723,9 +1723,9 @@ type MosaicLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MosaicLayout) MarshalJSON() ([]byte, error) {
+func (s MosaicLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod MosaicLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1769,9 +1769,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Contains metadata for longrunning operation for the edit
@@ -1803,9 +1803,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OpsAnalyticsQuery: Preview: A query that produces an aggregated response and
@@ -1828,9 +1828,9 @@ type OpsAnalyticsQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
+func (s OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod OpsAnalyticsQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Option: A protocol buffer option, which can be attached to a message, field,
@@ -1860,9 +1860,9 @@ type Option struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Option) MarshalJSON() ([]byte, error) {
+func (s Option) MarshalJSON() ([]byte, error) {
 	type NoMethod Option
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Parameter: Preview: Parameter value applied to the aggregation function.
@@ -1885,9 +1885,9 @@ type Parameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Parameter) MarshalJSON() ([]byte, error) {
+func (s Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Parameter) UnmarshalJSON(data []byte) error {
@@ -1950,9 +1950,9 @@ type PickTimeSeriesFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PickTimeSeriesFilter) MarshalJSON() ([]byte, error) {
+func (s PickTimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PickTimeSeriesFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PieChart: A widget that displays timeseries data as a pie or a donut.
@@ -1984,9 +1984,9 @@ type PieChart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PieChart) MarshalJSON() ([]byte, error) {
+func (s PieChart) MarshalJSON() ([]byte, error) {
 	type NoMethod PieChart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PieChartDataSet: Groups a time series query definition.
@@ -2025,9 +2025,9 @@ type PieChartDataSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PieChartDataSet) MarshalJSON() ([]byte, error) {
+func (s PieChartDataSet) MarshalJSON() ([]byte, error) {
 	type NoMethod PieChartDataSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryExemplarsRequest: QueryExemplarsRequest holds all parameters of the
@@ -2055,9 +2055,9 @@ type QueryExemplarsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryExemplarsRequest) MarshalJSON() ([]byte, error) {
+func (s QueryExemplarsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryExemplarsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryInstantRequest: QueryInstantRequest holds all parameters of the
@@ -2089,9 +2089,9 @@ type QueryInstantRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryInstantRequest) MarshalJSON() ([]byte, error) {
+func (s QueryInstantRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryInstantRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryLabelsRequest: QueryLabelsRequest holds all parameters of the
@@ -2119,9 +2119,9 @@ type QueryLabelsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryLabelsRequest) MarshalJSON() ([]byte, error) {
+func (s QueryLabelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryLabelsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRangeRequest: QueryRangeRequest holds all parameters of the Prometheus
@@ -2162,9 +2162,9 @@ type QueryRangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRangeRequest) MarshalJSON() ([]byte, error) {
+func (s QueryRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuerySeriesRequest: QuerySeries holds all parameters of the Prometheus
@@ -2189,9 +2189,9 @@ type QuerySeriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuerySeriesRequest) MarshalJSON() ([]byte, error) {
+func (s QuerySeriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QuerySeriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RatioPart: Describes a query to build the numerator or denominator of a
@@ -2217,9 +2217,9 @@ type RatioPart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RatioPart) MarshalJSON() ([]byte, error) {
+func (s RatioPart) MarshalJSON() ([]byte, error) {
 	type NoMethod RatioPart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Row: Defines the layout properties and content for a row.
@@ -2244,9 +2244,9 @@ type Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Row) MarshalJSON() ([]byte, error) {
+func (s Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowLayout: A simplified layout that divides the available space into rows
@@ -2267,9 +2267,9 @@ type RowLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowLayout) MarshalJSON() ([]byte, error) {
+func (s RowLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod RowLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Scorecard: A widget showing the latest value of a metric, and how this value
@@ -2278,8 +2278,15 @@ type Scorecard struct {
 	// BlankView: Will cause the Scorecard to show only the value, with no
 	// indicator to its value relative to its thresholds.
 	BlankView *Empty `json:"blankView,omitempty"`
+	// Dimensions: Optional. A dimension is a structured label, class, or category
+	// for a set of measurements in your data.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
 	// GaugeView: Will cause the scorecard to show a gauge chart.
 	GaugeView *GaugeView `json:"gaugeView,omitempty"`
+	// Measures: Optional. A measure is a measured value of a property in your
+	// data. For example, rainfall in inches, number of units sold, revenue gained,
+	// etc.
+	Measures []*Measure `json:"measures,omitempty"`
 	// SparkChartView: Will cause the scorecard to show a spark chart.
 	SparkChartView *SparkChartView `json:"sparkChartView,omitempty"`
 	// Thresholds: The thresholds used to determine the state of the scorecard
@@ -2314,9 +2321,9 @@ type Scorecard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Scorecard) MarshalJSON() ([]byte, error) {
+func (s Scorecard) MarshalJSON() ([]byte, error) {
 	type NoMethod Scorecard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SectionHeader: A widget that defines a new section header. Sections populate
@@ -2340,9 +2347,9 @@ type SectionHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SectionHeader) MarshalJSON() ([]byte, error) {
+func (s SectionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod SectionHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SingleViewGroup: A widget that groups the other widgets by using a dropdown
@@ -2371,9 +2378,9 @@ type SourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceContext) MarshalJSON() ([]byte, error) {
+func (s SourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpanContext: The context of a span. This is attached to an Exemplar in
@@ -2400,9 +2407,9 @@ type SpanContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpanContext) MarshalJSON() ([]byte, error) {
+func (s SpanContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpanContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkChartView: A sparkChart is a small chart suitable for inclusion in a
@@ -2436,9 +2443,9 @@ type SparkChartView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkChartView) MarshalJSON() ([]byte, error) {
+func (s SparkChartView) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkChartView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatisticalTimeSeriesFilter: A filter that ranks streams based on their
@@ -2470,9 +2477,9 @@ type StatisticalTimeSeriesFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatisticalTimeSeriesFilter) MarshalJSON() ([]byte, error) {
+func (s StatisticalTimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod StatisticalTimeSeriesFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The Status type defines a logical error model that is suitable for
@@ -2504,9 +2511,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDataSet: Groups a time series query definition with table options.
@@ -2541,9 +2548,9 @@ type TableDataSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataSet) MarshalJSON() ([]byte, error) {
+func (s TableDataSet) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDisplayOptions: Table display options that can be reused.
@@ -2564,9 +2571,9 @@ type TableDisplayOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDisplayOptions) MarshalJSON() ([]byte, error) {
+func (s TableDisplayOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDisplayOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Text: A widget that displays textual content.
@@ -2595,9 +2602,9 @@ type Text struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Text) MarshalJSON() ([]byte, error) {
+func (s Text) MarshalJSON() ([]byte, error) {
 	type NoMethod Text
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextStyle: Properties that determine how the title and content are styled
@@ -2677,9 +2684,9 @@ type TextStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextStyle) MarshalJSON() ([]byte, error) {
+func (s TextStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod TextStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Threshold: Defines a threshold for categorizing time series values.
@@ -2730,9 +2737,9 @@ type Threshold struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Threshold) MarshalJSON() ([]byte, error) {
+func (s Threshold) MarshalJSON() ([]byte, error) {
 	type NoMethod Threshold
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Threshold) UnmarshalJSON(data []byte) error {
@@ -2781,9 +2788,9 @@ type Tile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tile) MarshalJSON() ([]byte, error) {
+func (s Tile) MarshalJSON() ([]byte, error) {
 	type NoMethod Tile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeriesFilter: A filter that defines a subset of time series data that is
@@ -2819,9 +2826,9 @@ type TimeSeriesFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSeriesFilter) MarshalJSON() ([]byte, error) {
+func (s TimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeriesFilterRatio: A pair of time series filters that define a ratio
@@ -2853,9 +2860,9 @@ type TimeSeriesFilterRatio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
+func (s TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesFilterRatio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeriesQuery: TimeSeriesQuery collects the set of supported methods for
@@ -2899,9 +2906,9 @@ type TimeSeriesQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSeriesQuery) MarshalJSON() ([]byte, error) {
+func (s TimeSeriesQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeriesTable: A table that displays time series data.
@@ -2931,9 +2938,9 @@ type TimeSeriesTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSeriesTable) MarshalJSON() ([]byte, error) {
+func (s TimeSeriesTable) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Type: A protocol buffer message type.
@@ -2971,9 +2978,9 @@ type Type struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Type) MarshalJSON() ([]byte, error) {
+func (s Type) MarshalJSON() ([]byte, error) {
 	type NoMethod Type
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Widget: Widget contains a single dashboard component and configuration of
@@ -3028,9 +3035,9 @@ type Widget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Widget) MarshalJSON() ([]byte, error) {
+func (s Widget) MarshalJSON() ([]byte, error) {
 	type NoMethod Widget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // XyChart: A chart that displays data on a 2D (X and Y axes) plane.
@@ -3065,9 +3072,9 @@ type XyChart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *XyChart) MarshalJSON() ([]byte, error) {
+func (s XyChart) MarshalJSON() ([]byte, error) {
 	type NoMethod XyChart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationsGlobalMetricsScopesGetCall struct {

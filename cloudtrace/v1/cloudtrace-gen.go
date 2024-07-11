@@ -221,9 +221,9 @@ type ListTracesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTracesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTracesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTracesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Trace: A trace describes how long it takes for an application to perform an
@@ -254,9 +254,9 @@ type Trace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Trace) MarshalJSON() ([]byte, error) {
+func (s Trace) MarshalJSON() ([]byte, error) {
 	type NoMethod Trace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TraceSpan: A span represents a single timed event within a trace. Spans can
@@ -321,9 +321,9 @@ type TraceSpan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TraceSpan) MarshalJSON() ([]byte, error) {
+func (s TraceSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod TraceSpan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Traces: List of new or updated traces.
@@ -343,9 +343,9 @@ type Traces struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Traces) MarshalJSON() ([]byte, error) {
+func (s Traces) MarshalJSON() ([]byte, error) {
 	type NoMethod Traces
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsPatchTracesCall struct {

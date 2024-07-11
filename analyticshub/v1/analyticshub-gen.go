@@ -257,6 +257,37 @@ type ProjectsLocationsSubscriptionsService struct {
 	s *Service
 }
 
+// AnalyticsHubSubscriptionInfo: Information about an associated Analytics Hub
+// subscription
+// (https://cloud.google.com/bigquery/docs/analytics-hub-manage-subscriptions).
+type AnalyticsHubSubscriptionInfo struct {
+	// Listing: Optional. The name of the associated Analytics Hub listing
+	// resource. Pattern:
+	// "projects/{project}/locations/{location}/dataExchanges/{data_exchange}/listin
+	// gs/{listing}"
+	Listing string `json:"listing,omitempty"`
+	// Subscription: Optional. The name of the associated Analytics Hub
+	// subscription resource. Pattern:
+	// "projects/{project}/locations/{location}/subscriptions/{subscription}"
+	Subscription string `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Listing") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Listing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnalyticsHubSubscriptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyticsHubSubscriptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -293,9 +324,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -328,9 +359,111 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AvroConfig: Configuration for writing message data in Avro format. Message
+// payloads and metadata will be written to files as an Avro binary.
+type AvroConfig struct {
+	// UseTopicSchema: Optional. When true, the output Cloud Storage file will be
+	// serialized using the topic schema, if it exists.
+	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
+	// WriteMetadata: Optional. When true, write the subscription name, message_id,
+	// publish_time, attributes, and ordering_key as additional fields in the
+	// output. The subscription name, message_id, and publish_time fields are put
+	// in their own fields while all other message properties other than data (for
+	// example, an ordering_key, if present) are added as entries in the attributes
+	// map.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UseTopicSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UseTopicSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvroConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvroConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryConfig: Configuration for a BigQuery subscription.
+type BigQueryConfig struct {
+	// DropUnknownFields: Optional. When true and use_topic_schema is true, any
+	// fields that are a part of the topic schema that are not part of the BigQuery
+	// table schema are dropped when writing to BigQuery. Otherwise, the schemas
+	// must be kept in sync and any messages with extra fields are not written and
+	// remain in the subscription's backlog.
+	DropUnknownFields bool `json:"dropUnknownFields,omitempty"`
+	// ServiceAccountEmail: Optional. The service account to use to write to
+	// BigQuery. The subscription creator or updater that specifies this field must
+	// have `iam.serviceAccounts.actAs` permission on the service account. If not
+	// specified, the Pub/Sub service agent
+	// (https://cloud.google.com/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// State: Output only. An output-only field that indicates whether or not the
+	// subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to BigQuery
+	//   "PERMISSION_DENIED" - Cannot write to the BigQuery table because of
+	// permission denied errors. This can happen if - Pub/Sub SA has not been
+	// granted the [appropriate BigQuery IAM
+	// permissions](https://cloud.google.com/pubsub/docs/create-subscription#assign_
+	// bigquery_service_account) - bigquery.googleapis.com API is not enabled for
+	// the project
+	// ([instructions](https://cloud.google.com/service-usage/docs/enable-disable))
+	//   "NOT_FOUND" - Cannot write to the BigQuery table because it does not
+	// exist.
+	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a schema
+	// mismatch.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination locations are
+	// not in the allowed regions.
+	State string `json:"state,omitempty"`
+	// Table: Optional. The name of the table to which to write data, of the form
+	// {projectId}.{datasetId}.{tableId}
+	Table string `json:"table,omitempty"`
+	// UseTableSchema: Optional. When true, use the BigQuery table's schema as the
+	// columns to write to in BigQuery. `use_table_schema` and `use_topic_schema`
+	// cannot be enabled at the same time.
+	UseTableSchema bool `json:"useTableSchema,omitempty"`
+	// UseTopicSchema: Optional. When true, use the topic's schema as the columns
+	// to write to in BigQuery, if it exists. `use_topic_schema` and
+	// `use_table_schema` cannot be enabled at the same time.
+	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
+	// WriteMetadata: Optional. When true, write the subscription name, message_id,
+	// publish_time, attributes, and ordering_key to additional columns in the
+	// table. The subscription name, message_id, and publish_time fields are put in
+	// their own columns while all other message properties (other than data) are
+	// written to a JSON object in the attributes column.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropUnknownFields") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropUnknownFields") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryDatasetSource: A reference to a shared dataset. It is an existing
@@ -346,9 +479,8 @@ type BigQueryDatasetSource struct {
 	// RestrictedExportPolicy: Optional. If set, restricted export policy will be
 	// propagated and enforced on the linked dataset.
 	RestrictedExportPolicy *RestrictedExportPolicy `json:"restrictedExportPolicy,omitempty"`
-	// SelectedResources: Optional. Resources in this dataset that are selectively
-	// shared. If this field is empty, then the entire dataset (all resources) are
-	// shared. This field is only valid for data clean room exchanges.
+	// SelectedResources: Optional. Resource in this dataset that is selectively
+	// shared. This field is required for data clean room exchanges.
 	SelectedResources []*SelectedResource `json:"selectedResources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -363,9 +495,9 @@ type BigQueryDatasetSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryDatasetSource) MarshalJSON() ([]byte, error) {
+func (s BigQueryDatasetSource) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDatasetSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -462,9 +594,87 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudStorageConfig: Configuration for a Cloud Storage subscription.
+type CloudStorageConfig struct {
+	// AvroConfig: Optional. If set, message data will be written to Cloud Storage
+	// in Avro format.
+	AvroConfig *AvroConfig `json:"avroConfig,omitempty"`
+	// Bucket: Required. User-provided name for the Cloud Storage bucket. The
+	// bucket must be created by the user. The bucket name must be without any
+	// prefix like "gs://". See the [bucket naming requirements]
+	// (https://cloud.google.com/storage/docs/buckets#naming).
+	Bucket string `json:"bucket,omitempty"`
+	// FilenameDatetimeFormat: Optional. User-provided format string specifying how
+	// to represent datetimes in Cloud Storage filenames. See the datetime format
+	// guidance
+	// (https://cloud.google.com/pubsub/docs/create-cloudstorage-subscription#file_names).
+	FilenameDatetimeFormat string `json:"filenameDatetimeFormat,omitempty"`
+	// FilenamePrefix: Optional. User-provided prefix for Cloud Storage filename.
+	// See the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming).
+	FilenamePrefix string `json:"filenamePrefix,omitempty"`
+	// FilenameSuffix: Optional. User-provided suffix for Cloud Storage filename.
+	// See the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming). Must not end in "/".
+	FilenameSuffix string `json:"filenameSuffix,omitempty"`
+	// MaxBytes: Optional. The maximum bytes that can be written to a Cloud Storage
+	// file before a new file is created. Min 1 KB, max 10 GiB. The max_bytes limit
+	// may be exceeded in cases where messages are larger than the limit.
+	MaxBytes int64 `json:"maxBytes,omitempty,string"`
+	// MaxDuration: Optional. The maximum duration that can elapse before a new
+	// Cloud Storage file is created. Min 1 minute, max 10 minutes, default 5
+	// minutes. May not exceed the subscription's acknowledgement deadline.
+	MaxDuration string `json:"maxDuration,omitempty"`
+	// MaxMessages: Optional. The maximum number of messages that can be written to
+	// a Cloud Storage file before a new file is created. Min 1000 messages.
+	MaxMessages int64 `json:"maxMessages,omitempty,string"`
+	// ServiceAccountEmail: Optional. The service account to use to write to Cloud
+	// Storage. The subscription creator or updater that specifies this field must
+	// have `iam.serviceAccounts.actAs` permission on the service account. If not
+	// specified, the Pub/Sub service agent
+	// (https://cloud.google.com/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// State: Output only. An output-only field that indicates whether or not the
+	// subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to Cloud Storage.
+	//   "PERMISSION_DENIED" - Cannot write to the Cloud Storage bucket because of
+	// permission denied errors.
+	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it does not
+	// exist.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination locations are
+	// not in the allowed regions.
+	//   "SCHEMA_MISMATCH" - Cannot write to the Cloud Storage bucket due to an
+	// incompatibility between the topic schema and subscription settings.
+	State string `json:"state,omitempty"`
+	// TextConfig: Optional. If set, message data will be written to Cloud Storage
+	// in text format.
+	TextConfig *TextConfig `json:"textConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvroConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvroConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudStorageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataExchange: A data exchange is a container that lets you share data. Along
@@ -476,6 +686,18 @@ type DataExchange struct {
 	// except tabs (HT), new lines (LF), carriage returns (CR), and page breaks
 	// (FF). Default value is an empty string. Max length: 2000 bytes.
 	Description string `json:"description,omitempty"`
+	// DiscoveryType: Optional. Type of discovery on the discovery page for all the
+	// listings under this exchange. Updating this field also updates (overwrites)
+	// the discovery_type field for all the listings under this exchange.
+	//
+	// Possible values:
+	//   "DISCOVERY_TYPE_UNSPECIFIED" - Unspecified. Defaults to
+	// DISCOVERY_TYPE_PRIVATE.
+	//   "DISCOVERY_TYPE_PRIVATE" - The Data exchange/listing can be discovered in
+	// the 'Private' results list.
+	//   "DISCOVERY_TYPE_PUBLIC" - The Data exchange/listing can be discovered in
+	// the 'Public' results list.
+	DiscoveryType string `json:"discoveryType,omitempty"`
 	// DisplayName: Required. Human-readable display name of the data exchange. The
 	// display name must contain only Unicode letters, numbers (0-9), underscores
 	// (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with
@@ -517,9 +739,9 @@ type DataExchange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataExchange) MarshalJSON() ([]byte, error) {
+func (s DataExchange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataExchange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataProvider: Contains details of the data provider.
@@ -542,9 +764,9 @@ type DataProvider struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataProvider) MarshalJSON() ([]byte, error) {
+func (s DataProvider) MarshalJSON() ([]byte, error) {
 	type NoMethod DataProvider
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DcrExchangeConfig: Data Clean Room (DCR), used for privacy-safe and secured
@@ -578,9 +800,50 @@ type DcrExchangeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DcrExchangeConfig) MarshalJSON() ([]byte, error) {
+func (s DcrExchangeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DcrExchangeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeadLetterPolicy: Dead lettering is done on a best effort basis. The same
+// message might be dead lettered multiple times. If validation on any of the
+// fields fails at subscription creation/updation, the create/update
+// subscription request will fail.
+type DeadLetterPolicy struct {
+	// DeadLetterTopic: Optional. The name of the topic to which dead letter
+	// messages should be published. Format is
+	// `projects/{project}/topics/{topic}`.The Pub/Sub service account associated
+	// with the enclosing subscription's parent project (i.e.,
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have
+	// permission to Publish() to this topic. The operation will fail if the topic
+	// does not exist. Users should ensure that there is a subscription attached to
+	// this topic since messages published to a topic with no subscriptions are
+	// lost.
+	DeadLetterTopic string `json:"deadLetterTopic,omitempty"`
+	// MaxDeliveryAttempts: Optional. The maximum number of delivery attempts for
+	// any message. The value must be between 5 and 100. The number of delivery
+	// attempts is defined as 1 + (the sum of number of NACKs and number of times
+	// the acknowledgement deadline has been exceeded for the message). A NACK is
+	// any call to ModifyAckDeadline with a 0 deadline. Note that client libraries
+	// may automatically extend ack_deadlines. This field will be honored on a best
+	// effort basis. If this parameter is 0, a default value of 5 is used.
+	MaxDeliveryAttempts int64 `json:"maxDeliveryAttempts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeadLetterTopic") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeadLetterTopic") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeadLetterPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DeadLetterPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DefaultExchangeConfig: Default Analytics Hub data exchange, used for secured
@@ -620,9 +883,9 @@ type DestinationDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationDataset) MarshalJSON() ([]byte, error) {
+func (s DestinationDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationDatasetReference: Contains the reference that identifies a
@@ -647,9 +910,31 @@ type DestinationDatasetReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationDatasetReference) MarshalJSON() ([]byte, error) {
+func (s DestinationDatasetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationDatasetReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DestinationPubSubSubscription: Defines the destination Pub/Sub subscription.
+type DestinationPubSubSubscription struct {
+	// PubsubSubscription: Required. Destination Pub/Sub subscription resource.
+	PubsubSubscription *GooglePubsubV1Subscription `json:"pubsubSubscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PubsubSubscription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PubsubSubscription") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DestinationPubSubSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod DestinationPubSubSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -659,6 +944,34 @@ func (s *DestinationDatasetReference) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// ExpirationPolicy: A policy that specifies the conditions for resource
+// expiration (i.e., automatic resource deletion).
+type ExpirationPolicy struct {
+	// Ttl: Optional. Specifies the "time-to-live" duration for an associated
+	// resource. The resource expires if it is not active for a period of `ttl`.
+	// The definition of "activity" depends on the type of the associated resource.
+	// The minimum and maximum allowed values for `ttl` depend on the type of the
+	// associated resource, as well. If `ttl` is not set, the associated resource
+	// never expires.
+	Ttl string `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ttl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ttl") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExpirationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpirationPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -704,9 +1017,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -727,9 +1040,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -759,9 +1072,148 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePubsubV1Subscription: A subscription resource. If none of
+// `push_config`, `bigquery_config`, or `cloud_storage_config` is set, then the
+// subscriber will pull and ack messages using API methods. At most one of
+// these fields may be set.
+type GooglePubsubV1Subscription struct {
+	// AckDeadlineSeconds: Optional. The approximate amount of time (on a
+	// best-effort basis) Pub/Sub waits for the subscriber to acknowledge receipt
+	// before resending the message. In the interval after the message is delivered
+	// and before it is acknowledged, it is considered to be _outstanding_. During
+	// that time period, the message will not be redelivered (on a best-effort
+	// basis). For pull subscriptions, this value is used as the initial value for
+	// the ack deadline. To override this value for a given message, call
+	// `ModifyAckDeadline` with the corresponding `ack_id` if using non-streaming
+	// pull or send the `ack_id` in a `StreamingModifyAckDeadlineRequest` if using
+	// streaming pull. The minimum custom deadline you can specify is 10 seconds.
+	// The maximum custom deadline you can specify is 600 seconds (10 minutes). If
+	// this parameter is 0, a default value of 10 seconds is used. For push
+	// delivery, this value is also used to set the request timeout for the call to
+	// the push endpoint. If the subscriber never acknowledges the message, the
+	// Pub/Sub system will eventually redeliver the message.
+	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
+	// AnalyticsHubSubscriptionInfo: Output only. Information about the associated
+	// Analytics Hub subscription. Only set if the subscritpion is created by
+	// Analytics Hub.
+	AnalyticsHubSubscriptionInfo *AnalyticsHubSubscriptionInfo `json:"analyticsHubSubscriptionInfo,omitempty"`
+	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
+	// subscription, this field is used to configure it.
+	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
+	// CloudStorageConfig: Optional. If delivery to Google Cloud Storage is used
+	// with this subscription, this field is used to configure it.
+	CloudStorageConfig *CloudStorageConfig `json:"cloudStorageConfig,omitempty"`
+	// DeadLetterPolicy: Optional. A policy that specifies the conditions for dead
+	// lettering messages in this subscription. If dead_letter_policy is not set,
+	// dead lettering is disabled. The Pub/Sub service account associated with this
+	// subscriptions's parent project (i.e.,
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have
+	// permission to Acknowledge() messages on this subscription.
+	DeadLetterPolicy *DeadLetterPolicy `json:"deadLetterPolicy,omitempty"`
+	// Detached: Optional. Indicates whether the subscription is detached from its
+	// topic. Detached subscriptions don't receive messages from their topic and
+	// don't retain any backlog. `Pull` and `StreamingPull` requests will return
+	// FAILED_PRECONDITION. If the subscription is a push subscription, pushes to
+	// the endpoint will not be made.
+	Detached bool `json:"detached,omitempty"`
+	// EnableExactlyOnceDelivery: Optional. If true, Pub/Sub provides the following
+	// guarantees for the delivery of a message with a given value of `message_id`
+	// on this subscription: * The message sent to a subscriber is guaranteed not
+	// to be resent before the message's acknowledgement deadline expires. * An
+	// acknowledged message will not be resent to a subscriber. Note that
+	// subscribers may still receive multiple copies of a message when
+	// `enable_exactly_once_delivery` is true if the message was published multiple
+	// times by a publisher client. These copies are considered distinct by Pub/Sub
+	// and have distinct `message_id` values.
+	EnableExactlyOnceDelivery bool `json:"enableExactlyOnceDelivery,omitempty"`
+	// EnableMessageOrdering: Optional. If true, messages published with the same
+	// `ordering_key` in `PubsubMessage` will be delivered to the subscribers in
+	// the order in which they are received by the Pub/Sub system. Otherwise, they
+	// may be delivered in any order.
+	EnableMessageOrdering bool `json:"enableMessageOrdering,omitempty"`
+	// ExpirationPolicy: Optional. A policy that specifies the conditions for this
+	// subscription's expiration. A subscription is considered active as long as
+	// any connected subscriber is successfully consuming messages from the
+	// subscription or is issuing operations on the subscription. If
+	// `expiration_policy` is not set, a *default policy* with `ttl` of 31 days
+	// will be used. The minimum allowed value for `expiration_policy.ttl` is 1
+	// day. If `expiration_policy` is set, but `expiration_policy.ttl` is not set,
+	// the subscription never expires.
+	ExpirationPolicy *ExpirationPolicy `json:"expirationPolicy,omitempty"`
+	// Filter: Optional. An expression written in the Pub/Sub filter language
+	// (https://cloud.google.com/pubsub/docs/filtering). If non-empty, then only
+	// `PubsubMessage`s whose `attributes` field matches the filter are delivered
+	// on this subscription. If empty, then no messages are filtered out.
+	Filter string `json:"filter,omitempty"`
+	// Labels: Optional. See Creating and managing labels
+	// (https://cloud.google.com/pubsub/docs/labels).
+	Labels map[string]string `json:"labels,omitempty"`
+	// MessageRetentionDuration: Optional. How long to retain unacknowledged
+	// messages in the subscription's backlog, from the moment a message is
+	// published. If `retain_acked_messages` is true, then this also configures the
+	// retention of acknowledged messages, and thus configures how far back in time
+	// a `Seek` can be done. Defaults to 7 days. Cannot be more than 7 days or less
+	// than 10 minutes.
+	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
+	// Name: Required. Name of the subscription. Format is
+	// `projects/{project}/subscriptions/{sub}`.
+	Name string `json:"name,omitempty"`
+	// PushConfig: Optional. If push delivery is used with this subscription, this
+	// field is used to configure it.
+	PushConfig *PushConfig `json:"pushConfig,omitempty"`
+	// RetainAckedMessages: Optional. Indicates whether to retain acknowledged
+	// messages. If true, then messages are not expunged from the subscription's
+	// backlog, even if they are acknowledged, until they fall out of the
+	// `message_retention_duration` window. This must be true if you would like to
+	// [`Seek` to a timestamp]
+	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the
+	// past to replay previously-acknowledged messages.
+	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
+	// RetryPolicy: Optional. A policy that specifies how Pub/Sub retries message
+	// delivery for this subscription. If not set, the default retry policy is
+	// applied. This generally implies that messages will be retried as soon as
+	// possible for healthy subscribers. RetryPolicy will be triggered on NACKs or
+	// acknowledgement deadline exceeded events for a given message.
+	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
+	// State: Output only. An output-only field indicating whether or not the
+	// subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively receive messages
+	//   "RESOURCE_ERROR" - The subscription cannot receive messages because of an
+	// error with the resource to which it pushes messages. See the more detailed
+	// error state in the corresponding configuration.
+	State string `json:"state,omitempty"`
+	// TopicMessageRetentionDuration: Output only. Indicates the minimum duration
+	// for which a message is retained after it is published to the subscription's
+	// topic. If this field is set, messages published to the subscription's topic
+	// in the last `topic_message_retention_duration` are always available to
+	// subscribers. See the `message_retention_duration` field in `Topic`. This
+	// field is set only in responses from the server; it is ignored if it is set
+	// in any requests.
+	TopicMessageRetentionDuration string `json:"topicMessageRetentionDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AckDeadlineSeconds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePubsubV1Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePubsubV1Subscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedResource: Reference to a linked resource tracked by this Subscription.
@@ -769,6 +1221,11 @@ type LinkedResource struct {
 	// LinkedDataset: Output only. Name of the linked dataset, e.g.
 	// projects/subscriberproject/datasets/linked_dataset
 	LinkedDataset string `json:"linkedDataset,omitempty"`
+	// LinkedPubsubSubscription: Output only. Name of the Pub/Sub subscription,
+	// e.g. projects/subscriberproject/subscriptions/subscriptions/sub_id
+	LinkedPubsubSubscription string `json:"linkedPubsubSubscription,omitempty"`
+	// Listing: Output only. Listing for which linked resource is created.
+	Listing string `json:"listing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LinkedDataset") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -782,9 +1239,9 @@ type LinkedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedResource) MarshalJSON() ([]byte, error) {
+func (s LinkedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDataExchangesResponse: Message for response to the list of data
@@ -810,9 +1267,9 @@ type ListDataExchangesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDataExchangesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDataExchangesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataExchangesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListListingsResponse: Message for response to the list of Listings.
@@ -837,9 +1294,9 @@ type ListListingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListListingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListListingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListListingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOrgDataExchangesResponse: Message for response to listing data exchanges
@@ -865,9 +1322,9 @@ type ListOrgDataExchangesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOrgDataExchangesResponse) MarshalJSON() ([]byte, error) {
+func (s ListOrgDataExchangesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOrgDataExchangesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSharedResourceSubscriptionsResponse: Message for response to the listing
@@ -893,9 +1350,9 @@ type ListSharedResourceSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSharedResourceSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSharedResourceSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSharedResourceSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Message for response to the listing of
@@ -921,9 +1378,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Listing: A listing is what gets published into a data exchange that a
@@ -966,6 +1423,17 @@ type Listing struct {
 	// tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF).
 	// Default value is an empty string. Max length: 2000 bytes.
 	Description string `json:"description,omitempty"`
+	// DiscoveryType: Optional. Type of discovery of the listing on the discovery
+	// page.
+	//
+	// Possible values:
+	//   "DISCOVERY_TYPE_UNSPECIFIED" - Unspecified. Defaults to
+	// DISCOVERY_TYPE_PRIVATE.
+	//   "DISCOVERY_TYPE_PRIVATE" - The Data exchange/listing can be discovered in
+	// the 'Private' results list.
+	//   "DISCOVERY_TYPE_PUBLIC" - The Data exchange/listing can be discovered in
+	// the 'Public' results list.
+	DiscoveryType string `json:"discoveryType,omitempty"`
 	// DisplayName: Required. Human-readable display name of the listing. The
 	// display name must contain only Unicode letters, numbers (0-9), underscores
 	// (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with
@@ -988,10 +1456,19 @@ type Listing struct {
 	// Publisher: Optional. Details of the publisher who owns the listing and who
 	// can share the source data.
 	Publisher *Publisher `json:"publisher,omitempty"`
+	// PubsubTopic: Required. Pub/Sub topic source.
+	PubsubTopic *PubSubTopicSource `json:"pubsubTopic,omitempty"`
 	// RequestAccess: Optional. Email or URL of the request access of the listing.
 	// Subscribers can use this reference to request access. Max Length: 1000
 	// bytes.
 	RequestAccess string `json:"requestAccess,omitempty"`
+	// ResourceType: Output only. Listing shared asset type.
+	//
+	// Possible values:
+	//   "SHARED_RESOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "BIGQUERY_DATASET" - BigQuery Dataset Asset.
+	//   "PUBSUB_TOPIC" - Pub/Sub Topic Asset.
+	ResourceType string `json:"resourceType,omitempty"`
 	// RestrictedExportConfig: Optional. If set, restricted export configuration
 	// will be propagated and enforced on the linked dataset.
 	RestrictedExportConfig *RestrictedExportConfig `json:"restrictedExportConfig,omitempty"`
@@ -1018,9 +1495,66 @@ type Listing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Listing) MarshalJSON() ([]byte, error) {
+func (s Listing) MarshalJSON() ([]byte, error) {
 	type NoMethod Listing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NoWrapper: Sets the `data` field as the HTTP body for delivery.
+type NoWrapper struct {
+	// WriteMetadata: Optional. When true, writes the Pub/Sub message metadata to
+	// `x-goog-pubsub-:` headers of the HTTP request. Writes the Pub/Sub message
+	// attributes to `:` headers of the HTTP request.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WriteMetadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NoWrapper) MarshalJSON() ([]byte, error) {
+	type NoMethod NoWrapper
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OidcToken: Contains information needed for generating an OpenID Connect
+// token (https://developers.google.com/identity/protocols/OpenIDConnect).
+type OidcToken struct {
+	// Audience: Optional. Audience to be used when generating OIDC token. The
+	// audience claim identifies the recipients that the JWT is intended for. The
+	// audience value is a single case-sensitive string. Having multiple values
+	// (array) for the audience field is not supported. More info about the OIDC
+	// JWT token audience here: https://tools.ietf.org/html/rfc7519#section-4.1.3
+	// Note: if not specified, the Push endpoint URL will be used.
+	Audience string `json:"audience,omitempty"`
+	// ServiceAccountEmail: Optional. Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) used for generating the
+	// OIDC token. For more information on setting up authentication, see Push
+	// subscriptions (https://cloud.google.com/pubsub/docs/push).
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OidcToken) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcToken
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1065,9 +1599,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of a long-running operation in
@@ -1104,9 +1638,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1196,9 +1730,36 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PubSubTopicSource: Pub/Sub topic source.
+type PubSubTopicSource struct {
+	// DataAffinityRegions: Optional. Region hint on where the data might be
+	// published. Data affinity regions are modifiable. See go/regions for full
+	// listing of possible Cloud regions.
+	DataAffinityRegions []string `json:"dataAffinityRegions,omitempty"`
+	// Topic: Required. Resource name of the Pub/Sub topic source for this listing.
+	// e.g. projects/myproject/topics/topicId
+	Topic string `json:"topic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataAffinityRegions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataAffinityRegions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PubSubTopicSource) MarshalJSON() ([]byte, error) {
+	type NoMethod PubSubTopicSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Publisher: Contains details of the listing publisher.
@@ -1221,9 +1782,65 @@ type Publisher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Publisher) MarshalJSON() ([]byte, error) {
+func (s Publisher) MarshalJSON() ([]byte, error) {
 	type NoMethod Publisher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PubsubWrapper: The payload to the push endpoint is in the form of the JSON
+// representation of a PubsubMessage
+// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+type PubsubWrapper struct {
+}
+
+// PushConfig: Configuration for a push delivery endpoint.
+type PushConfig struct {
+	// Attributes: Optional. Endpoint configuration attributes that can be used to
+	// control different aspects of the message delivery. The only currently
+	// supported attribute is `x-goog-version`, which you can use to change the
+	// format of the pushed message. This attribute indicates the version of the
+	// data expected by the endpoint. This controls the shape of the pushed message
+	// (i.e., its fields and metadata). If not present during the
+	// `CreateSubscription` call, it will default to the version of the Pub/Sub API
+	// used to make such call. If not present in a `ModifyPushConfig` call, its
+	// value will not be changed. `GetSubscription` calls will always return a
+	// valid version, even if the subscription was created without this attribute.
+	// The only supported values for the `x-goog-version` attribute are: *
+	// `v1beta1`: uses the push format defined in the v1beta1 Pub/Sub API. * `v1`
+	// or `v1beta2`: uses the push format defined in the v1 Pub/Sub API. For
+	// example: `attributes { "x-goog-version": "v1" }`
+	Attributes map[string]string `json:"attributes,omitempty"`
+	// NoWrapper: Optional. When set, the payload to the push endpoint is not
+	// wrapped.
+	NoWrapper *NoWrapper `json:"noWrapper,omitempty"`
+	// OidcToken: Optional. If specified, Pub/Sub will generate and attach an OIDC
+	// JWT token as an `Authorization` header in the HTTP request for every pushed
+	// message.
+	OidcToken *OidcToken `json:"oidcToken,omitempty"`
+	// PubsubWrapper: Optional. When set, the payload to the push endpoint is in
+	// the form of the JSON representation of a PubsubMessage
+	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+	PubsubWrapper *PubsubWrapper `json:"pubsubWrapper,omitempty"`
+	// PushEndpoint: Optional. A URL locating the endpoint to which messages should
+	// be pushed. For example, a Webhook endpoint might use
+	// `https://example.com/push`.
+	PushEndpoint string `json:"pushEndpoint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PushConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PushConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshSubscriptionRequest: Message for refreshing a subscription.
@@ -1248,9 +1865,9 @@ type RefreshSubscriptionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
+func (s RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshSubscriptionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestrictedExportConfig: Restricted export config, used to configure
@@ -1277,9 +1894,9 @@ type RestrictedExportConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictedExportConfig) MarshalJSON() ([]byte, error) {
+func (s RestrictedExportConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictedExportConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestrictedExportPolicy: Restricted export policy used to configure
@@ -1306,9 +1923,43 @@ type RestrictedExportPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictedExportPolicy) MarshalJSON() ([]byte, error) {
+func (s RestrictedExportPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictedExportPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetryPolicy: A policy that specifies how Pub/Sub retries message delivery.
+// Retry delay will be exponential based on provided minimum and maximum
+// backoffs. https://en.wikipedia.org/wiki/Exponential_backoff. RetryPolicy
+// will be triggered on NACKs or acknowledgement deadline exceeded events for a
+// given message. Retry Policy is implemented on a best effort basis. At times,
+// the delay between consecutive deliveries may not match the configuration.
+// That is, delay can be more or less than configured backoff.
+type RetryPolicy struct {
+	// MaximumBackoff: Optional. The maximum delay between consecutive deliveries
+	// of a given message. Value should be between 0 and 600 seconds. Defaults to
+	// 600 seconds.
+	MaximumBackoff string `json:"maximumBackoff,omitempty"`
+	// MinimumBackoff: Optional. The minimum delay between consecutive deliveries
+	// of a given message. Value should be between 0 and 600 seconds. Defaults to
+	// 10 seconds.
+	MinimumBackoff string `json:"minimumBackoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaximumBackoff") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaximumBackoff") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetryPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RetryPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevokeSubscriptionRequest: Message for revoking a subscription.
@@ -1322,7 +1973,7 @@ type RevokeSubscriptionResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// SelectedResource: Resource in this dataset that are selectively shared.
+// SelectedResource: Resource in this dataset that is selectively shared.
 type SelectedResource struct {
 	// Table: Optional. Format: For table:
 	// `projects/{projectId}/datasets/{datasetId}/tables/{tableId}`
@@ -1341,9 +1992,9 @@ type SelectedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SelectedResource) MarshalJSON() ([]byte, error) {
+func (s SelectedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SelectedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1370,9 +2021,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SharingEnvironmentConfig: Sharing environment is a behavior model for
@@ -1398,9 +2049,9 @@ type SharingEnvironmentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SharingEnvironmentConfig) MarshalJSON() ([]byte, error) {
+func (s SharingEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SharingEnvironmentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1432,9 +2083,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscribeDataExchangeRequest: Message for subscribing to a Data Exchange.
@@ -1460,9 +2111,9 @@ type SubscribeDataExchangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscribeDataExchangeRequest) MarshalJSON() ([]byte, error) {
+func (s SubscribeDataExchangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeDataExchangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscribeDataExchangeResponse: Message for response when you subscribe to a
@@ -1483,9 +2134,9 @@ type SubscribeDataExchangeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
+func (s SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeDataExchangeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscribeListingRequest: Message for subscribing to a listing.
@@ -1493,6 +2144,9 @@ type SubscribeListingRequest struct {
 	// DestinationDataset: Input only. BigQuery destination dataset to create for
 	// the subscriber.
 	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
+	// DestinationPubsubSubscription: Required. Input only. Destination Pub/Sub
+	// subscription to create for the subscriber.
+	DestinationPubsubSubscription *DestinationPubSubSubscription `json:"destinationPubsubSubscription,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationDataset") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1506,9 +2160,9 @@ type SubscribeListingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscribeListingRequest) MarshalJSON() ([]byte, error) {
+func (s SubscribeListingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeListingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscribeListingResponse: Message for response when you subscribe to a
@@ -1532,9 +2186,9 @@ type SubscribeListingResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscribeListingResponse) MarshalJSON() ([]byte, error) {
+func (s SubscribeListingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeListingResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A subscription represents a subscribers' access to a
@@ -1555,6 +2209,9 @@ type Subscription struct {
 	// projects/123/datasets/my_dataset For listing-level subscriptions, this is a
 	// map of size 1. Only contains values if state == STATE_ACTIVE.
 	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
+	// LinkedResources: Output only. Linked resources created in the subscription.
+	// Only contains values if state = STATE_ACTIVE.
+	LinkedResources []*LinkedResource `json:"linkedResources,omitempty"`
 	// Listing: Output only. Resource name of the source Listing. e.g.
 	// projects/123/locations/US/dataExchanges/456/listings/789
 	Listing string `json:"listing,omitempty"`
@@ -1567,6 +2224,13 @@ type Subscription struct {
 	// OrganizationId: Output only. Organization of the project this subscription
 	// belongs to.
 	OrganizationId string `json:"organizationId,omitempty"`
+	// ResourceType: Output only. Listing shared asset type.
+	//
+	// Possible values:
+	//   "SHARED_RESOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "BIGQUERY_DATASET" - BigQuery Dataset Asset.
+	//   "PUBSUB_TOPIC" - Pub/Sub Topic Asset.
+	ResourceType string `json:"resourceType,omitempty"`
 	// State: Output only. Current state of the subscription.
 	//
 	// Possible values:
@@ -1596,9 +2260,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1621,9 +2285,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1648,9 +2312,14 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TextConfig: Configuration for writing message data in text format. Message
+// payloads will be written to files as raw text, separated by a newline.
+type TextConfig struct {
 }
 
 type OrganizationsLocationsDataExchangesListCall struct {

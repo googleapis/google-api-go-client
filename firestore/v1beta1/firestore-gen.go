@@ -240,9 +240,9 @@ type Aggregation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Aggregation) MarshalJSON() ([]byte, error) {
+func (s Aggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod Aggregation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AggregationResult: The result of a single bucket from a Firestore
@@ -268,9 +268,9 @@ type AggregationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationResult) MarshalJSON() ([]byte, error) {
+func (s AggregationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArrayValue: An array value.
@@ -290,9 +290,9 @@ type ArrayValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArrayValue) MarshalJSON() ([]byte, error) {
+func (s ArrayValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ArrayValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Avg: Average of the values of the requested field. * Only numeric values
@@ -316,9 +316,9 @@ type Avg struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Avg) MarshalJSON() ([]byte, error) {
+func (s Avg) MarshalJSON() ([]byte, error) {
 	type NoMethod Avg
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetDocumentsRequest: The request for Firestore.BatchGetDocuments.
@@ -356,9 +356,9 @@ type BatchGetDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchGetDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetDocumentsResponse: The streamed response for
@@ -394,9 +394,9 @@ type BatchGetDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchWriteRequest: The request for Firestore.BatchWrite.
@@ -420,9 +420,9 @@ type BatchWriteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchWriteRequest) MarshalJSON() ([]byte, error) {
+func (s BatchWriteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchWriteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchWriteResponse: The response from Firestore.BatchWrite.
@@ -449,9 +449,9 @@ type BatchWriteResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchWriteResponse) MarshalJSON() ([]byte, error) {
+func (s BatchWriteResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchWriteResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BeginTransactionRequest: The request for Firestore.BeginTransaction.
@@ -472,9 +472,9 @@ type BeginTransactionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
+func (s BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BeginTransactionResponse: The response for Firestore.BeginTransaction.
@@ -497,9 +497,9 @@ type BeginTransactionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
+func (s BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BitSequence: A sequence of bits, encoded in a byte array. Each byte in the
@@ -534,9 +534,9 @@ type BitSequence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BitSequence) MarshalJSON() ([]byte, error) {
+func (s BitSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod BitSequence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BloomFilter: A bloom filter (https://en.wikipedia.org/wiki/Bloom_filter).
@@ -565,9 +565,9 @@ type BloomFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BloomFilter) MarshalJSON() ([]byte, error) {
+func (s BloomFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod BloomFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CollectionSelector: A selection of a collection, such as `messages as m1`.
@@ -592,9 +592,9 @@ type CollectionSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CollectionSelector) MarshalJSON() ([]byte, error) {
+func (s CollectionSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod CollectionSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitRequest: The request for Firestore.Commit.
@@ -616,9 +616,9 @@ type CommitRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitRequest) MarshalJSON() ([]byte, error) {
+func (s CommitRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitResponse: The response for Firestore.Commit.
@@ -645,9 +645,9 @@ type CommitResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitResponse) MarshalJSON() ([]byte, error) {
+func (s CommitResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompositeFilter: A filter that merges multiple other filters using the given
@@ -677,9 +677,9 @@ type CompositeFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
+func (s CompositeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Count: Count of documents that match the query. The `COUNT(*)` aggregation
@@ -705,9 +705,9 @@ type Count struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Count) MarshalJSON() ([]byte, error) {
+func (s Count) MarshalJSON() ([]byte, error) {
 	type NoMethod Count
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cursor: A position in a query result set.
@@ -732,9 +732,9 @@ type Cursor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cursor) MarshalJSON() ([]byte, error) {
+func (s Cursor) MarshalJSON() ([]byte, error) {
 	type NoMethod Cursor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Document: A Firestore document. Must not exceed 1 MiB - 4 bytes.
@@ -784,9 +784,9 @@ type Document struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Document) MarshalJSON() ([]byte, error) {
+func (s Document) MarshalJSON() ([]byte, error) {
 	type NoMethod Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentChange: A Document has changed. May be the result of multiple
@@ -819,9 +819,9 @@ type DocumentChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentChange) MarshalJSON() ([]byte, error) {
+func (s DocumentChange) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentDelete: A Document has been deleted. May be the result of multiple
@@ -850,9 +850,9 @@ type DocumentDelete struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentDelete) MarshalJSON() ([]byte, error) {
+func (s DocumentDelete) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentDelete
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentMask: A set of field paths on a document. Used to restrict a get or
@@ -876,9 +876,9 @@ type DocumentMask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentMask) MarshalJSON() ([]byte, error) {
+func (s DocumentMask) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentMask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentRemove: A Document has been removed from the view of the targets.
@@ -909,9 +909,9 @@ type DocumentRemove struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentRemove) MarshalJSON() ([]byte, error) {
+func (s DocumentRemove) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentRemove
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentTransform: A transformation of a document.
@@ -934,9 +934,9 @@ type DocumentTransform struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentTransform) MarshalJSON() ([]byte, error) {
+func (s DocumentTransform) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentTransform
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentsTarget: A target specified by a set of documents names.
@@ -959,9 +959,9 @@ type DocumentsTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentsTarget) MarshalJSON() ([]byte, error) {
+func (s DocumentsTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentsTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1001,9 +1001,9 @@ type ExecutionStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionStats) MarshalJSON() ([]byte, error) {
+func (s ExecutionStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExistenceFilter: A digest of all the documents that match a given target.
@@ -1041,9 +1041,9 @@ type ExistenceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExistenceFilter) MarshalJSON() ([]byte, error) {
+func (s ExistenceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ExistenceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExplainMetrics: Explain metrics for the query.
@@ -1066,9 +1066,9 @@ type ExplainMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainMetrics) MarshalJSON() ([]byte, error) {
+func (s ExplainMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExplainOptions: Explain options for the query.
@@ -1091,9 +1091,9 @@ type ExplainOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainOptions) MarshalJSON() ([]byte, error) {
+func (s ExplainOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldFilter: A filter on a specific field.
@@ -1146,9 +1146,9 @@ type FieldFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldFilter) MarshalJSON() ([]byte, error) {
+func (s FieldFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldReference: A reference to a field in a document, ex:
@@ -1171,9 +1171,9 @@ type FieldReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldReference) MarshalJSON() ([]byte, error) {
+func (s FieldReference) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldTransform: A transformation of a field of the document.
@@ -1251,9 +1251,9 @@ type FieldTransform struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldTransform) MarshalJSON() ([]byte, error) {
+func (s FieldTransform) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldTransform
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: A filter.
@@ -1277,9 +1277,9 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindNearest: Nearest Neighbors search config.
@@ -1323,9 +1323,64 @@ type FindNearest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindNearest) MarshalJSON() ([]byte, error) {
+func (s FindNearest) MarshalJSON() ([]byte, error) {
 	type NoMethod FindNearest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
+// google.longrunning.Operation results from
+// FirestoreAdmin.BulkDeleteDocuments.
+type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
+	// CollectionIds: The ids of the collection groups that are being deleted.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
+	EndTime string `json:"endTime,omitempty"`
+	// NamespaceIds: Which namespace ids are being deleted.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+	// OperationState: The state of the operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1Progress `json:"progressBytes,omitempty"`
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1Progress `json:"progressDocuments,omitempty"`
+	// SnapshotTime: The timestamp that corresponds to the version of the database
+	// that is being read to get the list of documents to delete. This time can
+	// also be used as the timestamp of PITR in case of disaster recovery (subject
+	// to PITR window limit).
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the create
@@ -1359,9 +1414,9 @@ type GoogleFirestoreAdminV1Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the long-running
@@ -1406,9 +1461,9 @@ type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the update
@@ -1460,9 +1515,9 @@ type GoogleFirestoreAdminV1beta1ExportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ExportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ExportDocumentsRequest: The request for
@@ -1493,9 +1548,9 @@ type GoogleFirestoreAdminV1beta1ExportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ExportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ExportDocumentsResponse: Returned in the
@@ -1518,9 +1573,9 @@ type GoogleFirestoreAdminV1beta1ExportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ExportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ImportDocumentsMetadata: Metadata for
@@ -1567,9 +1622,9 @@ type GoogleFirestoreAdminV1beta1ImportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ImportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ImportDocumentsRequest: The request for
@@ -1596,9 +1651,9 @@ type GoogleFirestoreAdminV1beta1ImportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ImportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1Index: An index definition.
@@ -1640,9 +1695,9 @@ type GoogleFirestoreAdminV1beta1Index struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1Index) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1Index) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1Index
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1IndexField: A field of an index.
@@ -1676,9 +1731,9 @@ type GoogleFirestoreAdminV1beta1IndexField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1IndexField) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1IndexField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1IndexField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1IndexOperationMetadata: Metadata for index
@@ -1720,9 +1775,9 @@ type GoogleFirestoreAdminV1beta1IndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1IndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1IndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1IndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ListIndexesResponse: The response for
@@ -1748,9 +1803,9 @@ type GoogleFirestoreAdminV1beta1ListIndexesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1ListIndexesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1ListIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1ListIndexesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1LocationMetadata: The metadata message for
@@ -1780,9 +1835,9 @@ type GoogleFirestoreAdminV1beta1Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -1827,9 +1882,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -1855,9 +1910,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -1900,9 +1955,9 @@ type ListCollectionIdsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCollectionIdsRequest) MarshalJSON() ([]byte, error) {
+func (s ListCollectionIdsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCollectionIdsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCollectionIdsResponse: The response from Firestore.ListCollectionIds.
@@ -1927,9 +1982,9 @@ type ListCollectionIdsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCollectionIdsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCollectionIdsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCollectionIdsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDocumentsResponse: The response for Firestore.ListDocuments.
@@ -1955,9 +2010,9 @@ type ListDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListenRequest: A request for Firestore.Listen
@@ -1981,9 +2036,9 @@ type ListenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListenRequest) MarshalJSON() ([]byte, error) {
+func (s ListenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ListenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListenResponse: The response for Firestore.Listen.
@@ -2017,9 +2072,9 @@ type ListenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListenResponse) MarshalJSON() ([]byte, error) {
+func (s ListenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MapValue: A map value.
@@ -2042,9 +2097,9 @@ type MapValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MapValue) MarshalJSON() ([]byte, error) {
+func (s MapValue) MarshalJSON() ([]byte, error) {
 	type NoMethod MapValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Order: An order on a field.
@@ -2071,9 +2126,9 @@ type Order struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Order) MarshalJSON() ([]byte, error) {
+func (s Order) MarshalJSON() ([]byte, error) {
 	type NoMethod Order
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionQueryRequest: The request for Firestore.PartitionQuery.
@@ -2124,9 +2179,9 @@ type PartitionQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionQueryRequest) MarshalJSON() ([]byte, error) {
+func (s PartitionQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionQueryResponse: The response for Firestore.PartitionQuery.
@@ -2162,9 +2217,9 @@ type PartitionQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionQueryResponse) MarshalJSON() ([]byte, error) {
+func (s PartitionQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlanSummary: Planning phase information for the query.
@@ -2186,9 +2241,9 @@ type PlanSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlanSummary) MarshalJSON() ([]byte, error) {
+func (s PlanSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PlanSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Precondition: A precondition on a document, used for conditional operations.
@@ -2212,9 +2267,9 @@ type Precondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Precondition) MarshalJSON() ([]byte, error) {
+func (s Precondition) MarshalJSON() ([]byte, error) {
 	type NoMethod Precondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Projection: The projection of document's fields to return.
@@ -2235,9 +2290,9 @@ type Projection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Projection) MarshalJSON() ([]byte, error) {
+func (s Projection) MarshalJSON() ([]byte, error) {
 	type NoMethod Projection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryTarget: A target specified by a query.
@@ -2263,9 +2318,9 @@ type QueryTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryTarget) MarshalJSON() ([]byte, error) {
+func (s QueryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadOnly: Options for a transaction that can only be used to read documents.
@@ -2288,9 +2343,9 @@ type ReadOnly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadOnly) MarshalJSON() ([]byte, error) {
+func (s ReadOnly) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadOnly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadWrite: Options for a transaction that can be used to read and write
@@ -2312,9 +2367,9 @@ type ReadWrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadWrite) MarshalJSON() ([]byte, error) {
+func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadWrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackRequest: The request for Firestore.Rollback.
@@ -2334,9 +2389,9 @@ type RollbackRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunAggregationQueryRequest: The request for Firestore.RunAggregationQuery.
@@ -2372,9 +2427,9 @@ type RunAggregationQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunAggregationQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunAggregationQueryResponse: The response for Firestore.RunAggregationQuery.
@@ -2413,9 +2468,9 @@ type RunAggregationQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
+func (s RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunAggregationQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryRequest: The request for Firestore.RunQuery.
@@ -2451,9 +2506,9 @@ type RunQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryResponse: The response for Firestore.RunQuery.
@@ -2497,9 +2552,9 @@ type RunQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
+func (s RunQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2531,9 +2586,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StructuredAggregationQuery: Firestore query for running an aggregation over
@@ -2558,9 +2613,9 @@ type StructuredAggregationQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
+func (s StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod StructuredAggregationQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StructuredQuery: A Firestore query. The query stages are executed in the
@@ -2637,9 +2692,9 @@ type StructuredQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StructuredQuery) MarshalJSON() ([]byte, error) {
+func (s StructuredQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod StructuredQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sum: Sum of the values of the requested field. * Only numeric values will be
@@ -2671,9 +2726,9 @@ type Sum struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sum) MarshalJSON() ([]byte, error) {
+func (s Sum) MarshalJSON() ([]byte, error) {
 	type NoMethod Sum
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Target: A specification of a set of documents to listen to.
@@ -2724,9 +2779,9 @@ type Target struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Target) MarshalJSON() ([]byte, error) {
+func (s Target) MarshalJSON() ([]byte, error) {
 	type NoMethod Target
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetChange: Targets being watched have changed.
@@ -2778,9 +2833,9 @@ type TargetChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetChange) MarshalJSON() ([]byte, error) {
+func (s TargetChange) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionOptions: Options for creating a new transaction.
@@ -2802,9 +2857,9 @@ type TransactionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionOptions) MarshalJSON() ([]byte, error) {
+func (s TransactionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnaryFilter: A filter with a single operand.
@@ -2837,9 +2892,9 @@ type UnaryFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
+func (s UnaryFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod UnaryFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Value: A message that can hold any of the supported value types.
@@ -2889,9 +2944,9 @@ type Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Value) MarshalJSON() ([]byte, error) {
+func (s Value) MarshalJSON() ([]byte, error) {
 	type NoMethod Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Value) UnmarshalJSON(data []byte) error {
@@ -2946,9 +3001,9 @@ type Write struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Write) MarshalJSON() ([]byte, error) {
+func (s Write) MarshalJSON() ([]byte, error) {
 	type NoMethod Write
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteRequest: The request for Firestore.Write. The first request creates a
@@ -2989,9 +3044,9 @@ type WriteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteRequest) MarshalJSON() ([]byte, error) {
+func (s WriteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteResponse: The response for Firestore.Write.
@@ -3025,9 +3080,9 @@ type WriteResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteResponse) MarshalJSON() ([]byte, error) {
+func (s WriteResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteResult: The result of applying a write.
@@ -3052,9 +3107,9 @@ type WriteResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteResult) MarshalJSON() ([]byte, error) {
+func (s WriteResult) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsDatabasesExportDocumentsCall struct {

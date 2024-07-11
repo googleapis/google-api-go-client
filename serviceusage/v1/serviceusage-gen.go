@@ -215,9 +215,9 @@ type AddEnableRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddEnableRulesResponse) MarshalJSON() ([]byte, error) {
+func (s AddEnableRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddEnableRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdminQuotaPolicy: Quota policy created by quota administrator.
@@ -264,9 +264,9 @@ type AdminQuotaPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdminQuotaPolicy) MarshalJSON() ([]byte, error) {
+func (s AdminQuotaPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AdminQuotaPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Api: Api is a light-weight descriptor for an API Interface. Interfaces are
@@ -325,9 +325,9 @@ type Api struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Api) MarshalJSON() ([]byte, error) {
+func (s Api) MarshalJSON() ([]byte, error) {
 	type NoMethod Api
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthProvider: Configuration for an authentication provider, including
@@ -391,9 +391,9 @@ type AuthProvider struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthProvider) MarshalJSON() ([]byte, error) {
+func (s AuthProvider) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthProvider
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthRequirement: User-defined authentication requirements, including support
@@ -429,9 +429,9 @@ type AuthRequirement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthRequirement) MarshalJSON() ([]byte, error) {
+func (s AuthRequirement) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthRequirement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Authentication: `Authentication` defines the authentication configuration
@@ -461,9 +461,9 @@ type Authentication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Authentication) MarshalJSON() ([]byte, error) {
+func (s Authentication) MarshalJSON() ([]byte, error) {
 	type NoMethod Authentication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthenticationRule: Authentication rules for the service. By default, if a
@@ -495,9 +495,9 @@ type AuthenticationRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthenticationRule) MarshalJSON() ([]byte, error) {
+func (s AuthenticationRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthenticationRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Backend: `Backend` defines the backend configuration for a service.
@@ -518,9 +518,9 @@ type Backend struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Backend) MarshalJSON() ([]byte, error) {
+func (s Backend) MarshalJSON() ([]byte, error) {
 	type NoMethod Backend
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackendRule: A backend rule provides configuration for an individual API
@@ -605,9 +605,9 @@ type BackendRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackendRule) MarshalJSON() ([]byte, error) {
+func (s BackendRule) MarshalJSON() ([]byte, error) {
 	type NoMethod BackendRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BackendRule) UnmarshalJSON(data []byte) error {
@@ -646,9 +646,9 @@ type BatchCreateAdminOverridesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateAdminOverridesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateAdminOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateAdminOverridesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateConsumerOverridesResponse: Response message for
@@ -669,9 +669,9 @@ type BatchCreateConsumerOverridesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateConsumerOverridesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchEnableServicesRequest: Request message for the `BatchEnableServices`
@@ -697,9 +697,9 @@ type BatchEnableServicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchEnableServicesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchEnableServicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchEnableServicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchEnableServicesResponse: Response message for the `BatchEnableServices`
@@ -724,9 +724,9 @@ type BatchEnableServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchEnableServicesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchEnableServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchEnableServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetServicesResponse: Response message for the `BatchGetServices`
@@ -750,9 +750,9 @@ type BatchGetServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetServicesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Billing: Billing related configuration of the service. The following example
@@ -790,9 +790,9 @@ type Billing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Billing) MarshalJSON() ([]byte, error) {
+func (s Billing) MarshalJSON() ([]byte, error) {
 	type NoMethod Billing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BillingDestination: Configuration of a specific billing destination
@@ -817,9 +817,9 @@ type BillingDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BillingDestination) MarshalJSON() ([]byte, error) {
+func (s BillingDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod BillingDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -901,9 +901,9 @@ type ClientLibrarySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientLibrarySettings) MarshalJSON() ([]byte, error) {
+func (s ClientLibrarySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientLibrarySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommonLanguageSettings: Required information for every language.
@@ -935,9 +935,9 @@ type CommonLanguageSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommonLanguageSettings) MarshalJSON() ([]byte, error) {
+func (s CommonLanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CommonLanguageSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConsumerPolicy: Consumer Policy is a set of rules that define what services
@@ -973,9 +973,9 @@ type ConsumerPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConsumerPolicy) MarshalJSON() ([]byte, error) {
+func (s ConsumerPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumerPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Context: `Context` defines which contexts an API requests. Example: context:
@@ -1009,9 +1009,9 @@ type Context struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Context) MarshalJSON() ([]byte, error) {
+func (s Context) MarshalJSON() ([]byte, error) {
 	type NoMethod Context
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContextRule: A context rule provides information about the context for an
@@ -1043,9 +1043,9 @@ type ContextRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContextRule) MarshalJSON() ([]byte, error) {
+func (s ContextRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ContextRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Control: Selects and configures the service controller used by the service.
@@ -1070,9 +1070,9 @@ type Control struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Control) MarshalJSON() ([]byte, error) {
+func (s Control) MarshalJSON() ([]byte, error) {
 	type NoMethod Control
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CppSettings: Settings for C++ client libraries.
@@ -1092,9 +1092,9 @@ type CppSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CppSettings) MarshalJSON() ([]byte, error) {
+func (s CppSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CppSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAdminQuotaPolicyMetadata: Metadata message that provides information
@@ -1127,9 +1127,9 @@ type CustomError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomError) MarshalJSON() ([]byte, error) {
+func (s CustomError) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomErrorRule: A custom error rule.
@@ -1154,9 +1154,9 @@ type CustomErrorRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomErrorRule) MarshalJSON() ([]byte, error) {
+func (s CustomErrorRule) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomErrorRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomHttpPattern: A custom pattern is used for defining custom HTTP verb.
@@ -1178,9 +1178,9 @@ type CustomHttpPattern struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
+func (s CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomHttpPattern
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteAdminQuotaPolicyMetadata: Metadata message that provides information
@@ -1221,9 +1221,9 @@ type DisableServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisableServiceRequest) MarshalJSON() ([]byte, error) {
+func (s DisableServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DisableServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableServiceResponse: Response message for the `DisableService` method.
@@ -1245,9 +1245,9 @@ type DisableServiceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisableServiceResponse) MarshalJSON() ([]byte, error) {
+func (s DisableServiceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DisableServiceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Documentation: `Documentation` provides the information for describing a
@@ -1318,9 +1318,9 @@ type Documentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Documentation) MarshalJSON() ([]byte, error) {
+func (s Documentation) MarshalJSON() ([]byte, error) {
 	type NoMethod Documentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentationRule: A documentation rule provides information about
@@ -1358,9 +1358,9 @@ type DocumentationRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
+func (s DocumentationRule) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentationRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DotnetSettings: Settings for Dotnet client libraries.
@@ -1402,9 +1402,9 @@ type DotnetSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DotnetSettings) MarshalJSON() ([]byte, error) {
+func (s DotnetSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DotnetSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1436,9 +1436,9 @@ type EnableFailure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnableFailure) MarshalJSON() ([]byte, error) {
+func (s EnableFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableFailure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnableRule: The consumer policy rule that defines usable services and
@@ -1483,9 +1483,9 @@ type EnableRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnableRule) MarshalJSON() ([]byte, error) {
+func (s EnableRule) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnableServiceRequest: Request message for the `EnableService` method.
@@ -1511,9 +1511,9 @@ type EnableServiceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnableServiceResponse) MarshalJSON() ([]byte, error) {
+func (s EnableServiceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableServiceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Endpoint: `Endpoint` describes a network address of a service that serves a
@@ -1562,9 +1562,9 @@ type Endpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Endpoint) MarshalJSON() ([]byte, error) {
+func (s Endpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod Endpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Enum: Enum type definition.
@@ -1600,9 +1600,9 @@ type Enum struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Enum) MarshalJSON() ([]byte, error) {
+func (s Enum) MarshalJSON() ([]byte, error) {
 	type NoMethod Enum
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnumValue: Enum value definition.
@@ -1626,9 +1626,9 @@ type EnumValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnumValue) MarshalJSON() ([]byte, error) {
+func (s EnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod EnumValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Field: A single field of a message type.
@@ -1697,9 +1697,9 @@ type Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Field) MarshalJSON() ([]byte, error) {
+func (s Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldPolicy: Google API Policy Annotation This message defines a simple API
@@ -1738,9 +1738,9 @@ type FieldPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldPolicy) MarshalJSON() ([]byte, error) {
+func (s FieldPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetServiceIdentityMetadata: Metadata for the `GetServiceIdentity` method.
@@ -1773,9 +1773,9 @@ type GetServiceIdentityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetServiceIdentityResponse) MarshalJSON() ([]byte, error) {
+func (s GetServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetServiceIdentityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoSettings: Settings for Go client libraries.
@@ -1795,9 +1795,9 @@ type GoSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoSettings) MarshalJSON() ([]byte, error) {
+func (s GoSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiService: `Service` is the root object of Google API service
@@ -1915,9 +1915,9 @@ type GoogleApiService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiService) MarshalJSON() ([]byte, error) {
+func (s GoogleApiService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV1OperationMetadata: The operation metadata returned
@@ -1939,9 +1939,9 @@ type GoogleApiServiceusageV1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV1Service: A service that is available for use by the
@@ -1986,9 +1986,9 @@ type GoogleApiServiceusageV1Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV1Service) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV1Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1Service
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV1ServiceConfig: The configuration of the service.
@@ -2033,9 +2033,9 @@ type GoogleApiServiceusageV1ServiceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV1ServiceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV1ServiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1ServiceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV1beta1GetServiceIdentityResponse: Response message for
@@ -2065,9 +2065,9 @@ type GoogleApiServiceusageV1beta1GetServiceIdentityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV1beta1GetServiceIdentityResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV1beta1GetServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1beta1GetServiceIdentityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV1beta1ServiceIdentity: Service identity for a service.
@@ -2093,9 +2093,9 @@ type GoogleApiServiceusageV1beta1ServiceIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV1beta1ServiceIdentity) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV1beta1ServiceIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1beta1ServiceIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV2alphaConsumerPolicy: Consumer Policy is a set of
@@ -2137,9 +2137,9 @@ type GoogleApiServiceusageV2alphaConsumerPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV2alphaConsumerPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV2alphaConsumerPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV2alphaConsumerPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV2alphaEnableRule: The consumer policy rule that
@@ -2161,9 +2161,9 @@ type GoogleApiServiceusageV2alphaEnableRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiServiceusageV2alphaEnableRule) MarshalJSON() ([]byte, error) {
+func (s GoogleApiServiceusageV2alphaEnableRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV2alphaEnableRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiServiceusageV2alphaUpdateConsumerPolicyMetadata: Metadata for the
@@ -2197,9 +2197,9 @@ type Http struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Http) MarshalJSON() ([]byte, error) {
+func (s Http) MarshalJSON() ([]byte, error) {
 	type NoMethod Http
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRule: gRPC Transcoding gRPC Transcoding is a feature for mapping between
@@ -2386,9 +2386,9 @@ type HttpRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRule) MarshalJSON() ([]byte, error) {
+func (s HttpRule) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAdminOverridesMetadata: Metadata message that provides information
@@ -2414,9 +2414,9 @@ type ImportAdminOverridesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAdminOverridesResponse) MarshalJSON() ([]byte, error) {
+func (s ImportAdminOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdminOverridesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAdminQuotaPoliciesMetadata: Metadata message that provides information
@@ -2443,9 +2443,9 @@ type ImportAdminQuotaPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAdminQuotaPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ImportAdminQuotaPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdminQuotaPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportConsumerOverridesMetadata: Metadata message that provides information
@@ -2472,9 +2472,9 @@ type ImportConsumerOverridesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
+func (s ImportConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportConsumerOverridesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JavaSettings: Settings for Java client libraries.
@@ -2510,9 +2510,9 @@ type JavaSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JavaSettings) MarshalJSON() ([]byte, error) {
+func (s JavaSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod JavaSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JwtLocation: Specifies a location to extract JWT from an API request.
@@ -2543,9 +2543,9 @@ type JwtLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JwtLocation) MarshalJSON() ([]byte, error) {
+func (s JwtLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod JwtLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelDescriptor: A description of a label.
@@ -2574,9 +2574,9 @@ type LabelDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
+func (s LabelDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -2602,9 +2602,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServicesResponse: Response message for the `ListServices` method.
@@ -2630,9 +2630,9 @@ type ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogDescriptor: A description of a log type. Example in YAML format: - name:
@@ -2668,9 +2668,9 @@ type LogDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogDescriptor) MarshalJSON() ([]byte, error) {
+func (s LogDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod LogDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Logging: Logging configuration of the service. The following example shows
@@ -2709,9 +2709,9 @@ type Logging struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Logging) MarshalJSON() ([]byte, error) {
+func (s Logging) MarshalJSON() ([]byte, error) {
 	type NoMethod Logging
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoggingDestination: Configuration of a specific logging destination (the
@@ -2738,9 +2738,9 @@ type LoggingDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoggingDestination) MarshalJSON() ([]byte, error) {
+func (s LoggingDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LongRunning: Describes settings to use when generating API methods that use
@@ -2772,9 +2772,9 @@ type LongRunning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LongRunning) MarshalJSON() ([]byte, error) {
+func (s LongRunning) MarshalJSON() ([]byte, error) {
 	type NoMethod LongRunning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LongRunning) UnmarshalJSON(data []byte) error {
@@ -2825,9 +2825,9 @@ type Method struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Method) MarshalJSON() ([]byte, error) {
+func (s Method) MarshalJSON() ([]byte, error) {
 	type NoMethod Method
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MethodPolicy: Defines policies applying to an RPC method.
@@ -2852,9 +2852,9 @@ type MethodPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MethodPolicy) MarshalJSON() ([]byte, error) {
+func (s MethodPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MethodPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MethodSettings: Describes the generator configuration for a method.
@@ -2893,9 +2893,9 @@ type MethodSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MethodSettings) MarshalJSON() ([]byte, error) {
+func (s MethodSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod MethodSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricDescriptor: Defines a metric type and its schema. Once a metric
@@ -3058,9 +3058,9 @@ type MetricDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricDescriptor) MarshalJSON() ([]byte, error) {
+func (s MetricDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricDescriptorMetadata: Additional annotations that can be used to guide
@@ -3123,9 +3123,9 @@ type MetricDescriptorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
+func (s MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricDescriptorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricRule: Bind API methods to metrics. Binding a method to a metric causes
@@ -3152,9 +3152,9 @@ type MetricRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricRule) MarshalJSON() ([]byte, error) {
+func (s MetricRule) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Mixin: Declares an API Interface to be included in this interface. The
@@ -3207,9 +3207,9 @@ type Mixin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Mixin) MarshalJSON() ([]byte, error) {
+func (s Mixin) MarshalJSON() ([]byte, error) {
 	type NoMethod Mixin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredResourceDescriptor: An object that describes the schema of a
@@ -3296,9 +3296,9 @@ type MonitoredResourceDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
+func (s MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredResourceDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Monitoring: Monitoring configuration of the service. The example below shows
@@ -3353,9 +3353,9 @@ type Monitoring struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Monitoring) MarshalJSON() ([]byte, error) {
+func (s Monitoring) MarshalJSON() ([]byte, error) {
 	type NoMethod Monitoring
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoringDestination: Configuration of a specific monitoring destination
@@ -3380,9 +3380,9 @@ type MonitoringDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoringDestination) MarshalJSON() ([]byte, error) {
+func (s MonitoringDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoringDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeSettings: Settings for Node client libraries.
@@ -3402,9 +3402,9 @@ type NodeSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeSettings) MarshalJSON() ([]byte, error) {
+func (s NodeSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuthRequirements: OAuth scopes are a way to define data and permissions on
@@ -3441,9 +3441,9 @@ type OAuthRequirements struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OAuthRequirements) MarshalJSON() ([]byte, error) {
+func (s OAuthRequirements) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthRequirements
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -3488,9 +3488,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: The operation metadata returned for the batchend services
@@ -3512,9 +3512,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Option: A protocol buffer option, which can be attached to a message, field,
@@ -3544,9 +3544,9 @@ type Option struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Option) MarshalJSON() ([]byte, error) {
+func (s Option) MarshalJSON() ([]byte, error) {
 	type NoMethod Option
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Page: Represents a documentation page. A page can contain subpages to
@@ -3580,9 +3580,9 @@ type Page struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Page) MarshalJSON() ([]byte, error) {
+func (s Page) MarshalJSON() ([]byte, error) {
 	type NoMethod Page
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhpSettings: Settings for Php client libraries.
@@ -3602,9 +3602,9 @@ type PhpSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhpSettings) MarshalJSON() ([]byte, error) {
+func (s PhpSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod PhpSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Publishing: This message configures the settings for publishing Google Cloud
@@ -3671,9 +3671,9 @@ type Publishing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Publishing) MarshalJSON() ([]byte, error) {
+func (s Publishing) MarshalJSON() ([]byte, error) {
 	type NoMethod Publishing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PythonSettings: Settings for Python client libraries.
@@ -3693,9 +3693,9 @@ type PythonSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PythonSettings) MarshalJSON() ([]byte, error) {
+func (s PythonSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod PythonSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Quota: Quota configuration helps to achieve fairness and budgeting in
@@ -3738,9 +3738,9 @@ type Quota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Quota) MarshalJSON() ([]byte, error) {
+func (s Quota) MarshalJSON() ([]byte, error) {
 	type NoMethod Quota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuotaLimit: `QuotaLimit` defines a specific limit that applies over a
@@ -3812,9 +3812,9 @@ type QuotaLimit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
+func (s QuotaLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaLimit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuotaOverride: A quota override
@@ -3871,9 +3871,9 @@ type QuotaOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuotaOverride) MarshalJSON() ([]byte, error) {
+func (s QuotaOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveEnableRulesMetadata: Metadata for the `RemoveEnableRules` method.
@@ -3903,9 +3903,9 @@ type RemoveEnableRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveEnableRulesResponse) MarshalJSON() ([]byte, error) {
+func (s RemoveEnableRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveEnableRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RubySettings: Settings for Ruby client libraries.
@@ -3925,9 +3925,9 @@ type RubySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RubySettings) MarshalJSON() ([]byte, error) {
+func (s RubySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RubySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceIdentity: Service identity for a service. This is the identity that
@@ -3952,9 +3952,9 @@ type ServiceIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
+func (s ServiceIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceContext: `SourceContext` represents information about the source of a
@@ -3977,9 +3977,9 @@ type SourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceContext) MarshalJSON() ([]byte, error) {
+func (s SourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceInfo: Source information used to create a Service Config
@@ -3999,9 +3999,9 @@ type SourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceInfo) MarshalJSON() ([]byte, error) {
+func (s SourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -4033,9 +4033,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemParameter: Define a parameter's name and location. The parameter may
@@ -4064,9 +4064,9 @@ type SystemParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemParameter) MarshalJSON() ([]byte, error) {
+func (s SystemParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemParameterRule: Define a system parameter rule mapping system parameter
@@ -4093,9 +4093,9 @@ type SystemParameterRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemParameterRule) MarshalJSON() ([]byte, error) {
+func (s SystemParameterRule) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemParameterRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemParameters: ### System parameter configuration A system parameter is a
@@ -4128,9 +4128,9 @@ type SystemParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemParameters) MarshalJSON() ([]byte, error) {
+func (s SystemParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Type: A protocol buffer message type.
@@ -4168,9 +4168,9 @@ type Type struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Type) MarshalJSON() ([]byte, error) {
+func (s Type) MarshalJSON() ([]byte, error) {
 	type NoMethod Type
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateAdminQuotaPolicyMetadata: Metadata message that provides information
@@ -4218,9 +4218,9 @@ type Usage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Usage) MarshalJSON() ([]byte, error) {
+func (s Usage) MarshalJSON() ([]byte, error) {
 	type NoMethod Usage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageRule: Usage configuration rules for the service. NOTE: Under
@@ -4259,9 +4259,9 @@ type UsageRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageRule) MarshalJSON() ([]byte, error) {
+func (s UsageRule) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OperationsCancelCall struct {

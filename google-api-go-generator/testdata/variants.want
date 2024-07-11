@@ -221,9 +221,9 @@ type GeoJsonGeometryCollection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonGeometryCollection) MarshalJSON() ([]byte, error) {
+func (s GeoJsonGeometryCollection) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonGeometryCollection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GeoJsonLineString struct {
@@ -247,9 +247,9 @@ type GeoJsonLineString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonLineString) MarshalJSON() ([]byte, error) {
+func (s GeoJsonLineString) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonLineString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoJsonMultiLineString: Multi Line String
@@ -274,9 +274,9 @@ type GeoJsonMultiLineString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonMultiLineString) MarshalJSON() ([]byte, error) {
+func (s GeoJsonMultiLineString) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonMultiLineString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GeoJsonMultiPoint struct {
@@ -300,9 +300,9 @@ type GeoJsonMultiPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonMultiPoint) MarshalJSON() ([]byte, error) {
+func (s GeoJsonMultiPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonMultiPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GeoJsonMultiPolygon struct {
@@ -326,9 +326,9 @@ type GeoJsonMultiPolygon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
+func (s GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonMultiPolygon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GeoJsonPoint struct {
@@ -352,9 +352,9 @@ type GeoJsonPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonPoint) MarshalJSON() ([]byte, error) {
+func (s GeoJsonPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GeoJsonPolygon struct {
@@ -382,9 +382,9 @@ type GeoJsonPolygon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonPolygon) MarshalJSON() ([]byte, error) {
+func (s GeoJsonPolygon) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonPolygon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MapFolder struct {
@@ -421,9 +421,9 @@ type MapFolder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MapFolder) MarshalJSON() ([]byte, error) {
+func (s MapFolder) MarshalJSON() ([]byte, error) {
 	type NoMethod MapFolder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *MapFolder) UnmarshalJSON(data []byte) error {
@@ -503,9 +503,9 @@ type MapKmlLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MapKmlLink) MarshalJSON() ([]byte, error) {
+func (s MapKmlLink) MarshalJSON() ([]byte, error) {
 	type NoMethod MapKmlLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *MapKmlLink) UnmarshalJSON(data []byte) error {
@@ -558,9 +558,9 @@ type MapLayer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MapLayer) MarshalJSON() ([]byte, error) {
+func (s MapLayer) MarshalJSON() ([]byte, error) {
 	type NoMethod MapLayer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *MapLayer) UnmarshalJSON(data []byte) error {

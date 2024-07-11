@@ -288,9 +288,9 @@ type AcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -387,9 +387,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BootImage: Definition of the boot image used by the Runtime. Used to
@@ -423,9 +423,9 @@ type ContainerImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerImage) MarshalJSON() ([]byte, error) {
+func (s ContainerImage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataprocParameters: Parameters used in Dataproc JobType executions.
@@ -446,9 +446,9 @@ type DataprocParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataprocParameters) MarshalJSON() ([]byte, error) {
+func (s DataprocParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod DataprocParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnoseInstanceRequest: Request for creating a notebook instance diagnostic
@@ -473,9 +473,9 @@ type DiagnoseInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnoseInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s DiagnoseInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnoseInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnoseRuntimeRequest: Request for creating a notebook instance diagnostic
@@ -500,9 +500,9 @@ type DiagnoseRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnoseRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s DiagnoseRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnoseRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnosticConfig: Defines flags that are used to run the diagnostic tool
@@ -542,9 +542,9 @@ type DiagnosticConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnosticConfig) MarshalJSON() ([]byte, error) {
+func (s DiagnosticConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnosticConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Disk: An instance-attached disk resource.
@@ -609,9 +609,9 @@ type Disk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Disk) MarshalJSON() ([]byte, error) {
+func (s Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -645,9 +645,9 @@ type EncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Environment: Definition of a software environment that is used to start a
@@ -686,9 +686,9 @@ type Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Environment) MarshalJSON() ([]byte, error) {
+func (s Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Event: The definition of an Event for a managed / semi-managed notebook
@@ -725,9 +725,9 @@ type Event struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Event) MarshalJSON() ([]byte, error) {
+func (s Event) MarshalJSON() ([]byte, error) {
 	type NoMethod Event
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Execution: The definition of a single executed notebook.
@@ -786,9 +786,9 @@ type Execution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Execution) MarshalJSON() ([]byte, error) {
+func (s Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod Execution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionTemplate: The description a notebook execution workload.
@@ -897,9 +897,9 @@ type ExecutionTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionTemplate) MarshalJSON() ([]byte, error) {
+func (s ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -945,9 +945,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetInstanceHealthResponse: Response for checking if a notebook instance is
@@ -987,9 +987,9 @@ type GetInstanceHealthResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetInstanceHealthResponse) MarshalJSON() ([]byte, error) {
+func (s GetInstanceHealthResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetInstanceHealthResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestOsFeature: Guest OS features for boot disk.
@@ -1012,9 +1012,9 @@ type GuestOsFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestOsFeature) MarshalJSON() ([]byte, error) {
+func (s GuestOsFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestOsFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: The definition of a notebook instance.
@@ -1207,9 +1207,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceConfig: Notebook instance configurations that can be updated.
@@ -1233,9 +1233,9 @@ type InstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
+func (s InstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceMigrationEligibility: InstanceMigrationEligibility represents the
@@ -1282,9 +1282,9 @@ type InstanceMigrationEligibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceMigrationEligibility) MarshalJSON() ([]byte, error) {
+func (s InstanceMigrationEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceMigrationEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IsInstanceUpgradeableResponse: Response for checking if a notebook instance
@@ -1318,9 +1318,9 @@ type IsInstanceUpgradeableResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IsInstanceUpgradeableResponse) MarshalJSON() ([]byte, error) {
+func (s IsInstanceUpgradeableResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IsInstanceUpgradeableResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEnvironmentsResponse: Response for listing environments.
@@ -1348,9 +1348,9 @@ type ListEnvironmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEnvironmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExecutionsResponse: Response for listing scheduled notebook executions
@@ -1380,9 +1380,9 @@ type ListExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancesResponse: Response for listing notebook instances.
@@ -1412,9 +1412,9 @@ type ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1440,9 +1440,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1468,9 +1468,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRuntimesResponse: Response for listing Managed Notebook Runtimes.
@@ -1500,9 +1500,9 @@ type ListRuntimesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRuntimesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRuntimesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRuntimesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSchedulesResponse: Response for listing scheduled notebook job.
@@ -1532,9 +1532,9 @@ type ListSchedulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSchedulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSchedulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSchedulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalDisk: A Local attached disk resource.
@@ -1605,9 +1605,9 @@ type LocalDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalDisk) MarshalJSON() ([]byte, error) {
+func (s LocalDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalDiskInitializeParams: Input only. Specifies the parameters for a new
@@ -1654,9 +1654,9 @@ type LocalDiskInitializeParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalDiskInitializeParams) MarshalJSON() ([]byte, error) {
+func (s LocalDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalDiskInitializeParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1692,9 +1692,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrateInstanceRequest: Request for migrating a User-Managed Notebook to
@@ -1724,9 +1724,9 @@ type MigrateInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrateInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s MigrateInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrateInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrateRuntimeRequest: Request for migrating a Runtime to a Workbench
@@ -1777,9 +1777,9 @@ type MigrateRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrateRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s MigrateRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrateRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1824,9 +1824,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1863,9 +1863,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1953,9 +1953,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshRuntimeTokenInternalRequest: Request for getting a new access token.
@@ -1976,9 +1976,9 @@ type RefreshRuntimeTokenInternalRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshRuntimeTokenInternalRequest) MarshalJSON() ([]byte, error) {
+func (s RefreshRuntimeTokenInternalRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshRuntimeTokenInternalRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshRuntimeTokenInternalResponse: Response with a new access token.
@@ -2003,9 +2003,9 @@ type RefreshRuntimeTokenInternalResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshRuntimeTokenInternalResponse) MarshalJSON() ([]byte, error) {
+func (s RefreshRuntimeTokenInternalResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshRuntimeTokenInternalResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterInstanceRequest: Request for registering a notebook instance.
@@ -2028,9 +2028,9 @@ type RegisterInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s RegisterInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportInstanceEventRequest: Request for reporting a Managed Notebook Event.
@@ -2053,9 +2053,9 @@ type ReportInstanceEventRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportInstanceEventRequest) MarshalJSON() ([]byte, error) {
+func (s ReportInstanceEventRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportInstanceEventRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportInstanceInfoRequest: Request for notebook instances to report
@@ -2080,9 +2080,9 @@ type ReportInstanceInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportInstanceInfoRequest) MarshalJSON() ([]byte, error) {
+func (s ReportInstanceInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportInstanceInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRuntimeEventRequest: Request for reporting a Managed Notebook Event.
@@ -2105,9 +2105,9 @@ type ReportRuntimeEventRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRuntimeEventRequest) MarshalJSON() ([]byte, error) {
+func (s ReportRuntimeEventRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRuntimeEventRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReservationAffinity: Reservation Affinity for consuming Zonal reservation.
@@ -2138,9 +2138,9 @@ type ReservationAffinity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
+func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationAffinity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetInstanceRequest: Request for resetting a notebook instance
@@ -2164,9 +2164,9 @@ type ResetRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResetRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s ResetRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackInstanceRequest: Request for rollbacking a notebook instance
@@ -2187,9 +2187,9 @@ type RollbackInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Runtime: The definition of a Runtime for a managed notebook instance.
@@ -2269,9 +2269,9 @@ type Runtime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Runtime) MarshalJSON() ([]byte, error) {
+func (s Runtime) MarshalJSON() ([]byte, error) {
 	type NoMethod Runtime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeAcceleratorConfig: Definition of the types of hardware accelerators
@@ -2315,9 +2315,9 @@ type RuntimeAcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeAcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s RuntimeAcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeAcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeAccessConfig: Specifies the login configuration for Runtime
@@ -2351,9 +2351,9 @@ type RuntimeAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeAccessConfig) MarshalJSON() ([]byte, error) {
+func (s RuntimeAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeGuestOsFeature: Optional. A list of features to enable on the guest
@@ -2382,9 +2382,9 @@ type RuntimeGuestOsFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeGuestOsFeature) MarshalJSON() ([]byte, error) {
+func (s RuntimeGuestOsFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeGuestOsFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeMetrics: Contains runtime daemon metrics, such as OS and kernels and
@@ -2405,9 +2405,9 @@ type RuntimeMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeMetrics) MarshalJSON() ([]byte, error) {
+func (s RuntimeMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeMigrationEligibility: RuntimeMigrationEligibility represents the
@@ -2455,9 +2455,9 @@ type RuntimeMigrationEligibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeMigrationEligibility) MarshalJSON() ([]byte, error) {
+func (s RuntimeMigrationEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeMigrationEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeShieldedInstanceConfig: A set of Shielded Instance options. See
@@ -2492,9 +2492,9 @@ type RuntimeShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s RuntimeShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RuntimeSoftwareConfig: Specifies the selection and configuration of software
@@ -2563,9 +2563,9 @@ type RuntimeSoftwareConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeSoftwareConfig) MarshalJSON() ([]byte, error) {
+func (s RuntimeSoftwareConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeSoftwareConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Schedule: The definition of a schedule.
@@ -2629,9 +2629,9 @@ type Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Schedule) MarshalJSON() ([]byte, error) {
+func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SchedulerAcceleratorConfig: Definition of a hardware accelerator. Note that
@@ -2668,9 +2668,9 @@ type SchedulerAcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SchedulerAcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s SchedulerAcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulerAcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2693,9 +2693,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetInstanceAcceleratorRequest: Request for setting instance accelerator.
@@ -2739,9 +2739,9 @@ type SetInstanceAcceleratorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetInstanceAcceleratorRequest) MarshalJSON() ([]byte, error) {
+func (s SetInstanceAcceleratorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetInstanceAcceleratorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetInstanceLabelsRequest: Request for setting instance labels.
@@ -2762,9 +2762,9 @@ type SetInstanceLabelsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetInstanceLabelsRequest) MarshalJSON() ([]byte, error) {
+func (s SetInstanceLabelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetInstanceLabelsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetInstanceMachineTypeRequest: Request for setting instance machine type.
@@ -2785,9 +2785,9 @@ type SetInstanceMachineTypeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetInstanceMachineTypeRequest) MarshalJSON() ([]byte, error) {
+func (s SetInstanceMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetInstanceMachineTypeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShieldedInstanceConfig: A set of Shielded Instance options. See Images using
@@ -2822,9 +2822,9 @@ type ShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartInstanceRequest: Request for starting a notebook instance
@@ -2848,9 +2848,9 @@ type StartRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s StartRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2882,9 +2882,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopInstanceRequest: Request for stopping a notebook instance
@@ -2908,9 +2908,9 @@ type StopRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StopRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s StopRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StopRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SwitchRuntimeRequest: Request for switching a Managed Notebook Runtime.
@@ -2934,9 +2934,9 @@ type SwitchRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SwitchRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s SwitchRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SwitchRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -2959,9 +2959,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2986,9 +2986,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TriggerScheduleRequest: Request for created scheduled notebooks
@@ -3012,9 +3012,9 @@ type UpdateInstanceConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceMetadataItemsRequest: Request for adding/changing metadata
@@ -3035,9 +3035,9 @@ type UpdateInstanceMetadataItemsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceMetadataItemsRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceMetadataItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceMetadataItemsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceMetadataItemsResponse: Response for adding/changing metadata
@@ -3061,9 +3061,9 @@ type UpdateInstanceMetadataItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceMetadataItemsResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceMetadataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceMetadataItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateShieldedInstanceConfigRequest: Request for updating the Shielded
@@ -3085,9 +3085,9 @@ type UpdateShieldedInstanceConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateShieldedInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateShieldedInstanceConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateShieldedInstanceConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeHistoryEntry: The entry of VM image upgrade history.
@@ -3138,9 +3138,9 @@ type UpgradeHistoryEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
+func (s UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeHistoryEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeInstanceInternalRequest: Request for upgrading a notebook instance
@@ -3172,9 +3172,9 @@ type UpgradeInstanceInternalRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeInstanceInternalRequest) MarshalJSON() ([]byte, error) {
+func (s UpgradeInstanceInternalRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeInstanceInternalRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeInstanceRequest: Request for upgrading a notebook instance
@@ -3202,9 +3202,9 @@ type UpgradeInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeRuntimeRequest: Request for upgrading a Managed Notebook Runtime to
@@ -3226,9 +3226,9 @@ type UpgradeRuntimeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeRuntimeRequest) MarshalJSON() ([]byte, error) {
+func (s UpgradeRuntimeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeRuntimeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VertexAIParameters: Parameters used in Vertex AI JobType executions.
@@ -3259,9 +3259,9 @@ type VertexAIParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VertexAIParameters) MarshalJSON() ([]byte, error) {
+func (s VertexAIParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod VertexAIParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualMachine: Runtime using Virtual Machine for computing.
@@ -3287,9 +3287,9 @@ type VirtualMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
+func (s VirtualMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualMachineConfig: The config settings for virtual machine.
@@ -3393,9 +3393,9 @@ type VirtualMachineConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualMachineConfig) MarshalJSON() ([]byte, error) {
+func (s VirtualMachineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachineConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmImage: Definition of a custom Compute Engine virtual machine image for
@@ -3423,9 +3423,9 @@ type VmImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VmImage) MarshalJSON() ([]byte, error) {
+func (s VmImage) MarshalJSON() ([]byte, error) {
 	type NoMethod VmImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

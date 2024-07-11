@@ -937,9 +937,9 @@ type Access struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Access) MarshalJSON() ([]byte, error) {
+func (s Access) MarshalJSON() ([]byte, error) {
 	type NoMethod Access
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessReview: Conveys information about a Kubernetes access review (such as
@@ -977,9 +977,9 @@ type AccessReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessReview) MarshalJSON() ([]byte, error) {
+func (s AccessReview) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveProtection: Information about Google Cloud Armor Adaptive Protection
@@ -1005,9 +1005,9 @@ type AdaptiveProtection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveProtection) MarshalJSON() ([]byte, error) {
+func (s AdaptiveProtection) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveProtection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AdaptiveProtection) UnmarshalJSON(data []byte) error {
@@ -1046,9 +1046,9 @@ type Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Application) MarshalJSON() ([]byte, error) {
+func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Asset: Security Command Center representation of a Google Cloud resource.
@@ -1103,9 +1103,9 @@ type Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Asset) MarshalJSON() ([]byte, error) {
+func (s Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssetDiscoveryConfig: The configuration used for Asset Discovery runs.
@@ -1138,9 +1138,9 @@ type AssetDiscoveryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
+func (s AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetDiscoveryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attack: Information about DDoS attack volume and classification.
@@ -1165,9 +1165,9 @@ type Attack struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attack) MarshalJSON() ([]byte, error) {
+func (s Attack) MarshalJSON() ([]byte, error) {
 	type NoMethod Attack
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttackExposure: An attack exposure contains the results of an attack path
@@ -1175,7 +1175,7 @@ func (s *Attack) MarshalJSON() ([]byte, error) {
 type AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -1214,9 +1214,9 @@ type AttackExposure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttackExposure) MarshalJSON() ([]byte, error) {
+func (s AttackExposure) MarshalJSON() ([]byte, error) {
 	type NoMethod AttackExposure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AttackExposure) UnmarshalJSON(data []byte) error {
@@ -1255,9 +1255,9 @@ type AttackPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttackPath) MarshalJSON() ([]byte, error) {
+func (s AttackPath) MarshalJSON() ([]byte, error) {
 	type NoMethod AttackPath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttackPathEdge: Represents a connection between a source node and a
@@ -1280,9 +1280,9 @@ type AttackPathEdge struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttackPathEdge) MarshalJSON() ([]byte, error) {
+func (s AttackPathEdge) MarshalJSON() ([]byte, error) {
 	type NoMethod AttackPathEdge
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttackPathNode: Represents one point that an attacker passes through in this
@@ -1298,10 +1298,10 @@ type AttackPathNode struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Resource: The name of the resource at this point in the attack path. The
 	// format of the name follows the Cloud Asset Inventory resource name format
-	// ("https://cloud.google.com/asset-inventory/docs/resource-name-format")
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	Resource string `json:"resource,omitempty"`
 	// ResourceType: The supported resource type
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types")
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 	ResourceType string `json:"resourceType,omitempty"`
 	// Uuid: Unique id of the attack path node.
 	Uuid string `json:"uuid,omitempty"`
@@ -1318,9 +1318,9 @@ type AttackPathNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttackPathNode) MarshalJSON() ([]byte, error) {
+func (s AttackPathNode) MarshalJSON() ([]byte, error) {
 	type NoMethod AttackPathNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttackStepNode: Detailed steps the attack can take between path nodes.
@@ -1355,9 +1355,9 @@ type AttackStepNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttackStepNode) MarshalJSON() ([]byte, error) {
+func (s AttackStepNode) MarshalJSON() ([]byte, error) {
 	type NoMethod AttackStepNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -1396,9 +1396,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -1431,9 +1431,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsAccount: An AWS account that is a member of an organization.
@@ -1455,9 +1455,9 @@ type AwsAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsAccount) MarshalJSON() ([]byte, error) {
+func (s AwsAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsMetadata: AWS metadata associated with the resource, only applicable if
@@ -1484,9 +1484,9 @@ type AwsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsMetadata) MarshalJSON() ([]byte, error) {
+func (s AwsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsOrganization: An organization is a collection of accounts that are
@@ -1511,9 +1511,9 @@ type AwsOrganization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsOrganization) MarshalJSON() ([]byte, error) {
+func (s AwsOrganization) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsOrganization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AwsOrganizationalUnit: An Organizational Unit (OU) is a container of AWS
@@ -1541,9 +1541,110 @@ type AwsOrganizationalUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
+func (s AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsOrganizationalUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureManagementGroup: Represents an Azure management group.
+type AzureManagementGroup struct {
+	// DisplayName: The display name of the Azure management group.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure management group, for example,
+	// `20000000-0001-0000-0000-000000000000`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureManagementGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureManagementGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureMetadata: Azure metadata associated with the resource, only applicable
+// if the finding's cloud provider is Microsoft Azure.
+type AzureMetadata struct {
+	// ManagementGroups: A list of Azure management groups associated with the
+	// resource, ordered from lowest level (closest to the subscription) to highest
+	// level.
+	ManagementGroups []*AzureManagementGroup `json:"managementGroups,omitempty"`
+	// ResourceGroup: The Azure resource group associated with the resource.
+	ResourceGroup *AzureResourceGroup `json:"resourceGroup,omitempty"`
+	// Subscription: The Azure subscription associated with the resource.
+	Subscription *AzureSubscription `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagementGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureResourceGroup: Represents an Azure resource group.
+type AzureResourceGroup struct {
+	// Name: The name of the Azure resource group. This is not a UUID.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureResourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureResourceGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureSubscription: Represents an Azure subscription.
+type AzureSubscription struct {
+	// DisplayName: The display name of the Azure subscription.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure subscription, for example,
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupDisasterRecovery: Information related to Google Cloud Backup and DR
@@ -1612,9 +1713,9 @@ type BackupDisasterRecovery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
+func (s BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupDisasterRecovery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateResourceValueConfigsRequest: Request message to create multiple
@@ -1635,9 +1736,9 @@ type BatchCreateResourceValueConfigsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateResourceValueConfigsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreateResourceValueConfigsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateResourceValueConfigsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateResourceValueConfigsResponse: Response message for
@@ -1661,9 +1762,9 @@ type BatchCreateResourceValueConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateResourceValueConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -1760,9 +1861,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkMuteFindingsRequest: Request message for bulk findings update. Note: 1.
@@ -1797,9 +1898,9 @@ type BulkMuteFindingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkMuteFindingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudArmor: Fields related to Google Cloud Armor findings.
@@ -1838,9 +1939,9 @@ type CloudArmor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudArmor) MarshalJSON() ([]byte, error) {
+func (s CloudArmor) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudArmor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudDlpDataProfile: The data profile
@@ -1871,9 +1972,9 @@ type CloudDlpDataProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
+func (s CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudDlpDataProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudDlpInspection: Details about the Cloud Data Loss Prevention (Cloud DLP)
@@ -1906,9 +2007,9 @@ type CloudDlpInspection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudDlpInspection) MarshalJSON() ([]byte, error) {
+func (s CloudDlpInspection) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudDlpInspection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudLoggingEntry: Metadata taken from a Cloud Logging LogEntry
@@ -1939,9 +2040,9 @@ type CloudLoggingEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudLoggingEntry) MarshalJSON() ([]byte, error) {
+func (s CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudLoggingEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Compliance: Contains compliance information about a security standard
@@ -1967,9 +2068,9 @@ type Compliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Compliance) MarshalJSON() ([]byte, error) {
+func (s Compliance) MarshalJSON() ([]byte, error) {
 	type NoMethod Compliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplianceSnapshot: Result containing the properties and count of a
@@ -2011,9 +2112,9 @@ type ComplianceSnapshot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceSnapshot) MarshalJSON() ([]byte, error) {
+func (s ComplianceSnapshot) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceSnapshot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Connection: Contains information about the IP connection associated with the
@@ -2052,9 +2153,9 @@ type Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Connection) MarshalJSON() ([]byte, error) {
+func (s Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Contact: The email address of a contact.
@@ -2074,9 +2175,9 @@ type Contact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Contact) MarshalJSON() ([]byte, error) {
+func (s Contact) MarshalJSON() ([]byte, error) {
 	type NoMethod Contact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactDetails: Details about specific contacts
@@ -2096,9 +2197,9 @@ type ContactDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactDetails) MarshalJSON() ([]byte, error) {
+func (s ContactDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Container: Container associated with the finding.
@@ -2129,9 +2230,9 @@ type Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Container) MarshalJSON() ([]byte, error) {
+func (s Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateResourceValueConfigRequest: Request message to create single resource
@@ -2154,9 +2255,9 @@ type CreateResourceValueConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateResourceValueConfigRequest) MarshalJSON() ([]byte, error) {
+func (s CreateResourceValueConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateResourceValueConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomModuleValidationError: An error encountered while validating the
@@ -2189,9 +2290,9 @@ type CustomModuleValidationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomModuleValidationError) MarshalJSON() ([]byte, error) {
+func (s CustomModuleValidationError) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomModuleValidationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomModuleValidationErrors: A list of zero or more errors encountered
@@ -2212,9 +2313,9 @@ type CustomModuleValidationErrors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomModuleValidationErrors) MarshalJSON() ([]byte, error) {
+func (s CustomModuleValidationErrors) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomModuleValidationErrors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cve: CVE stands for Common Vulnerabilities and Exposures. Information from
@@ -2276,9 +2377,9 @@ type Cve struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cve) MarshalJSON() ([]byte, error) {
+func (s Cve) MarshalJSON() ([]byte, error) {
 	type NoMethod Cve
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cvssv3: Common Vulnerability Scoring System version 3.
@@ -2398,9 +2499,9 @@ type Cvssv3 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cvssv3) MarshalJSON() ([]byte, error) {
+func (s Cvssv3) MarshalJSON() ([]byte, error) {
 	type NoMethod Cvssv3
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Cvssv3) UnmarshalJSON(data []byte) error {
@@ -2461,9 +2562,9 @@ type Database struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Database) MarshalJSON() ([]byte, error) {
+func (s Database) MarshalJSON() ([]byte, error) {
 	type NoMethod Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Detection: Memory hash detection contributing to the binary family match.
@@ -2487,9 +2588,9 @@ type Detection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Detection) MarshalJSON() ([]byte, error) {
+func (s Detection) MarshalJSON() ([]byte, error) {
 	type NoMethod Detection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Detection) UnmarshalJSON(data []byte) error {
@@ -2528,9 +2629,9 @@ type DiskPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiskPath) MarshalJSON() ([]byte, error) {
+func (s DiskPath) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskPath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EffectiveEventThreatDetectionCustomModule: An
@@ -2561,12 +2662,12 @@ type EffectiveEventThreatDetectionCustomModule struct {
 	EnablementState string `json:"enablementState,omitempty"`
 	// Name: Output only. The resource name of the effective ETD custom module. Its
 	// format is: *
-	// "organizations/{organization}/eventThreatDetectionSettings/effectiveCustomMod
-	// ules/{module}". *
-	// "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module
-	// }". *
-	// "projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{modu
-	// le}".
+	// `organizations/{organization}/eventThreatDetectionSettings/effectiveCustomMod
+	// ules/{module}`. *
+	// `folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module
+	// }`. *
+	// `projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{modu
+	// le}`.
 	Name string `json:"name,omitempty"`
 	// Type: Output only. Type for the module. e.g. CONFIGURABLE_BAD_IP.
 	Type string `json:"type,omitempty"`
@@ -2586,9 +2687,9 @@ type EffectiveEventThreatDetectionCustomModule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EffectiveEventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
+func (s EffectiveEventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveEventThreatDetectionCustomModule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2620,9 +2721,9 @@ type EnvironmentVariable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
+func (s EnvironmentVariable) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentVariable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventThreatDetectionCustomModule: Represents an instance of an Event Threat
@@ -2657,10 +2758,10 @@ type EventThreatDetectionCustomModule struct {
 	LastEditor string `json:"lastEditor,omitempty"`
 	// Name: Immutable. The resource name of the Event Threat Detection custom
 	// module. Its format is: *
-	// "organizations/{organization}/eventThreatDetectionSettings/customModules/{mod
-	// ule}". *
-	// "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-	// "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+	// `organizations/{organization}/eventThreatDetectionSettings/customModules/{mod
+	// ule}`. *
+	// `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+	// `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 	Name string `json:"name,omitempty"`
 	// Type: Type for the module. e.g. CONFIGURABLE_BAD_IP.
 	Type string `json:"type,omitempty"`
@@ -2682,9 +2783,9 @@ type EventThreatDetectionCustomModule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
+func (s EventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
 	type NoMethod EventThreatDetectionCustomModule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExfilResource: Resource where data was exfiltrated from or exfiltrated to.
@@ -2711,9 +2812,9 @@ type ExfilResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExfilResource) MarshalJSON() ([]byte, error) {
+func (s ExfilResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ExfilResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Exfiltration: Exfiltration represents a data exfiltration attempt from one
@@ -2743,9 +2844,9 @@ type Exfiltration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Exfiltration) MarshalJSON() ([]byte, error) {
+func (s Exfiltration) MarshalJSON() ([]byte, error) {
 	type NoMethod Exfiltration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -2791,9 +2892,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: File information about the related binary/library used by an
@@ -2830,9 +2931,9 @@ type File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *File) MarshalJSON() ([]byte, error) {
+func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Finding: Security Command Center finding. A finding is a record of
@@ -2925,7 +3026,14 @@ type Finding struct {
 	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
 	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
 	// in the security posture.
+	//   "TOXIC_COMBINATION" - Describes a group of security issues that, when the
+	// issues occur together, represent a greater risk than when the issues occur
+	// independently. A group of such issues is referred to as a toxic combination.
 	FindingClass string `json:"findingClass,omitempty"`
+	// GroupMemberships: Contains details about groups of which this finding is a
+	// member. A group is a collection of findings that are related in some way.
+	// This field cannot be updated. Its value is ignored in all update requests.
+	GroupMemberships []*GroupMembership `json:"groupMemberships,omitempty"`
 	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
 	// Indicator: Represents what's commonly known as an *indicator of compromise*
@@ -3061,6 +3169,12 @@ type Finding struct {
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
+	// ToxicCombination: Contains details about a group of security issues that,
+	// when the issues occur together, represent a greater risk than when the
+	// issues occur independently. A group of such issues is referred to as a toxic
+	// combination. This field cannot be updated. Its value is ignored in all
+	// update requests.
+	ToxicCombination *ToxicCombination `json:"toxicCombination,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -3081,9 +3195,9 @@ type Finding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Finding) MarshalJSON() ([]byte, error) {
+func (s Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod Finding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Folder: Message that contains the resource name and display name of a folder
@@ -3107,9 +3221,9 @@ type Folder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Folder) MarshalJSON() ([]byte, error) {
+func (s Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcpMetadata: GCP metadata associated with the resource, only applicable if
@@ -3142,9 +3256,9 @@ type GcpMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcpMetadata) MarshalJSON() ([]byte, error) {
+func (s GcpMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Geolocation: Represents a geographical location for a given access.
@@ -3164,9 +3278,9 @@ type Geolocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Geolocation) MarshalJSON() ([]byte, error) {
+func (s Geolocation) MarshalJSON() ([]byte, error) {
 	type NoMethod Geolocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -3187,9 +3301,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -3219,9 +3333,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1BigQueryExport: Configures how to deliver
@@ -3284,9 +3398,9 @@ type GoogleCloudSecuritycenterV1BigQueryExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1BigQueryExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1Binding: Represents a Kubernetes RoleBinding or
@@ -3314,9 +3428,9 @@ type GoogleCloudSecuritycenterV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to a
@@ -3369,9 +3483,9 @@ type GoogleCloudSecuritycenterV1CustomConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1CustomConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1CustomConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1CustomConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1CustomOutputSpec: A set of optional name-value
@@ -3394,9 +3508,9 @@ type GoogleCloudSecuritycenterV1CustomOutputSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1CustomOutputSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule: An
@@ -3448,9 +3562,9 @@ type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third party
@@ -3506,9 +3620,9 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1ExternalSystem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1MuteConfig: A mute config is a Cloud SCC resource
@@ -3539,12 +3653,12 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	// on config creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
 	// Name: This field will be ignored if provided on config creation. Format
-	// "organizations/{organization}/muteConfigs/{mute_config}"
-	// "folders/{folder}/muteConfigs/{mute_config}"
-	// "projects/{project}/muteConfigs/{mute_config}"
-	// "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-	// "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-	// "projects/{project}/locations/global/muteConfigs/{mute_config}"
+	// `organizations/{organization}/muteConfigs/{mute_config}`
+	// `folders/{folder}/muteConfigs/{mute_config}`
+	// `projects/{project}/muteConfigs/{mute_config}`
+	// `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+	// `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+	// `projects/{project}/locations/global/muteConfigs/{mute_config}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the mute config was
 	// updated. This field is set by the server and will be ignored if provided on
@@ -3566,9 +3680,9 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1MuteConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1NotificationMessage: Cloud SCC's Notification
@@ -3594,9 +3708,9 @@ type GoogleCloudSecuritycenterV1NotificationMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1NotificationMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1Property: An individual name-value pair that
@@ -3621,9 +3735,9 @@ type GoogleCloudSecuritycenterV1Property struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1Property
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1Resource: Information related to the Google Cloud
@@ -3631,6 +3745,8 @@ func (s *GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV1Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the resource resides in.
 	//
 	// Possible values:
@@ -3666,14 +3782,14 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	ResourcePath *ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The parent service or product from which the resource is provided,
@@ -3694,9 +3810,9 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1Resource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ResourceSelector: Resource for selecting resource
@@ -3717,9 +3833,9 @@ type GoogleCloudSecuritycenterV1ResourceSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1ResourceSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
@@ -3742,12 +3858,13 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value",
+	// "env": "prod"}` will match resources with labels "key": "value" `AND` "env":
+	// "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -3762,16 +3879,16 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -3793,9 +3910,9 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1ResourceValueConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1ResourceValueConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1ResourceValueConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse: Response of asset
@@ -3825,9 +3942,9 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule: Represents
@@ -3890,9 +4007,9 @@ type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping: Resource value
@@ -3933,9 +4050,9 @@ type GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse: Response of asset
@@ -3965,9 +4082,9 @@ type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Finding: Security Command Center finding.
@@ -4058,9 +4175,9 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1Finding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Folder: Message that contains the resource
@@ -4084,9 +4201,9 @@ type GoogleCloudSecuritycenterV1p1beta1Folder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1Folder) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1Folder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1NotificationMessage: Security Command
@@ -4113,9 +4230,9 @@ type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1NotificationMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Resource: Information related to the
@@ -4149,9 +4266,9 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1Resource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse: Response of
@@ -4181,9 +4298,9 @@ type GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1p1beta1SecurityMarks: User specified security
@@ -4229,9 +4346,9 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1SecurityMarks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Access: Represents an access event.
@@ -4300,9 +4417,9 @@ type GoogleCloudSecuritycenterV2Access struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Access) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Access) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Access
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AccessReview: Conveys information about a
@@ -4340,9 +4457,9 @@ type GoogleCloudSecuritycenterV2AccessReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AccessReview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AccessReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AccessReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AdaptiveProtection: Information about Google
@@ -4369,9 +4486,9 @@ type GoogleCloudSecuritycenterV2AdaptiveProtection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AdaptiveProtection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AdaptiveProtection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) UnmarshalJSON(data []byte) error {
@@ -4411,9 +4528,9 @@ type GoogleCloudSecuritycenterV2Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Application) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Application) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Attack: Information about DDoS attack volume and
@@ -4439,9 +4556,9 @@ type GoogleCloudSecuritycenterV2Attack struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Attack
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AttackExposure: An attack exposure contains the
@@ -4449,7 +4566,7 @@ func (s *GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV2AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -4488,9 +4605,9 @@ type GoogleCloudSecuritycenterV2AttackExposure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AttackExposure) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AttackExposure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AttackExposure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudSecuritycenterV2AttackExposure) UnmarshalJSON(data []byte) error {
@@ -4527,9 +4644,9 @@ type GoogleCloudSecuritycenterV2AwsAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AwsAccount) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AwsAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AwsAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AwsMetadata: AWS metadata associated with the
@@ -4557,9 +4674,9 @@ type GoogleCloudSecuritycenterV2AwsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AwsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AwsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AwsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AwsOrganization: An organization is a collection
@@ -4584,9 +4701,9 @@ type GoogleCloudSecuritycenterV2AwsOrganization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AwsOrganization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AwsOrganization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AwsOrganization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AwsOrganizationalUnit: An Organizational Unit
@@ -4615,9 +4732,114 @@ type GoogleCloudSecuritycenterV2AwsOrganizationalUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AwsOrganizationalUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureManagementGroup: Represents an Azure
+// management group.
+type GoogleCloudSecuritycenterV2AzureManagementGroup struct {
+	// DisplayName: The display name of the Azure management group.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure management group, for example,
+	// `20000000-0001-0000-0000-000000000000`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AzureManagementGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureManagementGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureMetadata: Azure metadata associated with the
+// resource, only applicable if the finding's cloud provider is Microsoft
+// Azure.
+type GoogleCloudSecuritycenterV2AzureMetadata struct {
+	// ManagementGroups: A list of Azure management groups associated with the
+	// resource, ordered from lowest level (closest to the subscription) to highest
+	// level.
+	ManagementGroups []*GoogleCloudSecuritycenterV2AzureManagementGroup `json:"managementGroups,omitempty"`
+	// ResourceGroup: The Azure resource group associated with the resource.
+	ResourceGroup *GoogleCloudSecuritycenterV2AzureResourceGroup `json:"resourceGroup,omitempty"`
+	// Subscription: The Azure subscription associated with the resource.
+	Subscription *GoogleCloudSecuritycenterV2AzureSubscription `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagementGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
+// group.
+type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
+	// Name: The name of the Azure resource group. This is not a UUID.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AzureResourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureResourceGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureSubscription: Represents an Azure
+// subscription.
+type GoogleCloudSecuritycenterV2AzureSubscription struct {
+	// DisplayName: The display name of the Azure subscription.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure subscription, for example,
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AzureSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2BackupDisasterRecovery: Information related to
@@ -4686,9 +4908,9 @@ type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2BackupDisasterRecovery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2BigQueryExport: Configures how to deliver
@@ -4750,9 +4972,9 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2BigQueryExport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2BigQueryExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2BigQueryExport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Binding: Represents a Kubernetes RoleBinding or
@@ -4780,9 +5002,9 @@ type GoogleCloudSecuritycenterV2Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2BulkMuteFindingsResponse: The response to a
@@ -4827,9 +5049,9 @@ type GoogleCloudSecuritycenterV2CloudArmor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2CloudArmor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2CloudArmor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2CloudArmor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2CloudDlpDataProfile: The data profile
@@ -4860,9 +5082,9 @@ type GoogleCloudSecuritycenterV2CloudDlpDataProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2CloudDlpDataProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2CloudDlpInspection: Details about the Cloud Data
@@ -4896,9 +5118,9 @@ type GoogleCloudSecuritycenterV2CloudDlpInspection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2CloudDlpInspection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2CloudDlpInspection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2CloudDlpInspection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2CloudLoggingEntry: Metadata taken from a Cloud
@@ -4930,9 +5152,9 @@ type GoogleCloudSecuritycenterV2CloudLoggingEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2CloudLoggingEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2CloudLoggingEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Compliance: Contains compliance information about
@@ -4958,9 +5180,9 @@ type GoogleCloudSecuritycenterV2Compliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Compliance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Compliance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Compliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Connection: Contains information about the IP
@@ -4999,9 +5221,9 @@ type GoogleCloudSecuritycenterV2Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Connection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Contact: The email address of a contact.
@@ -5021,9 +5243,9 @@ type GoogleCloudSecuritycenterV2Contact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Contact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Contact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Contact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ContactDetails: Details about specific contacts
@@ -5043,9 +5265,9 @@ type GoogleCloudSecuritycenterV2ContactDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ContactDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ContactDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ContactDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Container: Container associated with the finding.
@@ -5076,9 +5298,9 @@ type GoogleCloudSecuritycenterV2Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Container) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Container) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Cve: CVE stands for Common Vulnerabilities and
@@ -5141,9 +5363,9 @@ type GoogleCloudSecuritycenterV2Cve struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Cve) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Cve) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Cve
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Cvssv3: Common Vulnerability Scoring System
@@ -5264,9 +5486,9 @@ type GoogleCloudSecuritycenterV2Cvssv3 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Cvssv3) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Cvssv3) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Cvssv3
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudSecuritycenterV2Cvssv3) UnmarshalJSON(data []byte) error {
@@ -5327,9 +5549,9 @@ type GoogleCloudSecuritycenterV2Database struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Detection: Memory hash detection contributing to
@@ -5354,9 +5576,9 @@ type GoogleCloudSecuritycenterV2Detection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Detection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Detection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Detection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error {
@@ -5395,9 +5617,9 @@ type GoogleCloudSecuritycenterV2DiskPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2DiskPath) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2DiskPath) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2DiskPath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2EnvironmentVariable: A name-value pair
@@ -5420,9 +5642,9 @@ type GoogleCloudSecuritycenterV2EnvironmentVariable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2EnvironmentVariable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2EnvironmentVariable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2EnvironmentVariable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ExfilResource: Resource where data was
@@ -5450,9 +5672,9 @@ type GoogleCloudSecuritycenterV2ExfilResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ExfilResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ExfilResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ExfilResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Exfiltration: Exfiltration represents a data
@@ -5482,9 +5704,9 @@ type GoogleCloudSecuritycenterV2Exfiltration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Exfiltration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ExternalSystem: Representation of third party
@@ -5542,9 +5764,9 @@ type GoogleCloudSecuritycenterV2ExternalSystem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ExternalSystem) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ExternalSystem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ExternalSystem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2File: File information about the related
@@ -5582,9 +5804,9 @@ type GoogleCloudSecuritycenterV2File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2File) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2File) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Finding: Security Command Center finding. A
@@ -5685,7 +5907,13 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
 	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
 	// in the security posture.
+	//   "TOXIC_COMBINATION" - Describes a combination of security issues that
+	// represent a more severe security problem when taken together.
 	FindingClass string `json:"findingClass,omitempty"`
+	// GroupMemberships: Contains details about groups of which this finding is a
+	// member. A group is a collection of findings that are related in some way.
+	// This field cannot be updated. Its value is ignored in all update requests.
+	GroupMemberships []*GoogleCloudSecuritycenterV2GroupMembership `json:"groupMemberships,omitempty"`
 	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*GoogleCloudSecuritycenterV2IamBinding `json:"iamBindings,omitempty"`
 	// Indicator: Represents what's commonly known as an *indicator of compromise*
@@ -5832,6 +6060,12 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
+	// ToxicCombination: Contains details about a group of security issues that,
+	// when the issues occur together, represent a greater risk than when the
+	// issues occur independently. A group of such issues is referred to as a toxic
+	// combination. This field cannot be updated. Its value is ignored in all
+	// update requests.
+	ToxicCombination *GoogleCloudSecuritycenterV2ToxicCombination `json:"toxicCombination,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -5849,9 +6083,9 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Finding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Finding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Folder: Message that contains the resource name
@@ -5875,9 +6109,9 @@ type GoogleCloudSecuritycenterV2Folder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Folder) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Folder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Geolocation: Represents a geographical location
@@ -5898,9 +6132,39 @@ type GoogleCloudSecuritycenterV2Geolocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Geolocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Geolocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Geolocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2GroupMembership: Contains details about groups of
+// which this finding is a member. A group is a collection of findings that are
+// related in some way.
+type GoogleCloudSecuritycenterV2GroupMembership struct {
+	// GroupId: ID of the group.
+	GroupId string `json:"groupId,omitempty"`
+	// GroupType: Type of group.
+	//
+	// Possible values:
+	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
+	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	GroupType string `json:"groupType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2GroupMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2GroupMembership
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2IamBinding: Represents a particular IAM binding,
@@ -5932,9 +6196,9 @@ type GoogleCloudSecuritycenterV2IamBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2IamBinding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2IamBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IamBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Indicator: Represents what's commonly known as an
@@ -5965,9 +6229,9 @@ type GoogleCloudSecuritycenterV2Indicator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Indicator) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Indicator) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Indicator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2KernelRootkit: Kernel mode rootkit signatures.
@@ -6014,9 +6278,9 @@ type GoogleCloudSecuritycenterV2KernelRootkit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2KernelRootkit) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2KernelRootkit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2KernelRootkit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Kubernetes: Kubernetes-related attributes.
@@ -6061,9 +6325,9 @@ type GoogleCloudSecuritycenterV2Kubernetes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Kubernetes) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Kubernetes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Kubernetes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Label: Represents a generic name-value label. A
@@ -6089,9 +6353,9 @@ type GoogleCloudSecuritycenterV2Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Label) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Label) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2LoadBalancer: Contains information related to the
@@ -6112,9 +6376,9 @@ type GoogleCloudSecuritycenterV2LoadBalancer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2LoadBalancer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2LoadBalancer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2LoadBalancer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2LogEntry: An individual entry in a log.
@@ -6134,9 +6398,9 @@ type GoogleCloudSecuritycenterV2LogEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2LogEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2LogEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2LogEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2MemoryHashSignature: A signature corresponding to
@@ -6160,9 +6424,9 @@ type GoogleCloudSecuritycenterV2MemoryHashSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2MemoryHashSignature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2MemoryHashSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2MemoryHashSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2MitreAttack: MITRE ATT&CK tactics and techniques
@@ -6202,8 +6466,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
 	//   "PYTHON" - T1059.006
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -6251,7 +6517,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -6291,8 +6560,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
 	//   "PYTHON" - T1059.006
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -6340,7 +6611,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -6357,9 +6631,9 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2MitreAttack) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2MitreAttack) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2MitreAttack
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2MuteConfig: A mute config is a Cloud SCC resource
@@ -6422,9 +6696,9 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2MuteConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2MuteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2MuteConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Node: Kubernetes nodes associated with the
@@ -6446,9 +6720,9 @@ type GoogleCloudSecuritycenterV2Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Node) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Node) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2NodePool: Provides GKE node pool information.
@@ -6470,9 +6744,9 @@ type GoogleCloudSecuritycenterV2NodePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2NodePool) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2NodePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Notebook: Represents a Jupyter notebook IPYNB
@@ -6501,9 +6775,9 @@ type GoogleCloudSecuritycenterV2Notebook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Notebook) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Notebook) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Notebook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2NotificationMessage: Cloud SCC's Notification
@@ -6529,9 +6803,9 @@ type GoogleCloudSecuritycenterV2NotificationMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2NotificationMessage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2NotificationMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2NotificationMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Object: Kubernetes object related to the finding,
@@ -6564,9 +6838,9 @@ type GoogleCloudSecuritycenterV2Object struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Object) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Object) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Object
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2OrgPolicy: Contains information about the org
@@ -6588,9 +6862,9 @@ type GoogleCloudSecuritycenterV2OrgPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2OrgPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2OrgPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2OrgPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Package: Package is a generic definition of a
@@ -6617,9 +6891,9 @@ type GoogleCloudSecuritycenterV2Package struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Package
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Pod: A Kubernetes Pod.
@@ -6646,9 +6920,9 @@ type GoogleCloudSecuritycenterV2Pod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Pod) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Pod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Pod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2PolicyDriftDetails: The policy field that
@@ -6676,9 +6950,9 @@ type GoogleCloudSecuritycenterV2PolicyDriftDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2PolicyDriftDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2PolicyDriftDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Process: Represents an operating system process.
@@ -6720,9 +6994,9 @@ type GoogleCloudSecuritycenterV2Process struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Process) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Process) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Process
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ProcessSignature: Indicates what signature
@@ -6752,9 +7026,9 @@ type GoogleCloudSecuritycenterV2ProcessSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ProcessSignature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ProcessSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ProcessSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Reference: Additional Links
@@ -6777,9 +7051,9 @@ type GoogleCloudSecuritycenterV2Reference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Reference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Reference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Reference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Requests: Information about the requests relevant
@@ -6809,9 +7083,9 @@ type GoogleCloudSecuritycenterV2Requests struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Requests) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Requests) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Requests
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudSecuritycenterV2Requests) UnmarshalJSON(data []byte) error {
@@ -6833,6 +7107,8 @@ func (s *GoogleCloudSecuritycenterV2Requests) UnmarshalJSON(data []byte) error {
 type GoogleCloudSecuritycenterV2Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *GoogleCloudSecuritycenterV2AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *GoogleCloudSecuritycenterV2AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the finding is from.
 	//
 	// Possible values:
@@ -6855,14 +7131,14 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	ResourcePath *GoogleCloudSecuritycenterV2ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The service or resource provider associated with the resource.
@@ -6882,9 +7158,9 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Resource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ResourcePath: Represents the path of resources
@@ -6906,9 +7182,9 @@ type GoogleCloudSecuritycenterV2ResourcePath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ResourcePath) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ResourcePath) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ResourcePath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ResourcePathNode: A node within the resource
@@ -6946,9 +7222,9 @@ type GoogleCloudSecuritycenterV2ResourcePathNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ResourcePathNode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ResourcePathNode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ResourcePathNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ResourceValueConfig: A resource value
@@ -6971,12 +7247,12 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
+	// "prod"} will match resources with labels "key": "value" `AND` "env": "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -6992,16 +7268,16 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -7020,9 +7296,9 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ResourceValueConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ResourceValueConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ResourceValueConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Role: Kubernetes Role or ClusterRole.
@@ -7051,9 +7327,9 @@ type GoogleCloudSecuritycenterV2Role struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Role) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Role) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Role
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2SecurityBulletin: SecurityBulletin are
@@ -7080,9 +7356,9 @@ type GoogleCloudSecuritycenterV2SecurityBulletin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2SecurityBulletin) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2SecurityBulletin) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2SecurityBulletin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2SecurityMarks: User specified security marks that
@@ -7138,9 +7414,9 @@ type GoogleCloudSecuritycenterV2SecurityMarks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2SecurityMarks) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2SecurityMarks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2SecurityPolicy: Information about the Google
@@ -7170,9 +7446,9 @@ type GoogleCloudSecuritycenterV2SecurityPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2SecurityPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2SecurityPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2SecurityPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2SecurityPosture: Represents a posture that is
@@ -7213,9 +7489,9 @@ type GoogleCloudSecuritycenterV2SecurityPosture struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2SecurityPosture) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2SecurityPosture) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2SecurityPosture
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping: Resource value
@@ -7256,9 +7532,9 @@ type GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo: Identity delegation
@@ -7288,9 +7564,9 @@ type GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Subject: Represents a Kubernetes subject.
@@ -7321,9 +7597,9 @@ type GoogleCloudSecuritycenterV2Subject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Subject) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Subject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2TicketInfo: Information about the ticket, if any,
@@ -7356,9 +7632,55 @@ type GoogleCloudSecuritycenterV2TicketInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2TicketInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2TicketInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2TicketInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2ToxicCombination: Contains details about a group
+// of security issues that, when the issues occur together, represent a greater
+// risk than when the issues occur independently. A group of such issues is
+// referred to as a toxic combination.
+type GoogleCloudSecuritycenterV2ToxicCombination struct {
+	// AttackExposureScore: The Attack exposure score
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
+	// of this toxic combination. The score is a measure of how much this toxic
+	// combination exposes one or more high-value resources to potential attack.
+	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
+	// RelatedFindings: List of resource names of findings associated with this
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttackExposureScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2ToxicCombination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ToxicCombination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudSecuritycenterV2ToxicCombination) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudSecuritycenterV2ToxicCombination
+	var s1 struct {
+		AttackExposureScore gensupport.JSONFloat64 `json:"attackExposureScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AttackExposureScore = float64(s1.AttackExposureScore)
+	return nil
 }
 
 // GoogleCloudSecuritycenterV2Vulnerability: Refers to common vulnerability
@@ -7386,9 +7708,9 @@ type GoogleCloudSecuritycenterV2Vulnerability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2Vulnerability) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2Vulnerability) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Vulnerability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2YaraRuleSignature: A signature corresponding to a
@@ -7409,9 +7731,9 @@ type GoogleCloudSecuritycenterV2YaraRuleSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSecuritycenterV2YaraRuleSignature) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSecuritycenterV2YaraRuleSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2YaraRuleSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupAssetsRequest: Request message for grouping by assets.
@@ -7509,9 +7831,9 @@ type GroupAssetsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupAssetsRequest) MarshalJSON() ([]byte, error) {
+func (s GroupAssetsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupAssetsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupAssetsResponse: Response message for grouping by assets.
@@ -7543,9 +7865,9 @@ type GroupAssetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupAssetsResponse) MarshalJSON() ([]byte, error) {
+func (s GroupAssetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupAssetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupFindingsRequest: Request message for grouping by findings.
@@ -7630,9 +7952,9 @@ type GroupFindingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupFindingsRequest) MarshalJSON() ([]byte, error) {
+func (s GroupFindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupFindingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupFindingsResponse: Response message for group by findings.
@@ -7664,9 +7986,38 @@ type GroupFindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupFindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GroupFindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupFindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GroupMembership: Contains details about groups of which this finding is a
+// member. A group is a collection of findings that are related in some way.
+type GroupMembership struct {
+	// GroupId: ID of the group.
+	GroupId string `json:"groupId,omitempty"`
+	// GroupType: Type of group.
+	//
+	// Possible values:
+	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
+	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	GroupType string `json:"groupType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GroupMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupMembership
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupResult: Result containing the properties and count of a groupBy
@@ -7689,9 +8040,9 @@ type GroupResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupResult) MarshalJSON() ([]byte, error) {
+func (s GroupResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IamBinding: Represents a particular IAM binding, which captures a member's
@@ -7723,9 +8074,9 @@ type IamBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IamBinding) MarshalJSON() ([]byte, error) {
+func (s IamBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod IamBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IamPolicy: Cloud IAM Policy information associated with the Google Cloud
@@ -7750,9 +8101,9 @@ type IamPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IamPolicy) MarshalJSON() ([]byte, error) {
+func (s IamPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IamPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Indicator: Represents what's commonly known as an _indicator of compromise_
@@ -7783,9 +8134,9 @@ type Indicator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Indicator) MarshalJSON() ([]byte, error) {
+func (s Indicator) MarshalJSON() ([]byte, error) {
 	type NoMethod Indicator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KernelRootkit: Kernel mode rootkit signatures.
@@ -7832,9 +8183,9 @@ type KernelRootkit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
+func (s KernelRootkit) MarshalJSON() ([]byte, error) {
 	type NoMethod KernelRootkit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Kubernetes: Kubernetes-related attributes.
@@ -7879,9 +8230,9 @@ type Kubernetes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Kubernetes) MarshalJSON() ([]byte, error) {
+func (s Kubernetes) MarshalJSON() ([]byte, error) {
 	type NoMethod Kubernetes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Label: Represents a generic name-value label. A label has separate name and
@@ -7906,9 +8257,9 @@ type Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Label) MarshalJSON() ([]byte, error) {
+func (s Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAssetsResponse: Response message for listing assets.
@@ -7938,9 +8289,9 @@ type ListAssetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAssetsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAssetsResult: Result containing the Asset and its State.
@@ -7969,9 +8320,9 @@ type ListAssetsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAssetsResult) MarshalJSON() ([]byte, error) {
+func (s ListAssetsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssetsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAttackPathsResponse: Response message for listing the attack paths for a
@@ -7998,9 +8349,9 @@ type ListAttackPathsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAttackPathsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAttackPathsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttackPathsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBigQueryExportsResponse: Response message for listing BigQuery exports.
@@ -8026,9 +8377,9 @@ type ListBigQueryExportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBigQueryExportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDescendantEventThreatDetectionCustomModulesResponse: Response for
@@ -8059,9 +8410,9 @@ type ListDescendantEventThreatDetectionCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDescendantEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDescendantEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDescendantEventThreatDetectionCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDescendantSecurityHealthAnalyticsCustomModulesResponse: Response message
@@ -8089,9 +8440,9 @@ type ListDescendantSecurityHealthAnalyticsCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDescendantSecurityHealthAnalyticsCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEffectiveEventThreatDetectionCustomModulesResponse: Response for listing
@@ -8121,9 +8472,9 @@ type ListEffectiveEventThreatDetectionCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEffectiveEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEffectiveEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEffectiveEventThreatDetectionCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEffectiveSecurityHealthAnalyticsCustomModulesResponse: Response message
@@ -8153,9 +8504,9 @@ type ListEffectiveSecurityHealthAnalyticsCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEffectiveSecurityHealthAnalyticsCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEventThreatDetectionCustomModulesResponse: Response for listing Event
@@ -8185,9 +8536,9 @@ type ListEventThreatDetectionCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEventThreatDetectionCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingsResponse: Response message for listing findings.
@@ -8217,9 +8568,9 @@ type ListFindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFindingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListFindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingsResult: Result containing the Finding and its StateChange.
@@ -8254,9 +8605,9 @@ type ListFindingsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFindingsResult) MarshalJSON() ([]byte, error) {
+func (s ListFindingsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMuteConfigsResponse: Response message for listing mute configs.
@@ -8282,9 +8633,9 @@ type ListMuteConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMuteConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMuteConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMuteConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNotificationConfigsResponse: Response message for listing notification
@@ -8311,9 +8662,9 @@ type ListNotificationConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNotificationConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListNotificationConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotificationConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -8339,9 +8690,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListResourceValueConfigsResponse: Response message to list resource value
@@ -8368,9 +8719,9 @@ type ListResourceValueConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListResourceValueConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSecurityHealthAnalyticsCustomModulesResponse: Response message for
@@ -8398,9 +8749,9 @@ type ListSecurityHealthAnalyticsCustomModulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSecurityHealthAnalyticsCustomModulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSourcesResponse: Response message for listing sources.
@@ -8426,9 +8777,9 @@ type ListSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListValuedResourcesResponse: Response message for listing the valued
@@ -8458,9 +8809,9 @@ type ListValuedResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListValuedResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListValuedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListValuedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoadBalancer: Contains information related to the load balancer associated
@@ -8481,9 +8832,9 @@ type LoadBalancer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoadBalancer) MarshalJSON() ([]byte, error) {
+func (s LoadBalancer) MarshalJSON() ([]byte, error) {
 	type NoMethod LoadBalancer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntry: An individual entry in a log.
@@ -8503,9 +8854,9 @@ type LogEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntry) MarshalJSON() ([]byte, error) {
+func (s LogEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MemoryHashSignature: A signature corresponding to memory page hashes.
@@ -8528,9 +8879,9 @@ type MemoryHashSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemoryHashSignature) MarshalJSON() ([]byte, error) {
+func (s MemoryHashSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod MemoryHashSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MitreAttack: MITRE ATT&CK tactics and techniques related to this finding.
@@ -8570,8 +8921,10 @@ type MitreAttack struct {
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
 	//   "PYTHON" - T1059.006
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -8619,7 +8972,10 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -8659,8 +9015,10 @@ type MitreAttack struct {
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
 	//   "PYTHON" - T1059.006
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -8708,7 +9066,10 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -8725,9 +9086,9 @@ type MitreAttack struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MitreAttack) MarshalJSON() ([]byte, error) {
+func (s MitreAttack) MarshalJSON() ([]byte, error) {
 	type NoMethod MitreAttack
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Node: Kubernetes nodes associated with the finding.
@@ -8748,9 +9109,9 @@ type Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Node) MarshalJSON() ([]byte, error) {
+func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodePool: Provides GKE node pool information.
@@ -8772,9 +9133,9 @@ type NodePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePool) MarshalJSON() ([]byte, error) {
+func (s NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Notebook: Represents a Jupyter notebook IPYNB file, such as a Colab
@@ -8802,9 +9163,9 @@ type Notebook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Notebook) MarshalJSON() ([]byte, error) {
+func (s Notebook) MarshalJSON() ([]byte, error) {
 	type NoMethod Notebook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationConfig: Cloud Security Command Center (Cloud SCC) notification
@@ -8846,9 +9207,9 @@ type NotificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
+func (s NotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Object: Kubernetes object related to the finding, uniquely identified by
@@ -8881,9 +9242,9 @@ type Object struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Object) MarshalJSON() ([]byte, error) {
+func (s Object) MarshalJSON() ([]byte, error) {
 	type NoMethod Object
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -8928,9 +9289,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrgPolicy: Contains information about the org policies associated with the
@@ -8952,9 +9313,9 @@ type OrgPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrgPolicy) MarshalJSON() ([]byte, error) {
+func (s OrgPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrganizationSettings: User specified settings that are attached to the
@@ -8987,9 +9348,9 @@ type OrganizationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
+func (s OrganizationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod OrganizationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Package: Package is a generic definition of a package.
@@ -9015,16 +9376,16 @@ type Package struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Package) MarshalJSON() ([]byte, error) {
+func (s Package) MarshalJSON() ([]byte, error) {
 	type NoMethod Package
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathNodeAssociatedFinding: A finding that is associated with this node in
 // the attack path.
 type PathNodeAssociatedFinding struct {
 	// CanonicalFinding: Canonical name of the associated findings. Example:
-	// organizations/123/sources/456/findings/789
+	// `organizations/123/sources/456/findings/789`
 	CanonicalFinding string `json:"canonicalFinding,omitempty"`
 	// FindingCategory: The additional taxonomy group within findings from a given
 	// source.
@@ -9044,9 +9405,9 @@ type PathNodeAssociatedFinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PathNodeAssociatedFinding) MarshalJSON() ([]byte, error) {
+func (s PathNodeAssociatedFinding) MarshalJSON() ([]byte, error) {
 	type NoMethod PathNodeAssociatedFinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pod: A Kubernetes Pod.
@@ -9073,9 +9434,9 @@ type Pod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pod) MarshalJSON() ([]byte, error) {
+func (s Pod) MarshalJSON() ([]byte, error) {
 	type NoMethod Pod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -9165,9 +9526,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyDriftDetails: The policy field that violates the deployed posture and
@@ -9195,9 +9556,9 @@ type PolicyDriftDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyDriftDetails) MarshalJSON() ([]byte, error) {
+func (s PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyDriftDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Position: A position in the uploaded text version of a module.
@@ -9217,9 +9578,9 @@ type Position struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Position) MarshalJSON() ([]byte, error) {
+func (s Position) MarshalJSON() ([]byte, error) {
 	type NoMethod Position
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Process: Represents an operating system process.
@@ -9261,9 +9622,9 @@ type Process struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Process) MarshalJSON() ([]byte, error) {
+func (s Process) MarshalJSON() ([]byte, error) {
 	type NoMethod Process
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProcessSignature: Indicates what signature matched this process.
@@ -9292,9 +9653,9 @@ type ProcessSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProcessSignature) MarshalJSON() ([]byte, error) {
+func (s ProcessSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod ProcessSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reference: Additional Links
@@ -9317,9 +9678,9 @@ type Reference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reference) MarshalJSON() ([]byte, error) {
+func (s Reference) MarshalJSON() ([]byte, error) {
 	type NoMethod Reference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Requests: Information about the requests relevant to the finding.
@@ -9348,9 +9709,9 @@ type Requests struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Requests) MarshalJSON() ([]byte, error) {
+func (s Requests) MarshalJSON() ([]byte, error) {
 	type NoMethod Requests
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Requests) UnmarshalJSON(data []byte) error {
@@ -9372,6 +9733,8 @@ func (s *Requests) UnmarshalJSON(data []byte) error {
 type Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the finding is from.
 	//
 	// Possible values:
@@ -9432,9 +9795,9 @@ type Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Resource) MarshalJSON() ([]byte, error) {
+func (s Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourcePath: Represents the path of resources leading up to the resource
@@ -9456,9 +9819,9 @@ type ResourcePath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourcePath) MarshalJSON() ([]byte, error) {
+func (s ResourcePath) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourcePath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourcePathNode: A node within the resource path. Each node represents a
@@ -9496,9 +9859,9 @@ type ResourcePathNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourcePathNode) MarshalJSON() ([]byte, error) {
+func (s ResourcePathNode) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourcePathNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceValueConfigMetadata: Metadata about a ResourceValueConfig. For
@@ -9519,9 +9882,9 @@ type ResourceValueConfigMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceValueConfigMetadata) MarshalJSON() ([]byte, error) {
+func (s ResourceValueConfigMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceValueConfigMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Role: Kubernetes Role or ClusterRole.
@@ -9550,9 +9913,9 @@ type Role struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Role) MarshalJSON() ([]byte, error) {
+func (s Role) MarshalJSON() ([]byte, error) {
 	type NoMethod Role
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunAssetDiscoveryRequest: Request message for running asset discovery for an
@@ -9584,9 +9947,9 @@ type SecurityBulletin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityBulletin) MarshalJSON() ([]byte, error) {
+func (s SecurityBulletin) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityBulletin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityCenterProperties: Security Command Center managed properties. These
@@ -9637,9 +10000,9 @@ type SecurityCenterProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityCenterProperties) MarshalJSON() ([]byte, error) {
+func (s SecurityCenterProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityCenterProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityMarks: User specified security marks that are attached to the parent
@@ -9687,9 +10050,9 @@ type SecurityMarks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
+func (s SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityMarks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityPolicy: Information about the Google Cloud Armor security policy
@@ -9718,9 +10081,9 @@ type SecurityPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityPolicy) MarshalJSON() ([]byte, error) {
+func (s SecurityPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityPosture: Represents a posture that is deployed on Google Cloud by
@@ -9761,9 +10124,9 @@ type SecurityPosture struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityPosture) MarshalJSON() ([]byte, error) {
+func (s SecurityPosture) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPosture
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccountDelegationInfo: Identity delegation history of an
@@ -9793,9 +10156,9 @@ type ServiceAccountDelegationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
+func (s ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountDelegationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetFindingStateRequest: Request message for updating a finding's state.
@@ -9823,9 +10186,9 @@ type SetFindingStateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetFindingStateRequest) MarshalJSON() ([]byte, error) {
+func (s SetFindingStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetFindingStateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -9852,9 +10215,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetMuteRequest: Request message for updating a finding's mute status.
@@ -9880,9 +10243,9 @@ type SetMuteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetMuteRequest) MarshalJSON() ([]byte, error) {
+func (s SetMuteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetMuteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimulateSecurityHealthAnalyticsCustomModuleRequest: Request message to
@@ -9906,9 +10269,9 @@ type SimulateSecurityHealthAnalyticsCustomModuleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimulateSecurityHealthAnalyticsCustomModuleRequest) MarshalJSON() ([]byte, error) {
+func (s SimulateSecurityHealthAnalyticsCustomModuleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulateSecurityHealthAnalyticsCustomModuleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimulateSecurityHealthAnalyticsCustomModuleResponse: Response message for
@@ -9932,9 +10295,9 @@ type SimulateSecurityHealthAnalyticsCustomModuleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimulateSecurityHealthAnalyticsCustomModuleResponse) MarshalJSON() ([]byte, error) {
+func (s SimulateSecurityHealthAnalyticsCustomModuleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulateSecurityHealthAnalyticsCustomModuleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimulatedResource: Manually constructed resource name. If the custom module
@@ -9963,9 +10326,9 @@ type SimulatedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimulatedResource) MarshalJSON() ([]byte, error) {
+func (s SimulatedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulatedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimulatedResult: Possible test result.
@@ -9990,9 +10353,9 @@ type SimulatedResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimulatedResult) MarshalJSON() ([]byte, error) {
+func (s SimulatedResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulatedResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Simulation: Attack path simulation
@@ -10008,7 +10371,7 @@ type Simulation struct {
 	// CreateTime: Output only. Time simulation was created
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Full resource name of the Simulation:
-	// organizations/123/simulations/456
+	// `organizations/123/simulations/456`
 	Name string `json:"name,omitempty"`
 	// ResourceValueConfigsMetadata: Resource value configurations' metadata used
 	// in this simulation. Maximum of 100.
@@ -10029,9 +10392,9 @@ type Simulation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Simulation) MarshalJSON() ([]byte, error) {
+func (s Simulation) MarshalJSON() ([]byte, error) {
 	type NoMethod Simulation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: Security Command Center finding source. A finding source is an
@@ -10077,9 +10440,9 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Source) MarshalJSON() ([]byte, error) {
+func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -10111,9 +10474,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StreamingConfig: The config for streaming-based notifications, which send
@@ -10144,9 +10507,9 @@ type StreamingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StreamingConfig) MarshalJSON() ([]byte, error) {
+func (s StreamingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subject: Represents a Kubernetes subject.
@@ -10177,9 +10540,9 @@ type Subject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subject) MarshalJSON() ([]byte, error) {
+func (s Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod Subject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -10202,9 +10565,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -10229,9 +10592,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TicketInfo: Information about the ticket, if any, that is being used to
@@ -10263,9 +10626,55 @@ type TicketInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TicketInfo) MarshalJSON() ([]byte, error) {
+func (s TicketInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ToxicCombination: Contains details about a group of security issues that,
+// when the issues occur together, represent a greater risk than when the
+// issues occur independently. A group of such issues is referred to as a toxic
+// combination.
+type ToxicCombination struct {
+	// AttackExposureScore: The Attack exposure score
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
+	// of this toxic combination. The score is a measure of how much this toxic
+	// combination exposes one or more high-value resources to potential attack.
+	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
+	// RelatedFindings: List of resource names of findings associated with this
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttackExposureScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToxicCombination) MarshalJSON() ([]byte, error) {
+	type NoMethod ToxicCombination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ToxicCombination) UnmarshalJSON(data []byte) error {
+	type NoMethod ToxicCombination
+	var s1 struct {
+		AttackExposureScore gensupport.JSONFloat64 `json:"attackExposureScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AttackExposureScore = float64(s1.AttackExposureScore)
+	return nil
 }
 
 // ValidateEventThreatDetectionCustomModuleRequest: Request to validate an
@@ -10289,9 +10698,9 @@ type ValidateEventThreatDetectionCustomModuleRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateEventThreatDetectionCustomModuleRequest) MarshalJSON() ([]byte, error) {
+func (s ValidateEventThreatDetectionCustomModuleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateEventThreatDetectionCustomModuleRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateEventThreatDetectionCustomModuleResponse: Response to validating an
@@ -10316,9 +10725,9 @@ type ValidateEventThreatDetectionCustomModuleResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidateEventThreatDetectionCustomModuleResponse) MarshalJSON() ([]byte, error) {
+func (s ValidateEventThreatDetectionCustomModuleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateEventThreatDetectionCustomModuleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValuedResource: A resource that is determined to have value to a user's
@@ -10367,9 +10776,9 @@ type ValuedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValuedResource) MarshalJSON() ([]byte, error) {
+func (s ValuedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ValuedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ValuedResource) UnmarshalJSON(data []byte) error {
@@ -10411,9 +10820,9 @@ type Vulnerability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Vulnerability) MarshalJSON() ([]byte, error) {
+func (s Vulnerability) MarshalJSON() ([]byte, error) {
 	type NoMethod Vulnerability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityCountBySeverity: Vulnerability count by severity.
@@ -10433,9 +10842,9 @@ type VulnerabilityCountBySeverity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityCountBySeverity) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityCountBySeverity) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityCountBySeverity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilitySnapshot: Result containing the properties and count of a
@@ -10469,9 +10878,9 @@ type VulnerabilitySnapshot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilitySnapshot) MarshalJSON() ([]byte, error) {
+func (s VulnerabilitySnapshot) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilitySnapshot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YaraRuleSignature: A signature corresponding to a YARA rule.
@@ -10491,9 +10900,9 @@ type YaraRuleSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YaraRuleSignature) MarshalJSON() ([]byte, error) {
+func (s YaraRuleSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod YaraRuleSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersAssetsGroupCall struct {
@@ -10509,8 +10918,8 @@ type FoldersAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10636,8 +11045,8 @@ type FoldersAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11006,8 +11415,8 @@ type FoldersBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
 	c := &FoldersBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11119,9 +11528,9 @@ type FoldersBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *FoldersBigQueryExportsService) Delete(name string) *FoldersBigQueryExportsDeleteCall {
 	c := &FoldersBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11218,9 +11627,9 @@ type FoldersBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *FoldersBigQueryExportsService) Get(name string) *FoldersBigQueryExportsGetCall {
 	c := &FoldersBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11333,8 +11742,8 @@ type FoldersBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersBigQueryExportsService) List(parent string) *FoldersBigQueryExportsListCall {
 	c := &FoldersBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12336,10 +12745,10 @@ type FoldersEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12722,8 +13131,8 @@ type FoldersFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *FoldersFindingsBulkMuteCall {
 	c := &FoldersFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12825,8 +13234,8 @@ type FoldersLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersLocationsMuteConfigsCreateCall {
 	c := &FoldersLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12938,12 +13347,12 @@ type FoldersLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersLocationsMuteConfigsService) Delete(name string) *FoldersLocationsMuteConfigsDeleteCall {
 	c := &FoldersLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13040,12 +13449,12 @@ type FoldersLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersLocationsMuteConfigsService) Get(name string) *FoldersLocationsMuteConfigsGetCall {
 	c := &FoldersLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13154,8 +13563,8 @@ type FoldersLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersLocationsMuteConfigsService) List(parent string) *FoldersLocationsMuteConfigsListCall {
 	c := &FoldersLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13303,12 +13712,12 @@ type FoldersLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *FoldersLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersLocationsMuteConfigsPatchCall {
 	c := &FoldersLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13418,8 +13827,8 @@ type FoldersMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsCreateCall {
 	c := &FoldersMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13531,12 +13940,12 @@ type FoldersMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersMuteConfigsService) Delete(name string) *FoldersMuteConfigsDeleteCall {
 	c := &FoldersMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13633,12 +14042,12 @@ type FoldersMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersMuteConfigsService) Get(name string) *FoldersMuteConfigsGetCall {
 	c := &FoldersMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13747,8 +14156,8 @@ type FoldersMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersMuteConfigsService) List(parent string) *FoldersMuteConfigsListCall {
 	c := &FoldersMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13896,12 +14305,12 @@ type FoldersMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *FoldersMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsPatchCall {
 	c := &FoldersMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14011,8 +14420,8 @@ type FoldersNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsCreateCall {
 	c := &FoldersNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14123,9 +14532,9 @@ type FoldersNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *FoldersNotificationConfigsService) Delete(name string) *FoldersNotificationConfigsDeleteCall {
 	c := &FoldersNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14222,9 +14631,9 @@ type FoldersNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *FoldersNotificationConfigsService) Get(name string) *FoldersNotificationConfigsGetCall {
 	c := &FoldersNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14600,9 +15009,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14706,12 +15115,12 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14808,12 +15217,12 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14924,9 +15333,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15073,9 +15482,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struc
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15449,12 +15858,12 @@ type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct 
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15565,9 +15974,9 @@ type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15712,8 +16121,8 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15863,12 +16272,12 @@ type FoldersSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
 	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15994,12 +16403,12 @@ type FoldersSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
 	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16357,9 +16766,9 @@ type FoldersSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *FoldersSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *FoldersSourcesFindingsSetMuteCall {
 	c := &FoldersSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16463,9 +16872,9 @@ type FoldersSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16804,7 +17213,7 @@ type OrganizationsGetOrganizationSettingsCall struct {
 // GetOrganizationSettings: Gets the settings for an organization.
 //
 //   - name: Name of the organization to get organization settings for. Its
-//     format is "organizations/[organization_id]/organizationSettings".
+//     format is `organizations/[organization_id]/organizationSettings`.
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17026,8 +17435,8 @@ type OrganizationsAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17153,8 +17562,8 @@ type OrganizationsAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17402,7 +17811,7 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // a TOO_MANY_REQUESTS error.
 //
 //   - parent: Name of the organization to run asset discovery for. Its format is
-//     "organizations/[organization_id]".
+//     `organizations/[organization_id]`.
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17628,8 +18037,8 @@ type OrganizationsBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
 	c := &OrganizationsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17741,9 +18150,9 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *OrganizationsBigQueryExportsService) Delete(name string) *OrganizationsBigQueryExportsDeleteCall {
 	c := &OrganizationsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17840,9 +18249,9 @@ type OrganizationsBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *OrganizationsBigQueryExportsService) Get(name string) *OrganizationsBigQueryExportsGetCall {
 	c := &OrganizationsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17955,8 +18364,8 @@ type OrganizationsBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsBigQueryExportsService) List(parent string) *OrganizationsBigQueryExportsListCall {
 	c := &OrganizationsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18958,10 +19367,10 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19344,8 +19753,8 @@ type OrganizationsFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *OrganizationsFindingsBulkMuteCall {
 	c := &OrganizationsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19447,8 +19856,8 @@ type OrganizationsLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsLocationsMuteConfigsCreateCall {
 	c := &OrganizationsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19560,12 +19969,12 @@ type OrganizationsLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsLocationsMuteConfigsService) Delete(name string) *OrganizationsLocationsMuteConfigsDeleteCall {
 	c := &OrganizationsLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19662,12 +20071,12 @@ type OrganizationsLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsLocationsMuteConfigsService) Get(name string) *OrganizationsLocationsMuteConfigsGetCall {
 	c := &OrganizationsLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19776,8 +20185,8 @@ type OrganizationsLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsLocationsMuteConfigsService) List(parent string) *OrganizationsLocationsMuteConfigsListCall {
 	c := &OrganizationsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19925,12 +20334,12 @@ type OrganizationsLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *OrganizationsLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsLocationsMuteConfigsPatchCall {
 	c := &OrganizationsLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20040,8 +20449,8 @@ type OrganizationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsCreateCall {
 	c := &OrganizationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20153,12 +20562,12 @@ type OrganizationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsMuteConfigsService) Delete(name string) *OrganizationsMuteConfigsDeleteCall {
 	c := &OrganizationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20255,12 +20664,12 @@ type OrganizationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsMuteConfigsService) Get(name string) *OrganizationsMuteConfigsGetCall {
 	c := &OrganizationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20369,8 +20778,8 @@ type OrganizationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsMuteConfigsService) List(parent string) *OrganizationsMuteConfigsListCall {
 	c := &OrganizationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20518,12 +20927,12 @@ type OrganizationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *OrganizationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsPatchCall {
 	c := &OrganizationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20633,8 +21042,8 @@ type OrganizationsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20745,9 +21154,9 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20844,9 +21253,9 @@ type OrganizationsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21879,7 +22288,7 @@ type OrganizationsResourceValueConfigsGetCall struct {
 // Get: Gets a ResourceValueConfig.
 //
 //   - name: Name of the resource value config to retrieve. Its format is
-//     organizations/{organization}/resourceValueConfigs/{config_id}.
+//     `organizations/{organization}/resourceValueConfigs/{config_id}`.
 func (r *OrganizationsResourceValueConfigsService) Get(name string) *OrganizationsResourceValueConfigsGetCall {
 	c := &OrganizationsResourceValueConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21988,7 +22397,7 @@ type OrganizationsResourceValueConfigsListCall struct {
 // List: Lists all ResourceValueConfigs.
 //
 //   - parent: The parent, which owns the collection of resource value configs.
-//     Its format is "organizations/[organization_id]".
+//     Its format is `organizations/[organization_id]`.
 func (r *OrganizationsResourceValueConfigsService) List(parent string) *OrganizationsResourceValueConfigsListCall {
 	c := &OrganizationsResourceValueConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22249,9 +22658,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct 
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22355,12 +22764,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct 
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22457,12 +22866,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22573,9 +22982,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22722,9 +23131,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23098,12 +23507,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall s
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23214,9 +23623,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall 
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23362,8 +23771,8 @@ type OrganizationsSimulationsGetCall struct {
 // organization.
 //
 //   - name: The organization name or simulation name of this simulation Valid
-//     format: "organizations/{organization}/simulations/latest"
-//     "organizations/{organization}/simulations/{simulation}".
+//     format: `organizations/{organization}/simulations/latest`
+//     `organizations/{organization}/simulations/{simulation}`.
 func (r *OrganizationsSimulationsService) Get(name string) *OrganizationsSimulationsGetCall {
 	c := &OrganizationsSimulationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23472,12 +23881,12 @@ type OrganizationsSimulationsAttackExposureResultsAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsAttackExposureResultsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
 	c := &OrganizationsSimulationsAttackExposureResultsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23632,10 +24041,10 @@ type OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall struct
 // List: Lists the valued resources for a set of simulation results and filter.
 //
 //   - parent: Name of parent to list valued resources. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`.
 func (r *OrganizationsSimulationsAttackExposureResultsValuedResourcesService) List(parent string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
 	c := &OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23655,8 +24064,8 @@ func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) F
 // `resource_value` * `resource_type` * `resource` * `display_name` Values
 // should be a comma separated list of fields. For example:
 // `exposed_score,resource_value`. The default sorting order is descending. To
-// specify ascending or descending order for a field, append a " ASC" or a "
-// DESC" suffix, respectively; for example: `exposed_score DESC`.
+// specify ascending or descending order for a field, append a ` ASC` or a `
+// DESC` suffix, respectively; for example: `exposed_score DESC`.
 func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -23803,12 +24212,12 @@ type OrganizationsSimulationsAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackPathsListCall {
 	c := &OrganizationsSimulationsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23963,8 +24372,8 @@ type OrganizationsSimulationsValuedResourcesGetCall struct {
 // Get: Get the valued resource by name
 //
 //   - name: The name of this valued resource Valid format:
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsValuedResourcesService) Get(name string) *OrganizationsSimulationsValuedResourcesGetCall {
 	c := &OrganizationsSimulationsValuedResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24072,10 +24481,10 @@ type OrganizationsSimulationsValuedResourcesListCall struct {
 // List: Lists the valued resources for a set of simulation results and filter.
 //
 //   - parent: Name of parent to list valued resources. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`.
 func (r *OrganizationsSimulationsValuedResourcesService) List(parent string) *OrganizationsSimulationsValuedResourcesListCall {
 	c := &OrganizationsSimulationsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24095,8 +24504,8 @@ func (c *OrganizationsSimulationsValuedResourcesListCall) Filter(filter string) 
 // `resource_value` * `resource_type` * `resource` * `display_name` Values
 // should be a comma separated list of fields. For example:
 // `exposed_score,resource_value`. The default sorting order is descending. To
-// specify ascending or descending order for a field, append a " ASC" or a "
-// DESC" suffix, respectively; for example: `exposed_score DESC`.
+// specify ascending or descending order for a field, append a ` ASC` or a `
+// DESC` suffix, respectively; for example: `exposed_score DESC`.
 func (c *OrganizationsSimulationsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsValuedResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -24243,12 +24652,12 @@ type OrganizationsSimulationsValuedResourcesAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsValuedResourcesAttackPathsService) List(parent string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
 	c := &OrganizationsSimulationsValuedResourcesAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24403,7 +24812,7 @@ type OrganizationsSourcesCreateCall struct {
 // Create: Creates a source.
 //
 //   - parent: Resource name of the new source's parent. Its format should be
-//     "organizations/[organization_id]".
+//     `organizations/[organization_id]`.
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24505,7 +24914,7 @@ type OrganizationsSourcesGetCall struct {
 // Get: Gets a source.
 //
 //   - name: Relative resource name of the source. Its format is
-//     "organizations/[organization_id]/source/[source_id]".
+//     `organizations/[organization_id]/source/[source_id]`.
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24716,8 +25125,8 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25184,7 +25593,7 @@ type OrganizationsSourcesFindingsCreateCall struct {
 // creation to succeed.
 //
 //   - parent: Resource name of the new finding's parent. Its format should be
-//     "organizations/[organization_id]/sources/[source_id]".
+//     `organizations/[organization_id]/sources/[source_id]`.
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25299,12 +25708,12 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25430,12 +25839,12 @@ type OrganizationsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25793,9 +26202,9 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *OrganizationsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *OrganizationsSourcesFindingsSetMuteCall {
 	c := &OrganizationsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25899,9 +26308,9 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26241,8 +26650,8 @@ type ProjectsAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26368,8 +26777,8 @@ type ProjectsAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26738,8 +27147,8 @@ type ProjectsBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
 	c := &ProjectsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26851,9 +27260,9 @@ type ProjectsBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *ProjectsBigQueryExportsService) Delete(name string) *ProjectsBigQueryExportsDeleteCall {
 	c := &ProjectsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26950,9 +27359,9 @@ type ProjectsBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *ProjectsBigQueryExportsService) Get(name string) *ProjectsBigQueryExportsGetCall {
 	c := &ProjectsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27065,8 +27474,8 @@ type ProjectsBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsBigQueryExportsService) List(parent string) *ProjectsBigQueryExportsListCall {
 	c := &ProjectsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28068,10 +28477,10 @@ type ProjectsEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28454,8 +28863,8 @@ type ProjectsFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *ProjectsFindingsBulkMuteCall {
 	c := &ProjectsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28557,8 +28966,8 @@ type ProjectsLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsLocationsMuteConfigsCreateCall {
 	c := &ProjectsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28670,12 +29079,12 @@ type ProjectsLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsLocationsMuteConfigsService) Delete(name string) *ProjectsLocationsMuteConfigsDeleteCall {
 	c := &ProjectsLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28772,12 +29181,12 @@ type ProjectsLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsLocationsMuteConfigsService) Get(name string) *ProjectsLocationsMuteConfigsGetCall {
 	c := &ProjectsLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28886,8 +29295,8 @@ type ProjectsLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsLocationsMuteConfigsService) List(parent string) *ProjectsLocationsMuteConfigsListCall {
 	c := &ProjectsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29035,12 +29444,12 @@ type ProjectsLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *ProjectsLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsLocationsMuteConfigsPatchCall {
 	c := &ProjectsLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29150,8 +29559,8 @@ type ProjectsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsCreateCall {
 	c := &ProjectsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29263,12 +29672,12 @@ type ProjectsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsMuteConfigsService) Delete(name string) *ProjectsMuteConfigsDeleteCall {
 	c := &ProjectsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29365,12 +29774,12 @@ type ProjectsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsMuteConfigsService) Get(name string) *ProjectsMuteConfigsGetCall {
 	c := &ProjectsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29479,8 +29888,8 @@ type ProjectsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsMuteConfigsService) List(parent string) *ProjectsMuteConfigsListCall {
 	c := &ProjectsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29628,12 +30037,12 @@ type ProjectsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *ProjectsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsPatchCall {
 	c := &ProjectsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29743,8 +30152,8 @@ type ProjectsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsCreateCall {
 	c := &ProjectsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29855,9 +30264,9 @@ type ProjectsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *ProjectsNotificationConfigsService) Delete(name string) *ProjectsNotificationConfigsDeleteCall {
 	c := &ProjectsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29954,9 +30363,9 @@ type ProjectsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *ProjectsNotificationConfigsService) Get(name string) *ProjectsNotificationConfigsGetCall {
 	c := &ProjectsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30332,9 +30741,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30438,12 +30847,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30540,12 +30949,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30656,9 +31065,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30805,9 +31214,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall stru
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31181,12 +31590,12 @@ type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31297,9 +31706,9 @@ type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struc
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31444,8 +31853,8 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31595,12 +32004,12 @@ type ProjectsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
 	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31726,12 +32135,12 @@ type ProjectsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
 	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32089,9 +32498,9 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *ProjectsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *ProjectsSourcesFindingsSetMuteCall {
 	c := &ProjectsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32195,9 +32604,9 @@ type ProjectsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

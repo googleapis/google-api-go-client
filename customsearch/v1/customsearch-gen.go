@@ -191,9 +191,9 @@ type Promotion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Promotion) MarshalJSON() ([]byte, error) {
+func (s Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod Promotion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PromotionBodyLines: Block object belonging to a promotion.
@@ -219,9 +219,9 @@ type PromotionBodyLines struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PromotionBodyLines) MarshalJSON() ([]byte, error) {
+func (s PromotionBodyLines) MarshalJSON() ([]byte, error) {
 	type NoMethod PromotionBodyLines
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PromotionImage: Image belonging to a promotion.
@@ -245,9 +245,9 @@ type PromotionImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PromotionImage) MarshalJSON() ([]byte, error) {
+func (s PromotionImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PromotionImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Result: A custom search result.
@@ -301,9 +301,9 @@ type Result struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Result) MarshalJSON() ([]byte, error) {
+func (s Result) MarshalJSON() ([]byte, error) {
 	type NoMethod Result
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultImage: Image belonging to a custom search result.
@@ -335,9 +335,9 @@ type ResultImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultImage) MarshalJSON() ([]byte, error) {
+func (s ResultImage) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultLabels: Refinement label associated with a custom search result.
@@ -363,9 +363,9 @@ type ResultLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultLabels) MarshalJSON() ([]byte, error) {
+func (s ResultLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Search: Response to a custom search request.
@@ -411,9 +411,9 @@ type Search struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Search) MarshalJSON() ([]byte, error) {
+func (s Search) MarshalJSON() ([]byte, error) {
 	type NoMethod Search
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchQueries: Query metadata for the previous, current, and next pages of
@@ -439,9 +439,9 @@ type SearchQueries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchQueries) MarshalJSON() ([]byte, error) {
+func (s SearchQueries) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchQueries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchQueriesNextPage: Custom search request metadata.
@@ -613,9 +613,9 @@ type SearchQueriesNextPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchQueriesNextPage) MarshalJSON() ([]byte, error) {
+func (s SearchQueriesNextPage) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchQueriesNextPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchQueriesPreviousPage: Custom search request metadata.
@@ -787,9 +787,9 @@ type SearchQueriesPreviousPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchQueriesPreviousPage) MarshalJSON() ([]byte, error) {
+func (s SearchQueriesPreviousPage) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchQueriesPreviousPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchQueriesRequest: Custom search request metadata.
@@ -961,9 +961,9 @@ type SearchQueriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchQueriesRequest) MarshalJSON() ([]byte, error) {
+func (s SearchQueriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchQueriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchSearchInformation: Metadata about a search operation.
@@ -991,9 +991,9 @@ type SearchSearchInformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchSearchInformation) MarshalJSON() ([]byte, error) {
+func (s SearchSearchInformation) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchSearchInformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SearchSearchInformation) UnmarshalJSON(data []byte) error {
@@ -1029,9 +1029,9 @@ type SearchSpelling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchSpelling) MarshalJSON() ([]byte, error) {
+func (s SearchSpelling) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchSpelling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchUrl: OpenSearch template and URL.
@@ -1056,9 +1056,9 @@ type SearchUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchUrl) MarshalJSON() ([]byte, error) {
+func (s SearchUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CseListCall struct {

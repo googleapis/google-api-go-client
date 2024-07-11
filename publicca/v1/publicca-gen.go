@@ -216,9 +216,9 @@ type ExternalAccountKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalAccountKey) MarshalJSON() ([]byte, error) {
+func (s ExternalAccountKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalAccountKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsExternalAccountKeysCreateCall struct {

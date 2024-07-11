@@ -173,9 +173,9 @@ type DirectoryList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectoryList) MarshalJSON() ([]byte, error) {
+func (s DirectoryList) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectoryList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DirectoryListItems struct {
@@ -216,9 +216,9 @@ type DirectoryListItems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectoryListItems) MarshalJSON() ([]byte, error) {
+func (s DirectoryListItems) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectoryListItems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DirectoryListItemsIcons: Links to 16x16 and 32x32 icons representing the
@@ -241,9 +241,9 @@ type DirectoryListItemsIcons struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectoryListItemsIcons) MarshalJSON() ([]byte, error) {
+func (s DirectoryListItemsIcons) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectoryListItemsIcons
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JsonSchema struct {
@@ -257,15 +257,10 @@ type JsonSchema struct {
 	Annotations *JsonSchemaAnnotations `json:"annotations,omitempty"`
 	// Default: The default value of this property (if one exists).
 	Default string `json:"default,omitempty"`
-	// Deprecated -- Whether the parameter is deprecated.
-	Deprecated bool `json:"deprecated,omitempty"`
 	// Description: A description of this object.
 	Description string `json:"description,omitempty"`
 	// Enum: Values this parameter may take (if it is an enum).
 	Enum []string `json:"enum,omitempty"`
-	// EnumDeprecated: The deprecation status for the enums. Each position maps to
-	// the corresponding value in the "enum" array.
-	EnumDeprecated []bool `json:"enumDeprecated,omitempty"`
 	// EnumDescriptions: The descriptions for the enums. Each position maps to the
 	// corresponding value in the "enum" array.
 	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
@@ -320,9 +315,9 @@ type JsonSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonSchema) MarshalJSON() ([]byte, error) {
+func (s JsonSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonSchemaAnnotations: Additional information about this property.
@@ -342,9 +337,9 @@ type JsonSchemaAnnotations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonSchemaAnnotations) MarshalJSON() ([]byte, error) {
+func (s JsonSchemaAnnotations) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchemaAnnotations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonSchemaVariant: In a variant data type, the value of one property is used
@@ -368,9 +363,9 @@ type JsonSchemaVariant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonSchemaVariant) MarshalJSON() ([]byte, error) {
+func (s JsonSchemaVariant) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchemaVariant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JsonSchemaVariantMap struct {
@@ -389,9 +384,9 @@ type JsonSchemaVariantMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonSchemaVariantMap) MarshalJSON() ([]byte, error) {
+func (s JsonSchemaVariantMap) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchemaVariantMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RestDescription struct {
@@ -413,10 +408,6 @@ type RestDescription struct {
 	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 	// DocumentationLink: A link to human readable documentation for the API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
-	// Endpoints: A list of location-based endpoint objects for this API. Each
-	// object contains the endpoint URL, location, description and deprecation
-	// status.
-	Endpoints []*RestDescriptionEndpoints `json:"endpoints,omitempty"`
 	// Etag: The ETag for this response.
 	Etag string `json:"etag,omitempty"`
 	// ExponentialBackoffDefault: Enable exponential backoff for suitable methods
@@ -479,9 +470,9 @@ type RestDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestDescription) MarshalJSON() ([]byte, error) {
+func (s RestDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestDescriptionAuth: Authentication information.
@@ -501,9 +492,9 @@ type RestDescriptionAuth struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestDescriptionAuth) MarshalJSON() ([]byte, error) {
+func (s RestDescriptionAuth) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescriptionAuth
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestDescriptionAuthOauth2: OAuth 2.0 authentication information.
@@ -523,9 +514,9 @@ type RestDescriptionAuthOauth2 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestDescriptionAuthOauth2) MarshalJSON() ([]byte, error) {
+func (s RestDescriptionAuthOauth2) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescriptionAuthOauth2
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestDescriptionAuthOauth2Scopes: The scope value.
@@ -545,37 +536,9 @@ type RestDescriptionAuthOauth2Scopes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestDescriptionAuthOauth2Scopes) MarshalJSON() ([]byte, error) {
+func (s RestDescriptionAuthOauth2Scopes) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescriptionAuthOauth2Scopes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// RestDescriptionEndpoints: A single endpoint object
-type RestDescriptionEndpoints struct {
-	// Deprecated -- Whether this endpoint is deprecated
-	Deprecated bool `json:"deprecated,omitempty"`
-	// Description: A string describing the host designated by the URL
-	Description string `json:"description,omitempty"`
-	// EndpointUrl: The URL of the endpoint target host
-	EndpointUrl string `json:"endpointUrl,omitempty"`
-	// Location: The location of the endpoint
-	Location string `json:"location,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Deprecated") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Deprecated") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *RestDescriptionEndpoints) MarshalJSON() ([]byte, error) {
-	type NoMethod RestDescriptionEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestDescriptionIcons: Links to 16x16 and 32x32 icons representing the API.
@@ -597,17 +560,12 @@ type RestDescriptionIcons struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
+func (s RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescriptionIcons
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RestMethod struct {
-	// ApiVersion: The API Version of this method, as passed in via the
-	// `X-Goog-Api-Version` header or `$apiVersion` query parameter.
-	ApiVersion string `json:"apiVersion,omitempty"`
-	// Deprecated -- Whether this method is deprecated.
-	Deprecated bool `json:"deprecated,omitempty"`
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 	// EtagRequired: Whether this method requires an ETag to be specified. The ETag
@@ -648,22 +606,22 @@ type RestMethod struct {
 	// use the download service URL (i.e. "/download"). Only applies if the method
 	// supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethod) MarshalJSON() ([]byte, error) {
+func (s RestMethod) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodMediaUpload: Media upload parameters.
@@ -687,9 +645,9 @@ type RestMethodMediaUpload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodMediaUpload) MarshalJSON() ([]byte, error) {
+func (s RestMethodMediaUpload) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodMediaUpload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodMediaUploadProtocols: Supported upload protocols.
@@ -711,9 +669,9 @@ type RestMethodMediaUploadProtocols struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodMediaUploadProtocols) MarshalJSON() ([]byte, error) {
+func (s RestMethodMediaUploadProtocols) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodMediaUploadProtocols
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodMediaUploadProtocolsResumable: Supports the Resumable Media Upload
@@ -739,9 +697,9 @@ type RestMethodMediaUploadProtocolsResumable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodMediaUploadProtocolsResumable) MarshalJSON() ([]byte, error) {
+func (s RestMethodMediaUploadProtocolsResumable) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodMediaUploadProtocolsResumable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodMediaUploadProtocolsSimple: Supports uploading as a single HTTP
@@ -767,9 +725,9 @@ type RestMethodMediaUploadProtocolsSimple struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodMediaUploadProtocolsSimple) MarshalJSON() ([]byte, error) {
+func (s RestMethodMediaUploadProtocolsSimple) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodMediaUploadProtocolsSimple
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodRequest: The schema for the request.
@@ -791,9 +749,9 @@ type RestMethodRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodRequest) MarshalJSON() ([]byte, error) {
+func (s RestMethodRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestMethodResponse: The schema for the response.
@@ -813,34 +771,32 @@ type RestMethodResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestMethodResponse) MarshalJSON() ([]byte, error) {
+func (s RestMethodResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RestMethodResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RestResource struct {
-	// Deprecated -- Whether this resource is deprecated.
-	Deprecated bool `json:"deprecated,omitempty"`
 	// Methods: Methods on this resource.
 	Methods map[string]RestMethod `json:"methods,omitempty"`
 	// Resources: Sub-resources on this resource.
 	Resources map[string]RestResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Deprecated") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Deprecated") to include in API
+	// NullFields is a list of field names (e.g. "Methods") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RestResource) MarshalJSON() ([]byte, error) {
+func (s RestResource) MarshalJSON() ([]byte, error) {
 	type NoMethod RestResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ApisGetRestCall struct {

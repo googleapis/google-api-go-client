@@ -350,9 +350,9 @@ type AllocatedConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllocatedConnection) MarshalJSON() ([]byte, error) {
+func (s AllocatedConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod AllocatedConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppGateway: A BeyondCorp AppGateway resource represents a BeyondCorp
@@ -425,9 +425,9 @@ type AppGateway struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppGateway) MarshalJSON() ([]byte, error) {
+func (s AppGateway) MarshalJSON() ([]byte, error) {
 	type NoMethod AppGateway
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppGatewayOperationMetadata: Represents the metadata of the long-running
@@ -464,9 +464,9 @@ type AppGatewayOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s AppGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AppGatewayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSecurityZerotrustApplinkAppConnectorProtoConnectionConfig:
@@ -506,9 +506,9 @@ type CloudSecurityZerotrustApplinkAppConnectorProtoConnectionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSecurityZerotrustApplinkAppConnectorProtoConnectionConfig) MarshalJSON() ([]byte, error) {
+func (s CloudSecurityZerotrustApplinkAppConnectorProtoConnectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSecurityZerotrustApplinkAppConnectorProtoConnectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSecurityZerotrustApplinkAppConnectorProtoConnectorDetails:
@@ -558,9 +558,9 @@ type CloudSecurityZerotrustApplinkAppConnectorProtoGateway struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudSecurityZerotrustApplinkAppConnectorProtoGateway) MarshalJSON() ([]byte, error) {
+func (s CloudSecurityZerotrustApplinkAppConnectorProtoGateway) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSecurityZerotrustApplinkAppConnectorProtoGateway
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSecurityZerotrustApplinkLogagentProtoLogAgentDetails: LogAgentDetails
@@ -645,9 +645,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1AppConnection) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1AppConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1AppConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint:
@@ -670,9 +670,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway: Gateway
@@ -709,9 +709,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata:
@@ -748,9 +748,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1ListAppConnectionsResponse: Response
@@ -779,9 +779,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1ListAppConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1ListAppConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1ListAppConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1ListAppConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponse: Response
@@ -811,9 +811,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponseAppConnecti
@@ -839,9 +839,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponseAppConnec
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponseAppConnectionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponseAppConnectionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1ResolveAppConnectionsResponseAppConnectionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionOperationMetadata:
@@ -878,9 +878,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionOperationMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1AppConnector: A BeyondCorp connector
@@ -937,9 +937,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1AppConnector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1AppConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1AppConnectorInstanceConfig:
@@ -971,9 +971,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1AppConnectorInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnectorInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1AppConnectorInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnectorInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata:
@@ -1010,9 +1010,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfo: PrincipalInfo
@@ -1033,9 +1033,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfoServiceAccount:
@@ -1056,9 +1056,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfoServiceAccount
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfoServiceAccount) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfoServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnectorPrincipalInfoServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails:
@@ -1086,9 +1086,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ImageConfig: ImageConfig defines the
@@ -1115,9 +1115,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ImageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ImageConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ImageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ImageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ListAppConnectorsResponse: Response
@@ -1146,9 +1146,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ListAppConnectorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ListAppConnectorsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ListAppConnectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ListAppConnectorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1NotificationConfig: NotificationConfig
@@ -1169,9 +1169,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1NotificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1NotificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1NotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1NotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1NotificationConfigCloudPubSubNotification
@@ -1193,9 +1193,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1NotificationConfigCloudPubSubNotificati
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1NotificationConfigCloudPubSubNotificationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1NotificationConfigCloudPubSubNotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1NotificationConfigCloudPubSubNotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1RemoteAgentDetails: RemoteAgentDetails
@@ -1236,9 +1236,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ReportStatusRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ReportStatusRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ReportStatusRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ReportStatusRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse: Response
@@ -1262,9 +1262,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo: ResourceInfo represents
@@ -1305,9 +1305,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorOperationMetadata:
@@ -1344,9 +1344,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorOperationMetadata stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails:
@@ -1374,9 +1374,9 @@ type GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1alphaRemoteAgentDetails:
@@ -1418,9 +1418,9 @@ type GoogleCloudBeyondcorpAppgatewaysV1alphaAppGatewayOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpAppgatewaysV1alphaAppGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpAppgatewaysV1alphaAppGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppgatewaysV1alphaAppGatewayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpConnectionsV1alphaConnectionOperationMetadata:
@@ -1457,9 +1457,9 @@ type GoogleCloudBeyondcorpConnectionsV1alphaConnectionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpConnectionsV1alphaConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpConnectionsV1alphaConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpConnectionsV1alphaConnectionOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpConnectorsV1alphaConnectorOperationMetadata: Represents
@@ -1496,9 +1496,9 @@ type GoogleCloudBeyondcorpConnectorsV1alphaConnectorOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpConnectorsV1alphaConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpConnectorsV1alphaConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpConnectorsV1alphaConnectorOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpConnectorsV1alphaContainerHealthDetails:
@@ -1526,9 +1526,9 @@ type GoogleCloudBeyondcorpConnectorsV1alphaContainerHealthDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpConnectorsV1alphaContainerHealthDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpConnectorsV1alphaContainerHealthDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpConnectorsV1alphaContainerHealthDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpConnectorsV1alphaRemoteAgentDetails: RemoteAgentDetails
@@ -1570,9 +1570,9 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerServiceOperationMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerServiceOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerServiceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerServiceOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata:
@@ -1609,9 +1609,9 @@ type GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata:
@@ -1649,9 +1649,9 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -1678,9 +1678,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -1717,9 +1717,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -1758,9 +1758,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -1793,9 +1793,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -1892,9 +1892,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -1984,9 +1984,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2013,9 +2013,9 @@ type GoogleIamV1SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsRequest: Request message for
@@ -2039,9 +2039,9 @@ type GoogleIamV1TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsResponse: Response message for
@@ -2066,9 +2066,9 @@ type GoogleIamV1TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -2100,9 +2100,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -2147,9 +2147,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -2181,9 +2181,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -2229,9 +2229,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAppGatewaysResponse: Response message for BeyondCorp.ListAppGateways.
@@ -2259,9 +2259,9 @@ type ListAppGatewaysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAppGatewaysResponse) MarshalJSON() ([]byte, error) {
+func (s ListAppGatewaysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppGatewaysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tunnelv1ProtoTunnelerError: TunnelerError is an error proto for errors
@@ -2285,9 +2285,9 @@ type Tunnelv1ProtoTunnelerError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tunnelv1ProtoTunnelerError) MarshalJSON() ([]byte, error) {
+func (s Tunnelv1ProtoTunnelerError) MarshalJSON() ([]byte, error) {
 	type NoMethod Tunnelv1ProtoTunnelerError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tunnelv1ProtoTunnelerInfo: TunnelerInfo contains metadata about tunneler
@@ -2322,9 +2322,9 @@ type Tunnelv1ProtoTunnelerInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tunnelv1ProtoTunnelerInfo) MarshalJSON() ([]byte, error) {
+func (s Tunnelv1ProtoTunnelerInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod Tunnelv1ProtoTunnelerInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall struct {

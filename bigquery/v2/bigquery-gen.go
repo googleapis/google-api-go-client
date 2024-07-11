@@ -323,9 +323,9 @@ type AggregateClassificationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregateClassificationMetrics) MarshalJSON() ([]byte, error) {
+func (s AggregateClassificationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregateClassificationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AggregateClassificationMetrics) UnmarshalJSON(data []byte) error {
@@ -379,9 +379,9 @@ type AggregationThresholdPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationThresholdPolicy) MarshalJSON() ([]byte, error) {
+func (s AggregationThresholdPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationThresholdPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Argument: Input/output argument of a function or a stored procedure.
@@ -428,9 +428,9 @@ type Argument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Argument) MarshalJSON() ([]byte, error) {
+func (s Argument) MarshalJSON() ([]byte, error) {
 	type NoMethod Argument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArimaCoefficients: Arima coefficients.
@@ -455,9 +455,9 @@ type ArimaCoefficients struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaCoefficients) MarshalJSON() ([]byte, error) {
+func (s ArimaCoefficients) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaCoefficients
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ArimaCoefficients) UnmarshalJSON(data []byte) error {
@@ -505,9 +505,9 @@ type ArimaFittingMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaFittingMetrics) MarshalJSON() ([]byte, error) {
+func (s ArimaFittingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaFittingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ArimaFittingMetrics) UnmarshalJSON(data []byte) error {
@@ -569,9 +569,9 @@ type ArimaForecastingMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaForecastingMetrics) MarshalJSON() ([]byte, error) {
+func (s ArimaForecastingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaForecastingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArimaModelInfo: Arima model information.
@@ -630,9 +630,9 @@ type ArimaModelInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaModelInfo) MarshalJSON() ([]byte, error) {
+func (s ArimaModelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaModelInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArimaOrder: Arima order, can be used for both non-seasonal and seasonal
@@ -657,9 +657,9 @@ type ArimaOrder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaOrder) MarshalJSON() ([]byte, error) {
+func (s ArimaOrder) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaOrder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArimaResult: (Auto-)arima fitting result. Wrap everything in ArimaResult for
@@ -693,9 +693,9 @@ type ArimaResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaResult) MarshalJSON() ([]byte, error) {
+func (s ArimaResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArimaSingleModelForecastingMetrics: Model evaluation metrics for a single
@@ -753,9 +753,9 @@ type ArimaSingleModelForecastingMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
+func (s ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaSingleModelForecastingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -794,9 +794,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -829,9 +829,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AvroOptions: Options for external data sources.
@@ -854,9 +854,9 @@ type AvroOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AvroOptions) MarshalJSON() ([]byte, error) {
+func (s AvroOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod AvroOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BiEngineReason: Reason why BI Engine didn't accelerate the query (or
@@ -894,9 +894,9 @@ type BiEngineReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BiEngineReason) MarshalJSON() ([]byte, error) {
+func (s BiEngineReason) MarshalJSON() ([]byte, error) {
 	type NoMethod BiEngineReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BiEngineStatistics: Statistics for a BI Engine specific query. Populated as
@@ -943,19 +943,17 @@ type BiEngineStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BiEngineStatistics) MarshalJSON() ([]byte, error) {
+func (s BiEngineStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod BiEngineStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigLakeConfiguration: Configuration for BigLake managed tables.
 type BigLakeConfiguration struct {
 	// ConnectionId: Required. The connection specifying the credentials to be used
 	// to read and write to external storage, such as Cloud Storage. The
-	// connection_id can have the form
-	// "<project\_id>.<location\_id>.<connection\_id>" or
-	// "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>
-	// ".
+	// connection_id can have the form `{project}.{location}.{connection_id}` or
+	// `projects/{project}/locations/{location}/connections/{connection_id}".
 	ConnectionId string `json:"connectionId,omitempty"`
 	// FileFormat: Required. The file format the table data is stored in.
 	//
@@ -965,7 +963,7 @@ type BigLakeConfiguration struct {
 	FileFormat string `json:"fileFormat,omitempty"`
 	// StorageUri: Required. The fully qualified location prefix of the external
 	// folder where table data is stored. The '*' wildcard character is not
-	// allowed. The URI should be in the format "gs://bucket/path_to_table/"
+	// allowed. The URI should be in the format `gs://bucket/path_to_table/`
 	StorageUri string `json:"storageUri,omitempty"`
 	// TableFormat: Required. The table format the metadata only snapshots are
 	// stored in.
@@ -987,9 +985,9 @@ type BigLakeConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigLakeConfiguration) MarshalJSON() ([]byte, error) {
+func (s BigLakeConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod BigLakeConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BigQueryModelTraining struct {
@@ -1010,9 +1008,9 @@ type BigQueryModelTraining struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryModelTraining) MarshalJSON() ([]byte, error) {
+func (s BigQueryModelTraining) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryModelTraining
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigtableColumn: Information related to a Bigtable column.
@@ -1034,7 +1032,7 @@ type BigtableColumn struct {
 	// 'onlyReadLatest' is set at both levels.
 	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
 	// QualifierEncoded: [Required] Qualifier of the column. Columns in the parent
-	// column family that has this exact qualifier are exposed as . field. If the
+	// column family that has this exact qualifier are exposed as `.` field. If the
 	// qualifier is valid UTF-8 string, it can be specified in the qualifier_string
 	// field. Otherwise, a base-64 encoded value must be set to qualifier_encoded.
 	// The column field name is the same as the column qualifier. However, if the
@@ -1064,17 +1062,17 @@ type BigtableColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigtableColumn) MarshalJSON() ([]byte, error) {
+func (s BigtableColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod BigtableColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigtableColumnFamily: Information related to a Bigtable column family.
 type BigtableColumnFamily struct {
 	// Columns: Optional. Lists of columns that should be exposed as individual
 	// fields as opposed to a list of (column name, value) pairs. All columns whose
-	// qualifier matches a qualifier in this list can be accessed as .. Other
-	// columns can be accessed as a list through .Column field.
+	// qualifier matches a qualifier in this list can be accessed as `.`. Other
+	// columns can be accessed as a list through the `.Column` field.
 	Columns []*BigtableColumn `json:"columns,omitempty"`
 	// Encoding: Optional. The encoding of the values when the type is not STRING.
 	// Acceptable encoding values are: TEXT - indicates values are alphanumeric
@@ -1110,9 +1108,9 @@ type BigtableColumnFamily struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigtableColumnFamily) MarshalJSON() ([]byte, error) {
+func (s BigtableColumnFamily) MarshalJSON() ([]byte, error) {
 	type NoMethod BigtableColumnFamily
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigtableOptions: Options specific to Google Cloud Bigtable data sources.
@@ -1153,9 +1151,9 @@ type BigtableOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigtableOptions) MarshalJSON() ([]byte, error) {
+func (s BigtableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BigtableOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BinaryClassificationMetrics: Evaluation metrics for binary
@@ -1183,9 +1181,9 @@ type BinaryClassificationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BinaryClassificationMetrics) MarshalJSON() ([]byte, error) {
+func (s BinaryClassificationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod BinaryClassificationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BinaryConfusionMatrix: Confusion matrix for binary classification models.
@@ -1224,9 +1222,9 @@ type BinaryConfusionMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BinaryConfusionMatrix) MarshalJSON() ([]byte, error) {
+func (s BinaryConfusionMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod BinaryConfusionMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BinaryConfusionMatrix) UnmarshalJSON(data []byte) error {
@@ -1345,9 +1343,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BqmlIterationResult struct {
@@ -1374,9 +1372,9 @@ type BqmlIterationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BqmlIterationResult) MarshalJSON() ([]byte, error) {
+func (s BqmlIterationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod BqmlIterationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BqmlIterationResult) UnmarshalJSON(data []byte) error {
@@ -1419,9 +1417,9 @@ type BqmlTrainingRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BqmlTrainingRun) MarshalJSON() ([]byte, error) {
+func (s BqmlTrainingRun) MarshalJSON() ([]byte, error) {
 	type NoMethod BqmlTrainingRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BqmlTrainingRunTrainingOptions: Deprecated.
@@ -1448,9 +1446,9 @@ type BqmlTrainingRunTrainingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BqmlTrainingRunTrainingOptions) MarshalJSON() ([]byte, error) {
+func (s BqmlTrainingRunTrainingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BqmlTrainingRunTrainingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BqmlTrainingRunTrainingOptions) UnmarshalJSON(data []byte) error {
@@ -1495,9 +1493,9 @@ type CategoricalValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoricalValue) MarshalJSON() ([]byte, error) {
+func (s CategoricalValue) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoricalValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CategoryCount: Represents the count of a single category within the cluster.
@@ -1520,9 +1518,9 @@ type CategoryCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoryCount) MarshalJSON() ([]byte, error) {
+func (s CategoryCount) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoryCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloneDefinition: Information about base table and clone time of a table
@@ -1547,9 +1545,9 @@ type CloneDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloneDefinition) MarshalJSON() ([]byte, error) {
+func (s CloneDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cluster: Message containing the information about one cluster.
@@ -1573,9 +1571,9 @@ type Cluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cluster) MarshalJSON() ([]byte, error) {
+func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterInfo: Information about a single cluster for clustering model.
@@ -1601,9 +1599,9 @@ type ClusterInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterInfo) MarshalJSON() ([]byte, error) {
+func (s ClusterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ClusterInfo) UnmarshalJSON(data []byte) error {
@@ -1641,9 +1639,9 @@ type Clustering struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Clustering) MarshalJSON() ([]byte, error) {
+func (s Clustering) MarshalJSON() ([]byte, error) {
 	type NoMethod Clustering
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusteringMetrics: Evaluation metrics for clustering models.
@@ -1668,9 +1666,9 @@ type ClusteringMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusteringMetrics) MarshalJSON() ([]byte, error) {
+func (s ClusteringMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusteringMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ClusteringMetrics) UnmarshalJSON(data []byte) error {
@@ -1709,9 +1707,9 @@ type ConfusionMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfusionMatrix) MarshalJSON() ([]byte, error) {
+func (s ConfusionMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfusionMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ConfusionMatrix) UnmarshalJSON(data []byte) error {
@@ -1743,8 +1741,12 @@ func (s *ConfusionMatrix) UnmarshalJSON(data []byte) error {
 // format in which a you can specify a query label, see labels in the
 // JobConfiguration resource type:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#jobconfiguration
-// Additional properties are allowed, but ignored. Specifying multiple
-// connection properties with the same key returns an error.
+// * **service_account**: indicates the service account to use to run a
+// continuous query. If set, the query job uses the service account to access
+// Google Cloud resources. Service account access is bounded by the IAM
+// permissions that you have granted to the service account. Additional
+// properties are allowed, but ignored. Specifying multiple connection
+// properties with the same key returns an error.
 type ConnectionProperty struct {
 	// Key: The key of the property to set.
 	Key string `json:"key,omitempty"`
@@ -1763,9 +1765,9 @@ type ConnectionProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectionProperty) MarshalJSON() ([]byte, error) {
+func (s ConnectionProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CsvOptions: Information related to a CSV data source.
@@ -1846,9 +1848,9 @@ type CsvOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CsvOptions) MarshalJSON() ([]byte, error) {
+func (s CsvOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CsvOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataFormatOptions: Options for data format adjustments.
@@ -1869,9 +1871,9 @@ type DataFormatOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataFormatOptions) MarshalJSON() ([]byte, error) {
+func (s DataFormatOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod DataFormatOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataMaskingStatistics: Statistics for data-masking.
@@ -1892,9 +1894,9 @@ type DataMaskingStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataMaskingStatistics) MarshalJSON() ([]byte, error) {
+func (s DataMaskingStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod DataMaskingStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSplitResult: Data split result. This contains references to the training
@@ -1919,11 +1921,12 @@ type DataSplitResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSplitResult) MarshalJSON() ([]byte, error) {
+func (s DataSplitResult) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSplitResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Dataset: Represents a BigQuery dataset.
 type Dataset struct {
 	// Access: Optional. An array of objects that define dataset access for one or
 	// more entities. You can set this property when inserting or updating a
@@ -1949,9 +1952,9 @@ type Dataset struct {
 	// '': empty string. Default to case-sensitive behavior.
 	DefaultCollation string `json:"defaultCollation,omitempty"`
 	// DefaultEncryptionConfiguration: The default encryption key for all tables in
-	// the dataset. Once this property is set, all newly-created partitioned tables
-	// in the dataset will have encryption key set to this value, unless table
-	// creation request (or query) overrides the key.
+	// the dataset. After this property is set, the encryption key of all
+	// newly-created tables in the dataset is set to this value unless the table
+	// creation request or query explicitly overrides the key.
 	DefaultEncryptionConfiguration *EncryptionConfiguration `json:"defaultEncryptionConfiguration,omitempty"`
 	// DefaultPartitionExpirationMs: This default partition expiration, expressed
 	// in milliseconds. When new time-partitioned tables are created in a dataset
@@ -2025,8 +2028,9 @@ type Dataset struct {
 	Kind string `json:"kind,omitempty"`
 	// Labels: The labels associated with this dataset. You can use these to
 	// organize and group your datasets. You can set this property when inserting
-	// or updating a dataset. See Creating and Updating Dataset Labels for more
-	// information.
+	// or updating a dataset. See Creating and Updating Dataset Labels
+	// (https://cloud.google.com/bigquery/docs/creating-managing-labels#creating_and_updating_dataset_labels)
+	// for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LastModifiedTime: Output only. The date when this dataset was last modified,
 	// in milliseconds since the epoch.
@@ -2046,6 +2050,14 @@ type Dataset struct {
 	// value can be from 48 to 168 hours (2 to 7 days). The default value is 168
 	// hours if this is not set.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
+	// ResourceTags: Optional. The tags (/bigquery/docs/tags) attached to this
+	// dataset. Tag keys are globally unique. Tag key is expected to be in the
+	// namespaced format, for example "123456789012/environment" where 123456789012
+	// is the ID of the parent organization or project resource for this tag key.
+	// Tag value is expected to be the short name, for example "Production". See
+	// Tag definitions (/iam/docs/tags-access-control#definitions) for more
+	// details.
+	ResourceTags map[string]string `json:"resourceTags,omitempty"`
 	// Restrictions: Optional. Output only. Restriction config for all tables and
 	// dataset. If set, restrict certain accesses on the dataset and all its tables
 	// based on the config. See Data egress
@@ -2089,9 +2101,9 @@ type Dataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dataset) MarshalJSON() ([]byte, error) {
+func (s Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod Dataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetAccess: An object that defines dataset access for an entity.
@@ -2114,9 +2126,9 @@ type DatasetAccess struct {
 	IamMember string `json:"iamMember,omitempty"`
 	// Role: An IAM role ID that should be granted to the user, group, or domain
 	// specified in this access entry. The following legacy mappings will be
-	// applied: OWNER <=> roles/bigquery.dataOwner WRITER <=>
-	// roles/bigquery.dataEditor READER <=> roles/bigquery.dataViewer This field
-	// will accept any of the above formats, but will return only the legacy
+	// applied: * `OWNER`: `roles/bigquery.dataOwner` * `WRITER`:
+	// `roles/bigquery.dataEditor` * `READER`: `roles/bigquery.dataViewer` This
+	// field will accept any of the above formats, but will return only the legacy
 	// format. For example, if you set this field to "roles/bigquery.dataOwner", it
 	// will be returned back as "OWNER".
 	Role string `json:"role,omitempty"`
@@ -2128,9 +2140,9 @@ type DatasetAccess struct {
 	// update operation.
 	Routine *RoutineReference `json:"routine,omitempty"`
 	// SpecialGroup: [Pick one] A special group to grant access to. Possible values
-	// include: projectOwners: Owners of the enclosing project. projectReaders:
-	// Readers of the enclosing project. projectWriters: Writers of the enclosing
-	// project. allAuthenticatedUsers: All authenticated BigQuery users. Maps to
+	// include: * projectOwners: Owners of the enclosing project. * projectReaders:
+	// Readers of the enclosing project. * projectWriters: Writers of the enclosing
+	// project. * allAuthenticatedUsers: All authenticated BigQuery users. Maps to
 	// similarly-named IAM members.
 	SpecialGroup string `json:"specialGroup,omitempty"`
 	// UserByEmail: [Pick one] An email address of a user to grant access to. For
@@ -2156,9 +2168,9 @@ type DatasetAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetAccess) MarshalJSON() ([]byte, error) {
+func (s DatasetAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetTags: A global tag managed by Resource Manager.
@@ -2183,9 +2195,9 @@ type DatasetTags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetTags) MarshalJSON() ([]byte, error) {
+func (s DatasetTags) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetTags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetAccessEntry: Grants all resources of particular types in a particular
@@ -2219,9 +2231,9 @@ type DatasetAccessEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetAccessEntry) MarshalJSON() ([]byte, error) {
+func (s DatasetAccessEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetAccessEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetList: Response format for a page of results when listing datasets.
@@ -2260,9 +2272,9 @@ type DatasetList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetList) MarshalJSON() ([]byte, error) {
+func (s DatasetList) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetListDatasets: A dataset resource with only a subset of fields, to be
@@ -2297,11 +2309,12 @@ type DatasetListDatasets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetListDatasets) MarshalJSON() ([]byte, error) {
+func (s DatasetListDatasets) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetListDatasets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DatasetReference: Identifier for a dataset.
 type DatasetReference struct {
 	// DatasetId: Required. A unique ID for this dataset, without the project name.
 	// The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores
@@ -2322,9 +2335,9 @@ type DatasetReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetReference) MarshalJSON() ([]byte, error) {
+func (s DatasetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationTableProperties: Properties for the destination table.
@@ -2357,9 +2370,9 @@ type DestinationTableProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationTableProperties) MarshalJSON() ([]byte, error) {
+func (s DestinationTableProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationTableProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DifferentialPrivacyPolicy: Represents privacy policy associated with
@@ -2436,9 +2449,9 @@ type DifferentialPrivacyPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DifferentialPrivacyPolicy) MarshalJSON() ([]byte, error) {
+func (s DifferentialPrivacyPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod DifferentialPrivacyPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DifferentialPrivacyPolicy) UnmarshalJSON(data []byte) error {
@@ -2484,9 +2497,9 @@ type DimensionalityReductionMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionalityReductionMetrics) MarshalJSON() ([]byte, error) {
+func (s DimensionalityReductionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionalityReductionMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DimensionalityReductionMetrics) UnmarshalJSON(data []byte) error {
@@ -2527,9 +2540,9 @@ type DmlStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DmlStatistics) MarshalJSON() ([]byte, error) {
+func (s DmlStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod DmlStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleCandidates: Discrete candidates of a double hyperparameter.
@@ -2549,9 +2562,9 @@ type DoubleCandidates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleCandidates) MarshalJSON() ([]byte, error) {
+func (s DoubleCandidates) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleCandidates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleCandidates) UnmarshalJSON(data []byte) error {
@@ -2590,9 +2603,9 @@ type DoubleHparamSearchSpace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleHparamSearchSpace) MarshalJSON() ([]byte, error) {
+func (s DoubleHparamSearchSpace) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleHparamSearchSpace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleRange: Range of a double hyperparameter.
@@ -2614,9 +2627,9 @@ type DoubleRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleRange) MarshalJSON() ([]byte, error) {
+func (s DoubleRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleRange) UnmarshalJSON(data []byte) error {
@@ -2635,6 +2648,7 @@ func (s *DoubleRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// EncryptionConfiguration: Configuration for Cloud KMS encryption settings.
 type EncryptionConfiguration struct {
 	// KmsKeyName: Optional. Describes the Cloud KMS encryption key that will be
 	// used to protect destination BigQuery table. The BigQuery Service Account
@@ -2653,9 +2667,9 @@ type EncryptionConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfiguration) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Entry: A single entry in the confusion matrix.
@@ -2679,9 +2693,9 @@ type Entry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entry) MarshalJSON() ([]byte, error) {
+func (s Entry) MarshalJSON() ([]byte, error) {
 	type NoMethod Entry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorProto: Error details.
@@ -2708,9 +2722,9 @@ type ErrorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorProto) MarshalJSON() ([]byte, error) {
+func (s ErrorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EvaluationMetrics: Evaluation metrics of a model. These are either computed
@@ -2749,9 +2763,9 @@ type EvaluationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s EvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod EvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExplainQueryStage: A single stage of query execution.
@@ -2844,9 +2858,9 @@ type ExplainQueryStage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainQueryStage) MarshalJSON() ([]byte, error) {
+func (s ExplainQueryStage) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainQueryStage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ExplainQueryStage) UnmarshalJSON(data []byte) error {
@@ -2896,9 +2910,9 @@ type ExplainQueryStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainQueryStep) MarshalJSON() ([]byte, error) {
+func (s ExplainQueryStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainQueryStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Explanation: Explanation for a single feature.
@@ -2922,9 +2936,9 @@ type Explanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Explanation) MarshalJSON() ([]byte, error) {
+func (s Explanation) MarshalJSON() ([]byte, error) {
 	type NoMethod Explanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Explanation) UnmarshalJSON(data []byte) error {
@@ -2963,9 +2977,9 @@ type ExportDataStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportDataStatistics) MarshalJSON() ([]byte, error) {
+func (s ExportDataStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportDataStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -3011,9 +3025,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalCatalogDatasetOptions: Options defining open source compatible
@@ -3040,9 +3054,9 @@ type ExternalCatalogDatasetOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalCatalogDatasetOptions) MarshalJSON() ([]byte, error) {
+func (s ExternalCatalogDatasetOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalCatalogDatasetOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalCatalogTableOptions: Metadata about open source compatible table.
@@ -3074,9 +3088,9 @@ type ExternalCatalogTableOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalCatalogTableOptions) MarshalJSON() ([]byte, error) {
+func (s ExternalCatalogTableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalCatalogTableOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ExternalDataConfiguration struct {
@@ -3096,10 +3110,9 @@ type ExternalDataConfiguration struct {
 	Compression string `json:"compression,omitempty"`
 	// ConnectionId: Optional. The connection specifying the credentials to be used
 	// to read external storage, such as Azure Blob, Cloud Storage, or S3. The
-	// connection_id can have the form
-	// "<project\_id>.<location\_id>.<connection\_id>" or
-	// "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>
-	// ".
+	// connection_id can have the form `{project_id}.{location_id};{connection_id}`
+	// or
+	// `projects/{project_id}/locations/{location_id}/connections/{connection_id}`.
 	ConnectionId string `json:"connectionId,omitempty"`
 	// CsvOptions: Optional. Additional properties to set if sourceFormat is set to
 	// CSV.
@@ -3245,9 +3258,9 @@ type ExternalDataConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
+func (s ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDataConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalDatasetReference: Configures the access a dataset defined in an
@@ -3272,9 +3285,9 @@ type ExternalDatasetReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalDatasetReference) MarshalJSON() ([]byte, error) {
+func (s ExternalDatasetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDatasetReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalServiceCost: The external service cost is a portion of the total
@@ -3313,9 +3326,9 @@ type ExternalServiceCost struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalServiceCost) MarshalJSON() ([]byte, error) {
+func (s ExternalServiceCost) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalServiceCost
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FeatureValue: Representative value of a single feature within the cluster.
@@ -3340,9 +3353,9 @@ type FeatureValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FeatureValue) MarshalJSON() ([]byte, error) {
+func (s FeatureValue) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FeatureValue) UnmarshalJSON(data []byte) error {
@@ -3382,9 +3395,35 @@ type ForeignTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ForeignTypeInfo) MarshalJSON() ([]byte, error) {
+func (s ForeignTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ForeignTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ForeignViewDefinition: A view can be represented in multiple ways. Each
+// representation has its own dialect. This message stores the metadata
+// required for these representations.
+type ForeignViewDefinition struct {
+	// Dialect: Optional. Represents the dialect of the query.
+	Dialect string `json:"dialect,omitempty"`
+	// Query: Required. The query that defines the view.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dialect") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dialect") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ForeignViewDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod ForeignViewDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -3405,9 +3444,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -3437,9 +3476,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetQueryResultsResponse: Response object of GetQueryResults.
@@ -3505,9 +3544,9 @@ type GetQueryResultsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetQueryResultsResponse) MarshalJSON() ([]byte, error) {
+func (s GetQueryResultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetQueryResultsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetServiceAccountResponse: Response object of GetServiceAccount
@@ -3532,9 +3571,9 @@ type GetServiceAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
+func (s GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetServiceAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlobalExplanation: Global explanations containing the top most important
@@ -3560,9 +3599,9 @@ type GlobalExplanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlobalExplanation) MarshalJSON() ([]byte, error) {
+func (s GlobalExplanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GlobalExplanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSheetsOptions: Options specific to Google Sheets data sources.
@@ -3596,9 +3635,9 @@ type GoogleSheetsOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSheetsOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HighCardinalityJoin: High cardinality join detailed information.
@@ -3625,9 +3664,9 @@ type HighCardinalityJoin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HighCardinalityJoin) MarshalJSON() ([]byte, error) {
+func (s HighCardinalityJoin) MarshalJSON() ([]byte, error) {
 	type NoMethod HighCardinalityJoin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HivePartitioningOptions: Options for configuring hive partitioning detect.
@@ -3683,9 +3722,9 @@ type HivePartitioningOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HivePartitioningOptions) MarshalJSON() ([]byte, error) {
+func (s HivePartitioningOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HivePartitioningOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HparamSearchSpaces: Hyperparameter search spaces. These should be a subset
@@ -3755,9 +3794,9 @@ type HparamSearchSpaces struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HparamSearchSpaces) MarshalJSON() ([]byte, error) {
+func (s HparamSearchSpaces) MarshalJSON() ([]byte, error) {
 	type NoMethod HparamSearchSpaces
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HparamTuningTrial: Training info of a trial in hyperparameter tuning
@@ -3809,9 +3848,9 @@ type HparamTuningTrial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HparamTuningTrial) MarshalJSON() ([]byte, error) {
+func (s HparamTuningTrial) MarshalJSON() ([]byte, error) {
 	type NoMethod HparamTuningTrial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
@@ -3904,9 +3943,9 @@ type IndexUnusedReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexUnusedReason) MarshalJSON() ([]byte, error) {
+func (s IndexUnusedReason) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexUnusedReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InputDataChange: Details about the input data change insight.
@@ -3927,9 +3966,9 @@ type InputDataChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InputDataChange) MarshalJSON() ([]byte, error) {
+func (s InputDataChange) MarshalJSON() ([]byte, error) {
 	type NoMethod InputDataChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *InputDataChange) UnmarshalJSON(data []byte) error {
@@ -3963,9 +4002,9 @@ type IntArray struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntArray) MarshalJSON() ([]byte, error) {
+func (s IntArray) MarshalJSON() ([]byte, error) {
 	type NoMethod IntArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntArrayHparamSearchSpace: Search space for int array.
@@ -3985,9 +4024,9 @@ type IntArrayHparamSearchSpace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntArrayHparamSearchSpace) MarshalJSON() ([]byte, error) {
+func (s IntArrayHparamSearchSpace) MarshalJSON() ([]byte, error) {
 	type NoMethod IntArrayHparamSearchSpace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntCandidates: Discrete candidates of an int hyperparameter.
@@ -4007,9 +4046,9 @@ type IntCandidates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntCandidates) MarshalJSON() ([]byte, error) {
+func (s IntCandidates) MarshalJSON() ([]byte, error) {
 	type NoMethod IntCandidates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntHparamSearchSpace: Search space for an int hyperparameter.
@@ -4031,9 +4070,9 @@ type IntHparamSearchSpace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntHparamSearchSpace) MarshalJSON() ([]byte, error) {
+func (s IntHparamSearchSpace) MarshalJSON() ([]byte, error) {
 	type NoMethod IntHparamSearchSpace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntRange: Range of an int hyperparameter.
@@ -4055,9 +4094,9 @@ type IntRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntRange) MarshalJSON() ([]byte, error) {
+func (s IntRange) MarshalJSON() ([]byte, error) {
 	type NoMethod IntRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IterationResult: Information about a single iteration of the training run.
@@ -4091,9 +4130,9 @@ type IterationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IterationResult) MarshalJSON() ([]byte, error) {
+func (s IterationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod IterationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *IterationResult) UnmarshalJSON(data []byte) error {
@@ -4160,9 +4199,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobCancelResponse: Describes format of a jobs cancellation response.
@@ -4187,9 +4226,9 @@ type JobCancelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobCancelResponse) MarshalJSON() ([]byte, error) {
+func (s JobCancelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod JobCancelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JobConfiguration struct {
@@ -4203,7 +4242,10 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 	// JobTimeoutMs: Optional. Job timeout in milliseconds. If this time limit is
-	// exceeded, BigQuery might attempt to stop the job.
+	// exceeded, BigQuery will attempt to stop a longer job, but may not always
+	// succeed in canceling it before the job completes. For example, a job that
+	// takes more than 60 seconds to complete has a better chance of being stopped
+	// than a job that takes 10 seconds to complete.
 	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
 	// JobType: Output only. The type of the job. Can be QUERY, LOAD, EXTRACT, COPY
 	// or UNKNOWN.
@@ -4232,9 +4274,9 @@ type JobConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfiguration) MarshalJSON() ([]byte, error) {
+func (s JobConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobConfigurationExtract: JobConfigurationExtract configures a job that
@@ -4291,9 +4333,9 @@ type JobConfigurationExtract struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfigurationExtract) MarshalJSON() ([]byte, error) {
+func (s JobConfigurationExtract) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfigurationExtract
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobConfigurationLoad: JobConfigurationLoad contains the configuration
@@ -4313,6 +4355,20 @@ type JobConfigurationLoad struct {
 	Autodetect bool `json:"autodetect,omitempty"`
 	// Clustering: Clustering specification for the destination table.
 	Clustering *Clustering `json:"clustering,omitempty"`
+	// ColumnNameCharacterMap: Optional. Character map supported for column names
+	// in CSV/Parquet loads. Defaults to STRICT and can be overridden by Project
+	// Config Service. Using this option with unsupporting load formats will result
+	// in an error.
+	//
+	// Possible values:
+	//   "COLUMN_NAME_CHARACTER_MAP_UNSPECIFIED" - Unspecified column name
+	// character map.
+	//   "STRICT" - Support flexible column name and reject invalid column names.
+	//   "V1" - Support alphanumeric + underscore characters and names must start
+	// with a letter or underscore. Invalid column names will be normalized.
+	//   "V2" - Support flexible column name. Invalid column names will be
+	// normalized.
+	ColumnNameCharacterMap string `json:"columnNameCharacterMap,omitempty"`
 	// ConnectionProperties: Optional. Connection properties which can modify the
 	// load job behavior. Currently, only the 'session_id' connection property is
 	// supported, and is used to resolve _SESSION appearing as the dataset id.
@@ -4570,9 +4626,9 @@ type JobConfigurationLoad struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfigurationLoad) MarshalJSON() ([]byte, error) {
+func (s JobConfigurationLoad) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfigurationLoad
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobConfigurationQuery: JobConfigurationQuery configures a BigQuery query
@@ -4735,9 +4791,9 @@ type JobConfigurationQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfigurationQuery) MarshalJSON() ([]byte, error) {
+func (s JobConfigurationQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfigurationQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobConfigurationTableCopy: JobConfigurationTableCopy configures a job that
@@ -4800,9 +4856,9 @@ type JobConfigurationTableCopy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
+func (s JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
 	type NoMethod JobConfigurationTableCopy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobCreationReason: Reason about why a Job was created from a `jobs.query`
@@ -4839,9 +4895,9 @@ type JobCreationReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobCreationReason) MarshalJSON() ([]byte, error) {
+func (s JobCreationReason) MarshalJSON() ([]byte, error) {
 	type NoMethod JobCreationReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobList: JobList is the response format for a jobs.list call.
@@ -4874,9 +4930,9 @@ type JobList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobList) MarshalJSON() ([]byte, error) {
+func (s JobList) MarshalJSON() ([]byte, error) {
 	type NoMethod JobList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobListJobs: ListFormatJob is a partial projection of job information
@@ -4920,9 +4976,9 @@ type JobListJobs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobListJobs) MarshalJSON() ([]byte, error) {
+func (s JobListJobs) MarshalJSON() ([]byte, error) {
 	type NoMethod JobListJobs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobReference: A job reference is a fully qualified identifier for referring
@@ -4951,9 +5007,9 @@ type JobReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobReference) MarshalJSON() ([]byte, error) {
+func (s JobReference) MarshalJSON() ([]byte, error) {
 	type NoMethod JobReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics: Statistics for a single job execution.
@@ -5032,9 +5088,9 @@ type JobStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics) MarshalJSON() ([]byte, error) {
+func (s JobStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *JobStatistics) UnmarshalJSON(data []byte) error {
@@ -5072,9 +5128,9 @@ type JobStatisticsReservationUsage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatisticsReservationUsage) MarshalJSON() ([]byte, error) {
+func (s JobStatisticsReservationUsage) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatisticsReservationUsage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics2: Statistics for a query job.
@@ -5304,9 +5360,9 @@ type JobStatistics2 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
+func (s JobStatistics2) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics2
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics2ReservationUsage: Job resource usage breakdown by reservation.
@@ -5330,9 +5386,9 @@ type JobStatistics2ReservationUsage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics2ReservationUsage) MarshalJSON() ([]byte, error) {
+func (s JobStatistics2ReservationUsage) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics2ReservationUsage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics3: Statistics for a load job.
@@ -5367,9 +5423,9 @@ type JobStatistics3 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics3) MarshalJSON() ([]byte, error) {
+func (s JobStatistics3) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics3
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics4: Statistics for an extract job.
@@ -5398,9 +5454,9 @@ type JobStatistics4 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics4) MarshalJSON() ([]byte, error) {
+func (s JobStatistics4) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics4
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatistics5: Statistics for a copy job.
@@ -5423,9 +5479,9 @@ type JobStatistics5 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatistics5) MarshalJSON() ([]byte, error) {
+func (s JobStatistics5) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics5
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JobStatus struct {
@@ -5453,9 +5509,9 @@ type JobStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatus) MarshalJSON() ([]byte, error) {
+func (s JobStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JoinRestrictionPolicy: Represents privacy policy associated with "join
@@ -5492,9 +5548,9 @@ type JoinRestrictionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JoinRestrictionPolicy) MarshalJSON() ([]byte, error) {
+func (s JoinRestrictionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod JoinRestrictionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonOptions: Json Options for load and make external tables.
@@ -5516,9 +5572,9 @@ type JsonOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonOptions) MarshalJSON() ([]byte, error) {
+func (s JsonOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type JsonValue interface{}
@@ -5548,9 +5604,9 @@ type LinkedDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s LinkedDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedDatasetSource: A dataset source type which refers to another BigQuery
@@ -5572,9 +5628,9 @@ type LinkedDatasetSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedDatasetSource) MarshalJSON() ([]byte, error) {
+func (s LinkedDatasetSource) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedDatasetSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListModelsResponse: Response format for a single page when listing BigQuery
@@ -5602,9 +5658,9 @@ type ListModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRoutinesResponse: Describes the format of a single result page when
@@ -5633,9 +5689,9 @@ type ListRoutinesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRoutinesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRoutinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRoutinesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRowAccessPoliciesResponse: Response message for the
@@ -5661,9 +5717,9 @@ type ListRowAccessPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRowAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRowAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRowAccessPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoadQueryStatistics: Statistics for a LOAD query.
@@ -5702,9 +5758,9 @@ type LoadQueryStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoadQueryStatistics) MarshalJSON() ([]byte, error) {
+func (s LoadQueryStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod LoadQueryStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: BigQuery-specific metadata about a location. This will be
@@ -5728,9 +5784,9 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaterializedView: A materialized view considered for a query job.
@@ -5790,9 +5846,9 @@ type MaterializedView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaterializedView) MarshalJSON() ([]byte, error) {
+func (s MaterializedView) MarshalJSON() ([]byte, error) {
 	type NoMethod MaterializedView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaterializedViewDefinition: Definition and configuration of a materialized
@@ -5829,9 +5885,9 @@ type MaterializedViewDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaterializedViewDefinition) MarshalJSON() ([]byte, error) {
+func (s MaterializedViewDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod MaterializedViewDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaterializedViewStatistics: Statistics of materialized views considered in a
@@ -5855,9 +5911,9 @@ type MaterializedViewStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaterializedViewStatistics) MarshalJSON() ([]byte, error) {
+func (s MaterializedViewStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod MaterializedViewStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaterializedViewStatus: Status of a materialized view. The last refresh
@@ -5884,9 +5940,9 @@ type MaterializedViewStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaterializedViewStatus) MarshalJSON() ([]byte, error) {
+func (s MaterializedViewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod MaterializedViewStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataCacheStatistics: Statistics for metadata caching in BigLake tables.
@@ -5907,9 +5963,9 @@ type MetadataCacheStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetadataCacheStatistics) MarshalJSON() ([]byte, error) {
+func (s MetadataCacheStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataCacheStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MlStatistics: Job statistics specific to a BigQuery ML training job.
@@ -5954,8 +6010,8 @@ type MlStatistics struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
-	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
-	// transform clause.
+	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
+	// clause along with statistics useful for ML analytic functions.
 	ModelType string `json:"modelType,omitempty"`
 	// TrainingType: Output only. Training type of the job.
 	//
@@ -5979,9 +6035,9 @@ type MlStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MlStatistics) MarshalJSON() ([]byte, error) {
+func (s MlStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod MlStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Model struct {
@@ -6071,8 +6127,8 @@ type Model struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
-	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
-	// transform clause.
+	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
+	// clause along with statistics useful for ML analytic functions.
 	ModelType string `json:"modelType,omitempty"`
 	// OptimalTrialIds: Output only. For single-objective hyperparameter tuning
 	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overvie
@@ -6107,9 +6163,9 @@ type Model struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Model) MarshalJSON() ([]byte, error) {
+func (s Model) MarshalJSON() ([]byte, error) {
 	type NoMethod Model
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ModelDefinition struct {
@@ -6130,9 +6186,9 @@ type ModelDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelDefinition) MarshalJSON() ([]byte, error) {
+func (s ModelDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelDefinitionModelOptions: Deprecated.
@@ -6153,9 +6209,9 @@ type ModelDefinitionModelOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelDefinitionModelOptions) MarshalJSON() ([]byte, error) {
+func (s ModelDefinitionModelOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelDefinitionModelOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelExtractOptions: Options related to model extraction.
@@ -6179,9 +6235,9 @@ type ModelExtractOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelExtractOptions) MarshalJSON() ([]byte, error) {
+func (s ModelExtractOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelExtractOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelReference: Id path of a model.
@@ -6207,9 +6263,9 @@ type ModelReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelReference) MarshalJSON() ([]byte, error) {
+func (s ModelReference) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiClassClassificationMetrics: Evaluation metrics for multi-class
@@ -6233,9 +6289,9 @@ type MultiClassClassificationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiClassClassificationMetrics) MarshalJSON() ([]byte, error) {
+func (s MultiClassClassificationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiClassClassificationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParquetOptions: Parquet Options for load and make external tables.
@@ -6246,15 +6302,15 @@ type ParquetOptions struct {
 	// EnumAsString: Optional. Indicates whether to infer Parquet ENUM logical type
 	// as STRING instead of BYTES by default.
 	EnumAsString bool `json:"enumAsString,omitempty"`
-	// MapTargetType: Optional. Will indicate how to represent a parquet map if
+	// MapTargetType: Optional. Indicates how to represent a Parquet map if
 	// present.
 	//
 	// Possible values:
-	//   "MAP_TARGET_TYPE_UNSPECIFIED" - In this mode, we fall back to the default.
-	// Currently (3/24) we represent the map as: struct map_field_name { repeated
-	// struct key_value { key value } }
-	//   "ARRAY_OF_STRUCT" - In this mode, we omit parquet's key_value struct and
-	// represent the map as: repeated struct map_field_name { key value }
+	//   "MAP_TARGET_TYPE_UNSPECIFIED" - In this mode, the map will have the
+	// following schema: struct map_field_name { repeated struct key_value { key
+	// value } }.
+	//   "ARRAY_OF_STRUCT" - In this mode, the map will have the following schema:
+	// repeated struct map_field_name { key value }.
 	MapTargetType string `json:"mapTargetType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableListInference") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6269,9 +6325,9 @@ type ParquetOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
+func (s ParquetOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ParquetOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionSkew: Partition skew detailed information.
@@ -6291,14 +6347,14 @@ type PartitionSkew struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionSkew) MarshalJSON() ([]byte, error) {
+func (s PartitionSkew) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionSkew
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionedColumn: The partitioning column information.
 type PartitionedColumn struct {
-	// Field: Output only. The name of the partition column.
+	// Field: Required. The name of the partition column.
 	Field string `json:"field,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6313,17 +6369,23 @@ type PartitionedColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionedColumn) MarshalJSON() ([]byte, error) {
+func (s PartitionedColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionedColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitioningDefinition: The partitioning information, which includes managed
-// table and external table partition information.
+// table, external table and metastore partitioned table partition information.
 type PartitioningDefinition struct {
-	// PartitionedColumn: Output only. Details about each partitioning column.
-	// BigQuery native tables only support 1 partitioning column. Other table types
-	// may support 0, 1 or more partitioning columns.
+	// PartitionedColumn: Optional. Details about each partitioning column. This
+	// field is output only for all partitioning types other than metastore
+	// partitioned tables. BigQuery native tables only support 1 partitioning
+	// column. Other table types may support 0, 1 or more partitioning columns. For
+	// metastore partitioned tables, the order must match the definition order in
+	// the Hive Metastore, where it must match the physical layout of the table.
+	// For example, CREATE TABLE a_table(id BIGINT, name STRING) PARTITIONED BY
+	// (city STRING, state STRING). In this case the values must be ['city',
+	// 'state'] in that order.
 	PartitionedColumn []*PartitionedColumn `json:"partitionedColumn,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartitionedColumn") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6338,9 +6400,9 @@ type PartitioningDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitioningDefinition) MarshalJSON() ([]byte, error) {
+func (s PartitioningDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitioningDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerformanceInsights: Performance insights for the job.
@@ -6369,9 +6431,9 @@ type PerformanceInsights struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerformanceInsights) MarshalJSON() ([]byte, error) {
+func (s PerformanceInsights) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformanceInsights
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -6461,9 +6523,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrincipalComponentInfo: Principal component infos, used only for eigen
@@ -6496,9 +6558,9 @@ type PrincipalComponentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrincipalComponentInfo) MarshalJSON() ([]byte, error) {
+func (s PrincipalComponentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PrincipalComponentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PrincipalComponentInfo) UnmarshalJSON(data []byte) error {
@@ -6546,9 +6608,9 @@ type PrivacyPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivacyPolicy) MarshalJSON() ([]byte, error) {
+func (s PrivacyPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivacyPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectList: Response object of ListProjects
@@ -6580,9 +6642,9 @@ type ProjectList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectList) MarshalJSON() ([]byte, error) {
+func (s ProjectList) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectListProjects: Information about a single project.
@@ -6611,9 +6673,9 @@ type ProjectListProjects struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectListProjects) MarshalJSON() ([]byte, error) {
+func (s ProjectListProjects) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectListProjects
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectReference: A unique reference to a project.
@@ -6634,9 +6696,9 @@ type ProjectReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectReference) MarshalJSON() ([]byte, error) {
+func (s ProjectReference) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryInfo: Query optimization information for a QUERY job.
@@ -6656,9 +6718,9 @@ type QueryInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryInfo) MarshalJSON() ([]byte, error) {
+func (s QueryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryParameter: A parameter given to a query.
@@ -6683,9 +6745,9 @@ type QueryParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryParameter) MarshalJSON() ([]byte, error) {
+func (s QueryParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryParameterType: The type of a query parameter.
@@ -6713,9 +6775,9 @@ type QueryParameterType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryParameterType) MarshalJSON() ([]byte, error) {
+func (s QueryParameterType) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameterType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryParameterTypeStructTypes: The type of a struct parameter.
@@ -6739,9 +6801,9 @@ type QueryParameterTypeStructTypes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryParameterTypeStructTypes) MarshalJSON() ([]byte, error) {
+func (s QueryParameterTypeStructTypes) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameterTypeStructTypes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryParameterValue: The value of a query parameter.
@@ -6767,9 +6829,9 @@ type QueryParameterValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryParameterValue) MarshalJSON() ([]byte, error) {
+func (s QueryParameterValue) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameterValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequest: Describes the format of the jobs.query request.
@@ -6905,9 +6967,9 @@ type QueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRequest) MarshalJSON() ([]byte, error) {
+func (s QueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type QueryResponse struct {
@@ -6989,9 +7051,9 @@ type QueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResponse) MarshalJSON() ([]byte, error) {
+func (s QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryTimelineSample: Summary of the state of query execution at a given
@@ -7027,15 +7089,14 @@ type QueryTimelineSample struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
+func (s QueryTimelineSample) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryTimelineSample
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RangePartitioning struct {
-	// Field: Required. [Experimental] The table is partitioned by this field. The
-	// field must be a top-level NULLABLE/REQUIRED field. The only supported type
-	// is INTEGER/INT64.
+	// Field: Required. The name of the column to partition the table on. It must
+	// be a top-level, INT64 column whose mode is NULLABLE or REQUIRED.
 	Field string `json:"field,omitempty"`
 	// Range: [Experimental] Defines the ranges for range partitioning.
 	Range *RangePartitioningRange `json:"range,omitempty"`
@@ -7052,9 +7113,9 @@ type RangePartitioning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RangePartitioning) MarshalJSON() ([]byte, error) {
+func (s RangePartitioning) MarshalJSON() ([]byte, error) {
 	type NoMethod RangePartitioning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RangePartitioningRange: [Experimental] Defines the ranges for range
@@ -7079,9 +7140,9 @@ type RangePartitioningRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RangePartitioningRange) MarshalJSON() ([]byte, error) {
+func (s RangePartitioningRange) MarshalJSON() ([]byte, error) {
 	type NoMethod RangePartitioningRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RangeValue: Represents the value of a range.
@@ -7105,9 +7166,9 @@ type RangeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RangeValue) MarshalJSON() ([]byte, error) {
+func (s RangeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod RangeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RankingMetrics: Evaluation metrics used by weighted-ALS models specified by
@@ -7142,9 +7203,9 @@ type RankingMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RankingMetrics) MarshalJSON() ([]byte, error) {
+func (s RankingMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod RankingMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RankingMetrics) UnmarshalJSON(data []byte) error {
@@ -7193,9 +7254,9 @@ type RegressionMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegressionMetrics) MarshalJSON() ([]byte, error) {
+func (s RegressionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod RegressionMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RegressionMetrics) UnmarshalJSON(data []byte) error {
@@ -7253,9 +7314,9 @@ type RemoteFunctionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteFunctionOptions) MarshalJSON() ([]byte, error) {
+func (s RemoteFunctionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteFunctionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteModelInfo: Remote Model Info
@@ -7311,9 +7372,9 @@ type RemoteModelInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteModelInfo) MarshalJSON() ([]byte, error) {
+func (s RemoteModelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteModelInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RestrictionConfig struct {
@@ -7338,9 +7399,9 @@ type RestrictionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictionConfig) MarshalJSON() ([]byte, error) {
+func (s RestrictionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Routine: A user-defined function or a stored procedure.
@@ -7478,9 +7539,9 @@ type Routine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Routine) MarshalJSON() ([]byte, error) {
+func (s Routine) MarshalJSON() ([]byte, error) {
 	type NoMethod Routine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RoutineReference: Id path of a routine.
@@ -7506,9 +7567,9 @@ type RoutineReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RoutineReference) MarshalJSON() ([]byte, error) {
+func (s RoutineReference) MarshalJSON() ([]byte, error) {
 	type NoMethod RoutineReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Row: A single row in the confusion matrix.
@@ -7530,9 +7591,9 @@ type Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Row) MarshalJSON() ([]byte, error) {
+func (s Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowAccessPolicy: Represents access on a subset of rows on the specified
@@ -7570,9 +7631,9 @@ type RowAccessPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowAccessPolicy) MarshalJSON() ([]byte, error) {
+func (s RowAccessPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RowAccessPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowAccessPolicyReference: Id path of a row access policy.
@@ -7602,9 +7663,9 @@ type RowAccessPolicyReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowAccessPolicyReference) MarshalJSON() ([]byte, error) {
+func (s RowAccessPolicyReference) MarshalJSON() ([]byte, error) {
 	type NoMethod RowAccessPolicyReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowLevelSecurityStatistics: Statistics for row-level security.
@@ -7625,9 +7686,9 @@ type RowLevelSecurityStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowLevelSecurityStatistics) MarshalJSON() ([]byte, error) {
+func (s RowLevelSecurityStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod RowLevelSecurityStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptOptions: Options related to script execution.
@@ -7659,9 +7720,9 @@ type ScriptOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptOptions) MarshalJSON() ([]byte, error) {
+func (s ScriptOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptStackFrame: Represents the location of the statement/expression being
@@ -7704,9 +7765,9 @@ type ScriptStackFrame struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptStackFrame) MarshalJSON() ([]byte, error) {
+func (s ScriptStackFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptStackFrame
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptStatistics: Job statistics specific to the child job of a script.
@@ -7736,9 +7797,9 @@ type ScriptStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
+func (s ScriptStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchStatistics: Statistics for a search query. Populated as part of
@@ -7775,9 +7836,9 @@ type SearchStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchStatistics) MarshalJSON() ([]byte, error) {
+func (s SearchStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SerDeInfo: Serializer and deserializer information.
@@ -7805,9 +7866,9 @@ type SerDeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SerDeInfo) MarshalJSON() ([]byte, error) {
+func (s SerDeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SerDeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SessionInfo: [Preview] Information related to sessions.
@@ -7827,9 +7888,9 @@ type SessionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SessionInfo) MarshalJSON() ([]byte, error) {
+func (s SessionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SessionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -7856,9 +7917,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SkewSource: Details about source stages which produce skewed data.
@@ -7878,9 +7939,9 @@ type SkewSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SkewSource) MarshalJSON() ([]byte, error) {
+func (s SkewSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SkewSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SnapshotDefinition: Information about base table and snapshot time of the
@@ -7905,9 +7966,9 @@ type SnapshotDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
+func (s SnapshotDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkLoggingInfo: Spark job logs can be filtered by these fields in Cloud
@@ -7930,9 +7991,9 @@ type SparkLoggingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkLoggingInfo) MarshalJSON() ([]byte, error) {
+func (s SparkLoggingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkLoggingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkOptions: Options for a user-defined Spark routine.
@@ -7992,9 +8053,9 @@ type SparkOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkOptions) MarshalJSON() ([]byte, error) {
+func (s SparkOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SparkStatistics: Statistics for a BigSpark query. Populated as part of
@@ -8046,9 +8107,9 @@ type SparkStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SparkStatistics) MarshalJSON() ([]byte, error) {
+func (s SparkStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StagePerformanceChangeInsight: Performance insights compared to the previous
@@ -8071,9 +8132,9 @@ type StagePerformanceChangeInsight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StagePerformanceChangeInsight) MarshalJSON() ([]byte, error) {
+func (s StagePerformanceChangeInsight) MarshalJSON() ([]byte, error) {
 	type NoMethod StagePerformanceChangeInsight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StagePerformanceStandaloneInsight: Standalone performance insights for a
@@ -8106,9 +8167,9 @@ type StagePerformanceStandaloneInsight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StagePerformanceStandaloneInsight) MarshalJSON() ([]byte, error) {
+func (s StagePerformanceStandaloneInsight) MarshalJSON() ([]byte, error) {
 	type NoMethod StagePerformanceStandaloneInsight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandardSqlDataType: The data type of a variable such as a function
@@ -8165,9 +8226,9 @@ type StandardSqlDataType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandardSqlDataType) MarshalJSON() ([]byte, error) {
+func (s StandardSqlDataType) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardSqlDataType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandardSqlField: A field or a column.
@@ -8191,9 +8252,9 @@ type StandardSqlField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandardSqlField) MarshalJSON() ([]byte, error) {
+func (s StandardSqlField) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardSqlField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandardSqlStructType: The representation of a SQL STRUCT type.
@@ -8213,9 +8274,9 @@ type StandardSqlStructType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandardSqlStructType) MarshalJSON() ([]byte, error) {
+func (s StandardSqlStructType) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardSqlStructType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandardSqlTableType: A table type
@@ -8235,9 +8296,9 @@ type StandardSqlTableType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandardSqlTableType) MarshalJSON() ([]byte, error) {
+func (s StandardSqlTableType) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardSqlTableType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDescriptor: Contains information about how a table's data is stored
@@ -8270,9 +8331,9 @@ type StorageDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDescriptor) MarshalJSON() ([]byte, error) {
+func (s StorageDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Streamingbuffer struct {
@@ -8299,9 +8360,9 @@ type Streamingbuffer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
+func (s Streamingbuffer) MarshalJSON() ([]byte, error) {
 	type NoMethod Streamingbuffer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StringHparamSearchSpace: Search space for string and enum.
@@ -8321,9 +8382,9 @@ type StringHparamSearchSpace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StringHparamSearchSpace) MarshalJSON() ([]byte, error) {
+func (s StringHparamSearchSpace) MarshalJSON() ([]byte, error) {
 	type NoMethod StringHparamSearchSpace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemVariables: System variables given to a query.
@@ -8345,9 +8406,9 @@ type SystemVariables struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemVariables) MarshalJSON() ([]byte, error) {
+func (s SystemVariables) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemVariables
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Table struct {
@@ -8451,6 +8512,10 @@ type Table struct {
 	// NumBytes: Output only. The size of this table in logical bytes, excluding
 	// any data in the streaming buffer.
 	NumBytes int64 `json:"numBytes,omitempty,string"`
+	// NumCurrentPhysicalBytes: Output only. Number of physical bytes used by
+	// current live data storage. This data is not kept in real time, and might be
+	// delayed by a few seconds to a few minutes.
+	NumCurrentPhysicalBytes int64 `json:"numCurrentPhysicalBytes,omitempty,string"`
 	// NumLongTermBytes: Output only. The number of logical bytes in the table that
 	// are considered "long-term storage".
 	NumLongTermBytes int64 `json:"numLongTermBytes,omitempty,string"`
@@ -8482,9 +8547,11 @@ type Table struct {
 	// bytes. This also includes storage used for time travel. This data is not
 	// kept in real time, and might be delayed by a few seconds to a few minutes.
 	NumTotalPhysicalBytes int64 `json:"numTotalPhysicalBytes,omitempty,string"`
-	// PartitionDefinition: Output only. The partition information for all table
-	// formats, including managed partitioned tables, hive partitioned tables, and
-	// iceberg partitioned tables.
+	// PartitionDefinition: Optional. The partition information for all table
+	// formats, including managed partitioned tables, hive partitioned tables,
+	// iceberg partitioned, and metastore partitioned tables. This field is only
+	// populated for metastore partitioned tables. For other table formats, this is
+	// an output only field.
 	PartitionDefinition *PartitioningDefinition `json:"partitionDefinition,omitempty"`
 	// RangePartitioning: If specified, configures range partitioning for this
 	// table.
@@ -8557,9 +8624,9 @@ type Table struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Table) MarshalJSON() ([]byte, error) {
+func (s Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableCell struct {
@@ -8577,9 +8644,9 @@ type TableCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableCell) MarshalJSON() ([]byte, error) {
+func (s TableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod TableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableConstraints: The TableConstraints defines the primary key and foreign
@@ -8603,9 +8670,9 @@ type TableConstraints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableConstraints) MarshalJSON() ([]byte, error) {
+func (s TableConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod TableConstraints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableConstraintsForeignKeys: Represents a foreign key constraint on a
@@ -8629,9 +8696,9 @@ type TableConstraintsForeignKeys struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableConstraintsForeignKeys) MarshalJSON() ([]byte, error) {
+func (s TableConstraintsForeignKeys) MarshalJSON() ([]byte, error) {
 	type NoMethod TableConstraintsForeignKeys
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableConstraintsForeignKeysColumnReferences: The pair of the foreign key
@@ -8655,9 +8722,9 @@ type TableConstraintsForeignKeysColumnReferences struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableConstraintsForeignKeysColumnReferences) MarshalJSON() ([]byte, error) {
+func (s TableConstraintsForeignKeysColumnReferences) MarshalJSON() ([]byte, error) {
 	type NoMethod TableConstraintsForeignKeysColumnReferences
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableConstraintsForeignKeysReferencedTable struct {
@@ -8677,9 +8744,9 @@ type TableConstraintsForeignKeysReferencedTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableConstraintsForeignKeysReferencedTable) MarshalJSON() ([]byte, error) {
+func (s TableConstraintsForeignKeysReferencedTable) MarshalJSON() ([]byte, error) {
 	type NoMethod TableConstraintsForeignKeysReferencedTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableConstraintsPrimaryKey: Represents the primary key constraint on a
@@ -8701,9 +8768,9 @@ type TableConstraintsPrimaryKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableConstraintsPrimaryKey) MarshalJSON() ([]byte, error) {
+func (s TableConstraintsPrimaryKey) MarshalJSON() ([]byte, error) {
 	type NoMethod TableConstraintsPrimaryKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDataInsertAllRequest: Request for sending a single streaming insert.
@@ -8745,9 +8812,9 @@ type TableDataInsertAllRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDataInsertAllRequestRows: Data for a single insertion row.
@@ -8771,9 +8838,9 @@ type TableDataInsertAllRequestRows struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllRequestRows
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDataInsertAllResponse: Describes the format of a streaming insert
@@ -8800,9 +8867,9 @@ type TableDataInsertAllResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllResponse) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableDataInsertAllResponseInsertErrors: Error details about a single row's
@@ -8825,9 +8892,9 @@ type TableDataInsertAllResponseInsertErrors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllResponseInsertErrors) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllResponseInsertErrors) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllResponseInsertErrors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableDataList struct {
@@ -8860,9 +8927,9 @@ type TableDataList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataList) MarshalJSON() ([]byte, error) {
+func (s TableDataList) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableFieldSchema: A field in TableSchema
@@ -8961,9 +9028,9 @@ type TableFieldSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableFieldSchema) MarshalJSON() ([]byte, error) {
+func (s TableFieldSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableFieldSchemaCategories: Deprecated.
@@ -8983,9 +9050,9 @@ type TableFieldSchemaCategories struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableFieldSchemaCategories) MarshalJSON() ([]byte, error) {
+func (s TableFieldSchemaCategories) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchemaCategories
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableFieldSchemaPolicyTags: Optional. The policy tags attached to this
@@ -9009,9 +9076,9 @@ type TableFieldSchemaPolicyTags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableFieldSchemaPolicyTags) MarshalJSON() ([]byte, error) {
+func (s TableFieldSchemaPolicyTags) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchemaPolicyTags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableFieldSchemaRangeElementType: Represents the type of a field element.
@@ -9032,9 +9099,9 @@ type TableFieldSchemaRangeElementType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableFieldSchemaRangeElementType) MarshalJSON() ([]byte, error) {
+func (s TableFieldSchemaRangeElementType) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchemaRangeElementType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableList: Partial projection of the metadata for a given table in a list
@@ -9066,9 +9133,9 @@ type TableList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableList) MarshalJSON() ([]byte, error) {
+func (s TableList) MarshalJSON() ([]byte, error) {
 	type NoMethod TableList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableListTables struct {
@@ -9117,9 +9184,9 @@ type TableListTables struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableListTables) MarshalJSON() ([]byte, error) {
+func (s TableListTables) MarshalJSON() ([]byte, error) {
 	type NoMethod TableListTables
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableListTablesView: Information about a logical view.
@@ -9142,9 +9209,9 @@ type TableListTablesView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableListTablesView) MarshalJSON() ([]byte, error) {
+func (s TableListTablesView) MarshalJSON() ([]byte, error) {
 	type NoMethod TableListTablesView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableMetadataCacheUsage: Table level detail on the usage of metadata
@@ -9154,6 +9221,9 @@ type TableMetadataCacheUsage struct {
 	// Explanation: Free form human-readable reason metadata caching was unused for
 	// the job.
 	Explanation string `json:"explanation,omitempty"`
+	// Staleness: Duration since last refresh as of this job for managed tables
+	// (indicates metadata cache staleness as seen by this job).
+	Staleness string `json:"staleness,omitempty"`
 	// TableReference: Metadata caching eligible table referenced in the query.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 	// TableType: Table type
@@ -9184,9 +9254,9 @@ type TableMetadataCacheUsage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableMetadataCacheUsage) MarshalJSON() ([]byte, error) {
+func (s TableMetadataCacheUsage) MarshalJSON() ([]byte, error) {
 	type NoMethod TableMetadataCacheUsage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableReference struct {
@@ -9215,9 +9285,9 @@ type TableReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableReference) MarshalJSON() ([]byte, error) {
+func (s TableReference) MarshalJSON() ([]byte, error) {
 	type NoMethod TableReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableReplicationInfo: Replication info of a table created using `AS REPLICA`
@@ -9260,9 +9330,9 @@ type TableReplicationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableReplicationInfo) MarshalJSON() ([]byte, error) {
+func (s TableReplicationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TableReplicationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableRow struct {
@@ -9282,9 +9352,9 @@ type TableRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableRow) MarshalJSON() ([]byte, error) {
+func (s TableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod TableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableSchema: Schema of a table
@@ -9307,9 +9377,9 @@ type TableSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableSchema) MarshalJSON() ([]byte, error) {
+func (s TableSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod TableSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -9332,9 +9402,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -9359,9 +9429,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TimePartitioning struct {
@@ -9396,9 +9466,9 @@ type TimePartitioning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
+func (s TimePartitioning) MarshalJSON() ([]byte, error) {
 	type NoMethod TimePartitioning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrainingOptions: Options used in model training.
@@ -9943,9 +10013,9 @@ type TrainingOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrainingOptions) MarshalJSON() ([]byte, error) {
+func (s TrainingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TrainingOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
@@ -10043,9 +10113,9 @@ type TrainingRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrainingRun) MarshalJSON() ([]byte, error) {
+func (s TrainingRun) MarshalJSON() ([]byte, error) {
 	type NoMethod TrainingRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionInfo: [Alpha] Information of a multi-statement transaction.
@@ -10065,9 +10135,9 @@ type TransactionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionInfo) MarshalJSON() ([]byte, error) {
+func (s TransactionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransformColumn: Information about a single transform column.
@@ -10091,15 +10161,16 @@ type TransformColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransformColumn) MarshalJSON() ([]byte, error) {
+func (s TransformColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod TransformColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteDatasetRequest: Request format for undeleting a dataset.
 type UndeleteDatasetRequest struct {
 	// DeletionTime: Optional. The exact time when the dataset was deleted. If not
-	// specified, the most recently deleted version is undeleted.
+	// specified, the most recently deleted version is undeleted. Undeleting a
+	// dataset using deletion time is not supported.
 	DeletionTime string `json:"deletionTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeletionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10114,9 +10185,9 @@ type UndeleteDatasetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteDatasetRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteDatasetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteDatasetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserDefinedFunctionResource:  This is used for defining User Defined
@@ -10146,9 +10217,9 @@ type UserDefinedFunctionResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
+func (s UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefinedFunctionResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VectorSearchStatistics: Statistics for a vector search query. Populated as
@@ -10186,13 +10257,15 @@ type VectorSearchStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VectorSearchStatistics) MarshalJSON() ([]byte, error) {
+func (s VectorSearchStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod VectorSearchStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ViewDefinition: Describes the definition of a logical view.
 type ViewDefinition struct {
+	// ForeignDefinitions: Optional. Foreign view representations.
+	ForeignDefinitions []*ForeignViewDefinition `json:"foreignDefinitions,omitempty"`
 	// PrivacyPolicy: Optional. Specifices the privacy policy for the view.
 	PrivacyPolicy *PrivacyPolicy `json:"privacyPolicy,omitempty"`
 	// Query: Required. A query that BigQuery executes when the view is referenced.
@@ -10210,22 +10283,22 @@ type ViewDefinition struct {
 	// UserDefinedFunctionResources: Describes user-defined function resources used
 	// in the query.
 	UserDefinedFunctionResources []*UserDefinedFunctionResource `json:"userDefinedFunctionResources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrivacyPolicy") to
+	// ForceSendFields is a list of field names (e.g. "ForeignDefinitions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrivacyPolicy") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ForeignDefinitions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ViewDefinition) MarshalJSON() ([]byte, error) {
+func (s ViewDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod ViewDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DatasetsDeleteCall struct {
@@ -10575,11 +10648,12 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request by label. The syntax is \"labels.<name>[:<value>]\".
-// Multiple filters can be ANDed together by connecting with a space. Example:
-// \"labels.department:receiving labels.active\". See Filtering datasets using
-// labels (/bigquery/docs/filtering-labels#filtering_datasets_using_labels) for
-// details.
+// results of the request by label. The syntax is `labels.[:]`. Multiple
+// filters can be ANDed together by connecting with a space. Example:
+// `labels.department:receiving labels.active`. See Filtering datasets using
+// labels
+// (https://cloud.google.com/bigquery/docs/filtering-labels#filtering_datasets_using_labels)
+// for details.
 func (c *DatasetsListCall) Filter(filter string) *DatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -11056,8 +11130,8 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
@@ -11258,8 +11332,8 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
@@ -11388,8 +11462,8 @@ func (c *JobsGetQueryResultsCall) FormatOptionsUseInt64Timestamp(formatOptionsUs
 
 // Location sets the optional parameter "location": The geographic location of
 // the job. You must specify the location to run the job for the following
-// scenarios: - If the location to run a job is not in the `us` or the `eu`
-// multi-regional location - If the job's location is in a single region (for
+// scenarios: * If the location to run a job is not in the `us` or the `eu`
+// multi-regional location * If the job's location is in a single region (for
 // example, `us-central1`) For more information, see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {

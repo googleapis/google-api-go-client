@@ -215,9 +215,9 @@ type Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Application) MarshalJSON() ([]byte, error) {
+func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationDataTransfer: Template to map fields of ApplicationDataTransfer
@@ -247,9 +247,9 @@ type ApplicationDataTransfer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
+func (s ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationDataTransfer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationTransferParam: Template for application transfer parameters.
@@ -271,9 +271,9 @@ type ApplicationTransferParam struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
+func (s ApplicationTransferParam) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationTransferParam
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationsListResponse: Template for a collection of Applications.
@@ -303,9 +303,9 @@ type ApplicationsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
+func (s ApplicationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataTransfer: A Transfer resource represents the transfer of the ownership
@@ -346,9 +346,9 @@ type DataTransfer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataTransfer) MarshalJSON() ([]byte, error) {
+func (s DataTransfer) MarshalJSON() ([]byte, error) {
 	type NoMethod DataTransfer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataTransfersListResponse: Template for a collection of DataTransfer
@@ -378,9 +378,9 @@ type DataTransfersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataTransfersListResponse) MarshalJSON() ([]byte, error) {
+func (s DataTransfersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DataTransfersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ApplicationsGetCall struct {

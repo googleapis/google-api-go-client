@@ -205,7 +205,6 @@ type ProjectsLocationsConnectionsActionsService struct {
 func NewProjectsLocationsConnectionsEntityTypesService(s *Service) *ProjectsLocationsConnectionsEntityTypesService {
 	rs := &ProjectsLocationsConnectionsEntityTypesService{s: s}
 	rs.Entities = NewProjectsLocationsConnectionsEntityTypesEntitiesService(s)
-	rs.Entitieswithacls = NewProjectsLocationsConnectionsEntityTypesEntitieswithaclsService(s)
 	return rs
 }
 
@@ -213,8 +212,6 @@ type ProjectsLocationsConnectionsEntityTypesService struct {
 	s *Service
 
 	Entities *ProjectsLocationsConnectionsEntityTypesEntitiesService
-
-	Entitieswithacls *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService
 }
 
 func NewProjectsLocationsConnectionsEntityTypesEntitiesService(s *Service) *ProjectsLocationsConnectionsEntityTypesEntitiesService {
@@ -223,15 +220,6 @@ func NewProjectsLocationsConnectionsEntityTypesEntitiesService(s *Service) *Proj
 }
 
 type ProjectsLocationsConnectionsEntityTypesEntitiesService struct {
-	s *Service
-}
-
-func NewProjectsLocationsConnectionsEntityTypesEntitieswithaclsService(s *Service) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService {
-	rs := &ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService struct {
 	s *Service
 }
 
@@ -257,33 +245,9 @@ type AccessCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessCredentials) MarshalJSON() ([]byte, error) {
+func (s AccessCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessCredentials
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// AclInfo: AclInfo has a list of readers for a resource. This is defined as
-// per the below docs
-// https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/projects.locations.collections.dataStores.branches.documents#aclinfo
-type AclInfo struct {
-	// Readers: A list of readers for a resource.
-	Readers []*Readers `json:"readers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Readers") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Readers") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *AclInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AclInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Action: Action message contains metadata information about a single action
@@ -319,9 +283,9 @@ type Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Action) MarshalJSON() ([]byte, error) {
+func (s Action) MarshalJSON() ([]byte, error) {
 	type NoMethod Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckReadinessResponse: Response containing status of the connector for
@@ -344,9 +308,9 @@ type CheckReadinessResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckReadinessResponse) MarshalJSON() ([]byte, error) {
+func (s CheckReadinessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckReadinessResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckStatusResponse: The status of the connector.
@@ -385,9 +349,9 @@ type CheckStatusResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckStatusResponse) MarshalJSON() ([]byte, error) {
+func (s CheckStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckStatusResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DailyCycle: Time window specified for daily operations.
@@ -409,9 +373,9 @@ type DailyCycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DailyCycle) MarshalJSON() ([]byte, error) {
+func (s DailyCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod DailyCycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -447,9 +411,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DenyMaintenancePeriod: DenyMaintenancePeriod definition. Maintenance is
@@ -482,9 +446,9 @@ type DenyMaintenancePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod DenyMaintenancePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -521,9 +485,9 @@ type Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entity) MarshalJSON() ([]byte, error) {
+func (s Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityType: EntityType message contains metadata information about a single
@@ -560,35 +524,9 @@ type EntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityType) MarshalJSON() ([]byte, error) {
+func (s EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// EntityWithACL: EntityWithACL refers to a single row of an entity type with
-// ACL information.
-type EntityWithACL struct {
-	// AclInfo: ACL information of the entity.
-	AclInfo *AclInfo `json:"acl_info,omitempty"`
-	Id      string   `json:"id,omitempty"`
-	// JsonData: Entity data in JSON format.
-	JsonData string `json:"jsonData,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AclInfo") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AclInfo") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *EntityWithACL) MarshalJSON() ([]byte, error) {
-	type NoMethod EntityWithACL
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeAuthCodeRequest: ExchangeAuthCodeRequest currently includes no
@@ -616,9 +554,9 @@ type ExchangeAuthCodeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeAuthCodeResponse) MarshalJSON() ([]byte, error) {
+func (s ExchangeAuthCodeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeAuthCodeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteActionRequest: Request message for ActionService.ExecuteAction
@@ -639,9 +577,9 @@ type ExecuteActionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteActionRequest) MarshalJSON() ([]byte, error) {
+func (s ExecuteActionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteActionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteActionResponse: Response message for ActionService.ExecuteAction
@@ -669,9 +607,9 @@ type ExecuteActionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteActionResponse) MarshalJSON() ([]byte, error) {
+func (s ExecuteActionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteActionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteSqlQueryRequest: An execute sql query request containing the query
@@ -694,9 +632,9 @@ type ExecuteSqlQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteSqlQueryRequest) MarshalJSON() ([]byte, error) {
+func (s ExecuteSqlQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteSqlQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteSqlQueryResponse: A response returned by the connection after
@@ -724,9 +662,9 @@ type ExecuteSqlQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteSqlQueryResponse) MarshalJSON() ([]byte, error) {
+func (s ExecuteSqlQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteSqlQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Field: Message contains EntityType's Field metadata.
@@ -815,9 +753,9 @@ type Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Field) MarshalJSON() ([]byte, error) {
+func (s Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InputParameter: Input Parameter message contains metadata about the
@@ -901,9 +839,9 @@ type InputParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InputParameter) MarshalJSON() ([]byte, error) {
+func (s InputParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod InputParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: Instance represents the interface for SLM services to actuate the
@@ -1021,9 +959,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonSchema: JsonSchema representation of schema metadata
@@ -1114,9 +1052,9 @@ type JsonSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonSchema) MarshalJSON() ([]byte, error) {
+func (s JsonSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListActionsResponse: Response message for ActionService.ListActions
@@ -1144,9 +1082,9 @@ type ListActionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListActionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListActionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListActionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEntitiesResponse: Response message for EntityService.ListEntities
@@ -1171,37 +1109,9 @@ type ListEntitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEntitiesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEntitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ListEntitiesWithACLsResponse: Response message for
-// EntityService.ListEntitiesWithACLs
-type ListEntitiesWithACLsResponse struct {
-	// EntitiesWithAcl: List containing entity rows.
-	EntitiesWithAcl []*EntityWithACL `json:"entitiesWithAcl,omitempty"`
-	// NextPageToken: Next page token if more records are available.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "EntitiesWithAcl") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EntitiesWithAcl") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListEntitiesWithACLsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListEntitiesWithACLsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEntityTypesResponse: Response message for EntityService.ListEntityTypes
@@ -1229,9 +1139,9 @@ type ListEntityTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntityTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenancePolicy: Defines policies to service maintenance events.
@@ -1277,9 +1187,9 @@ type MaintenancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+func (s MaintenancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceSchedule: Maintenance schedule which is exposed to customer and
@@ -1316,9 +1226,9 @@ type MaintenanceSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+func (s MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceSettings: Maintenance settings associated with instance. Allows
@@ -1352,9 +1262,9 @@ type MaintenanceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceSettings) MarshalJSON() ([]byte, error) {
+func (s MaintenanceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: MaintenanceWindow definition.
@@ -1376,9 +1286,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeSloMetadata: Node information for custom per-node SLO implementations.
@@ -1407,9 +1317,9 @@ type NodeSloMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeSloMetadata) MarshalJSON() ([]byte, error) {
+func (s NodeSloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeSloMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationParameter: Contains notification related data.
@@ -1430,9 +1340,9 @@ type NotificationParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationParameter) MarshalJSON() ([]byte, error) {
+func (s NotificationParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerSliSloEligibility: PerSliSloEligibility is a mapping from an SLI name to
@@ -1464,33 +1374,9 @@ type PerSliSloEligibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+func (s PerSliSloEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod PerSliSloEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// Principal: Principal is a user or group that has access to a resource.
-type Principal struct {
-	// GroupId: The group that has access to a resource.
-	GroupId string `json:"group_id,omitempty"`
-	// UserId: The user that has access to a resource.
-	UserId string `json:"user_id,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroupId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *Principal) MarshalJSON() ([]byte, error) {
-	type NoMethod Principal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProvisionedResource: Describes provisioned dataplane resources.
@@ -1518,9 +1404,9 @@ type ProvisionedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProvisionedResource) MarshalJSON() ([]byte, error) {
+func (s ProvisionedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisionedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Query: A wrapper around the SQL query statement. This is needed so that the
@@ -1551,9 +1437,9 @@ type Query struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Query) MarshalJSON() ([]byte, error) {
+func (s Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryParameter: Query parameter definition
@@ -1619,32 +1505,9 @@ type QueryParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryParameter) MarshalJSON() ([]byte, error) {
+func (s QueryParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// Readers: Readers is a list of principals that have read access to a
-// resource.
-type Readers struct {
-	// Principals: A list of principals that have read access to a resource.
-	Principals []*Principal `json:"principals,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Principals") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Principals") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *Readers) MarshalJSON() ([]byte, error) {
-	type NoMethod Readers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Reference struct {
@@ -1665,9 +1528,9 @@ type Reference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reference) MarshalJSON() ([]byte, error) {
+func (s Reference) MarshalJSON() ([]byte, error) {
 	type NoMethod Reference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshAccessTokenRequest: RefreshAccessTokenRequest currently includes no
@@ -1695,9 +1558,9 @@ type RefreshAccessTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefreshAccessTokenResponse) MarshalJSON() ([]byte, error) {
+func (s RefreshAccessTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshAccessTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultMetadata: Result Metadata message contains metadata about the result
@@ -1772,9 +1635,9 @@ type ResultMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultMetadata) MarshalJSON() ([]byte, error) {
+func (s ResultMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Schedule: Configure the schedule.
@@ -1808,9 +1671,9 @@ type Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Schedule) MarshalJSON() ([]byte, error) {
+func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SloEligibility: SloEligibility is a tuple containing eligibility value: true
@@ -1836,9 +1699,9 @@ type SloEligibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SloEligibility) MarshalJSON() ([]byte, error) {
+func (s SloEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod SloEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SloMetadata: SloMetadata contains resources required for proper SLO
@@ -1869,9 +1732,9 @@ type SloMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SloMetadata) MarshalJSON() ([]byte, error) {
+func (s SloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SloMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -1902,9 +1765,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateEntitiesWithConditionsResponse: Response message for
@@ -1928,9 +1791,9 @@ type UpdateEntitiesWithConditionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateEntitiesWithConditionsResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateEntitiesWithConditionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEntitiesWithConditionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdatePolicy: Maintenance policy applicable to instance updates.
@@ -1976,9 +1839,9 @@ type UpdatePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdatePolicy) MarshalJSON() ([]byte, error) {
+func (s UpdatePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklyCycle: Time window specified for weekly operations.
@@ -1998,9 +1861,9 @@ type WeeklyCycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklyCycle) MarshalJSON() ([]byte, error) {
+func (s WeeklyCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyCycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsConnectionsCheckReadinessCall struct {
@@ -4002,180 +3865,4 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 		return nil, err
 	}
 	return ret, nil
-}
-
-type ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists entity rows with ACLs of a particular entity type contained in
-// the request. Note: 1. Currently, only max of one 'sort_by' column is
-// supported. 2. If no 'sort_by' column is provided, the primary key of the
-// table is used. If zero or more than one primary key is available, we default
-// to the unpaginated list entities logic which only returns the first page. 3.
-// The values of the 'sort_by' columns must uniquely identify an entity row,
-// otherwise undefined behaviors may be observed during pagination. 4. Since
-// transactions are not supported, any updates, inserts or deletes during
-// pagination can lead to stale data being returned or other unexpected
-// behaviors.
-//
-//   - parent: Resource name of the Entity Type. Format:
-//     projects/{project}/locations/{location}/connections/{connection}/entityType
-//     s/{type}.
-func (r *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService) List(parent string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c := &ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Conditions sets the optional parameter "conditions": Conditions to be used
-// when listing entities. From a proto standpoint, There are no restrictions on
-// what can be passed using this field. The connector documentation should have
-// information about what format of filters/conditions are supported.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Conditions(conditions string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.Set("conditions", conditions)
-	return c
-}
-
-// GsutilUri sets the optional parameter "gsutilUri": Format: gs://object_path
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) GsutilUri(gsutilUri string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.Set("gsutilUri", gsutilUri)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Number of entity rows to
-// return. Defaults page size = 25. Max page size = 200.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token value if
-// available from a previous request.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// SortBy sets the optional parameter "sortBy": List of 'sort_by' columns to
-// use when returning the results.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) SortBy(sortBy ...string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.SetMulti("sortBy", append([]string{}, sortBy...))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/entitieswithacls")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.connections.entityTypes.entitieswithacls.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListEntitiesWithACLsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Do(opts ...googleapi.CallOption) (*ListEntitiesWithACLsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListEntitiesWithACLsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Pages(ctx context.Context, f func(*ListEntitiesWithACLsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

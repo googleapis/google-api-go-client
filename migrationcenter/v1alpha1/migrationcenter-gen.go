@@ -1424,7 +1424,7 @@ type ComputeEnginePreferences struct {
 	//   "LICENSE_TYPE_DEFAULT" - Default Google Cloud licensing plan. Licensing is
 	// charged per usage. This a good value to start with.
 	//   "LICENSE_TYPE_BRING_YOUR_OWN_LICENSE" - Bring-your-own-license (BYOL)
-	// plan. User provides the OS license.
+	// plan. User provides the license.
 	LicenseType string `json:"licenseType,omitempty"`
 	// MachinePreferences: Preferences concerning the machine types to consider on
 	// Compute Engine.
@@ -4701,14 +4701,15 @@ type OperatingSystemPricingPreferencesOperatingSystemPricing struct {
 	//   "COMMITMENT_PLAN_1_YEAR" - 1-year committed use discount.
 	//   "COMMITMENT_PLAN_3_YEAR" - 3-year committed use discount.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
-	// LicenseType: Optional. License type of the OS image.
+	// LicenseType: Optional. License type for premium images (RHEL, RHEL for SAP,
+	// SLES, SLES for SAP, Windows Server).
 	//
 	// Possible values:
 	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified (default value).
 	//   "LICENSE_TYPE_DEFAULT" - Default Google Cloud licensing plan. Licensing is
 	// charged per usage. This a good value to start with.
 	//   "LICENSE_TYPE_BRING_YOUR_OWN_LICENSE" - Bring-your-own-license (BYOL)
-	// plan. User provides the OS license.
+	// plan. User provides the license.
 	LicenseType string `json:"licenseType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7099,6 +7100,12 @@ type VmwareEnginePreferences struct {
 	//   "COMMITMENT_1_YEAR_UPFRONT_PAYMENT" - 1 year commitment (upfront payment).
 	//   "COMMITMENT_3_YEAR_UPFRONT_PAYMENT" - 3 years commitment (upfront
 	// payment).
+	//   "COMMITMENT_FLEXIBLE_3_YEAR_MONTHLY_PAYMENTS" - 3-year flexible commitment
+	// (monthly payments). While not supported in the v1 API, this value is
+	// converted to UNSPECIFIED in conversions to the v1 API.
+	//   "COMMITMENT_FLEXIBLE_3_YEAR_UPFRONT_PAYMENT" - 3-year flexible commitment
+	// (upfront payment). While not supported in the v1 API, this value is
+	// converted to UNSPECIFIED in conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are between 1.0
 	// and 8.0, with 0.1 increment.

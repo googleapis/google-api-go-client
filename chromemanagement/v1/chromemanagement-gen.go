@@ -5613,7 +5613,7 @@ func (r *CustomersReportsService) CountInstalledApps(customer string) *Customers
 // AND-separated fields in EBNF syntax. Note: OR operations are not supported
 // in this filter. Supported filter fields: * app_name * app_type *
 // install_type * number_of_permissions * total_install_count *
-// latest_profile_active_date * permission_name * app_id
+// latest_profile_active_date * permission_name * app_id * manifest_versions
 func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5621,7 +5621,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *Customer
 
 // OrderBy sets the optional parameter "orderBy": Field used to order results.
 // Supported order by fields: * app_name * app_type * install_type *
-// number_of_permissions * total_install_count * app_id
+// number_of_permissions * total_install_count * app_id * manifest_versions
 func (c *CustomersReportsCountInstalledAppsCall) OrderBy(orderBy string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

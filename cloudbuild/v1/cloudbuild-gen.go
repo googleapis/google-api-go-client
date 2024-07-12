@@ -2661,8 +2661,10 @@ func (s HttpBody) MarshalJSON() ([]byte, error) {
 // HttpConfig: HttpConfig is a configuration for HTTP related git operations.
 type HttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
-	// Service Account should have accessor permissions on this secret. The proxy
-	// URL should be in format protocol://@]proxyhost[:port].
+	// Service Account used in the build (either the default Service Account or
+	// user-specified Service Account) should have `secretmanager.versions.access`
+	// permissions on this secret. The proxy URL should be in format
+	// `protocol://@]proxyhost[:port]`.
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or

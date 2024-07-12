@@ -1519,7 +1519,8 @@ type ParamSpec struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
 	//   "STRING" - Default
-	//   "ARRAY" - Arrary type.
+	//   "ARRAY" - Array type.
+	//   "OBJECT" - Object type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1543,6 +1544,8 @@ func (s ParamSpec) MarshalJSON() ([]byte, error) {
 type ParamValue struct {
 	// ArrayVal: Value of the parameter if type is array.
 	ArrayVal []string `json:"arrayVal,omitempty"`
+	// ObjectVal: Optional. Value of the parameter if type is object.
+	ObjectVal map[string]string `json:"objectVal,omitempty"`
 	// StringVal: Value of the parameter if type is string.
 	StringVal string `json:"stringVal,omitempty"`
 	// Type: Type of parameter.
@@ -1551,6 +1554,7 @@ type ParamValue struct {
 	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
 	//   "STRING" - Default
 	//   "ARRAY" - Array type
+	//   "OBJECT" - Object type
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayVal") to
 	// unconditionally include in API requests. By default, fields with empty or

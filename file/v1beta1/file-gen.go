@@ -248,6 +248,15 @@ type Backup struct {
 	// DownloadBytes: Output only. Amount of bytes that will be downloaded if the
 	// backup is restored
 	DownloadBytes int64 `json:"downloadBytes,omitempty,string"`
+	// FileSystemProtocol: Output only. The file system protocol of the source
+	// Filestore instance that this backup is created from.
+	//
+	// Possible values:
+	//   "FILE_PROTOCOL_UNSPECIFIED" - FILE_PROTOCOL_UNSPECIFIED serves a "not set"
+	// default value when a FileProtocol is a separate field in a message.
+	//   "NFS_V3" - NFS 3.0.
+	//   "NFS_V4_1" - NFS 4.1.
+	FileSystemProtocol string `json:"fileSystemProtocol,omitempty"`
 	// KmsKeyName: Immutable. KMS key name used for data encryption.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.

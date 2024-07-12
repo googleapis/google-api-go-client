@@ -419,7 +419,7 @@ type GoogleFirebaseAppdistroV1alphaAiInstructions struct {
 	// AppDescription: Optional. Describes the app to give the AI some context
 	AppDescription string `json:"appDescription,omitempty"`
 	// Steps: Required. Steps to be accomplished by the AI
-	Steps []*GoogleFirebaseAppdistroV1alphaAiInstructionsStep `json:"steps,omitempty"`
+	Steps []*GoogleFirebaseAppdistroV1alphaAiStep `json:"steps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppDescription") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -438,9 +438,8 @@ func (s GoogleFirebaseAppdistroV1alphaAiInstructions) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaAiInstructionsStep: A step to be accomplished
-// by the AI
-type GoogleFirebaseAppdistroV1alphaAiInstructionsStep struct {
+// GoogleFirebaseAppdistroV1alphaAiStep: A step to be accomplished by the AI
+type GoogleFirebaseAppdistroV1alphaAiStep struct {
 	// Assertion: An assertion to be checked by the AI
 	Assertion string `json:"assertion,omitempty"`
 	// Goal: A goal to be accomplished by the AI
@@ -458,8 +457,39 @@ type GoogleFirebaseAppdistroV1alphaAiInstructionsStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleFirebaseAppdistroV1alphaAiInstructionsStep) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirebaseAppdistroV1alphaAiInstructionsStep
+func (s GoogleFirebaseAppdistroV1alphaAiStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaAiStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaAiStepResult: Captures the results of an
+// AiStep
+type GoogleFirebaseAppdistroV1alphaAiStepResult struct {
+	// State: Output only. The current state of the step
+	//
+	// Possible values:
+	//   "STEP_STATE_UNSPECIFIED" - Step state unspecified
+	//   "IN_PROGRESS" - The step is in progress
+	//   "PASSED" - The step has completed successfully
+	//   "FAILED" - The step has failed
+	State string `json:"state,omitempty"`
+	// Step: Required. The step performed by the AI
+	Step *GoogleFirebaseAppdistroV1alphaAiStep `json:"step,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaAiStepResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaAiStepResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -568,6 +598,8 @@ type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse struct {
 // GoogleFirebaseAppdistroV1alphaDeviceExecution: The results of running an
 // automated test on a particular device.
 type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
+	// AiStepResults: Output only. Results of the AI steps if passed in
+	AiStepResults []*GoogleFirebaseAppdistroV1alphaAiStepResult `json:"aiStepResults,omitempty"`
 	// AppCrash: Output only. An app crash, if any occurred during the test.
 	AppCrash *GoogleFirebaseAppdistroV1alphaAppCrash `json:"appCrash,omitempty"`
 	// CrawlGraphUri: Output only. A URI to an image of the Robo crawl graph.
@@ -627,13 +659,13 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	State string `json:"state,omitempty"`
 	// VideoUri: Output only. A URI to a video of the test run.
 	VideoUri string `json:"videoUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppCrash") to
+	// ForceSendFields is a list of field names (e.g. "AiStepResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppCrash") to include in API
+	// NullFields is a list of field names (e.g. "AiStepResults") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

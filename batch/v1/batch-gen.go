@@ -2130,15 +2130,17 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StatusEvent: Status event
+// StatusEvent: Status event.
 type StatusEvent struct {
 	// Description: Description of the event.
 	Description string `json:"description,omitempty"`
 	// EventTime: The time this event occurred.
 	EventTime string `json:"eventTime,omitempty"`
-	// TaskExecution: Task Execution
+	// TaskExecution: Task Execution. This field is only defined for task-level
+	// status events where the task fails.
 	TaskExecution *TaskExecution `json:"taskExecution,omitempty"`
-	// TaskState: Task State
+	// TaskState: Task State. This field is only defined for task-level status
+	// events.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state.
@@ -2383,9 +2385,9 @@ func (s TaskSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TaskStatus: Status of a task
+// TaskStatus: Status of a task.
 type TaskStatus struct {
-	// State: Task state
+	// State: Task state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state.

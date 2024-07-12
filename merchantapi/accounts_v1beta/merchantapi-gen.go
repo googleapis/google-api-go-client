@@ -159,6 +159,9 @@ func (s *APIService) userAgent() string {
 func NewAccountsService(s *APIService) *AccountsService {
 	rs := &AccountsService{s: s}
 	rs.Accounttax = NewAccountsAccounttaxService(s)
+	rs.BusinessIdentity = NewAccountsBusinessIdentityService(s)
+	rs.BusinessInfo = NewAccountsBusinessInfoService(s)
+	rs.Emailpreferences = NewAccountsEmailpreferencesService(s)
 	rs.Homepage = NewAccountsHomepageService(s)
 	rs.Issues = NewAccountsIssuesService(s)
 	rs.OnlineReturnPolicies = NewAccountsOnlineReturnPoliciesService(s)
@@ -174,6 +177,12 @@ type AccountsService struct {
 	s *APIService
 
 	Accounttax *AccountsAccounttaxService
+
+	BusinessIdentity *AccountsBusinessIdentityService
+
+	BusinessInfo *AccountsBusinessInfoService
+
+	Emailpreferences *AccountsEmailpreferencesService
 
 	Homepage *AccountsHomepageService
 
@@ -198,6 +207,33 @@ func NewAccountsAccounttaxService(s *APIService) *AccountsAccounttaxService {
 }
 
 type AccountsAccounttaxService struct {
+	s *APIService
+}
+
+func NewAccountsBusinessIdentityService(s *APIService) *AccountsBusinessIdentityService {
+	rs := &AccountsBusinessIdentityService{s: s}
+	return rs
+}
+
+type AccountsBusinessIdentityService struct {
+	s *APIService
+}
+
+func NewAccountsBusinessInfoService(s *APIService) *AccountsBusinessInfoService {
+	rs := &AccountsBusinessInfoService{s: s}
+	return rs
+}
+
+type AccountsBusinessInfoService struct {
+	s *APIService
+}
+
+func NewAccountsEmailpreferencesService(s *APIService) *AccountsEmailpreferencesService {
+	rs := &AccountsEmailpreferencesService{s: s}
+	return rs
+}
+
+type AccountsEmailpreferencesService struct {
 	s *APIService
 }
 
@@ -3441,440 +3477,6 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 }
 
-type AccountsGetBusinessIdentityCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetBusinessIdentity: Retrieves the business identity of an account.
-//
-//   - name: The resource name of the business identity. Format:
-//     `accounts/{account}/businessIdentity`.
-func (r *AccountsService) GetBusinessIdentity(name string) *AccountsGetBusinessIdentityCall {
-	c := &AccountsGetBusinessIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsGetBusinessIdentityCall) Fields(s ...googleapi.Field) *AccountsGetBusinessIdentityCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsGetBusinessIdentityCall) IfNoneMatch(entityTag string) *AccountsGetBusinessIdentityCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsGetBusinessIdentityCall) Context(ctx context.Context) *AccountsGetBusinessIdentityCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsGetBusinessIdentityCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsGetBusinessIdentityCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.getBusinessIdentity" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BusinessIdentity.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *AccountsGetBusinessIdentityCall) Do(opts ...googleapi.CallOption) (*BusinessIdentity, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BusinessIdentity{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsGetBusinessInfoCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetBusinessInfo: Retrieves the business info of an account.
-//
-//   - name: The resource name of the business info. Format:
-//     `accounts/{account}/businessInfo`.
-func (r *AccountsService) GetBusinessInfo(name string) *AccountsGetBusinessInfoCall {
-	c := &AccountsGetBusinessInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsGetBusinessInfoCall) Fields(s ...googleapi.Field) *AccountsGetBusinessInfoCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsGetBusinessInfoCall) IfNoneMatch(entityTag string) *AccountsGetBusinessInfoCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsGetBusinessInfoCall) Context(ctx context.Context) *AccountsGetBusinessInfoCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsGetBusinessInfoCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsGetBusinessInfoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.getBusinessInfo" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BusinessInfo.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsGetBusinessInfoCall) Do(opts ...googleapi.CallOption) (*BusinessInfo, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BusinessInfo{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsGetHomepageCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetHomepage: Retrieves a store's homepage.
-//
-//   - name: The name of the homepage to retrieve. Format:
-//     `accounts/{account}/homepage`.
-func (r *AccountsService) GetHomepage(name string) *AccountsGetHomepageCall {
-	c := &AccountsGetHomepageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsGetHomepageCall) Fields(s ...googleapi.Field) *AccountsGetHomepageCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsGetHomepageCall) IfNoneMatch(entityTag string) *AccountsGetHomepageCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsGetHomepageCall) Context(ctx context.Context) *AccountsGetHomepageCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsGetHomepageCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsGetHomepageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.getHomepage" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Homepage.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsGetHomepageCall) Do(opts ...googleapi.CallOption) (*Homepage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Homepage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsGetShippingSettingsCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetShippingSettings: Retrieve shipping setting information.
-//
-//   - name: The name of the shipping setting to retrieve. Format:
-//     `accounts/{account}/shippingsetting`.
-func (r *AccountsService) GetShippingSettings(name string) *AccountsGetShippingSettingsCall {
-	c := &AccountsGetShippingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsGetShippingSettingsCall) Fields(s ...googleapi.Field) *AccountsGetShippingSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsGetShippingSettingsCall) IfNoneMatch(entityTag string) *AccountsGetShippingSettingsCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsGetShippingSettingsCall) Context(ctx context.Context) *AccountsGetShippingSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsGetShippingSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsGetShippingSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.getShippingSettings" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ShippingSettings.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *AccountsGetShippingSettingsCall) Do(opts ...googleapi.CallOption) (*ShippingSettings, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ShippingSettings{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type AccountsListCall struct {
 	s            *APIService
 	urlParams_   gensupport.URLParams
@@ -4289,337 +3891,6 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 }
 
-type AccountsUpdateBusinessIdentityCall struct {
-	s                *APIService
-	name             string
-	businessidentity *BusinessIdentity
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-	header_          http.Header
-}
-
-// UpdateBusinessIdentity: Updates the business identity of an account.
-// Executing this method requires admin access.
-//
-//   - name: Identifier. The resource name of the business identity. Format:
-//     `accounts/{account}/businessIdentity`.
-func (r *AccountsService) UpdateBusinessIdentity(name string, businessidentity *BusinessIdentity) *AccountsUpdateBusinessIdentityCall {
-	c := &AccountsUpdateBusinessIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.businessidentity = businessidentity
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
-func (c *AccountsUpdateBusinessIdentityCall) UpdateMask(updateMask string) *AccountsUpdateBusinessIdentityCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsUpdateBusinessIdentityCall) Fields(s ...googleapi.Field) *AccountsUpdateBusinessIdentityCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsUpdateBusinessIdentityCall) Context(ctx context.Context) *AccountsUpdateBusinessIdentityCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsUpdateBusinessIdentityCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsUpdateBusinessIdentityCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businessidentity)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.updateBusinessIdentity" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BusinessIdentity.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *AccountsUpdateBusinessIdentityCall) Do(opts ...googleapi.CallOption) (*BusinessIdentity, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BusinessIdentity{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsUpdateBusinessInfoCall struct {
-	s            *APIService
-	name         string
-	businessinfo *BusinessInfo
-	urlParams_   gensupport.URLParams
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// UpdateBusinessInfo: Updates the business info of an account. Executing this
-// method requires admin access.
-//
-//   - name: Identifier. The resource name of the business info. Format:
-//     `accounts/{account}/businessInfo`.
-func (r *AccountsService) UpdateBusinessInfo(name string, businessinfo *BusinessInfo) *AccountsUpdateBusinessInfoCall {
-	c := &AccountsUpdateBusinessInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.businessinfo = businessinfo
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
-func (c *AccountsUpdateBusinessInfoCall) UpdateMask(updateMask string) *AccountsUpdateBusinessInfoCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsUpdateBusinessInfoCall) Fields(s ...googleapi.Field) *AccountsUpdateBusinessInfoCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsUpdateBusinessInfoCall) Context(ctx context.Context) *AccountsUpdateBusinessInfoCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsUpdateBusinessInfoCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsUpdateBusinessInfoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businessinfo)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.updateBusinessInfo" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BusinessInfo.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsUpdateBusinessInfoCall) Do(opts ...googleapi.CallOption) (*BusinessInfo, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BusinessInfo{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsUpdateHomepageCall struct {
-	s          *APIService
-	name       string
-	homepage   *Homepage
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// UpdateHomepage: Updates a store's homepage. Executing this method requires
-// admin access.
-//
-//   - name: Identifier. The resource name of the store's homepage. Format:
-//     `accounts/{account}/homepage`.
-func (r *AccountsService) UpdateHomepage(name string, homepage *Homepage) *AccountsUpdateHomepageCall {
-	c := &AccountsUpdateHomepageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.homepage = homepage
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
-func (c *AccountsUpdateHomepageCall) UpdateMask(updateMask string) *AccountsUpdateHomepageCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsUpdateHomepageCall) Fields(s ...googleapi.Field) *AccountsUpdateHomepageCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsUpdateHomepageCall) Context(ctx context.Context) *AccountsUpdateHomepageCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsUpdateHomepageCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsUpdateHomepageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.homepage)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.updateHomepage" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Homepage.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsUpdateHomepageCall) Do(opts ...googleapi.CallOption) (*Homepage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Homepage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type AccountsAccounttaxGetCall struct {
 	s            *APIService
 	name         string
@@ -4982,6 +4253,671 @@ func (c *AccountsAccounttaxPatchCall) Do(opts ...googleapi.CallOption) (*Account
 	return ret, nil
 }
 
+type AccountsBusinessIdentityGetBusinessIdentityCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBusinessIdentity: Retrieves the business identity of an account.
+//
+//   - name: The resource name of the business identity. Format:
+//     `accounts/{account}/businessIdentity`.
+func (r *AccountsBusinessIdentityService) GetBusinessIdentity(name string) *AccountsBusinessIdentityGetBusinessIdentityCall {
+	c := &AccountsBusinessIdentityGetBusinessIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) Fields(s ...googleapi.Field) *AccountsBusinessIdentityGetBusinessIdentityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) IfNoneMatch(entityTag string) *AccountsBusinessIdentityGetBusinessIdentityCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) Context(ctx context.Context) *AccountsBusinessIdentityGetBusinessIdentityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.businessIdentity.getBusinessIdentity" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessIdentity.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsBusinessIdentityGetBusinessIdentityCall) Do(opts ...googleapi.CallOption) (*BusinessIdentity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessIdentity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsBusinessIdentityUpdateBusinessIdentityCall struct {
+	s                *APIService
+	name             string
+	businessidentity *BusinessIdentity
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateBusinessIdentity: Updates the business identity of an account.
+// Executing this method requires admin access.
+//
+//   - name: Identifier. The resource name of the business identity. Format:
+//     `accounts/{account}/businessIdentity`.
+func (r *AccountsBusinessIdentityService) UpdateBusinessIdentity(name string, businessidentity *BusinessIdentity) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
+	c := &AccountsBusinessIdentityUpdateBusinessIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.businessidentity = businessidentity
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated.
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) UpdateMask(updateMask string) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) Fields(s ...googleapi.Field) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) Context(ctx context.Context) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businessidentity)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.businessIdentity.updateBusinessIdentity" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessIdentity.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) Do(opts ...googleapi.CallOption) (*BusinessIdentity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessIdentity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsBusinessInfoGetBusinessInfoCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBusinessInfo: Retrieves the business info of an account.
+//
+//   - name: The resource name of the business info. Format:
+//     `accounts/{account}/businessInfo`.
+func (r *AccountsBusinessInfoService) GetBusinessInfo(name string) *AccountsBusinessInfoGetBusinessInfoCall {
+	c := &AccountsBusinessInfoGetBusinessInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsBusinessInfoGetBusinessInfoCall) Fields(s ...googleapi.Field) *AccountsBusinessInfoGetBusinessInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsBusinessInfoGetBusinessInfoCall) IfNoneMatch(entityTag string) *AccountsBusinessInfoGetBusinessInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsBusinessInfoGetBusinessInfoCall) Context(ctx context.Context) *AccountsBusinessInfoGetBusinessInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsBusinessInfoGetBusinessInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessInfoGetBusinessInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.businessInfo.getBusinessInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessInfo.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsBusinessInfoGetBusinessInfoCall) Do(opts ...googleapi.CallOption) (*BusinessInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsBusinessInfoUpdateBusinessInfoCall struct {
+	s            *APIService
+	name         string
+	businessinfo *BusinessInfo
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateBusinessInfo: Updates the business info of an account. Executing this
+// method requires admin access.
+//
+//   - name: Identifier. The resource name of the business info. Format:
+//     `accounts/{account}/businessInfo`.
+func (r *AccountsBusinessInfoService) UpdateBusinessInfo(name string, businessinfo *BusinessInfo) *AccountsBusinessInfoUpdateBusinessInfoCall {
+	c := &AccountsBusinessInfoUpdateBusinessInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.businessinfo = businessinfo
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated.
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) UpdateMask(updateMask string) *AccountsBusinessInfoUpdateBusinessInfoCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Fields(s ...googleapi.Field) *AccountsBusinessInfoUpdateBusinessInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Context(ctx context.Context) *AccountsBusinessInfoUpdateBusinessInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businessinfo)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.businessInfo.updateBusinessInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessInfo.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Do(opts ...googleapi.CallOption) (*BusinessInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsEmailpreferencesGetEmailPreferencesCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEmailPreferences: Returns the email preferences for a Merchant Center
+// account user. Use the name=accounts/*/users/me/emailPreferences alias to get
+// preferences for the authenticated user.
+//
+//   - name: The name of the `EmailPreferences` resource. Format:
+//     `accounts/{account}/users/{email}/emailPreferences`.
+func (r *AccountsEmailpreferencesService) GetEmailPreferences(name string) *AccountsEmailpreferencesGetEmailPreferencesCall {
+	c := &AccountsEmailpreferencesGetEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailpreferencesGetEmailPreferencesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) IfNoneMatch(entityTag string) *AccountsEmailpreferencesGetEmailPreferencesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailpreferencesGetEmailPreferencesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.emailpreferences.getEmailPreferences" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EmailPreferences.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EmailPreferences{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsEmailpreferencesUpdateEmailPreferencesCall struct {
+	s                *APIService
+	name             string
+	emailpreferences *EmailPreferences
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateEmailPreferences: Updates the email preferences for a Merchant Center
+// account user. MCA users should specify the MCA account rather than a
+// sub-account of the MCA. Preferences which are not explicitly selected in the
+// update mask will not be updated. It is invalid for updates to specify an
+// UNCONFIRMED opt-in status value. Use the
+// name=accounts/*/users/me/emailPreferences alias to update preferences for
+// the authenticated user.
+//
+//   - name: Identifier. The name of the EmailPreferences. The endpoint is only
+//     supported for the authenticated user.
+func (r *AccountsEmailpreferencesService) UpdateEmailPreferences(name string, emailpreferences *EmailPreferences) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+	c := &AccountsEmailpreferencesUpdateEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.emailpreferences = emailpreferences
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated.
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.emailpreferences)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.emailpreferences.updateEmailPreferences" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EmailPreferences.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EmailPreferences{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type AccountsHomepageClaimCall struct {
 	s                    *APIService
 	name                 string
@@ -5093,6 +5029,114 @@ func (c *AccountsHomepageClaimCall) Do(opts ...googleapi.CallOption) (*Homepage,
 	return ret, nil
 }
 
+type AccountsHomepageGetHomepageCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetHomepage: Retrieves a store's homepage.
+//
+//   - name: The name of the homepage to retrieve. Format:
+//     `accounts/{account}/homepage`.
+func (r *AccountsHomepageService) GetHomepage(name string) *AccountsHomepageGetHomepageCall {
+	c := &AccountsHomepageGetHomepageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsHomepageGetHomepageCall) Fields(s ...googleapi.Field) *AccountsHomepageGetHomepageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsHomepageGetHomepageCall) IfNoneMatch(entityTag string) *AccountsHomepageGetHomepageCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsHomepageGetHomepageCall) Context(ctx context.Context) *AccountsHomepageGetHomepageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsHomepageGetHomepageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsHomepageGetHomepageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.homepage.getHomepage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Homepage.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsHomepageGetHomepageCall) Do(opts ...googleapi.CallOption) (*Homepage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Homepage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type AccountsHomepageUnclaimCall struct {
 	s                      *APIService
 	name                   string
@@ -5165,6 +5209,116 @@ func (c *AccountsHomepageUnclaimCall) doRequest(alt string) (*http.Response, err
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsHomepageUnclaimCall) Do(opts ...googleapi.CallOption) (*Homepage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Homepage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsHomepageUpdateHomepageCall struct {
+	s          *APIService
+	name       string
+	homepage   *Homepage
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateHomepage: Updates a store's homepage. Executing this method requires
+// admin access.
+//
+//   - name: Identifier. The resource name of the store's homepage. Format:
+//     `accounts/{account}/homepage`.
+func (r *AccountsHomepageService) UpdateHomepage(name string, homepage *Homepage) *AccountsHomepageUpdateHomepageCall {
+	c := &AccountsHomepageUpdateHomepageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.homepage = homepage
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated.
+func (c *AccountsHomepageUpdateHomepageCall) UpdateMask(updateMask string) *AccountsHomepageUpdateHomepageCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsHomepageUpdateHomepageCall) Fields(s ...googleapi.Field) *AccountsHomepageUpdateHomepageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsHomepageUpdateHomepageCall) Context(ctx context.Context) *AccountsHomepageUpdateHomepageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsHomepageUpdateHomepageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsHomepageUpdateHomepageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.homepage)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.homepage.updateHomepage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Homepage.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsHomepageUpdateHomepageCall) Do(opts ...googleapi.CallOption) (*Homepage, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6661,6 +6815,115 @@ func (c *AccountsRegionsPatchCall) Do(opts ...googleapi.CallOption) (*Region, er
 	return ret, nil
 }
 
+type AccountsShippingSettingsGetShippingSettingsCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetShippingSettings: Retrieve shipping setting information.
+//
+//   - name: The name of the shipping setting to retrieve. Format:
+//     `accounts/{account}/shippingsetting`.
+func (r *AccountsShippingSettingsService) GetShippingSettings(name string) *AccountsShippingSettingsGetShippingSettingsCall {
+	c := &AccountsShippingSettingsGetShippingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsShippingSettingsGetShippingSettingsCall) Fields(s ...googleapi.Field) *AccountsShippingSettingsGetShippingSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsShippingSettingsGetShippingSettingsCall) IfNoneMatch(entityTag string) *AccountsShippingSettingsGetShippingSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsShippingSettingsGetShippingSettingsCall) Context(ctx context.Context) *AccountsShippingSettingsGetShippingSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsShippingSettingsGetShippingSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsShippingSettingsGetShippingSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.shippingSettings.getShippingSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShippingSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsShippingSettingsGetShippingSettingsCall) Do(opts ...googleapi.CallOption) (*ShippingSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShippingSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type AccountsShippingSettingsInsertCall struct {
 	s                *APIService
 	parent           string
@@ -7303,117 +7566,6 @@ func (c *AccountsUsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	return ret, nil
 }
 
-type AccountsUsersGetEmailPreferencesCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetEmailPreferences: Returns the email preferences for a Merchant Center
-// account user. Use the name=accounts/*/users/me/emailPreferences alias to get
-// preferences for the authenticated user.
-//
-//   - name: The name of the `EmailPreferences` resource. Format:
-//     `accounts/{account}/users/{email}/emailPreferences`.
-func (r *AccountsUsersService) GetEmailPreferences(name string) *AccountsUsersGetEmailPreferencesCall {
-	c := &AccountsUsersGetEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsUsersGetEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsUsersGetEmailPreferencesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsUsersGetEmailPreferencesCall) IfNoneMatch(entityTag string) *AccountsUsersGetEmailPreferencesCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsUsersGetEmailPreferencesCall) Context(ctx context.Context) *AccountsUsersGetEmailPreferencesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsUsersGetEmailPreferencesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsUsersGetEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.users.getEmailPreferences" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *EmailPreferences.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *AccountsUsersGetEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &EmailPreferences{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type AccountsUsersListCall struct {
 	s            *APIService
 	parent       string
@@ -7661,122 +7813,6 @@ func (c *AccountsUsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error)
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &User{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsUsersUpdateEmailPreferencesCall struct {
-	s                *APIService
-	name             string
-	emailpreferences *EmailPreferences
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-	header_          http.Header
-}
-
-// UpdateEmailPreferences: Updates the email preferences for a Merchant Center
-// account user. MCA users should specify the MCA account rather than a
-// sub-account of the MCA. Preferences which are not explicitly selected in the
-// update mask will not be updated. It is invalid for updates to specify an
-// UNCONFIRMED opt-in status value. Use the
-// name=accounts/*/users/me/emailPreferences alias to update preferences for
-// the authenticated user.
-//
-//   - name: Identifier. The name of the EmailPreferences. The endpoint is only
-//     supported for the authenticated user.
-func (r *AccountsUsersService) UpdateEmailPreferences(name string, emailpreferences *EmailPreferences) *AccountsUsersUpdateEmailPreferencesCall {
-	c := &AccountsUsersUpdateEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.emailpreferences = emailpreferences
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
-func (c *AccountsUsersUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsUsersUpdateEmailPreferencesCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsUsersUpdateEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsUsersUpdateEmailPreferencesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsUsersUpdateEmailPreferencesCall) Context(ctx context.Context) *AccountsUsersUpdateEmailPreferencesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsUsersUpdateEmailPreferencesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsUsersUpdateEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.emailpreferences)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.users.updateEmailPreferences" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *EmailPreferences.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *AccountsUsersUpdateEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &EmailPreferences{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

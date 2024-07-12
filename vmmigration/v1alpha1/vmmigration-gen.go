@@ -2878,7 +2878,7 @@ type NetworkInterface struct {
 	InternalIp string `json:"internalIp,omitempty"`
 	// Network: The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
-	// Subnetwork: The subnetwork to connect the NIC to.
+	// Subnetwork: Optional. The subnetwork to connect the NIC to.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalIp") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1276,6 +1276,15 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Deployment state of otel-collector
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Deployment state of reconciler-manager pod
 	//
 	// Possible values:
@@ -1285,6 +1294,16 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Deployment state of
+	// resource-group-controller-manager
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Deployment state of root-reconciler
 	//
 	// Possible values:
@@ -1407,7 +1426,7 @@ func (s ConfigManagementConfigSyncState) MarshalJSON() ([]byte, error) {
 // ConfigManagementConfigSyncVersion: Specific versioning information
 // pertaining to ConfigSync's Pods
 type ConfigManagementConfigSyncVersion struct {
-	// AdmissionWebhook: Version of the deployed admission_webhook pod
+	// AdmissionWebhook: Version of the deployed admission-webhook pod
 	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
 	// GitSync: Version of the deployed git-sync pod
 	GitSync string `json:"gitSync,omitempty"`
@@ -1415,8 +1434,13 @@ type ConfigManagementConfigSyncVersion struct {
 	Importer string `json:"importer,omitempty"`
 	// Monitor: Version of the deployed monitor pod
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Version of the deployed otel-collector pod
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Version of the deployed reconciler-manager pod
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Version of the deployed
+	// resource-group-controller-manager pod
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Version of the deployed reconciler container in
 	// root-reconciler pod
 	RootReconciler string `json:"rootReconciler,omitempty"`
@@ -5624,7 +5648,7 @@ type ServiceMeshMembershipSpec struct {
 	//   "MANUAL" - User will manually configure the control plane (e.g. via CLI,
 	// or via the ControlPlaneRevision KRM API)
 	ControlPlane string `json:"controlPlane,omitempty"`
-	// Management: Enables automatic Service Mesh management.
+	// Management: Optional. Enables automatic Service Mesh management.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified

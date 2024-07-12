@@ -1211,7 +1211,8 @@ type Event struct {
 	// the recurring event to which this instance belongs. Immutable.
 	RecurringEventId string `json:"recurringEventId,omitempty"`
 	// Reminders: Information about the event's reminders for the authenticated
-	// user.
+	// user. Note that changing reminders does not also change the updated property
+	// of the enclosing event.
 	Reminders *EventReminders `json:"reminders,omitempty"`
 	// Sequence: Sequence number as per iCalendar.
 	Sequence int64 `json:"sequence,omitempty"`
@@ -1259,7 +1260,8 @@ type Event struct {
 	// - "transparent" - The event does not block time on the calendar. This is
 	// equivalent to setting Show me as to Available in the Calendar UI.
 	Transparency string `json:"transparency,omitempty"`
-	// Updated: Last modification time of the event (as a RFC3339 timestamp).
+	// Updated: Last modification time of the main event data (as a RFC3339
+	// timestamp). Updating event reminders will not cause this to change.
 	// Read-only.
 	Updated string `json:"updated,omitempty"`
 	// Visibility: Visibility of the event. Optional. Possible values are:
@@ -1426,7 +1428,8 @@ func (s EventOrganizer) MarshalJSON() ([]byte, error) {
 }
 
 // EventReminders: Information about the event's reminders for the
-// authenticated user.
+// authenticated user. Note that changing reminders does not also change the
+// updated property of the enclosing event.
 type EventReminders struct {
 	// Overrides: If the event doesn't use the default reminders, this lists the
 	// reminders specific to the event, or, if not set, indicates that no reminders

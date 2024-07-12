@@ -1279,6 +1279,9 @@ type GoogleCloudDialogflowCxV3EventHandler struct {
 	// TargetPage: The target page to transition to. Format:
 	// `projects//locations//agents//flows//pages/`.
 	TargetPage string `json:"targetPage,omitempty"`
+	// TargetPlaybook: The target playbook to transition to. Format:
+	// `projects//locations//agents//playbooks/`.
+	TargetPlaybook string `json:"targetPlaybook,omitempty"`
 	// TriggerFulfillment: The fulfillment to call when the event occurs. Handling
 	// webhook errors with a fulfillment enabled with webhook could cause infinite
 	// loop. It is invalid to specify such fulfillment for a handler handling
@@ -5483,17 +5486,21 @@ func (s GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignals) MarshalJSON() 
 // GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignalsAnswerGenerationModel
 // CallSignals: Diagnostic info related to the answer generation model call.
 type GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignalsAnswerGenerationModelCallSignals struct {
+	// Model: Name of the generative model. For example, "gemini-ultra",
+	// "gemini-pro", "gemini-1.5-flash" etc. Defaults to "Other" if the model is
+	// unknown.
+	Model string `json:"model,omitempty"`
 	// ModelOutput: Output of the generative model.
 	ModelOutput string `json:"modelOutput,omitempty"`
 	// RenderedPrompt: Prompt as sent to the model.
 	RenderedPrompt string `json:"renderedPrompt,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ModelOutput") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ModelOutput") to include in API
+	// NullFields is a list of field names (e.g. "Model") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5597,17 +5604,21 @@ func (s GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignalsGroundingSignals
 // GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignalsRewriterModelCallSign
 // als: Diagnostic info related to the rewriter model call.
 type GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignalsRewriterModelCallSignals struct {
+	// Model: Name of the generative model. For example, "gemini-ultra",
+	// "gemini-pro", "gemini-1.5-flash" etc. Defaults to "Other" if the model is
+	// unknown.
+	Model string `json:"model,omitempty"`
 	// ModelOutput: Output of the generative model.
 	ModelOutput string `json:"modelOutput,omitempty"`
 	// RenderedPrompt: Prompt as sent to the model.
 	RenderedPrompt string `json:"renderedPrompt,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ModelOutput") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ModelOutput") to include in API
+	// NullFields is a list of field names (e.g. "Model") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6260,6 +6271,9 @@ type GoogleCloudDialogflowCxV3beta1EventHandler struct {
 	// TargetPage: The target page to transition to. Format:
 	// `projects//locations//agents//flows//pages/`.
 	TargetPage string `json:"targetPage,omitempty"`
+	// TargetPlaybook: The target playbook to transition to. Format:
+	// `projects//locations//agents//playbooks/`.
+	TargetPlaybook string `json:"targetPlaybook,omitempty"`
 	// TriggerFulfillment: The fulfillment to call when the event occurs. Handling
 	// webhook errors with a fulfillment enabled with webhook could cause infinite
 	// loop. It is invalid to specify such fulfillment for a handler handling
@@ -9674,6 +9688,8 @@ type GoogleCloudDialogflowCxV3beta1Match struct {
 	//   "NO_MATCH" - No match was found for the query.
 	//   "NO_INPUT" - Indicates an empty query.
 	//   "EVENT" - The query directly triggered an event.
+	//   "KNOWLEDGE_CONNECTOR" - The query was matched to a Knowledge Connector
+	// answer.
 	//   "PLAYBOOK" - The query was handled by a `Playbook`.
 	MatchType string `json:"matchType,omitempty"`
 	// Parameters: The collection of parameters extracted from the query. Depending
@@ -14244,6 +14260,37 @@ func (s GoogleCloudDialogflowV2DeployConversationModelOperationMetadata) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2EncryptionSpec: A customer-managed encryption key
+// specification that can be applied to all created resources (e.g.
+// Conversation).
+type GoogleCloudDialogflowV2EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2EntityType: Each intent parameter has a type, called
 // the entity type, which dictates exactly how data from an end-user expression
 // is extracted. Dialogflow provides predefined system entities that can match
@@ -14618,6 +14665,55 @@ type GoogleCloudDialogflowV2ImportDocumentsResponse struct {
 
 func (s GoogleCloudDialogflowV2ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ImportDocumentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata: Metadata for
+// initializing a location-level encryption specification.
+type GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata struct {
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudDialogflowV2InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Request") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Request") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2InitializeEncryptionSpecRequest: The request to
+// initialize a location-level encryption specification.
+type GoogleCloudDialogflowV2InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudDialogflowV2EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17027,6 +17123,37 @@ func (s GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1EncryptionSpec: A customer-managed encryption
+// key specification that can be applied to all created resources (e.g.
+// Conversation).
+type GoogleCloudDialogflowV2beta1EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1EntityType: Each intent parameter has a type,
 // called the entity type, which dictates exactly how data from an end-user
 // expression is extracted. Dialogflow provides predefined system entities that
@@ -17349,6 +17476,55 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsResponse struct {
 
 func (s GoogleCloudDialogflowV2beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata: Metadata for
+// initializing a location-level encryption specification.
+type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata struct {
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Request") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Request") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest: The request to
+// initialize a location-level encryption specification.
+type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudDialogflowV2beta1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -19240,6 +19416,8 @@ type GoogleCloudDialogflowV2beta1Message struct {
 	//   "END_USER" - Participant is an end user that has called or chatted with
 	// Dialogflow services.
 	ParticipantRole string `json:"participantRole,omitempty"`
+	// ResponseMessages: Optional. Automated agent responses.
+	ResponseMessages []*GoogleCloudDialogflowV2beta1ResponseMessage `json:"responseMessages,omitempty"`
 	// SendTime: Optional. The time when the message was sent.
 	SendTime string `json:"sendTime,omitempty"`
 	// SentimentAnalysis: Output only. The sentiment analysis result for the
@@ -19445,6 +19623,182 @@ func (s *GoogleCloudDialogflowV2beta1QueryResult) UnmarshalJSON(data []byte) err
 	s.IntentDetectionConfidence = float64(s1.IntentDetectionConfidence)
 	s.SpeechRecognitionConfidence = float64(s1.SpeechRecognitionConfidence)
 	return nil
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessage: Response messages from an
+// automated agent.
+type GoogleCloudDialogflowV2beta1ResponseMessage struct {
+	// EndInteraction: A signal that indicates the interaction with the Dialogflow
+	// agent has ended.
+	EndInteraction *GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction `json:"endInteraction,omitempty"`
+	// LiveAgentHandoff: Hands off conversation to a live agent.
+	LiveAgentHandoff *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff `json:"liveAgentHandoff,omitempty"`
+	// MixedAudio: An audio response message composed of both the synthesized
+	// Dialogflow agent responses and the audios hosted in places known to the
+	// client.
+	MixedAudio *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio `json:"mixedAudio,omitempty"`
+	// Payload: Returns a response containing a custom, platform-specific payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// TelephonyTransferCall: A signal that the client should transfer the phone
+	// call connected to this agent to a third-party endpoint.
+	TelephonyTransferCall *GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
+	// Text: Returns a text response.
+	Text *GoogleCloudDialogflowV2beta1ResponseMessageText `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndInteraction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndInteraction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction: Indicates that
+// interaction with the Dialogflow agent has ended.
+type GoogleCloudDialogflowV2beta1ResponseMessageEndInteraction struct {
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff: Indicates that
+// the conversation should be handed off to a human agent. Dialogflow only uses
+// this to determine which conversations were handed off to a human agent for
+// measurement purposes. What else to do with this signal is up to you and your
+// handoff procedures. You may set this, for example: * In the entry
+// fulfillment of a CX Page if entering the page indicates something went
+// extremely wrong in the conversation. * In a webhook response when you
+// determine that the customer issue can only be handled by a human.
+type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
+	// Metadata: Custom metadata for your handoff procedure. Dialogflow doesn't
+	// impose any structure on this.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio: Represents an audio
+// message that is composed of both segments synthesized from the Dialogflow
+// agent prompts and ones hosted externally at the specified URIs.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio struct {
+	// Segments: Segments this audio response is composed of.
+	Segments []*GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Segments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment: Represents one
+// segment of audio.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment struct {
+	// AllowPlaybackInterruption: Whether the playback of this segment can be
+	// interrupted by the end user's speech and the client should then start the
+	// next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+	// Audio: Raw audio synthesized from the Dialogflow agent's response using the
+	// output config specified in the request.
+	Audio string `json:"audio,omitempty"`
+	// Uri: Client-specific URI that points to an audio clip accessible to the
+	// client.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowPlaybackInterruption")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowPlaybackInterruption") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall: Represents
+// the signal that telles the client to transfer the phone call connected to
+// the agent to a third-party endpoint.
+type GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall struct {
+	// PhoneNumber: Transfer the call to a phone number in E.164 format
+	// (https://en.wikipedia.org/wiki/E.164).
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	// SipUri: Transfer the call to a SIP endpoint.
+	SipUri string `json:"sipUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageText: The text response message.
+type GoogleCloudDialogflowV2beta1ResponseMessageText struct {
+	// Text: A collection of text responses.
+	Text []string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ResponseMessageText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageText
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1Sentiment: The sentiment, such as

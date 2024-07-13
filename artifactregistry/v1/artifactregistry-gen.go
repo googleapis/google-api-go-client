@@ -2290,6 +2290,11 @@ func (s ProjectSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PromoteArtifactMetadata: The metadata for promote artifact long running
+// operation.
+type PromoteArtifactMetadata struct {
+}
+
 // PythonPackage: PythonPackage represents a python artifact.
 type PythonPackage struct {
 	// CreateTime: Output only. Time the package was created.
@@ -2749,9 +2754,9 @@ type UploadGenericArtifactRequest struct {
 	// characters, i.e. [a-zA-Z0-9-_.~@].
 	Filename string `json:"filename,omitempty"`
 	// PackageId: The ID of the package of the generic artifact. If the package
-	// does not exist, a new package will be created. The `package_id` must start
-	// with a letter, end with a letter or number, only contain letters, numbers,
-	// hyphens and periods i.e. [a-z0-9-.], and cannot exceed 256 characters.
+	// does not exist, a new package will be created. The `package_id` should start
+	// and end with a letter or number, only contain letters, numbers, hyphens,
+	// underscores, and periods, and not exceed 256 characters.
 	PackageId string `json:"packageId,omitempty"`
 	// VersionId: The ID of the version of the generic artifact. If the version
 	// does not exist, a new version will be created. The version_id must start and

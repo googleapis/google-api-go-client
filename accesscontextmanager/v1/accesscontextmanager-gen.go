@@ -920,7 +920,8 @@ type EgressFrom struct {
 	SourceRestriction string `json:"sourceRestriction,omitempty"`
 	// Sources: Sources that this EgressPolicy authorizes access from. If this
 	// field is not empty, then `source_restriction` must be set to
-	// `SOURCE_RESTRICTION_ENABLED`.
+	// `SOURCE_RESTRICTION_ENABLED`. TODO (b/332744441): annotate this field with
+	// custom_org_policy_accessibility when cl/640698580 will be rolled out.
 	Sources []*EgressSource `json:"sources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Identities") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -988,7 +989,8 @@ type EgressSource struct {
 	// can be accessed through Google Cloud calls with request origins within the
 	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a
 	// single `*` is specified for `access_level`, then all EgressSources will be
-	// allowed.
+	// allowed. TODO (b/332744441): annotate this field with
+	// custom_org_policy_accessibility when cl/640698580 will be rolled out.
 	AccessLevel string `json:"accessLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2251,7 +2253,9 @@ func (s VpcAccessibleServices) MarshalJSON() ([]byte, error) {
 
 // VpcNetworkSource: The originating network source in Google Cloud.
 type VpcNetworkSource struct {
-	// VpcSubnetwork: Sub-segment ranges of a VPC network.
+	// VpcSubnetwork: Sub-segment ranges of a VPC network. TODO (b/332744441):
+	// annotate this field with custom_org_policy_accessibility when cl/640698580
+	// will be rolled out.
 	VpcSubnetwork *VpcSubNetwork `json:"vpcSubnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "VpcSubnetwork") to
 	// unconditionally include in API requests. By default, fields with empty or

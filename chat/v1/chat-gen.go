@@ -1274,26 +1274,24 @@ func (s DeletionMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeprecatedEvent: A Google Chat app interaction event. To learn about
-// interaction events, see Receive and respond to interactions with your Google
-// Chat app
-// (https://developers.google.com/workspace/chat/api/guides/message-formats).
-// To learn about event types and for example event payloads, see Types of
-// Google Chat app interaction events
-// (https://developers.google.com/workspace/chat/events). In addition to
-// receiving events from user interactions, Chat apps can receive events about
-// changes to spaces, such as when a new member is added to a space. To learn
-// about space events, see Work with events from Google Chat
-// (https://developers.google.com/workspace/chat/events-overview).
+// DeprecatedEvent: A Google Chat app interaction event that represents and
+// contains data about a user's interaction with a Chat app. To configure your
+// Chat app to receive interaction events, see Receive and respond to user
+// interactions
+// (https://developers.google.com/workspace/chat/receive-respond-interactions).
+// In addition to receiving events from user interactions, Chat apps can
+// receive events about changes to spaces, such as when a new member is added
+// to a space. To learn about space events, see Work with events from Google
+// Chat (https://developers.google.com/workspace/chat/events-overview).
 type DeprecatedEvent struct {
 	// Action: For `CARD_CLICKED` interaction events, the form action data
 	// associated when a user clicks a card or dialog. To learn more, see Read form
 	// data input by users on cards
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Action *FormAction `json:"action,omitempty"`
-	// Common: Represents informatmessage_visibilityion about the user's client,
-	// such as locale, host app, and platform. For Chat apps, `CommonEventObject`
-	// includes information submitted by users interacting with dialogs
+	// Common: Represents information about the user's client, such as locale, host
+	// app, and platform. For Chat apps, `CommonEventObject` includes information
+	// submitted by users interacting with dialogs
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
@@ -1324,7 +1322,7 @@ type DeprecatedEvent struct {
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 	// Message: The message that triggered the interaction event, if applicable.
 	Message *Message `json:"message,omitempty"`
-	// Space: The space in which the interaction event occurred.
+	// Space: The space in which the user interacted with the Chat app.
 	Space *Space `json:"space,omitempty"`
 	// ThreadKey: The Chat app-defined key for the thread related to the
 	// interaction event. See `spaces.messages.thread.threadKey`
@@ -1340,27 +1338,48 @@ type DeprecatedEvent struct {
 	// absent from API responses and the Chat API configuration page
 	// (https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat).
 	Token string `json:"token,omitempty"`
-	// Type: The type of interaction event. For details, see Types of Google Chat
-	// app interaction events
-	// (https://developers.google.com/workspace/chat/events).
+	// Type: The type (/workspace/chat/api/reference/rest/v1/EventType) of user
+	// interaction with the Chat app, such as `MESSAGE` or `ADDED_TO_SPACE`.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "MESSAGE" - A user sends the Chat app a message, or invokes the Chat app
-	// in a space.
+	// in a space, such as any of the following examples: * Any message in a direct
+	// message (DM) space with the Chat app. * A message in a multi-person space
+	// where a person @mentions the Chat app, or uses one of its slash commands. *
+	// If you've configured link previews for your Chat app, a user posts a message
+	// that contains a link that matches the configured URL pattern.
 	//   "ADDED_TO_SPACE" - A user adds the Chat app to a space, or a Google
 	// Workspace administrator installs the Chat app in direct message spaces for
-	// users in their organization.
-	//   "REMOVED_FROM_SPACE" - A user removes the Chat app from a space.
+	// users in their organization. Chat apps typically respond to this interaction
+	// event by posting a welcome message in the space. When administrators install
+	// Chat apps, the `space.adminInstalled` field is set to `true` and users can't
+	// uninstall them. To learn about Chat apps installed by administrators, see
+	// Google Workspace Admin Help's documentation, [Install Marketplace apps in
+	// your domain](https://support.google.com/a/answer/172482).
+	//   "REMOVED_FROM_SPACE" - A user removes the Chat app from a space, or a
+	// Google Workspace administrator uninstalls the Chat app for a user in their
+	// organization. Chat apps can't respond with messages to this event, because
+	// they have already been removed. When administrators uninstall Chat apps, the
+	// `space.adminInstalled` field is set to `false`. If a user installed the Chat
+	// app before the administrator, the Chat app remains installed for the user
+	// and the Chat app doesn't receive a `REMOVED_FROM_SPACE` interaction event.
 	//   "CARD_CLICKED" - A user clicks an interactive element of a card or dialog
-	// from a Chat app, such as a button. If a user interacts with a dialog, the
+	// from a Chat app, such as a button. To receive an interaction event, the
+	// button must trigger another interaction with the Chat app. For example, a
+	// Chat app doesn't receive a `CARD_CLICKED` interaction event if a user clicks
+	// a button that opens a link to a website, but receives interaction events in
+	// the following examples: * The user clicks a `Send feedback` button on a
+	// card, which opens a dialog for the user to input information. * The user
+	// clicks a `Submit` button after inputting information into a card or dialog.
+	// If a user clicks a button to open, submit, or cancel a dialog, the
 	// `CARD_CLICKED` interaction event's `isDialogEvent` field is set to `true`
 	// and includes a
 	// [`DialogEventType`](https://developers.google.com/workspace/chat/api/referenc
 	// e/rest/v1/DialogEventType).
 	//   "WIDGET_UPDATED" - A user updates a widget in a card message or dialog.
 	Type string `json:"type,omitempty"`
-	// User: The user that triggered the interaction event.
+	// User: The user that interacted with the Chat app.
 	User *User `json:"user,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4620,13 +4639,7 @@ type Space struct {
 	// organization. Omit this field when creating spaces in the following
 	// conditions: * The authenticated user uses a consumer account (unmanaged user
 	// account). By default, a space created by a consumer account permits any
-	// Google Chat user. * The space is used to [import data to Google Chat]
-	// (https://developers.google.com/chat/api/guides/import-data-overview) because
-	// import mode spaces must only permit members from the same Google Workspace
-	// organization. However, as part of the Google Workspace Developer Preview
-	// Program (https://developers.google.com/workspace/preview), import mode
-	// spaces can permit any Google Chat user so this field can then be set for
-	// import mode spaces. For existing spaces, this field is output only.
+	// Google Chat user. For existing spaces, this field is output only.
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
 	// ImportMode: Optional. Whether this space is created in `Import Mode` as part
 	// of a data migration into Google Workspace. While spaces are being imported,

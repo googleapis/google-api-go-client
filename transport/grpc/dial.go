@@ -53,6 +53,9 @@ var logRateLimiter = rate.Sometimes{Interval: 1 * time.Second}
 // Assign to var for unit test replacement
 var dialContext = grpc.DialContext
 
+// Assign to var for unit test replacement
+var dialContextNewAuth = grpctransport.Dial
+
 // otelStatsHandler is a singleton otelgrpc.clientHandler to be used across
 // all dial connections to avoid the memory leak documented in
 // https://github.com/open-telemetry/opentelemetry-go-contrib/issues/4226
@@ -218,7 +221,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
-	pool, err := grpctransport.Dial(ctx, secure, &grpctransport.Options{
+	pool, err := dialContextNewAuth(ctx, secure, &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
 		Endpoint:              ds.Endpoint,

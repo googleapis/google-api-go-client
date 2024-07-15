@@ -223,7 +223,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		DisableAuthentication: ds.NoAuth,
 		Endpoint:              ds.Endpoint,
 		Metadata:              metadata,
-		GRPCDialOpts:          ds.GRPCDialOpts,
+		GRPCDialOpts:          prepareDialOptsNewAuth(ds),
 		PoolSize:              poolSize,
 		Credentials:           creds,
 		APIKey:                ds.APIKey,
@@ -246,6 +246,15 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		},
 	})
 	return pool, err
+}
+
+func prepareDialOptsNewAuth(ds *internal.DialSettings) []grpc.DialOption {
+	var opts []grpc.DialOption
+	if ds.UserAgent != "" {
+		opts = append(opts, grpc.WithUserAgent(ds.UserAgent))
+	}
+
+	return append(opts, ds.GRPCDialOpts...)
 }
 
 func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.ClientConn, error) {

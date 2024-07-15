@@ -35,6 +35,34 @@ func TestDial(t *testing.T) {
 	dial(context.Background(), false, &o)
 }
 
+func TestPrepareDialOptsNewAuth(t *testing.T) {
+	for _, testcase := range []struct {
+		name        string
+		ds          *internal.DialSettings
+		wantNumOpts int
+	}{
+		{
+			name:        "empty",
+			ds:          &internal.DialSettings{},
+			wantNumOpts: 0,
+		},
+		{
+			name: "user agent",
+			ds: &internal.DialSettings{
+				UserAgent: "test",
+			},
+			wantNumOpts: 1,
+		},
+	} {
+		t.Run(testcase.name, func(t *testing.T) {
+			got := prepareDialOptsNewAuth(testcase.ds)
+			if len(got) != testcase.wantNumOpts {
+				t.Fatalf("got %d options, want %d options", len(got), testcase.wantNumOpts)
+			}
+		})
+	}
+}
+
 func TestCheckDirectPathEndPoint(t *testing.T) {
 	for _, testcase := range []struct {
 		name     string

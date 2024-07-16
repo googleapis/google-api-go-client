@@ -854,6 +854,34 @@ func (s Consumer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomRegionMetadata: Metadata about a custom region. This is only populated
+// if the region is a custom region. For single/multi regions, it will be
+// empty.
+type CustomRegionMetadata struct {
+	// OptionalReadOnlyRegions: The read-only regions for this custom region.
+	OptionalReadOnlyRegions []string `json:"optionalReadOnlyRegions,omitempty"`
+	// RequiredReadWriteRegions: The read-write regions for this custom region.
+	RequiredReadWriteRegions []string `json:"requiredReadWriteRegions,omitempty"`
+	// WitnessRegion: The Spanner witness region for this custom region.
+	WitnessRegion string `json:"witnessRegion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OptionalReadOnlyRegions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OptionalReadOnlyRegions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomRegionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRegionMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataCatalogConfig: Specifies how metastore metadata should be integrated
 // with the Data Catalog service.
 type DataCatalogConfig struct {
@@ -1567,6 +1595,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata about the service in a location.
 type LocationMetadata struct {
+	// CustomRegionMetadata: Possible configurations supported if the current
+	// region is a custom region.
+	CustomRegionMetadata []*CustomRegionMetadata `json:"customRegionMetadata,omitempty"`
 	// MultiRegionMetadata: The multi-region metadata if the current region is a
 	// multi-region.
 	MultiRegionMetadata *MultiRegionMetadata `json:"multiRegionMetadata,omitempty"`
@@ -1575,13 +1606,13 @@ type LocationMetadata struct {
 	// guarantees that exactly one HiveMetastoreVersion in the list will set
 	// is_default.
 	SupportedHiveMetastoreVersions []*HiveMetastoreVersion `json:"supportedHiveMetastoreVersions,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MultiRegionMetadata") to
+	// ForceSendFields is a list of field names (e.g. "CustomRegionMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MultiRegionMetadata") to include
+	// NullFields is a list of field names (e.g. "CustomRegionMetadata") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2442,6 +2473,8 @@ type Service struct {
 	// used.
 	//   "ERROR" - The metastore service has encountered an error and cannot be
 	// used. The metastore service should be deleted.
+	//   "AUTOSCALING" - The Dataproc Metastore service 2 is being scaled up or
+	// down.
 	//   "MIGRATING" - The metastore service is processing a managed migration.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Additional information about the current state of

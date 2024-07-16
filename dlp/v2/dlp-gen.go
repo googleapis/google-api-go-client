@@ -2818,7 +2818,7 @@ func (s GooglePrivacyDlpV2DataProfileJobConfig) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2DataProfileLocation: The data that will be profiled.
 type GooglePrivacyDlpV2DataProfileLocation struct {
-	// FolderId: The ID of the Folder within an organization to scan.
+	// FolderId: The ID of the folder within an organization to scan.
 	FolderId int64 `json:"folderId,omitempty,string"`
 	// OrganizationId: The ID of an organization to scan.
 	OrganizationId int64 `json:"organizationId,omitempty,string"`
@@ -4286,7 +4286,7 @@ func (s GooglePrivacyDlpV2DiscoverySchemaModifiedCadence) MarshalJSON() ([]byte,
 // discovery scan. Denotes an organization ID or folder ID within an
 // organization.
 type GooglePrivacyDlpV2DiscoveryStartingLocation struct {
-	// FolderId: The ID of the Folder within an organization to scan.
+	// FolderId: The ID of the folder within an organization to scan.
 	FolderId int64 `json:"folderId,omitempty,string"`
 	// OrganizationId: The ID of an organization to scan.
 	OrganizationId int64 `json:"organizationId,omitempty,string"`

@@ -1148,6 +1148,15 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Deployment state of otel-collector
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Deployment state of reconciler-manager pod
 	//
 	// Possible values:
@@ -1157,6 +1166,16 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Deployment state of
+	// resource-group-controller-manager
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Deployment state of root-reconciler
 	//
 	// Possible values:
@@ -1279,7 +1298,7 @@ func (s ConfigManagementConfigSyncState) MarshalJSON() ([]byte, error) {
 // ConfigManagementConfigSyncVersion: Specific versioning information
 // pertaining to ConfigSync's Pods
 type ConfigManagementConfigSyncVersion struct {
-	// AdmissionWebhook: Version of the deployed admission_webhook pod
+	// AdmissionWebhook: Version of the deployed admission-webhook pod
 	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
 	// GitSync: Version of the deployed git-sync pod
 	GitSync string `json:"gitSync,omitempty"`
@@ -1287,8 +1306,13 @@ type ConfigManagementConfigSyncVersion struct {
 	Importer string `json:"importer,omitempty"`
 	// Monitor: Version of the deployed monitor pod
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Version of the deployed otel-collector pod
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Version of the deployed reconciler-manager pod
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Version of the deployed
+	// resource-group-controller-manager pod
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Version of the deployed reconciler container in
 	// root-reconciler pod
 	RootReconciler string `json:"rootReconciler,omitempty"`
@@ -2622,6 +2646,32 @@ type GenerateConnectManifestResponse struct {
 
 func (s GenerateConnectManifestResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateConnectManifestResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateMembershipRBACRoleBindingYAMLResponse: Response for
+// GenerateRBACRoleBindingYAML.
+type GenerateMembershipRBACRoleBindingYAMLResponse struct {
+	// RoleBindingsYaml: a yaml text blob including the RBAC policies.
+	RoleBindingsYaml string `json:"roleBindingsYaml,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RoleBindingsYaml") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RoleBindingsYaml") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateMembershipRBACRoleBindingYAMLResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateMembershipRBACRoleBindingYAMLResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5380,7 +5430,7 @@ type ServiceMeshMembershipSpec struct {
 	//   "MANUAL" - User will manually configure the control plane (e.g. via CLI,
 	// or via the ControlPlaneRevision KRM API)
 	ControlPlane string `json:"controlPlane,omitempty"`
-	// Management: Enables automatic Service Mesh management.
+	// Management: Optional. Enables automatic Service Mesh management.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -9294,6 +9344,441 @@ func (c *ProjectsLocationsMembershipsBindingsPatchCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsMembershipsRbacrolebindingsCreateCall struct {
+	s               *Service
+	parent          string
+	rbacrolebinding *RBACRoleBinding
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a Membership RBACRoleBinding.
+//
+//   - parent: The parent (project and location) where the RBACRoleBinding will
+//     be created. Specified in the format
+//     `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) Create(parent string, rbacrolebinding *RBACRoleBinding) *ProjectsLocationsMembershipsRbacrolebindingsCreateCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.rbacrolebinding = rbacrolebinding
+	return c
+}
+
+// RbacrolebindingId sets the optional parameter "rbacrolebindingId": Required.
+// Client chosen ID for the RBACRoleBinding. `rbacrolebinding_id` must be a
+// valid RFC 1123 compliant DNS label: 1. At most 63 characters in length 2. It
+// must consist of lower case alphanumeric characters or `-` 3. It must start
+// and end with an alphanumeric character Which can be expressed as the regex:
+// `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63 characters.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) RbacrolebindingId(rbacrolebindingId string) *ProjectsLocationsMembershipsRbacrolebindingsCreateCall {
+	c.urlParams_.Set("rbacrolebindingId", rbacrolebindingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rbacrolebinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rbacrolebindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Membership RBACRoleBinding.
+//
+//   - name: The RBACRoleBinding resource name in the format
+//     `projects/*/locations/*/memberships/*/rbacrolebindings/*`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) Delete(name string) *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall struct {
+	s               *Service
+	parent          string
+	rbacrolebinding *RBACRoleBinding
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// GenerateMembershipRBACRoleBindingYAML: Generates a YAML of the RBAC policies
+// for the specified RoleBinding and its associated impersonation resources.
+//
+//   - parent: The parent (project and location) where the RBACRoleBinding will
+//     be created. Specified in the format
+//     `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) GenerateMembershipRBACRoleBindingYAML(parent string, rbacrolebinding *RBACRoleBinding) *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.rbacrolebinding = rbacrolebinding
+	return c
+}
+
+// RbacrolebindingId sets the optional parameter "rbacrolebindingId": Required.
+// Client chosen ID for the RBACRoleBinding. `rbacrolebinding_id` must be a
+// valid RFC 1123 compliant DNS label: 1. At most 63 characters in length 2. It
+// must consist of lower case alphanumeric characters or `-` 3. It must start
+// and end with an alphanumeric character Which can be expressed as the regex:
+// `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63 characters.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) RbacrolebindingId(rbacrolebindingId string) *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall {
+	c.urlParams_.Set("rbacrolebindingId", rbacrolebindingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rbacrolebinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rbacrolebindings:generateMembershipRBACRoleBindingYAML")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.generateMembershipRBACRoleBindingYAML" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateMembershipRBACRoleBindingYAMLResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleBindingYAMLCall) Do(opts ...googleapi.CallOption) (*GenerateMembershipRBACRoleBindingYAMLResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateMembershipRBACRoleBindingYAMLResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the details of a Membership RBACRoleBinding.
+//
+//   - name: The RBACRoleBinding resource name in the format
+//     `projects/*/locations/*/memberships/*/rbacrolebindings/*`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) Get(name string) *ProjectsLocationsMembershipsRbacrolebindingsGetCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsRbacrolebindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RBACRoleBinding.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) Do(opts ...googleapi.CallOption) (*RBACRoleBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RBACRoleBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsMembershipsRbacrolebindingsListCall struct {
 	s            *Service
 	parent       string
@@ -9438,6 +9923,118 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsPatchCall struct {
+	s               *Service
+	name            string
+	rbacrolebinding *RBACRoleBinding
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates a Membership RBACRoleBinding.
+//
+//   - name: The resource name for the rbacrolebinding
+//     `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{r
+//     bacrolebinding}` or
+//     `projects/{project}/locations/{location}/memberships/{membership}/rbacroleb
+//     indings/{rbacrolebinding}`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) Patch(name string, rbacrolebinding *RBACRoleBinding) *ProjectsLocationsMembershipsRbacrolebindingsPatchCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rbacrolebinding = rbacrolebinding
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The fields to
+// be updated.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMembershipsRbacrolebindingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rbacrolebinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

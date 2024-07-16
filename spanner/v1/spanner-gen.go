@@ -315,6 +315,7 @@ type ProjectsInstancesDatabaseOperationsService struct {
 
 func NewProjectsInstancesDatabasesService(s *Service) *ProjectsInstancesDatabasesService {
 	rs := &ProjectsInstancesDatabasesService{s: s}
+	rs.BackupSchedules = NewProjectsInstancesDatabasesBackupSchedulesService(s)
 	rs.DatabaseRoles = NewProjectsInstancesDatabasesDatabaseRolesService(s)
 	rs.Operations = NewProjectsInstancesDatabasesOperationsService(s)
 	rs.Sessions = NewProjectsInstancesDatabasesSessionsService(s)
@@ -324,11 +325,22 @@ func NewProjectsInstancesDatabasesService(s *Service) *ProjectsInstancesDatabase
 type ProjectsInstancesDatabasesService struct {
 	s *Service
 
+	BackupSchedules *ProjectsInstancesDatabasesBackupSchedulesService
+
 	DatabaseRoles *ProjectsInstancesDatabasesDatabaseRolesService
 
 	Operations *ProjectsInstancesDatabasesOperationsService
 
 	Sessions *ProjectsInstancesDatabasesSessionsService
+}
+
+func NewProjectsInstancesDatabasesBackupSchedulesService(s *Service) *ProjectsInstancesDatabasesBackupSchedulesService {
+	rs := &ProjectsInstancesDatabasesBackupSchedulesService{s: s}
+	return rs
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesService struct {
+	s *Service
 }
 
 func NewProjectsInstancesDatabasesDatabaseRolesService(s *Service) *ProjectsInstancesDatabasesDatabaseRolesService {
@@ -406,7 +418,7 @@ type ScansService struct {
 	s *Service
 }
 
-// AutoscalingConfig: Autoscaling config for an instance.
+// AutoscalingConfig: Autoscaling configuration for an instance.
 type AutoscalingConfig struct {
 	// AutoscalingLimits: Required. Autoscaling limits for an instance.
 	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
@@ -1340,13 +1352,14 @@ type CreateDatabaseRequest struct {
 	// statements execute atomically with the creation of the database: if there is
 	// an error in any statement, the database is not created.
 	ExtraStatements []string `json:"extraStatements,omitempty"`
-	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER PROTO
-	// BUNDLE statements in 'extra_statements' above. Contains a
-	// protobuf-serialized google.protobuf.FileDescriptorSet
-	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
-	// To generate it, install (https://grpc.io/docs/protoc-installation/) and run
-	// `protoc` with --include_imports and --descriptor_set_out. For example, to
-	// generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path
+	// ProtoDescriptors: Optional. Proto descriptors used by `CREATE/ALTER PROTO
+	// BUNDLE` statements in 'extra_statements'. Contains a protobuf-serialized
+	// `google.protobuf.FileDescriptorSet`
+	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto)
+	// descriptor set. To generate it, install
+	// (https://grpc.io/docs/protoc-installation/) and run `protoc` with
+	// --include_imports and --descriptor_set_out. For example, to generate for
+	// moon/shot/app.proto, run ``` $protoc --proto_path=/app_path
 	// --proto_path=/lib_path \ --include_imports \
 	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For more
 	// details, see protobuffer self description
@@ -1375,7 +1388,7 @@ func (s CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
 type CreateInstanceConfigMetadata struct {
 	// CancelTime: The time at which this operation was cancelled.
 	CancelTime string `json:"cancelTime,omitempty"`
-	// InstanceConfig: The target instance config end state.
+	// InstanceConfig: The target instance configuration end state.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// Progress: The progress of the CreateInstanceConfig operation.
 	Progress *InstanceOperationProgress `json:"progress,omitempty"`
@@ -1401,13 +1414,13 @@ func (s CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 type CreateInstanceConfigRequest struct {
 	// InstanceConfig: Required. The InstanceConfig proto of the configuration to
 	// create. instance_config.name must be `/instanceConfigs/`.
-	// instance_config.base_config must be a Google managed configuration name,
+	// instance_config.base_config must be a Google-managed configuration name,
 	// e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
-	// InstanceConfigId: Required. The ID of the instance config to create. Valid
-	// identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between
-	// 2 and 64 characters in length. The `custom-` prefix is required to avoid
-	// name conflicts with Google managed configurations.
+	// InstanceConfigId: Required. The ID of the instance configuration to create.
+	// Valid identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be
+	// between 2 and 64 characters in length. The `custom-` prefix is required to
+	// avoid name conflicts with Google-managed configurations.
 	InstanceConfigId string `json:"instanceConfigId,omitempty"`
 	// ValidateOnly: An option to validate, but not actually execute, a request,
 	// and provide the same response.
@@ -2108,7 +2121,9 @@ type ExecuteSqlRequest struct {
 	//   "PLAN" - This mode returns only the query plan, without any results or
 	// execution statistics information.
 	//   "PROFILE" - This mode returns both the query plan and the execution
-	// statistics along with the results.
+	// statistics along with the results. This has a performance overhead compared
+	// to the NORMAL mode. It is not recommended to use this mode for production
+	// traffic.
 	QueryMode string `json:"queryMode,omitempty"`
 	// QueryOptions: Query optimizer configuration to use for the given query.
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
@@ -2536,24 +2551,24 @@ type Instance struct {
 	// `projects//instances/a-z*[a-z0-9]`. The final segment of the name must be
 	// between 2 and 64 characters in length.
 	Name string `json:"name,omitempty"`
-	// NodeCount: The number of nodes allocated to this instance. At most one of
-	// either node_count or processing_units should be present in the message.
+	// NodeCount: The number of nodes allocated to this instance. At most, one of
+	// either `node_count` or `processing_units` should be present in the message.
 	// Users can set the node_count field to specify the target number of nodes
 	// allocated to the instance. If autoscaling is enabled, node_count is treated
 	// as an OUTPUT_ONLY field and reflects the current number of nodes allocated
-	// to the instance. This may be zero in API responses for instances that are
-	// not yet in state `READY`. See the documentation
-	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
-	// information about nodes and processing units.
+	// to the instance. This might be zero in API responses for instances that are
+	// not yet in the `READY` state. For more information, see Compute capacity,
+	// nodes, and processing units
+	// (https://cloud.google.com/spanner/docs/compute-capacity).
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance.
-	// At most one of processing_units or node_count should be present in the
-	// message. Users can set the processing_units field to specify the target
-	// number of processing units allocated to the instance. If autoscaling is
-	// enabled, processing_units is treated as an OUTPUT_ONLY field and reflects
-	// the current number of processing units allocated to the instance. This may
-	// be zero in API responses for instances that are not yet in state `READY`.
-	// See the documentation
+	// At most, one of either `processing_units` or `node_count` should be present
+	// in the message. Users can set the `processing_units` field to specify the
+	// target number of processing units allocated to the instance. If autoscaling
+	// is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and
+	// reflects the current number of processing units allocated to the instance.
+	// This might be zero in API responses for instances that are not yet in the
+	// `READY` state. See the documentation
 	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
 	// information about nodes and processing units.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
@@ -2597,29 +2612,30 @@ func (s Instance) MarshalJSON() ([]byte, error) {
 // replication.
 type InstanceConfig struct {
 	// BaseConfig: Base configuration name, e.g. projects//instanceConfigs/nam3,
-	// based on which this configuration is created. Only set for user managed
+	// based on which this configuration is created. Only set for user-managed
 	// configurations. `base_config` must refer to a configuration of type
-	// GOOGLE_MANAGED in the same project as this configuration.
+	// `GOOGLE_MANAGED` in the same project as this configuration.
 	BaseConfig string `json:"baseConfig,omitempty"`
-	// ConfigType: Output only. Whether this instance config is a Google or User
-	// Managed Configuration.
+	// ConfigType: Output only. Whether this instance configuration is a Google- or
+	// user-managed configuration.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
-	//   "GOOGLE_MANAGED" - Google managed configuration.
-	//   "USER_MANAGED" - User managed configuration.
+	//   "GOOGLE_MANAGED" - Google-managed configuration.
+	//   "USER_MANAGED" - User-managed configuration.
 	ConfigType string `json:"configType,omitempty"`
 	// DisplayName: The name of this instance configuration as it appears in UIs.
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: etag is used for optimistic concurrency control as a way to help
-	// prevent simultaneous updates of a instance config from overwriting each
-	// other. It is strongly suggested that systems make use of the etag in the
-	// read-modify-write cycle to perform instance config updates in order to avoid
-	// race conditions: An etag is returned in the response which contains instance
-	// configs, and systems are expected to put that etag in the request to update
-	// instance config to ensure that their change will be applied to the same
-	// version of the instance config. If no etag is provided in the call to update
-	// instance config, then the existing instance config is overwritten blindly.
+	// prevent simultaneous updates of a instance configuration from overwriting
+	// each other. It is strongly suggested that systems make use of the etag in
+	// the read-modify-write cycle to perform instance configuration updates in
+	// order to avoid race conditions: An etag is returned in the response which
+	// contains instance configurations, and systems are expected to put that etag
+	// in the request to update instance configuration to ensure that their change
+	// is applied to the same version of the instance configuration. If no etag is
+	// provided in the call to update the instance configuration, then the existing
+	// instance configuration is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 	// FreeInstanceAvailability: Output only. Describes whether free instances are
 	// available to be created in this instance config.
@@ -2633,8 +2649,8 @@ type InstanceConfig struct {
 	//   "DISABLED" - Indicates that free instances are currently not available to
 	// be created in this instance config.
 	//   "QUOTA_EXCEEDED" - Indicates that additional free instances cannot be
-	// created in this instance config because the project has reached its limit of
-	// free instances.
+	// created in this instance configuration because the project has reached its
+	// limit of free instances.
 	FreeInstanceAvailability string `json:"freeInstanceAvailability,omitempty"`
 	// Labels: Cloud Labels are a flexible and lightweight mechanism for organizing
 	// cloud resources into groups that reflect a customer's organizational needs
@@ -2657,11 +2673,11 @@ type InstanceConfig struct {
 	// databases in instances that use this instance configuration.
 	LeaderOptions []string `json:"leaderOptions,omitempty"`
 	// Name: A unique identifier for the instance configuration. Values are of the
-	// form `projects//instanceConfigs/a-z*`. User instance config must start with
-	// `custom-`.
+	// form `projects//instanceConfigs/a-z*`. User instance configuration must
+	// start with `custom-`.
 	Name string `json:"name,omitempty"`
 	// OptionalReplicas: Output only. The available optional replicas to choose
-	// from for user managed configurations. Populated for Google managed
+	// from for user-managed configurations. Populated for Google-managed
 	// configurations.
 	OptionalReplicas []*ReplicaInfo `json:"optionalReplicas,omitempty"`
 	// QuorumType: Output only. The `QuorumType` of the instance configuration.
@@ -2678,23 +2694,24 @@ type InstanceConfig struct {
 	// type forms a write quorums from replicas are spread across more than one
 	// region in a multi-region configuration.
 	QuorumType string `json:"quorumType,omitempty"`
-	// Reconciling: Output only. If true, the instance config is being created or
-	// updated. If false, there are no ongoing operations for the instance config.
+	// Reconciling: Output only. If true, the instance configuration is being
+	// created or updated. If false, there are no ongoing operations for the
+	// instance config.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// Replicas: The geographic placement of nodes in this instance configuration
-	// and their replication properties. To create user managed configurations,
+	// and their replication properties. To create user-managed configurations,
 	// input `replicas` must include all replicas in `replicas` of the
 	// `base_config` and include one or more replicas in the `optional_replicas` of
 	// the `base_config`.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
-	// State: Output only. The current instance config state. Applicable only for
-	// USER_MANAGED configs.
+	// State: Output only. The current instance configuration state. Applicable
+	// only for `USER_MANAGED` configurations.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
-	//   "CREATING" - The instance config is still being created.
-	//   "READY" - The instance config is fully created and ready to be used to
-	// create instances.
+	//   "CREATING" - The instance configuration is still being created.
+	//   "READY" - The instance configuration is fully created and ready to be used
+	// to create instances.
 	State string `json:"state,omitempty"`
 	// StorageLimitPerProcessingUnit: Output only. The storage limit in bytes per
 	// processing unit.
@@ -2781,15 +2798,15 @@ type InstancePartition struct {
 	// created.
 	Name string `json:"name,omitempty"`
 	// NodeCount: The number of nodes allocated to this instance partition. Users
-	// can set the node_count field to specify the target number of nodes allocated
-	// to the instance partition. This may be zero in API responses for instance
-	// partitions that are not yet in state `READY`.
+	// can set the `node_count` field to specify the target number of nodes
+	// allocated to the instance partition. This may be zero in API responses for
+	// instance partitions that are not yet in state `READY`.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance
-	// partition. Users can set the processing_units field to specify the target
-	// number of processing units allocated to the instance partition. This may be
-	// zero in API responses for instance partitions that are not yet in state
-	// `READY`.
+	// partition. Users can set the `processing_units` field to specify the target
+	// number of processing units allocated to the instance partition. This might
+	// be zero in API responses for instance partitions that are not yet in the
+	// `READY` state.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
 	// ReferencingBackups: Output only. The names of the backups that reference
 	// this instance partition. Referencing backups should share the parent
@@ -3174,10 +3191,10 @@ type ListInstanceConfigOperationsResponse struct {
 	// NextPageToken: `next_page_token` can be sent in a subsequent
 	// ListInstanceConfigOperations call to fetch more of the matching metadata.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Operations: The list of matching instance config long-running operations.
-	// Each operation's name will be prefixed by the instance config's name. The
-	// operation's metadata field type `metadata.type_url` describes the type of
-	// the metadata.
+	// Operations: The list of matching instance configuration long-running
+	// operations. Each operation's name will be prefixed by the instance config's
+	// name. The operation's metadata field type `metadata.type_url` describes the
+	// type of the metadata.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3580,8 +3597,8 @@ func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
 
 // MoveInstanceRequest: The request for MoveInstance.
 type MoveInstanceRequest struct {
-	// TargetConfig: Required. The target instance config for the instance to move.
-	// Values are of the form `projects//instanceConfigs/`.
+	// TargetConfig: Required. The target instance configuration for the instance
+	// to move. Values are of the form `projects//instanceConfigs/`.
 	TargetConfig string `json:"targetConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3937,15 +3954,15 @@ type PartitionQueryRequest struct {
 	// created.
 	PartitionOptions *PartitionOptions `json:"partitionOptions,omitempty"`
 	// Sql: Required. The query request to generate partitions for. The request
-	// will fail if the query is not root partitionable. For a query to be root
+	// fails if the query is not root partitionable. For a query to be root
 	// partitionable, it needs to satisfy a few conditions. For example, if the
 	// query execution plan contains a distributed union operator, then it must be
 	// the first operator in the plan. For more information about other conditions,
 	// see Read data in parallel
 	// (https://cloud.google.com/spanner/docs/reads#read_data_in_parallel). The
-	// query request must not contain DML commands, such as INSERT, UPDATE, or
-	// DELETE. Use ExecuteStreamingSql with a PartitionedDml transaction for large,
-	// partition-friendly DML operations.
+	// query request must not contain DML commands, such as `INSERT`, `UPDATE`, or
+	// `DELETE`. Use `ExecuteStreamingSql` with a PartitionedDml transaction for
+	// large, partition-friendly DML operations.
 	Sql string `json:"sql,omitempty"`
 	// Transaction: Read only snapshot transactions are supported, read/write and
 	// single use transactions are not.
@@ -4740,17 +4757,18 @@ type RestoreDatabaseEncryptionConfig struct {
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
-	// keys used to encrypt the database. Values are of the form
+	// keys used to encrypt the database. Values have the form
 	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
 	// kms_key_names must fully cover all regions of the database instance
-	// configuration. Some examples: * For single region database instance configs,
-	// specify a single regional location KMS key. * For multi-regional database
-	// instance configs of type GOOGLE_MANAGED, either specify a multi-regional
-	// location KMS key or multiple regional location KMS keys that cover all
-	// regions in the instance config. * For a database instance config of type
-	// USER_MANAGED, please specify only regional location KMS keys to cover each
-	// region in the instance config. Multi-regional location KMS keys are not
-	// supported for USER_MANAGED instance configs.
+	// configuration. Some examples: * For single region database instance
+	// configurations, specify a single regional location KMS key. * For
+	// multi-regional database instance configurations of type `GOOGLE_MANAGED`,
+	// either specify a multi-regional location KMS key or multiple regional
+	// location KMS keys that cover all regions in the instance configuration. *
+	// For a database instance configuration of type `USER_MANAGED`, please specify
+	// only regional location KMS keys to cover each region in the instance
+	// configuration. Multi-regional location KMS keys are not supported for
+	// USER_MANAGED instance configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5914,7 +5932,7 @@ func (s UpdateDatabaseRequest) MarshalJSON() ([]byte, error) {
 type UpdateInstanceConfigMetadata struct {
 	// CancelTime: The time at which this operation was cancelled.
 	CancelTime string `json:"cancelTime,omitempty"`
-	// InstanceConfig: The desired instance config after updating.
+	// InstanceConfig: The desired instance configuration after updating.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// Progress: The progress of the UpdateInstanceConfig operation.
 	Progress *InstanceOperationProgress `json:"progress,omitempty"`
@@ -5938,10 +5956,10 @@ func (s UpdateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 
 // UpdateInstanceConfigRequest: The request for UpdateInstanceConfigRequest.
 type UpdateInstanceConfigRequest struct {
-	// InstanceConfig: Required. The user instance config to update, which must
-	// always include the instance config name. Otherwise, only fields mentioned in
-	// update_mask need be included. To prevent conflicts of concurrent updates,
-	// etag can be used.
+	// InstanceConfig: Required. The user instance configuration to update, which
+	// must always include the instance configuration name. Otherwise, only fields
+	// mentioned in update_mask need be included. To prevent conflicts of
+	// concurrent updates, etag can be used.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// UpdateMask: Required. A mask specifying which fields in InstanceConfig
 	// should be updated. The field mask must always be specified; this prevents
@@ -6196,17 +6214,17 @@ type ProjectsInstanceConfigOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the user-managed instance config long-running operations in the
-// given project. An instance config operation has a name of the form
-// `projects//instanceConfigs//operations/`. The long-running operation
+// List: Lists the user-managed instance configuration long-running operations
+// in the given project. An instance configuration operation has a name of the
+// form `projects//instanceConfigs//operations/`. The long-running operation
 // metadata field type `metadata.type_url` describes the type of the metadata.
 // Operations returned include those that have completed/failed/canceled within
 // the last 7 days, and pending operations. Operations returned are ordered by
 // `operation.metadata.value.start_time` in descending order starting from the
 // most recently started operation.
 //
-//   - parent: The project of the instance config operations. Values are of the
-//     form `projects/`.
+//   - parent: The project of the instance configuration operations. Values are
+//     of the form `projects/`.
 func (r *ProjectsInstanceConfigOperationsService) List(parent string) *ProjectsInstanceConfigOperationsListCall {
 	c := &ProjectsInstanceConfigOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6236,7 +6254,7 @@ func (r *ProjectsInstanceConfigOperationsService) List(parent string) *ProjectsI
 // adata) AND` \ `(metadata.instance_config.name:custom-config) AND` \
 // `(metadata.progress.start_time < \"2021-03-28T14:50:00Z\") AND` \
 // `(error:*)` - Return operations where: * The operation's metadata type is
-// CreateInstanceConfigMetadata. * The instance config name contains
+// CreateInstanceConfigMetadata. * The instance configuration name contains
 // "custom-config". * The operation started before 2021-03-28T14:50:00Z. * The
 // operation resulted in an error.
 func (c *ProjectsInstanceConfigOperationsListCall) Filter(filter string) *ProjectsInstanceConfigOperationsListCall {
@@ -6381,24 +6399,24 @@ type ProjectsInstanceConfigsCreateCall struct {
 	header_                     http.Header
 }
 
-// Create: Creates an instance config and begins preparing it to be used. The
-// returned long-running operation can be used to track the progress of
-// preparing the new instance config. The instance config name is assigned by
-// the caller. If the named instance config already exists,
+// Create: Creates an instance configuration and begins preparing it to be
+// used. The returned long-running operation can be used to track the progress
+// of preparing the new instance config. The instance configuration name is
+// assigned by the caller. If the named instance configuration already exists,
 // `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after the
-// request returns: * The instance config is readable via the API, with all
-// requested attributes. The instance config's reconciling field is set to
+// request returns: * The instance configuration is readable via the API, with
+// all requested attributes. The instance config's reconciling field is set to
 // true. Its state is `CREATING`. While the operation is pending: * Cancelling
-// the operation renders the instance config immediately unreadable via the
-// API. * Except for deleting the creating resource, all other attempts to
-// modify the instance config are rejected. Upon completion of the returned
-// operation: * Instances can be created using the instance configuration. *
-// The instance config's reconciling field becomes false. Its state becomes
-// `READY`. The returned long-running operation will have a name of the format
-// `/operations/` and can be used to track creation of the instance config. The
-// metadata field type is CreateInstanceConfigMetadata. The response field type
-// is InstanceConfig, if successful. Authorization requires
-// `spanner.instanceConfigs.create` permission on the resource parent.
+// the operation renders the instance configuration immediately unreadable via
+// the API. * Except for deleting the creating resource, all other attempts to
+// modify the instance configuration are rejected. Upon completion of the
+// returned operation: * Instances can be created using the instance
+// configuration. * The instance config's reconciling field becomes false. Its
+// state becomes `READY`. The returned long-running operation will have a name
+// of the format `/operations/` and can be used to track creation of the
+// instance config. The metadata field type is CreateInstanceConfigMetadata.
+// The response field type is InstanceConfig, if successful. Authorization
+// requires `spanner.instanceConfigs.create` permission on the resource parent.
 //
 //   - parent: The name of the project in which to create the instance config.
 //     Values are of the form `projects/`.
@@ -6501,7 +6519,7 @@ type ProjectsInstanceConfigsDeleteCall struct {
 
 // Delete: Deletes the instance config. Deletion is only allowed when no
 // instances are using the configuration. If any instances are using the
-// config, returns `FAILED_PRECONDITION`. Only user managed configurations can
+// config, returns `FAILED_PRECONDITION`. Only user-managed configurations can
 // be deleted. Authorization requires `spanner.instanceConfigs.delete`
 // permission on the resource name.
 //
@@ -6514,11 +6532,12 @@ func (r *ProjectsInstanceConfigsService) Delete(name string) *ProjectsInstanceCo
 }
 
 // Etag sets the optional parameter "etag": Used for optimistic concurrency
-// control as a way to help prevent simultaneous deletes of an instance config
-// from overwriting each other. If not empty, the API only deletes the instance
-// config when the etag provided matches the current status of the requested
-// instance config. Otherwise, deletes the instance config without checking the
-// current status of the requested instance config.
+// control as a way to help prevent simultaneous deletes of an instance
+// configuration from overwriting each other. If not empty, the API only
+// deletes the instance configuration when the etag provided matches the
+// current status of the requested instance config. Otherwise, deletes the
+// instance configuration without checking the current status of the requested
+// instance config.
 func (c *ProjectsInstanceConfigsDeleteCall) Etag(etag string) *ProjectsInstanceConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -6728,7 +6747,7 @@ type ProjectsInstanceConfigsListCall struct {
 }
 
 // List: Lists the supported instance configurations for a given project.
-// Returns both Google managed configs and user managed configs.
+// Returns both Google-managed configurations and user-managed configurations.
 //
 //   - parent: The name of the project for which a list of supported instance
 //     configurations is requested. Values are of the form `projects/`.
@@ -6876,26 +6895,26 @@ type ProjectsInstanceConfigsPatchCall struct {
 
 // Patch: Updates an instance config. The returned long-running operation can
 // be used to track the progress of updating the instance. If the named
-// instance config does not exist, returns `NOT_FOUND`. Only user managed
-// configurations can be updated. Immediately after the request returns: * The
-// instance config's reconciling field is set to true. While the operation is
-// pending: * Cancelling the operation sets its metadata's cancel_time. The
-// operation is guaranteed to succeed at undoing all changes, after which point
-// it terminates with a `CANCELLED` status. * All other attempts to modify the
-// instance config are rejected. * Reading the instance config via the API
-// continues to give the pre-request values. Upon completion of the returned
-// operation: * Creating instances using the instance configuration uses the
-// new values. * The instance config's new values are readable via the API. *
-// The instance config's reconciling field becomes false. The returned
-// long-running operation will have a name of the format `/operations/` and can
-// be used to track the instance config modification. The metadata field type
-// is UpdateInstanceConfigMetadata. The response field type is InstanceConfig,
-// if successful. Authorization requires `spanner.instanceConfigs.update`
-// permission on the resource name.
+// instance configuration does not exist, returns `NOT_FOUND`. Only
+// user-managed configurations can be updated. Immediately after the request
+// returns: * The instance config's reconciling field is set to true. While the
+// operation is pending: * Cancelling the operation sets its metadata's
+// cancel_time. The operation is guaranteed to succeed at undoing all changes,
+// after which point it terminates with a `CANCELLED` status. * All other
+// attempts to modify the instance configuration are rejected. * Reading the
+// instance configuration via the API continues to give the pre-request values.
+// Upon completion of the returned operation: * Creating instances using the
+// instance configuration uses the new values. * The instance config's new
+// values are readable via the API. * The instance config's reconciling field
+// becomes false. The returned long-running operation will have a name of the
+// format `/operations/` and can be used to track the instance configuration
+// modification. The metadata field type is UpdateInstanceConfigMetadata. The
+// response field type is InstanceConfig, if successful. Authorization requires
+// `spanner.instanceConfigs.update` permission on the resource name.
 //
 //   - name: A unique identifier for the instance configuration. Values are of
-//     the form `projects//instanceConfigs/a-z*`. User instance config must start
-//     with `custom-`.
+//     the form `projects//instanceConfigs/a-z*`. User instance configuration
+//     must start with `custom-`.
 func (r *ProjectsInstanceConfigsService) Patch(nameid string, updateinstanceconfigrequest *UpdateInstanceConfigRequest) *ProjectsInstanceConfigsPatchCall {
 	c := &ProjectsInstanceConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -8535,23 +8554,23 @@ type ProjectsInstancesMoveCall struct {
 // are rejected: * DatabaseAdmin.CreateDatabase, *
 // DatabaseAdmin.UpdateDatabaseDdl (Disabled if default_leader is specified in
 // the request.) * DatabaseAdmin.RestoreDatabase * DatabaseAdmin.CreateBackup *
-// DatabaseAdmin.CopyBackup * Both the source and target instance configs are
-// subject to hourly compute and storage charges. * The instance may experience
-// higher read-write latencies and a higher transaction abort rate. However,
-// moving an instance does not cause any downtime. The returned long-running
-// operation will have a name of the format `/operations/` and can be used to
-// track the move instance operation. The metadata field type is
-// MoveInstanceMetadata. The response field type is Instance, if successful.
-// Cancelling the operation sets its metadata's cancel_time. Cancellation is
-// not immediate since it involves moving any data previously moved to target
-// instance config back to the original instance config. The same operation can
-// be used to track the progress of the cancellation. Upon successful
-// completion of the cancellation, the operation terminates with CANCELLED
-// status. Upon completion(if not cancelled) of the returned operation: *
-// Instance would be successfully moved to the target instance config. * You
-// are billed for compute and storage in target instance config. Authorization
-// requires `spanner.instances.update` permission on the resource instance. For
-// more details, please see documentation
+// DatabaseAdmin.CopyBackup * Both the source and target instance
+// configurations are subject to hourly compute and storage charges. * The
+// instance may experience higher read-write latencies and a higher transaction
+// abort rate. However, moving an instance does not cause any downtime. The
+// returned long-running operation will have a name of the format
+// `/operations/` and can be used to track the move instance operation. The
+// metadata field type is MoveInstanceMetadata. The response field type is
+// Instance, if successful. Cancelling the operation sets its metadata's
+// cancel_time. Cancellation is not immediate since it involves moving any data
+// previously moved to target instance configuration back to the original
+// instance config. The same operation can be used to track the progress of the
+// cancellation. Upon successful completion of the cancellation, the operation
+// terminates with `CANCELLED` status. Upon completion(if not cancelled) of the
+// returned operation: * Instance would be successfully moved to the target
+// instance config. * You are billed for compute and storage in target instance
+// config. Authorization requires `spanner.instances.update` permission on the
+// resource instance. For more details, please see documentation
 // (https://cloud.google.com/spanner/docs/move-instance).
 //
 // - name: The instance to move. Values are of the form `projects//instances/`.
@@ -11049,8 +11068,8 @@ type ProjectsInstancesDatabasesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates a new Cloud Spanner database and starts to prepare it for
-// serving. The returned long-running operation will have a name of the format
+// Create: Creates a new Spanner database and starts to prepare it for serving.
+// The returned long-running operation will have a name of the format
 // `/operations/` and can be used to track preparation of the database. The
 // metadata field type is CreateDatabaseMetadata. The response field type is
 // Database, if successful.
@@ -12416,6 +12435,331 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Do(opts ...googleapi.CallOptio
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a database or backup
+// resource. Returns an empty policy if a database or backup exists but does
+// not have a policy set. Authorization requires
+// `spanner.databases.getIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.getIamPolicy` permission on
+// resource.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
+//     being retrieved. The format is `projects//instances/` for instance
+//     resources and `projects//instances//databases/` for database resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on a database or backup
+// resource. Replaces any existing policy. Authorization requires
+// `spanner.databases.setIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.setIamPolicy` permission on
+// resource.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
+//     being set. The format is `projects//instances/` for instance resources and
+//     `projects//instances//databases/` for databases resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that the caller has on the specified
+// database or backup resource. Attempting this RPC on a non-existent Cloud
+// Spanner database will result in a NOT_FOUND error if the user has
+// `spanner.databases.list` permission on the containing Cloud Spanner
+// instance. Otherwise returns an empty set of permissions. Calling this method
+// on a backup that does not exist will result in a NOT_FOUND error if the user
+// has `spanner.backups.list` permission on the containing instance.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
+//     being tested. The format is `projects//instances/` for instance resources
+//     and `projects//instances//databases/` for database resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

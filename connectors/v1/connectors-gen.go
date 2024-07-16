@@ -3632,7 +3632,8 @@ type MultipleSelectConfig struct {
 	AllowCustomValues bool `json:"allowCustomValues,omitempty"`
 	// MultipleSelectOptions: Required. Multiple select options.
 	MultipleSelectOptions []*MultipleSelectOption `json:"multipleSelectOptions,omitempty"`
-	// ValueSeparator: Required. Value separator.
+	// ValueSeparator: Required. Value separator. Only "," can be used for OAuth
+	// auth code flow scope field.
 	ValueSeparator string `json:"valueSeparator,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowCustomValues") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4358,12 +4359,17 @@ type ResultMetadata struct {
 	// instead.
 	//   "DATA_TYPE_TIMESTAMP_WITH_TIMEZONE" - UNSUPPORTED! Use TIMESTAMP instead.
 	DataType string `json:"dataType,omitempty"`
+	// DefaultValue: The following field specifies the default value of the
+	// Parameter provided by the external system if a value is not provided.
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
 	// Description: A brief description of the field.
 	Description string `json:"description,omitempty"`
 	// Field: Name of the result field.
 	Field string `json:"field,omitempty"`
 	// JsonSchema: JsonSchema representation of this action's result
 	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+	// Nullable: Specifies whether a null value is allowed.
+	Nullable bool `json:"nullable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

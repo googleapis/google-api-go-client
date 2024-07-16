@@ -509,9 +509,9 @@ func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DomainConfig: Configuration options for private workstation clusters.
+// DomainConfig: Configuration options for a custom domain.
 type DomainConfig struct {
-	// Domain: Immutable. Whether Workstations endpoint is private.
+	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
 	Domain string `json:"domain,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1396,11 +1396,52 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PortRange: A PortRange defines a range of ports. Both first and last are
+// inclusive. To specify a single port, both first and last should be the same.
+type PortRange struct {
+	// First: Required. Starting port number for the current range of ports.
+	First int64 `json:"first,omitempty"`
+	// Last: Required. Ending port number for the current range of ports.
+	Last int64 `json:"last,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "First") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "First") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PortRange) MarshalJSON() ([]byte, error) {
+	type NoMethod PortRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrivateClusterConfig: Configuration options for private workstation
+// clusters.
 type PrivateClusterConfig struct {
-	AllowedProjects       []string `json:"allowedProjects,omitempty"`
-	ClusterHostname       string   `json:"clusterHostname,omitempty"`
-	EnablePrivateEndpoint bool     `json:"enablePrivateEndpoint,omitempty"`
-	ServiceAttachmentUri  string   `json:"serviceAttachmentUri,omitempty"`
+	// AllowedProjects: Optional. Additional projects that are allowed to attach to
+	// the workstation cluster's service attachment. By default, the workstation
+	// cluster's project and the VPC host project (if different) are allowed.
+	AllowedProjects []string `json:"allowedProjects,omitempty"`
+	// ClusterHostname: Output only. Hostname for the workstation cluster. This
+	// field will be populated only when private endpoint is enabled. To access
+	// workstations in the workstation cluster, create a new DNS zone mapping this
+	// domain name to an internal IP address and a forwarding rule mapping that
+	// address to the service attachment.
+	ClusterHostname string `json:"clusterHostname,omitempty"`
+	// EnablePrivateEndpoint: Immutable. Whether Workstations endpoint is private.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+	// ServiceAttachmentUri: Output only. Service attachment URI for the
+	// workstation cluster. The service attachemnt is created when private endpoint
+	// is enabled. To access workstations in the workstation cluster, configure
+	// access to the managed service using Private Service Connect
+	// (https://cloud.google.com/vpc/docs/configure-private-service-connect-services).
+	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1775,6 +1816,10 @@ func (s WorkstationCluster) MarshalJSON() ([]byte, error) {
 // Management (IAM) (https://cloud.google.com/iam/docs/overview) rules to grant
 // access to teams or to individual developers.
 type WorkstationConfig struct {
+	// AllowedPorts: Optional. A Single or Range of ports externally accessible in
+	// the workstation. If not specified defaults to ports 22, 80 and ports
+	// 1024-65535.
+	AllowedPorts []*PortRange `json:"allowedPorts,omitempty"`
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// Conditions: Output only. Status conditions describing the current resource
@@ -1886,13 +1931,13 @@ type WorkstationConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AllowedPorts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// NullFields is a list of field names (e.g. "AllowedPorts") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

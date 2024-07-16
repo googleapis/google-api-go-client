@@ -466,6 +466,12 @@ func (s GoogleIdentityStsV1ExchangeTokenRequest) MarshalJSON() ([]byte, error) {
 // GoogleIdentityStsV1ExchangeTokenResponse: Response message for
 // ExchangeToken.
 type GoogleIdentityStsV1ExchangeTokenResponse struct {
+	// AccessBoundarySessionKey: The access boundary session key. This key is used
+	// along with the access boundary intermediate token to generate Credential
+	// Access Boundary tokens at client side. This field is absent when the
+	// `requested_token_type` from the request is not
+	// `urn:ietf:params:oauth:token-type:access_boundary_intermediate_token`.
+	AccessBoundarySessionKey string `json:"access_boundary_session_key,omitempty"`
 	// AccessToken: An OAuth 2.0 security token, issued by Google, in response to
 	// the token exchange request. Tokens can vary in size, depending in part on
 	// the size of mapped claims, up to a maximum of 12288 bytes (12 KB). Google
@@ -486,15 +492,15 @@ type GoogleIdentityStsV1ExchangeTokenResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AccessToken") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AccessBoundarySessionKey")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccessToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessBoundarySessionKey") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	dataflowService, err := dataflow.NewService(ctx, option.WithScopes(dataflow.ComputeReadonlyScope))
+//	dataflowService, err := dataflow.NewService(ctx, option.WithScopes(dataflow.ComputeScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -106,9 +106,6 @@ const (
 
 	// View and manage your Google Compute Engine resources
 	ComputeScope = "https://www.googleapis.com/auth/compute"
-
-	// View your Google Compute Engine resources
-	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
 )
 
 // NewService creates a new Service.
@@ -116,7 +113,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/compute",
-		"https://www.googleapis.com/auth/compute.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

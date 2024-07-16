@@ -7194,7 +7194,7 @@ func (r *OrganizationsLocationsInsightsService) List(parent string) *Organizatio
 // `subCategory` Examples: * "category = application AND type = count" *
 // "category = application AND subCategory = iap" * "type = status" Allowed
 // values: * type: [count, latency, status, list] * category: [application,
-// device, request, security] * subCategory: [iap, webprotect] NOTE: Only
+// device, request, security] * subCategory: [iap, caa, webprotect] NOTE: Only
 // equality based comparison is allowed. Only `AND` conjunction is allowed.
 // NOTE: The 'AND' in the filter field needs to be in capital letters only.
 // NOTE: Just filtering on `subCategory` is not allowed. It should be passed in
@@ -16256,7 +16256,7 @@ func (r *ProjectsLocationsInsightsService) List(parent string) *ProjectsLocation
 // `subCategory` Examples: * "category = application AND type = count" *
 // "category = application AND subCategory = iap" * "type = status" Allowed
 // values: * type: [count, latency, status, list] * category: [application,
-// device, request, security] * subCategory: [iap, webprotect] NOTE: Only
+// device, request, security] * subCategory: [iap, caa, webprotect] NOTE: Only
 // equality based comparison is allowed. Only `AND` conjunction is allowed.
 // NOTE: The 'AND' in the filter field needs to be in capital letters only.
 // NOTE: Just filtering on `subCategory` is not allowed. It should be passed in

@@ -572,9 +572,9 @@ func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DomainConfig: Configuration options for private workstation clusters.
+// DomainConfig: Configuration options for a custom domain.
 type DomainConfig struct {
-	// Domain: Immutable. Whether Workstations endpoint is private.
+	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
 	Domain string `json:"domain,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1427,7 +1427,7 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PortRange: A PortsConfig defines a range of ports. Both first and last are
+// PortRange: A PortRange defines a range of ports. Both first and last are
 // inclusive. To specify a single port, both first and last should be the same.
 type PortRange struct {
 	// First: Required. Starting port number for the current range of ports.
@@ -1452,11 +1452,27 @@ func (s PortRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PrivateClusterConfig: Configuration options for private workstation
+// clusters.
 type PrivateClusterConfig struct {
-	AllowedProjects       []string `json:"allowedProjects,omitempty"`
-	ClusterHostname       string   `json:"clusterHostname,omitempty"`
-	EnablePrivateEndpoint bool     `json:"enablePrivateEndpoint,omitempty"`
-	ServiceAttachmentUri  string   `json:"serviceAttachmentUri,omitempty"`
+	// AllowedProjects: Optional. Additional projects that are allowed to attach to
+	// the workstation cluster's service attachment. By default, the workstation
+	// cluster's project and the VPC host project (if different) are allowed.
+	AllowedProjects []string `json:"allowedProjects,omitempty"`
+	// ClusterHostname: Output only. Hostname for the workstation cluster. This
+	// field will be populated only when private endpoint is enabled. To access
+	// workstations in the workstation cluster, create a new DNS zone mapping this
+	// domain name to an internal IP address and a forwarding rule mapping that
+	// address to the service attachment.
+	ClusterHostname string `json:"clusterHostname,omitempty"`
+	// EnablePrivateEndpoint: Immutable. Whether Workstations endpoint is private.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+	// ServiceAttachmentUri: Output only. Service attachment URI for the
+	// workstation cluster. The service attachemnt is created when private endpoint
+	// is enabled. To access workstations in the workstation cluster, configure
+	// access to the managed service using Private Service Connect
+	// (https://cloud.google.com/vpc/docs/configure-private-service-connect-services).
+	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1707,6 +1723,10 @@ type Workstation struct {
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SourceWorkstation: Optional. The source workstation from which this
 	// workstations persistent directories were cloned on creation.
 	SourceWorkstation string `json:"sourceWorkstation,omitempty"`
@@ -1797,6 +1817,10 @@ type WorkstationCluster struct {
 	// Reconciling: Output only. Indicates whether this workstation cluster is
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Subnetwork: Immutable. Name of the Compute Engine subnetwork in which
 	// instances associated with this workstation cluster will be created. Must be
 	// part of the subnetwork specified for this workstation cluster.
@@ -1946,6 +1970,10 @@ type WorkstationConfig struct {
 	// time. This is strongly discouraged because you incur costs and will not pick
 	// up security updates.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// configuration.
 	Uid string `json:"uid,omitempty"`

@@ -289,6 +289,9 @@ func (s AgentCommand) MarshalJSON() ([]byte, error) {
 // AssetLocation: Provides the mapping of a cloud asset to a direct physical
 // location or to a proxy that defines the location on its behalf.
 type AssetLocation struct {
+	// CcfeRmsPath: Spanner path of the CCFE RMS database. It is only applicable
+	// for CCFE tenants that use CCFE RMS for storing resource metadata.
+	CcfeRmsPath string `json:"ccfeRmsPath,omitempty"`
 	// Expected: Defines the customer expectation around ZI/ZS for this asset and
 	// ZI/ZS state of the region at the time of asset creation.
 	Expected *IsolationExpectations `json:"expected,omitempty"`
@@ -300,13 +303,13 @@ type AssetLocation struct {
 	// ParentAsset: Defines parents assets if any in order to allow later
 	// generation of child_asset_location data via child assets.
 	ParentAsset []*CloudAsset `json:"parentAsset,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Expected") to
+	// ForceSendFields is a list of field names (e.g. "CcfeRmsPath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Expected") to include in API
+	// NullFields is a list of field names (e.g. "CcfeRmsPath") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

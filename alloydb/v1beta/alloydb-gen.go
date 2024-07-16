@@ -341,6 +341,7 @@ type Backup struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -563,6 +564,7 @@ type Cluster struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -3569,6 +3571,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.

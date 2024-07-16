@@ -1415,6 +1415,15 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Deployment state of otel-collector
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Deployment state of reconciler-manager pod
 	//
 	// Possible values:
@@ -1424,6 +1433,16 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
 	//   "PENDING" - Deployment is installing or terminating
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Deployment state of
+	// resource-group-controller-manager
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined
+	//   "NOT_INSTALLED" - Deployment is not installed
+	//   "INSTALLED" - Deployment is installed
+	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Deployment state of root-reconciler
 	//
 	// Possible values:
@@ -1546,7 +1565,7 @@ func (s ConfigManagementConfigSyncState) MarshalJSON() ([]byte, error) {
 // ConfigManagementConfigSyncVersion: Specific versioning information
 // pertaining to ConfigSync's Pods
 type ConfigManagementConfigSyncVersion struct {
-	// AdmissionWebhook: Version of the deployed admission_webhook pod
+	// AdmissionWebhook: Version of the deployed admission-webhook pod
 	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
 	// GitSync: Version of the deployed git-sync pod
 	GitSync string `json:"gitSync,omitempty"`
@@ -1554,8 +1573,13 @@ type ConfigManagementConfigSyncVersion struct {
 	Importer string `json:"importer,omitempty"`
 	// Monitor: Version of the deployed monitor pod
 	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Version of the deployed otel-collector pod
+	OtelCollector string `json:"otelCollector,omitempty"`
 	// ReconcilerManager: Version of the deployed reconciler-manager pod
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Version of the deployed
+	// resource-group-controller-manager pod
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
 	// RootReconciler: Version of the deployed reconciler container in
 	// root-reconciler pod
 	RootReconciler string `json:"rootReconciler,omitempty"`
@@ -5989,6 +6013,14 @@ func (s ServiceMeshFeatureState) MarshalJSON() ([]byte, error) {
 // ServiceMeshMembershipSpec: **Service Mesh**: Spec for a single Membership
 // for the servicemesh feature
 type ServiceMeshMembershipSpec struct {
+	// ConfigApi: Optional. Specifies the API that will be used for configuring the
+	// mesh workloads.
+	//
+	// Possible values:
+	//   "CONFIG_API_UNSPECIFIED" - Unspecified
+	//   "CONFIG_API_ISTIO" - Use the Istio API for configuration.
+	//   "CONFIG_API_GATEWAY" - Use the K8s Gateway API for configuration.
+	ConfigApi string `json:"configApi,omitempty"`
 	// ControlPlane: Deprecated: use `management` instead Enables automatic control
 	// plane management.
 	//
@@ -6013,7 +6045,7 @@ type ServiceMeshMembershipSpec struct {
 	//   "STABLE" - STABLE channel includes versions that are known to be stable
 	// and reliable in production.
 	DefaultChannel string `json:"defaultChannel,omitempty"`
-	// Management: Enables automatic Service Mesh management.
+	// Management: Optional. Enables automatic Service Mesh management.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -6022,13 +6054,13 @@ type ServiceMeshMembershipSpec struct {
 	//   "MANAGEMENT_MANUAL" - User will manually configure their service mesh
 	// components.
 	Management string `json:"management,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ControlPlane") to
+	// ForceSendFields is a list of field names (e.g. "ConfigApi") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ControlPlane") to include in API
+	// NullFields is a list of field names (e.g. "ConfigApi") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

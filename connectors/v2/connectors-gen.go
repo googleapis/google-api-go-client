@@ -1615,6 +1615,9 @@ type ResultMetadata struct {
 	//   "TIME_WITH_TIMEZONE" - Time with timezone type.
 	//   "TIMESTAMP_WITH_TIMEZONE" - Timestamp with timezone type.
 	DataType string `json:"dataType,omitempty"`
+	// DefaultValue: The following field specifies the default value of the
+	// Parameter provided by the external system if a value is not provided.
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
 	// Description: A brief description of the metadata field.
 	Description string `json:"description,omitempty"`
 	// JsonSchema: JsonSchema of the result, applicable only if parameter is of
@@ -1622,6 +1625,8 @@ type ResultMetadata struct {
 	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
 	// Name: Name of the metadata field.
 	Name string `json:"name,omitempty"`
+	// Nullable: Specifies whether a null value is allowed.
+	Nullable bool `json:"nullable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

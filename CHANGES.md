@@ -1,5 +1,22 @@
 # Changes
 
+## [0.189.0](https://github.com/googleapis/google-api-go-client/compare/v0.188.0...v0.189.0) (2024-07-22)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2680](https://github.com/googleapis/google-api-go-client/issues/2680)) ([4a713f7](https://github.com/googleapis/google-api-go-client/commit/4a713f714e522fc9b642b6e877f387b45b45d92c))
+* **all:** Auto-regenerate discovery clients ([#2683](https://github.com/googleapis/google-api-go-client/issues/2683)) ([1e3757d](https://github.com/googleapis/google-api-go-client/commit/1e3757d0fae889f480bdd54dfeb09362ca0ac6d9))
+* **all:** Auto-regenerate discovery clients ([#2685](https://github.com/googleapis/google-api-go-client/issues/2685)) ([611884d](https://github.com/googleapis/google-api-go-client/commit/611884d3f736ca0ac205859dc428537ab167fd19))
+* **all:** Auto-regenerate discovery clients ([#2687](https://github.com/googleapis/google-api-go-client/issues/2687)) ([27405af](https://github.com/googleapis/google-api-go-client/commit/27405af8ca136a1c64f413f4fc3f0db57c53b80f))
+* **all:** Auto-regenerate discovery clients ([#2691](https://github.com/googleapis/google-api-go-client/issues/2691)) ([a94722f](https://github.com/googleapis/google-api-go-client/commit/a94722f1bfc635faedebf847230fc97b9845f390))
+
+
+### Bug Fixes
+
+* **cba:** Update newAuth path to use nil oauth2 client ([#2684](https://github.com/googleapis/google-api-go-client/issues/2684)) ([d925dcb](https://github.com/googleapis/google-api-go-client/commit/d925dcbb27f2412664b43259cc4840d0f952857f))
+* **transport/grpc:** Retain UserAgent option with new auth stack ([#2690](https://github.com/googleapis/google-api-go-client/issues/2690)) ([aa4662f](https://github.com/googleapis/google-api-go-client/commit/aa4662f7581724e440a9530d84d10264ff974c81))
+
 ## [0.188.0](https://github.com/googleapis/google-api-go-client/compare/v0.187.0...v0.188.0) (2024-07-09)
 
 

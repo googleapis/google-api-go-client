@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	cloud.google.com/go v0.115.0
-	cloud.google.com/go/auth v0.7.1
+	cloud.google.com/go/auth v0.7.2
 	cloud.google.com/go/auth/oauth2adapt v0.2.3
 	cloud.google.com/go/compute/metadata v0.5.0
 	github.com/google/go-cmp v0.6.0
@@ -19,16 +19,16 @@ require (
 	golang.org/x/oauth2 v0.21.0
 	golang.org/x/sync v0.7.0
 	golang.org/x/time v0.5.0
-	google.golang.org/genproto v0.0.0-20240711142825-46eb208f015d
-	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240711142825-46eb208f015d
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d
+	google.golang.org/genproto v0.0.0-20240722135656-d784300faade
+	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240722135656-d784300faade
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade
 	google.golang.org/grpc v1.64.1
 	google.golang.org/protobuf v1.34.2
 )
 
 require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
-	github.com/go-logr/logr v1.4.1 // indirect
+	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.4 // indirect

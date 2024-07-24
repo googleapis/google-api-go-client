@@ -617,8 +617,7 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 	// Express: Optional. Flag for a reCAPTCHA express request for an assessment
-	// without a token. If enabled, `site_key` must reference a SCORE key with WAF
-	// feature set to EXPRESS.
+	// without a token. If enabled, `site_key` must reference an Express site key.
 	Express bool `json:"express,omitempty"`
 	// FirewallPolicyEvaluation: Optional. Flag for enabling firewall policy config
 	// assessment. If this flag is enabled, the firewall policy will be evaluated
@@ -689,6 +688,11 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 func (s GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Event
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ExpressKeySettings: Settings specific to
+// keys that can be used for reCAPTCHA Express.
+type GoogleCloudRecaptchaenterpriseV1ExpressKeySettings struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallAction: An individual action. Each
@@ -1197,10 +1201,12 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// DisplayName: Required. Human-readable display name of this key. Modifiable
 	// by user.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExpressSettings: Settings for keys that can be used by reCAPTCHA Express.
+	ExpressSettings *GoogleCloudRecaptchaenterpriseV1ExpressKeySettings `json:"expressSettings,omitempty"`
 	// IosSettings: Settings for keys that can be used by iOS apps.
 	IosSettings *GoogleCloudRecaptchaenterpriseV1IOSKeySettings `json:"iosSettings,omitempty"`
 	// Labels: Optional. See [Creating and managing labels]
-	// (https://cloud.google.com/recaptcha-enterprise/docs/labels).
+	// (https://cloud.google.com/recaptcha/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name for the Key in the format
 	// `projects/{project}/keys/{key}`.
@@ -1389,11 +1395,11 @@ type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 	// SkipBillingCheck: Optional. If true, skips the billing check. A reCAPTCHA
 	// Enterprise key or migrated key behaves differently than a reCAPTCHA
 	// (non-Enterprise version) key when you reach a quota limit (see
-	// https://cloud.google.com/recaptcha-enterprise/quotas#quota_limit). To avoid
-	// any disruption of your usage, we check that a billing account is present. If
+	// https://cloud.google.com/recaptcha/quotas#quota_limit). To avoid any
+	// disruption of your usage, we check that a billing account is present. If
 	// your usage of reCAPTCHA is under the free quota, you can safely skip the
 	// billing check and proceed with the migration. See
-	// https://cloud.google.com/recaptcha-enterprise/docs/billing-information.
+	// https://cloud.google.com/recaptcha/docs/billing-information.
 	SkipBillingCheck bool `json:"skipBillingCheck,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SkipBillingCheck") to
 	// unconditionally include in API requests. By default, fields with empty or

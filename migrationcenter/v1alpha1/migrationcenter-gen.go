@@ -1429,17 +1429,15 @@ type ComputeEnginePreferences struct {
 	// MachinePreferences: Preferences concerning the machine types to consider on
 	// Compute Engine.
 	MachinePreferences *MachinePreferences `json:"machinePreferences,omitempty"`
-	// Multithreading: Optional. Preferences for multithreading support.
+	// Multithreading: Optional. Preferences for multithreading support on Windows
+	// Server.
 	//
 	// Possible values:
-	//   "MULTITHREADING_UNSPECIFIED" - Same as
-	// MULTITHREADING_DISABLED_WITH_COMPENSATION.
-	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading if doing
-	// so is advantageous.
-	//   "MULTITHREADING_ENABLED" - Always enable simultaneous multithreading.
+	//   "MULTITHREADING_UNSPECIFIED" - Same as MULTITHREADING_AUTO.
+	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading.
+	//   "MULTITHREADING_ENABLED" - Enable simultaneous multithreading.
 	//   "MULTITHREADING_DISABLED_WITH_COMPENSATION" - Disable simultaneous
-	// multithreading and increase number of VCPUs to compensate, if doing so is
-	// advantageous.
+	// multithreading and increase number of VCPUs to compensate.
 	Multithreading string `json:"multithreading,omitempty"`
 	// OsPricingPreferences: Optional. Pricing options for OS images.
 	OsPricingPreferences *OperatingSystemPricingPreferences `json:"osPricingPreferences,omitempty"`
@@ -2183,14 +2181,11 @@ type DatabasePreferencesCloudSqlSqlServer struct {
 	// Multithreading: Optional. Preferences for multithreading support.
 	//
 	// Possible values:
-	//   "MULTITHREADING_UNSPECIFIED" - Same as
-	// MULTITHREADING_DISABLED_WITH_COMPENSATION.
-	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading if doing
-	// so is lower cost.
-	//   "MULTITHREADING_ENABLED" - Always enable simultaneous multithreading.
+	//   "MULTITHREADING_UNSPECIFIED" - Same as MULTITHREADING_AUTO.
+	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading.
+	//   "MULTITHREADING_ENABLED" - Enable simultaneous multithreading.
 	//   "MULTITHREADING_DISABLED_WITH_COMPENSATION" - Disable simultaneous
-	// multithreading and increase number of VCPUs to compensate, if doing so is
-	// lower cost.
+	// multithreading and increase number of VCPUs to compensate.
 	Multithreading string `json:"multithreading,omitempty"`
 	// VersionType: Optional. Edition of Microsoft SQL version that is used on a
 	// Cloud SQL for SQL server instance.
@@ -5538,7 +5533,8 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MachinePreferences: A set of preferences that applies to all machines in the
 	// context.
 	MachinePreferences *VirtualMachinePreferences `json:"machinePreferences,omitempty"`
-	// MonthlyCostCompute: Compute monthly cost for this preference set.
+	// MonthlyCostCompute: Output only. Compute monthly cost for this preference
+	// set.
 	MonthlyCostCompute *Money `json:"monthlyCostCompute,omitempty"`
 	// MonthlyCostDatabaseBackup: Output only. Backup monthly cost for this
 	// preference set. Only present for databases.
@@ -5546,17 +5542,19 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MonthlyCostDatabaseLicensing: Output only. Database licensing monthly cost
 	// for this preference set. Only present for databases.
 	MonthlyCostDatabaseLicensing *Money `json:"monthlyCostDatabaseLicensing,omitempty"`
-	// MonthlyCostNetworkEgress: Network Egress monthly cost for this preference
-	// set. Only present for virtual machines.
-	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
-	// MonthlyCostOsLicense: Operating system licensing monthly cost for this
+	// MonthlyCostNetworkEgress: Output only. Network Egress monthly cost for this
 	// preference set. Only present for virtual machines.
+	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
+	// MonthlyCostOsLicense: Output only. Operating system licensing monthly cost
+	// for this preference set. Only present for virtual machines.
 	MonthlyCostOsLicense *Money `json:"monthlyCostOsLicense,omitempty"`
-	// MonthlyCostOther: Miscellaneous monthly cost for this preference set.
+	// MonthlyCostOther: Output only. Miscellaneous monthly cost for this
+	// preference set.
 	MonthlyCostOther *Money `json:"monthlyCostOther,omitempty"`
-	// MonthlyCostStorage: Storage monthly cost for this preference set.
+	// MonthlyCostStorage: Output only. Storage monthly cost for this preference
+	// set.
 	MonthlyCostStorage *Money `json:"monthlyCostStorage,omitempty"`
-	// MonthlyCostTotal: Total monthly cost for this preference set.
+	// MonthlyCostTotal: Output only. Total monthly cost for this preference set.
 	MonthlyCostTotal *Money `json:"monthlyCostTotal,omitempty"`
 	// PreferenceSet: Output only. A copy of the preference set used for this
 	// finding.

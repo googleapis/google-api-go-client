@@ -4312,7 +4312,8 @@ func (s Revision) MarshalJSON() ([]byte, error) {
 type RevisionSpec struct {
 	// ContainerConcurrency: ContainerConcurrency specifies the maximum allowed
 	// in-flight (concurrent) requests per container instance of the Revision. If
-	// not specified, defaults to 80.
+	// not specified or 0, defaults to 80 when requested CPU >= 1 and defaults to 1
+	// when requested CPU < 1.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
 	// Containers: Required. Containers holds the list which define the units of
 	// execution for this Revision. In the context of a Revision, we disallow a

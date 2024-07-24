@@ -417,12 +417,18 @@ func (s AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
 // AdaptiveMtTranslateRequest: The request for sending an AdaptiveMt
 // translation query.
 type AdaptiveMtTranslateRequest struct {
-	// Content: Required. The content of the input in string format. For now only
-	// one sentence per request is supported.
+	// Content: Required. The content of the input in string format.
 	Content []string `json:"content,omitempty"`
 	// Dataset: Required. The resource name for the dataset to use for adaptive MT.
 	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
 	Dataset string `json:"dataset,omitempty"`
+	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
+	// within the same region (have the same location-id) as the model, otherwise
+	// an INVALID_ARGUMENT (400) error is returned.
+	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+	// ReferenceSentenceConfig: Configuration for caller provided reference
+	// sentences.
+	ReferenceSentenceConfig *ReferenceSentenceConfig `json:"referenceSentenceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -443,6 +449,10 @@ func (s AdaptiveMtTranslateRequest) MarshalJSON() ([]byte, error) {
 
 // AdaptiveMtTranslateResponse: An AdaptiveMtTranslate response.
 type AdaptiveMtTranslateResponse struct {
+	// GlossaryTranslations: Text translation response if a glossary is provided in
+	// the request. This could be the same as 'translation' above if no terms
+	// apply.
+	GlossaryTranslations []*AdaptiveMtTranslation `json:"glossaryTranslations,omitempty"`
 	// LanguageCode: Output only. The translation's language code.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Translations: Output only. The translation.
@@ -450,15 +460,15 @@ type AdaptiveMtTranslateResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "GlossaryTranslations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GlossaryTranslations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1261,7 +1271,7 @@ func (s Glossary) MarshalJSON() ([]byte, error) {
 type GlossaryEntry struct {
 	// Description: Describes the glossary entry.
 	Description string `json:"description,omitempty"`
-	// Name: Required. The resource name of the entry. Format:
+	// Name: Identifier. The resource name of the entry. Format:
 	// "projects/*/locations/*/glossaries/*/glossaryEntries/*"
 	Name string `json:"name,omitempty"`
 	// TermsPair: Used for an unidirectional glossary.
@@ -2077,6 +2087,82 @@ func (s OutputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReferenceSentenceConfig: Message of caller-provided reference configuration.
+type ReferenceSentenceConfig struct {
+	// ReferenceSentencePairLists: Reference sentences pair lists. Each list will
+	// be used as the references to translate the sentence under "content" field at
+	// the corresponding index. Length of the list is required to be equal to the
+	// length of "content" field.
+	ReferenceSentencePairLists []*ReferenceSentencePairList `json:"referenceSentencePairLists,omitempty"`
+	// SourceLanguageCode: Source language code.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+	// TargetLanguageCode: Target language code.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceSentencePairLists")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceSentencePairLists") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentenceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentenceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceSentencePair: A pair of sentences used as reference in source and
+// target languages.
+type ReferenceSentencePair struct {
+	// SourceSentence: Source sentence in the sentence pair.
+	SourceSentence string `json:"sourceSentence,omitempty"`
+	// TargetSentence: Target sentence in the sentence pair.
+	TargetSentence string `json:"targetSentence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceSentence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceSentence") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentencePair) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentencePair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceSentencePairList: A list of reference sentence pairs.
+type ReferenceSentencePairList struct {
+	// ReferenceSentencePairs: Reference sentence pairs.
+	ReferenceSentencePairs []*ReferenceSentencePair `json:"referenceSentencePairs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceSentencePairs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceSentencePairs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentencePairList) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentencePairList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Romanization: A single romanization response.
 type Romanization struct {
 	// DetectedLanguageCode: The ISO-639 language code of source text in the
@@ -2421,8 +2507,10 @@ type TranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
 	// - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
-	//  For global (non-regionalized) requests, use `location-id` `global`. For
-	// example,
+	//  - Translation LLM models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/trans
+	// lation-llm`, For global (non-regionalized) requests, use `location-id`
+	// `global`. For example,
 	// `projects/{project-number-or-id}/locations/global/models/general/nmt`. If
 	// not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
@@ -7260,7 +7348,7 @@ type ProjectsLocationsGlossariesGlossaryEntriesPatchCall struct {
 
 // Patch: Updates a glossary entry.
 //
-//   - name: The resource name of the entry. Format:
+//   - name: Identifier. The resource name of the entry. Format:
 //     "projects/*/locations/*/glossaries/*/glossaryEntries/*".
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Patch(name string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

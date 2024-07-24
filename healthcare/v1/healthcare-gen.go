@@ -1329,11 +1329,11 @@ type DeidentifyConfig struct {
 	// source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
 	// UseRegionalDataProcessing: Ensures in-flight data remains in the region of
-	// origin during de-identification. Using this option results in a significant
-	// reduction of throughput, and is not compatible with `LOCATION` or
-	// `ORGANIZATION_NAME` infoTypes. `LOCATION` must be excluded within
-	// TextConfig, and must also be excluded within ImageConfig if image redaction
-	// is required.
+	// origin during de-identification. The default value is false. Using this
+	// option results in a significant reduction of throughput, and is not
+	// compatible with `LOCATION` or `ORGANIZATION_NAME` infoTypes. `LOCATION` must
+	// be excluded within TextConfig, and must also be excluded within ImageConfig
+	// if image redaction is required.
 	UseRegionalDataProcessing bool `json:"useRegionalDataProcessing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dicom") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2240,14 +2240,16 @@ type FhirNotificationConfig struct {
 	// (https://cloud.google.com/healthcare-api/docs/how-tos/logging).
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// SendFullResource: Whether to send full FHIR resource to this Pub/Sub topic.
+	// The default value is false.
 	SendFullResource bool `json:"sendFullResource,omitempty"`
 	// SendPreviousResourceOnDelete: Whether to send full FHIR resource to this
-	// Pub/Sub topic for deleting FHIR resource. Note that setting this to true
-	// does not guarantee that all previous resources will be sent in the format of
-	// full FHIR resource. When a resource change is too large or during heavy
-	// traffic, only the resource name will be sent. Clients should always check
-	// the "payloadType" label from a Pub/Sub message to determine whether it needs
-	// to fetch the full previous resource as a separate operation.
+	// Pub/Sub topic for deleting FHIR resource. The default value is false. Note
+	// that setting this to true does not guarantee that all previous resources
+	// will be sent in the format of full FHIR resource. When a resource change is
+	// too large or during heavy traffic, only the resource name will be sent.
+	// Clients should always check the "payloadType" label from a Pub/Sub message
+	// to determine whether it needs to fetch the full previous resource as a
+	// separate operation.
 	SendPreviousResourceOnDelete bool `json:"sendPreviousResourceOnDelete,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2290,7 +2292,7 @@ type FhirStore struct {
 	// default `handling=lenient` which ignores unrecognized search parameters. The
 	// handling can always be changed from the default on an individual API call by
 	// setting the HTTP header `Prefer: handling=strict` or `Prefer:
-	// handling=lenient`.
+	// handling=lenient`. Defaults to false.
 	DefaultSearchHandlingStrict bool `json:"defaultSearchHandlingStrict,omitempty"`
 	// DisableReferentialIntegrity: Immutable. Whether to disable referential
 	// integrity in this FHIR store. This field is immutable after FHIR store
@@ -2303,11 +2305,11 @@ type FhirStore struct {
 	DisableReferentialIntegrity bool `json:"disableReferentialIntegrity,omitempty"`
 	// DisableResourceVersioning: Immutable. Whether to disable resource versioning
 	// for this FHIR store. This field can not be changed after the creation of
-	// FHIR store. If set to false, which is the default behavior, all write
-	// operations cause historical versions to be recorded automatically. The
-	// historical versions can be fetched through the history APIs, but cannot be
-	// updated. If set to true, no historical versions are kept. The server sends
-	// errors for attempts to read the historical versions.
+	// FHIR store. If set to false, all write operations cause historical versions
+	// to be recorded automatically. The historical versions can be fetched through
+	// the history APIs, but cannot be updated. If set to true, no historical
+	// versions are kept. The server sends errors for attempts to read the
+	// historical versions. Defaults to false.
 	DisableResourceVersioning bool `json:"disableResourceVersioning,omitempty"`
 	// EnableUpdateCreate: Whether this FHIR store has the updateCreate capability
 	// (https://www.hl7.org/fhir/capabilitystatement-definitions.html#CapabilityStatement.rest.resource.updateCreate).
@@ -2318,7 +2320,7 @@ type FhirStore struct {
 	// data such as patient identifiers in client-specified resource IDs. Those IDs
 	// are part of the FHIR resource path recorded in Cloud audit logs and Pub/Sub
 	// notifications. Those IDs can also be contained in reference fields within
-	// other resources.
+	// other resources. Defaults to false.
 	EnableUpdateCreate bool `json:"enableUpdateCreate,omitempty"`
 	// Labels: User-supplied key-value pairs used to organize FHIR stores. Label
 	// keys must be between 1 and 63 characters long, have a UTF-8 encoding of
@@ -2847,12 +2849,12 @@ type GoogleCloudHealthcareV1FhirBigQueryDestination struct {
 	// DatasetUri: BigQuery URI to an existing dataset, up to 2000 characters long,
 	// in the format `bq://projectId.bqDatasetId`.
 	DatasetUri string `json:"datasetUri,omitempty"`
-	// Force: If this flag is `TRUE`, all tables are deleted from the dataset
-	// before the new exported tables are written. If the flag is not set and the
-	// destination dataset contains tables, the export call returns an error. If
-	// `write_disposition` is specified, this parameter is ignored. force=false is
-	// equivalent to write_disposition=WRITE_EMPTY and force=true is equivalent to
-	// write_disposition=WRITE_TRUNCATE.
+	// Force: The default value is false. If this flag is `TRUE`, all tables are
+	// deleted from the dataset before the new exported tables are written. If the
+	// flag is not set and the destination dataset contains tables, the export call
+	// returns an error. If `write_disposition` is specified, this parameter is
+	// ignored. force=false is equivalent to write_disposition=WRITE_EMPTY and
+	// force=true is equivalent to write_disposition=WRITE_TRUNCATE.
 	Force bool `json:"force,omitempty"`
 	// SchemaConfig: The configuration for the exported BigQuery schema.
 	SchemaConfig *SchemaConfig `json:"schemaConfig,omitempty"`
@@ -4004,7 +4006,7 @@ type Message struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a
 	// given store.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MessageType: The message type for this message. MSH-9.1.
+	// MessageType: Output only. The message type for this message. MSH-9.1.
 	MessageType string `json:"messageType,omitempty"`
 	// Name: Output only. Resource name of the Message, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Sto
@@ -4012,15 +4014,16 @@ type Message struct {
 	Name string `json:"name,omitempty"`
 	// ParsedData: Output only. The parsed version of the raw message data.
 	ParsedData *ParsedData `json:"parsedData,omitempty"`
-	// PatientIds: All patient IDs listed in the PID-2, PID-3, and PID-4 segments
-	// of this message.
+	// PatientIds: Output only. All patient IDs listed in the PID-2, PID-3, and
+	// PID-4 segments of this message.
 	PatientIds []*PatientId `json:"patientIds,omitempty"`
-	// SchematizedData: The parsed version of the raw message data schematized
-	// according to this store's schemas and type definitions.
+	// SchematizedData: Output only. The parsed version of the raw message data
+	// schematized according to this store's schemas and type definitions.
 	SchematizedData *SchematizedData `json:"schematizedData,omitempty"`
-	// SendFacility: The hospital that this message came from. MSH-4.
+	// SendFacility: Output only. The hospital that this message came from. MSH-4.
 	SendFacility string `json:"sendFacility,omitempty"`
-	// SendTime: The datetime the sending application sent this message. MSH-7.
+	// SendTime: Output only. The datetime the sending application sent this
+	// message. MSH-7.
 	SendTime string `json:"sendTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5434,29 +5437,30 @@ func (s UserDataMapping) MarshalJSON() ([]byte, error) {
 // validation.
 type ValidationConfig struct {
 	// DisableFhirpathValidation: Whether to disable FHIRPath validation for
-	// incoming resources. Set this to true to disable checking incoming resources
-	// for conformance against FHIRPath requirement defined in the FHIR
-	// specification. This property only affects resource types that do not have
-	// profiles configured for them, any rules in enabled implementation guides
-	// will still be enforced.
-	DisableFhirpathValidation bool `json:"disableFhirpathValidation,omitempty"`
-	// DisableProfileValidation: Whether to disable profile validation for this
-	// FHIR store. Set this to true to disable checking incoming resources for
-	// conformance against structure definitions in this FHIR store.
-	DisableProfileValidation bool `json:"disableProfileValidation,omitempty"`
-	// DisableReferenceTypeValidation: Whether to disable reference type validation
-	// for incoming resources. Set this to true to disable checking incoming
-	// resources for conformance against reference type requirement defined in the
-	// FHIR specification. This property only affects resource types that do not
-	// have profiles configured for them, any rules in enabled implementation
-	// guides will still be enforced.
-	DisableReferenceTypeValidation bool `json:"disableReferenceTypeValidation,omitempty"`
-	// DisableRequiredFieldValidation: Whether to disable required fields
-	// validation for incoming resources. Set this to true to disable checking
-	// incoming resources for conformance against required fields requirement
+	// incoming resources. The default value is false. Set this to true to disable
+	// checking incoming resources for conformance against FHIRPath requirement
 	// defined in the FHIR specification. This property only affects resource types
 	// that do not have profiles configured for them, any rules in enabled
 	// implementation guides will still be enforced.
+	DisableFhirpathValidation bool `json:"disableFhirpathValidation,omitempty"`
+	// DisableProfileValidation: Whether to disable profile validation for this
+	// FHIR store. The default value is false. Set this to true to disable checking
+	// incoming resources for conformance against structure definitions in this
+	// FHIR store.
+	DisableProfileValidation bool `json:"disableProfileValidation,omitempty"`
+	// DisableReferenceTypeValidation: Whether to disable reference type validation
+	// for incoming resources. The default value is false. Set this to true to
+	// disable checking incoming resources for conformance against reference type
+	// requirement defined in the FHIR specification. This property only affects
+	// resource types that do not have profiles configured for them, any rules in
+	// enabled implementation guides will still be enforced.
+	DisableReferenceTypeValidation bool `json:"disableReferenceTypeValidation,omitempty"`
+	// DisableRequiredFieldValidation: Whether to disable required fields
+	// validation for incoming resources. The default value is false. Set this to
+	// true to disable checking incoming resources for conformance against required
+	// fields requirement defined in the FHIR specification. This property only
+	// affects resource types that do not have profiles configured for them, any
+	// rules in enabled implementation guides will still be enforced.
 	DisableRequiredFieldValidation bool `json:"disableRequiredFieldValidation,omitempty"`
 	// EnabledImplementationGuides: A list of implementation guide URLs in this
 	// FHIR store that are used to configure the profiles to use for validation.

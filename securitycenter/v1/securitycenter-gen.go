@@ -4921,7 +4921,7 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
 	// Dataset: The dataset to write findings' updates to. Its format is
-	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset
+	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery dataset
 	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
 	// underscores (_).
 	Dataset string `json:"dataset,omitempty"`
@@ -4942,7 +4942,7 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// BigQuery export. This field is set by the server and will be ignored if
 	// provided on export creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: The relative resource name of this export. See:
+	// Name: Identifier. The relative resource name of this export. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
 	// The following list shows some examples: +
 	// `organizations/{organization_id}/locations/{location_id}/bigQueryExports/{exp
@@ -6661,8 +6661,8 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	// mute config. This field is set by the server and will be ignored if provided
 	// on config creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: This field will be ignored if provided on config creation. The
-	// following list shows some examples of the format: +
+	// Name: Identifier. This field will be ignored if provided on config creation.
+	// The following list shows some examples of the format: +
 	// `organizations/{organization}/muteConfigs/{mute_config}` +
 	// `organizations/{organization}locations/{location}//muteConfigs/{mute_config}`
 	//  + `folders/{folder}/muteConfigs/{mute_config}` +
@@ -7244,7 +7244,7 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Description of the resource value configuration.
 	Description string `json:"description,omitempty"`
-	// Name: Name for the resource value configuration
+	// Name: Identifier. Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
 	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
@@ -7257,7 +7257,7 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
 	// ResourceValue: Resource value level this expression represents Only required
-	// when there is no SDP mapping in the request
+	// when there is no Sensitive Data Protection mapping in the request
 	//
 	// Possible values:
 	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
@@ -7268,15 +7268,15 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with `AND` of other resources.
+	// "project/456" scope and will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with `AND` to check against. Values
-	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// TagValues: Tag values combined with `AND` to check against. Values in the
+	// form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
 	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
@@ -9769,13 +9769,14 @@ type Resource struct {
 	ResourcePath *ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// org/{organization_id}/folder/{folder_id}/folder/{folder_id}/project/{project_
-	// id} where there can be any number of folders. For AWS, it has the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/folder/{folder_id}/folder/{folder_id}/project/{project
+	// _id}` where there can be any number of folders. For AWS, it has the format
+	// of
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The service or resource provider associated with the resource.
@@ -12008,9 +12009,9 @@ type FoldersEventThreatDetectionSettingsValidateCustomModuleCall struct {
 //
 //   - parent: Resource name of the parent to validate the Custom Module under.
 //     Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *FoldersEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *FoldersEventThreatDetectionSettingsValidateCustomModuleCall {
 	c := &FoldersEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12116,9 +12117,9 @@ type FoldersEventThreatDetectionSettingsCustomModulesCreateCall struct {
 // by default.
 //
 //   - parent: The new custom module's parent. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *FoldersEventThreatDetectionSettingsCustomModulesCreateCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12222,10 +12223,10 @@ type FoldersEventThreatDetectionSettingsCustomModulesDeleteCall struct {
 // supported for resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Delete(name string) *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12322,10 +12323,10 @@ type FoldersEventThreatDetectionSettingsCustomModulesGetCall struct {
 // Get: Gets an Event Threat Detection custom module.
 //
 //   - name: Name of the custom module to get. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Get(name string) *FoldersEventThreatDetectionSettingsCustomModulesGetCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12436,9 +12437,9 @@ type FoldersEventThreatDetectionSettingsCustomModulesListCall struct {
 // parent along with modules inherited from ancestors.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) List(parent string) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12588,9 +12589,9 @@ type FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall struct {
 // under the given Resource Manager parent and its descendants.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12860,12 +12861,12 @@ type FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall struct {
 //
 //   - name: The resource name of the effective Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
-//     odules/{module}". *
-//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
-//     le}". *
-//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
-//     dule}".
+//     `organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
+//     odules/{module}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
+//     le}`. *
+//     `projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
+//     dule}`.
 func (r *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
 	c := &FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12976,9 +12977,9 @@ type FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall struct {
 // parent along with modules inherited from its ancestors.
 //
 //   - parent: Name of the parent to list custom modules for. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
 	c := &FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18630,9 +18631,9 @@ type OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall struct {
 //
 //   - parent: Resource name of the parent to validate the Custom Module under.
 //     Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *OrganizationsEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall {
 	c := &OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18738,9 +18739,9 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall struct {
 // by default.
 //
 //   - parent: The new custom module's parent. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18844,10 +18845,10 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall struct {
 // supported for resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Delete(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18944,10 +18945,10 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesGetCall struct {
 // Get: Gets an Event Threat Detection custom module.
 //
 //   - name: Name of the custom module to get. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Get(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19058,9 +19059,9 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesListCall struct {
 // parent along with modules inherited from ancestors.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) List(parent string) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19210,9 +19211,9 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall st
 // under the given Resource Manager parent and its descendants.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19482,12 +19483,12 @@ type OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall stru
 //
 //   - name: The resource name of the effective Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
-//     odules/{module}". *
-//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
-//     le}". *
-//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
-//     dule}".
+//     `organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
+//     odules/{module}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
+//     le}`. *
+//     `projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
+//     dule}`.
 func (r *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
 	c := &OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19598,9 +19599,9 @@ type OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall str
 // parent along with modules inherited from its ancestors.
 //
 //   - parent: Name of the parent to list custom modules for. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
 	c := &OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27740,9 +27741,9 @@ type ProjectsEventThreatDetectionSettingsValidateCustomModuleCall struct {
 //
 //   - parent: Resource name of the parent to validate the Custom Module under.
 //     Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *ProjectsEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall {
 	c := &ProjectsEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27848,9 +27849,9 @@ type ProjectsEventThreatDetectionSettingsCustomModulesCreateCall struct {
 // by default.
 //
 //   - parent: The new custom module's parent. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27954,10 +27955,10 @@ type ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall struct {
 // supported for resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Delete(name string) *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28054,10 +28055,10 @@ type ProjectsEventThreatDetectionSettingsCustomModulesGetCall struct {
 // Get: Gets an Event Threat Detection custom module.
 //
 //   - name: Name of the custom module to get. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Get(name string) *ProjectsEventThreatDetectionSettingsCustomModulesGetCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28168,9 +28169,9 @@ type ProjectsEventThreatDetectionSettingsCustomModulesListCall struct {
 // parent along with modules inherited from ancestors.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) List(parent string) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28320,9 +28321,9 @@ type ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall struct 
 // under the given Resource Manager parent and its descendants.
 //
 //   - parent: Name of the parent to list custom modules under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28592,12 +28593,12 @@ type ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall struct {
 //
 //   - name: The resource name of the effective Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
-//     odules/{module}". *
-//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
-//     le}". *
-//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
-//     dule}".
+//     `organizations/{organization}/eventThreatDetectionSettings/effectiveCustomM
+//     odules/{module}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{modu
+//     le}`. *
+//     `projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{mo
+//     dule}`.
 func (r *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
 	c := &ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28708,9 +28709,9 @@ type ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall struct {
 // parent along with modules inherited from its ancestors.
 //
 //   - parent: Name of the parent to list custom modules for. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings". *
-//     "folders/{folder}/eventThreatDetectionSettings". *
-//     "projects/{project}/eventThreatDetectionSettings".
+//     `organizations/{organization}/eventThreatDetectionSettings`. *
+//     `folders/{folder}/eventThreatDetectionSettings`. *
+//     `projects/{project}/eventThreatDetectionSettings`.
 func (r *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
 	c := &ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

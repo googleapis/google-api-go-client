@@ -357,11 +357,13 @@ func (s Console) MarshalJSON() ([]byte, error) {
 
 // Customer: Contains metadata around a Cloud Controls Partner Customer
 type Customer struct {
-	// CustomerOnboardingState: Container for customer onboarding steps
+	// CustomerOnboardingState: Output only. Container for customer onboarding
+	// steps
 	CustomerOnboardingState *CustomerOnboardingState `json:"customerOnboardingState,omitempty"`
-	// DisplayName: The customer organization's display name. E.g. "google.com".
+	// DisplayName: Output only. The customer organization's display name. E.g.
+	// "google.com".
 	DisplayName string `json:"displayName,omitempty"`
-	// IsOnboarded: Indicates whether a customer is fully onboarded
+	// IsOnboarded: Output only. Indicates whether a customer is fully onboarded
 	IsOnboarded bool `json:"isOnboarded,omitempty"`
 	// Name: Identifier. Format:
 	// `organizations/{organization}/locations/{location}/customers/{customer}`

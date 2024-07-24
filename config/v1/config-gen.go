@@ -1866,11 +1866,11 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // TerraformBlueprint: TerraformBlueprint describes the source of a Terraform
 // root module which describes the resources and configs to be deployed.
 type TerraformBlueprint struct {
-	// GcsSource: Required. URI of an object in Google Cloud Storage. Format:
+	// GcsSource: URI of an object in Google Cloud Storage. Format:
 	// `gs://{bucket}/{object}` URI may also specify an object version for zipped
 	// objects. Format: `gs://{bucket}/{object}#{version}`
 	GcsSource string `json:"gcsSource,omitempty"`
-	// GitSource: Required. URI of a public Git repo.
+	// GitSource: URI of a public Git repo.
 	GitSource *GitSource `json:"gitSource,omitempty"`
 	// InputValues: Input variable values for the Terraform blueprint.
 	InputValues map[string]TerraformVariable `json:"inputValues,omitempty"`

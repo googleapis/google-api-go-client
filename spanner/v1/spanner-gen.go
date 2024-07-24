@@ -513,6 +513,15 @@ func (s AutoscalingTargets) MarshalJSON() ([]byte, error) {
 
 // Backup: A backup of a Cloud Spanner database.
 type Backup struct {
+	// BackupSchedules: Output only. List of backup schedule URIs that are
+	// associated with creating this backup. This is only applicable for scheduled
+	// backups, and is empty for on-demand backups. To optimize for storage,
+	// whenever possible, multiple schedules are collapsed together to create one
+	// backup. In such cases, this field captures the list of all backup schedule
+	// URIs that are associated with creating this backup. If collapsing is not
+	// done, then this field captures the single backup schedule URI associated
+	// with creating this backup.
+	BackupSchedules []string `json:"backupSchedules,omitempty"`
 	// CreateTime: Output only. The time the CreateBackup request is received. If
 	// the request does not specify `version_time`, the `version_time` of the
 	// backup will be equivalent to the `create_time`.
@@ -594,15 +603,15 @@ type Backup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BackupSchedules") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupSchedules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -640,6 +649,75 @@ type BackupInfo struct {
 
 func (s BackupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupSchedule: BackupSchedule expresses the automated backup creation
+// specification for a Spanner database. Next ID: 10
+type BackupSchedule struct {
+	// EncryptionConfig: Optional. The encryption configuration that will be used
+	// to encrypt the backup. If this field is not specified, the backup will use
+	// the same encryption configuration as the database.
+	EncryptionConfig *CreateBackupEncryptionConfig `json:"encryptionConfig,omitempty"`
+	// FullBackupSpec: The schedule creates only full backups.
+	FullBackupSpec *FullBackupSpec `json:"fullBackupSpec,omitempty"`
+	// Name: Identifier. Output only for the CreateBackupSchedule operation.
+	// Required for the UpdateBackupSchedule operation. A globally unique
+	// identifier for the backup schedule which cannot be changed. Values are of
+	// the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]` The
+	// final segment of the name must be between 2 and 60 characters in length.
+	Name string `json:"name,omitempty"`
+	// RetentionDuration: Optional. The retention duration of a backup that must be
+	// at least 6 hours and at most 366 days. The backup is eligible to be
+	// automatically deleted once the retention period has elapsed.
+	RetentionDuration string `json:"retentionDuration,omitempty"`
+	// Spec: Optional. The schedule specification based on which the backup
+	// creations are triggered.
+	Spec *BackupScheduleSpec `json:"spec,omitempty"`
+	// UpdateTime: Output only. The timestamp at which the schedule was last
+	// updated. If the schedule has never been updated, this field contains the
+	// timestamp when the schedule was first created.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupScheduleSpec: Defines specifications of the backup schedule.
+type BackupScheduleSpec struct {
+	// CronSpec: Cron style schedule specification.
+	CronSpec *CrontabSpec `json:"cronSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CronSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CronSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupScheduleSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupScheduleSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1267,6 +1345,57 @@ func (s CopyBackupRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateBackupEncryptionConfig: Encryption configuration for the backup to
+// create.
+type CreateBackupEncryptionConfig struct {
+	// EncryptionType: Required. The encryption type of the backup.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "USE_DATABASE_ENCRYPTION" - Use the same encryption configuration as the
+	// database. This is the default option when encryption_config is empty. For
+	// example, if the database is using `Customer_Managed_Encryption`, the backup
+	// will be using the same Cloud KMS key as the database.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+	// specified, `kms_key_name` must contain a valid Cloud KMS key.
+	EncryptionType string `json:"encryptionType,omitempty"`
+	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect the
+	// backup. This field should be set only when encryption_type is
+	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
+	// keys used to protect the backup. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
+	// kms_key_names must fully cover all regions of the backup's instance
+	// configuration. Some examples: * For single region instance configs, specify
+	// a single regional location KMS key. * For multi-regional instance configs of
+	// type GOOGLE_MANAGED, either specify a multi-regional location KMS key or
+	// multiple regional location KMS keys that cover all regions in the instance
+	// config. * For an instance config of type USER_MANAGED, please specify only
+	// regional location KMS keys to cover each region in the instance config.
+	// Multi-regional location KMS keys are not supported for USER_MANAGED instance
+	// configs.
+	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateBackupEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBackupEncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateBackupMetadata: Metadata type for the operation returned by
 // CreateBackup.
 type CreateBackupMetadata struct {
@@ -1592,6 +1721,49 @@ type CreateSessionRequest struct {
 
 func (s CreateSessionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSessionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrontabSpec: CrontabSpec can be used to specify the version time and
+// frequency at which the backup should be created.
+type CrontabSpec struct {
+	// CreationWindow: Output only. Schedule backups will contain an externally
+	// consistent copy of the database at the version time specified in
+	// `schedule_spec.cron_spec`. However, Spanner may not initiate the creation of
+	// the scheduled backups at that version time. Spanner will initiate the
+	// creation of scheduled backups within the time window bounded by the
+	// version_time specified in `schedule_spec.cron_spec` and version_time +
+	// `creation_window`.
+	CreationWindow string `json:"creationWindow,omitempty"`
+	// Text: Required. Textual representation of the crontab. User can customize
+	// the backup frequency and the backup version time using the cron expression.
+	// The version time must be in UTC timzeone. The backup will contain an
+	// externally consistent copy of the database at the version time. Allowed
+	// frequencies are 12 hour, 1 day, 1 week and 1 month. Examples of valid cron
+	// specifications: * `0 2/12 * * * ` : every 12 hours at (2, 14) hours past
+	// midnight in UTC. * `0 2,14 * * * ` : every 12 hours at (2,14) hours past
+	// midnight in UTC. * `0 2 * * * ` : once a day at 2 past midnight in UTC. * `0
+	// 2 * * 0 ` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *
+	// ` : once a month on 8th day at 2 past midnight in UTC.
+	Text string `json:"text,omitempty"`
+	// TimeZone: Output only. The time zone of the times in `CrontabSpec.text`.
+	// Currently only UTC is supported.
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreationWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreationWindow") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrontabSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CrontabSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2287,6 +2459,11 @@ type FreeInstanceMetadata struct {
 func (s FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeInstanceMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FullBackupSpec: The specification for full backups. A full backup stores the
+// entire contents of the database at a given version time.
+type FullBackupSpec struct {
 }
 
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
@@ -3066,6 +3243,34 @@ type ListBackupOperationsResponse struct {
 
 func (s ListBackupOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupOperationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupSchedulesResponse: The response for ListBackupSchedules.
+type ListBackupSchedulesResponse struct {
+	// BackupSchedules: The list of backup schedules for a database.
+	BackupSchedules []*BackupSchedule `json:"backupSchedules,omitempty"`
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListBackupSchedules call to fetch more of the schedules.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupSchedules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupSchedules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupSchedulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupSchedulesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12447,6 +12652,320 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsInstancesDatabasesBackupSchedulesCreateCall struct {
+	s              *Service
+	parent         string
+	backupschedule *BackupSchedule
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new backup schedule.
+//
+// - parent: The name of the database that this backup schedule applies to.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Create(parent string, backupschedule *BackupSchedule) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backupschedule = backupschedule
+	return c
+}
+
+// BackupScheduleId sets the optional parameter "backupScheduleId": Required.
+// The Id to use for the backup schedule. The `backup_schedule_id` appended to
+// `parent` forms the full backup schedule name of the form
+// `projects//instances//databases//backupSchedules/`.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) BackupScheduleId(backupScheduleId string) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.urlParams_.Set("backupScheduleId", backupScheduleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a backup schedule.
+//
+//   - name: The name of the schedule to delete. Values are of the form
+//     `projects//instances//databases//backupSchedules/`.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Delete(name string) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets backup schedule for the input schedule name.
+//
+//   - name: The name of the schedule to retrieve. Values are of the form
+//     `projects//instances//databases//backupSchedules/`.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Get(name string) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -12543,6 +13062,268 @@ func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Do(opts ...g
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the backup schedules for the database.
+//
+//   - parent: Database is the parent resource whose backup schedules should be
+//     listed. Values are of the form projects//instances//databases/.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) List(parent string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of backup schedules
+// to be returned in the response. If 0 or less, defaults to the server's
+// maximum allowed page size.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) PageSize(pageSize int64) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListBackupSchedulesResponse to the same `parent`.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) PageToken(pageToken string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupSchedulesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Do(opts ...googleapi.CallOption) (*ListBackupSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Pages(ctx context.Context, f func(*ListBackupSchedulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesPatchCall struct {
+	s              *Service
+	nameid         string
+	backupschedule *BackupSchedule
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates a backup schedule.
+//
+//   - name: Identifier. Output only for the CreateBackupSchedule operation.
+//     Required for the UpdateBackupSchedule operation. A globally unique
+//     identifier for the backup schedule which cannot be changed. Values are of
+//     the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]`
+//     The final segment of the name must be between 2 and 60 characters in
+//     length.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Patch(nameid string, backupschedule *BackupSchedule) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.backupschedule = backupschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A mask
+// specifying which fields in the BackupSchedule resource should be updated.
+// This mask is relative to the BackupSchedule resource, not to the request
+// message. The field mask must always be specified; this prevents any future
+// fields from being erased accidentally.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -433,10 +433,11 @@ type BoostConfig struct {
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on boosted Cloud Workstations VMs running using this boost
-	// configuration. Nested virtualization lets you run virtual machine (VM)
-	// instances inside your workstation. Before enabling nested virtualization,
-	// consider the following important considerations. Cloud Workstations
-	// instances are subject to the same restrictions as Compute Engine instances
+	// configuration. Defaults to false. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling nested
+	// virtualization, consider the following important considerations. Cloud
+	// Workstations instances are subject to the same restrictions as Compute
+	// Engine instances
 	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
 	// * **Organization policy**: projects, folders, or organizations may be
 	// restricted from creating nested VMs if the **Disable VM nested
@@ -448,14 +449,7 @@ type BoostConfig struct {
 	// performance for workloads that are CPU-bound and possibly greater than a 10%
 	// decrease for workloads that are input/output bound. * **Machine Type**:
 	// nested virtualization can only be enabled on boost configurations that
-	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
-	// virtualization may not be enabled on boost configurations with accelerators.
-	// * **Operating System**: Because Container-Optimized OS
-	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
-	// does not support nested virtualization, when nested virtualization is
-	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
-	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts) image.
-	// Defaults to false.
+	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// Id: Optional. Required. The id to be used for the boost config.
 	Id string `json:"id,omitempty"`
@@ -718,10 +712,11 @@ type GceInstance struct {
 	DisableSsh bool `json:"disableSsh,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on Cloud Workstations VMs created using this workstation
-	// configuration. Nested virtualization lets you run virtual machine (VM)
-	// instances inside your workstation. Before enabling nested virtualization,
-	// consider the following important considerations. Cloud Workstations
-	// instances are subject to the same restrictions as Compute Engine instances
+	// configuration. Defaults to false. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling nested
+	// virtualization, consider the following important considerations. Cloud
+	// Workstations instances are subject to the same restrictions as Compute
+	// Engine instances
 	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
 	// * **Organization policy**: projects, folders, or organizations may be
 	// restricted from creating nested VMs if the **Disable VM nested
@@ -733,13 +728,7 @@ type GceInstance struct {
 	// performance for workloads that are CPU-bound and possibly greater than a 10%
 	// decrease for workloads that are input/output bound. * **Machine Type**:
 	// nested virtualization can only be enabled on workstation configurations that
-	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
-	// virtualization may not be enabled on workstation configurations with
-	// accelerators. * **Operating System**: because Container-Optimized OS
-	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
-	// does not support nested virtualization, when nested virtualization is
-	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
-	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts) image.
+	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// MachineType: Optional. The type of machine to use for VM instances—for
 	// example, "e2-standard-4". For more information about machine types that
@@ -1690,6 +1679,9 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 type Workstation struct {
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// BoostConfigs: Output only. List of available boost configuration ids that
+	// this workstation can be boosted up to
+	BoostConfigs []*WorkstationBoostConfig `json:"boostConfigs,omitempty"`
 	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. Time when this workstation was soft-deleted.
@@ -1767,6 +1759,29 @@ type Workstation struct {
 
 func (s Workstation) MarshalJSON() ([]byte, error) {
 	type NoMethod Workstation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkstationBoostConfig: Boost config for this workstation. This object is
+// populated from the parent workstation config.
+type WorkstationBoostConfig struct {
+	// Id: Output only. Boost config id.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkstationBoostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkstationBoostConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1893,10 +1908,15 @@ type WorkstationConfig struct {
 	// configuration.
 	DisplayName string `json:"displayName,omitempty"`
 	// EnableAuditAgent: Optional. Whether to enable Linux `auditd` logging on the
-	// workstation. When enabled, a service account must also be specified that has
-	// `logging.buckets.write` permission on the project. Operating system audit
-	// logging is distinct from Cloud Audit Logs
-	// (https://cloud.google.com/workstations/docs/audit-logging).
+	// workstation. When enabled, a service_account must also be specified that has
+	// `roles/logging.logWriter` and `roles/monitoring.metricWriter` on the
+	// project. Operating system audit logging is distinct from Cloud Audit Logs
+	// (https://cloud.google.com/workstations/docs/audit-logging) and Container
+	// output logging
+	// (http://cloud/workstations/docs/container-output-logging#overview).
+	// Operating system audit logs are available in the Cloud Logging
+	// (https://cloud.google.com/logging/docs) console by querying:
+	// resource.type="gce_instance" log_name:"/logs/linux-auditd"
 	EnableAuditAgent bool `json:"enableAuditAgent,omitempty"`
 	// EncryptionKey: Immutable. Encrypts resources of this workstation
 	// configuration using a customer-managed encryption key (CMEK). If specified,

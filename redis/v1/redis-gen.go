@@ -643,8 +643,7 @@ type DatabaseResourceFeed struct {
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
-	FeedType string `json:"feedType,omitempty"`
-	// ObservabilityMetricData: More feed data would be added in subsequent CLs
+	FeedType                 string                                    `json:"feedType,omitempty"`
 	ObservabilityMetricData  *ObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *DatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
 	ResourceHealthSignalData *DatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`

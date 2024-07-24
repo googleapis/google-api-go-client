@@ -672,6 +672,9 @@ func (s Image) MarshalJSON() ([]byte, error) {
 
 // Issue: Product issue.
 type Issue struct {
+	// ApplicableCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where issue applies to the manufacturer product.
+	ApplicableCountries []string `json:"applicableCountries,omitempty"`
 	// Attribute: If present, the attribute that triggered the issue. For more
 	// information about attributes, see
 	// https://support.google.com/manufacturers/answer/6124116.
@@ -709,15 +712,15 @@ type Issue struct {
 	// Type: The server-generated type of the issue, for example,
 	// “INCORRECT_TEXT_FORMATTING”, “IMAGE_NOT_SERVEABLE”, etc.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Attribute") to
+	// ForceSendFields is a list of field names (e.g. "ApplicableCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attribute") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplicableCountries") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

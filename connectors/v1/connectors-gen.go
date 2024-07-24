@@ -830,6 +830,10 @@ func (s ConfigVariableTemplate) MarshalJSON() ([]byte, error) {
 
 // Connection: Connection represents an instance of connector.
 type Connection struct {
+	// AsyncOperationsEnabled: Optional. Async operations enabled for the
+	// connection. If Async Operations is enabled, Connection allows the customers
+	// to initiate async long running operations using the actions API.
+	AsyncOperationsEnabled bool `json:"asyncOperationsEnabled,omitempty"`
 	// AuthConfig: Optional. Configuration for establishing the connection's
 	// authentication with an external system.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
@@ -930,15 +934,15 @@ type Connection struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AuthConfig") to
+	// ForceSendFields is a list of field names (e.g. "AsyncOperationsEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AsyncOperationsEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1128,6 +1132,9 @@ type ConnectorInfraConfig struct {
 	// InternalclientRatelimitThreshold: Max QPS supported for internal requests
 	// originating from Connd.
 	InternalclientRatelimitThreshold int64 `json:"internalclientRatelimitThreshold,omitempty,string"`
+	// MigrateDeploymentModel: Indicate whether connector is being migrated to
+	// cloud run deployment model.
+	MigrateDeploymentModel bool `json:"migrateDeploymentModel,omitempty"`
 	// RatelimitThreshold: Max QPS supported by the connector version before
 	// throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
@@ -1264,6 +1271,16 @@ type ConnectorVersionInfraConfig struct {
 	//   "GKE_MST" - Default model gke mst.
 	//   "CLOUD_RUN_MST" - Cloud run mst.
 	DeploymentModel string `json:"deploymentModel,omitempty"`
+	// DeploymentModelMigrationState: Output only. Status of the deployment model
+	// migration.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_MODEL_MIGRATION_STATE_UNSPECIFIED" - Deployment model
+	// migration state is not specified.
+	//   "IN_PROGRESS" - Deployment model migration is in progress.
+	//   "COMPLETED" - Deployment model migration is completed.
+	//   "ROLLEDBACK" - Deployment model migration rolledback.
+	DeploymentModelMigrationState string `json:"deploymentModelMigrationState,omitempty"`
 	// HpaConfig: Output only. HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
 	// InternalclientRatelimitThreshold: Output only. Max QPS supported for

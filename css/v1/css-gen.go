@@ -447,13 +447,22 @@ func (s Attributes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Certification: The certification for the product.
+// Certification: The certification for the product. Use the this attribute to
+// describe certifications, such as energy efficiency ratings, associated with
+// a product.
 type Certification struct {
-	// Authority: Name of the certification body.
+	// Authority: The authority or certification body responsible for issuing the
+	// certification. At this time, the most common value is "EC" or
+	// “European_Commission” for energy labels in the EU.
 	Authority string `json:"authority,omitempty"`
-	// Code: A unique code to identify the certification.
+	// Code: The code of the certification. For example, for the EPREL certificate
+	// with the link
+	// https://eprel.ec.europa.eu/screen/product/dishwashers2019/123456 the code is
+	// 123456. The code is required for European Energy Labels.
 	Code string `json:"code,omitempty"`
-	// Name: Name of the certification.
+	// Name: The name of the certification. At this time, the most common value is
+	// "EPREL", which represents energy efficiency certifications in the EU
+	// European Registry for Energy Labeling (EPREL) database.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with empty or

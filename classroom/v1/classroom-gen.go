@@ -4478,8 +4478,9 @@ func (c *CoursesAnnouncementsGetAddOnContextCall) AddOnToken(addOnToken string) 
 }
 
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
-// the attachment. This field is required for student users and optional for
-// teacher users. If not provided in the student case, an error is returned.
+// the attachment. This field is required for all requests except when the user
+// is in the Attachment Discovery iframe
+// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesAnnouncementsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesAnnouncementsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -6064,8 +6065,9 @@ func (c *CoursesCourseWorkGetAddOnContextCall) AddOnToken(addOnToken string) *Co
 }
 
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
-// the attachment. This field is required for student users and optional for
-// teacher users. If not provided in the student case, an error is returned.
+// the attachment. This field is required for all requests except when the user
+// is in the Attachment Discovery iframe
+// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesCourseWorkGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesCourseWorkGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -8878,8 +8880,9 @@ func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) AddOnToken(addOnToken st
 }
 
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
-// the attachment. This field is required for student users and optional for
-// teacher users. If not provided in the student case, an error is returned.
+// the attachment. This field is required for all requests except when the user
+// is in the Attachment Discovery iframe
+// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesCourseWorkMaterialsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c
@@ -10034,8 +10037,9 @@ func (c *CoursesPostsGetAddOnContextCall) AddOnToken(addOnToken string) *Courses
 }
 
 // AttachmentId sets the optional parameter "attachmentId": The identifier of
-// the attachment. This field is required for student users and optional for
-// teacher users. If not provided in the student case, an error is returned.
+// the attachment. This field is required for all requests except when the user
+// is in the Attachment Discovery iframe
+// (https://developers.google.com/classroom/add-ons/get-started/iframes/attachment-discovery-iframe).
 func (c *CoursesPostsGetAddOnContextCall) AttachmentId(attachmentId string) *CoursesPostsGetAddOnContextCall {
 	c.urlParams_.Set("attachmentId", attachmentId)
 	return c

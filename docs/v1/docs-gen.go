@@ -353,6 +353,30 @@ func (s Body) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BookmarkLink: A reference to a bookmark in this document.
+type BookmarkLink struct {
+	// Id: The ID of a bookmark in this document.
+	Id string `json:"id,omitempty"`
+	// TabId: The ID of the tab containing this bookmark.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BookmarkLink) MarshalJSON() ([]byte, error) {
+	type NoMethod BookmarkLink
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Bullet: Describes the bullet of a paragraph.
 type Bullet struct {
 	// ListId: The ID of the list this paragraph belongs to.
@@ -899,6 +923,13 @@ type DeleteFooterRequest struct {
 	// defined on a SectionStyle, the reference to this footer is removed and the
 	// footer of that type is now continued from the previous section.
 	FooterId string `json:"footerId,omitempty"`
+	// TabId: The tab that contains the footer to delete. When omitted, the request
+	// is applied to the first tab. In a document containing a single tab: - If
+	// provided, must match the singular tab's ID. - If omitted, the request
+	// applies to the singular tab. In a document containing multiple tabs: - If
+	// provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FooterId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -925,6 +956,13 @@ type DeleteHeaderRequest struct {
 	// defined on a SectionStyle, the reference to this header is removed and the
 	// header of that type is now continued from the previous section.
 	HeaderId string `json:"headerId,omitempty"`
+	// TabId: The tab containing the header to delete. When omitted, the request is
+	// applied to the first tab. In a document containing a single tab: - If
+	// provided, must match the singular tab's ID. - If omitted, the request
+	// applies to the singular tab. In a document containing multiple tabs: - If
+	// provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HeaderId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -950,6 +988,14 @@ type DeleteNamedRangeRequest struct {
 	Name string `json:"name,omitempty"`
 	// NamedRangeId: The ID of the named range to delete.
 	NamedRangeId string `json:"namedRangeId,omitempty"`
+	// TabsCriteria: Optional. The criteria used to specify which tab(s) the range
+	// deletion should occur in. When omitted, the range deletion is applied to all
+	// tabs. In a document containing a single tab: - If provided, must match the
+	// singular tab's ID. - If omitted, the range deletion applies to the singular
+	// tab. In a document containing multiple tabs: - If provided, the range
+	// deletion applies to the specified tabs. - If not provided, the range
+	// deletion applies to all tabs.
+	TabsCriteria *TabsCriteria `json:"tabsCriteria,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -997,6 +1043,13 @@ func (s DeleteParagraphBulletsRequest) MarshalJSON() ([]byte, error) {
 type DeletePositionedObjectRequest struct {
 	// ObjectId: The ID of the positioned object to delete.
 	ObjectId string `json:"objectId,omitempty"`
+	// TabId: The tab that the positioned object to delete is in. When omitted, the
+	// request is applied to the first tab. In a document containing a single tab:
+	// - If provided, must match the singular tab's ID. - If omitted, the request
+	// applies to the singular tab. In a document containing multiple tabs: - If
+	// provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ObjectId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1173,6 +1226,10 @@ type Document struct {
 	//   "PREVIEW_WITHOUT_SUGGESTIONS" - The returned document is a preview with
 	// all suggested changes rejected if there are any suggestions in the document.
 	SuggestionsViewMode string `json:"suggestionsViewMode,omitempty"`
+	// Tabs: Tabs that are part of a document. Tabs can contain child tabs, a tab
+	// nested within another tab. Child tabs are represented by the Tab.child_tabs
+	// field.
+	Tabs []*Tab `json:"tabs,omitempty"`
 	// Title: The title of the document.
 	Title string `json:"title,omitempty"`
 
@@ -1362,6 +1419,53 @@ type DocumentStyleSuggestionState struct {
 
 func (s DocumentStyleSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentStyleSuggestionState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DocumentTab: A tab with document contents.
+type DocumentTab struct {
+	// Body: The main body of the document tab.
+	Body *Body `json:"body,omitempty"`
+	// DocumentStyle: The style of the document tab.
+	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
+	// Footers: The footers in the document tab, keyed by footer ID.
+	Footers map[string]Footer `json:"footers,omitempty"`
+	// Footnotes: The footnotes in the document tab, keyed by footnote ID.
+	Footnotes map[string]Footnote `json:"footnotes,omitempty"`
+	// Headers: The headers in the document tab, keyed by header ID.
+	Headers map[string]Header `json:"headers,omitempty"`
+	// InlineObjects: The inline objects in the document tab, keyed by object ID.
+	InlineObjects map[string]InlineObject `json:"inlineObjects,omitempty"`
+	// Lists: The lists in the document tab, keyed by list ID.
+	Lists map[string]List `json:"lists,omitempty"`
+	// NamedRanges: The named ranges in the document tab, keyed by name.
+	NamedRanges map[string]NamedRanges `json:"namedRanges,omitempty"`
+	// NamedStyles: The named styles of the document tab.
+	NamedStyles *NamedStyles `json:"namedStyles,omitempty"`
+	// PositionedObjects: The positioned objects in the document tab, keyed by
+	// object ID.
+	PositionedObjects map[string]PositionedObject `json:"positionedObjects,omitempty"`
+	// SuggestedDocumentStyleChanges: The suggested changes to the style of the
+	// document tab, keyed by suggestion ID.
+	SuggestedDocumentStyleChanges map[string]SuggestedDocumentStyle `json:"suggestedDocumentStyleChanges,omitempty"`
+	// SuggestedNamedStylesChanges: The suggested changes to the named styles of
+	// the document tab, keyed by suggestion ID.
+	SuggestedNamedStylesChanges map[string]SuggestedNamedStyles `json:"suggestedNamedStylesChanges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentTab) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentTab
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1559,6 +1663,13 @@ type EndOfSegmentLocation struct {
 	// SegmentId: The ID of the header, footer or footnote the location is in. An
 	// empty segment ID signifies the document's body.
 	SegmentId string `json:"segmentId,omitempty"`
+	// TabId: The tab that the location is in. When omitted, the request is applied
+	// to the first tab. In a document containing a single tab: - If provided, must
+	// match the singular tab's ID. - If omitted, the request applies to the
+	// singular tab. In a document containing multiple tabs: - If provided, the
+	// request applies to the specified tab. - If omitted, the request applies to
+	// the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SegmentId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1715,6 +1826,30 @@ type Header struct {
 
 func (s Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HeadingLink: A reference to a heading in this document.
+type HeadingLink struct {
+	// Id: The ID of a heading in this document.
+	Id string `json:"id,omitempty"`
+	// TabId: The ID of the tab containing this heading.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeadingLink) MarshalJSON() ([]byte, error) {
+	type NoMethod HeadingLink
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2274,19 +2409,31 @@ func (s InsertTextRequest) MarshalJSON() ([]byte, error) {
 // Link: A reference to another portion of a document or an external URL
 // resource.
 type Link struct {
+	// Bookmark: A bookmark in this document. In documents containing a single tab,
+	// links to bookmarks within the singular tab continue to return
+	// Link.bookmark_id when the includeTabsContent parameter is set to `false` or
+	// unset. Otherwise, this field is returned.
+	Bookmark *BookmarkLink `json:"bookmark,omitempty"`
 	// BookmarkId: The ID of a bookmark in this document.
 	BookmarkId string `json:"bookmarkId,omitempty"`
+	// Heading: A heading in this document. In documents containing a single tab,
+	// links to headings within the singular tab continue to return Link.heading_id
+	// when the includeTabsContent parameter is set to `false` or unset. Otherwise,
+	// this field is returned.
+	Heading *HeadingLink `json:"heading,omitempty"`
 	// HeadingId: The ID of a heading in this document.
 	HeadingId string `json:"headingId,omitempty"`
+	// TabId: The ID of a tab in this document.
+	TabId string `json:"tabId,omitempty"`
 	// Url: An external URL.
 	Url string `json:"url,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BookmarkId") to
+	// ForceSendFields is a list of field names (e.g. "Bookmark") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BookmarkId") to include in API
+	// NullFields is a list of field names (e.g. "Bookmark") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2442,6 +2589,13 @@ type Location struct {
 	// SegmentId: The ID of the header, footer or footnote the location is in. An
 	// empty segment ID signifies the document's body.
 	SegmentId string `json:"segmentId,omitempty"`
+	// TabId: The tab that the location is in. When omitted, the request is applied
+	// to the first tab. In a document containing a single tab: - If provided, must
+	// match the singular tab's ID. - If omitted, the request applies to the
+	// singular tab. In a document containing multiple tabs: - If provided, the
+	// request applies to the specified tab. - If omitted, the request applies to
+	// the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3535,6 +3689,13 @@ type Range struct {
 	// In all current uses, a start index must be provided. This field is an
 	// Int32Value in order to accommodate future use cases with open-ended ranges.
 	StartIndex int64 `json:"startIndex,omitempty"`
+	// TabId: The tab that contains this range. When omitted, the request applies
+	// to the first tab. In a document containing a single tab: - If provided, must
+	// match the singular tab's ID. - If omitted, the request applies to the
+	// singular tab. In a document containing multiple tabs: - If provided, the
+	// request applies to the specified tab. - If omitted, the request applies to
+	// the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndIndex") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3560,6 +3721,13 @@ type ReplaceAllTextRequest struct {
 	ContainsText *SubstringMatchCriteria `json:"containsText,omitempty"`
 	// ReplaceText: The text that will replace the matched text.
 	ReplaceText string `json:"replaceText,omitempty"`
+	// TabsCriteria: Optional. The criteria used to specify in which tabs the
+	// replacement occurs. When omitted, the replacement applies to all tabs. In a
+	// document containing a single tab: - If provided, must match the singular
+	// tab's ID. - If omitted, the replacement applies to the singular tab. In a
+	// document containing multiple tabs: - If provided, the replacement applies to
+	// the specified tabs. - If omitted, the replacement applies to all tabs.
+	TabsCriteria *TabsCriteria `json:"tabsCriteria,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContainsText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3617,6 +3785,13 @@ type ReplaceImageRequest struct {
 	// image's bounds. The rendered size of the image will be the same as the
 	// original image.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
+	// TabId: The tab that the image to be replaced is in. When omitted, the
+	// request is applied to the first tab. In a document containing a single tab:
+	// - If provided, must match the singular tab's ID. - If omitted, the request
+	// applies to the singular tab. In a document containing multiple tabs: - If
+	// provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// Uri: The URI of the new image. The image is fetched once at insertion time
 	// and a copy is stored for display inside the document. Images must be less
 	// than 50MB, cannot exceed 25 megapixels, and must be in PNG, JPEG, or GIF
@@ -3658,6 +3833,13 @@ type ReplaceNamedRangeContentRequest struct {
 	// each one will be replaced. If there are no named ranges with the given name,
 	// then the request will be a no-op.
 	NamedRangeName string `json:"namedRangeName,omitempty"`
+	// TabsCriteria: Optional. The criteria used to specify in which tabs the
+	// replacement occurs. When omitted, the replacement applies to all tabs. In a
+	// document containing a single tab: - If provided, must match the singular
+	// tab's ID. - If omitted, the replacement applies to the singular tab. In a
+	// document containing multiple tabs: - If provided, the replacement applies to
+	// the specified tabs. - If omitted, the replacement applies to all tabs.
+	TabsCriteria *TabsCriteria `json:"tabsCriteria,omitempty"`
 	// Text: Replaces the content of the specified named range(s) with the given
 	// text.
 	Text string `json:"text,omitempty"`
@@ -4620,6 +4802,64 @@ func (s SuggestedTextStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Tab: A tab in a document.
+type Tab struct {
+	// ChildTabs: The child tabs nested within this tab.
+	ChildTabs []*Tab `json:"childTabs,omitempty"`
+	// DocumentTab: A tab with document contents, like text and images.
+	DocumentTab *DocumentTab `json:"documentTab,omitempty"`
+	// TabProperties: The properties of the tab, like ID and title.
+	TabProperties *TabProperties `json:"tabProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChildTabs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChildTabs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Tab) MarshalJSON() ([]byte, error) {
+	type NoMethod Tab
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TabProperties: Properties of a tab.
+type TabProperties struct {
+	// Index: The index of the tab within the parent.
+	Index int64 `json:"index,omitempty"`
+	// NestingLevel: Output only. The depth of the tab within the document.
+	// Root-level tabs start at 0.
+	NestingLevel int64 `json:"nestingLevel,omitempty"`
+	// ParentTabId: Optional. The ID of the parent tab. Empty when the current tab
+	// is a root-level tab, which means it doesn't have any parents.
+	ParentTabId string `json:"parentTabId,omitempty"`
+	// TabId: Output only. The ID of the tab. This field can't be changed.
+	TabId string `json:"tabId,omitempty"`
+	// Title: The user-visible name of the tab.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TabProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod TabProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TabStop: A tab stop within a paragraph.
 type TabStop struct {
 	// Alignment: The alignment of this tab stop. If unset, the value defaults to
@@ -5120,6 +5360,28 @@ func (s TableStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TabsCriteria: A criteria that specifies in which tabs a request executes.
+type TabsCriteria struct {
+	// TabIds: The list of tab IDs in which the request executes.
+	TabIds []string `json:"tabIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TabIds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TabIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TabsCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod TabsCriteria
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TextRun: A ParagraphElement that represents a run of text that all has the
 // same styling.
 type TextRun struct {
@@ -5327,6 +5589,13 @@ type UpdateDocumentStyleRequest struct {
 	// A single "*" can be used as short-hand for listing every field. For
 	// example to update the background, set `fields` to "background".
 	Fields string `json:"fields,omitempty"`
+	// TabId: The tab that contains the style to update. When omitted, the request
+	// applies to the first tab. In a document containing a single tab: - If
+	// provided, must match the singular tab's ID. - If omitted, the request
+	// applies to the singular tab. In a document containing multiple tabs: - If
+	// provided, the request applies to the specified tab. - If not provided, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentStyle") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5863,6 +6132,19 @@ type DocumentsGetCall struct {
 func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId
+	return c
+}
+
+// IncludeTabsContent sets the optional parameter "includeTabsContent": Whether
+// to populate the Document.tabs field instead of the text content fields like
+// body and documentStyle on Document. - When `True`: Document content
+// populates in the Document.tabs field instead of the text content fields in
+// Document. - When `False`: The content of the document's first tab populates
+// the content fields in Document excluding Document.tabs. If a document has
+// only one tab, then that tab is used to populate the document content.
+// Document.tabs will be empty.
+func (c *DocumentsGetCall) IncludeTabsContent(includeTabsContent bool) *DocumentsGetCall {
+	c.urlParams_.Set("includeTabsContent", fmt.Sprint(includeTabsContent))
 	return c
 }
 

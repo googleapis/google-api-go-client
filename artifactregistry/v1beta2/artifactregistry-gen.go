@@ -1192,6 +1192,9 @@ type ProjectSettings struct {
 	// projects/{project-id}/projectSettings In update request: never set In
 	// response: always set
 	Name string `json:"name,omitempty"`
+	// PullPercent: The percentage of pull traffic to redirect from GCR to AR when
+	// using partial redirection.
+	PullPercent int64 `json:"pullPercent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

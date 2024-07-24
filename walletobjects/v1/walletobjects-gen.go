@@ -2160,6 +2160,12 @@ type EventTicketObject struct {
 	ReservationInfo *EventReservationInfo `json:"reservationInfo,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SeatInfo: Seating details for this ticket.
 	SeatInfo *EventSeat `json:"seatInfo,omitempty"`
 	// SmartTapRedemptionValue: The value that will be transmitted to a Smart Tap
@@ -2568,8 +2574,7 @@ type FlightClass struct {
 	// offset. Time may be specified up to millisecond precision. eg:
 	// `2027-03-05T06:30:00` This should be the local date/time at the airport (not
 	// a UTC time). Google will reject the request if UTC offset is provided. Time
-	// zones will be calculated by Google based on departure airport. If this is
-	// not set, Google will set it based on data from other sources.
+	// zones will be calculated by Google based on departure airport.
 	LocalBoardingDateTime string `json:"localBoardingDateTime,omitempty"`
 	// LocalEstimatedOrActualArrivalDateTime: The estimated time the aircraft plans
 	// to reach the destination gate (not the runway) or the actual time it reached
@@ -2581,8 +2586,7 @@ type FlightClass struct {
 	// millisecond precision. eg: `2027-03-05T06:30:00` This should be the local
 	// date/time at the airport (not a UTC time). Google will reject the request if
 	// UTC offset is provided. Time zones will be calculated by Google based on
-	// arrival airport. If this is not set, Google will set it based on data from
-	// other sources.
+	// arrival airport.
 	LocalEstimatedOrActualArrivalDateTime string `json:"localEstimatedOrActualArrivalDateTime,omitempty"`
 	// LocalEstimatedOrActualDepartureDateTime: The estimated time the aircraft
 	// plans to pull from the gate or the actual time the aircraft already pulled
@@ -2594,8 +2598,7 @@ type FlightClass struct {
 	// offset. Time may be specified up to millisecond precision. eg:
 	// `2027-03-05T06:30:00` This should be the local date/time at the airport (not
 	// a UTC time). Google will reject the request if UTC offset is provided. Time
-	// zones will be calculated by Google based on departure airport. If this is
-	// not set, Google will set it based on data from other sources.
+	// zones will be calculated by Google based on departure airport.
 	LocalEstimatedOrActualDepartureDateTime string `json:"localEstimatedOrActualDepartureDateTime,omitempty"`
 	// LocalGateClosingDateTime: The gate closing time as it would be printed on
 	// the boarding pass. Do not set this field if you do not want to print it in
@@ -2613,8 +2616,7 @@ type FlightClass struct {
 	// to millisecond precision. eg: `2027-03-05T06:30:00` This should be the local
 	// date/time at the airport (not a UTC time). Google will reject the request if
 	// UTC offset is provided. Time zones will be calculated by Google based on
-	// arrival airport. If this is not set, Google will set it based on data from
-	// other sources.
+	// arrival airport.
 	LocalScheduledArrivalDateTime string `json:"localScheduledArrivalDateTime,omitempty"`
 	// LocalScheduledDepartureDateTime: Required. The scheduled date and time when
 	// the aircraft is expected to depart the gate (not the runway) Note: This
@@ -2902,6 +2904,12 @@ type FlightObject struct {
 	ReservationInfo *ReservationInfo `json:"reservationInfo,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SecurityProgramLogo: An image for the security program that applies to the
 	// passenger.
 	SecurityProgramLogo *Image `json:"securityProgramLogo,omitempty"`
@@ -3267,6 +3275,12 @@ type GenericObject struct {
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
 	// RotatingBarcode: The rotating barcode settings/details.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SmartTapRedemptionValue: The value that will be transmitted to a Smart Tap
 	// certified terminal over NFC for this object. The class level fields
 	// `enableSmartTap` and `redemptionIssuers` must also be set up correctly in
@@ -3703,6 +3717,12 @@ type GiftCardObject struct {
 	Pin string `json:"pin,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SmartTapRedemptionValue: The value that will be transmitted to a Smart Tap
 	// certified terminal over NFC for this object. The class level fields
 	// `enableSmartTap` and `redemptionIssuers` must also be set up correctly in
@@ -4645,6 +4665,12 @@ type LoyaltyObject struct {
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SecondaryLoyaltyPoints: The secondary loyalty reward points label, balance,
 	// and type. Shown in addition to the primary loyalty points.
 	SecondaryLoyaltyPoints *LoyaltyPoints `json:"secondaryLoyaltyPoints,omitempty"`
@@ -5572,6 +5598,12 @@ type OfferObject struct {
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SmartTapRedemptionValue: The value that will be transmitted to a Smart Tap
 	// certified terminal over NFC for this object. The class level fields
 	// `enableSmartTap` and `redemptionIssuers` must also be set up correctly in
@@ -6134,6 +6166,43 @@ type RotatingBarcodeValues struct {
 
 func (s RotatingBarcodeValues) MarshalJSON() ([]byte, error) {
 	type NoMethod RotatingBarcodeValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SaveRestrictions: Defines restrictions on the object that will be verified
+// during save. Note: this is an advanced feature, please contact Google for
+// implementation support.
+type SaveRestrictions struct {
+	// RestrictToEmailSha256: Restrict the save of the referencing object to the
+	// given email address only. This is the hex output of SHA256 sum of the email
+	// address, all lowercase and without any notations like "." or "+", except
+	// "@". For example, for example@example.com, this value will be
+	// 31c5543c1734d25c7206f5fd591525d0295bec6fe84ff82f946a34fe970a1e66 and for
+	// Example@example.com, this value will be
+	// bc34f262c93ad7122763684ccea6f07fb7f5d8a2d11e60ce15a6f43fe70ce632 If email
+	// address of the logged-in user who tries to save this pass does not match
+	// with the defined value here, users won't be allowed to save this pass. They
+	// will instead be prompted with an error to contact the issuer. This
+	// information should be gathered from the user with an explicit consent via
+	// Sign in with Google integration
+	// https://developers.google.com/identity/authentication. Please contact with
+	// support before using Save Restrictions.
+	RestrictToEmailSha256 string `json:"restrictToEmailSha256,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RestrictToEmailSha256") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RestrictToEmailSha256") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SaveRestrictions) MarshalJSON() ([]byte, error) {
+	type NoMethod SaveRestrictions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6955,6 +7024,12 @@ type TransitObject struct {
 	PurchaseDetails *PurchaseDetails `json:"purchaseDetails,omitempty"`
 	// RotatingBarcode: The rotating barcode type and value.
 	RotatingBarcode *RotatingBarcode `json:"rotatingBarcode,omitempty"`
+	// SaveRestrictions: Restrictions on the object that needs to be verified
+	// before the user tries to save the pass. Note that this restrictions will
+	// only be applied during save time. If the restrictions changed after a user
+	// saves the pass, the new restrictions will not be applied to an already saved
+	// pass.
+	SaveRestrictions *SaveRestrictions `json:"saveRestrictions,omitempty"`
 	// SmartTapRedemptionValue: The value that will be transmitted to a Smart Tap
 	// certified terminal over NFC for this object. The class level fields
 	// `enableSmartTap` and `redemptionIssuers` must also be set up correctly in

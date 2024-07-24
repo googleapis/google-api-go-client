@@ -3932,7 +3932,7 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
 	// Dataset: The dataset to write findings' updates to. Its format is
-	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset
+	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery dataset
 	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
 	// underscores (_).
 	Dataset string `json:"dataset,omitempty"`
@@ -3953,7 +3953,7 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// BigQuery export. This field is set by the server and will be ignored if
 	// provided on export creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: The relative resource name of this export. See:
+	// Name: Identifier. The relative resource name of this export. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
 	// The following list shows some examples: +
 	// `organizations/{organization_id}/locations/{location_id}/bigQueryExports/{exp
@@ -5672,8 +5672,8 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	// mute config. This field is set by the server and will be ignored if provided
 	// on config creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: This field will be ignored if provided on config creation. The
-	// following list shows some examples of the format: +
+	// Name: Identifier. This field will be ignored if provided on config creation.
+	// The following list shows some examples of the format: +
 	// `organizations/{organization}/muteConfigs/{mute_config}` +
 	// `organizations/{organization}locations/{location}//muteConfigs/{mute_config}`
 	//  + `folders/{folder}/muteConfigs/{mute_config}` +
@@ -6255,7 +6255,7 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Description of the resource value configuration.
 	Description string `json:"description,omitempty"`
-	// Name: Name for the resource value configuration
+	// Name: Identifier. Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
 	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
@@ -6268,7 +6268,7 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
 	// ResourceValue: Resource value level this expression represents Only required
-	// when there is no SDP mapping in the request
+	// when there is no Sensitive Data Protection mapping in the request
 	//
 	// Possible values:
 	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
@@ -6279,15 +6279,15 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with `AND` of other resources.
+	// "project/456" scope and will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with `AND` to check against. Values
-	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// TagValues: Tag values combined with `AND` to check against. Values in the
+	// form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
 	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`

@@ -722,6 +722,8 @@ type Environment struct {
 	// EnvironmentId must start with a lowercase letter followed by up to 63
 	// lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: The current state of the environment.

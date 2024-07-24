@@ -11515,7 +11515,7 @@ func (s GoogleCloudDialogflowV2beta1AssistQueryParameters) MarshalJSON() ([]byte
 // speech audio to be processed.
 type GoogleCloudDialogflowV2beta1AudioInput struct {
 	// Audio: Required. The natural language speech audio to be processed. A single
-	// request can contain up to 1 minute of speech audio data. The transcribed
+	// request can contain up to 2 minutes of speech audio data. The transcribed
 	// text cannot contain more than 256 bytes for virtual agent interactions.
 	Audio string `json:"audio,omitempty"`
 	// Config: Required. Instructs the speech recognizer how to process the speech

@@ -628,7 +628,8 @@ type DnsAuthorization struct {
 	// `projects/*/locations/*/dnsAuthorizations/*`.
 	Name string `json:"name,omitempty"`
 	// Type: Immutable. Type of DnsAuthorization. If unset during resource creation
-	// the following default will be used: - in location global: FIXED_RECORD.
+	// the following default will be used: - in location `global`: FIXED_RECORD, -
+	// in other locations: PER_PROJECT_RECORD.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.

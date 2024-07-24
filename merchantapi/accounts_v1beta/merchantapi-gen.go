@@ -2812,7 +2812,9 @@ type TermsOfServiceAgreementState struct {
 	// region_code
 	Accepted *Accepted `json:"accepted,omitempty"`
 	// Name: Identifier. The resource name of the terms of service version. Format:
-	// `accounts/{account}/termsOfServiceAgreementState/{identifier}`
+	// `accounts/{account}/termsOfServiceAgreementState/{identifier}` The
+	// identifier format is: `{TermsOfServiceKind}-{country}` For example, an
+	// identifier could be: `MERCHANT_CENTER-US`
 	Name string `json:"name,omitempty"`
 	// RegionCode: Region code as defined by https://cldr.unicode.org/. This is the
 	// country the current state applies to.
@@ -7040,7 +7042,8 @@ type AccountsTermsOfServiceAgreementStatesGetCall struct {
 // Get: Returns the state of a terms of service agreement.
 //
 //   - name: The resource name of the terms of service version. Format:
-//     `accounts/{account}/termsOfServiceAgreementState/{identifier}`.
+//     `accounts/{account}/termsOfServiceAgreementState/{identifier}` The
+//     identifier format is: `{TermsOfServiceKind}-{country}`.
 func (r *AccountsTermsOfServiceAgreementStatesService) Get(nameid string) *AccountsTermsOfServiceAgreementStatesGetCall {
 	c := &AccountsTermsOfServiceAgreementStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

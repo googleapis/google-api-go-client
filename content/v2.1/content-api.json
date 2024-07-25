@@ -6219,7 +6219,7 @@
       }
     }
   },
-  "revision": "20240719",
+  "revision": "20240723",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -14500,7 +14500,7 @@
           "type": "array"
         },
         "source": {
-          "description": "The source of the offer, that is, how the offer was created. Acceptable values are: - \"`api`\" - \"`crawl`\" - \"`feed`\" ",
+          "description": "Output only. The source of the offer, that is, how the offer was created. Acceptable values are: - \"`api`\" - \"`crawl`\" - \"`feed`\" ",
           "type": "string"
         },
         "structuredDescription": {

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240719",
+  "revision": "20240722",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -707,11 +707,6 @@
         "responseSchema": {
           "$ref": "GoogleCloudAiplatformV1beta1Schema",
           "description": "Optional. The `Schema` object allows the definition of input and output data types. These types can be objects, but also primitives and arrays. Represents a select subset of an [OpenAPI 3.0 schema object](https://spec.openapis.org/oas/v3.0.3#schema). If set, a compatible response_mime_type must also be set. Compatible mimetypes: `application/json`: Schema for JSON response."
-        },
-        "seed": {
-          "description": "Optional. Seed.",
-          "format": "int32",
-          "type": "integer"
         },
         "stopSequences": {
           "description": "Optional. Stop sequences.",

@@ -809,8 +809,6 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// response_mime_type must also be set. Compatible mimetypes:
 	// `application/json`: Schema for JSON response.
 	ResponseSchema *GoogleCloudAiplatformV1beta1Schema `json:"responseSchema,omitempty"`
-	// Seed: Optional. Seed.
-	Seed int64 `json:"seed,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.

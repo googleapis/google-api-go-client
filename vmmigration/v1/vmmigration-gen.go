@@ -1947,6 +1947,9 @@ type ImageImport struct {
 	// Encryption: Immutable. The encryption details used by the image import
 	// process during the image adaptation for Compute Engine.
 	Encryption *Encryption `json:"encryption,omitempty"`
+	// MachineImageTargetDefaults: Immutable. Target details for importing a
+	// machine image, will be used by ImageImportJob.
+	MachineImageTargetDefaults *MachineImageTargetDetails `json:"machineImageTargetDefaults,omitempty"`
 	// Name: Output only. The resource path of the ImageImport.
 	Name string `json:"name,omitempty"`
 	// RecentImageImportJobs: Output only. The result of the most recent runs for
@@ -1994,6 +1997,9 @@ type ImageImportJob struct {
 	// Errors: Output only. Provides details on the error that led to the image
 	// import state in case of an error.
 	Errors []*Status `json:"errors,omitempty"`
+	// MachineImageTargetDetails: Output only. Target details used to import a
+	// machine image.
+	MachineImageTargetDetails *MachineImageTargetDetails `json:"machineImageTargetDetails,omitempty"`
 	// Name: Output only. The resource path of the ImageImportJob.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the image import.
@@ -2613,6 +2619,96 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MachineImageParametersOverrides: Parameters overriding decisions based on
+// the source machine image configurations.
+type MachineImageParametersOverrides struct {
+	// MachineType: Optional. The machine type to create the MachineImage with. If
+	// empty, the service will choose a relevant machine type based on the
+	// information from the source image. For more information about machine types,
+	// please refer to https://cloud.google.com/compute/docs/machine-resource.
+	MachineType string `json:"machineType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MachineType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineImageParametersOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineImageParametersOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MachineImageTargetDetails: The target details of the machine image resource
+// that will be created by the image import job.
+type MachineImageTargetDetails struct {
+	// AdditionalLicenses: Optional. Additional licenses to assign to the instance
+	// created by the machine image. Format:
+	// https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/licenses/LICENSE_NAME
+	// Or
+	// https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/licenses/LICENSE_NAME
+	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
+	// Description: Optional. An optional description of the machine image.
+	Description string `json:"description,omitempty"`
+	// Encryption: Immutable. The encryption to apply to the machine image.
+	Encryption *Encryption `json:"encryption,omitempty"`
+	// Labels: Optional. The labels to apply to the instance created by the machine
+	// image.
+	Labels map[string]string `json:"labels,omitempty"`
+	// MachineImageName: Required. The name of the machine image to be created.
+	MachineImageName string `json:"machineImageName,omitempty"`
+	// MachineImageParametersOverrides: Optional. Parameters overriding decisions
+	// based on the source machine image configurations.
+	MachineImageParametersOverrides *MachineImageParametersOverrides `json:"machineImageParametersOverrides,omitempty"`
+	// NetworkInterfaces: Optional. The network interfaces to create with the
+	// instance created by the machine image. Internal and external IP addresses
+	// are ignored for machine image import.
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+	// OsAdaptationParameters: Optional. Use to set the parameters relevant for the
+	// OS adaptation process.
+	OsAdaptationParameters *ImageImportOsAdaptationParameters `json:"osAdaptationParameters,omitempty"`
+	// ServiceAccount: Optional. The service account to assign to the instance
+	// created by the machine image.
+	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
+	// ShieldedInstanceConfig: Optional. Shielded instance configuration.
+	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
+	// SingleRegionStorage: Optional. Set to true to set the machine image
+	// storageLocations to the single region of the import job. When false, the
+	// closest multi-region is selected.
+	SingleRegionStorage bool `json:"singleRegionStorage,omitempty"`
+	// SkipOsAdaptation: Optional. Use to skip OS adaptation process.
+	SkipOsAdaptation *SkipOsAdaptation `json:"skipOsAdaptation,omitempty"`
+	// Tags: Optional. The tags to apply to the instance created by the machine
+	// image.
+	Tags []string `json:"tags,omitempty"`
+	// TargetProject: Required. Reference to the TargetProject resource that
+	// represents the target project in which the imported machine image will be
+	// created.
+	TargetProject string `json:"targetProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalLicenses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalLicenses") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineImageTargetDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineImageTargetDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MigratingVm: MigratingVm describes the VM that will be migrated from a
 // Source environment and its replication state.
 type MigratingVm struct {
@@ -2855,6 +2951,15 @@ type NetworkInterface struct {
 	InternalIp string `json:"internalIp,omitempty"`
 	// Network: The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
+	// NetworkTier: Optional. The networking tier used for configuring network
+	// access configuration. If left empty, will default to PREMIUM.
+	//
+	// Possible values:
+	//   "COMPUTE_ENGINE_NETWORK_TIER_UNSPECIFIED" - An unspecified network tier.
+	// Will be used as PREMIUM.
+	//   "NETWORK_TIER_STANDARD" - A standard network tier.
+	//   "NETWORK_TIER_PREMIUM" - A premium network tier.
+	NetworkTier string `json:"networkTier,omitempty"`
 	// Subnetwork: Optional. The subnetwork to connect the NIC to.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalIp") to
@@ -3299,9 +3404,80 @@ func (s SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceAccount: Service account to assign to the instance created by the
+// machine image.
+type ServiceAccount struct {
+	// Email: Required. The email address of the service account.
+	Email string `json:"email,omitempty"`
+	// Scopes: Optional. The list of scopes to be made available for this service
+	// account.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ShieldedInstanceConfig: Shielded instance configuration.
+type ShieldedInstanceConfig struct {
+	// EnableIntegrityMonitoring: Optional. Defines whether the instance created by
+	// the machine image has integrity monitoring enabled. This can be set to true
+	// only if the image boot option is EFI, and vTPM is enabled.
+	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
+	// EnableVtpm: Optional. Defines whether the instance created by the machine
+	// image has vTPM enabled. This can be set to true only if the image boot
+	// option is EFI.
+	EnableVtpm bool `json:"enableVtpm,omitempty"`
+	// SecureBoot: Optional. Defines whether the instance created by the machine
+	// image has Secure Boot enabled. This can be set to true only if the image
+	// boot option is EFI.
+	//
+	// Possible values:
+	//   "SECURE_BOOT_UNSPECIFIED" - No explicit value is selected. Will use the
+	// configuration of the source (if exists, otherwise the default will be
+	// false).
+	//   "TRUE" - Use secure boot. This can be set to true only if the image boot
+	// option is EFI.
+	//   "FALSE" - Do not use secure boot.
+	SecureBoot string `json:"secureBoot,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableIntegrityMonitoring")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableIntegrityMonitoring") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ShieldedInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ShuttingDownSourceVMStep: ShuttingDownSourceVMStep contains specific step
 // details.
 type ShuttingDownSourceVMStep struct {
+}
+
+// SkipOsAdaptation: Mentions that the machine image import is not using OS
+// adaptation process.
+type SkipOsAdaptation struct {
 }
 
 // Source: Source message describes a specific vm migration Source resource. It

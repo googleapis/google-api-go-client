@@ -340,6 +340,19 @@ type Execution struct {
 	// prematurely. The value is only present if the execution's state is `FAILED`
 	// or `CANCELLED`.
 	Error *Error `json:"error,omitempty"`
+	// ExecutionHistoryLevel: Optional. Describes the level of the execution
+	// history feature to apply to this execution. If not specified, the level of
+	// the execution history feature will be determined by its workflow's execution
+	// history level. If the value is different from its workflow's value, it will
+	// override the workflow's execution history level for this exeuction.
+	//
+	// Possible values:
+	//   "EXECUTION_HISTORY_LEVEL_UNSPECIFIED" - The default/unset value.
+	//   "EXECUTION_HISTORY_BASIC" - Enable execution history basic feature for
+	// this execution.
+	//   "EXECUTION_HISTORY_DETAILED" - Enable execution history detailed feature
+	// for this execution.
+	ExecutionHistoryLevel string `json:"executionHistoryLevel,omitempty"`
 	// Labels: Labels associated with this execution. Labels can contain at most 64
 	// entries. Keys and values can be no longer than 63 characters and can only
 	// contain lowercase letters, numeric characters, underscores, and dashes.

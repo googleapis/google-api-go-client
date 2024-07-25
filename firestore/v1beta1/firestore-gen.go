@@ -1282,7 +1282,10 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FindNearest: Nearest Neighbors search config.
+// FindNearest: Nearest Neighbors search config. The ordering provided by
+// FindNearest supersedes the order_by stage. If multiple documents have the
+// same vector distance, the returned document order is not guaranteed to be
+// stable between queries.
 type FindNearest struct {
 	// DistanceMeasure: Required. The distance measure to use, required.
 	//

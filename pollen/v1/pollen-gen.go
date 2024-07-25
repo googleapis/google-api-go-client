@@ -333,11 +333,11 @@ func (s Date) MarshalJSON() ([]byte, error) {
 type DayInfo struct {
 	// Date: The date in UTC at which the pollen forecast data is represented.
 	Date *Date `json:"date,omitempty"`
-	// PlantInfo: This list will include (up to) 15 pollen species affecting the
+	// PlantInfo: This list will include up to 15 pollen species affecting the
 	// location specified in the request.
 	PlantInfo []*PlantInfo `json:"plantInfo,omitempty"`
-	// PollenTypeInfo: This list will include (up to) three pollen types (grass,
-	// weed, tree) affecting the location specified in the request.
+	// PollenTypeInfo: This list will include up to three pollen types (GRASS,
+	// WEED, TREE) affecting the location specified in the request.
 	PollenTypeInfo []*PollenTypeInfo `json:"pollenTypeInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -644,8 +644,8 @@ func (c *ForecastLookupCall) Days(days int64) *ForecastLookupCall {
 
 // LanguageCode sets the optional parameter "languageCode": Allows the client
 // to choose the language for the response. If data cannot be provided for that
-// language the API uses the closest match. Allowed values rely on the IETF
-// BCP-47 standard. Default value is "en".
+// language, the API uses the closest match. Allowed values rely on the IETF
+// BCP-47 standard. The default value is "en".
 func (c *ForecastLookupCall) LanguageCode(languageCode string) *ForecastLookupCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -666,8 +666,8 @@ func (c *ForecastLookupCall) LocationLongitude(locationLongitude float64) *Forec
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of daily
-// info records to return per page. The default and max value is 5 (5 days of
-// data).
+// info records to return per page. The default and max value is 5, indicating
+// 5 days of data.
 func (c *ForecastLookupCall) PageSize(pageSize int64) *ForecastLookupCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -675,7 +675,7 @@ func (c *ForecastLookupCall) PageSize(pageSize int64) *ForecastLookupCall {
 
 // PageToken sets the optional parameter "pageToken": A page token received
 // from a previous daily call. It is used to retrieve the subsequent page. Note
-// that when providing a value for the page token all other request parameters
+// that when providing a value for the page token, all other request parameters
 // provided must match the previous call that provided the page token.
 func (c *ForecastLookupCall) PageToken(pageToken string) *ForecastLookupCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -685,7 +685,7 @@ func (c *ForecastLookupCall) PageToken(pageToken string) *ForecastLookupCall {
 // PlantsDescription sets the optional parameter "plantsDescription": Contains
 // general information about plants, including details on their seasonality,
 // special shapes and colors, information about allergic cross-reactions, and
-// plant photos.
+// plant photos. The default value is "true".
 func (c *ForecastLookupCall) PlantsDescription(plantsDescription bool) *ForecastLookupCall {
 	c.urlParams_.Set("plantsDescription", fmt.Sprint(plantsDescription))
 	return c

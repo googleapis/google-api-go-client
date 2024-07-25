@@ -427,7 +427,8 @@ type PrimaryProductDataSource struct {
 	//   "CHANNEL_UNSPECIFIED" - Not specified.
 	//   "ONLINE_PRODUCTS" - Online product.
 	//   "LOCAL_PRODUCTS" - Local product.
-	//   "PRODUCTS" - Unified data source for both local and online products.
+	//   "PRODUCTS" - Unified data source for both local and online products. Note:
+	// Products management through the API is not possible for this channel.
 	Channel string `json:"channel,omitempty"`
 	// ContentLanguage: Optional. Immutable. The two-letter ISO 639-1 language of
 	// the items in the data source. `feedLabel` and `contentLanguage` must be

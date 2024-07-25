@@ -412,6 +412,9 @@ type AttachedDisk struct {
 	//   "SCRATCH" - A scratch disk type.
 	//   "PERSISTENT" - A persistent disk type.
 	DiskType string `json:"diskType,omitempty"`
+	// DiskTypeUri: Optional. Output only. The URI of the disk type resource. For
+	// example: projects/project/zones/zone/diskTypes/pd-standard or pd-ssd
+	DiskTypeUri string `json:"diskTypeUri,omitempty"`
 	// GuestOsFeature: Optional. A list of features to enable on the guest
 	// operating system. Applicable only for bootable images.
 	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
@@ -1029,9 +1032,12 @@ type ComputeInstanceBackupProperties struct {
 	// created from these properties. Use metadata queries to obtain the access
 	// tokens for these instances.
 	ServiceAccount []*ServiceAccount `json:"serviceAccount,omitempty"`
-	// SourceInstanceName: Name of the source instance at the time of backup. The
-	// name is 1-63 characters long, and complies with RFC1035.
-	SourceInstanceName string `json:"sourceInstanceName,omitempty"`
+	// SourceInstance: The source instance used to create this backup. This can be
+	// a partial or full URL to the resource. For example, the following are valid
+	// values:
+	// -https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/
+	// instance -projects/project/zones/zone/instances/instance
+	SourceInstance string `json:"sourceInstance,omitempty"`
 	// Tags: A list of tags to apply to the instances that are created from these
 	// properties. The tags identify valid sources or targets for network
 	// firewalls. The setTags method can modify this list of tags. Each tag within
@@ -3771,6 +3777,13 @@ func (r *ProjectsLocationsBackupVaultsService) Patch(name string, backupvault *B
 	c := &ProjectsLocationsBackupVaultsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.backupvault = backupvault
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, will not check
+// plan duration against backup vault enforcement duration. Non-standard field.
+func (c *ProjectsLocationsBackupVaultsPatchCall) Force(force bool) *ProjectsLocationsBackupVaultsPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 

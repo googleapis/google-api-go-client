@@ -5087,6 +5087,9 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// DocumentSchema: The schema of the processor version. Describes the output.
 	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
+	// GenAiModelInfo: Output only. Information about Generative AI model-based
+	// processor versions.
+	GenAiModelInfo *GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo `json:"genAiModelInfo,omitempty"`
 	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
 	// by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
@@ -5198,6 +5201,92 @@ type GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo struct {
 
 func (s GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo: Information about
+// Generative AI model-based processor versions.
+type GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo struct {
+	// CustomGenAiModelInfo: Information for a custom Generative AI model created
+	// by the user.
+	CustomGenAiModelInfo *GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoCustomGenAiModelInfo `json:"customGenAiModelInfo,omitempty"`
+	// FoundationGenAiModelInfo: Information for a pretrained Google-managed
+	// foundation model.
+	FoundationGenAiModelInfo *GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo `json:"foundationGenAiModelInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomGenAiModelInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomGenAiModelInfo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoCustomGenAiModelInfo:
+// Information for a custom Generative AI model created by the user. These are
+// created with `Create New Version` in either the `Call foundation model` or
+// `Fine tuning` tabs.
+type GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoCustomGenAiModelInfo struct {
+	// BaseProcessorVersionId: The base processor version ID for the custom model.
+	BaseProcessorVersionId string `json:"baseProcessorVersionId,omitempty"`
+	// CustomModelType: The type of custom model created by the user.
+	//
+	// Possible values:
+	//   "CUSTOM_MODEL_TYPE_UNSPECIFIED" - The model type is unspecified.
+	//   "VERSIONED_FOUNDATION" - The model is a versioned foundation model.
+	//   "FINE_TUNED" - The model is a finetuned foundation model.
+	CustomModelType string `json:"customModelType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoCustomGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoCustomGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
+// : Information for a pretrained Google-managed foundation model.
+type GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
+	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// version.
+	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
+	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
+	// training dataset required for finetuning.
+	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinetuningAllowed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

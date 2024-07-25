@@ -6818,6 +6818,11 @@ type LoyaltyProgram struct {
 	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`
 	// LoyaltyPoints: Optional. The amount of loyalty points earned on a purchase.
 	LoyaltyPoints int64 `json:"loyaltyPoints,omitempty,string"`
+	// MemberPriceEffectiveDate: Optional. A date range during which the item is
+	// eligible for member price. If not specified, the member price is always
+	// applicable. The date range is represented by a pair of ISO 8601 dates
+	// separated by a space, comma, or slash.
+	MemberPriceEffectiveDate string `json:"memberPriceEffectiveDate,omitempty"`
 	// Price: Optional. The price for members of the given tier (instant discount
 	// price). Must be smaller or equal to the regular price.
 	Price *Price `json:"price,omitempty"`
@@ -11498,8 +11503,8 @@ type Product struct {
 	// different sizes, insert a separate product for each size with the same
 	// `itemGroupId` value (see size definition).
 	Sizes []string `json:"sizes,omitempty"`
-	// Source: The source of the offer, that is, how the offer was created.
-	// Acceptable values are: - "api" - "crawl" - "feed"
+	// Source: Output only. The source of the offer, that is, how the offer was
+	// created. Acceptable values are: - "api" - "crawl" - "feed"
 	Source string `json:"source,omitempty"`
 	// StructuredDescription: Structured description, for algorithmically
 	// (AI)-generated descriptions.

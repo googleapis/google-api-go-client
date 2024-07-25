@@ -245,7 +245,6 @@ type PropertiesCustomMetricsService struct {
 
 func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 	rs := &PropertiesDataStreamsService{s: s}
-	rs.EventEditRules = NewPropertiesDataStreamsEventEditRulesService(s)
 	rs.MeasurementProtocolSecrets = NewPropertiesDataStreamsMeasurementProtocolSecretsService(s)
 	return rs
 }
@@ -253,18 +252,7 @@ func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 type PropertiesDataStreamsService struct {
 	s *Service
 
-	EventEditRules *PropertiesDataStreamsEventEditRulesService
-
 	MeasurementProtocolSecrets *PropertiesDataStreamsMeasurementProtocolSecretsService
-}
-
-func NewPropertiesDataStreamsEventEditRulesService(s *Service) *PropertiesDataStreamsEventEditRulesService {
-	rs := &PropertiesDataStreamsEventEditRulesService{s: s}
-	return rs
-}
-
-type PropertiesDataStreamsEventEditRulesService struct {
-	s *Service
 }
 
 func NewPropertiesDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesDataStreamsMeasurementProtocolSecretsService {
@@ -2346,31 +2334,6 @@ func (s GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest: Request message for
-// ReorderEventEditRules RPC.
-type GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest struct {
-	// EventEditRules: Required. EventEditRule resource names for the specified
-	// data stream, in the needed processing order. All EventEditRules for the
-	// stream must be present in the list.
-	EventEditRules []string `json:"eventEditRules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EventEditRules") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EventEditRules") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleAnalyticsAdminV1betaRunAccessReportRequest: The request for a Data
 // Access Record Report.
 type GoogleAnalyticsAdminV1betaRunAccessReportRequest struct {
@@ -2534,7 +2497,7 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 	// Property: Optional. Resource name for a child property. If set, only return
 	// changes made to this property or its child resources. Format:
-	// properties/{propertyId} Example: "properties/100"
+	// properties/{propertyId} Example: `properties/100`
 	Property string `json:"property,omitempty"`
 	// ResourceType: Optional. If set, only return changes if they are for a
 	// resource that matches at least one of these types.
@@ -2983,7 +2946,7 @@ type AccountsGetDataSharingSettingsCall struct {
 //
 //   - name: The name of the settings to lookup. Format:
 //     accounts/{account}/dataSharingSettings Example:
-//     "accounts/1000/dataSharingSettings".
+//     `accounts/1000/dataSharingSettings`.
 func (r *AccountsService) GetDataSharingSettings(name string) *AccountsGetDataSharingSettingsCall {
 	c := &AccountsGetDataSharingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3570,7 +3533,7 @@ type AccountsSearchChangeHistoryEventsCall struct {
 // children given the specified set of filters.
 //
 //   - account: The account resource for which to return change history
-//     resources. Format: accounts/{account} Example: "accounts/100".
+//     resources. Format: accounts/{account} Example: `accounts/100`.
 func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1betasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
 	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4727,7 +4690,8 @@ type PropertiesConversionEventsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a conversion event with the specified attributes.
+// Create: Deprecated: Use `CreateKeyEvent` instead. Creates a conversion event
+// with the specified attributes.
 //
 //   - parent: The resource name of the parent property where this conversion
 //     event will be created. Format: properties/123.
@@ -4829,7 +4793,8 @@ type PropertiesConversionEventsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a conversion event in a property.
+// Delete: Deprecated: Use `DeleteKeyEvent` instead. Deletes a conversion event
+// in a property.
 //
 //   - name: The resource name of the conversion event to delete. Format:
 //     properties/{property}/conversionEvents/{conversion_event} Example:
@@ -4928,7 +4893,8 @@ type PropertiesConversionEventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a single conversion event.
+// Get: Deprecated: Use `GetKeyEvent` instead. Retrieve a single conversion
+// event.
 //
 //   - name: The resource name of the conversion event to retrieve. Format:
 //     properties/{property}/conversionEvents/{conversion_event} Example:
@@ -5038,8 +5004,9 @@ type PropertiesConversionEventsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of conversion events in the specified parent property.
-// Returns an empty list if no conversion events are found.
+// List: Deprecated: Use `ListKeyEvents` instead. Returns a list of conversion
+// events in the specified parent property. Returns an empty list if no
+// conversion events are found.
 //
 //   - parent: The resource name of the parent property. Example:
 //     'properties/123'.
@@ -5188,7 +5155,8 @@ type PropertiesConversionEventsPatchCall struct {
 	header_                                   http.Header
 }
 
-// Patch: Updates a conversion event with the specified attributes.
+// Patch: Deprecated: Use `UpdateKeyEvent` instead. Updates a conversion event
+// with the specified attributes.
 //
 //   - name: Output only. Resource name of this conversion event. Format:
 //     properties/{property}/conversionEvents/{conversion_event}.
@@ -7001,109 +6969,6 @@ func (c *PropertiesDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	return ret, nil
 }
 
-type PropertiesDataStreamsEventEditRulesReorderCall struct {
-	s                                                      *Service
-	parent                                                 string
-	googleanalyticsadminv1betareordereventeditrulesrequest *GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest
-	urlParams_                                             gensupport.URLParams
-	ctx_                                                   context.Context
-	header_                                                http.Header
-}
-
-// Reorder: Changes the processing order of event edit rules on the specified
-// stream.
-//
-// - parent: Example format: properties/123/dataStreams/456.
-func (r *PropertiesDataStreamsEventEditRulesService) Reorder(parent string, googleanalyticsadminv1betareordereventeditrulesrequest *GoogleAnalyticsAdminV1betaReorderEventEditRulesRequest) *PropertiesDataStreamsEventEditRulesReorderCall {
-	c := &PropertiesDataStreamsEventEditRulesReorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleanalyticsadminv1betareordereventeditrulesrequest = googleanalyticsadminv1betareordereventeditrulesrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PropertiesDataStreamsEventEditRulesReorderCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesReorderCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PropertiesDataStreamsEventEditRulesReorderCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesReorderCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PropertiesDataStreamsEventEditRulesReorderCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesDataStreamsEventEditRulesReorderCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betareordereventeditrulesrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/eventEditRules:reorder")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.reorder" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesDataStreamsEventEditRulesReorderCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type PropertiesDataStreamsMeasurementProtocolSecretsCreateCall struct {
 	s                                                   *Service
 	parent                                              string
@@ -7688,7 +7553,7 @@ type PropertiesFirebaseLinksCreateCall struct {
 // Create: Creates a FirebaseLink. Properties can have at most one
 // FirebaseLink.
 //
-// - parent: Format: properties/{property_id} Example: properties/1234.
+// - parent: Format: properties/{property_id} Example: `properties/1234`.
 func (r *PropertiesFirebaseLinksService) Create(parent string, googleanalyticsadminv1betafirebaselink *GoogleAnalyticsAdminV1betaFirebaseLink) *PropertiesFirebaseLinksCreateCall {
 	c := &PropertiesFirebaseLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7790,7 +7655,7 @@ type PropertiesFirebaseLinksDeleteCall struct {
 // Delete: Deletes a FirebaseLink on a property
 //
 //   - name: Format: properties/{property_id}/firebaseLinks/{firebase_link_id}
-//     Example: properties/1234/firebaseLinks/5678.
+//     Example: `properties/1234/firebaseLinks/5678`.
 func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebaseLinksDeleteCall {
 	c := &PropertiesFirebaseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7888,7 +7753,7 @@ type PropertiesFirebaseLinksListCall struct {
 // List: Lists FirebaseLinks on a property. Properties can have at most one
 // FirebaseLink.
 //
-// - parent: Format: properties/{property_id} Example: properties/1234.
+// - parent: Format: properties/{property_id} Example: `properties/1234`.
 func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebaseLinksListCall {
 	c := &PropertiesFirebaseLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

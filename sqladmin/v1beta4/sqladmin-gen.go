@@ -897,6 +897,14 @@ type ConnectSettings struct {
 	Region string `json:"region,omitempty"`
 	// ServerCaCert: SSL configuration.
 	ServerCaCert *SslCert `json:"serverCaCert,omitempty"`
+	// ServerCaMode: Specify what type of CA is used for the server certificate.
+	//
+	// Possible values:
+	//   "CA_MODE_UNSPECIFIED" - CA mode is unknown.
+	//   "GOOGLE_MANAGED_INTERNAL_CA" - Google-managed self-signed internal CA.
+	//   "GOOGLE_MANAGED_CAS_CA" - Google-managed regional CA part of root CA
+	// hierarchy hosted on Google Cloud's Certificate Authority Service (CAS).
+	ServerCaMode string `json:"serverCaMode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1260,6 +1268,10 @@ type DatabaseInstance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to
 	SuspensionReason []string `json:"suspensionReason,omitempty"`
+	// SwitchTransactionLogsToCloudStorageEnabled: Input only. Whether Cloud SQL is
+	// enabled to switch storing point-in-time recovery log files from a data disk
+	// to Cloud Storage.
+	SwitchTransactionLogsToCloudStorageEnabled bool `json:"switchTransactionLogsToCloudStorageEnabled,omitempty"`
 	// UpgradableDatabaseVersions: Output only. All database versions that are
 	// available for upgrade.
 	UpgradableDatabaseVersions []*AvailableDatabaseVersion `json:"upgradableDatabaseVersions,omitempty"`
@@ -2693,6 +2705,14 @@ type IpConfiguration struct {
 	// enforcing the requirement for valid client certificates, then use the
 	// `ssl_mode` flag instead of the legacy `require_ssl` flag.
 	RequireSsl bool `json:"requireSsl,omitempty"`
+	// ServerCaMode: Specify what type of CA is used for the server certificate.
+	//
+	// Possible values:
+	//   "CA_MODE_UNSPECIFIED" - CA mode is unknown.
+	//   "GOOGLE_MANAGED_INTERNAL_CA" - Google-managed self-signed internal CA.
+	//   "GOOGLE_MANAGED_CAS_CA" - Google-managed regional CA part of root CA
+	// hierarchy hosted on Google Cloud's Certificate Authority Service (CAS).
+	ServerCaMode string `json:"serverCaMode,omitempty"`
 	// SslMode: Specify how SSL/TLS is enforced in database connections. If you
 	// must use the `require_ssl` flag for backward compatibility, then only the
 	// following value pairs are valid: For PostgreSQL and MySQL: *
@@ -3094,6 +3114,8 @@ type Operation struct {
 	// unavailable for 1-3 minutes.
 	//   "SWITCHOVER_TO_REPLICA" - Switches a primary instance to a replica. This
 	// operation runs as part of a switchover operation to the original primary
+	// instance.
+	//   "MAJOR_VERSION_UPGRADE" - Updates the major version of a Cloud SQL
 	// instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
@@ -3867,6 +3889,8 @@ type SqlExternalSyncSettingError struct {
 	// the specified extensions are not enabled on destination instance. For
 	// example, before you can migrate data to the destination instance, you must
 	// enable the PGAudit extension on the instance.
+	//   "UNSUPPORTED_COLUMNS" - The source database has generated columns that
+	// can't be migrated. Please change them to regular columns before migration.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6325,7 +6349,9 @@ type InstancesAddServerCaCall struct {
 // specified instance. Required to prepare for a certificate rotation. If a CA
 // version was previously added but never used in a certificate rotation, this
 // operation replaces that version. There cannot be more than one CA version
-// waiting to be rotated in.
+// waiting to be rotated in. For instances that have enabled Certificate
+// Authority Service (CAS) based server CA, please use AddServerCertificate to
+// add a new server certificate.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
@@ -8394,7 +8420,9 @@ type InstancesRotateServerCaCall struct {
 
 // RotateServerCa: Rotates the server certificate to one signed by the
 // Certificate Authority (CA) version previously added with the addServerCA
-// method.
+// method. For instances that have enabled Certificate Authority Service (CAS)
+// based server CA, please use RotateServerCertificate to rotate the server
+// certificate.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.

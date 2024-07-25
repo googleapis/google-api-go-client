@@ -3991,6 +3991,8 @@ func (s DataSourceSheetProperties) MarshalJSON() ([]byte, error) {
 type DataSourceSpec struct {
 	// BigQuery: A BigQueryDataSourceSpec.
 	BigQuery *BigQueryDataSourceSpec `json:"bigQuery,omitempty"`
+	// Looker: A LookerDatasourceSpec.
+	Looker *LookerDataSourceSpec `json:"looker,omitempty"`
 	// Parameters: The parameters of the data source, used when querying the data
 	// source.
 	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
@@ -5976,6 +5978,32 @@ type Link struct {
 
 func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LookerDataSourceSpec: The specification of a Looker data source.
+type LookerDataSourceSpec struct {
+	// Explore: Name of a LookerML model explore.
+	Explore string `json:"explore,omitempty"`
+	// InstanceUri: A Looker instance URL.
+	InstanceUri string `json:"instanceUri,omitempty"`
+	// Model: Name of a LookerML model.
+	Model string `json:"model,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Explore") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Explore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LookerDataSourceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod LookerDataSourceSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

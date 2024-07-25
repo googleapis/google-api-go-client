@@ -2100,6 +2100,7 @@ type PackageData struct {
 	//   "RUBYGEMS" - Ruby packges (from RubyGems package manager).
 	//   "RUST" - Rust packages from Cargo (Github ecosystem is `RUST`).
 	//   "COMPOSER" - PHP packages from Composer package manager.
+	//   "SWIFT" - Swift packages from Swift Package Manager (SwiftPM).
 	PackageType string `json:"packageType,omitempty"`
 	// PatchedCve: CVEs that this package is no longer vulnerable to
 	// go/drydock-dd-custom-binary-scanning

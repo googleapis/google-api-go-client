@@ -9211,8 +9211,8 @@ type IdFilter struct {
 	// AdGroupIds: YouTube Ad Groups to download by ID. All IDs must belong to the
 	// same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	AdGroupIds googleapi.Int64s `json:"adGroupIds,omitempty"`
-	// AdGroupQaIds: Optional. YouTube Ad Groups QA to download by ID. All IDs must
-	// belong to the same Advertiser or Partner specified in
+	// AdGroupQaIds: Optional. YouTube Ad Groups, by ID, to download in QA format.
+	// All IDs must belong to the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	AdGroupQaIds googleapi.Int64s `json:"adGroupQaIds,omitempty"`
 	// CampaignIds: Campaigns to download by ID. All IDs must belong to the same
@@ -9224,8 +9224,8 @@ type IdFilter struct {
 	// LineItemIds: Line Items to download by ID. All IDs must belong to the same
 	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	LineItemIds googleapi.Int64s `json:"lineItemIds,omitempty"`
-	// LineItemQaIds: Optional. Line Items QA to download by ID. All IDs must
-	// belong to the same Advertiser or Partner specified in
+	// LineItemQaIds: Optional. Line Items, by ID, to download in QA format. All
+	// IDs must belong to the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	LineItemQaIds googleapi.Int64s `json:"lineItemQaIds,omitempty"`
 	// MediaProductIds: Media Products to download by ID. All IDs must belong to
@@ -12751,8 +12751,8 @@ type ParentEntityFilter struct {
 	//   "FILE_TYPE_LINE_ITEM" - Line Item.
 	//   "FILE_TYPE_AD_GROUP" - YouTube Ad Group.
 	//   "FILE_TYPE_AD" - YouTube Ad.
-	//   "FILE_TYPE_LINE_ITEM_QA" - Line Item QA.
-	//   "FILE_TYPE_AD_GROUP_QA" - YouTube Ad Group QA.
+	//   "FILE_TYPE_LINE_ITEM_QA" - Line Item - QA format.
+	//   "FILE_TYPE_AD_GROUP_QA" - YouTube Ad Group - QA format.
 	FileType []string `json:"fileType,omitempty"`
 	// FilterIds: The IDs of the specified filter type. This is used to filter
 	// entities to fetch. If filter type is not `FILTER_TYPE_NONE`, at least one ID
@@ -12780,11 +12780,13 @@ type ParentEntityFilter struct {
 	// filter IDs must be Insertion Order IDs that belong to the Advertiser or
 	// Partner specified in CreateSdfDownloadTaskRequest. Can only be used for
 	// downloading `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`,
-	// `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM_QA`, `FILE_TYPE_AD_GROUP`, `FILE_TYPE_AD_GROUP_QA`, and
+	// `FILE_TYPE_AD`.
 	//   "FILTER_TYPE_LINE_ITEM_ID" - Line Item ID. If selected, all filter IDs
 	// must be Line Item IDs that belong to the Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest. Can only be used for downloading
-	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_LINE_ITEM_QA`,`FILE_TYPE_AD_GROUP`,
+	// `FILE_TYPE_AD_GROUP_QA`, and `FILE_TYPE_AD`.
 	FilterType string `json:"filterType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13941,10 +13943,6 @@ type ReviewStatusInfo struct {
 	// ExchangeReviewStatuses: Exchange review statuses for the creative.
 	ExchangeReviewStatuses []*ExchangeReviewStatus `json:"exchangeReviewStatuses,omitempty"`
 	// PublisherReviewStatuses: Publisher review statuses for the creative.
-	// **Warning:** This field will be deprecated on June 26th, 2024. After this
-	// date, this field will be empty. Read our feature deprecation announcement
-	// (/display-video/api/deprecations#features.creative_publisher_review_statuses)
-	//  for more information.
 	PublisherReviewStatuses []*PublisherReviewStatus `json:"publisherReviewStatuses,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or

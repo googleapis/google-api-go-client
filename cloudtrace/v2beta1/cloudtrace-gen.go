@@ -228,8 +228,9 @@ func (s ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 
 // OutputConfig: OutputConfig contains a destination for writing trace data.
 type OutputConfig struct {
-	// Destination: The destination for writing trace data. Supported formats
-	// include: "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
+	// Destination: Required. The destination for writing trace data. Supported
+	// formats include:
+	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	Destination string `json:"destination,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -252,8 +253,9 @@ func (s OutputConfig) MarshalJSON() ([]byte, error) {
 // TraceSink: Describes a sink used to export traces to a BigQuery dataset. The
 // sink must be created within a project.
 type TraceSink struct {
-	// Name: Required. The canonical sink resource name, unique within the project.
-	// Must be of the form: projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
+	// Name: Identifier. The canonical sink resource name, unique within the
+	// project. Must be of the form:
+	// projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
 	// "projects/12345/traceSinks/my-project-trace-sink". Sink identifiers are
 	// limited to 256 characters and can include only the following characters:
 	// upper and lower-case alphanumeric characters, underscores, hyphens, and

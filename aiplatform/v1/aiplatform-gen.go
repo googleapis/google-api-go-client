@@ -1337,8 +1337,7 @@ type PublishersModelsService struct {
 	s *Service
 }
 
-// CloudAiLargeModelsVisionGenerateVideoResponse: Next ID: 8 Generate video
-// response.
+// CloudAiLargeModelsVisionGenerateVideoResponse: Generate video response.
 type CloudAiLargeModelsVisionGenerateVideoResponse struct {
 	// GeneratedSamples: The generates samples.
 	GeneratedSamples []*CloudAiLargeModelsVisionMedia `json:"generatedSamples,omitempty"`
@@ -1347,8 +1346,6 @@ type CloudAiLargeModelsVisionGenerateVideoResponse struct {
 	RaiMediaFilteredCount int64 `json:"raiMediaFilteredCount,omitempty"`
 	// RaiMediaFilteredReasons: Returns rai failure reasons if any.
 	RaiMediaFilteredReasons []string `json:"raiMediaFilteredReasons,omitempty"`
-	// ReportingMetrics: Billable prediction metrics.
-	ReportingMetrics *IntelligenceCloudAutomlXpsReportingMetrics `json:"reportingMetrics,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratedSamples") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3715,6 +3712,8 @@ type GoogleCloudAiplatformV1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1SafetyRating `json:"safetyRatings,omitempty"`
+	// Score: Output only. Confidence score of the candidate.
+	Score float64 `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3731,6 +3730,20 @@ type GoogleCloudAiplatformV1Candidate struct {
 func (s GoogleCloudAiplatformV1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Candidate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1Candidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1Candidate
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata: This message
@@ -4027,13 +4040,13 @@ func (s GoogleCloudAiplatformV1CompletionStats) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1ComputeTokensRequest: Request message for
 // ComputeTokens RPC call.
 type GoogleCloudAiplatformV1ComputeTokensRequest struct {
-	// Contents: Required. Input content.
+	// Contents: Optional. Input content.
 	Contents []*GoogleCloudAiplatformV1Content `json:"contents,omitempty"`
-	// Instances: Required. The instances that are the input to token computing API
+	// Instances: Optional. The instances that are the input to token computing API
 	// call. Schema is identical to the prediction schema of the text model, even
 	// for the non-text models, like chat models, or Codey models.
 	Instances []interface{} `json:"instances,omitempty"`
-	// Model: Required. The name of the publisher model requested to serve the
+	// Model: Optional. The name of the publisher model requested to serve the
 	// prediction. Format:
 	// projects/{project}/locations/{location}/publishers/*/models/*
 	Model string `json:"model,omitempty"`
@@ -4322,15 +4335,24 @@ func (s GoogleCloudAiplatformV1CopyModelResponse) MarshalJSON() ([]byte, error) 
 // GoogleCloudAiplatformV1CountTokensRequest: Request message for
 // PredictionService.CountTokens.
 type GoogleCloudAiplatformV1CountTokensRequest struct {
-	// Contents: Required. Input content.
+	// Contents: Optional. Input content.
 	Contents []*GoogleCloudAiplatformV1Content `json:"contents,omitempty"`
-	// Instances: Required. The instances that are the input to token counting
+	// Instances: Optional. The instances that are the input to token counting
 	// call. Schema is identical to the prediction schema of the underlying model.
 	Instances []interface{} `json:"instances,omitempty"`
-	// Model: Required. The name of the publisher model requested to serve the
+	// Model: Optional. The name of the publisher model requested to serve the
 	// prediction. Format:
 	// `projects/{project}/locations/{location}/publishers/*/models/*`
 	Model string `json:"model,omitempty"`
+	// SystemInstruction: Optional. The user provided system instructions for the
+	// model. Note: only text should be used in parts and content in each part will
+	// be in a separate paragraph.
+	SystemInstruction *GoogleCloudAiplatformV1Content `json:"systemInstruction,omitempty"`
+	// Tools: Optional. A list of `Tools` the model may use to generate the next
+	// response. A `Tool` is a piece of code that enables the system to interact
+	// with external systems to perform an action, or set of actions, outside of
+	// knowledge and scope of the model.
+	Tools []*GoogleCloudAiplatformV1Tool `json:"tools,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4741,6 +4763,32 @@ type GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata struct {
 
 func (s GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1CreateNotebookExecutionJobOperationMetadata: Metadata
+// information for NotebookService.CreateNotebookExecutionJob.
+type GoogleCloudAiplatformV1CreateNotebookExecutionJobOperationMetadata struct {
+	// GenericMetadata: The operation generic information.
+	GenericMetadata *GoogleCloudAiplatformV1GenericOperationMetadata `json:"genericMetadata,omitempty"`
+	// ProgressMessage: A human-readable message that shows the intermediate
+	// progress details of NotebookRuntime.
+	ProgressMessage string `json:"progressMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1CreateNotebookExecutionJobOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1CreateNotebookExecutionJobOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5441,7 +5489,7 @@ type GoogleCloudAiplatformV1Dataset struct {
 	// ModelReference: Optional. Reference to the public base model last used by
 	// the dataset. Only set for prompt datasets.
 	ModelReference string `json:"modelReference,omitempty"`
-	// Name: Output only. The resource name of the Dataset.
+	// Name: Output only. Identifier. The resource name of the Dataset.
 	Name string `json:"name,omitempty"`
 	// SavedQueries: All SavedQueries belong to the Dataset will be returned in
 	// List/Get Dataset response. The annotation_specs field will not be populated
@@ -5491,7 +5539,7 @@ type GoogleCloudAiplatformV1DatasetVersion struct {
 	// ModelReference: Output only. Reference to the public base model last used by
 	// the dataset version. Only set for prompt dataset versions.
 	ModelReference string `json:"modelReference,omitempty"`
-	// Name: Output only. The resource name of the DatasetVersion.
+	// Name: Output only. Identifier. The resource name of the DatasetVersion.
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. Timestamp when this DatasetVersion was last
 	// updated.
@@ -6550,6 +6598,17 @@ func (s GoogleCloudAiplatformV1EncryptionSpec) MarshalJSON() ([]byte, error) {
 type GoogleCloudAiplatformV1Endpoint struct {
 	// CreateTime: Output only. Timestamp when this Endpoint was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DedicatedEndpointDns: Output only. DNS of the dedicated endpoint. Will only
+	// be populated if dedicated_endpoint_enabled is true. Format:
+	// `https://{endpoint_id}.{region}-{project_number}.prediction.vertexai.goog`.
+	DedicatedEndpointDns string `json:"dedicatedEndpointDns,omitempty"`
+	// DedicatedEndpointEnabled: If true, the endpoint will be exposed through a
+	// dedicated DNS [Endpoint.dedicated_endpoint_dns]. Your request to the
+	// dedicated DNS will be isolated from other users' traffic and will have
+	// better performance and reliability. Note: Once you enabled dedicated
+	// endpoint, you won't be able to send request to the shared DNS
+	// {region}-aiplatform.googleapis.com. The limitation will be removed soon.
+	DedicatedEndpointEnabled bool `json:"dedicatedEndpointEnabled,omitempty"`
 	// DeployedModels: Output only. The models deployed in this Endpoint. To add or
 	// remove DeployedModels use EndpointService.DeployModel and
 	// EndpointService.UndeployModel respectively.
@@ -11265,71 +11324,6 @@ func (s GoogleCloudAiplatformV1GroundednessSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1GroundingAttribution: Grounding attribution.
-type GoogleCloudAiplatformV1GroundingAttribution struct {
-	// ConfidenceScore: Optional. Output only. Confidence score of the attribution.
-	// Ranges from 0 to 1. 1 is the most confident.
-	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
-	// Segment: Output only. Segment of the content this attribution belongs to.
-	Segment *GoogleCloudAiplatformV1Segment `json:"segment,omitempty"`
-	// Web: Optional. Attribution from the web.
-	Web *GoogleCloudAiplatformV1GroundingAttributionWeb `json:"web,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1GroundingAttribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1GroundingAttribution
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1GroundingAttribution) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1GroundingAttribution
-	var s1 struct {
-		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceScore = float64(s1.ConfidenceScore)
-	return nil
-}
-
-// GoogleCloudAiplatformV1GroundingAttributionWeb: Attribution from the web.
-type GoogleCloudAiplatformV1GroundingAttributionWeb struct {
-	// Title: Output only. Title of the attribution.
-	Title string `json:"title,omitempty"`
-	// Uri: Output only. URI reference of the attribution.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1GroundingAttributionWeb) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1GroundingAttributionWeb
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAiplatformV1GroundingChunk: Grounding chunk.
 type GoogleCloudAiplatformV1GroundingChunk struct {
 	// RetrievedContext: Grounding chunk from context retrieved by the retrieval
@@ -11407,8 +11401,6 @@ func (s GoogleCloudAiplatformV1GroundingChunkWeb) MarshalJSON() ([]byte, error) 
 // GoogleCloudAiplatformV1GroundingMetadata: Metadata returned to client when
 // grounding is enabled.
 type GoogleCloudAiplatformV1GroundingMetadata struct {
-	// GroundingAttributions: Optional. List of grounding attributions.
-	GroundingAttributions []*GoogleCloudAiplatformV1GroundingAttribution `json:"groundingAttributions,omitempty"`
 	// GroundingChunks: List of supporting references retrieved from specified
 	// grounding source.
 	GroundingChunks []*GoogleCloudAiplatformV1GroundingChunk `json:"groundingChunks,omitempty"`
@@ -11420,15 +11412,15 @@ type GoogleCloudAiplatformV1GroundingMetadata struct {
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundingAttributions") to
+	// ForceSendFields is a list of field names (e.g. "GroundingChunks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundingAttributions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GroundingChunks") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -13446,6 +13438,35 @@ type GoogleCloudAiplatformV1ListNasTrialDetailsResponse struct {
 
 func (s GoogleCloudAiplatformV1ListNasTrialDetailsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListNasTrialDetailsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse: Response message
+// for [NotebookService.CreateNotebookExecutionJob]
+type GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass to
+	// ListNotebookExecutionJobs.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// NotebookExecutionJobs: List of NotebookExecutionJobs in the requested page.
+	NotebookExecutionJobs []*GoogleCloudAiplatformV1NotebookExecutionJob `json:"notebookExecutionJobs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16707,6 +16728,8 @@ type GoogleCloudAiplatformV1NearestNeighborQuery struct {
 	// NeighborCount: Optional. The number of similar entities to be retrieved from
 	// feature view for each query.
 	NeighborCount int64 `json:"neighborCount,omitempty"`
+	// NumericFilters: Optional. The list of numeric filters.
+	NumericFilters []*GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter `json:"numericFilters,omitempty"`
 	// Parameters: Optional. Parameters that can be set to tune query on the fly.
 	Parameters *GoogleCloudAiplatformV1NearestNeighborQueryParameters `json:"parameters,omitempty"`
 	// PerCrowdingAttributeNeighborCount: Optional. Crowding is a constraint on a
@@ -16771,6 +16794,69 @@ func (s *GoogleCloudAiplatformV1NearestNeighborQueryEmbedding) UnmarshalJSON(dat
 	for i := range s1.Value {
 		s.Value[i] = float64(s1.Value[i])
 	}
+	return nil
+}
+
+// GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter: Numeric filter is
+// used to search a subset of the entities by using boolean rules on numeric
+// columns. For example: Database Point 0: {name: “a” value_int: 42} {name:
+// “b” value_float: 1.0} Database Point 1: {name: “a” value_int: 10}
+// {name: “b” value_float: 2.0} Database Point 2: {name: “a” value_int:
+// -1} {name: “b” value_float: 3.0} Query: {name: “a” value_int: 12
+// operator: LESS} // Matches Point 1, 2 {name: “b” value_float: 2.0
+// operator: EQUAL} // Matches Point 1
+type GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter struct {
+	// Name: Required. Column name in BigQuery that used as filters.
+	Name string `json:"name,omitempty"`
+	// Op: Optional. This MUST be specified for queries and must NOT be specified
+	// for database points.
+	//
+	// Possible values:
+	//   "OPERATOR_UNSPECIFIED" - Unspecified operator.
+	//   "LESS" - Entities are eligible if their value is < the query's.
+	//   "LESS_EQUAL" - Entities are eligible if their value is <= the query's.
+	//   "EQUAL" - Entities are eligible if their value is == the query's.
+	//   "GREATER_EQUAL" - Entities are eligible if their value is >= the query's.
+	//   "GREATER" - Entities are eligible if their value is > the query's.
+	//   "NOT_EQUAL" - Entities are eligible if their value is != the query's.
+	Op string `json:"op,omitempty"`
+	// ValueDouble: double value type.
+	ValueDouble float64 `json:"valueDouble,omitempty"`
+	// ValueFloat: float value type.
+	ValueFloat float64 `json:"valueFloat,omitempty"`
+	// ValueInt: int value type.
+	ValueInt int64 `json:"valueInt,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1NearestNeighborQueryNumericFilter
+	var s1 struct {
+		ValueDouble gensupport.JSONFloat64 `json:"valueDouble"`
+		ValueFloat  gensupport.JSONFloat64 `json:"valueFloat"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ValueDouble = float64(s1.ValueDouble)
+	s.ValueFloat = float64(s1.ValueFloat)
 	return nil
 }
 
@@ -17167,6 +17253,181 @@ type GoogleCloudAiplatformV1NotebookEucConfig struct {
 
 func (s GoogleCloudAiplatformV1NotebookEucConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookEucConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookExecutionJob: NotebookExecutionJob represents
+// an instance of a notebook execution.
+type GoogleCloudAiplatformV1NotebookExecutionJob struct {
+	// CreateTime: Output only. Timestamp when this NotebookExecutionJob was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataformRepositorySource: The Dataform Repository pointing to a single file
+	// notebook repository.
+	DataformRepositorySource *GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource `json:"dataformRepositorySource,omitempty"`
+	// DirectNotebookSource: The contents of an input notebook file.
+	DirectNotebookSource *GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource `json:"directNotebookSource,omitempty"`
+	// DisplayName: The display name of the NotebookExecutionJob. The name can be
+	// up to 128 characters long and can consist of any UTF-8 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// ExecutionTimeout: Max running time of the execution job in seconds (default
+	// 86400s / 24 hrs).
+	ExecutionTimeout string `json:"executionTimeout,omitempty"`
+	// ExecutionUser: The user email to run the execution as. Only supported by
+	// Colab runtimes.
+	ExecutionUser string `json:"executionUser,omitempty"`
+	// GcsNotebookSource: The Cloud Storage url pointing to the ipynb file. Format:
+	// `gs://bucket/notebook_file.ipynb`
+	GcsNotebookSource *GoogleCloudAiplatformV1NotebookExecutionJobGcsNotebookSource `json:"gcsNotebookSource,omitempty"`
+	// GcsOutputUri: The Cloud Storage location to upload the result to. Format:
+	// `gs://bucket-name`
+	GcsOutputUri string `json:"gcsOutputUri,omitempty"`
+	// JobState: Output only. The state of the NotebookExecutionJob.
+	//
+	// Possible values:
+	//   "JOB_STATE_UNSPECIFIED" - The job state is unspecified.
+	//   "JOB_STATE_QUEUED" - The job has been just created or resumed and
+	// processing has not yet begun.
+	//   "JOB_STATE_PENDING" - The service is preparing to run the job.
+	//   "JOB_STATE_RUNNING" - The job is in progress.
+	//   "JOB_STATE_SUCCEEDED" - The job completed successfully.
+	//   "JOB_STATE_FAILED" - The job failed.
+	//   "JOB_STATE_CANCELLING" - The job is being cancelled. From this state the
+	// job may only go to either `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED` or
+	// `JOB_STATE_CANCELLED`.
+	//   "JOB_STATE_CANCELLED" - The job has been cancelled.
+	//   "JOB_STATE_PAUSED" - The job has been stopped, and can be resumed.
+	//   "JOB_STATE_EXPIRED" - The job has expired.
+	//   "JOB_STATE_UPDATING" - The job is being updated. Only jobs in the
+	// `RUNNING` state can be updated. After updating, the job goes back to the
+	// `RUNNING` state.
+	//   "JOB_STATE_PARTIALLY_SUCCEEDED" - The job is partially succeeded, some
+	// results may be missing due to errors.
+	JobState string `json:"jobState,omitempty"`
+	// Labels: The labels with user-defined metadata to organize
+	// NotebookExecutionJobs. Label keys and values can be no longer than 64
+	// characters (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are allowed.
+	// See https://goo.gl/xmQnxf for more information and examples of labels.
+	// System reserved label keys are prefixed with "aiplatform.googleapis.com/"
+	// and are immutable.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. The resource name of this NotebookExecutionJob. Format:
+	// `projects/{project_id}/locations/{location}/notebookExecutionJobs/{job_id}`
+	Name string `json:"name,omitempty"`
+	// NotebookRuntimeTemplateResourceName: The NotebookRuntimeTemplate to source
+	// compute configuration from.
+	NotebookRuntimeTemplateResourceName string `json:"notebookRuntimeTemplateResourceName,omitempty"`
+	// ScheduleResourceName: Output only. The Schedule resource name if this job is
+	// triggered by one. Format:
+	// `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
+	ScheduleResourceName string `json:"scheduleResourceName,omitempty"`
+	// ServiceAccount: The service account to run the execution as.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Status: Output only. Populated when the NotebookExecutionJob is completed.
+	// When there is an error during notebook execution, the error details are
+	// populated.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// UpdateTime: Output only. Timestamp when this NotebookExecutionJob was most
+	// recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1NotebookExecutionJob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookExecutionJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource: The
+// Dataform Repository containing the input notebook.
+type GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource struct {
+	// CommitSha: The commit SHA to read repository with. If unset, the file will
+	// be read at HEAD.
+	CommitSha string `json:"commitSha,omitempty"`
+	// DataformRepositoryResourceName: The resource name of the Dataform
+	// Repository. Format:
+	// `projects/{project_id}/locations/{location}/repositories/{repository_id}`
+	DataformRepositoryResourceName string `json:"dataformRepositoryResourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommitSha") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommitSha") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource: The content
+// of the input notebook in ipynb format.
+type GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource struct {
+	// Content: The base64-encoded contents of the input notebook file.
+	Content string `json:"content,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookExecutionJobGcsNotebookSource: The Cloud
+// Storage uri for the input notebook.
+type GoogleCloudAiplatformV1NotebookExecutionJobGcsNotebookSource struct {
+	// Generation: The version of the Cloud Storage object to read. If unset, the
+	// current version of the object is read. See
+	// https://cloud.google.com/storage/docs/metadata#generation-number.
+	Generation string `json:"generation,omitempty"`
+	// Uri: The Cloud Storage uri pointing to the ipynb file. Format:
+	// `gs://bucket/notebook_file.ipynb`
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Generation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Generation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1NotebookExecutionJobGcsNotebookSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookExecutionJobGcsNotebookSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17808,6 +18069,9 @@ type GoogleCloudAiplatformV1PersistentResource struct {
 	// (https://cloud.google.com/vertex-ai/docs/general/vpc-peering). If this field
 	// is left unspecified, the resources aren't peered with any network.
 	Network string `json:"network,omitempty"`
+	// PscInterfaceConfig: Optional. Configuration for PSC-I for
+	// PersistentResource.
+	PscInterfaceConfig *GoogleCloudAiplatformV1PscInterfaceConfig `json:"pscInterfaceConfig,omitempty"`
 	// ReservedIpRanges: Optional. A list of names for the reserved IP ranges under
 	// the VPC network that can be used for this persistent resource. If set, we
 	// will deploy the persistent resource within the provided IP ranges.
@@ -18761,6 +19025,37 @@ type GoogleCloudAiplatformV1PscAutomatedEndpoints struct {
 
 func (s GoogleCloudAiplatformV1PscAutomatedEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PscAutomatedEndpoints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PscInterfaceConfig: Configuration for PSC-I.
+type GoogleCloudAiplatformV1PscInterfaceConfig struct {
+	// NetworkAttachment: Optional. The full name of the Compute Engine network
+	// attachment (https://cloud.google.com/vpc/docs/about-network-attachments) to
+	// attach to the resource. For example,
+	// `projects/12345/regions/us-central1/networkAttachments/myNA`. is of the form
+	// `projects/{project}/regions/{region}/networkAttachments/{networkAttachment}`.
+	//  Where {project} is a project number, as in `12345`, and {networkAttachment}
+	// is a network attachment name. To specify this field, you must have already
+	// [created a network attachment]
+	// (https://cloud.google.com/vpc/docs/create-manage-network-attachments#create-network-attachments).
+	// This field is only used for resources using PSC-I.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PscInterfaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20003,6 +20298,29 @@ func (s GoogleCloudAiplatformV1RawPredictRequest) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1RayLogsSpec: Configuration for the Ray OSS Logs.
+type GoogleCloudAiplatformV1RayLogsSpec struct {
+	// Disabled: Optional. Flag to disable the export of Ray OSS logs to Cloud
+	// Logging.
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1RayLogsSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1RayLogsSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1RayMetricSpec: Configuration for the Ray metrics.
 type GoogleCloudAiplatformV1RayMetricSpec struct {
 	// Disabled: Optional. Flag to disable the Ray metrics collection.
@@ -20043,6 +20361,8 @@ type GoogleCloudAiplatformV1RaySpec struct {
 	// need all the resource pools to have the same Ray image. Otherwise, use the
 	// {@code resource_pool_images} field.
 	ImageUri string `json:"imageUri,omitempty"`
+	// RayLogsSpec: Optional. OSS Ray logging configurations.
+	RayLogsSpec *GoogleCloudAiplatformV1RayLogsSpec `json:"rayLogsSpec,omitempty"`
 	// RayMetricSpec: Optional. Ray metrics configurations.
 	RayMetricSpec *GoogleCloudAiplatformV1RayMetricSpec `json:"rayMetricSpec,omitempty"`
 	// ResourcePoolImages: Optional. Required if image_uri isn't set. A map of
@@ -20753,9 +21073,8 @@ func (s GoogleCloudAiplatformV1ResumeScheduleRequest) MarshalJSON() ([]byte, err
 // GoogleCloudAiplatformV1Retrieval: Defines a retrieval tool that model can
 // call to access external knowledge.
 type GoogleCloudAiplatformV1Retrieval struct {
-	// DisableAttribution: Optional. Disable using the result from this tool in
-	// detecting grounding attribution. This does not affect how the result is
-	// given to the model for generation.
+	// DisableAttribution: Optional. Deprecated. This option is no longer
+	// supported.
 	DisableAttribution bool `json:"disableAttribution,omitempty"`
 	// VertexAiSearch: Set to use data source powered by Vertex AI Search.
 	VertexAiSearch *GoogleCloudAiplatformV1VertexAISearch `json:"vertexAiSearch,omitempty"`
@@ -21493,6 +21812,14 @@ type GoogleCloudAiplatformV1Scheduling struct {
 	// restarted. This feature can be used by distributed training jobs that are
 	// not resilient to workers leaving and joining a job.
 	RestartJobOnWorkerRestart bool `json:"restartJobOnWorkerRestart,omitempty"`
+	// Strategy: Optional. This determines which type of scheduling strategy to
+	// use.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy will default to ON_DEMAND.
+	//   "ON_DEMAND" - Regular on-demand provisioning strategy.
+	//   "LOW_COST" - Low cost by making potential use of spot resources.
+	Strategy string `json:"strategy,omitempty"`
 	// Timeout: The maximum job running time. The default is 7 days.
 	Timeout string `json:"timeout,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisableRetries") to
@@ -29896,6 +30223,7 @@ type GoogleCloudAiplatformV1SupervisedHyperParameters struct {
 	//   "ADAPTER_SIZE_FOUR" - Adapter size 4.
 	//   "ADAPTER_SIZE_EIGHT" - Adapter size 8.
 	//   "ADAPTER_SIZE_SIXTEEN" - Adapter size 16.
+	//   "ADAPTER_SIZE_THIRTY_TWO" - Adapter size 32.
 	AdapterSize string `json:"adapterSize,omitempty"`
 	// EpochCount: Optional. Number of complete passes the model makes over the
 	// entire training dataset during training.
@@ -33410,101 +33738,6 @@ type GoogleTypeMoney struct {
 
 func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type IntelligenceCloudAutomlXpsMetricEntry struct {
-	// ArgentumMetricId: For billing metrics that are using legacy sku's, set the
-	// legacy billing metric id here. This will be sent to Chemist as the
-	// "cloudbilling.googleapis.com/argentum_metric_id" label. Otherwise leave
-	// empty.
-	ArgentumMetricId string `json:"argentumMetricId,omitempty"`
-	// DoubleValue: A double value.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
-	// Int64Value: A signed 64-bit integer value.
-	Int64Value int64 `json:"int64Value,omitempty,string"`
-	// MetricName: The metric name defined in the service configuration.
-	MetricName string `json:"metricName,omitempty"`
-	// SystemLabels: Billing system labels for this (metric, value) pair.
-	SystemLabels []*IntelligenceCloudAutomlXpsMetricEntryLabel `json:"systemLabels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ArgentumMetricId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ArgentumMetricId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s IntelligenceCloudAutomlXpsMetricEntry) MarshalJSON() ([]byte, error) {
-	type NoMethod IntelligenceCloudAutomlXpsMetricEntry
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *IntelligenceCloudAutomlXpsMetricEntry) UnmarshalJSON(data []byte) error {
-	type NoMethod IntelligenceCloudAutomlXpsMetricEntry
-	var s1 struct {
-		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.DoubleValue = float64(s1.DoubleValue)
-	return nil
-}
-
-type IntelligenceCloudAutomlXpsMetricEntryLabel struct {
-	// LabelName: The name of the label.
-	LabelName string `json:"labelName,omitempty"`
-	// LabelValue: The value of the label.
-	LabelValue string `json:"labelValue,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LabelName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LabelName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s IntelligenceCloudAutomlXpsMetricEntryLabel) MarshalJSON() ([]byte, error) {
-	type NoMethod IntelligenceCloudAutomlXpsMetricEntryLabel
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type IntelligenceCloudAutomlXpsReportingMetrics struct {
-	// EffectiveTrainingDuration: The effective time training used. If set, this is
-	// used for quota management and billing. Deprecated. AutoML BE doesn't use
-	// this. Don't set.
-	EffectiveTrainingDuration string `json:"effectiveTrainingDuration,omitempty"`
-	// MetricEntries: One entry per metric name. The values must be aggregated per
-	// metric name.
-	MetricEntries []*IntelligenceCloudAutomlXpsMetricEntry `json:"metricEntries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveTrainingDuration")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveTrainingDuration") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s IntelligenceCloudAutomlXpsReportingMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod IntelligenceCloudAutomlXpsReportingMetrics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -37505,7 +37738,7 @@ type ProjectsLocationsDatasetsPatchCall struct {
 
 // Patch: Updates a Dataset.
 //
-// - name: Output only. The resource name of the Dataset.
+// - name: Output only. Identifier. The resource name of the Dataset.
 func (r *ProjectsLocationsDatasetsService) Patch(name string, googlecloudaiplatformv1dataset *GoogleCloudAiplatformV1Dataset) *ProjectsLocationsDatasetsPatchCall {
 	c := &ProjectsLocationsDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40519,7 +40752,7 @@ type ProjectsLocationsDatasetsDatasetVersionsPatchCall struct {
 
 // Patch: Updates a DatasetVersion.
 //
-// - name: Output only. The resource name of the DatasetVersion.
+// - name: Output only. Identifier. The resource name of the DatasetVersion.
 func (r *ProjectsLocationsDatasetsDatasetVersionsService) Patch(name string, googlecloudaiplatformv1datasetversion *GoogleCloudAiplatformV1DatasetVersion) *ProjectsLocationsDatasetsDatasetVersionsPatchCall {
 	c := &ProjectsLocationsDatasetsDatasetVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -73544,6 +73777,525 @@ func (c *ProjectsLocationsNasJobsNasTrialDetailsListCall) Pages(ctx context.Cont
 	}
 }
 
+type ProjectsLocationsNotebookExecutionJobsCreateCall struct {
+	s                                           *Service
+	parent                                      string
+	googlecloudaiplatformv1notebookexecutionjob *GoogleCloudAiplatformV1NotebookExecutionJob
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Create: Creates a NotebookExecutionJob.
+//
+//   - parent: The resource name of the Location to create the
+//     NotebookExecutionJob. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookExecutionJobsService) Create(parent string, googlecloudaiplatformv1notebookexecutionjob *GoogleCloudAiplatformV1NotebookExecutionJob) *ProjectsLocationsNotebookExecutionJobsCreateCall {
+	c := &ProjectsLocationsNotebookExecutionJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1notebookexecutionjob = googlecloudaiplatformv1notebookexecutionjob
+	return c
+}
+
+// NotebookExecutionJobId sets the optional parameter "notebookExecutionJobId":
+// User specified ID for the NotebookExecutionJob.
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) NotebookExecutionJobId(notebookExecutionJobId string) *ProjectsLocationsNotebookExecutionJobsCreateCall {
+	c.urlParams_.Set("notebookExecutionJobId", notebookExecutionJobId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1notebookexecutionjob)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookExecutionJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a NotebookExecutionJob.
+//
+// - name: The name of the NotebookExecutionJob resource to be deleted.
+func (r *ProjectsLocationsNotebookExecutionJobsService) Delete(name string) *ProjectsLocationsNotebookExecutionJobsDeleteCall {
+	c := &ProjectsLocationsNotebookExecutionJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a NotebookExecutionJob.
+//
+// - name: The name of the NotebookExecutionJob resource.
+func (r *ProjectsLocationsNotebookExecutionJobsService) Get(name string) *ProjectsLocationsNotebookExecutionJobsGetCall {
+	c := &ProjectsLocationsNotebookExecutionJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": The NotebookExecutionJob view.
+// Defaults to BASIC.
+//
+// Possible values:
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_UNSPECIFIED" - When unspecified, the API
+//
+// defaults to the BASIC view.
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_BASIC" - Includes all fields except for
+//
+// direct notebook inputs.
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_FULL" - Includes all fields.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) View(view string) *ProjectsLocationsNotebookExecutionJobsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookExecutionJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1NotebookExecutionJob.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1NotebookExecutionJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1NotebookExecutionJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists NotebookExecutionJobs in a Location.
+//
+//   - parent: The resource name of the Location from which to list the
+//     NotebookExecutionJobs. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookExecutionJobsService) List(parent string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c := &ProjectsLocationsNotebookExecutionJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. For field names both snake_case and camelCase are
+// supported. * `notebookExecutionJob` supports = and !=.
+// `notebookExecutionJob` represents the NotebookExecutionJob ID. *
+// `displayName` supports = and != and regex. * `schedule` supports = and !=
+// and regex. Some examples: * `notebookExecutionJob="123" *
+// `notebookExecutionJob="my-execution-job" * `displayName="myDisplayName"
+// and `displayName=~"myDisplayNameRegex"
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Filter(filter string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields to order by, sorted in ascending order. Use "desc" after a field name
+// for descending. Supported fields: * `display_name` * `create_time` *
+// `update_time` Example: `display_name, create_time desc`.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) OrderBy(orderBy string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token. Typically obtained via ListNotebookExecutionJobs.next_page_token of
+// the previous NotebookService.ListNotebookExecutionJobs call.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) PageToken(pageToken string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The NotebookExecutionJob view.
+// Defaults to BASIC.
+//
+// Possible values:
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_UNSPECIFIED" - When unspecified, the API
+//
+// defaults to the BASIC view.
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_BASIC" - Includes all fields except for
+//
+// direct notebook inputs.
+//
+//	"NOTEBOOK_EXECUTION_JOB_VIEW_FULL" - Includes all fields.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) View(view string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookExecutionJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookExecutionJobsListCall) Pages(ctx context.Context, f func(*GoogleCloudAiplatformV1ListNotebookExecutionJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsNotebookExecutionJobsOperationsCancelCall struct {
 	s          *Service
 	name       string
@@ -94246,9 +94998,16 @@ func (r *PublishersModelsService) Get(name string) *PublishersModelsGetCall {
 	return c
 }
 
+// IsHuggingFaceModel sets the optional parameter "isHuggingFaceModel": Boolean
+// indicates whether the requested model is a Hugging Face model.
+func (c *PublishersModelsGetCall) IsHuggingFaceModel(isHuggingFaceModel bool) *PublishersModelsGetCall {
+	c.urlParams_.Set("isHuggingFaceModel", fmt.Sprint(isHuggingFaceModel))
+	return c
+}
+
 // LanguageCode sets the optional parameter "languageCode": The IETF BCP-47
 // language code representing the language in which the publisher model's text
-// information should be written in (see go/bcp47).
+// information should be written in.
 func (c *PublishersModelsGetCall) LanguageCode(languageCode string) *PublishersModelsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c

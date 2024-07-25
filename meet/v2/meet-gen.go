@@ -759,14 +759,20 @@ type Space struct {
 	ActiveConference *ActiveConference `json:"activeConference,omitempty"`
 	// Config: Configuration pertaining to the meeting space.
 	Config *SpaceConfig `json:"config,omitempty"`
-	// MeetingCode: Output only. Type friendly code to join the meeting. Format:
-	// `[a-z]+-[a-z]+-[a-z]+` such as `abc-mnop-xyz`. The maximum length is 128
-	// characters. Can only be used as an alias of the space ID to get the space.
+	// MeetingCode: Output only. Type friendly unique string used to join the
+	// meeting. Format: `[a-z]+-[a-z]+-[a-z]+`. For example, `abc-mnop-xyz`. The
+	// maximum length is 128 characters. Can only be used as an alias of the space
+	// name to get the space.
 	MeetingCode string `json:"meetingCode,omitempty"`
-	// MeetingUri: Output only. URI used to join meetings, such as
+	// MeetingUri: Output only. URI used to join meetings consisting of
+	// `https://meet.google.com/` followed by the `meeting_code`. For example,
 	// `https://meet.google.com/abc-mnop-xyz`.
 	MeetingUri string `json:"meetingUri,omitempty"`
-	// Name: Immutable. Resource name of the space. Format: `spaces/{space}`
+	// Name: Immutable. Resource name of the space. Format: `spaces/{space}`.
+	// `{space}` is the resource identifier for the space. It's a unique,
+	// server-generated ID and is case sensitive. For example, `jQCFfuBOdN5z`. For
+	// more information, see How Meet identifies a meeting space
+	// (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2581,19 +2587,25 @@ func (c *SpacesCreateCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 
 type SpacesEndActiveConferenceCall struct {
 	s                          *Service
-	name                       string
+	nameid                     string
 	endactiveconferencerequest *EndActiveConferenceRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
 	header_                    http.Header
 }
 
-// EndActiveConference: Ends an active conference (if there's one).
+// EndActiveConference: Ends an active conference (if there's one). For an
+// example, see End active conference
+// (https://developers.google.com/meet/api/guides/meeting-spaces#end-active-conference).
 //
-// - name: Resource name of the space.
-func (r *SpacesService) EndActiveConference(name string, endactiveconferencerequest *EndActiveConferenceRequest) *SpacesEndActiveConferenceCall {
+//   - name: Resource name of the space. Format: `spaces/{space}`. `{space}` is
+//     the resource identifier for the space. It's a unique, server-generated ID
+//     and is case sensitive. For example, `jQCFfuBOdN5z`. For more information,
+//     see How Meet identifies a meeting space
+//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+func (r *SpacesService) EndActiveConference(nameid string, endactiveconferencerequest *EndActiveConferenceRequest) *SpacesEndActiveConferenceCall {
 	c := &SpacesEndActiveConferenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	c.endactiveconferencerequest = endactiveconferencerequest
 	return c
 }
@@ -2638,7 +2650,7 @@ func (c *SpacesEndActiveConferenceCall) doRequest(alt string) (*http.Response, e
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2682,19 +2694,33 @@ func (c *SpacesEndActiveConferenceCall) Do(opts ...googleapi.CallOption) (*Empty
 
 type SpacesGetCall struct {
 	s            *Service
-	name         string
+	nameid       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// Get: Gets a space by `space_id` or `meeting_code`.
+// Get: Gets details about a meeting space. For an example, see Get a meeting
+// space
+// (https://developers.google.com/meet/api/guides/meeting-spaces#get-meeting-space).
 //
-// - name: Resource name of the space.
-func (r *SpacesService) Get(name string) *SpacesGetCall {
+//   - name: Resource name of the space. Format: `spaces/{space}` or
+//     `spaces/{meetingCode}`. `{space}` is the resource identifier for the
+//     space. It's a unique, server-generated ID and is case sensitive. For
+//     example, `jQCFfuBOdN5z`. `{meetingCode}` is an alias for the space. It's a
+//     typeable, unique character string and is non-case sensitive. For example,
+//     `abc-mnop-xyz`. The maximum length is 128 characters. A `meetingCode`
+//     shouldn't be stored long term as it can become dissociated from a meeting
+//     space and can be reused for different meeting spaces in the future.
+//     Generally, a `meetingCode` expires 365 days after last use. For more
+//     information, see Learn about meeting codes in Google Meet
+//     (https://support.google.com/meet/answer/10710509). For more information,
+//     see How Meet identifies a meeting space
+//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+func (r *SpacesService) Get(nameid string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	return c
 }
 
@@ -2745,7 +2771,7 @@ func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2789,19 +2815,25 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 
 type SpacesPatchCall struct {
 	s          *Service
-	name       string
+	nameid     string
 	space      *Space
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
-// Patch: Updates a space.
+// Patch: Updates details about a meeting space. For an example, see Update a
+// meeting space
+// (https://developers.google.com/meet/api/guides/meeting-spaces#update-meeting-space).
 //
-// - name: Immutable. Resource name of the space. Format: `spaces/{space}`.
-func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
+//   - name: Immutable. Resource name of the space. Format: `spaces/{space}`.
+//     `{space}` is the resource identifier for the space. It's a unique,
+//     server-generated ID and is case sensitive. For example, `jQCFfuBOdN5z`.
+//     For more information, see How Meet identifies a meeting space
+//     (https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space).
+func (r *SpacesService) Patch(nameid string, space *Space) *SpacesPatchCall {
 	c := &SpacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	c.space = space
 	return c
 }
@@ -2855,7 +2887,7 @@ func (c *SpacesPatchCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }

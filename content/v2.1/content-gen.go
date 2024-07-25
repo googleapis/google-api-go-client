@@ -11503,8 +11503,8 @@ type Product struct {
 	// different sizes, insert a separate product for each size with the same
 	// `itemGroupId` value (see size definition).
 	Sizes []string `json:"sizes,omitempty"`
-	// Source: The source of the offer, that is, how the offer was created.
-	// Acceptable values are: - "api" - "crawl" - "feed"
+	// Source: Output only. The source of the offer, that is, how the offer was
+	// created. Acceptable values are: - "api" - "crawl" - "feed"
 	Source string `json:"source,omitempty"`
 	// StructuredDescription: Structured description, for algorithmically
 	// (AI)-generated descriptions.

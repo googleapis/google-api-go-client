@@ -3987,11 +3987,11 @@ type NonComplianceDetail struct {
 	// setting.
 	//
 	// Possible values:
-	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is disallowed.
+	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is not used.
 	//   "API_LEVEL" - The setting is not supported in the API level of the Android
 	// version running on the device.
-	//   "MANAGEMENT_MODE" - The management mode (profile owner, device owner,
-	// etc.) doesn't support the setting.
+	//   "MANAGEMENT_MODE" - The management mode (such as fully managed or work
+	// profile) doesn't support the setting.
 	//   "USER_ACTION" - The user has not taken required action to comply with the
 	// setting.
 	//   "INVALID_VALUE" - The setting has an invalid value.
@@ -4083,11 +4083,11 @@ type NonComplianceDetailCondition struct {
 	// setting. If not set, then this condition matches any reason.
 	//
 	// Possible values:
-	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is disallowed.
+	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is not used.
 	//   "API_LEVEL" - The setting is not supported in the API level of the Android
 	// version running on the device.
-	//   "MANAGEMENT_MODE" - The management mode (profile owner, device owner,
-	// etc.) doesn't support the setting.
+	//   "MANAGEMENT_MODE" - The management mode (such as fully managed or work
+	// profile) doesn't support the setting.
 	//   "USER_ACTION" - The user has not taken required action to comply with the
 	// setting.
 	//   "INVALID_VALUE" - The setting has an invalid value.
@@ -8373,10 +8373,7 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 
 // Create: Creates an enrollment token for a given enterprise. It's up to the
 // caller's responsibility to manage the lifecycle of newly created tokens and
-// deleting them when they're not intended to be used anymore. Once an
-// enrollment token has been created, it's not possible to retrieve the token's
-// content anymore using AM API. It is recommended for EMMs to securely store
-// the token if it's intended to be reused.
+// deleting them when they're not intended to be used anymore.
 //
 // - parent: The name of the enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {

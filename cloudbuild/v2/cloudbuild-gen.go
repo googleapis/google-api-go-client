@@ -2195,7 +2195,7 @@ func (s RunWorkflowCustomOperationMetadata) MarshalJSON() ([]byte, error) {
 type SecretVolumeSource struct {
 	// SecretName: Name of the secret referenced by the WorkspaceBinding.
 	SecretName string `json:"secretName,omitempty"`
-	// SecretVersion: Output only. Resource name of the SecretVersion. In format:
+	// SecretVersion: Optional. Resource name of the SecretVersion. In format:
 	// projects/*/secrets/*/versions/*
 	SecretVersion string `json:"secretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SecretName") to

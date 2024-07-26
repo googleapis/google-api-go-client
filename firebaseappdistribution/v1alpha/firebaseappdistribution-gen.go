@@ -1014,8 +1014,7 @@ func (s GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, error
 // GoogleFirebaseAppdistroV1alphaReleaseTest: The results of running an
 // automated test on a release.
 type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
-	// AiInstructions: Optional. Input only. Instructions for AI driven test. Input
-	// only.
+	// AiInstructions: Optional. Instructions for AI driven test.
 	AiInstructions *GoogleFirebaseAppdistroV1alphaAiInstructions `json:"aiInstructions,omitempty"`
 	// CreateTime: Output only. Timestamp when the test was run.
 	CreateTime string `json:"createTime,omitempty"`

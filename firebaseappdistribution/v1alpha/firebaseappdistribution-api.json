@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20240717",
+  "revision": "20240724",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "GoogleFirebaseAppdistroV1Release": {
@@ -1250,7 +1250,7 @@
       "properties": {
         "aiInstructions": {
           "$ref": "GoogleFirebaseAppdistroV1alphaAiInstructions",
-          "description": "Optional. Input only. Instructions for AI driven test. Input only."
+          "description": "Optional. Instructions for AI driven test."
         },
         "createTime": {
           "description": "Output only. Timestamp when the test was run.",

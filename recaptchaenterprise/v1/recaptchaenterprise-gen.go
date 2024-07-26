@@ -326,6 +326,36 @@ func (s GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest: The AddIpOverride
+// request message.
+type GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest struct {
+	// IpOverrideData: Required. IP override added to the key.
+	IpOverrideData *GoogleCloudRecaptchaenterpriseV1IpOverrideData `json:"ipOverrideData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpOverrideData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpOverrideData") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1AddIpOverrideResponse: Response for
+// AddIpOverride.
+type GoogleCloudRecaptchaenterpriseV1AddIpOverrideResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific to
 // keys that can be used by Android apps.
 type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
@@ -1187,6 +1217,41 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1IOSKeySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1IOSKeySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1IpOverrideData: Information about the IP or
+// IP range override.
+type GoogleCloudRecaptchaenterpriseV1IpOverrideData struct {
+	// Ip: Required. The IP address to override (can be IPv4, IPv6 or CIDR). The IP
+	// override must be a valid IPv4 or IPv6 address, or a CIDR range. The IP
+	// override must be a public IP address. Example of IPv4: 168.192.5.6 Example
+	// of IPv6: 2001:0000:130F:0000:0000:09C0:876A:130B Example of IPv4 with CIDR:
+	// 168.192.5.0/24 Example of IPv6 with CIDR: 2001:0DB8:1234::/48
+	Ip string `json:"ip,omitempty"`
+	// OverrideType: Required. Describes the type of IP override.
+	//
+	// Possible values:
+	//   "OVERRIDE_TYPE_UNSPECIFIED" - Default override type that indicates this
+	// enum hasn't been specified.
+	//   "ALLOW" - Allowlist the IP address; i.e. give a `risk_analysis.score` of
+	// 0.9 for all valid assessments.
+	OverrideType string `json:"overrideType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ip") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ip") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1IpOverrideData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1IpOverrideData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3342,6 +3407,112 @@ func (c *ProjectsFirewallpoliciesReorderCall) Do(opts ...googleapi.CallOption) (
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsKeysAddIpOverrideCall struct {
+	s                                                    *Service
+	name                                                 string
+	googlecloudrecaptchaenterprisev1addipoverriderequest *GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// AddIpOverride: Adds an IP override to a key. The following restrictions
+// hold: * The maximum number of IP overrides per key is 100. * For any
+// conflict (such as IP already exists or IP part of an existing IP range), an
+// error will be returned.
+//
+//   - name: The name of the key to which the IP override is added, in the format
+//     `projects/{project}/keys/{key}`.
+func (r *ProjectsKeysService) AddIpOverride(name string, googlecloudrecaptchaenterprisev1addipoverriderequest *GoogleCloudRecaptchaenterpriseV1AddIpOverrideRequest) *ProjectsKeysAddIpOverrideCall {
+	c := &ProjectsKeysAddIpOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecaptchaenterprisev1addipoverriderequest = googlecloudrecaptchaenterprisev1addipoverriderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsKeysAddIpOverrideCall) Fields(s ...googleapi.Field) *ProjectsKeysAddIpOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsKeysAddIpOverrideCall) Context(ctx context.Context) *ProjectsKeysAddIpOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsKeysAddIpOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsKeysAddIpOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecaptchaenterprisev1addipoverriderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:addIpOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.keys.addIpOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecaptchaenterpriseV1AddIpOverrideResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsKeysAddIpOverrideCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1AddIpOverrideResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1AddIpOverrideResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -941,17 +941,22 @@ func (s GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings) MarshalJSON() ([]
 // GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings: Define behaviors
 // on logging.
 type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
+	// EnableConsentBasedRedaction: Enables consent-based end-user input redaction,
+	// if true, a pre-defined session parameter
+	// `$session.params.conversation-redaction` will be used to determine if the
+	// utterance should be redacted.
+	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
 	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableInteractionLogging") to
+	// NullFields is a list of field names (e.g. "EnableConsentBasedRedaction") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4379,17 +4384,22 @@ func (s GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings) MarshalJSON(
 // GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings: Define
 // behaviors on logging.
 type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
+	// EnableConsentBasedRedaction: Enables consent-based end-user input redaction,
+	// if true, a pre-defined session parameter
+	// `$session.params.conversation-redaction` will be used to determine if the
+	// utterance should be redacted.
+	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
 	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableInteractionLogging") to
+	// NullFields is a list of field names (e.g. "EnableConsentBasedRedaction") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

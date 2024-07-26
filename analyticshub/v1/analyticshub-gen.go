@@ -3409,8 +3409,8 @@ type ProjectsLocationsDataExchangesSubscribeCall struct {
 	header_                      http.Header
 }
 
-// Subscribe: Creates a Subscription to a Data Exchange. This is a long-running
-// operation as it will create one or more linked datasets.
+// Subscribe: Creates a Subscription to a Data Clean Room. This is a
+// long-running operation as it will create one or more linked datasets.
 //
 //   - name: Resource name of the Data Exchange. e.g.
 //     `projects/publisherproject/locations/US/dataExchanges/123`.

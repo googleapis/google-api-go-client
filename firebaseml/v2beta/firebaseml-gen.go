@@ -809,6 +809,8 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// response_mime_type must also be set. Compatible mimetypes:
 	// `application/json`: Schema for JSON response.
 	ResponseSchema *GoogleCloudAiplatformV1beta1Schema `json:"responseSchema,omitempty"`
+	// RoutingConfig: Optional. Routing configuration.
+	RoutingConfig *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig `json:"routingConfig,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
@@ -855,6 +857,84 @@ func (s *GoogleCloudAiplatformV1beta1GenerationConfig) UnmarshalJSON(data []byte
 	s.TopK = float64(s1.TopK)
 	s.TopP = float64(s1.TopP)
 	return nil
+}
+
+// GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig: Routing config.
+type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig struct {
+	// AutoMode: Automated routing.
+	AutoMode *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode `json:"autoMode,omitempty"`
+	// ManualMode: Manual routing.
+	ManualMode *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode `json:"manualMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode:
+// When automated routing is specified, the routing will be determined by the
+// pretrained routing model and customer provided model routing preference.
+type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode struct {
+	// ModelRoutingPreference: The model routing preference.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unspecified model routing preference.
+	//   "PRIORITIZE_QUALITY" - Prefer higher quality over low cost.
+	//   "BALANCED" - Balanced model routing preference.
+	//   "PRIORITIZE_COST" - Prefer lower cost over higher quality.
+	ModelRoutingPreference string `json:"modelRoutingPreference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelRoutingPreference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelRoutingPreference") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode:
+// When manual routing is set, the specified model will be used directly.
+type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode struct {
+	// ModelName: The model name to use. Only the public LLM models are accepted.
+	// e.g. gemini-1.5-pro-001.
+	ModelName string `json:"modelName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public

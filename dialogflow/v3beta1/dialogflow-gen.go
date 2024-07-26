@@ -617,17 +617,22 @@ func (s GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings) MarshalJSON() ([]
 // GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings: Define behaviors
 // on logging.
 type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
+	// EnableConsentBasedRedaction: Enables consent-based end-user input redaction,
+	// if true, a pre-defined session parameter
+	// `$session.params.conversation-redaction` will be used to determine if the
+	// utterance should be redacted.
+	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
 	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableInteractionLogging") to
+	// NullFields is a list of field names (e.g. "EnableConsentBasedRedaction") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4089,17 +4094,22 @@ func (s GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings) MarshalJSON(
 // GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings: Define
 // behaviors on logging.
 type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
+	// EnableConsentBasedRedaction: Enables consent-based end-user input redaction,
+	// if true, a pre-defined session parameter
+	// `$session.params.conversation-redaction` will be used to determine if the
+	// utterance should be redacted.
+	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
 	// EnableStackdriverLogging: Enables StackDriver logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableInteractionLogging")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableInteractionLogging") to
+	// NullFields is a list of field names (e.g. "EnableConsentBasedRedaction") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -12432,6 +12442,8 @@ func (s GoogleCloudDialogflowCxV3beta1ToolFunctionTool) MarshalJSON() ([]byte, e
 type GoogleCloudDialogflowCxV3beta1ToolOpenApiTool struct {
 	// Authentication: Optional. Authentication information required by the API.
 	Authentication *GoogleCloudDialogflowCxV3beta1ToolAuthentication `json:"authentication,omitempty"`
+	// ServiceDirectoryConfig: Optional. Service Directory configuration.
+	ServiceDirectoryConfig *GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
 	// TextSchema: Required. The OpenAPI schema specified as a text.
 	TextSchema string `json:"textSchema,omitempty"`
 	// TlsConfig: Optional. TLS configuration for the HTTPS verification.
@@ -12451,6 +12463,32 @@ type GoogleCloudDialogflowCxV3beta1ToolOpenApiTool struct {
 
 func (s GoogleCloudDialogflowCxV3beta1ToolOpenApiTool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ToolOpenApiTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig: Configuration for
+// tools using Service Directory.
+type GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig struct {
+	// Service: Required. The name of Service Directory
+	// (https://cloud.google.com/service-directory) service. Format:
+	// `projects//locations//namespaces//services/`. `Location ID` of the service
+	// directory must be the same as the location of the agent.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

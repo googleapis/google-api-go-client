@@ -257,10 +257,15 @@ type JsonSchema struct {
 	Annotations *JsonSchemaAnnotations `json:"annotations,omitempty"`
 	// Default: The default value of this property (if one exists).
 	Default string `json:"default,omitempty"`
+	// Deprecated -- Whether the parameter is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
 	// Description: A description of this object.
 	Description string `json:"description,omitempty"`
 	// Enum: Values this parameter may take (if it is an enum).
 	Enum []string `json:"enum,omitempty"`
+	// EnumDeprecated: The deprecation status for the enums. Each position maps to
+	// the corresponding value in the "enum" array.
+	EnumDeprecated []bool `json:"enumDeprecated,omitempty"`
 	// EnumDescriptions: The descriptions for the enums. Each position maps to the
 	// corresponding value in the "enum" array.
 	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
@@ -408,6 +413,10 @@ type RestDescription struct {
 	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 	// DocumentationLink: A link to human readable documentation for the API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
+	// Endpoints: A list of location-based endpoint objects for this API. Each
+	// object contains the endpoint URL, location, description and deprecation
+	// status.
+	Endpoints []*RestDescriptionEndpoints `json:"endpoints,omitempty"`
 	// Etag: The ETag for this response.
 	Etag string `json:"etag,omitempty"`
 	// ExponentialBackoffDefault: Enable exponential backoff for suitable methods
@@ -541,6 +550,34 @@ func (s RestDescriptionAuthOauth2Scopes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RestDescriptionEndpoints: A single endpoint object
+type RestDescriptionEndpoints struct {
+	// Deprecated -- Whether this endpoint is deprecated
+	Deprecated bool `json:"deprecated,omitempty"`
+	// Description: A string describing the host designated by the URL
+	Description string `json:"description,omitempty"`
+	// EndpointUrl: The URL of the endpoint target host
+	EndpointUrl string `json:"endpointUrl,omitempty"`
+	// Location: The location of the endpoint
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deprecated") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestDescriptionEndpoints) MarshalJSON() ([]byte, error) {
+	type NoMethod RestDescriptionEndpoints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestDescriptionIcons: Links to 16x16 and 32x32 icons representing the API.
 type RestDescriptionIcons struct {
 	// X16: The URL of the 16x16 icon.
@@ -566,6 +603,11 @@ func (s RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 }
 
 type RestMethod struct {
+	// ApiVersion: The API Version of this method, as passed in via the
+	// `X-Goog-Api-Version` header or `$apiVersion` query parameter.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// Deprecated -- Whether this method is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 	// EtagRequired: Whether this method requires an ETag to be specified. The ETag
@@ -606,13 +648,13 @@ type RestMethod struct {
 	// use the download service URL (i.e. "/download"). Only applies if the method
 	// supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -777,17 +819,19 @@ func (s RestMethodResponse) MarshalJSON() ([]byte, error) {
 }
 
 type RestResource struct {
+	// Deprecated -- Whether this resource is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
 	// Methods: Methods on this resource.
 	Methods map[string]RestMethod `json:"methods,omitempty"`
 	// Resources: Sub-resources on this resource.
 	Resources map[string]RestResource `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// NullFields is a list of field names (e.g. "Deprecated") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

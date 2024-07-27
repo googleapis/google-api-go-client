@@ -1,5 +1,16 @@
 # Changes
 
+## [0.190.0](https://github.com/googleapis/google-api-go-client/compare/v0.189.0...v0.190.0) (2024-07-27)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2693](https://github.com/googleapis/google-api-go-client/issues/2693)) ([cbc19e7](https://github.com/googleapis/google-api-go-client/commit/cbc19e75465de8084d9e34b2b3ccc0ba8d905e3d))
+* **all:** Auto-regenerate discovery clients ([#2698](https://github.com/googleapis/google-api-go-client/issues/2698)) ([ddc4e0b](https://github.com/googleapis/google-api-go-client/commit/ddc4e0b0adb8c4fe22edb4a821e4f2c716d5a327))
+* **all:** Auto-regenerate discovery clients ([#2699](https://github.com/googleapis/google-api-go-client/issues/2699)) ([d07fd26](https://github.com/googleapis/google-api-go-client/commit/d07fd26bf7d8b4a5848207b35d4214976bceeac0))
+* **all:** Auto-regenerate discovery clients ([#2700](https://github.com/googleapis/google-api-go-client/issues/2700)) ([a8b0821](https://github.com/googleapis/google-api-go-client/commit/a8b0821bdcc9a5e76db236bfce38823ab36002de))
+* Move storage, bigquery, and compute to new auth lib ([#2695](https://github.com/googleapis/google-api-go-client/issues/2695)) ([66ace6c](https://github.com/googleapis/google-api-go-client/commit/66ace6c95689fd06cb467069d8ec0f5ddb8ac695))
+
 ## [0.189.0](https://github.com/googleapis/google-api-go-client/compare/v0.188.0...v0.189.0) (2024-07-22)
 
 

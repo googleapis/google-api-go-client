@@ -3913,8 +3913,13 @@ type ObjectMeta struct {
 	// restricted, and the accepted annotations will be different depending on the
 	// resource type. * `autoscaling.knative.dev/maxScale`: Revision. *
 	// `autoscaling.knative.dev/minScale`: Revision. *
+	// `run.googleapis.com/base-images`: Revision, Service. *
 	// `run.googleapis.com/binary-authorization-breakglass`: Service, Job, *
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
+	// `run.googleapis.com/build-environment-variables`: Service. *
+	// `run.googleapis.com/build-id`: Service. *
+	// `run.googleapis.com/build-service-account`: Service. *
+	// `run.googleapis.com/build-worker-pool`: Service. *
 	// `run.googleapis.com/client-name`: All resources. *
 	// `run.googleapis.com/cloudsql-instances`: Revision, Execution. *
 	// `run.googleapis.com/container-dependencies`: Revision . *
@@ -3925,6 +3930,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/encryption-key-shutdown-hours`: Revision *
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
+	// `run.googleapis.com/function-target`: Service. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
 	// Service, Job. * `run.googleapis.com/minScale`: Service (ALPHA) *
@@ -3933,6 +3939,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/secrets`: Revision, Execution. *
 	// `run.googleapis.com/secure-session-agent`: Revision. *
 	// `run.googleapis.com/sessionAffinity`: Revision. *
+	// `run.googleapis.com/source-location`: Service. *
 	// `run.googleapis.com/startup-cpu-boost`: Revision. *
 	// `run.googleapis.com/vpc-access-connector`: Revision, Execution. *
 	// `run.googleapis.com/vpc-access-egress`: Revision, Execution.

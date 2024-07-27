@@ -103,27 +103,28 @@ const (
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
-	// View, add, update, and remove members from conversations in Google Chat
+	// See, add, update, and remove members from conversations and spaces in Google
+	// Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// View, compose, send, update, and delete messages, and add, view, and delete
-	// reactions to messages.
+	// See, compose, send, update, and delete messages and their associated
+	// attachments, and add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
-	// View, add, and delete reactions to messages in Google Chat
+	// See, add, and delete reactions to messages in Google Chat
 	ChatMessagesReactionsScope = "https://www.googleapis.com/auth/chat.messages.reactions"
 
 	// View reactions to messages in Google Chat
 	ChatMessagesReactionsReadonlyScope = "https://www.googleapis.com/auth/chat.messages.reactions.readonly"
 
-	// View messages and reactions in Google Chat
+	// See messages and their associated reactions and attachments in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
-	// Create conversations and spaces and see or edit metadata (including history
-	// settings and access settings) in Google Chat
+	// Create conversations and spaces and see or update metadata (including
+	// history settings and access settings) in Google Chat
 	ChatSpacesScope = "https://www.googleapis.com/auth/chat.spaces"
 
 	// View chat and spaces in Google Chat

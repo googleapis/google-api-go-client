@@ -169,6 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
+	rs.EncryptionSpec = NewProjectsLocationsEncryptionSpecService(s)
 	rs.Insightsdata = NewProjectsLocationsInsightsdataService(s)
 	rs.IssueModels = NewProjectsLocationsIssueModelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -181,6 +182,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Conversations *ProjectsLocationsConversationsService
+
+	EncryptionSpec *ProjectsLocationsEncryptionSpecService
 
 	Insightsdata *ProjectsLocationsInsightsdataService
 
@@ -211,6 +214,15 @@ func NewProjectsLocationsConversationsAnalysesService(s *Service) *ProjectsLocat
 }
 
 type ProjectsLocationsConversationsAnalysesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEncryptionSpecService(s *Service) *ProjectsLocationsEncryptionSpecService {
+	rs := &ProjectsLocationsEncryptionSpecService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEncryptionSpecService struct {
 	s *Service
 }
 
@@ -1716,6 +1728,40 @@ func (s GoogleCloudContactcenterinsightsV1DialogflowSource) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1EncryptionSpec: A customer-managed
+// encryption key specification that can be applied to all created resources
+// (e.g. Conversation).
+type GoogleCloudContactcenterinsightsV1EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1Entity: The data for an entity annotation.
 // Represents a phrase in the conversation that is a known entity, such as a
 // person, an organization, or location.
@@ -2437,6 +2483,67 @@ func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptOb
 // GoogleCloudContactcenterinsightsV1IngestConversationsResponse: The response
 // to an IngestConversations operation.
 type GoogleCloudContactcenterinsightsV1IngestConversationsResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata: Metadata
+// for initializing a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Partial errors during initialising operation that might cause
+	// the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest: The
+// request to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudContactcenterinsightsV1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecResponse: The
+// response to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1Intent: The data for an intent. Represents
@@ -5012,6 +5119,37 @@ func (s GoogleCloudContactcenterinsightsV1alpha1DialogflowSource) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec: A customer-managed
+// encryption key specification that can be applied to all created resources
+// (e.g. Conversation).
+type GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1Entity: The data for an entity
 // annotation. Represents a phrase in the conversation that is a known entity,
 // such as a person, an organization, or location.
@@ -5710,6 +5848,67 @@ func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTransc
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsResponse: The
 // response to an IngestConversations operation.
 type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata:
+// Metadata for initializing a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Partial errors during initialising operation that might cause
+	// the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest: The
+// request to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecResponse:
+// The response to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1Intent: The data for an intent.
@@ -6574,6 +6773,114 @@ type GoogleRpcStatus struct {
 func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsGetEncryptionSpecCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEncryptionSpec: Gets location-level encryption key specification.
+//
+// - name: The name of the encryption spec resource to get.
+func (r *ProjectsLocationsService) GetEncryptionSpec(name string) *ProjectsLocationsGetEncryptionSpecCall {
+	c := &ProjectsLocationsGetEncryptionSpecCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetEncryptionSpecCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetEncryptionSpecCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetEncryptionSpecCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Context(ctx context.Context) *ProjectsLocationsGetEncryptionSpecCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetEncryptionSpecCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.getEncryptionSpec" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1EncryptionSpec.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1EncryptionSpec, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1EncryptionSpec{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsGetSettingsCall struct {
@@ -8425,6 +8732,113 @@ func (c *ProjectsLocationsConversationsAnalysesListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsEncryptionSpecInitializeCall struct {
+	s                                                                 *Service
+	name                                                              string
+	googlecloudcontactcenterinsightsv1initializeencryptionspecrequest *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest
+	urlParams_                                                        gensupport.URLParams
+	ctx_                                                              context.Context
+	header_                                                           http.Header
+}
+
+// Initialize: Initializes a location-level encryption key specification. An
+// error will be thrown if the location has resources already created before
+// the initialization. Once the encryption specification is initialized at a
+// location, it is immutable and all newly created resources under the location
+// will be encrypted with the existing specification.
+//
+//   - name: Immutable. The resource name of the encryption key specification
+//     resource. Format: projects/{project}/locations/{location}/encryptionSpec.
+func (r *ProjectsLocationsEncryptionSpecService) Initialize(name string, googlecloudcontactcenterinsightsv1initializeencryptionspecrequest *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c := &ProjectsLocationsEncryptionSpecInitializeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1initializeencryptionspecrequest = googlecloudcontactcenterinsightsv1initializeencryptionspecrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Fields(s ...googleapi.Field) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Context(ctx context.Context) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontactcenterinsightsv1initializeencryptionspecrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:initialize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.encryptionSpec.initialize" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsInsightsdataExportCall struct {

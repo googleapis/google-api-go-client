@@ -2109,6 +2109,8 @@ func (s GoogleBigtableAdminV2TypeString) MarshalJSON() ([]byte, error) {
 type GoogleBigtableAdminV2TypeStringEncoding struct {
 	// Utf8Bytes: Use `Utf8Bytes` encoding.
 	Utf8Bytes *GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes `json:"utf8Bytes,omitempty"`
+	// Utf8Raw: Deprecated: if set, converts to an empty `utf8_bytes`.
+	Utf8Raw *GoogleBigtableAdminV2TypeStringEncodingUtf8Raw `json:"utf8Raw,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Utf8Bytes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2132,6 +2134,11 @@ func (s GoogleBigtableAdminV2TypeStringEncoding) MarshalJSON() ([]byte, error) {
 // Compatibility? - BigQuery Federation `TEXT` encoding - HBase `Bytes.toBytes`
 // - Java `String#getBytes(StandardCharsets.UTF_8)`
 type GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes struct {
+}
+
+// GoogleBigtableAdminV2TypeStringEncodingUtf8Raw: Deprecated: prefer the
+// equivalent `Utf8Bytes`.
+type GoogleBigtableAdminV2TypeStringEncodingUtf8Raw struct {
 }
 
 // GoogleBigtableAdminV2TypeStruct: A structured data value, consisting of
@@ -3495,15 +3502,15 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // Bigtable will always sort data based on the raw encoded value, *not* the
 // decoded type. - Example: BYTES values sort in the same order as their raw
 // encodings. - Counterexample: Encoding INT64 as a fixed-width decimal string
-// does *not* preserve sort order when dealing with negative numbers. INT64(1)
-// > INT64(-1), but STRING("-00001") > STRING("00001). * Self-delimiting: If we
-// concatenate two encoded values, can we always tell where the first one ends
-// and the second one begins? - Example: If we encode INT64s to fixed-width
-// STRINGs, the first value will always contain exactly N digits, possibly
-// preceded by a sign. - Counterexample: If we concatenate two UTF-8 encoded
-// STRINGs, we have no way to tell where the first one ends. * Compatibility:
-// Which other systems have matching encoding schemes? For example, does this
-// encoding have a GoogleSQL equivalent? HBase? Java?
+// does *not* preserve sort order when dealing with negative numbers. `INT64(1)
+// > INT64(-1)`, but `STRING("-00001") > STRING("00001)`. * Self-delimiting: If
+// we concatenate two encoded values, can we always tell where the first one
+// ends and the second one begins? - Example: If we encode INT64s to
+// fixed-width STRINGs, the first value will always contain exactly N digits,
+// possibly preceded by a sign. - Counterexample: If we concatenate two UTF-8
+// encoded STRINGs, we have no way to tell where the first one ends. *
+// Compatibility: Which other systems have matching encoding schemes? For
+// example, does this encoding have a GoogleSQL equivalent? HBase? Java?
 type Type struct {
 	// AggregateType: Aggregate
 	AggregateType *GoogleBigtableAdminV2TypeAggregate `json:"aggregateType,omitempty"`

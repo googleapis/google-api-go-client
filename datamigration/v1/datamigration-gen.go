@@ -788,6 +788,8 @@ type CloudSqlSettings struct {
 	// version is 35.
 	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the minor
 	// version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
+	// version is 37.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.
@@ -4356,6 +4358,8 @@ type SqlServerHomogeneousMigrationJobConfig struct {
 	BackupFilePattern string `json:"backupFilePattern,omitempty"`
 	// DatabaseBackups: Required. Backup details per database in Cloud Storage.
 	DatabaseBackups []*SqlServerDatabaseBackup `json:"databaseBackups,omitempty"`
+	// PromoteWhenReady: Optional. Promote databases when ready.
+	PromoteWhenReady bool `json:"promoteWhenReady,omitempty"`
 	// UseDiffBackup: Optional. Enable differential backups.
 	UseDiffBackup bool `json:"useDiffBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupFilePattern") to

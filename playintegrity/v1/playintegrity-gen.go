@@ -430,6 +430,8 @@ func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 
 // DeviceIntegrity: Contains the device attestation information. Next tag: 4
 type DeviceIntegrity struct {
+	// DeviceRecall: Details about the device recall bits set by the developer.
+	DeviceRecall *DeviceRecall `json:"deviceRecall,omitempty"`
 	// DeviceRecognitionVerdict: Details about the integrity of the device the app
 	// is running on.
 	//
@@ -450,21 +452,46 @@ type DeviceIntegrity struct {
 	// RecentDeviceActivity: Details about the device activity of the device the
 	// app is running on.
 	RecentDeviceActivity *RecentDeviceActivity `json:"recentDeviceActivity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeviceRecognitionVerdict")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "DeviceRecall") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeviceRecognitionVerdict") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeviceRecall") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceIntegrity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceRecall: Contains the recall bits per device set by the developer. Next
+// tag: 3
+type DeviceRecall struct {
+	// Values: Required. Contains the recall bits values.
+	Values *Values `json:"values,omitempty"`
+	// WriteDates: Required. Contains the recall bits write dates.
+	WriteDates *WriteDates `json:"writeDates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceRecall) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceRecall
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -658,6 +685,36 @@ type Values struct {
 
 func (s Values) MarshalJSON() ([]byte, error) {
 	type NoMethod Values
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WriteDates: Contains the recall bits write dates.
+type WriteDates struct {
+	// YyyymmFirst: Optional. Write time in YYYYMM format (in UTC, e.g. 202402) for
+	// the first bit. Note that this value won't be set if the first bit is false.
+	YyyymmFirst int64 `json:"yyyymmFirst,omitempty"`
+	// YyyymmSecond: Optional. Write time in YYYYMM format (in UTC, e.g. 202402)
+	// for the second bit. Note that this value won't be set if the second bit is
+	// false.
+	YyyymmSecond int64 `json:"yyyymmSecond,omitempty"`
+	// YyyymmThird: Optional. Write time in YYYYMM format (in UTC, e.g. 202402) for
+	// the third bit. Note that this value won't be set if the third bit is false.
+	YyyymmThird int64 `json:"yyyymmThird,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "YyyymmFirst") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "YyyymmFirst") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WriteDates) MarshalJSON() ([]byte, error) {
+	type NoMethod WriteDates
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -4179,6 +4179,18 @@ type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
 	// the inspection rules defined by the `InspectTemplate` change. If not set,
 	// changing the template will not cause a data profile to update.
 	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: Frequency to update profiles regardless of whether the
+	// underlying resource has changed. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
 	// SchemaModifiedCadence: Governs when to update data profiles when a schema is
 	// modified.
 	SchemaModifiedCadence *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
@@ -12458,6 +12470,160 @@ func (c *OrganizationsLocationsConnectionsGetCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 }
 
+type OrganizationsLocationsConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Connections in a parent. Use SearchConnections to see all
+// connections within an organization.
+//
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *OrganizationsLocationsConnectionsService) List(parent string) *OrganizationsLocationsConnectionsListCall {
+	c := &OrganizationsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Supported field/value: `state`
+// - MISSING|AVAILABLE|ERROR
+func (c *OrganizationsLocationsConnectionsListCall) Filter(filter string) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results per page,
+// max 1000.
+func (c *OrganizationsLocationsConnectionsListCall) PageSize(pageSize int64) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other request
+// fields must match the original request.
+func (c *OrganizationsLocationsConnectionsListCall) PageToken(pageToken string) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConnectionsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsListCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListConnectionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsConnectionsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type OrganizationsLocationsConnectionsPatchCall struct {
 	s                                         *Service
 	name                                      string
@@ -12572,8 +12738,9 @@ type OrganizationsLocationsConnectionsSearchCall struct {
 
 // Search: Searches for Connections in a parent.
 //
-//   - parent: Parent name, typically an organization, without location. For
-//     example: `organizations/12345678`.
+//   - parent: Resource name of the organization or project with a wildcard
+//     location, for example `organizations/433245324/locations/-` or
+//     `projects/project-id/locations/-`.
 func (r *OrganizationsLocationsConnectionsService) Search(parent string) *OrganizationsLocationsConnectionsSearchCall {
 	c := &OrganizationsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21336,9 +21503,12 @@ type ProjectsLocationsConnectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Connections in a parent.
+// List: Lists Connections in a parent. Use SearchConnections to see all
+// connections within an organization.
 //
-// - parent: Parent name, for example: `projects/project-id/locations/global`.
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21592,8 +21762,9 @@ type ProjectsLocationsConnectionsSearchCall struct {
 
 // Search: Searches for Connections in a parent.
 //
-//   - parent: Parent name, typically an organization, without location. For
-//     example: `organizations/12345678`.
+//   - parent: Resource name of the organization or project with a wildcard
+//     location, for example `organizations/433245324/locations/-` or
+//     `projects/project-id/locations/-`.
 func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLocationsConnectionsSearchCall {
 	c := &ProjectsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

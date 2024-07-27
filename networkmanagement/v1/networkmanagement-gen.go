@@ -1510,6 +1510,9 @@ type InstanceInfo struct {
 	NetworkTags []string `json:"networkTags,omitempty"`
 	// NetworkUri: URI of a Compute Engine network.
 	NetworkUri string `json:"networkUri,omitempty"`
+	// PscNetworkAttachmentUri: URI of the PSC network attachment the NIC is
+	// attached to (if relevant).
+	PscNetworkAttachmentUri string `json:"pscNetworkAttachmentUri,omitempty"`
 	// ServiceAccount: Service account authorized for the instance.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Uri: URI of a Compute Engine instance.

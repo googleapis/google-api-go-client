@@ -608,8 +608,10 @@ func (s ExecutionResult) MarshalJSON() ([]byte, error) {
 
 // ExternalDataSources: Message for external data sources
 type ExternalDataSources struct {
-	// AssetType: Required. The asset type of the external data source must be one
-	// of go/cai-asset-types
+	// AssetType: Required. The asset type of the external data source this can be
+	// one of go/cai-asset-types to override the default asset type or it can be a
+	// custom type defined by the user custom type must match the asset type in the
+	// rule
 	AssetType string `json:"assetType,omitempty"`
 	// Name: Optional. Name of external data source. The name will be used inside
 	// the rego/sql to refer the external data
@@ -720,6 +722,9 @@ func (s Insight) MarshalJSON() ([]byte, error) {
 }
 
 type IsolationExpectations struct {
+	// RequirementOverride: Explicit overrides for ZI and ZS requirements to be
+	// used for resources that should be excluded from ZI/ZS verification logic.
+	RequirementOverride *RequirementOverride `json:"requirementOverride,omitempty"`
 	// Possible values:
 	//   "ZI_UNSPECIFIED"
 	//   "ZI_UNKNOWN" - To be used if tracking is not available
@@ -773,15 +778,15 @@ type IsolationExpectations struct {
 	//   "ZS_REGION_NOT_ENABLED"
 	//   "ZS_REGION_ENABLED"
 	ZsRegionState string `json:"zsRegionState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ZiOrgPolicy") to
+	// ForceSendFields is a list of field names (e.g. "RequirementOverride") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ZiOrgPolicy") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequirementOverride") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1218,6 +1223,38 @@ type RegionalMigDistributionPolicy struct {
 
 func (s RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalMigDistributionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type RequirementOverride struct {
+	// Possible values:
+	//   "ZI_UNSPECIFIED"
+	//   "ZI_UNKNOWN" - To be used if tracking is not available
+	//   "ZI_NOT_REQUIRED"
+	//   "ZI_PREFERRED"
+	//   "ZI_REQUIRED"
+	ZiOverride string `json:"ziOverride,omitempty"`
+	// Possible values:
+	//   "ZS_UNSPECIFIED"
+	//   "ZS_UNKNOWN" - To be used if tracking is not available
+	//   "ZS_NOT_REQUIRED"
+	//   "ZS_REQUIRED"
+	ZsOverride string `json:"zsOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ZiOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ZiOverride") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequirementOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod RequirementOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1663,6 +1700,25 @@ type SapDiscoveryResourceInstanceProperties struct {
 	//   "INSTANCE_ROLE_ERS" - Enqueue replication server.
 	//   "INSTANCE_ROLE_APP_SERVER" - Application server.
 	//   "INSTANCE_ROLE_DATABASE" - Database node.
+	//   "INSTANCE_ROLE_ASCS_ERS" - Combinations of roles. Application central
+	// services and enqueue replication server.
+	//   "INSTANCE_ROLE_ASCS_APP_SERVER" - Application central services and
+	// application server.
+	//   "INSTANCE_ROLE_ASCS_DATABASE" - Application central services and database.
+	//   "INSTANCE_ROLE_ERS_APP_SERVER" - Enqueue replication server and
+	// application server.
+	//   "INSTANCE_ROLE_ERS_DATABASE" - Enqueue replication server and database.
+	//   "INSTANCE_ROLE_APP_SERVER_DATABASE" - Application server and database.
+	//   "INSTANCE_ROLE_ASCS_ERS_APP_SERVER" - Application central services,
+	// enqueue replication server and application server.
+	//   "INSTANCE_ROLE_ASCS_ERS_DATABASE" - Application central services, enqueue
+	// replication server and database.
+	//   "INSTANCE_ROLE_ASCS_APP_SERVER_DATABASE" - Application central services,
+	// application server and database.
+	//   "INSTANCE_ROLE_ERS_APP_SERVER_DATABASE" - Enqueue replication server,
+	// application server and database.
+	//   "INSTANCE_ROLE_ASCS_ERS_APP_SERVER_DATABASE" - Application central
+	// services, enqueue replication server, application server and database.
 	InstanceRole string `json:"instanceRole,omitempty"`
 	// VirtualHostname: Optional. A virtual hostname of the instance if it has one.
 	VirtualHostname string `json:"virtualHostname,omitempty"`

@@ -771,9 +771,9 @@ type AlertStrategy struct {
 	// NotificationChannelStrategy: Control how notifications will be sent out, on
 	// a per-channel basis.
 	NotificationChannelStrategy []*NotificationChannelStrategy `json:"notificationChannelStrategy,omitempty"`
-	// NotificationRateLimit: Required for alert policies with a LogMatch
-	// condition.This limit is not implemented for alert policies that are not
-	// log-based.
+	// NotificationRateLimit: Required for log-based alert policies, i.e. policies
+	// with a LogMatch condition.This limit is not implemented for alert policies
+	// that do not have a LogMatch condition.
 	NotificationRateLimit *NotificationRateLimit `json:"notificationRateLimit,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoClose") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5020,6 +5020,10 @@ func (s TimeInterval) MarshalJSON() ([]byte, error) {
 // fully-specified monitored resource and a fully-specified metric. This type
 // is used for both listing and creating time series.
 type TimeSeries struct {
+	// Description: Input only. A detailed description of the time series that will
+	// be associated with the google.api.MetricDescriptor for the metric. Once set,
+	// this field cannot be changed through CreateTimeSeries.
+	Description string `json:"description,omitempty"`
 	// Metadata: Output only. The associated monitored resource metadata. When
 	// reading a time series, this field will include metadata labels that are
 	// explicitly named in the reduction. When creating a time series, this field
@@ -5061,7 +5065,8 @@ type TimeSeries struct {
 	Resource *MonitoredResource `json:"resource,omitempty"`
 	// Unit: The units in which the metric value is reported. It is only applicable
 	// if the value_type is INT64, DOUBLE, or DISTRIBUTION. The unit defines the
-	// representation of the stored metric values.
+	// representation of the stored metric values. This field can only be changed
+	// through CreateTimeSeries when it is empty or "1".
 	Unit string `json:"unit,omitempty"`
 	// ValueType: The value type of the time series. When listing time series, this
 	// value type might be different from the value type of the associated metric
@@ -5080,13 +5085,13 @@ type TimeSeries struct {
 	//   "DISTRIBUTION" - The value is a Distribution.
 	//   "MONEY" - The value is money.
 	ValueType string `json:"valueType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

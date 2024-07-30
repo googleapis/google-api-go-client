@@ -1936,7 +1936,10 @@ type Dataset struct {
 	// for the following entities: access.specialGroup: projectReaders;
 	// access.role: READER; access.specialGroup: projectWriters; access.role:
 	// WRITER; access.specialGroup: projectOwners; access.role: OWNER;
-	// access.userByEmail: [dataset creator email]; access.role: OWNER;
+	// access.userByEmail: [dataset creator email]; access.role: OWNER; If you
+	// patch a dataset, then this field is overwritten by the patched dataset's
+	// access field. To add entities, you must supply the entire existing access
+	// array in addition to any new entities that you want to add.
 	Access []*DatasetAccess `json:"access,omitempty"`
 	// CreationTime: Output only. The time when this dataset was created, in
 	// milliseconds since the epoch.
@@ -2079,7 +2082,8 @@ type Dataset struct {
 	//   "LOGICAL" - Billing for logical bytes.
 	//   "PHYSICAL" - Billing for physical bytes.
 	StorageBillingModel string `json:"storageBillingModel,omitempty"`
-	// Tags: Output only. Tags for the Dataset.
+	// Tags: Output only. Tags for the dataset. To provide tags as inputs, use the
+	// `resourceTags` field.
 	Tags []*DatasetTags `json:"tags,omitempty"`
 	// Type: Output only. Same as `type` in `ListFormatDataset`. The type of the
 	// dataset, one of: * DEFAULT - only accessible by owner and authorized
@@ -5026,6 +5030,16 @@ type JobStatistics struct {
 	// DataMaskingStatistics: Output only. Statistics for data-masking. Present
 	// only for query and extract jobs.
 	DataMaskingStatistics *DataMaskingStatistics `json:"dataMaskingStatistics,omitempty"`
+	// Edition: Output only. Name of edition corresponding to the reservation for
+	// this job at the time of this update.
+	//
+	// Possible values:
+	//   "RESERVATION_EDITION_UNSPECIFIED" - Default value, which will be treated
+	// as ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 	// EndTime: Output only. End time of this job, in milliseconds since the epoch.
 	// This field will be present whenever a job is in the DONE state.
 	EndTime int64 `json:"endTime,omitempty,string"`

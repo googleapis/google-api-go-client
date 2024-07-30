@@ -283,6 +283,29 @@ type ProjectsTestersService struct {
 	s *Service
 }
 
+// AndroidxCrawlerOutputPoint: Point for describing bounding boxes tap
+// locations Top left is 0,0
+type AndroidxCrawlerOutputPoint struct {
+	XCoordinate int64 `json:"xCoordinate,omitempty"`
+	YCoordinate int64 `json:"yCoordinate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "XCoordinate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "XCoordinate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AndroidxCrawlerOutputPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidxCrawlerOutputPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
 	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
@@ -465,6 +488,10 @@ func (s GoogleFirebaseAppdistroV1alphaAiStep) MarshalJSON() ([]byte, error) {
 // GoogleFirebaseAppdistroV1alphaAiStepResult: Captures the results of an
 // AiStep
 type GoogleFirebaseAppdistroV1alphaAiStepResult struct {
+	// AssertionDetails: Output only. Details for an assertion step.
+	AssertionDetails *GoogleFirebaseAppdistroV1alphaAssertionDetails `json:"assertionDetails,omitempty"`
+	// GoalDetails: Output only. Details for a goal step.
+	GoalDetails *GoogleFirebaseAppdistroV1alphaGoalDetails `json:"goalDetails,omitempty"`
 	// State: Output only. The current state of the step
 	//
 	// Possible values:
@@ -475,15 +502,15 @@ type GoogleFirebaseAppdistroV1alphaAiStepResult struct {
 	State string `json:"state,omitempty"`
 	// Step: Required. The step performed by the AI
 	Step *GoogleFirebaseAppdistroV1alphaAiStep `json:"step,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AssertionDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AssertionDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -569,6 +596,34 @@ func (s GoogleFirebaseAppdistroV1alphaAppCrash) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaAssertionDetails: Details for an assertion
+// step.
+type GoogleFirebaseAppdistroV1alphaAssertionDetails struct {
+	// Explanation: Output only. An explanation justifying the assertion result.
+	Explanation string `json:"explanation,omitempty"`
+	// Result: Output only. The result of the assertion.
+	Result bool `json:"result,omitempty"`
+	// Screenshot: Output only. The screenshot used in the context of this
+	// assertion.
+	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Explanation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaAssertionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaAssertionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
 	// ReleaseNotes: The actual release notes body from the user
 	ReleaseNotes *GoogleFirebaseAppdistroV1alphaReleaseNotes `json:"releaseNotes,omitempty"`
@@ -593,6 +648,35 @@ func (s GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest) MarshalJSON() (
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceAction: A high level action taken by the
+// AI on the device, potentially involving multiple taps, text entries, waits,
+// etc.
+type GoogleFirebaseAppdistroV1alphaDeviceAction struct {
+	// Description: Output only. A short description of the high level action taken
+	// by the AI agent.
+	Description string `json:"description,omitempty"`
+	// DeviceInteractions: Output only. The interactions made with the device as
+	// part of this higher level action taken by the agent, such as taps, text
+	// entries, waits, etc.
+	DeviceInteractions []*GoogleFirebaseAppdistroV1alphaDeviceInteraction `json:"deviceInteractions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaDeviceExecution: The results of running an
@@ -675,6 +759,84 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 
 func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceExecution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteraction: An interaction with the
+// device, such as a tap, text entry, wait, etc.
+type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
+	// Screenshot: Output only. The screenshot used in the context of this action.
+	// The screen may have changed before the action was actually taken.
+	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
+	// Swipe: Output only. A swipe action.
+	Swipe *GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe `json:"swipe,omitempty"`
+	// Tap: Output only. A tap action.
+	Tap *AndroidxCrawlerOutputPoint `json:"tap,omitempty"`
+	// TextInput: Output only. Text entered for a text entry action.
+	TextInput string `json:"textInput,omitempty"`
+	// Wait: Output only. A wait action.
+	Wait *GoogleFirebaseAppdistroV1alphaDeviceInteractionWait `json:"wait,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Screenshot") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Screenshot") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceInteraction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteraction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe: A swipe action.
+type GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe struct {
+	// End: Output only. The end point of the swipe.
+	End *AndroidxCrawlerOutputPoint `json:"end,omitempty"`
+	// Start: Output only. The start point of the swipe.
+	Start *AndroidxCrawlerOutputPoint `json:"start,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "End") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteractionWait: A wait action.
+type GoogleFirebaseAppdistroV1alphaDeviceInteractionWait struct {
+	// Duration: Output only. The duration of the wait.
+	Duration string `json:"duration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceInteractionWait) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteractionWait
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -827,6 +989,58 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 
 func (s GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaGoalAction: An action taken by the AI agent
+// while attempting to accomplish a goal.
+type GoogleFirebaseAppdistroV1alphaGoalAction struct {
+	// DeviceAction: Output only. A high level action taken by the AI on the
+	// device.
+	DeviceAction *GoogleFirebaseAppdistroV1alphaDeviceAction `json:"deviceAction,omitempty"`
+	// Explanation: Output only. An explanation justifying why the action was
+	// taken.
+	Explanation string `json:"explanation,omitempty"`
+	// TerminalAction: Output only. An action taken by the AI to end the goal.
+	TerminalAction *GoogleFirebaseAppdistroV1alphaTerminalAction `json:"terminalAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaGoalAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaGoalAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaGoalDetails: Details for a goal step.
+type GoogleFirebaseAppdistroV1alphaGoalDetails struct {
+	// GoalActions: Output only. The actions taken by the AI while attempting to
+	// accomplish the goal.
+	GoalActions []*GoogleFirebaseAppdistroV1alphaGoalAction `json:"goalActions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoalActions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoalActions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaGoalDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaGoalDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1099,6 +1313,64 @@ type GoogleFirebaseAppdistroV1alphaRoboStats struct {
 
 func (s GoogleFirebaseAppdistroV1alphaRoboStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRoboStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaScreenshot: A device screenshot taken during a
+// test.
+type GoogleFirebaseAppdistroV1alphaScreenshot struct {
+	// Height: Output only. The height of the screenshot, in pixels.
+	Height int64 `json:"height,omitempty"`
+	// Uri: Output only. The URI of the screenshot.
+	Uri string `json:"uri,omitempty"`
+	// Width: Output only. The width of the screenshot, in pixels.
+	Width int64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaScreenshot) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaScreenshot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaTerminalAction: An action taken by the AI to
+// end the goal.
+type GoogleFirebaseAppdistroV1alphaTerminalAction struct {
+	// Reason: Output only. The reason why this goal was ended.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Reason unspecified.
+	//   "GOAL_IMPOSSIBLE" - The goal was impossible to accomplish.
+	//   "GOAL_COMPLETE" - The goal was completed successfully.
+	Reason string `json:"reason,omitempty"`
+	// Screenshot: Output only. The screenshot used in the context of this terminal
+	// action.
+	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaTerminalAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaTerminalAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

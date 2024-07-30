@@ -2944,8 +2944,8 @@ type Service struct {
 	// this field won't be provided by default and can be requested by setting the
 	// IncludeExtraData field in GetServiceRequest
 	GeneratedCustomerMetadata googleapi.RawMessage `json:"generatedCustomerMetadata,omitempty"`
-	// Id: Relative name of the service within the application. Example:
-	// default.@OutputOnly
+	// Id: Output only. Relative name of the service within the application.
+	// Example: default.@OutputOnly
 	Id string `json:"id,omitempty"`
 	// Labels: A set of labels to apply to this service. Labels are key/value pairs
 	// that describe the service and all resources that belong to it (e.g.,
@@ -2958,7 +2958,7 @@ type Service struct {
 	// must start with a lowercase letter or an international character. Each
 	// service can have at most 32 labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Full path to the Service resource in the API. Example:
+	// Name: Output only. Full path to the Service resource in the API. Example:
 	// apps/myapp/services/default.@OutputOnly
 	Name string `json:"name,omitempty"`
 	// NetworkSettings: Ingress settings for this service. Will apply to all
@@ -3355,7 +3355,8 @@ type Version struct {
 	BuildEnvVariables map[string]string `json:"buildEnvVariables,omitempty"`
 	// CreateTime: Time that this version was created.@OutputOnly
 	CreateTime string `json:"createTime,omitempty"`
-	// CreatedBy: Email address of the user who created this version.@OutputOnly
+	// CreatedBy: Output only. Email address of the user who created this
+	// version.@OutputOnly
 	CreatedBy string `json:"createdBy,omitempty"`
 	// DefaultExpiration: Duration that static files should be cached by web
 	// proxies and browsers. Only applicable if the corresponding
@@ -3367,8 +3368,9 @@ type Version struct {
 	// Deployment: Code and application artifacts that make up this version.Only
 	// returned in GET requests if view=FULL is set.
 	Deployment *Deployment `json:"deployment,omitempty"`
-	// DiskUsageBytes: Total size in bytes of all the files that are included in
-	// this version and currently hosted on the App Engine disk.@OutputOnly
+	// DiskUsageBytes: Output only. Total size in bytes of all the files that are
+	// included in this version and currently hosted on the App Engine
+	// disk.@OutputOnly
 	DiskUsageBytes int64 `json:"diskUsageBytes,omitempty,string"`
 	// EndpointsApiService: Cloud Endpoints configuration.If endpoints_api_service
 	// is set, the Cloud Endpoints Extensible Service Proxy will be provided to
@@ -3439,7 +3441,7 @@ type Version struct {
 	// to perform complex initialization and rely on the state of its memory over
 	// time. Manually scaled versions are sometimes referred to as "backends".
 	ManualScaling *ManualScaling `json:"manualScaling,omitempty"`
-	// Name: Full path to the Version resource in the API. Example:
+	// Name: Output only. Full path to the Version resource in the API. Example:
 	// apps/myapp/services/default/versions/v1.@OutputOnly
 	Name string `json:"name,omitempty"`
 	// Network: Extra network settings. Only applicable in the App Engine flexible
@@ -3484,7 +3486,7 @@ type Version struct {
 	// Threadsafe: Whether multiple requests can be dispatched to this version at
 	// once.
 	Threadsafe bool `json:"threadsafe,omitempty"`
-	// VersionUrl: Serving URL for this version. Example:
+	// VersionUrl: Output only. Serving URL for this version. Example:
 	// "https://myversion-dot-myservice-dot-myapp.appspot.com"@OutputOnly
 	VersionUrl string `json:"versionUrl,omitempty"`
 	// Vm: Whether to deploy this version in a container on a virtual machine.

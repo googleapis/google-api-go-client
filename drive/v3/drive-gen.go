@@ -6027,7 +6027,9 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse": Whether the
 // user is acknowledging the risk of downloading known malware or other abusive
-// files. This is only applicable when alt=media.
+// files. This is only applicable when the `alt` parameter is set to `media`
+// and the user is the owner of the file or an organizer of the shared drive in
+// which the file resides.
 func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprint(acknowledgeAbuse))
 	return c
@@ -6935,7 +6937,9 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse": Whether the
 // user is acknowledging the risk of downloading known malware or other abusive
-// files. This is only applicable when alt=media.
+// files. This is only applicable when the `alt` parameter is set to `media`
+// and the user is the owner of the file or an organizer of the shared drive in
+// which the file resides.
 func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
 	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprint(acknowledgeAbuse))
 	return c
@@ -8455,7 +8459,9 @@ func (r *RevisionsService) Get(fileId string, revisionId string) *RevisionsGetCa
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse": Whether the
 // user is acknowledging the risk of downloading known malware or other abusive
-// files. This is only applicable when alt=media.
+// files. This is only applicable when the `alt` parameter is set to `media`
+// and the user is the owner of the file or an organizer of the shared drive in
+// which the file resides.
 func (c *RevisionsGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *RevisionsGetCall {
 	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprint(acknowledgeAbuse))
 	return c

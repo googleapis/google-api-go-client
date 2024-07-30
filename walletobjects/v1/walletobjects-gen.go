@@ -3268,6 +3268,10 @@ type GenericObject struct {
 	// view in upper left, and also on the list/thumbnail view. If the logo is not
 	// present, the first letter of `cardTitle` would be shown as logo.
 	Logo *Image `json:"logo,omitempty"`
+	// Messages: An array of messages displayed in the app. All users of this
+	// object will receive its associated messages. The maximum number of these
+	// fields is 10.
+	Messages []*Message `json:"messages,omitempty"`
 	// Notifications: The notification settings that are enabled for this object.
 	Notifications *Notifications `json:"notifications,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and

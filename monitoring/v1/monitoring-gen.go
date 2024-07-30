@@ -920,15 +920,36 @@ type DashboardFilter struct {
 	//   "USER_METADATA_LABEL" - Filter on a user metadata label value
 	//   "SYSTEM_METADATA_LABEL" - Filter on a system metadata label value
 	//   "GROUP" - Filter on a group id
+	//   "VALUE_ONLY" - Filter that only contains a value. The label_key field must
+	// be unset for filters of this type.
 	FilterType string `json:"filterType,omitempty"`
-	// LabelKey: Required. The key for the label
+	// LabelKey: Optional. The key for the label. This must be omitted if the
+	// filter_type is VALUE_ONLY but is required otherwise.
 	LabelKey string `json:"labelKey,omitempty"`
-	// StringValue: A variable-length string value.
+	// StringArray: A list of possible string values for the filter
+	StringArray *StringArray `json:"stringArray,omitempty"`
+	// StringArrayValue: An array of variable-length string values. If this field
+	// is set, value_type must be set to STRING_ARRAY or VALUE_TYPE_UNSPECIFIED
+	StringArrayValue *StringArray `json:"stringArrayValue,omitempty"`
+	// StringValue: A variable-length string value. If this field is set,
+	// value_type must be set to STRING or VALUE_TYPE_UNSPECIFIED
 	StringValue string `json:"stringValue,omitempty"`
 	// TemplateVariable: The placeholder text that can be referenced in a filter
 	// string or MQL query. If omitted, the dashboard filter will be applied to all
 	// relevant widgets in the dashboard.
 	TemplateVariable string `json:"templateVariable,omitempty"`
+	// TimeSeriesQuery: A query to run to fetch possible values for the filter.
+	// Only OpsAnalyticsQueries are supported
+	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
+	// ValueType: The type of the filter value. If value_type is not provided, it
+	// will be inferred from the default_value. If neither value_type nor
+	// default_value is provided, value_type will be set to STRING by default.
+	//
+	// Possible values:
+	//   "VALUE_TYPE_UNSPECIFIED" - Value type is unspecified
+	//   "STRING" - String type
+	//   "STRING_ARRAY" - String array type
+	ValueType string `json:"valueType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilterType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2513,6 +2534,28 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StringArray: An array of strings
+type StringArray struct {
+	// Values: The values of the array
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StringArray) MarshalJSON() ([]byte, error) {
+	type NoMethod StringArray
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

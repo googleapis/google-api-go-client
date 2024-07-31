@@ -1241,7 +1241,7 @@
       }
     }
   },
-  "revision": "20240723",
+  "revision": "20240725",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -1892,7 +1892,7 @@
         },
         "message": {
           "$ref": "Message",
-          "description": "The message that triggered the interaction event, if applicable."
+          "description": "For `ADDED_TO_SPACE`, `CARD_CLICKED`, and `MESSAGE` interaction events, the message that triggered the interaction event, if applicable."
         },
         "space": {
           "$ref": "Space",

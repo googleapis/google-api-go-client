@@ -525,6 +525,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// verification. The assessment event must include a token and site key to use
 	// this feature.
 	AccountVerification *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo `json:"accountVerification,omitempty"`
+	// AssessmentEnvironment: Optional. The environment creating the assessment.
+	// This describes your environment (the system invoking CreateAssessment), NOT
+	// the environment of your user.
+	AssessmentEnvironment *GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment `json:"assessmentEnvironment,omitempty"`
 	// Event: Optional. The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 	// FirewallPolicyAssessment: Output only. Assessment returned when firewall
@@ -571,6 +575,38 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1Assessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Assessment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment: The environment
+// creating the assessment. This describes your environment (the system
+// invoking CreateAssessment), NOT the environment of your user.
+type GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment struct {
+	// Client: Optional. Identifies the client module initiating the
+	// CreateAssessment request. This can be the link to the client module's
+	// project. Examples include: -
+	// "github.com/GoogleCloudPlatform/recaptcha-enterprise-google-tag-manager" -
+	// "cloud.google.com/recaptcha/docs/implement-waf-akamai" -
+	// "cloud.google.com/recaptcha/docs/implement-waf-cloudflare" -
+	// "wordpress.org/plugins/recaptcha-something"
+	Client string `json:"client,omitempty"`
+	// Version: Optional. The version of the client module. For example, "1.0.0".
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Client") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Client") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

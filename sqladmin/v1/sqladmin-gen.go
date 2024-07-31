@@ -623,6 +623,9 @@ type BackupRun struct {
 	Kind string `json:"kind,omitempty"`
 	// Location: Location of the backups.
 	Location string `json:"location,omitempty"`
+	// MaxChargeableBytes: Output only. The maximum chargeable bytes for the
+	// backup.
+	MaxChargeableBytes int64 `json:"maxChargeableBytes,omitempty,string"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// StartTime: The time the backup operation actually started in UTC timezone in
@@ -1211,6 +1214,9 @@ type DatabaseInstance struct {
 	// RootPassword: Initial root password. Use only on creation. You must set root
 	// passwords before you can connect to PostgreSQL instances.
 	RootPassword string `json:"rootPassword,omitempty"`
+	// SatisfiesPzi: Output only. This status indicates whether the instance
+	// satisfies PZI. The status is reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: This status indicates whether the instance satisfies PZS. The
 	// status is reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`

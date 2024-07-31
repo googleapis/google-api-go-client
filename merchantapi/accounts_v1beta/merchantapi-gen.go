@@ -158,7 +158,6 @@ func (s *APIService) userAgent() string {
 
 func NewAccountsService(s *APIService) *AccountsService {
 	rs := &AccountsService{s: s}
-	rs.Accounttax = NewAccountsAccounttaxService(s)
 	rs.BusinessIdentity = NewAccountsBusinessIdentityService(s)
 	rs.BusinessInfo = NewAccountsBusinessInfoService(s)
 	rs.Emailpreferences = NewAccountsEmailpreferencesService(s)
@@ -175,8 +174,6 @@ func NewAccountsService(s *APIService) *AccountsService {
 
 type AccountsService struct {
 	s *APIService
-
-	Accounttax *AccountsAccounttaxService
 
 	BusinessIdentity *AccountsBusinessIdentityService
 
@@ -199,15 +196,6 @@ type AccountsService struct {
 	TermsOfServiceAgreementStates *AccountsTermsOfServiceAgreementStatesService
 
 	Users *AccountsUsersService
-}
-
-func NewAccountsAccounttaxService(s *APIService) *AccountsAccounttaxService {
-	rs := &AccountsAccounttaxService{s: s}
-	return rs
-}
-
-type AccountsAccounttaxService struct {
-	s *APIService
 }
 
 func NewAccountsBusinessIdentityService(s *APIService) *AccountsBusinessIdentityService {
@@ -460,39 +448,6 @@ type AccountIssue struct {
 
 func (s AccountIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountIssue
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AccountTax: The tax settings of a merchant account. All methods require the
-// admin role.
-type AccountTax struct {
-	// Account: Output only. The ID of the account to which these account tax
-	// settings belong.
-	Account int64 `json:"account,omitempty,string"`
-	// Name: Identifier. The name of the tax setting. Format:
-	// "{account_tax.name=accounts/{account}}"
-	Name string `json:"name,omitempty"`
-	// TaxRules: Tax rules. "Define the tax rules in each region. No tax will be
-	// presented if a region has no rule."
-	TaxRules []*TaxRule `json:"taxRules,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Account") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AccountTax) MarshalJSON() ([]byte, error) {
-	type NoMethod AccountTax
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1287,37 +1242,6 @@ type ImpactedDestination struct {
 
 func (s ImpactedDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod ImpactedDestination
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Interval: Represents a time interval, encoded as a Timestamp start
-// (inclusive) and a Timestamp end (exclusive). The start must be less than or
-// equal to the end. When the start equals the end, the interval is empty
-// (matches no time). When both start and end are unspecified, the interval
-// matches any time.
-type Interval struct {
-	// EndTime: Optional. Exclusive end of the interval. If specified, a Timestamp
-	// matching this interval will have to be before the end.
-	EndTime string `json:"endTime,omitempty"`
-	// StartTime: Optional. Inclusive start of the interval. If specified, a
-	// Timestamp matching this interval will have to be the same or after the
-	// start.
-	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Interval) MarshalJSON() ([]byte, error) {
-	type NoMethod Interval
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2639,82 +2563,6 @@ func (s Table) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TaxPostalCodeRange: A range of postal codes that defines the area.
-type TaxPostalCodeRange struct {
-	// End: The end of the postal code range. Will be the same as start if not
-	// specified.
-	End string `json:"end,omitempty"`
-	// Start: Required. The start of the postal code range, which is also the
-	// smallest in the range.
-	Start string `json:"start,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "End") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s TaxPostalCodeRange) MarshalJSON() ([]byte, error) {
-	type NoMethod TaxPostalCodeRange
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// TaxRule: Primary type convension percent micro : 100% = 1 000 000 and 1% =
-// 10 000 cannot be negative. Information about tax nexus and related
-// parameters applicable to orders delivered to the area covered by a single
-// tax admin. Nexus is created when a merchant is doing business in an area
-// administered by tax admin (only US states are supported for nexus
-// configuration). If merchant has nexus in a US state, merchant needs to pay
-// tax to all tax authorities associated with the shipping destination. Next Id
-// : 8
-type TaxRule struct {
-	// EffectiveTimePeriod: Required. Time period when this rule is effective. If
-	// the duration is missing from effective_time listed, then it is open ended to
-	// the future. The start of this time period is inclusive, and the end is
-	// exclusive.
-	EffectiveTimePeriod *Interval `json:"effectiveTimePeriod,omitempty"`
-	// LocationId: The admin_id or criteria_id of the region in which this rule is
-	// applicable.
-	LocationId int64 `json:"locationId,omitempty,string"`
-	// PostCodeRange: The range of postal codes in which this rule is applicable.
-	PostCodeRange *TaxPostalCodeRange `json:"postCodeRange,omitempty"`
-	// RegionCode: Region code in which this rule is applicable
-	RegionCode string `json:"regionCode,omitempty"`
-	// SelfSpecifiedRateMicros: A fixed rate specified in micros, where 100% =
-	// 1_000_000. Suitable for origin-based states.
-	SelfSpecifiedRateMicros int64 `json:"selfSpecifiedRateMicros,omitempty,string"`
-	// ShippingTaxed: If set, shipping charge is taxed (at the same rate as
-	// product) when delivering to this admin's area. Can only be set on US states
-	// without category.
-	ShippingTaxed bool `json:"shippingTaxed,omitempty"`
-	// UseGoogleRate: Rate that depends on delivery location: if merchant has a
-	// nexus in corresponding US state, rates from authorities with jurisdiction
-	// over delivery area are added up.
-	UseGoogleRate bool `json:"useGoogleRate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveTimePeriod") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveTimePeriod") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s TaxRule) MarshalJSON() ([]byte, error) {
-	type NoMethod TaxRule
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // TermsOfService: A `TermsOfService`.
 type TermsOfService struct {
 	// External: Whether this terms of service version is external. External terms
@@ -3852,222 +3700,6 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Account{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsAccounttaxGetCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Returns the tax rules that match the conditions of GetAccountTaxRequest
-//
-// - name: The name from which tax settings will be retrieved.
-func (r *AccountsAccounttaxService) Get(name string) *AccountsAccounttaxGetCall {
-	c := &AccountsAccounttaxGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsAccounttaxGetCall) Fields(s ...googleapi.Field) *AccountsAccounttaxGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *AccountsAccounttaxGetCall) IfNoneMatch(entityTag string) *AccountsAccounttaxGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsAccounttaxGetCall) Context(ctx context.Context) *AccountsAccounttaxGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsAccounttaxGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsAccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.accounttax.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *AccountTax.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsAccounttaxGetCall) Do(opts ...googleapi.CallOption) (*AccountTax, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &AccountTax{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type AccountsAccounttaxPatchCall struct {
-	s          *APIService
-	name       string
-	accounttax *AccountTax
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Patch: Updates the tax settings of the account.
-//
-//   - name: Identifier. The name of the tax setting. Format:
-//     "{account_tax.name=accounts/{account}}".
-func (r *AccountsAccounttaxService) Patch(name string, accounttax *AccountTax) *AccountsAccounttaxPatchCall {
-	c := &AccountsAccounttaxPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.accounttax = accounttax
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// be updated
-func (c *AccountsAccounttaxPatchCall) UpdateMask(updateMask string) *AccountsAccounttaxPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AccountsAccounttaxPatchCall) Fields(s ...googleapi.Field) *AccountsAccounttaxPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AccountsAccounttaxPatchCall) Context(ctx context.Context) *AccountsAccounttaxPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AccountsAccounttaxPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsAccounttaxPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "merchantapi.accounts.accounttax.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *AccountTax.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AccountsAccounttaxPatchCall) Do(opts ...googleapi.CallOption) (*AccountTax, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &AccountTax{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

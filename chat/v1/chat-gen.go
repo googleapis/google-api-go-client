@@ -1321,7 +1321,8 @@ type DeprecatedEvent struct {
 	// the user is interacting with or about to interact with a dialog
 	// (https://developers.google.com/workspace/chat/dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
-	// Message: The message that triggered the interaction event, if applicable.
+	// Message: For `ADDED_TO_SPACE`, `CARD_CLICKED`, and `MESSAGE` interaction
+	// events, the message that triggered the interaction event, if applicable.
 	Message *Message `json:"message,omitempty"`
 	// Space: The space in which the user interacted with the Chat app.
 	Space *Space `json:"space,omitempty"`

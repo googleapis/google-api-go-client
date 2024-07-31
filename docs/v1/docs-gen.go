@@ -6137,7 +6137,7 @@ func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 
 // IncludeTabsContent sets the optional parameter "includeTabsContent": Whether
 // to populate the Document.tabs field instead of the text content fields like
-// body and documentStyle on Document. - When `True`: Document content
+// `body` and `documentStyle` on Document. - When `True`: Document content
 // populates in the Document.tabs field instead of the text content fields in
 // Document. - When `False`: The content of the document's first tab populates
 // the content fields in Document excluding Document.tabs. If a document has

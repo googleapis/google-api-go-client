@@ -356,6 +356,7 @@ type PropertiesCustomMetricsService struct {
 func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 	rs := &PropertiesDataStreamsService{s: s}
 	rs.EventCreateRules = NewPropertiesDataStreamsEventCreateRulesService(s)
+	rs.EventEditRules = NewPropertiesDataStreamsEventEditRulesService(s)
 	rs.MeasurementProtocolSecrets = NewPropertiesDataStreamsMeasurementProtocolSecretsService(s)
 	rs.SKAdNetworkConversionValueSchema = NewPropertiesDataStreamsSKAdNetworkConversionValueSchemaService(s)
 	return rs
@@ -365,6 +366,8 @@ type PropertiesDataStreamsService struct {
 	s *Service
 
 	EventCreateRules *PropertiesDataStreamsEventCreateRulesService
+
+	EventEditRules *PropertiesDataStreamsEventEditRulesService
 
 	MeasurementProtocolSecrets *PropertiesDataStreamsMeasurementProtocolSecretsService
 
@@ -377,6 +380,15 @@ func NewPropertiesDataStreamsEventCreateRulesService(s *Service) *PropertiesData
 }
 
 type PropertiesDataStreamsEventCreateRulesService struct {
+	s *Service
+}
+
+func NewPropertiesDataStreamsEventEditRulesService(s *Service) *PropertiesDataStreamsEventEditRulesService {
+	rs := &PropertiesDataStreamsEventEditRulesService{s: s}
+	return rs
+}
+
+type PropertiesDataStreamsEventEditRulesService struct {
 	s *Service
 }
 
@@ -3583,6 +3595,56 @@ func (s GoogleAnalyticsAdminV1alphaEventCreateRule) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaEventEditRule: An Event Edit Rule defines
+// conditions that will trigger the creation of an entirely new event based
+// upon matched criteria of a source event. Additional mutations of the
+// parameters from the source event can be defined. Unlike Event Create rules,
+// Event Edit Rules are applied in their defined order. Event Edit rules can't
+// be used to modify an event created from an Event Create rule.
+type GoogleAnalyticsAdminV1alphaEventEditRule struct {
+	// DisplayName: Required. The display name of this event edit rule. Maximum of
+	// 255 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// EventConditions: Required. Conditions on the source event must match for
+	// this rule to be applied. Must have at least one condition, and can have up
+	// to 10 max.
+	EventConditions []*GoogleAnalyticsAdminV1alphaMatchingCondition `json:"eventConditions,omitempty"`
+	// Name: Identifier. Resource name for this EventEditRule resource. Format:
+	// properties/{property}/dataStreams/{data_stream}/eventEditRules/{event_edit_ru
+	// le}
+	Name string `json:"name,omitempty"`
+	// ParameterMutations: Required. Parameter mutations define parameter behavior
+	// on the new event, and are applied in order. A maximum of 20 mutations can be
+	// applied.
+	ParameterMutations []*GoogleAnalyticsAdminV1alphaParameterMutation `json:"parameterMutations,omitempty"`
+	// ProcessingOrder: Output only. The order for which this rule will be
+	// processed. Rules with an order value lower than this will be processed
+	// before this rule, rules with an order value higher than this will be
+	// processed after this rule. New event edit rules will be assigned an order
+	// value at the end of the order. This value does not apply to event create
+	// rules.
+	ProcessingOrder int64 `json:"processingOrder,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaEventEditRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaEventEditRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaEventMapping: Event setting conditions to match
 // an event.
 type GoogleAnalyticsAdminV1alphaEventMapping struct {
@@ -4748,6 +4810,36 @@ func (s GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListEventEditRulesResponse: Response message for
+// ListEventEditRules RPC.
+type GoogleAnalyticsAdminV1alphaListEventEditRulesResponse struct {
+	// EventEditRules: List of EventEditRules. These will be ordered stably, but in
+	// an arbitrary order.
+	EventEditRules []*GoogleAnalyticsAdminV1alphaEventEditRule `json:"eventEditRules,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EventEditRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventEditRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaListEventEditRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListEventEditRulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse: Response message
 // for ListExpandedDataSets RPC.
 type GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse struct {
@@ -5438,6 +5530,31 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse struct {
 
 func (s GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest: Request message for
+// ReorderEventEditRules RPC.
+type GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest struct {
+	// EventEditRules: Required. EventEditRule resource names for the specified
+	// data stream, in the needed processing order. All EventEditRules for the
+	// stream must be present in the list.
+	EventEditRules []string `json:"eventEditRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventEditRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventEditRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17573,6 +17690,675 @@ func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Do(opts ...googleapi.Ca
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAnalyticsAdminV1alphaEventCreateRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesDataStreamsEventEditRulesCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleanalyticsadminv1alphaeventeditrule *GoogleAnalyticsAdminV1alphaEventEditRule
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates an EventEditRule.
+//
+// - parent: Example format: properties/123/dataStreams/456.
+func (r *PropertiesDataStreamsEventEditRulesService) Create(parent string, googleanalyticsadminv1alphaeventeditrule *GoogleAnalyticsAdminV1alphaEventEditRule) *PropertiesDataStreamsEventEditRulesCreateCall {
+	c := &PropertiesDataStreamsEventEditRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaeventeditrule = googleanalyticsadminv1alphaeventeditrule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesCreateCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaeventeditrule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/eventEditRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaEventEditRule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsEventEditRulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventEditRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventEditRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesDataStreamsEventEditRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an EventEditRule.
+//
+// - name: Example format: properties/123/dataStreams/456/eventEditRules/789.
+func (r *PropertiesDataStreamsEventEditRulesService) Delete(name string) *PropertiesDataStreamsEventEditRulesDeleteCall {
+	c := &PropertiesDataStreamsEventEditRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventEditRulesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesDataStreamsEventEditRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single EventEditRule.
+//
+//   - name: The name of the EventEditRule to get. Example format:
+//     properties/123/dataStreams/456/eventEditRules/789.
+func (r *PropertiesDataStreamsEventEditRulesService) Get(name string) *PropertiesDataStreamsEventEditRulesGetCall {
+	c := &PropertiesDataStreamsEventEditRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesDataStreamsEventEditRulesGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsEventEditRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesGetCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaEventEditRule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsEventEditRulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventEditRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventEditRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesDataStreamsEventEditRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists EventEditRules on a web data stream.
+//
+// - parent: Example format: properties/123/dataStreams/456.
+func (r *PropertiesDataStreamsEventEditRulesService) List(parent string) *PropertiesDataStreamsEventEditRulesListCall {
+	c := &PropertiesDataStreamsEventEditRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200 (higher values will be coerced to the maximum).
+func (c *PropertiesDataStreamsEventEditRulesListCall) PageSize(pageSize int64) *PropertiesDataStreamsEventEditRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListEventEditRules` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListEventEditRules` must match the call that provided the page token.
+func (c *PropertiesDataStreamsEventEditRulesListCall) PageToken(pageToken string) *PropertiesDataStreamsEventEditRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesDataStreamsEventEditRulesListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsEventEditRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesListCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/eventEditRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListEventEditRulesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsEventEditRulesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListEventEditRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListEventEditRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesDataStreamsEventEditRulesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListEventEditRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type PropertiesDataStreamsEventEditRulesPatchCall struct {
+	s                                        *Service
+	name                                     string
+	googleanalyticsadminv1alphaeventeditrule *GoogleAnalyticsAdminV1alphaEventEditRule
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Patch: Updates an EventEditRule.
+//
+//   - name: Identifier. Resource name for this EventEditRule resource. Format:
+//     properties/{property}/dataStreams/{data_stream}/eventEditRules/{event_edit_
+//     rule}.
+func (r *PropertiesDataStreamsEventEditRulesService) Patch(name string, googleanalyticsadminv1alphaeventeditrule *GoogleAnalyticsAdminV1alphaEventEditRule) *PropertiesDataStreamsEventEditRulesPatchCall {
+	c := &PropertiesDataStreamsEventEditRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaeventeditrule = googleanalyticsadminv1alphaeventeditrule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsEventEditRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaeventeditrule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaEventEditRule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsEventEditRulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventEditRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventEditRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesDataStreamsEventEditRulesReorderCall struct {
+	s                                                       *Service
+	parent                                                  string
+	googleanalyticsadminv1alphareordereventeditrulesrequest *GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Reorder: Changes the processing order of event edit rules on the specified
+// stream.
+//
+// - parent: Example format: properties/123/dataStreams/456.
+func (r *PropertiesDataStreamsEventEditRulesService) Reorder(parent string, googleanalyticsadminv1alphareordereventeditrulesrequest *GoogleAnalyticsAdminV1alphaReorderEventEditRulesRequest) *PropertiesDataStreamsEventEditRulesReorderCall {
+	c := &PropertiesDataStreamsEventEditRulesReorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphareordereventeditrulesrequest = googleanalyticsadminv1alphareordereventeditrulesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesDataStreamsEventEditRulesReorderCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventEditRulesReorderCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesDataStreamsEventEditRulesReorderCall) Context(ctx context.Context) *PropertiesDataStreamsEventEditRulesReorderCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesDataStreamsEventEditRulesReorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventEditRulesReorderCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphareordereventeditrulesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/eventEditRules:reorder")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventEditRules.reorder" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventEditRulesReorderCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

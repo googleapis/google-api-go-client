@@ -948,7 +948,7 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
 	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: Enables StackDriver logging.
+	// EnableStackdriverLogging: Enables Google Cloud Logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
@@ -1417,7 +1417,7 @@ func (s GoogleCloudDialogflowCxV3DeployFlowMetadata) MarshalJSON() ([]byte, erro
 // Environments.DeployFlow.
 type GoogleCloudDialogflowCxV3DeployFlowResponse struct {
 	// Deployment: The name of the flow version Deployment. Format:
-	// `projects//locations//agents// environments//deployments/`.
+	// `projects//locations//agents//environments//deployments/`.
 	Deployment string `json:"deployment,omitempty"`
 	// Environment: The updated environment where the flow is deployed.
 	Environment *GoogleCloudDialogflowCxV3Environment `json:"environment,omitempty"`
@@ -1521,8 +1521,8 @@ type GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig struct {
 	// environment. Default false.
 	EnablePredeploymentRun bool `json:"enablePredeploymentRun,omitempty"`
 	// TestCases: A list of test case names to run. They should be under the same
-	// agent. Format of each test case name: `projects//locations/
-	// /agents//testCases/`
+	// agent. Format of each test case name:
+	// `projects//locations//agents//testCases/`
 	TestCases []string `json:"testCases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableContinuousRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3470,7 +3470,7 @@ type GoogleCloudDialogflowCxV3TestCase struct {
 	LastTestResult *GoogleCloudDialogflowCxV3TestCaseResult `json:"lastTestResult,omitempty"`
 	// Name: The unique identifier of the test case. TestCases.CreateTestCase will
 	// populate the name automatically. Otherwise use format:
-	// `projects//locations//agents/ /testCases/`.
+	// `projects//locations//agents//testCases/`.
 	Name string `json:"name,omitempty"`
 	// Notes: Additional freeform notes about the test case. Limit of 400
 	// characters.
@@ -3537,7 +3537,7 @@ type GoogleCloudDialogflowCxV3TestCaseResult struct {
 	// the draft environment.
 	Environment string `json:"environment,omitempty"`
 	// Name: The resource name for the test case result. Format:
-	// `projects//locations//agents//testCases/ /results/`.
+	// `projects//locations//agents//testCases//results/`.
 	Name string `json:"name,omitempty"`
 	// TestResult: Whether the test case passed in the agent environment.
 	//
@@ -4391,7 +4391,7 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
 	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: Enables StackDriver logging.
+	// EnableStackdriverLogging: Enables Google Cloud Logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
@@ -4860,7 +4860,7 @@ func (s GoogleCloudDialogflowCxV3beta1DeployFlowMetadata) MarshalJSON() ([]byte,
 // Environments.DeployFlow.
 type GoogleCloudDialogflowCxV3beta1DeployFlowResponse struct {
 	// Deployment: The name of the flow version deployment. Format:
-	// `projects//locations//agents// environments//deployments/`.
+	// `projects//locations//agents//environments//deployments/`.
 	Deployment string `json:"deployment,omitempty"`
 	// Environment: The updated environment where the flow is deployed.
 	Environment *GoogleCloudDialogflowCxV3beta1Environment `json:"environment,omitempty"`
@@ -4965,8 +4965,8 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig struct {
 	// environment. Default false.
 	EnablePredeploymentRun bool `json:"enablePredeploymentRun,omitempty"`
 	// TestCases: A list of test case names to run. They should be under the same
-	// agent. Format of each test case name: `projects//locations/
-	// /agents//testCases/`
+	// agent. Format of each test case name:
+	// `projects//locations//agents//testCases/`
 	TestCases []string `json:"testCases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableContinuousRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6912,7 +6912,7 @@ type GoogleCloudDialogflowCxV3beta1TestCase struct {
 	LastTestResult *GoogleCloudDialogflowCxV3beta1TestCaseResult `json:"lastTestResult,omitempty"`
 	// Name: The unique identifier of the test case. TestCases.CreateTestCase will
 	// populate the name automatically. Otherwise use format:
-	// `projects//locations//agents/ /testCases/`.
+	// `projects//locations//agents//testCases/`.
 	Name string `json:"name,omitempty"`
 	// Notes: Additional freeform notes about the test case. Limit of 400
 	// characters.
@@ -6980,7 +6980,7 @@ type GoogleCloudDialogflowCxV3beta1TestCaseResult struct {
 	// the draft environment.
 	Environment string `json:"environment,omitempty"`
 	// Name: The resource name for the test case result. Format:
-	// `projects//locations//agents//testCases/ /results/`.
+	// `projects//locations//agents//testCases//results/`.
 	Name string `json:"name,omitempty"`
 	// TestResult: Whether the test case passed in the agent environment.
 	//
@@ -18464,13 +18464,6 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 // GoogleCloudDialogflowV2beta1SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
-	// AlternativeLanguageCodes: Defines the list of other language codes in
-	// addition to the one provided by the conversation profile that may be
-	// detected as the language code for the utterances over the conversation. See
-	// Language Support
-	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
-	// the currently supported language codes.
-	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
 	// AudioEncoding: Audio encoding of the audio content to process.
 	//
 	// Possible values:
@@ -18565,15 +18558,15 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// UseTimeoutBasedEndpointing: Use timeout based endpointing, interpreting
 	// endpointer sensitivy as seconds of timeout value.
 	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlternativeLanguageCodes")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AudioEncoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

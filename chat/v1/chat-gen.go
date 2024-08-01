@@ -2096,8 +2096,7 @@ func (s GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 // or equal to 300 pt. * On Android devices, the second column wraps if the
 // screen width is less than or equal to 320 dp. To include more than 2
 // columns, or to use rows, use the `Grid` widget. Google Workspace Add-ons and
-// Chat apps (https://developers.google.com/workspace/extend): Columns for
-// Google Workspace Add-ons are in Developer Preview.
+// Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Columns struct {
 	// ColumnItems: An array of columns. You can include up to 2 columns in a card
 	// or dialog.
@@ -2788,8 +2787,7 @@ type GoogleAppsCardV1SelectionInput struct {
 	// multiselect menus, see [Add a multiselect
 	// menu](https://developers.google.com/workspace/chat/design-interactive-card-di
 	// alog#multiselect-menu). [Google Workspace Add-ons and Chat
-	// apps](https://developers.google.com/workspace/extend): Multiselect for
-	// Google Workspace Add-ons are in Developer Preview.
+	// apps](https://developers.google.com/workspace/extend):
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or

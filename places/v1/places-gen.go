@@ -1511,8 +1511,10 @@ func (s GoogleMapsPlacesV1PlaceGenerativeSummary) MarshalJSON() ([]byte, error) 
 // GoogleMapsPlacesV1PlaceOpeningHours: Information about business hour of the
 // place.
 type GoogleMapsPlacesV1PlaceOpeningHours struct {
-	// OpenNow: Is this place open right now? Always present unless we lack
-	// time-of-day or timezone data for these opening hours.
+	// OpenNow: Whether the opening hours period is currently active. For regular
+	// opening hours and current opening hours, this field means whether the place
+	// is open. For secondary opening hours and current secondary opening hours,
+	// this field means whether the secondary hours of this place is active.
 	OpenNow bool `json:"openNow,omitempty"`
 	// Periods: The periods that this place is open during the week. The periods
 	// are in chronological order, starting with Sunday in the place-local

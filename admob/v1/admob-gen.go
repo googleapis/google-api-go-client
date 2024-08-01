@@ -264,9 +264,9 @@ type AdUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnit) MarshalJSON() ([]byte, error) {
+func (s AdUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // App: Describes an AdMob app for a specific platform (For example: Android or
@@ -315,9 +315,9 @@ type App struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *App) MarshalJSON() ([]byte, error) {
+func (s App) MarshalJSON() ([]byte, error) {
 	type NoMethod App
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppLinkedAppInfo: Information from the app store if the app is linked to an
@@ -348,9 +348,9 @@ type AppLinkedAppInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppLinkedAppInfo) MarshalJSON() ([]byte, error) {
+func (s AppLinkedAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppLinkedAppInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppManualAppInfo: Information provided for manual apps which are not linked
@@ -372,9 +372,9 @@ type AppManualAppInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppManualAppInfo) MarshalJSON() ([]byte, error) {
+func (s AppManualAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppManualAppInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -410,9 +410,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateRange: Specification of a single date range. Both dates are inclusive.
@@ -436,9 +436,9 @@ type DateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateRange) MarshalJSON() ([]byte, error) {
+func (s DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateMediationReportRequest: Request to generate an AdMob Mediation
@@ -459,9 +459,9 @@ type GenerateMediationReportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
+func (s GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateMediationReportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
@@ -499,9 +499,9 @@ type GenerateMediationReportResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateMediationReportResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateMediationReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateMediationReportResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateNetworkReportRequest: Request to generate an AdMob Network report.
@@ -521,9 +521,9 @@ type GenerateNetworkReportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
+func (s GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateNetworkReportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateNetworkReportResponse: The streaming response for the AdMob Network
@@ -561,9 +561,9 @@ type GenerateNetworkReportResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateNetworkReportResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateNetworkReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateNetworkReportResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdUnitsResponse: Response for the ad units list request.
@@ -589,9 +589,9 @@ type ListAdUnitsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdUnitsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAppsResponse: Response for the apps list request.
@@ -617,9 +617,9 @@ type ListAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAppsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPublisherAccountsResponse: Response for the publisher account list
@@ -647,9 +647,9 @@ type ListPublisherAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPublisherAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPublisherAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPublisherAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizationSettings: Localization settings for reports, such as currency
@@ -676,9 +676,9 @@ type LocalizationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
+func (s LocalizationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediationReportSpec: The specification for generating an AdMob Mediation
@@ -798,9 +798,9 @@ type MediationReportSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediationReportSpec) MarshalJSON() ([]byte, error) {
+func (s MediationReportSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediationReportSpecDimensionFilter: Describes which report rows to match
@@ -857,9 +857,9 @@ type MediationReportSpecDimensionFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediationReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
+func (s MediationReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpecDimensionFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediationReportSpecSortCondition: Sorting direction to be applied on a
@@ -950,9 +950,9 @@ type MediationReportSpecSortCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
+func (s MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpecSortCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkReportSpec: The specification for generating an AdMob Network report.
@@ -1073,9 +1073,9 @@ type NetworkReportSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkReportSpec) MarshalJSON() ([]byte, error) {
+func (s NetworkReportSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkReportSpecDimensionFilter: Describes which report rows to match based
@@ -1131,9 +1131,9 @@ type NetworkReportSpecDimensionFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
+func (s NetworkReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpecDimensionFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkReportSpecSortCondition: Sorting direction to be applied on a
@@ -1224,9 +1224,9 @@ type NetworkReportSpecSortCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkReportSpecSortCondition) MarshalJSON() ([]byte, error) {
+func (s NetworkReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpecSortCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublisherAccount: A publisher account contains information relevant to the
@@ -1261,9 +1261,9 @@ type PublisherAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublisherAccount) MarshalJSON() ([]byte, error) {
+func (s PublisherAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod PublisherAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportFooter: Groups data available after report generation, for example,
@@ -1289,9 +1289,9 @@ type ReportFooter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportFooter) MarshalJSON() ([]byte, error) {
+func (s ReportFooter) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFooter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportHeader: Groups data helps to treat the generated report. Always sent
@@ -1319,9 +1319,9 @@ type ReportHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportHeader) MarshalJSON() ([]byte, error) {
+func (s ReportHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRow: A row of the returning report.
@@ -1346,9 +1346,9 @@ type ReportRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRow) MarshalJSON() ([]byte, error) {
+func (s ReportRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRowDimensionValue: Representation of a dimension value.
@@ -1372,9 +1372,9 @@ type ReportRowDimensionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRowDimensionValue) MarshalJSON() ([]byte, error) {
+func (s ReportRowDimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRowDimensionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRowMetricValue: Representation of a metric value.
@@ -1401,9 +1401,9 @@ type ReportRowMetricValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRowMetricValue) MarshalJSON() ([]byte, error) {
+func (s ReportRowMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRowMetricValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ReportRowMetricValue) UnmarshalJSON(data []byte) error {
@@ -1457,9 +1457,9 @@ type ReportWarning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportWarning) MarshalJSON() ([]byte, error) {
+func (s ReportWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportWarning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StringList: List of string values.
@@ -1479,9 +1479,9 @@ type StringList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StringList) MarshalJSON() ([]byte, error) {
+func (s StringList) MarshalJSON() ([]byte, error) {
 	type NoMethod StringList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsGetCall struct {

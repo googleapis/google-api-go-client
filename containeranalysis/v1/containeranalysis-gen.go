@@ -297,9 +297,9 @@ type AliasContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AliasContext) MarshalJSON() ([]byte, error) {
+func (s AliasContext) MarshalJSON() ([]byte, error) {
 	type NoMethod AliasContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnalysisCompleted: Indicates which analysis completed successfully. Multiple
@@ -319,9 +319,9 @@ type AnalysisCompleted struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalysisCompleted) MarshalJSON() ([]byte, error) {
+func (s AnalysisCompleted) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalysisCompleted
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Artifact: Artifact describes a build product.
@@ -351,9 +351,9 @@ type Artifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Artifact) MarshalJSON() ([]byte, error) {
+func (s Artifact) MarshalJSON() ([]byte, error) {
 	type NoMethod Artifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Assessment: Assessment provides all information that is related to a single
@@ -409,9 +409,9 @@ type Assessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Assessment) MarshalJSON() ([]byte, error) {
+func (s Assessment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttestationNote: Note kind that represents a logical attestation "role" or
@@ -438,9 +438,9 @@ type AttestationNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttestationNote) MarshalJSON() ([]byte, error) {
+func (s AttestationNote) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestationNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttestationOccurrence: Occurrence that represents a single "attestation".
@@ -482,9 +482,9 @@ type AttestationOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
+func (s AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestationOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateNotesRequest: Request to create notes in batch.
@@ -504,9 +504,9 @@ type BatchCreateNotesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateNotesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreateNotesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateNotesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateNotesResponse: Response for creating notes in batch.
@@ -529,9 +529,9 @@ type BatchCreateNotesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateNotesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateNotesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateNotesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateOccurrencesRequest: Request to create occurrences in batch.
@@ -552,9 +552,9 @@ type BatchCreateOccurrencesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateOccurrencesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreateOccurrencesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateOccurrencesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateOccurrencesResponse: Response for creating occurrences in batch.
@@ -577,9 +577,9 @@ type BatchCreateOccurrencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateOccurrencesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateOccurrencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateOccurrencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -676,9 +676,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BuildDefinition struct {
@@ -699,9 +699,9 @@ type BuildDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildDefinition) MarshalJSON() ([]byte, error) {
+func (s BuildDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BuildMetadata struct {
@@ -721,9 +721,9 @@ type BuildMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildMetadata) MarshalJSON() ([]byte, error) {
+func (s BuildMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildNote: Note holding the version of the provider's builder and the
@@ -745,9 +745,9 @@ type BuildNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildNote) MarshalJSON() ([]byte, error) {
+func (s BuildNote) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildOccurrence: Details of a build occurrence.
@@ -789,9 +789,9 @@ type BuildOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildOccurrence) MarshalJSON() ([]byte, error) {
+func (s BuildOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildProvenance: Provenance of a build. Contains all information needed to
@@ -841,9 +841,9 @@ type BuildProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildProvenance) MarshalJSON() ([]byte, error) {
+func (s BuildProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildStep: A step in the build pipeline. Next ID: 21
@@ -962,9 +962,9 @@ type BuildStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildStep) MarshalJSON() ([]byte, error) {
+func (s BuildStep) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BuilderConfig struct {
@@ -982,9 +982,9 @@ type BuilderConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuilderConfig) MarshalJSON() ([]byte, error) {
+func (s BuilderConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BuilderConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CVSS: Common Vulnerability Scoring System. For details, see
@@ -1071,9 +1071,9 @@ type CVSS struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CVSS) MarshalJSON() ([]byte, error) {
+func (s CVSS) MarshalJSON() ([]byte, error) {
 	type NoMethod CVSS
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CVSS) UnmarshalJSON(data []byte) error {
@@ -1163,9 +1163,9 @@ type CVSSv3 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CVSSv3) MarshalJSON() ([]byte, error) {
+func (s CVSSv3) MarshalJSON() ([]byte, error) {
 	type NoMethod CVSSv3
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CVSSv3) UnmarshalJSON(data []byte) error {
@@ -1205,9 +1205,9 @@ type Category struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Category) MarshalJSON() ([]byte, error) {
+func (s Category) MarshalJSON() ([]byte, error) {
 	type NoMethod Category
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CisBenchmark: A compliance check that is a CIS benchmark.
@@ -1234,9 +1234,9 @@ type CisBenchmark struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CisBenchmark) MarshalJSON() ([]byte, error) {
+func (s CisBenchmark) MarshalJSON() ([]byte, error) {
 	type NoMethod CisBenchmark
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
@@ -1261,9 +1261,9 @@ type CloudRepoSourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
+func (s CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRepoSourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudStorageLocation: Empty placeholder to denote that this is a Google
@@ -1302,9 +1302,9 @@ type Command struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Command) MarshalJSON() ([]byte, error) {
+func (s Command) MarshalJSON() ([]byte, error) {
 	type NoMethod Command
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Completeness: Indicates that the builder claims certain fields in this
@@ -1333,9 +1333,9 @@ type Completeness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Completeness) MarshalJSON() ([]byte, error) {
+func (s Completeness) MarshalJSON() ([]byte, error) {
 	type NoMethod Completeness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ComplianceNote struct {
@@ -1367,9 +1367,9 @@ type ComplianceNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceNote) MarshalJSON() ([]byte, error) {
+func (s ComplianceNote) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplianceOccurrence: An indication that the compliance checks in the
@@ -1393,9 +1393,9 @@ type ComplianceOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceOccurrence) MarshalJSON() ([]byte, error) {
+func (s ComplianceOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplianceVersion: Describes the CIS benchmark version that is applicable to
@@ -1423,9 +1423,9 @@ type ComplianceVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceVersion) MarshalJSON() ([]byte, error) {
+func (s ComplianceVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig: ApprovalConfig
@@ -1448,9 +1448,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult: ApprovalResult
@@ -1489,9 +1489,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts: Artifacts produced by
@@ -1542,9 +1542,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects: Files
@@ -1575,9 +1575,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact: A Maven
@@ -1616,9 +1616,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage: Npm package
@@ -1645,9 +1645,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage: Python
@@ -1676,9 +1676,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Build: A build resource in the
@@ -1816,9 +1816,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Build struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Build) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Build) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Build
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval: BuildApproval
@@ -1850,9 +1850,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo: A fatal problem
@@ -1884,9 +1884,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions: Optional arguments
@@ -2011,9 +2011,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption: Details
@@ -2039,9 +2039,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep: A step in the build
@@ -2160,9 +2160,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning: A non-fatal problem
@@ -2191,9 +2191,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage: An image built by the
@@ -2220,9 +2220,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository: Location of
@@ -2250,9 +2250,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig: This
@@ -2280,9 +2280,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes: Container message for
@@ -2304,39 +2304,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation: Represents a storage
-// location in Cloud Storage
-type ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation struct {
-	// Bucket: Cloud Storage bucket. See
-	// https://cloud.google.com/storage/docs/naming#requirements
-	Bucket string `json:"bucket,omitempty"`
-	// Generation: Cloud Storage generation for the object. If the generation is
-	// omitted, the latest generation will be used.
-	Generation int64 `json:"generation,omitempty,string"`
-	// Object: Cloud Storage object. See
-	// https://cloud.google.com/storage/docs/naming#objectnames
-	Object string `json:"object,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a
@@ -2357,20 +2327,20 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig: HttpConfig
 // is a configuration for HTTP related git operations.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
-	// proxy URL should be in format protocol://@]proxyhost[:port].
+	// Service Account used in the build (either the default Service Account or
+	// user-specified Service Account) should have `secretmanager.versions.access`
+	// permissions on this secret. The proxy URL should be in format
+	// `protocol://@]proxyhost[:port]`.
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
-	// ProxySslCaInfo: Optional. Cloud Storage object storing the certificate to
-	// use with the HTTP proxy.
-	ProxySslCaInfo *ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation `json:"proxySslCaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2384,9 +2354,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource: Location of the source
@@ -2420,9 +2390,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Hash: Container message for hash
@@ -2451,9 +2421,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Hash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Hash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret: Pairs a set of
@@ -2482,9 +2452,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource: Location of the
@@ -2528,9 +2498,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Results: Artifacts created by the
@@ -2579,9 +2549,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Results struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Results) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Results) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Results
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Secret: Pairs a set of secret
@@ -2611,9 +2581,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Secret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Secret) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Secret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret: Pairs a
@@ -2639,9 +2609,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets: Secrets and secret
@@ -2666,9 +2636,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Source: Location of the source in
@@ -2705,9 +2675,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Source) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Source) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance: Provenance of
@@ -2751,9 +2721,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource: Location of the
@@ -2792,9 +2762,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest: Location
@@ -2825,9 +2795,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan: Start and end times for
@@ -2850,9 +2820,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact: A Maven
@@ -2878,9 +2848,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage: An npm
@@ -2906,9 +2876,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage: Artifact
@@ -2934,9 +2904,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Volume: Volume describes a Docker
@@ -2964,9 +2934,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Volume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Volume) MarshalJSON() ([]byte, error) {
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Volume) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Volume
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DSSEAttestationNote struct {
@@ -2985,9 +2955,9 @@ type DSSEAttestationNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DSSEAttestationNote) MarshalJSON() ([]byte, error) {
+func (s DSSEAttestationNote) MarshalJSON() ([]byte, error) {
 	type NoMethod DSSEAttestationNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DSSEAttestationOccurrence: Deprecated. Prefer to use a regular Occurrence,
@@ -3010,9 +2980,9 @@ type DSSEAttestationOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DSSEAttestationOccurrence) MarshalJSON() ([]byte, error) {
+func (s DSSEAttestationOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod DSSEAttestationOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DSSEHint: This submessage provides human-readable hints about the purpose of
@@ -3038,9 +3008,9 @@ type DSSEHint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DSSEHint) MarshalJSON() ([]byte, error) {
+func (s DSSEHint) MarshalJSON() ([]byte, error) {
 	type NoMethod DSSEHint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeploymentNote: An artifact that can be deployed in some runtime.
@@ -3060,9 +3030,9 @@ type DeploymentNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeploymentNote) MarshalJSON() ([]byte, error) {
+func (s DeploymentNote) MarshalJSON() ([]byte, error) {
 	type NoMethod DeploymentNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeploymentOccurrence: The period during which some deployable was active in
@@ -3102,9 +3072,9 @@ type DeploymentOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeploymentOccurrence) MarshalJSON() ([]byte, error) {
+func (s DeploymentOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod DeploymentOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Detail: A detail for a distro and package affected by this vulnerability and
@@ -3175,9 +3145,9 @@ type Detail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Detail) MarshalJSON() ([]byte, error) {
+func (s Detail) MarshalJSON() ([]byte, error) {
 	type NoMethod Detail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Digest: Digest information.
@@ -3199,9 +3169,9 @@ type Digest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Digest) MarshalJSON() ([]byte, error) {
+func (s Digest) MarshalJSON() ([]byte, error) {
 	type NoMethod Digest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoveryNote: A note that indicates a type of analysis a provider would
@@ -3242,9 +3212,9 @@ type DiscoveryNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoveryNote) MarshalJSON() ([]byte, error) {
+func (s DiscoveryNote) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoveryNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoveryOccurrence: Provides information about the analysis status of a
@@ -3299,9 +3269,9 @@ type DiscoveryOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoveryOccurrence) MarshalJSON() ([]byte, error) {
+func (s DiscoveryOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoveryOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Distribution: This represents a particular channel of distribution for a
@@ -3341,9 +3311,9 @@ type Distribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Distribution) MarshalJSON() ([]byte, error) {
+func (s Distribution) MarshalJSON() ([]byte, error) {
 	type NoMethod Distribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -3375,9 +3345,9 @@ type Envelope struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Envelope) MarshalJSON() ([]byte, error) {
+func (s Envelope) MarshalJSON() ([]byte, error) {
 	type NoMethod Envelope
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EnvelopeSignature struct {
@@ -3396,9 +3366,9 @@ type EnvelopeSignature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvelopeSignature) MarshalJSON() ([]byte, error) {
+func (s EnvelopeSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvelopeSignature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportSBOMRequest: The request to generate and export SBOM. Target must be
@@ -3420,9 +3390,9 @@ type ExportSBOMRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportSBOMRequest) MarshalJSON() ([]byte, error) {
+func (s ExportSBOMRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportSBOMRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportSBOMResponse: The response from a call to ExportSBOM.
@@ -3447,9 +3417,9 @@ type ExportSBOMResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportSBOMResponse) MarshalJSON() ([]byte, error) {
+func (s ExportSBOMResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportSBOMResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -3495,9 +3465,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileHashes: Container message for hashes of byte content of files, used in
@@ -3518,9 +3488,9 @@ type FileHashes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileHashes) MarshalJSON() ([]byte, error) {
+func (s FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod FileHashes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Fingerprint: A set of properties that uniquely identify a given Docker
@@ -3548,9 +3518,9 @@ type Fingerprint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Fingerprint) MarshalJSON() ([]byte, error) {
+func (s Fingerprint) MarshalJSON() ([]byte, error) {
 	type NoMethod Fingerprint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FixableTotalByDigest: Per resource and severity counts of fixable and total
@@ -3588,9 +3558,9 @@ type FixableTotalByDigest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FixableTotalByDigest) MarshalJSON() ([]byte, error) {
+func (s FixableTotalByDigest) MarshalJSON() ([]byte, error) {
 	type NoMethod FixableTotalByDigest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
@@ -3618,9 +3588,9 @@ type GerritSourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GerritSourceContext) MarshalJSON() ([]byte, error) {
+func (s GerritSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GerritSourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -3641,9 +3611,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -3673,9 +3643,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GitSourceContext: A GitSourceContext denotes a particular revision in a
@@ -3698,9 +3668,9 @@ type GitSourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GitSourceContext) MarshalJSON() ([]byte, error) {
+func (s GitSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GitSourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata: Metadata for all
@@ -3725,9 +3695,9 @@ type GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1FileLocation: Indicates the location at which a package was found.
@@ -3748,9 +3718,9 @@ type GrafeasV1FileLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1FileLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder: Identifies the entity that
@@ -3771,9 +3741,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness: Indicates that the builder
@@ -3795,9 +3765,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource: Describes where the config
@@ -3820,9 +3790,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation: Identifies the event that
@@ -3844,9 +3814,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial: The collection of artifacts that
@@ -3868,9 +3838,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata: Other properties of the build.
@@ -3893,9 +3863,9 @@ type GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata) MarshalJSON() ([]byte, error) {
+func (s GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hash: Container message for hash values.
@@ -3917,9 +3887,9 @@ type Hash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hash) MarshalJSON() ([]byte, error) {
+func (s Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hint: This submessage provides human-readable hints about the purpose of the
@@ -3945,9 +3915,9 @@ type Hint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hint) MarshalJSON() ([]byte, error) {
+func (s Hint) MarshalJSON() ([]byte, error) {
 	type NoMethod Hint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Identity: The unique identifier of the update.
@@ -3969,9 +3939,9 @@ type Identity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Identity) MarshalJSON() ([]byte, error) {
+func (s Identity) MarshalJSON() ([]byte, error) {
 	type NoMethod Identity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageNote: Basis describes the base image portion (Note) of the DockerImage
@@ -3996,9 +3966,9 @@ type ImageNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageNote) MarshalJSON() ([]byte, error) {
+func (s ImageNote) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageOccurrence: Details of the derived image portion of the DockerImage
@@ -4029,9 +3999,9 @@ type ImageOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageOccurrence) MarshalJSON() ([]byte, error) {
+func (s ImageOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InTotoProvenance struct {
@@ -4061,9 +4031,9 @@ type InTotoProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InTotoProvenance) MarshalJSON() ([]byte, error) {
+func (s InTotoProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod InTotoProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InTotoSlsaProvenanceV1 struct {
@@ -4086,9 +4056,9 @@ type InTotoSlsaProvenanceV1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InTotoSlsaProvenanceV1) MarshalJSON() ([]byte, error) {
+func (s InTotoSlsaProvenanceV1) MarshalJSON() ([]byte, error) {
 	type NoMethod InTotoSlsaProvenanceV1
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InTotoStatement: Spec defined at
@@ -4117,9 +4087,9 @@ type InTotoStatement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
+func (s InTotoStatement) MarshalJSON() ([]byte, error) {
 	type NoMethod InTotoStatement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Justification: Justification provides the justification when the state of
@@ -4160,9 +4130,9 @@ type Justification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Justification) MarshalJSON() ([]byte, error) {
+func (s Justification) MarshalJSON() ([]byte, error) {
 	type NoMethod Justification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Jwt struct {
@@ -4183,9 +4153,9 @@ type Jwt struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Jwt) MarshalJSON() ([]byte, error) {
+func (s Jwt) MarshalJSON() ([]byte, error) {
 	type NoMethod Jwt
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type KnowledgeBase struct {
@@ -4207,9 +4177,9 @@ type KnowledgeBase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KnowledgeBase) MarshalJSON() ([]byte, error) {
+func (s KnowledgeBase) MarshalJSON() ([]byte, error) {
 	type NoMethod KnowledgeBase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Layer: Layer holds metadata specific to a layer of a Docker image.
@@ -4233,9 +4203,9 @@ type Layer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Layer) MarshalJSON() ([]byte, error) {
+func (s Layer) MarshalJSON() ([]byte, error) {
 	type NoMethod Layer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // License: License information.
@@ -4260,9 +4230,9 @@ type License struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *License) MarshalJSON() ([]byte, error) {
+func (s License) MarshalJSON() ([]byte, error) {
 	type NoMethod License
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNoteOccurrencesResponse: Response for listing occurrences for a note.
@@ -4287,9 +4257,9 @@ type ListNoteOccurrencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNoteOccurrencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListNoteOccurrencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNoteOccurrencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNotesResponse: Response for listing notes.
@@ -4316,9 +4286,9 @@ type ListNotesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNotesResponse) MarshalJSON() ([]byte, error) {
+func (s ListNotesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOccurrencesResponse: Response for listing occurrences.
@@ -4345,9 +4315,9 @@ type ListOccurrencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOccurrencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListOccurrencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOccurrencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: An occurrence of a particular package installation found within a
@@ -4374,9 +4344,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Material struct {
@@ -4395,9 +4365,9 @@ type Material struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Material) MarshalJSON() ([]byte, error) {
+func (s Material) MarshalJSON() ([]byte, error) {
 	type NoMethod Material
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metadata: Other properties of the build.
@@ -4429,9 +4399,9 @@ type Metadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metadata) MarshalJSON() ([]byte, error) {
+func (s Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NonCompliantFile: Details about files that caused a compliance check to
@@ -4458,9 +4428,9 @@ type NonCompliantFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NonCompliantFile) MarshalJSON() ([]byte, error) {
+func (s NonCompliantFile) MarshalJSON() ([]byte, error) {
 	type NoMethod NonCompliantFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Note: A type of analysis that can be done for a resource.
@@ -4546,9 +4516,9 @@ type Note struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Note) MarshalJSON() ([]byte, error) {
+func (s Note) MarshalJSON() ([]byte, error) {
 	type NoMethod Note
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Occurrence: An instance of an analysis type that has been found on a
@@ -4633,9 +4603,9 @@ type Occurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Occurrence) MarshalJSON() ([]byte, error) {
+func (s Occurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod Occurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PackageIssue: A detail for a distro and package this vulnerability
@@ -4690,9 +4660,9 @@ type PackageIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PackageIssue) MarshalJSON() ([]byte, error) {
+func (s PackageIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PackageNote: PackageNote represents a particular package version.
@@ -4743,9 +4713,9 @@ type PackageNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PackageNote) MarshalJSON() ([]byte, error) {
+func (s PackageNote) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PackageOccurrence: Details on how a particular software package was
@@ -4789,9 +4759,9 @@ type PackageOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PackageOccurrence) MarshalJSON() ([]byte, error) {
+func (s PackageOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -4879,9 +4849,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: Product contains information about a product and how to uniquely
@@ -4909,9 +4879,9 @@ type Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Product) MarshalJSON() ([]byte, error) {
+func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectRepoId: Selects a repo using a Google Cloud Platform project ID
@@ -4934,9 +4904,9 @@ type ProjectRepoId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
+func (s ProjectRepoId) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectRepoId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProvenanceBuilder struct {
@@ -4956,9 +4926,9 @@ type ProvenanceBuilder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProvenanceBuilder) MarshalJSON() ([]byte, error) {
+func (s ProvenanceBuilder) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvenanceBuilder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Publisher: Publisher contains information about the publisher of this Note.
@@ -4986,9 +4956,9 @@ type Publisher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Publisher) MarshalJSON() ([]byte, error) {
+func (s Publisher) MarshalJSON() ([]byte, error) {
 	type NoMethod Publisher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Recipe: Steps taken to build the artifact. For a TaskRun, typically each
@@ -5035,9 +5005,9 @@ type Recipe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Recipe) MarshalJSON() ([]byte, error) {
+func (s Recipe) MarshalJSON() ([]byte, error) {
 	type NoMethod Recipe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RelatedUrl: Metadata for any related URL information.
@@ -5059,9 +5029,9 @@ type RelatedUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RelatedUrl) MarshalJSON() ([]byte, error) {
+func (s RelatedUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Remediation: Specifies details on how to handle (and presumably, fix) a
@@ -5095,9 +5065,9 @@ type Remediation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Remediation) MarshalJSON() ([]byte, error) {
+func (s Remediation) MarshalJSON() ([]byte, error) {
 	type NoMethod Remediation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RepoId: A unique identifier for a Cloud Repo.
@@ -5119,9 +5089,9 @@ type RepoId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RepoId) MarshalJSON() ([]byte, error) {
+func (s RepoId) MarshalJSON() ([]byte, error) {
 	type NoMethod RepoId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ResourceDescriptor struct {
@@ -5145,9 +5115,9 @@ type ResourceDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceDescriptor) MarshalJSON() ([]byte, error) {
+func (s ResourceDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RunDetails struct {
@@ -5167,9 +5137,9 @@ type RunDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunDetails) MarshalJSON() ([]byte, error) {
+func (s RunDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RunDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SBOMReferenceNote: The note representing an SBOM reference.
@@ -5192,9 +5162,9 @@ type SBOMReferenceNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SBOMReferenceNote) MarshalJSON() ([]byte, error) {
+func (s SBOMReferenceNote) MarshalJSON() ([]byte, error) {
 	type NoMethod SBOMReferenceNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SBOMReferenceOccurrence: The occurrence representing an SBOM reference as
@@ -5224,9 +5194,9 @@ type SBOMReferenceOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SBOMReferenceOccurrence) MarshalJSON() ([]byte, error) {
+func (s SBOMReferenceOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod SBOMReferenceOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SBOMStatus: The status of an SBOM generation.
@@ -5254,9 +5224,9 @@ type SBOMStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SBOMStatus) MarshalJSON() ([]byte, error) {
+func (s SBOMStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod SBOMStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SbomReferenceIntotoPayload: The actual payload that contains the SBOM
@@ -5287,9 +5257,9 @@ type SbomReferenceIntotoPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SbomReferenceIntotoPayload) MarshalJSON() ([]byte, error) {
+func (s SbomReferenceIntotoPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod SbomReferenceIntotoPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SbomReferenceIntotoPredicate: A predicate which describes the SBOM being
@@ -5316,9 +5286,9 @@ type SbomReferenceIntotoPredicate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SbomReferenceIntotoPredicate) MarshalJSON() ([]byte, error) {
+func (s SbomReferenceIntotoPredicate) MarshalJSON() ([]byte, error) {
 	type NoMethod SbomReferenceIntotoPredicate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -5341,9 +5311,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Signature: Verifiers (e.g. Kritis implementations) MUST verify signatures
@@ -5397,9 +5367,9 @@ type Signature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Signature) MarshalJSON() ([]byte, error) {
+func (s Signature) MarshalJSON() ([]byte, error) {
 	type NoMethod Signature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SlsaBuilder struct {
@@ -5417,9 +5387,9 @@ type SlsaBuilder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaBuilder) MarshalJSON() ([]byte, error) {
+func (s SlsaBuilder) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaBuilder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlsaCompleteness: Indicates that the builder claims certain fields in this
@@ -5448,9 +5418,9 @@ type SlsaCompleteness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaCompleteness) MarshalJSON() ([]byte, error) {
+func (s SlsaCompleteness) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaCompleteness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlsaMetadata: Other properties of the build.
@@ -5482,9 +5452,9 @@ type SlsaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaMetadata) MarshalJSON() ([]byte, error) {
+func (s SlsaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SlsaProvenance struct {
@@ -5514,9 +5484,9 @@ type SlsaProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaProvenance) MarshalJSON() ([]byte, error) {
+func (s SlsaProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlsaProvenanceV1: Keep in sync with schema at
@@ -5538,9 +5508,9 @@ type SlsaProvenanceV1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaProvenanceV1) MarshalJSON() ([]byte, error) {
+func (s SlsaProvenanceV1) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaProvenanceV1
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlsaProvenanceZeroTwo: See full explanation of fields at
@@ -5565,9 +5535,9 @@ type SlsaProvenanceZeroTwo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaProvenanceZeroTwo) MarshalJSON() ([]byte, error) {
+func (s SlsaProvenanceZeroTwo) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaProvenanceZeroTwo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SlsaRecipe: Steps taken to build the artifact. For a TaskRun, typically each
@@ -5613,9 +5583,9 @@ type SlsaRecipe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaRecipe) MarshalJSON() ([]byte, error) {
+func (s SlsaRecipe) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaRecipe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: Source describes the location of the source used for the build.
@@ -5651,9 +5621,9 @@ type Source struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Source) MarshalJSON() ([]byte, error) {
+func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceContext: A SourceContext is a reference to a tree of files. A
@@ -5682,9 +5652,9 @@ type SourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceContext) MarshalJSON() ([]byte, error) {
+func (s SourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -5716,9 +5686,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Subject struct {
@@ -5739,9 +5709,9 @@ type Subject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subject) MarshalJSON() ([]byte, error) {
+func (s Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod Subject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -5764,9 +5734,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -5791,9 +5761,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSpan: Start and end times for a build execution phase. Next ID: 3
@@ -5815,9 +5785,9 @@ type TimeSpan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSpan) MarshalJSON() ([]byte, error) {
+func (s TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSpan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeDistribution: The Upgrade Distribution represents metadata about the
@@ -5850,9 +5820,9 @@ type UpgradeDistribution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeDistribution) MarshalJSON() ([]byte, error) {
+func (s UpgradeDistribution) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeDistribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeNote: An Upgrade Note represents a potential upgrade of a package to
@@ -5884,9 +5854,9 @@ type UpgradeNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeNote) MarshalJSON() ([]byte, error) {
+func (s UpgradeNote) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeOccurrence: An Upgrade Occurrence represents that a specific
@@ -5920,9 +5890,9 @@ type UpgradeOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeOccurrence) MarshalJSON() ([]byte, error) {
+func (s UpgradeOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Version: Version contains structured information about the version of a
@@ -5967,9 +5937,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VexAssessment: VexAssessment provides all publisher provided Vex information
@@ -6023,9 +5993,9 @@ type VexAssessment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VexAssessment) MarshalJSON() ([]byte, error) {
+func (s VexAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod VexAssessment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Volume: Volume describes a Docker container volume which is mounted into
@@ -6053,9 +6023,9 @@ type Volume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Volume) MarshalJSON() ([]byte, error) {
+func (s Volume) MarshalJSON() ([]byte, error) {
 	type NoMethod Volume
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityAssessmentNote: A single VulnerabilityAssessmentNote represents
@@ -6089,9 +6059,9 @@ type VulnerabilityAssessmentNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityAssessmentNote) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityAssessmentNote) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityAssessmentNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerabilityNote: A security vulnerability that can be found in resources.
@@ -6145,9 +6115,9 @@ type VulnerabilityNote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityNote) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityNote) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityNote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VulnerabilityNote) UnmarshalJSON(data []byte) error {
@@ -6244,9 +6214,9 @@ type VulnerabilityOccurrence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityOccurrence) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityOccurrence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VulnerabilityOccurrence) UnmarshalJSON(data []byte) error {
@@ -6285,9 +6255,9 @@ type VulnerabilityOccurrencesSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerabilityOccurrencesSummary) MarshalJSON() ([]byte, error) {
+func (s VulnerabilityOccurrencesSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityOccurrencesSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type WindowsDetail struct {
@@ -6316,9 +6286,9 @@ type WindowsDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsDetail) MarshalJSON() ([]byte, error) {
+func (s WindowsDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WindowsUpdate: Windows Update represents the metadata about the update for
@@ -6354,9 +6324,9 @@ type WindowsUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsUpdate) MarshalJSON() ([]byte, error) {
+func (s WindowsUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsNotesGetCall struct {

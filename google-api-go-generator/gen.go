@@ -40,12 +40,13 @@ const (
 )
 
 var (
-	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
-	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
-	genDir        = flag.String("gendir", defaultGenDir(), "Directory to use to write out generated Go files")
-	build         = flag.Bool("build", false, "Compile generated packages.")
-	install       = flag.Bool("install", false, "Install generated packages.")
-	apisURL       = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
+	apiToGenerate  = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
+	useCache       = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
+	genDir         = flag.String("gendir", defaultGenDir(), "Directory to use to write out generated Go files")
+	build          = flag.Bool("build", false, "Compile generated packages.")
+	install        = flag.Bool("install", false, "Install generated packages.")
+	apisURL        = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
+	remoteCacheDir = flag.String("remote_cache_dir", os.Getenv("REMOTE_CACHE_DIR"), "Directory of remote cache index and schemas.")
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
 
@@ -159,7 +160,7 @@ func main() {
 	var (
 		apiIds  = []string{}
 		matches = []*API{}
-		errors  = []error{}
+		errs    = []error{}
 	)
 	for _, api := range getAPIs() {
 		apiIds = append(apiIds, api.ID)
@@ -172,8 +173,8 @@ func main() {
 		if err == errOldRevision {
 			log.Printf("Old revision found for %s, skipping generation", api.ID)
 			continue
-		} else if err != nil && err != errNoDoc {
-			errors = append(errors, &generateError{api, err})
+		} else if err != nil && !errors.Is(err, errNoDoc) {
+			errs = append(errs, &generateError{api, err})
 			continue
 		}
 		if *build && err == nil {
@@ -186,7 +187,7 @@ func main() {
 			args = append(args, api.Target())
 			out, err := exec.Command("go", args...).CombinedOutput()
 			if err != nil {
-				errors = append(errors, &compileError{api, string(out)})
+				errs = append(errs, &compileError{api, string(out)})
 			}
 		}
 	}
@@ -195,9 +196,9 @@ func main() {
 		log.Fatalf("No APIs matched %q; options are %v", *apiToGenerate, apiIds)
 	}
 
-	if len(errors) > 0 {
-		log.Printf("%d API(s) failed to generate or compile:", len(errors))
-		for _, ce := range errors {
+	if len(errs) > 0 {
+		log.Printf("%d API(s) failed to generate or compile:", len(errs))
+		for _, ce := range errs {
 			log.Println(ce.Error())
 		}
 		os.Exit(1)
@@ -241,6 +242,14 @@ func getAPIs() []*API {
 			log.Fatal(err)
 		}
 		source = apiListFile
+	} else if *remoteCacheDir != "" {
+		var err error
+		name := filepath.Join(*remoteCacheDir, "index.json")
+		bytes, err = os.ReadFile(name)
+		if err != nil {
+			log.Fatal(err)
+		}
+		source = name
 	} else {
 		bytes = slurpURL(*apisURL)
 		if *publicOnly {
@@ -590,34 +599,52 @@ func (a *API) needsDataWrapper() bool {
 	return false
 }
 
-func (a *API) jsonBytes() []byte {
+func (a *API) jsonBytes() ([]byte, error) {
 	if a.forceJSON == nil {
 		var slurp []byte
 		var err error
 		if *useCache {
 			slurp, err = os.ReadFile(a.JSONFile())
 			if err != nil {
-				log.Fatal(err)
+				return nil, err
+			}
+		} else if *remoteCacheDir != "" {
+			filename := fmt.Sprintf("%s.%s.json", a.Name, a.Version)
+			b, err := os.ReadFile(filepath.Join(*remoteCacheDir, filename))
+			if err != nil {
+				return nil, fmt.Errorf("%s: %w", err, errNoDoc)
+			}
+
+			// Make sure that keys are sorted by re-marshalling.
+			d := make(map[string]any)
+			json.Unmarshal(b, &d)
+			if err != nil {
+				return nil, err
+			}
+
+			slurp, err = json.MarshalIndent(d, "", "  ")
+			if err != nil {
+				return nil, err
 			}
 		} else {
 			slurp = slurpURL(a.DiscoveryURL())
 			if slurp != nil {
 				// Make sure that keys are sorted by re-marshalling.
-				d := make(map[string]interface{})
+				d := make(map[string]any)
 				json.Unmarshal(slurp, &d)
 				if err != nil {
-					log.Fatal(err)
+					return nil, err
 				}
 				var err error
 				slurp, err = json.MarshalIndent(d, "", "  ")
 				if err != nil {
-					log.Fatal(err)
+					return nil, err
 				}
 			}
 		}
 		a.forceJSON = slurp
 	}
-	return a.forceJSON
+	return a.forceJSON, nil
 }
 
 func (a *API) JSONFile() string {
@@ -629,7 +656,10 @@ func (a *API) JSONFile() string {
 // if the API spec file being pulled in is older than the local cache.
 func (a *API) WriteGeneratedCode() error {
 	genfilename := *output
-	jsonBytes := a.jsonBytes()
+	jsonBytes, err := a.jsonBytes()
+	if err != nil {
+		return err
+	}
 	// Skip generation if we don't have the discovery doc.
 	if jsonBytes == nil {
 		// No message here, because slurpURL printed one.
@@ -729,8 +759,10 @@ var docsLink string
 func (a *API) GenerateCode() ([]byte, error) {
 	pkg := a.Package()
 
-	jsonBytes := a.jsonBytes()
-	var err error
+	jsonBytes, err := a.jsonBytes()
+	if err != nil {
+		return nil, err
+	}
 	if a.doc == nil {
 		a.doc, err = disco.NewDocument(jsonBytes)
 		if err != nil {
@@ -1613,10 +1645,10 @@ func (s *Schema) writeSchemaStruct(api *API) {
 // by forceSendFieldName, and allows fields to be transmitted with the null value
 // by listing them in the field identified by nullFieldsName.
 func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
-	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
+	s.api.pn("func (s %s) MarshalJSON() ([]byte, error) {", s.GoName())
 	s.api.pn("\ttype NoMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
-	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(*s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
+	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
 

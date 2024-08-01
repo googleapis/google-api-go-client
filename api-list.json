@@ -1398,21 +1398,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "cloudcommerceprocurement:v1",
-      "name": "cloudcommerceprocurement",
-      "version": "v1",
-      "title": "Cloud Commerce Partner Procurement API",
-      "description": "Partner API for the Cloud Commerce Procurement Service.",
-      "discoveryRestUrl": "https://cloudcommerceprocurement.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/marketplace/docs/partners/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "cloudcontrolspartner:v1beta",
       "name": "cloudcontrolspartner",
       "version": "v1beta",
@@ -2102,6 +2087,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/document-warehouse",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "css:v1",
+      "name": "css",
+      "version": "v1",
+      "title": "CSS API",
+      "description": "Programmatically manage your Comparison Shopping Service (CSS) account data at scale.",
+      "discoveryRestUrl": "https://css.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/comparison-shopping-services/api/overview",
       "preferred": true
     },
     {
@@ -4088,6 +4088,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "meet:v2",
+      "name": "meet",
+      "version": "v2",
+      "title": "Google Meet API",
+      "description": "Create and manage meetings in Google Meet.",
+      "discoveryRestUrl": "https://meet.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/meet/api",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "memcache:v1beta2",
       "name": "memcache",
       "version": "v1beta2",
@@ -4114,6 +4129,156 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/memorystore/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:accounts_v1beta",
+      "name": "merchantapi",
+      "version": "accounts_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=accounts_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:conversions_v1beta",
+      "name": "merchantapi",
+      "version": "conversions_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=conversions_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:datasources_v1beta",
+      "name": "merchantapi",
+      "version": "datasources_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=datasources_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:inventories_v1beta",
+      "name": "merchantapi",
+      "version": "inventories_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=inventories_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:lfp_v1beta",
+      "name": "merchantapi",
+      "version": "lfp_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=lfp_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:notifications_v1beta",
+      "name": "merchantapi",
+      "version": "notifications_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=notifications_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:products_v1beta",
+      "name": "merchantapi",
+      "version": "products_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=products_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:promotions_v1beta",
+      "name": "merchantapi",
+      "version": "promotions_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=promotions_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:quota_v1beta",
+      "name": "merchantapi",
+      "version": "quota_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=quota_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:reports_v1beta",
+      "name": "merchantapi",
+      "version": "reports_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=reports_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
       "preferred": true
     },
     {
@@ -5434,7 +5599,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/webmaster-tools/search-console-api/",
+      "documentationLink": "https://developers.google.com/webmaster-tools/about",
       "preferred": true
     },
     {
@@ -5765,21 +5930,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/maps/documentation/solar",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "sourcerepo:v1",
-      "name": "sourcerepo",
-      "version": "v1",
-      "title": "Cloud Source Repositories API",
-      "description": "Accesses source code repositories hosted by Google. Important: Cloud Source Repositories is scheduled for end of sales starting June 17, 2024. Customers who have enabled the API prior to this date will not be affected and can continue to use Cloud Source Repositories. Organizations or projects who have not previously enabled the API cannot use Cloud Source Repositories after this date. View Cloud Source Repositories documentation for more info.",
-      "discoveryRestUrl": "https://sourcerepo.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/source-repositories/docs/apis",
       "preferred": true
     },
     {

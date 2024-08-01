@@ -1069,7 +1069,7 @@
       }
     }
   },
-  "revision": "20240511",
+  "revision": "20240716",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -1095,6 +1095,21 @@
         "downloadBytes": {
           "description": "Output only. Amount of bytes that will be downloaded if the backup is restored",
           "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "fileSystemProtocol": {
+          "description": "Output only. The file system protocol of the source Filestore instance that this backup is created from.",
+          "enum": [
+            "FILE_PROTOCOL_UNSPECIFIED",
+            "NFS_V3",
+            "NFS_V4_1"
+          ],
+          "enumDescriptions": [
+            "FILE_PROTOCOL_UNSPECIFIED serves a \"not set\" default value when a FileProtocol is a separate field in a message.",
+            "NFS 3.0.",
+            "NFS 4.1."
+          ],
           "readOnly": true,
           "type": "string"
         },
@@ -1185,6 +1200,13 @@
           "format": "int64",
           "readOnly": true,
           "type": "string"
+        },
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "type": "object"
         }
       },
       "type": "object"
@@ -1730,6 +1752,13 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "type": "object"
         },
         "tier": {
           "description": "The service tier of the instance.",
@@ -2475,6 +2504,13 @@
           ],
           "readOnly": true,
           "type": "string"
+        },
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "type": "object"
         }
       },
       "type": "object"

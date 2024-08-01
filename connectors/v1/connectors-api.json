@@ -2427,7 +2427,7 @@
       }
     }
   },
-  "revision": "20240606",
+  "revision": "20240715",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2596,6 +2596,10 @@
         },
         "enablePkce": {
           "description": "Whether to enable PKCE for the auth code flow.",
+          "type": "boolean"
+        },
+        "omitQueryParams": {
+          "description": "Optional. Omit query params from the redirect URI.",
           "type": "boolean"
         },
         "scopes": {
@@ -2822,6 +2826,10 @@
       "description": "Connection represents an instance of connector.",
       "id": "Connection",
       "properties": {
+        "asyncOperationsEnabled": {
+          "description": "Optional. Async operations enabled for the connection. If Async Operations is enabled, Connection allows the customers to initiate async long running operations using the actions API.",
+          "type": "boolean"
+        },
         "authConfig": {
           "$ref": "AuthConfig",
           "description": "Optional. Configuration for establishing the connection's authentication with an external system."
@@ -3114,6 +3122,23 @@
           "readOnly": true,
           "type": "string"
         },
+        "connectorType": {
+          "description": "Output only. The type of the connector.",
+          "enum": [
+            "CONNECTOR_TYPE_UNSPECIFIED",
+            "CONNECTOR_TYPE_GOOGLE",
+            "CONNECTOR_TYPE_TECHNICAL",
+            "CONNECTOR_TYPE_THIRD_PARTY"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Google connectors.",
+            "Technical connectors.",
+            "Third Party connectors."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "createTime": {
           "description": "Output only. Created time.",
           "format": "google-datetime",
@@ -3230,6 +3255,10 @@
           "description": "Max QPS supported for internal requests originating from Connd.",
           "format": "int64",
           "type": "string"
+        },
+        "migrateDeploymentModel": {
+          "description": "Indicate whether connector is being migrated to cloud run deployment model.",
+          "type": "boolean"
         },
         "ratelimitThreshold": {
           "description": "Max QPS supported by the connector version before throttling of requests.",
@@ -3425,6 +3454,23 @@
             "Default model gke mst.",
             "Cloud run mst."
           ],
+          "type": "string"
+        },
+        "deploymentModelMigrationState": {
+          "description": "Output only. Status of the deployment model migration.",
+          "enum": [
+            "DEPLOYMENT_MODEL_MIGRATION_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "ROLLEDBACK"
+          ],
+          "enumDescriptions": [
+            "Deployment model migration state is not specified.",
+            "Deployment model migration is in progress.",
+            "Deployment model migration is completed.",
+            "Deployment model migration rolledback."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "hpaConfig": {
@@ -5871,7 +5917,7 @@
           "type": "array"
         },
         "valueSeparator": {
-          "description": "Required. Value separator.",
+          "description": "Required. Value separator. Only \",\" can be used for OAuth auth code flow scope field.",
           "type": "string"
         }
       },
@@ -6515,6 +6561,10 @@
           ],
           "type": "string"
         },
+        "defaultValue": {
+          "description": "The following field specifies the default value of the Parameter provided by the external system if a value is not provided.",
+          "type": "any"
+        },
         "description": {
           "description": "A brief description of the field.",
           "type": "string"
@@ -6526,6 +6576,10 @@
         "jsonSchema": {
           "$ref": "JsonSchema",
           "description": "JsonSchema representation of this action's result"
+        },
+        "nullable": {
+          "description": "Specifies whether a null value is allowed.",
+          "type": "boolean"
         }
       },
       "type": "object"

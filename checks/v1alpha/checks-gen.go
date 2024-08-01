@@ -234,9 +234,9 @@ type GoogleChecksAccountV1alphaApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksAccountV1alphaApp) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksAccountV1alphaApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksAccountV1alphaApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksAccountV1alphaListAppsResponse: The response message for
@@ -263,9 +263,9 @@ type GoogleChecksAccountV1alphaListAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksAccountV1alphaListAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksAccountV1alphaListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksAccountV1alphaListAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaAnalyzeUploadRequest: The request message for
@@ -296,9 +296,9 @@ type GoogleChecksReportV1alphaAnalyzeUploadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaAnalyzeUploadRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaAnalyzeUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaAnalyzeUploadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaAppBundle: Information about the analyzed app
@@ -336,9 +336,9 @@ type GoogleChecksReportV1alphaAppBundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaAppBundle) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaAppBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaAppBundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheck: A check that was run on your app.
@@ -597,6 +597,8 @@ type GoogleChecksReportV1alphaCheck struct {
 	// critical issues.
 	//   "PRIVACY_POLICY_DATA_TYPE_SENSITIVE_INFO" - Checks if the Sensitive
 	// Information data type declaration matches usage.
+	//   "DATA_MONITORING_PII_LOGCAT_LEAK" - Checks if there were any PII leaked to
+	// device logs.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Citations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -611,9 +613,9 @@ type GoogleChecksReportV1alphaCheck struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheck) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheck) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheck
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckCitation: Regulation or policy that serves as
@@ -666,9 +668,9 @@ type GoogleChecksReportV1alphaCheckCitation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckCitation) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckCitation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckCitation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckDataSecurityEvidence: Evidence concerning data
@@ -689,9 +691,9 @@ type GoogleChecksReportV1alphaCheckDataSecurityEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckDataSecurityEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckDataSecurityEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckDataSecurityEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo:
@@ -713,9 +715,9 @@ type GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckDataTypeEvidence: Evidence concerning a data
@@ -816,9 +818,9 @@ type GoogleChecksReportV1alphaCheckDataTypeEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckDataTypeEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckDataTypeEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckDataTypeEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckEndpointEvidence: Evidence concerning an
@@ -839,9 +841,9 @@ type GoogleChecksReportV1alphaCheckEndpointEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckEndpointEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckEndpointEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckEndpointEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence: Evidence
@@ -862,9 +864,9 @@ type GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDet
@@ -885,9 +887,9 @@ type GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointD
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckEvidence: Evidence for a check.
@@ -928,9 +930,9 @@ type GoogleChecksReportV1alphaCheckEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckPermissionEvidence: Evidence concerning a
@@ -951,9 +953,9 @@ type GoogleChecksReportV1alphaCheckPermissionEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckPermissionEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckPermissionEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckPermissionEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence:
@@ -974,9 +976,9 @@ type GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissio
@@ -997,9 +999,9 @@ type GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermiss
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence: Evidence collected
@@ -1020,9 +1022,9 @@ type GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckSdkEvidence: Evidence conerning an SDK that
@@ -1043,9 +1045,9 @@ type GoogleChecksReportV1alphaCheckSdkEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckSdkEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckSdkEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckSdkEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckSdkIssueEvidence: Evidence concerning an SDK
@@ -1068,9 +1070,9 @@ type GoogleChecksReportV1alphaCheckSdkIssueEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckSdkIssueEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckSdkIssueEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckSdkIssueEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence: Evidence
@@ -1091,9 +1093,9 @@ type GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails:
@@ -1114,9 +1116,9 @@ type GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaCheckStateMetadata: Additional information about
@@ -1150,9 +1152,9 @@ type GoogleChecksReportV1alphaCheckStateMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaCheckStateMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaCheckStateMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaCheckStateMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoring: Represents the data monitoring
@@ -1179,9 +1181,9 @@ type GoogleChecksReportV1alphaDataMonitoring struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoring) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoring) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoring
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoringDataTypeResult: Information about a
@@ -1284,9 +1286,9 @@ type GoogleChecksReportV1alphaDataMonitoringDataTypeResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoringDataTypeResult) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoringDataTypeResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoringDataTypeResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoringEndpointResult: Information about an
@@ -1311,9 +1313,9 @@ type GoogleChecksReportV1alphaDataMonitoringEndpointResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoringEndpointResult) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoringEndpointResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoringEndpointResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoringPermissionResult: Information about a
@@ -1336,9 +1338,9 @@ type GoogleChecksReportV1alphaDataMonitoringPermissionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoringPermissionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoringPermissionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoringPermissionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoringResultMetadata: Information about a
@@ -1373,9 +1375,9 @@ type GoogleChecksReportV1alphaDataMonitoringResultMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoringResultMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoringResultMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoringResultMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataMonitoringSdkResult: Information about an SDK
@@ -1398,9 +1400,9 @@ type GoogleChecksReportV1alphaDataMonitoringSdkResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataMonitoringSdkResult) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataMonitoringSdkResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataMonitoringSdkResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypeEndpointEvidence: Evidence based on an
@@ -1457,9 +1459,9 @@ type GoogleChecksReportV1alphaDataTypeEndpointEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypeEndpointEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk: Details of
@@ -1480,9 +1482,9 @@ type GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails: Details of
@@ -1503,9 +1505,9 @@ type GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypeEvidence: Evidence collected about a data
@@ -1532,9 +1534,9 @@ type GoogleChecksReportV1alphaDataTypeEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypeEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypeEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypeEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypePermissionEvidence: Evidence based on the
@@ -1555,9 +1557,9 @@ type GoogleChecksReportV1alphaDataTypePermissionEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypePermissionEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypePermissionEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypePermissionEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence: Evidence based
@@ -1579,9 +1581,9 @@ type GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaEndpoint: Information about an endpoint.
@@ -1601,9 +1603,9 @@ type GoogleChecksReportV1alphaEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaEndpoint) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaListReportsResponse: The response message for
@@ -1630,9 +1632,9 @@ type GoogleChecksReportV1alphaListReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaListReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaListReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaListReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaPermission: Information about a permission.
@@ -1652,9 +1654,9 @@ type GoogleChecksReportV1alphaPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaPermission) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaPolicyFragment: Information about a policy
@@ -1677,9 +1679,9 @@ type GoogleChecksReportV1alphaPolicyFragment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaPolicyFragment) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaPolicyFragment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaPolicyFragment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaReport: Privacy report.
@@ -1710,9 +1712,9 @@ type GoogleChecksReportV1alphaReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaReport) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChecksReportV1alphaSdk: Information about an SDK.
@@ -1732,9 +1734,9 @@ type GoogleChecksReportV1alphaSdk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChecksReportV1alphaSdk) MarshalJSON() ([]byte, error) {
+func (s GoogleChecksReportV1alphaSdk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksReportV1alphaSdk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1760,9 +1762,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1807,9 +1809,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1841,9 +1843,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaitOperationRequest: The request message for Operations.WaitOperation.
@@ -1865,9 +1867,9 @@ type WaitOperationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaitOperationRequest) MarshalJSON() ([]byte, error) {
+func (s WaitOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WaitOperationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsAppsGetCall struct {

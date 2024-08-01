@@ -1249,9 +1249,9 @@ type EdgeConfigstoreBundleBadBundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EdgeConfigstoreBundleBadBundle) MarshalJSON() ([]byte, error) {
+func (s EdgeConfigstoreBundleBadBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod EdgeConfigstoreBundleBadBundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EdgeConfigstoreBundleBadBundleViolation: A message type used to describe a
@@ -1275,9 +1275,9 @@ type EdgeConfigstoreBundleBadBundleViolation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EdgeConfigstoreBundleBadBundleViolation) MarshalJSON() ([]byte, error) {
+func (s EdgeConfigstoreBundleBadBundleViolation) MarshalJSON() ([]byte, error) {
 	type NoMethod EdgeConfigstoreBundleBadBundleViolation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
@@ -1322,9 +1322,9 @@ type GoogleApiHttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
+func (s GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1APIProductAssociation: APIProductAssociation has the API
@@ -1348,9 +1348,9 @@ type GoogleCloudApigeeV1APIProductAssociation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1APIProductAssociation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1APIProductAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1APIProductAssociation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Access struct {
@@ -1370,9 +1370,9 @@ type GoogleCloudApigeeV1Access struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Access) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Access) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Access
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AccessGet: Get action. For example, "Get" : { "name" :
@@ -1393,9 +1393,9 @@ type GoogleCloudApigeeV1AccessGet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AccessGet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AccessGet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AccessGet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AccessLoggingConfig: Access logging configuration enables
@@ -1425,9 +1425,9 @@ type GoogleCloudApigeeV1AccessLoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AccessLoggingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AccessLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AccessLoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AccessRemove: Remove action. For example, "Remove" : {
@@ -1448,9 +1448,9 @@ type GoogleCloudApigeeV1AccessRemove struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AccessRemove) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AccessRemove) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AccessRemove
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AccessSet: Set action. For example, "Set" : { "name" :
@@ -1472,9 +1472,9 @@ type GoogleCloudApigeeV1AccessSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AccessSet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AccessSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AccessSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ActivateNatAddressRequest: Request for
@@ -1514,9 +1514,9 @@ type GoogleCloudApigeeV1AddonsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AddonsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AddonsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AddonsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AdjustDeveloperBalanceRequest: Request for
@@ -1541,9 +1541,9 @@ type GoogleCloudApigeeV1AdjustDeveloperBalanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AdjustDeveloperBalanceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AdjustDeveloperBalanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AdjustDeveloperBalanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AdvancedApiOpsConfig: Configuration for the Advanced API
@@ -1564,9 +1564,9 @@ type GoogleCloudApigeeV1AdvancedApiOpsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AdvancedApiOpsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AdvancedApiOpsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AdvancedApiOpsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Alias: Reference to a certificate or key/certificate
@@ -1600,9 +1600,9 @@ type GoogleCloudApigeeV1Alias struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Alias) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Alias) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Alias
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1AliasRevisionConfig struct {
@@ -1632,9 +1632,9 @@ type GoogleCloudApigeeV1AliasRevisionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AliasRevisionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AliasRevisionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AliasRevisionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AnalyticsConfig: Configuration for the Analytics add-on.
@@ -1668,9 +1668,9 @@ type GoogleCloudApigeeV1AnalyticsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AnalyticsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AnalyticsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AnalyticsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiCategory: `ApiCategory` represents an API category.
@@ -1700,9 +1700,9 @@ type GoogleCloudApigeeV1ApiCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiCategoryResponse: The API category resource wrapped
@@ -1734,9 +1734,9 @@ type GoogleCloudApigeeV1ApiCategoryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiCategoryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiDoc: `ApiDoc` represents an API catalog item. Catalog
@@ -1837,9 +1837,9 @@ type GoogleCloudApigeeV1ApiDoc struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiDoc) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiDoc) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiDoc
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiDocDocumentation: The documentation for a catalog
@@ -1862,9 +1862,9 @@ type GoogleCloudApigeeV1ApiDocDocumentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiDocDocumentation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiDocDocumentation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiDocDocumentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiDocDocumentationResponse: The catalog item
@@ -1896,9 +1896,9 @@ type GoogleCloudApigeeV1ApiDocDocumentationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiDocDocumentationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiDocDocumentationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiDocDocumentationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiDocResponse: The catalog item resource wrapped with
@@ -1930,9 +1930,9 @@ type GoogleCloudApigeeV1ApiDocResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiDocResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiDocResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiDocResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ApiProduct struct {
@@ -2079,9 +2079,9 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiProduct) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiProduct
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ApiProductRef struct {
@@ -2102,9 +2102,9 @@ type GoogleCloudApigeeV1ApiProductRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiProductRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiProductRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiProductRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiProxy: Metadata describing the API proxy
@@ -2153,9 +2153,9 @@ type GoogleCloudApigeeV1ApiProxy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiProxy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiProxy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiProxy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiProxyRevision: API proxy revision.
@@ -2251,9 +2251,9 @@ type GoogleCloudApigeeV1ApiProxyRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiProxyRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiProxyRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiProxyRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiSecurityConfig: Configurations of the API Security
@@ -2277,9 +2277,9 @@ type GoogleCloudApigeeV1ApiSecurityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiSecurityConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiSecurityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiSecurityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ApiSecurityRuntimeConfig: Response for
@@ -2315,9 +2315,9 @@ type GoogleCloudApigeeV1ApiSecurityRuntimeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiSecurityRuntimeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ApiSecurityRuntimeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiSecurityRuntimeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1App struct {
@@ -2372,9 +2372,9 @@ type GoogleCloudApigeeV1App struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1App) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1App) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1App
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AppGroup: AppGroup contains the request/response fields
@@ -2422,9 +2422,9 @@ type GoogleCloudApigeeV1AppGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AppGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AppGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AppGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AppGroupApp: Response for
@@ -2482,9 +2482,9 @@ type GoogleCloudApigeeV1AppGroupApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AppGroupApp) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AppGroupApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AppGroupApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1AppGroupAppKey: AppGroupAppKey contains all the
@@ -2532,9 +2532,9 @@ type GoogleCloudApigeeV1AppGroupAppKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AppGroupAppKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AppGroupAppKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AppGroupAppKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ArchiveDeployment: Archive Deployment information.
@@ -2579,9 +2579,9 @@ type GoogleCloudApigeeV1ArchiveDeployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ArchiveDeployment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ArchiveDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ArchiveDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1AsyncQuery struct {
@@ -2633,9 +2633,9 @@ type GoogleCloudApigeeV1AsyncQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AsyncQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AsyncQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AsyncQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1AsyncQueryResult struct {
@@ -2660,9 +2660,9 @@ type GoogleCloudApigeeV1AsyncQueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AsyncQueryResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AsyncQueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AsyncQueryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1AsyncQueryResultView struct {
@@ -2694,9 +2694,9 @@ type GoogleCloudApigeeV1AsyncQueryResultView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1AsyncQueryResultView) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1AsyncQueryResultView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AsyncQueryResultView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Attribute: Key-value pair to store extra metadata.
@@ -2721,9 +2721,9 @@ type GoogleCloudApigeeV1Attribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Attribute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Attribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Attribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Attributes struct {
@@ -2745,9 +2745,9 @@ type GoogleCloudApigeeV1Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Attributes) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest: Request for
@@ -2783,9 +2783,9 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll:
@@ -2813,9 +2813,9 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArra
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayR
@@ -2842,9 +2842,9 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArra
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse: Response
@@ -2874,9 +2874,9 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest: Request for
@@ -2898,9 +2898,9 @@ type GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse: Response for
@@ -2924,9 +2924,9 @@ type GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1CanaryEvaluation: CanaryEvaluation represents the canary
@@ -2979,9 +2979,9 @@ type GoogleCloudApigeeV1CanaryEvaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CanaryEvaluation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CanaryEvaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CanaryEvaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1CanaryEvaluationMetricLabels: Labels that can be used to
@@ -3007,9 +3007,9 @@ type GoogleCloudApigeeV1CanaryEvaluationMetricLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CanaryEvaluationMetricLabels) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CanaryEvaluationMetricLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CanaryEvaluationMetricLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1CertInfo: X.509 certificate as defined in RFC 5280.
@@ -3051,9 +3051,9 @@ type GoogleCloudApigeeV1CertInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CertInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CertInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CertInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Certificate struct {
@@ -3072,9 +3072,9 @@ type GoogleCloudApigeeV1Certificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Certificate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Certificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Certificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1CommonNameConfig struct {
@@ -3093,9 +3093,9 @@ type GoogleCloudApigeeV1CommonNameConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CommonNameConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CommonNameConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CommonNameConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ComputeEnvironmentScoresRequest: Request for
@@ -3134,9 +3134,9 @@ type GoogleCloudApigeeV1ComputeEnvironmentScoresRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ComputeEnvironmentScoresRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter: Filter scores by
@@ -3159,9 +3159,9 @@ type GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ComputeEnvironmentScoresResponse: Response for
@@ -3188,9 +3188,9 @@ type GoogleCloudApigeeV1ComputeEnvironmentScoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ComputeEnvironmentScoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ConfigVersion: Version of the API proxy configuration
@@ -3213,9 +3213,9 @@ type GoogleCloudApigeeV1ConfigVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ConfigVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ConfigVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ConfigVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ConnectorsPlatformConfig: Configuration for the
@@ -3240,9 +3240,9 @@ type GoogleCloudApigeeV1ConnectorsPlatformConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ConnectorsPlatformConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ConnectorsPlatformConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ConnectorsPlatformConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Credential struct {
@@ -3277,9 +3277,9 @@ type GoogleCloudApigeeV1Credential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Credential) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Credential) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Credential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1CreditDeveloperBalanceRequest: Request for
@@ -3309,9 +3309,9 @@ type GoogleCloudApigeeV1CreditDeveloperBalanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CreditDeveloperBalanceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CreditDeveloperBalanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CreditDeveloperBalanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1CustomReport struct {
@@ -3385,9 +3385,9 @@ type GoogleCloudApigeeV1CustomReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CustomReport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CustomReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CustomReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1CustomReportMetric: This encapsulates a metric property
@@ -3411,9 +3411,9 @@ type GoogleCloudApigeeV1CustomReportMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1CustomReportMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1CustomReportMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CustomReportMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DataCollector: Data collector configuration.
@@ -3454,9 +3454,9 @@ type GoogleCloudApigeeV1DataCollector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DataCollector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DataCollector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DataCollector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DataCollectorConfig: Data collector and its
@@ -3488,9 +3488,9 @@ type GoogleCloudApigeeV1DataCollectorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DataCollectorConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DataCollectorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DataCollectorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Datastore: The data store defines the connection to
@@ -3530,9 +3530,9 @@ type GoogleCloudApigeeV1Datastore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Datastore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Datastore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Datastore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DatastoreConfig: Configuration detail for datastore
@@ -3561,9 +3561,9 @@ type GoogleCloudApigeeV1DatastoreConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DatastoreConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DatastoreConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DatastoreConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DateRange: Date range of the data to export.
@@ -3588,9 +3588,9 @@ type GoogleCloudApigeeV1DateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DateRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1DebugMask struct {
@@ -3634,9 +3634,9 @@ type GoogleCloudApigeeV1DebugMask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DebugMask) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DebugMask) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DebugMask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1DebugSession struct {
@@ -3679,9 +3679,9 @@ type GoogleCloudApigeeV1DebugSession struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DebugSession) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DebugSession) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DebugSession
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DebugSessionTransaction: A transaction contains all of
@@ -3710,9 +3710,9 @@ type GoogleCloudApigeeV1DebugSessionTransaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DebugSessionTransaction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DebugSessionTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DebugSessionTransaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1DeleteCustomReportResponse struct {
@@ -3734,9 +3734,9 @@ type GoogleCloudApigeeV1DeleteCustomReportResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeleteCustomReportResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeleteCustomReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeleteCustomReportResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeleteResponse: Response for certain delete operations.
@@ -3767,9 +3767,9 @@ type GoogleCloudApigeeV1DeleteResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeleteResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeleteResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeleteResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Deployment struct {
@@ -3842,9 +3842,9 @@ type GoogleCloudApigeeV1Deployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Deployment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Deployment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Deployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentChangeReport: Response for
@@ -3885,9 +3885,9 @@ type GoogleCloudApigeeV1DeploymentChangeReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentChangeReport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentChangeReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentChangeReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentChangeReportRoutingChange: Describes a
@@ -3921,9 +3921,9 @@ type GoogleCloudApigeeV1DeploymentChangeReportRoutingChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentChangeReportRoutingChange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentChangeReportRoutingChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentChangeReportRoutingChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict: Describes a
@@ -3950,9 +3950,9 @@ type GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment: Tuple
@@ -3979,9 +3979,9 @@ type GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentConfig: NEXT ID: 11
@@ -4024,9 +4024,9 @@ type GoogleCloudApigeeV1DeploymentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeploymentGroupConfig: DeploymentGroupConfig represents a
@@ -4062,9 +4062,9 @@ type GoogleCloudApigeeV1DeploymentGroupConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeploymentGroupConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeploymentGroupConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentGroupConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Developer struct {
@@ -4120,9 +4120,9 @@ type GoogleCloudApigeeV1Developer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Developer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Developer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Developer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1DeveloperApp struct {
@@ -4178,9 +4178,9 @@ type GoogleCloudApigeeV1DeveloperApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperApp) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1DeveloperAppKey struct {
@@ -4225,9 +4225,9 @@ type GoogleCloudApigeeV1DeveloperAppKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperAppKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperAppKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperAppKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeveloperBalance: Account balance for the developer.
@@ -4251,9 +4251,9 @@ type GoogleCloudApigeeV1DeveloperBalance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperBalance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperBalance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperBalance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeveloperBalanceWallet: Wallet used to manage an account
@@ -4278,9 +4278,9 @@ type GoogleCloudApigeeV1DeveloperBalanceWallet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperBalanceWallet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperBalanceWallet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperBalanceWallet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeveloperMonetizationConfig: Monetization configuration
@@ -4311,9 +4311,9 @@ type GoogleCloudApigeeV1DeveloperMonetizationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperMonetizationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperMonetizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperMonetizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DeveloperSubscription: Structure of a
@@ -4352,9 +4352,9 @@ type GoogleCloudApigeeV1DeveloperSubscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DeveloperSubscription) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DeveloperSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeveloperSubscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DimensionMetric: Encapsulates a metric grouped by
@@ -4382,9 +4382,9 @@ type GoogleCloudApigeeV1DimensionMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DimensionMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1DisableSecurityActionRequest: Message to disable an
@@ -4413,9 +4413,9 @@ type GoogleCloudApigeeV1DocumentationFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1DocumentationFile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1DocumentationFile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DocumentationFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EnableSecurityActionRequest: Message to enable a disabled
@@ -4480,9 +4480,9 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EndpointAttachment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EndpointAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EndpointAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EndpointChainingRule: EndpointChainingRule specifies the
@@ -4508,9 +4508,9 @@ type GoogleCloudApigeeV1EndpointChainingRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EndpointChainingRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EndpointChainingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EndpointChainingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EntityMetadata: Metadata common to many entities in this
@@ -4537,9 +4537,9 @@ type GoogleCloudApigeeV1EntityMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EntityMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EntityMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EntityMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Environment struct {
@@ -4646,9 +4646,9 @@ type GoogleCloudApigeeV1Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Environment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1EnvironmentConfig struct {
@@ -4728,9 +4728,9 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EnvironmentConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EnvironmentGroup: EnvironmentGroup configuration. An
@@ -4773,9 +4773,9 @@ type GoogleCloudApigeeV1EnvironmentGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EnvironmentGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EnvironmentGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EnvironmentGroupAttachment: EnvironmentGroupAttachment is
@@ -4807,9 +4807,9 @@ type GoogleCloudApigeeV1EnvironmentGroupAttachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EnvironmentGroupAttachment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EnvironmentGroupAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentGroupAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1EnvironmentGroupConfig: EnvironmentGroupConfig is a
@@ -4854,9 +4854,9 @@ type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1EnvironmentGroupConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1EnvironmentGroupConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentGroupConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ExpireDeveloperSubscriptionRequest: Request for
@@ -4908,9 +4908,9 @@ type GoogleCloudApigeeV1Export struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Export) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Export) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Export
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ExportRequest: Request body for [CreateExportRequest]
@@ -4944,9 +4944,9 @@ type GoogleCloudApigeeV1ExportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ExportRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ExportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ExportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1FlowHook struct {
@@ -4980,9 +4980,9 @@ type GoogleCloudApigeeV1FlowHook struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1FlowHook) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1FlowHook) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1FlowHook
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1FlowHookConfig struct {
@@ -5010,9 +5010,9 @@ type GoogleCloudApigeeV1FlowHookConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1FlowHookConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1FlowHookConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1FlowHookConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GenerateDownloadUrlRequest: Request for
@@ -5042,9 +5042,9 @@ type GoogleCloudApigeeV1GenerateDownloadUrlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GenerateDownloadUrlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GenerateUploadUrlRequest: Request for GenerateUploadUrl
@@ -5074,9 +5074,9 @@ type GoogleCloudApigeeV1GenerateUploadUrlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GenerateUploadUrlResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GenerateUploadUrlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GenerateUploadUrlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse: The response for
@@ -5100,9 +5100,9 @@ type GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GetAsyncQueryResultUrlResponseURLInfo: A Signed URL and
@@ -5146,9 +5146,9 @@ type GoogleCloudApigeeV1GetAsyncQueryResultUrlResponseURLInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GetAsyncQueryResultUrlResponseURLInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GetAsyncQueryResultUrlResponseURLInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GetAsyncQueryResultUrlResponseURLInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GetSyncAuthorizationRequest: Request for
@@ -5180,9 +5180,9 @@ type GoogleCloudApigeeV1GraphQLOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GraphQLOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GraphQLOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GraphQLOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GraphQLOperationConfig: Binds the resources in a proxy or
@@ -5218,9 +5218,9 @@ type GoogleCloudApigeeV1GraphQLOperationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GraphQLOperationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GraphQLOperationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GraphQLOperationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GraphQLOperationGroup: List of graphQL operation
@@ -5250,9 +5250,9 @@ type GoogleCloudApigeeV1GraphQLOperationGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GraphQLOperationGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GraphQLOperationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GraphQLOperationGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GraphqlDocumentation: GraphQL documentation for a catalog
@@ -5276,9 +5276,9 @@ type GoogleCloudApigeeV1GraphqlDocumentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GraphqlDocumentation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GraphqlDocumentation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GraphqlDocumentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GrpcOperationConfig: Binds the resources in a proxy or
@@ -5315,9 +5315,9 @@ type GoogleCloudApigeeV1GrpcOperationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GrpcOperationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GrpcOperationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GrpcOperationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1GrpcOperationGroup: List of gRPC operation configuration
@@ -5339,9 +5339,9 @@ type GoogleCloudApigeeV1GrpcOperationGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1GrpcOperationGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1GrpcOperationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GrpcOperationGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1IngressConfig struct {
@@ -5375,9 +5375,9 @@ type GoogleCloudApigeeV1IngressConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1IngressConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1IngressConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1IngressConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Instance: Apigee runtime instance.
@@ -5477,9 +5477,9 @@ type GoogleCloudApigeeV1Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Instance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1InstanceAttachment: InstanceAttachment represents the
@@ -5508,9 +5508,9 @@ type GoogleCloudApigeeV1InstanceAttachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1InstanceAttachment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1InstanceAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1InstanceAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1InstanceDeploymentStatus: The status of a deployment as
@@ -5536,9 +5536,9 @@ type GoogleCloudApigeeV1InstanceDeploymentStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1InstanceDeploymentStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1InstanceDeploymentStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1InstanceDeploymentStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision: Revisions
@@ -5561,9 +5561,9 @@ type GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute: Route deployed in
@@ -5591,9 +5591,9 @@ type GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1IntegrationConfig: Configuration for the Integration
@@ -5614,9 +5614,9 @@ type GoogleCloudApigeeV1IntegrationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1IntegrationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1IntegrationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1IntegrationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1KeyAliasReference struct {
@@ -5638,9 +5638,9 @@ type GoogleCloudApigeeV1KeyAliasReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1KeyAliasReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1KeyAliasReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1KeyAliasReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1KeyValueEntry: Key value map pair where the value
@@ -5669,9 +5669,9 @@ type GoogleCloudApigeeV1KeyValueEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1KeyValueEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1KeyValueMap: Collection of key/value string pairs.
@@ -5699,9 +5699,9 @@ type GoogleCloudApigeeV1KeyValueMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1KeyValueMap) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1KeyValueMap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1KeyValueMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Keystore: Datastore for Certificates and Aliases.
@@ -5727,9 +5727,9 @@ type GoogleCloudApigeeV1Keystore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Keystore) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Keystore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Keystore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1KeystoreConfig struct {
@@ -5751,9 +5751,9 @@ type GoogleCloudApigeeV1KeystoreConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1KeystoreConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1KeystoreConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1KeystoreConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListApiCategoriesResponse: The response for
@@ -5785,9 +5785,9 @@ type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListApiCategoriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListApiCategoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiCategoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListApiDocsResponse struct {
@@ -5820,9 +5820,9 @@ type GoogleCloudApigeeV1ListApiDocsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListApiDocsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListApiDocsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiDocsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListApiProductsResponse struct {
@@ -5844,13 +5844,11 @@ type GoogleCloudApigeeV1ListApiProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListApiProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListApiProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListApiProxiesResponse: To change this message, in the
-// same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListApiProxiesResponse struct {
 	Proxies []*GoogleCloudApigeeV1ApiProxy `json:"proxies,omitempty"`
 
@@ -5869,9 +5867,9 @@ type GoogleCloudApigeeV1ListApiProxiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListApiProxiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListApiProxiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiProxiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListAppGroupAppsResponse: Response for ListAppGroupApps
@@ -5897,9 +5895,9 @@ type GoogleCloudApigeeV1ListAppGroupAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListAppGroupAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListAppGroupAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListAppGroupAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListAppGroupsResponse: ListAppGroupsResponse contains the
@@ -5929,9 +5927,9 @@ type GoogleCloudApigeeV1ListAppGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListAppGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListAppGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListAppGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListAppsResponse struct {
@@ -5957,9 +5955,9 @@ type GoogleCloudApigeeV1ListAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListArchiveDeploymentsResponse: Response for
@@ -5986,9 +5984,9 @@ type GoogleCloudApigeeV1ListArchiveDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListArchiveDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListArchiveDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListArchiveDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListAsyncQueriesResponse: The response for
@@ -6012,9 +6010,9 @@ type GoogleCloudApigeeV1ListAsyncQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListAsyncQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListAsyncQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListAsyncQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListCustomReportsResponse: This message encapsulates a
@@ -6037,9 +6035,9 @@ type GoogleCloudApigeeV1ListCustomReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListCustomReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListCustomReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListCustomReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListDataCollectorsResponse: Response for
@@ -6066,9 +6064,9 @@ type GoogleCloudApigeeV1ListDataCollectorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDataCollectorsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDataCollectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDataCollectorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListDatastoresResponse: The response for ListDatastores
@@ -6091,9 +6089,9 @@ type GoogleCloudApigeeV1ListDatastoresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDatastoresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDatastoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDatastoresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListDebugSessionsResponse struct {
@@ -6119,9 +6117,9 @@ type GoogleCloudApigeeV1ListDebugSessionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDebugSessionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDebugSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDebugSessionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListDeploymentsResponse struct {
@@ -6143,9 +6141,9 @@ type GoogleCloudApigeeV1ListDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListDeveloperAppsResponse struct {
@@ -6167,9 +6165,9 @@ type GoogleCloudApigeeV1ListDeveloperAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDeveloperAppsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDeveloperAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDeveloperAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse: Response for
@@ -6196,9 +6194,9 @@ type GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListEndpointAttachmentsResponse: Response for
@@ -6226,9 +6224,9 @@ type GoogleCloudApigeeV1ListEndpointAttachmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListEndpointAttachmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse: Response for
@@ -6257,9 +6255,9 @@ type GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListEnvironmentGroupsResponse: Response for
@@ -6286,9 +6284,9 @@ type GoogleCloudApigeeV1ListEnvironmentGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListEnvironmentGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListEnvironmentGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListEnvironmentGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListEnvironmentResourcesResponse: Response for
@@ -6312,9 +6310,9 @@ type GoogleCloudApigeeV1ListEnvironmentResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListEnvironmentResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListEnvironmentResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListEnvironmentResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListExportsResponse: The response for ListExports
@@ -6337,9 +6335,9 @@ type GoogleCloudApigeeV1ListExportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListExportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListExportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListExportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListHybridIssuersResponse struct {
@@ -6361,9 +6359,9 @@ type GoogleCloudApigeeV1ListHybridIssuersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListHybridIssuersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListHybridIssuersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListHybridIssuersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListInstanceAttachmentsResponse: Response for
@@ -6391,9 +6389,9 @@ type GoogleCloudApigeeV1ListInstanceAttachmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListInstanceAttachmentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListInstanceAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListInstanceAttachmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListInstancesResponse: Response for ListInstances.
@@ -6419,9 +6417,9 @@ type GoogleCloudApigeeV1ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListKeyValueEntriesResponse: The request structure for
@@ -6448,9 +6446,9 @@ type GoogleCloudApigeeV1ListKeyValueEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListKeyValueEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListKeyValueEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListKeyValueEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListNatAddressesResponse: Response for ListNatAddresses.
@@ -6476,9 +6474,9 @@ type GoogleCloudApigeeV1ListNatAddressesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListNatAddressesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListNatAddressesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListNatAddressesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListOfDevelopersResponse struct {
@@ -6500,9 +6498,9 @@ type GoogleCloudApigeeV1ListOfDevelopersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListOfDevelopersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListOfDevelopersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListOfDevelopersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ListOrganizationsResponse struct {
@@ -6525,9 +6523,9 @@ type GoogleCloudApigeeV1ListOrganizationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListOrganizationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListOrganizationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListOrganizationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListRatePlansResponse: Response for ListRatePlans.
@@ -6553,9 +6551,9 @@ type GoogleCloudApigeeV1ListRatePlansResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListRatePlansResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListSecurityActionsResponse: Contains a list of
@@ -6582,9 +6580,9 @@ type GoogleCloudApigeeV1ListSecurityActionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSecurityActionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSecurityActionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityActionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListSecurityIncidentsResponse: Response for
@@ -6611,9 +6609,9 @@ type GoogleCloudApigeeV1ListSecurityIncidentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityIncidentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse: Response for
@@ -6641,9 +6639,9 @@ type GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListSecurityProfilesResponse: Response for
@@ -6672,9 +6670,9 @@ type GoogleCloudApigeeV1ListSecurityProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSecurityProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSecurityProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListSecurityReportsResponse: The response for
@@ -6703,13 +6701,11 @@ type GoogleCloudApigeeV1ListSecurityReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSecurityReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSecurityReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSecurityReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListSharedFlowsResponse: To change this message, in the
-// same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListSharedFlowsResponse struct {
 	SharedFlows []*GoogleCloudApigeeV1SharedFlow `json:"sharedFlows,omitempty"`
 
@@ -6728,9 +6724,9 @@ type GoogleCloudApigeeV1ListSharedFlowsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListSharedFlowsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListSharedFlowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListSharedFlowsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ListTraceConfigOverridesResponse: Response for
@@ -6758,9 +6754,9 @@ type GoogleCloudApigeeV1ListTraceConfigOverridesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ListTraceConfigOverridesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ListTraceConfigOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListTraceConfigOverridesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Metadata: Encapsulates additional information about query
@@ -6787,9 +6783,9 @@ type GoogleCloudApigeeV1Metadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Metadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Metadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Metric: Encapsulates the metric data point. For example:
@@ -6817,9 +6813,9 @@ type GoogleCloudApigeeV1Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Metric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1MetricAggregation: The optionally aggregated metric to
@@ -6859,9 +6855,9 @@ type GoogleCloudApigeeV1MetricAggregation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1MetricAggregation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1MetricAggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1MetricAggregation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1MonetizationConfig: Configuration for the Monetization
@@ -6882,9 +6878,9 @@ type GoogleCloudApigeeV1MonetizationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1MonetizationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1MonetizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1MonetizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1NatAddress: Apigee NAT(network address translation)
@@ -6921,9 +6917,9 @@ type GoogleCloudApigeeV1NatAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1NatAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1NatAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1NatAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1NodeConfig: NodeConfig for setting the min/max number of
@@ -6955,9 +6951,9 @@ type GoogleCloudApigeeV1NodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1NodeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1NodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OASDocumentation: OpenAPI Specification documentation for
@@ -6986,9 +6982,9 @@ type GoogleCloudApigeeV1OASDocumentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OASDocumentation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OASDocumentation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OASDocumentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Operation: Represents the pairing of REST resource path
@@ -7014,9 +7010,9 @@ type GoogleCloudApigeeV1Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Operation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OperationConfig: Binds the resources in an API proxy or
@@ -7050,9 +7046,9 @@ type GoogleCloudApigeeV1OperationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OperationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OperationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OperationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OperationGroup: List of operation configuration details
@@ -7082,9 +7078,9 @@ type GoogleCloudApigeeV1OperationGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OperationGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OperationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OperationGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OperationMetadata: Metadata describing an Operation.
@@ -7121,9 +7117,9 @@ type GoogleCloudApigeeV1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OperationMetadataProgress: Information about operation
@@ -7156,9 +7152,9 @@ type GoogleCloudApigeeV1OperationMetadataProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OperationMetadataProgress) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OperationMetadataProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OperationMetadataProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1OptimizedStats struct {
@@ -7189,9 +7185,9 @@ type GoogleCloudApigeeV1OptimizedStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OptimizedStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OptimizedStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OptimizedStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OptimizedStatsNode: Encapsulates a data node as
@@ -7216,9 +7212,9 @@ type GoogleCloudApigeeV1OptimizedStatsNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OptimizedStatsNode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OptimizedStatsNode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OptimizedStatsNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1OptimizedStatsResponse: Encapsulates a response format
@@ -7247,9 +7243,9 @@ type GoogleCloudApigeeV1OptimizedStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OptimizedStatsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OptimizedStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OptimizedStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Organization struct {
@@ -7423,9 +7419,9 @@ type GoogleCloudApigeeV1Organization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Organization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Organization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1OrganizationProjectMapping struct {
@@ -7456,9 +7452,9 @@ type GoogleCloudApigeeV1OrganizationProjectMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1OrganizationProjectMapping) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1OrganizationProjectMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1OrganizationProjectMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1PodStatus struct {
@@ -7499,9 +7495,9 @@ type GoogleCloudApigeeV1PodStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1PodStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1PodStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1PodStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Point: Point is a group of information collected by
@@ -7532,9 +7528,9 @@ type GoogleCloudApigeeV1Point struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Point
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ProfileConfig: ProfileConfig defines a set of categories
@@ -7555,9 +7551,9 @@ type GoogleCloudApigeeV1ProfileConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ProfileConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ProfileConfigAbuse: Checks for abuse, which includes any
@@ -7607,9 +7603,9 @@ type GoogleCloudApigeeV1ProfileConfigCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ProfileConfigCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ProfileConfigMTLS: Checks to see if you have configured
@@ -7645,9 +7641,9 @@ type GoogleCloudApigeeV1Properties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Properties) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Properties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Properties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Property: A single property entry in the Properties
@@ -7670,9 +7666,9 @@ type GoogleCloudApigeeV1Property struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Property) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Property) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Property
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ProvisionOrganizationRequest: Request for
@@ -7722,9 +7718,9 @@ type GoogleCloudApigeeV1ProvisionOrganizationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ProvisionOrganizationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ProvisionOrganizationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ProvisionOrganizationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1Query struct {
@@ -7789,9 +7785,9 @@ type GoogleCloudApigeeV1Query struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Query) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Query) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Query
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1QueryMetadata struct {
@@ -7821,9 +7817,9 @@ type GoogleCloudApigeeV1QueryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryMetric: More info about Metric:
@@ -7853,9 +7849,9 @@ type GoogleCloudApigeeV1QueryMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryTabularStatsRequest: Request payload representing
@@ -7889,9 +7885,9 @@ type GoogleCloudApigeeV1QueryTabularStatsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryTabularStatsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryTabularStatsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryTabularStatsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryTabularStatsResponse: Encapsulates two kinds of
@@ -7922,9 +7918,9 @@ type GoogleCloudApigeeV1QueryTabularStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryTabularStatsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryTabularStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryTabularStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryTimeSeriesStatsRequest: QueryTimeSeriesStatsRequest
@@ -7980,9 +7976,9 @@ type GoogleCloudApigeeV1QueryTimeSeriesStatsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryTimeSeriesStatsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryTimeSeriesStatsResponse: Represents security stats
@@ -8011,9 +8007,9 @@ type GoogleCloudApigeeV1QueryTimeSeriesStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryTimeSeriesStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence: A sequence of time
@@ -8037,9 +8033,9 @@ type GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Quota: Quota contains the essential parameters needed
@@ -8070,9 +8066,9 @@ type GoogleCloudApigeeV1Quota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Quota) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Quota) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Quota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RatePlan: Rate plan details.
@@ -8193,9 +8189,9 @@ type GoogleCloudApigeeV1RatePlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RatePlan) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RatePlan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RatePlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RateRange: API call volume range and the fees charged
@@ -8222,9 +8218,9 @@ type GoogleCloudApigeeV1RateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RateRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Reference: A Reference configuration. References must
@@ -8258,9 +8254,9 @@ type GoogleCloudApigeeV1Reference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Reference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Reference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Reference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ReferenceConfig struct {
@@ -8284,9 +8280,9 @@ type GoogleCloudApigeeV1ReferenceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ReferenceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ReferenceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ReferenceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ReportInstanceStatusRequest: Request for
@@ -8315,9 +8311,9 @@ type GoogleCloudApigeeV1ReportInstanceStatusRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ReportInstanceStatusRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ReportInstanceStatusRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ReportInstanceStatusRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ReportInstanceStatusResponse: Placeholder for future
@@ -8345,9 +8341,9 @@ type GoogleCloudApigeeV1ReportProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ReportProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ReportProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ReportProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ResourceConfig struct {
@@ -8370,9 +8366,9 @@ type GoogleCloudApigeeV1ResourceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ResourceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ResourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ResourceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ResourceFile: Metadata about a resource file.
@@ -8397,9 +8393,9 @@ type GoogleCloudApigeeV1ResourceFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ResourceFile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ResourceFile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ResourceFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ResourceFiles: List of resource files.
@@ -8419,9 +8415,9 @@ type GoogleCloudApigeeV1ResourceFiles struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ResourceFiles) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ResourceFiles) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ResourceFiles
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ResourceStatus: The status of a resource loaded in the
@@ -8453,9 +8449,9 @@ type GoogleCloudApigeeV1ResourceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ResourceStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ResourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ResourceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Result: Result is short for "action result", could be
@@ -8513,9 +8509,9 @@ type GoogleCloudApigeeV1Result struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Result) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Result) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Result
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RevenueShareRange: API call volume range and the
@@ -8546,9 +8542,9 @@ type GoogleCloudApigeeV1RevenueShareRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RevenueShareRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RevenueShareRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RevenueShareRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudApigeeV1RevenueShareRange) UnmarshalJSON(data []byte) error {
@@ -8591,9 +8587,9 @@ type GoogleCloudApigeeV1RevisionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RevisionStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RevisionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RevisionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1RoutingRule struct {
@@ -8644,9 +8640,9 @@ type GoogleCloudApigeeV1RoutingRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RoutingRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RoutingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RoutingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeAddonsConfig: RuntimeAddonsConfig defines the
@@ -8678,9 +8674,9 @@ type GoogleCloudApigeeV1RuntimeAddonsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeAddonsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeAddonsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeAddonsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeAnalyticsConfig: Runtime configuration for the
@@ -8703,9 +8699,9 @@ type GoogleCloudApigeeV1RuntimeAnalyticsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeAnalyticsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeAnalyticsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeAnalyticsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeApiSecurityConfig: Runtime configuration for the
@@ -8726,9 +8722,9 @@ type GoogleCloudApigeeV1RuntimeApiSecurityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeApiSecurityConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeApiSecurityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeApiSecurityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeConfig: Runtime configuration for the
@@ -8765,9 +8761,9 @@ type GoogleCloudApigeeV1RuntimeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 8 RuntimeTraceConfig defines
@@ -8809,9 +8805,9 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 7 Trace
@@ -8848,9 +8844,9 @@ type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeTraceConfigOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeTraceConfigOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfigOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1RuntimeTraceSamplingConfig: NEXT ID: 3
@@ -8885,9 +8881,9 @@ type GoogleCloudApigeeV1RuntimeTraceSamplingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1RuntimeTraceSamplingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1RuntimeTraceSamplingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeTraceSamplingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudApigeeV1RuntimeTraceSamplingConfig) UnmarshalJSON(data []byte) error {
@@ -8930,9 +8926,9 @@ type GoogleCloudApigeeV1Schema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Schema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Schema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SchemaSchemaElement: Message type for the schema element
@@ -8955,9 +8951,9 @@ type GoogleCloudApigeeV1SchemaSchemaElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SchemaSchemaElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SchemaSchemaElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SchemaSchemaElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SchemaSchemaProperty: Properties for the schema field.
@@ -8984,9 +8980,9 @@ type GoogleCloudApigeeV1SchemaSchemaProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SchemaSchemaProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SchemaSchemaProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SchemaSchemaProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Score: Represents Security Score.
@@ -9010,9 +9006,9 @@ type GoogleCloudApigeeV1Score struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Score) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Score) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Score
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ScoreComponent: Component is an individual security
@@ -9045,9 +9041,9 @@ type GoogleCloudApigeeV1ScoreComponent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ScoreComponent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ScoreComponent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ScoreComponent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ScoreComponentRecommendation: Recommendation based on
@@ -9075,9 +9071,9 @@ type GoogleCloudApigeeV1ScoreComponentRecommendation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ScoreComponentRecommendation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ScoreComponentRecommendation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ScoreComponentRecommendationAction: Action to improve
@@ -9100,9 +9096,9 @@ type GoogleCloudApigeeV1ScoreComponentRecommendationAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ScoreComponentRecommendationAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ScoreComponentRecommendationAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendationAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext: Action
@@ -9123,9 +9119,9 @@ type GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAction: A SecurityAction is rule that can be
@@ -9186,9 +9182,9 @@ type GoogleCloudApigeeV1SecurityAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityActionAllow: Message that should be set in case
@@ -9252,9 +9248,9 @@ type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityActionConditionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityActionConditionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityActionConditionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityActionDeny: Message that should be set in case of
@@ -9275,9 +9271,9 @@ type GoogleCloudApigeeV1SecurityActionDeny struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityActionDeny) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityActionDeny) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityActionDeny
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityActionFlag: The message that should be set in the
@@ -9300,9 +9296,9 @@ type GoogleCloudApigeeV1SecurityActionFlag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityActionFlag) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityActionFlag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityActionFlag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityActionHttpHeader: An HTTP header.
@@ -9324,9 +9320,9 @@ type GoogleCloudApigeeV1SecurityActionHttpHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityActionHttpHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityActionHttpHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityActionHttpHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityActionsConfig: SecurityActionsConfig reflects the
@@ -9359,9 +9355,9 @@ type GoogleCloudApigeeV1SecurityActionsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityActionsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityActionsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityActionsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResult: The security assessment result
@@ -9389,9 +9385,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResultResource: Resource for which we
@@ -9421,9 +9417,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResultResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResultResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResultResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResultScoringResult: The result of the
@@ -9464,9 +9460,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResultScoringResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendat
@@ -9507,9 +9503,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommend
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendat
@@ -9532,9 +9528,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommend
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendat
@@ -9557,9 +9553,9 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommend
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityIncident: Represents an SecurityIncident
@@ -9620,9 +9616,9 @@ type GoogleCloudApigeeV1SecurityIncident struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityIncident
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityProfile: Represents a SecurityProfile resource.
@@ -9673,9 +9669,9 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityProfile) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityProfileEnvironment: Environment information of
@@ -9700,9 +9696,9 @@ type GoogleCloudApigeeV1SecurityProfileEnvironment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityProfileEnvironment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityProfileEnvironment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityProfileEnvironment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation: Represents a
@@ -9732,9 +9728,9 @@ type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityProfileScoringConfig: Security configurations to
@@ -9759,9 +9755,9 @@ type GoogleCloudApigeeV1SecurityProfileScoringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityProfileScoringConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityProfileScoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityProfileScoringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReport: SecurityReport saves all the information
@@ -9817,9 +9813,9 @@ type GoogleCloudApigeeV1SecurityReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReport) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReportMetadata: Metadata for the security report.
@@ -9850,9 +9846,9 @@ type GoogleCloudApigeeV1SecurityReportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReportQuery: Body structure when user makes a
@@ -9918,9 +9914,9 @@ type GoogleCloudApigeeV1SecurityReportQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReportQuery) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReportQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReportQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReportQueryMetric: Metric of the Query
@@ -9949,9 +9945,9 @@ type GoogleCloudApigeeV1SecurityReportQueryMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReportQueryMetric) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReportQueryMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReportQueryMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReportResultMetadata: Contains informations about
@@ -9981,9 +9977,9 @@ type GoogleCloudApigeeV1SecurityReportResultMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReportResultMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReportResultMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReportResultMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecurityReportResultView: The response for security
@@ -10017,9 +10013,9 @@ type GoogleCloudApigeeV1SecurityReportResultView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecurityReportResultView) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecurityReportResultView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityReportResultView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SecuritySettings: SecuritySettings reflects the current
@@ -10047,9 +10043,9 @@ type GoogleCloudApigeeV1SecuritySettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SecuritySettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SecuritySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecuritySettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1ServiceIssuersMapping struct {
@@ -10070,9 +10066,9 @@ type GoogleCloudApigeeV1ServiceIssuersMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ServiceIssuersMapping) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1ServiceIssuersMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ServiceIssuersMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Session: Session carries the debug session id and its
@@ -10096,9 +10092,9 @@ type GoogleCloudApigeeV1Session struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Session) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Session) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Session
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SetAddonEnablementRequest: Request for
@@ -10122,9 +10118,9 @@ type GoogleCloudApigeeV1SetAddonEnablementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SetAddonEnablementRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SetAddonEnablementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SetAddonEnablementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SetAddonsRequest: Request for SetAddons.
@@ -10144,9 +10140,9 @@ type GoogleCloudApigeeV1SetAddonsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SetAddonsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SetAddonsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SetAddonsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SharedFlow: The metadata describing a shared flow
@@ -10176,9 +10172,9 @@ type GoogleCloudApigeeV1SharedFlow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SharedFlow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SharedFlow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SharedFlow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1SharedFlowRevision: The metadata describing a shared flow
@@ -10236,9 +10232,9 @@ type GoogleCloudApigeeV1SharedFlowRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SharedFlowRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SharedFlowRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SharedFlowRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Stats: Encapsulates a `stats` response.
@@ -10265,9 +10261,9 @@ type GoogleCloudApigeeV1Stats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Stats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Stats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Stats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1StatsEnvironmentStats: Encapsulates the environment
@@ -10303,9 +10299,9 @@ type GoogleCloudApigeeV1StatsEnvironmentStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1StatsEnvironmentStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1StatsEnvironmentStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1StatsEnvironmentStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1StatsHostStats: Encapsulates the hostname wrapper: ```
@@ -10339,9 +10335,9 @@ type GoogleCloudApigeeV1StatsHostStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1StatsHostStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1StatsHostStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1StatsHostStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Subscription: Pub/Sub subscription of an environment.
@@ -10365,9 +10361,9 @@ type GoogleCloudApigeeV1Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Subscription) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1SyncAuthorization struct {
@@ -10408,9 +10404,9 @@ type GoogleCloudApigeeV1SyncAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1SyncAuthorization) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1SyncAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SyncAuthorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TargetServer: TargetServer configuration. TargetServers
@@ -10467,9 +10463,9 @@ type GoogleCloudApigeeV1TargetServer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TargetServer) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TargetServer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TargetServer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1TargetServerConfig struct {
@@ -10513,9 +10509,9 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TargetServerConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TargetServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TargetServerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TestDatastoreResponse: The response for TestDatastore
@@ -10540,9 +10536,9 @@ type GoogleCloudApigeeV1TestDatastoreResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TestDatastoreResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TestDatastoreResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TestDatastoreResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TlsInfo: TLS configuration information for virtual hosts
@@ -10595,9 +10591,9 @@ type GoogleCloudApigeeV1TlsInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TlsInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TlsInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TlsInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1TlsInfoCommonName struct {
@@ -10619,9 +10615,9 @@ type GoogleCloudApigeeV1TlsInfoCommonName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TlsInfoCommonName) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TlsInfoCommonName) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TlsInfoCommonName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudApigeeV1TlsInfoConfig struct {
@@ -10667,9 +10663,9 @@ type GoogleCloudApigeeV1TlsInfoConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TlsInfoConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TlsInfoConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TlsInfoConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TraceConfig: TraceConfig defines the configurations in an
@@ -10707,9 +10703,9 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TraceConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TraceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TraceConfigOverride: A representation of a configuration
@@ -10739,9 +10735,9 @@ type GoogleCloudApigeeV1TraceConfigOverride struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TraceConfigOverride) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TraceConfigOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TraceConfigOverride
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1TraceSamplingConfig: TraceSamplingConfig represents the
@@ -10775,9 +10771,9 @@ type GoogleCloudApigeeV1TraceSamplingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1TraceSamplingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1TraceSamplingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TraceSamplingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudApigeeV1TraceSamplingConfig) UnmarshalJSON(data []byte) error {
@@ -10821,9 +10817,9 @@ type GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1UpdateError: Details on why a resource update failed in
@@ -10933,9 +10929,9 @@ type GoogleCloudApigeeV1UpdateError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1UpdateError) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1UpdateError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1UpdateError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1UpdateSecurityIncidentRequest: Request for
@@ -10961,9 +10957,9 @@ type GoogleCloudApigeeV1UpdateSecurityIncidentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1UpdateSecurityIncidentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudApigeeV1UpdateSecurityIncidentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1UpdateSecurityIncidentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -11002,9 +10998,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -11037,9 +11033,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -11136,9 +11132,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -11228,9 +11224,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -11257,9 +11253,9 @@ type GoogleIamV1SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsRequest: Request message for
@@ -11283,9 +11279,9 @@ type GoogleIamV1TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsResponse: Response message for
@@ -11310,9 +11306,9 @@ type GoogleIamV1TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -11339,9 +11335,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -11386,9 +11382,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -11421,9 +11417,9 @@ type GoogleRpcPreconditionFailure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcPreconditionFailure) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcPreconditionFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcPreconditionFailure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcPreconditionFailureViolation: A message type used to describe a
@@ -11454,9 +11450,9 @@ type GoogleRpcPreconditionFailureViolation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcPreconditionFailureViolation) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcPreconditionFailureViolation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcPreconditionFailureViolation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -11488,9 +11484,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -11536,9 +11532,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeInterval: Represents a time interval, encoded as a Timestamp start
@@ -11567,9 +11563,9 @@ type GoogleTypeInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeInterval) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -11598,9 +11594,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HybridIssuersListCall struct {

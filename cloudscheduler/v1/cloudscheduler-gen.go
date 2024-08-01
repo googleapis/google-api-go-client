@@ -255,9 +255,9 @@ type AppEngineHttpTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
+func (s AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineHttpTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppEngineRouting: App Engine Routing. For more information about services,
@@ -323,9 +323,9 @@ type AppEngineRouting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppEngineRouting) MarshalJSON() ([]byte, error) {
+func (s AppEngineRouting) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineRouting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -413,9 +413,9 @@ type HttpTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpTarget) MarshalJSON() ([]byte, error) {
+func (s HttpTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Job: Configuration for a job. The maximum allowed size for a job is 1MB.
@@ -523,9 +523,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobsResponse: Response message for listing jobs using ListJobs.
@@ -553,9 +553,9 @@ type ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -581,9 +581,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -619,9 +619,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuthToken: Contains information needed for generating an OAuth token
@@ -651,9 +651,9 @@ type OAuthToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OAuthToken) MarshalJSON() ([]byte, error) {
+func (s OAuthToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OidcToken: Contains information needed for generating an OpenID Connect
@@ -683,9 +683,9 @@ type OidcToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OidcToken) MarshalJSON() ([]byte, error) {
+func (s OidcToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OidcToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PauseJobRequest: Request message for PauseJob.
@@ -739,9 +739,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubTarget: Pub/Sub target. The job will be delivered by publishing a
@@ -773,9 +773,9 @@ type PubsubTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubTarget) MarshalJSON() ([]byte, error) {
+func (s PubsubTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResumeJobRequest: Request message for ResumeJob.
@@ -834,9 +834,9 @@ type RetryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetryConfig) MarshalJSON() ([]byte, error) {
+func (s RetryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunJobRequest: Request message for forcing a job to run now using RunJob.
@@ -872,9 +872,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

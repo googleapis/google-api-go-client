@@ -231,6 +231,61 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
+// google.longrunning.Operation results from
+// FirestoreAdmin.BulkDeleteDocuments.
+type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
+	// CollectionIds: The ids of the collection groups that are being deleted.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
+	EndTime string `json:"endTime,omitempty"`
+	// NamespaceIds: Which namespace ids are being deleted.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+	// OperationState: The state of the operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1Progress `json:"progressBytes,omitempty"`
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1Progress `json:"progressDocuments,omitempty"`
+	// SnapshotTime: The timestamp that corresponds to the version of the database
+	// that is being read to get the list of documents to delete. This time can
+	// also be used as the timestamp of PITR in case of disaster recovery (subject
+	// to PITR window limit).
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the create
 // database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
@@ -262,9 +317,9 @@ type GoogleFirestoreAdminV1Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the long-running
@@ -309,9 +364,9 @@ type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the update
@@ -363,9 +418,9 @@ type GoogleFirestoreAdminV1beta2ExportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ExportDocumentsRequest: The request for
@@ -396,9 +451,9 @@ type GoogleFirestoreAdminV1beta2ExportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ExportDocumentsResponse: Returned in the
@@ -421,9 +476,9 @@ type GoogleFirestoreAdminV1beta2ExportDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2Field: Represents a single field in the database.
@@ -470,9 +525,9 @@ type GoogleFirestoreAdminV1beta2Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2Field) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2Field) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2FieldOperationMetadata: Metadata for
@@ -522,9 +577,9 @@ type GoogleFirestoreAdminV1beta2FieldOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2FieldOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2FieldOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2FieldOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ImportDocumentsMetadata: Metadata for
@@ -571,9 +626,9 @@ type GoogleFirestoreAdminV1beta2ImportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ImportDocumentsRequest: The request for
@@ -600,9 +655,9 @@ type GoogleFirestoreAdminV1beta2ImportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2Index: Cloud Firestore indexes enable simple and
@@ -674,9 +729,9 @@ type GoogleFirestoreAdminV1beta2Index struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2Index) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2Index) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Index
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2IndexConfig: The index configuration for this
@@ -713,9 +768,9 @@ type GoogleFirestoreAdminV1beta2IndexConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2IndexConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2IndexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2IndexConfigDelta: Information about an index
@@ -743,9 +798,9 @@ type GoogleFirestoreAdminV1beta2IndexConfigDelta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2IndexConfigDelta) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2IndexConfigDelta) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexConfigDelta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2IndexField: A field in an index. The field_path
@@ -784,9 +839,9 @@ type GoogleFirestoreAdminV1beta2IndexField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2IndexField) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2IndexField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2IndexOperationMetadata: Metadata for
@@ -833,9 +888,9 @@ type GoogleFirestoreAdminV1beta2IndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2IndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2IndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ListFieldsResponse: The response for
@@ -862,9 +917,9 @@ type GoogleFirestoreAdminV1beta2ListFieldsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ListFieldsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ListFieldsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ListFieldsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ListIndexesResponse: The response for
@@ -891,9 +946,9 @@ type GoogleFirestoreAdminV1beta2ListIndexesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2ListIndexesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2ListIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ListIndexesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2Progress: Describes the progress of the
@@ -917,9 +972,9 @@ type GoogleFirestoreAdminV1beta2Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirestoreAdminV1beta2Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleFirestoreAdminV1beta2Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -964,9 +1019,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -998,9 +1053,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsDatabasesExportDocumentsCall struct {

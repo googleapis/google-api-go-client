@@ -213,9 +213,9 @@ type GoogleFirebaseFcmDataV1beta1AndroidDeliveryData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1AndroidDeliveryData) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1AndroidDeliveryData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1AndroidDeliveryData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1Data: Data detailing messaging delivery
@@ -252,9 +252,9 @@ type GoogleFirebaseFcmDataV1beta1Data struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1Data) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1Data) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1Data
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents: Overview of
@@ -300,9 +300,9 @@ type GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) UnmarshalJSON(data []byte) error {
@@ -352,9 +352,9 @@ type GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1MessageInsightPercents: Additional information
@@ -378,9 +378,9 @@ type GoogleFirebaseFcmDataV1beta1MessageInsightPercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1MessageInsightPercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1MessageInsightPercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1MessageInsightPercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1MessageInsightPercents) UnmarshalJSON(data []byte) error {
@@ -455,9 +455,9 @@ type GoogleFirebaseFcmDataV1beta1MessageOutcomePercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1MessageOutcomePercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data []byte) error {
@@ -527,9 +527,9 @@ type GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) UnmarshalJSON(data []byte) error {
@@ -589,9 +589,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsAndroidAppsDeliveryDataListCall struct {

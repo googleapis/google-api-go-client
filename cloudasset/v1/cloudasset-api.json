@@ -1095,7 +1095,7 @@
       }
     }
   },
-  "revision": "20240608",
+  "revision": "20240717",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AccessSelector": {
@@ -2600,6 +2600,7 @@
       "properties": {
         "etag": {
           "description": "Output only. An opaque identifier for the current version of the `AccessPolicy`. This will always be a strongly validated etag, meaning that two Access Policies will be identical if and only if their etags are identical. Clients should not expect this to be in any specific format.",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
@@ -4075,7 +4076,7 @@
       "type": "object"
     },
     "ResourceSearchResult": {
-      "description": "A result of Resource Search, containing information of a cloud resource. Next ID: 36",
+      "description": "A result of Resource Search, containing information of a cloud resource.",
       "id": "ResourceSearchResult",
       "properties": {
         "additionalAttributes": {

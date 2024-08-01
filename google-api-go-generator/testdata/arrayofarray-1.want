@@ -157,7 +157,7 @@ type GeoJsonMultiPolygon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
+func (s GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoJsonMultiPolygon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

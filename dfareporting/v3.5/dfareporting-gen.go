@@ -189,9 +189,9 @@ type ClickTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClickTag) MarshalJSON() ([]byte, error) {
+func (s ClickTag) MarshalJSON() ([]byte, error) {
 	type NoMethod ClickTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeAssetId: Creative Asset ID.
@@ -225,9 +225,9 @@ type CreativeAssetId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreativeAssetId) MarshalJSON() ([]byte, error) {
+func (s CreativeAssetId) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeAssetId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeAssetMetadata: CreativeAssets contains properties of a creative
@@ -391,9 +391,9 @@ type CreativeAssetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
+func (s CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeAssetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeClickThroughUrl: Click-through URL
@@ -422,9 +422,9 @@ type CreativeClickThroughUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreativeClickThroughUrl) MarshalJSON() ([]byte, error) {
+func (s CreativeClickThroughUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeClickThroughUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeCustomEvent: Creative Custom Event.
@@ -487,9 +487,9 @@ type CreativeCustomEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreativeCustomEvent) MarshalJSON() ([]byte, error) {
+func (s CreativeCustomEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeCustomEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
@@ -530,9 +530,9 @@ type DimensionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionValue) MarshalJSON() ([]byte, error) {
+func (s DimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaRequestInfo: Extra information added to operations that support Scotty
@@ -608,9 +608,9 @@ type MediaRequestInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaRequestInfo) MarshalJSON() ([]byte, error) {
+func (s MediaRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaRequestInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaResponseInfo: This message is for backends to pass their scotty media
@@ -679,8 +679,9 @@ type MediaResponseInfo struct {
 	//   "NC0" - Network control
 	//   "BE0" - Best effort at high packet loss
 	//   "LLQ" - Low-latency queue (LLQ) best effort (go/llq)
-	//   "LLQ1" - LLQ best effort (go/llq2)
+	//   "LLQ1" - LLQ assured forwarding priority 1 (go/llq2)
 	//   "LLQ2" - LLQ assured forwarding priority 2 (go/llq2)
+	//   "LLQ3" - LLQ assured forwarding priority 3 (go/llq3)
 	TrafficClassField string `json:"trafficClassField,omitempty"`
 	// VerifyHashFromHeader: Tells Scotty to verify hashes on the agent's behalf by
 	// parsing out the X-Goog-Hash header.
@@ -698,9 +699,9 @@ type MediaResponseInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaResponseInfo) MarshalJSON() ([]byte, error) {
+func (s MediaResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaResponseInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OffsetPosition: Offset Position.
@@ -722,9 +723,9 @@ type OffsetPosition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OffsetPosition) MarshalJSON() ([]byte, error) {
+func (s OffsetPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod OffsetPosition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PopupWindowProperties: Popup Window Properties.
@@ -767,9 +768,9 @@ type PopupWindowProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PopupWindowProperties) MarshalJSON() ([]byte, error) {
+func (s PopupWindowProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod PopupWindowProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Size: Represents the dimensions of ads, placements, creatives, or creative
@@ -799,9 +800,9 @@ type Size struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Size) MarshalJSON() ([]byte, error) {
+func (s Size) MarshalJSON() ([]byte, error) {
 	type NoMethod Size
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MediaUploadCall struct {

@@ -252,9 +252,9 @@ type Catalog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Catalog) MarshalJSON() ([]byte, error) {
+func (s Catalog) MarshalJSON() ([]byte, error) {
 	type NoMethod Catalog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Database: Database is the container of tables.
@@ -298,9 +298,9 @@ type Database struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Database) MarshalJSON() ([]byte, error) {
+func (s Database) MarshalJSON() ([]byte, error) {
 	type NoMethod Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveDatabaseOptions: Options of a Hive database.
@@ -323,9 +323,9 @@ type HiveDatabaseOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HiveDatabaseOptions) MarshalJSON() ([]byte, error) {
+func (s HiveDatabaseOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveDatabaseOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveTableOptions: Options of a Hive table.
@@ -349,9 +349,9 @@ type HiveTableOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HiveTableOptions) MarshalJSON() ([]byte, error) {
+func (s HiveTableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveTableOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCatalogsResponse: Response message for the ListCatalogs method.
@@ -377,9 +377,9 @@ type ListCatalogsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCatalogsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCatalogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCatalogsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatabasesResponse: Response message for the ListDatabases method.
@@ -405,9 +405,9 @@ type ListDatabasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatabasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatabasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTablesResponse: Response message for the ListTables method.
@@ -433,9 +433,9 @@ type ListTablesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTablesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTablesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RenameTableRequest: Request message for the RenameTable method in
@@ -459,9 +459,9 @@ type RenameTableRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RenameTableRequest) MarshalJSON() ([]byte, error) {
+func (s RenameTableRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RenameTableRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SerDeInfo: Serializer and deserializer information.
@@ -482,9 +482,9 @@ type SerDeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SerDeInfo) MarshalJSON() ([]byte, error) {
+func (s SerDeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SerDeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDescriptor: Stores physical storage information of the data.
@@ -511,9 +511,9 @@ type StorageDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDescriptor) MarshalJSON() ([]byte, error) {
+func (s StorageDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Table: Represents a table.
@@ -561,9 +561,9 @@ type Table struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Table) MarshalJSON() ([]byte, error) {
+func (s Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsCatalogsCreateCall struct {

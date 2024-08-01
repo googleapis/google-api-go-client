@@ -205,9 +205,9 @@ type AnalyticsInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyticsInfo) MarshalJSON() ([]byte, error) {
+func (s AnalyticsInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidInfo: Android related attributes to the Dynamic Link.
@@ -236,9 +236,9 @@ type AndroidInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidInfo) MarshalJSON() ([]byte, error) {
+func (s AndroidInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateManagedShortLinkRequest: Request to create a managed Short Dynamic
@@ -276,9 +276,9 @@ type CreateManagedShortLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateManagedShortLinkRequest) MarshalJSON() ([]byte, error) {
+func (s CreateManagedShortLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateManagedShortLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateManagedShortLinkResponse: Response to create a short Dynamic Link.
@@ -306,9 +306,9 @@ type CreateManagedShortLinkResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateManagedShortLinkResponse) MarshalJSON() ([]byte, error) {
+func (s CreateManagedShortLinkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateManagedShortLinkResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateShortDynamicLinkRequest: Request to create a short Dynamic Link.
@@ -341,9 +341,9 @@ type CreateShortDynamicLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateShortDynamicLinkRequest) MarshalJSON() ([]byte, error) {
+func (s CreateShortDynamicLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateShortDynamicLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateShortDynamicLinkResponse: Response to create a short Dynamic Link.
@@ -370,9 +370,9 @@ type CreateShortDynamicLinkResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateShortDynamicLinkResponse) MarshalJSON() ([]byte, error) {
+func (s CreateShortDynamicLinkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateShortDynamicLinkResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DesktopInfo: Desktop related attributes to the Dynamic Link.
@@ -392,9 +392,9 @@ type DesktopInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DesktopInfo) MarshalJSON() ([]byte, error) {
+func (s DesktopInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DesktopInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceInfo: Signals associated with the device making the request.
@@ -430,9 +430,9 @@ type DeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
+func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicLinkEventStat: Dynamic Link event stat.
@@ -477,9 +477,9 @@ type DynamicLinkEventStat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicLinkEventStat) MarshalJSON() ([]byte, error) {
+func (s DynamicLinkEventStat) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicLinkEventStat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicLinkInfo: Information about a Dynamic Link.
@@ -535,9 +535,9 @@ type DynamicLinkInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicLinkInfo) MarshalJSON() ([]byte, error) {
+func (s DynamicLinkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicLinkInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicLinkStats: Analytics stats of a Dynamic Link for a given timeframe.
@@ -560,9 +560,9 @@ type DynamicLinkStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicLinkStats) MarshalJSON() ([]byte, error) {
+func (s DynamicLinkStats) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicLinkStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicLinkWarning: Dynamic Links warning messages.
@@ -633,9 +633,9 @@ type DynamicLinkWarning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicLinkWarning) MarshalJSON() ([]byte, error) {
+func (s DynamicLinkWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicLinkWarning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIosPostInstallAttributionRequest: Request for iSDK to execute strong
@@ -694,9 +694,9 @@ type GetIosPostInstallAttributionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIosPostInstallAttributionRequest) MarshalJSON() ([]byte, error) {
+func (s GetIosPostInstallAttributionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIosPostInstallAttributionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIosPostInstallAttributionResponse: Response for iSDK to execute strong
@@ -787,9 +787,9 @@ type GetIosPostInstallAttributionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIosPostInstallAttributionResponse) MarshalJSON() ([]byte, error) {
+func (s GetIosPostInstallAttributionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIosPostInstallAttributionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIosReopenAttributionRequest: Request for iSDK to get reopen attribution
@@ -818,9 +818,9 @@ type GetIosReopenAttributionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIosReopenAttributionRequest) MarshalJSON() ([]byte, error) {
+func (s GetIosReopenAttributionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIosReopenAttributionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIosReopenAttributionResponse: Response for iSDK to get reopen attribution
@@ -869,9 +869,9 @@ type GetIosReopenAttributionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
+func (s GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIosReopenAttributionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayAnalytics: Parameters for Google Play Campaign Measurements. Learn
@@ -908,9 +908,9 @@ type GooglePlayAnalytics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePlayAnalytics) MarshalJSON() ([]byte, error) {
+func (s GooglePlayAnalytics) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayAnalytics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ITunesConnectAnalytics: Parameters for iTunes Connect App Analytics.
@@ -938,9 +938,9 @@ type ITunesConnectAnalytics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ITunesConnectAnalytics) MarshalJSON() ([]byte, error) {
+func (s ITunesConnectAnalytics) MarshalJSON() ([]byte, error) {
 	type NoMethod ITunesConnectAnalytics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IosInfo: iOS related attributes to the Dynamic Link..
@@ -975,9 +975,9 @@ type IosInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IosInfo) MarshalJSON() ([]byte, error) {
+func (s IosInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IosInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedShortLink: Managed Short Link.
@@ -1022,9 +1022,9 @@ type ManagedShortLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedShortLink) MarshalJSON() ([]byte, error) {
+func (s ManagedShortLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedShortLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NavigationInfo: Information of navigation behavior.
@@ -1045,9 +1045,9 @@ type NavigationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NavigationInfo) MarshalJSON() ([]byte, error) {
+func (s NavigationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod NavigationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SocialMetaTagInfo: Parameters for social meta tag params. Used to set meta
@@ -1072,9 +1072,9 @@ type SocialMetaTagInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SocialMetaTagInfo) MarshalJSON() ([]byte, error) {
+func (s SocialMetaTagInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SocialMetaTagInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Suffix: Short Dynamic Link suffix.
@@ -1111,9 +1111,9 @@ type Suffix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Suffix) MarshalJSON() ([]byte, error) {
+func (s Suffix) MarshalJSON() ([]byte, error) {
 	type NoMethod Suffix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ManagedShortLinksCreateCall struct {

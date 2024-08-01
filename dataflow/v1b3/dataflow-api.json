@@ -7,9 +7,6 @@
         },
         "https://www.googleapis.com/auth/compute": {
           "description": "View and manage your Google Compute Engine resources"
-        },
-        "https://www.googleapis.com/auth/compute.readonly": {
-          "description": "View your Google Compute Engine resources"
         }
       }
     }
@@ -44,8 +41,58 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-east5.rep.googleapis.com/",
+      "location": "us-east5"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://dataflow.us-east7.rep.googleapis.com/",
       "location": "us-east7"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataflow.us-west8.rep.googleapis.com/",
+      "location": "us-west8"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -172,8 +219,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
+            "https://www.googleapis.com/auth/compute"
           ]
         },
         "workerMessages": {
@@ -201,8 +247,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
+            "https://www.googleapis.com/auth/compute"
           ]
         }
       },
@@ -287,8 +332,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "create": {
@@ -343,8 +387,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "get": {
@@ -398,8 +441,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "getMetrics": {
@@ -442,8 +484,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "list": {
@@ -524,8 +565,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "snapshot": {
@@ -560,8 +600,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "update": {
@@ -607,8 +646,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             }
           },
@@ -647,8 +685,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "sendCapture": {
@@ -683,8 +720,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -769,8 +805,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -809,8 +844,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "reportStatus": {
@@ -845,8 +879,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -887,8 +920,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             }
           },
@@ -927,8 +959,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -989,8 +1020,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "get": {
@@ -1046,8 +1076,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "getExecutionDetails": {
@@ -1097,8 +1126,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "getMetrics": {
@@ -1143,8 +1171,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "list": {
@@ -1227,8 +1254,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "snapshot": {
@@ -1270,8 +1296,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "update": {
@@ -1319,8 +1344,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               },
@@ -1366,8 +1390,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     },
                     "sendCapture": {
@@ -1409,8 +1432,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     }
                   }
@@ -1497,8 +1519,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     }
                   }
@@ -1541,8 +1562,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     }
                   }
@@ -1615,8 +1635,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     }
                   }
@@ -1662,8 +1681,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     },
                     "reportStatus": {
@@ -1705,8 +1723,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly"
+                        "https://www.googleapis.com/auth/compute"
                       ]
                     }
                   }
@@ -1751,8 +1768,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "get": {
@@ -1791,8 +1807,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "list": {
@@ -1829,8 +1844,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -1869,8 +1883,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "get": {
@@ -1918,8 +1931,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 },
                 "launch": {
@@ -1974,8 +1986,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly"
+                    "https://www.googleapis.com/auth/compute"
                   ]
                 }
               }
@@ -2018,8 +2029,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "list": {
@@ -2054,8 +2064,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             }
           }
@@ -2087,8 +2096,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "get": {
@@ -2134,8 +2142,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             },
             "launch": {
@@ -2188,8 +2195,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly"
+                "https://www.googleapis.com/auth/compute"
               ]
             }
           }
@@ -2197,7 +2203,7 @@
       }
     }
   },
-  "revision": "20240603",
+  "revision": "20240709",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -2967,7 +2973,7 @@
           "description": "Configuration options for sampling elements from a running pipeline."
         },
         "enableHotKeyLogging": {
-          "description": "When true, enables the logging of the literal hot key to the user's Cloud Logging.",
+          "description": "Optional. When true, enables the logging of the literal hot key to the user's Cloud Logging.",
           "type": "boolean"
         }
       },
@@ -3141,12 +3147,12 @@
           "type": "string"
         },
         "dataset": {
-          "description": "The dataset for the current project where various workflow related tables are stored. The supported resource type is: Google BigQuery: bigquery.googleapis.com/{dataset}",
+          "description": "Optional. The dataset for the current project where various workflow related tables are stored. The supported resource type is: Google BigQuery: bigquery.googleapis.com/{dataset}",
           "type": "string"
         },
         "debugOptions": {
           "$ref": "DebugOptions",
-          "description": "Any debugging options to be supplied to the job."
+          "description": "Optional. Any debugging options to be supplied to the job."
         },
         "experiments": {
           "description": "The list of experiments to enable. This field should be used for SDK related experiments and not for service related experiments. The proper field for service related experiments is service_options.",
@@ -3156,7 +3162,7 @@
           "type": "array"
         },
         "flexResourceSchedulingGoal": {
-          "description": "Which Flexible Resource Scheduling mode to run in.",
+          "description": "Optional. Which Flexible Resource Scheduling mode to run in.",
           "enum": [
             "FLEXRS_UNSPECIFIED",
             "FLEXRS_SPEED_OPTIMIZED",
@@ -3186,11 +3192,11 @@
           "type": "object"
         },
         "serviceAccountEmail": {
-          "description": "Identity to run virtual machines as. Defaults to the default account.",
+          "description": "Optional. Identity to run virtual machines as. Defaults to the default account.",
           "type": "string"
         },
         "serviceKmsKeyName": {
-          "description": "If set, contains the Cloud KMS key identifier used to encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format: projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY",
+          "description": "Optional. If set, contains the Cloud KMS key identifier used to encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format: projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY",
           "type": "string"
         },
         "serviceOptions": {
@@ -3262,11 +3268,11 @@
           "type": "array"
         },
         "workerRegion": {
-          "description": "The Compute Engine region (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1\". Mutually exclusive with worker_zone. If neither worker_region nor worker_zone is specified, default to the control plane's region.",
+          "description": "Optional. The Compute Engine region (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1\". Mutually exclusive with worker_zone. If neither worker_region nor worker_zone is specified, default to the control plane's region.",
           "type": "string"
         },
         "workerZone": {
-          "description": "The Compute Engine zone (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive with worker_region. If neither worker_region nor worker_zone is specified, a zone in the control plane's region is chosen based on available capacity.",
+          "description": "Optional. The Compute Engine zone (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive with worker_region. If neither worker_region nor worker_zone is specified, a zone in the control plane's region is chosen based on available capacity.",
           "type": "string"
         }
       },
@@ -3935,7 +3941,7 @@
           "type": "object"
         },
         "location": {
-          "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
+          "description": "Optional. The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
           "type": "string"
         },
         "name": {
@@ -4005,6 +4011,11 @@
           "description": "Reserved for future use. This field is set only in responses from the server; it is ignored if it is set in any requests.",
           "type": "boolean"
         },
+        "serviceResources": {
+          "$ref": "ServiceResources",
+          "description": "Output only. Resources used by the Dataflow Service to run the job.",
+          "readOnly": true
+        },
         "stageStates": {
           "description": "This field may be mutated by the Cloud Dataflow service; callers cannot mutate it.",
           "items": {
@@ -4039,7 +4050,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The map of transform name prefixes of the job to be replaced to the corresponding name prefixes of the new job.",
+          "description": "Optional. The map of transform name prefixes of the job to be replaced to the corresponding name prefixes of the new job.",
           "type": "object"
         },
         "type": {
@@ -5877,6 +5888,21 @@
         "tag": {
           "description": "The id of the TupleTag the user code will tag the output value by.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceResources": {
+      "description": "Resources used by the Dataflow Service to run the job.",
+      "id": "ServiceResources",
+      "properties": {
+        "zones": {
+          "description": "Output only. List of Cloud Zones being used by the Dataflow Service for this job. Example: us-central1-c",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"

@@ -265,9 +265,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -323,9 +323,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DayInfo: This object contains the daily forecast information for each day
@@ -333,11 +333,11 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 type DayInfo struct {
 	// Date: The date in UTC at which the pollen forecast data is represented.
 	Date *Date `json:"date,omitempty"`
-	// PlantInfo: This list will include (up to) 15 pollen species affecting the
+	// PlantInfo: This list will include up to 15 pollen species affecting the
 	// location specified in the request.
 	PlantInfo []*PlantInfo `json:"plantInfo,omitempty"`
-	// PollenTypeInfo: This list will include (up to) three pollen types (grass,
-	// weed, tree) affecting the location specified in the request.
+	// PollenTypeInfo: This list will include up to three pollen types (GRASS,
+	// WEED, TREE) affecting the location specified in the request.
 	PollenTypeInfo []*PollenTypeInfo `json:"pollenTypeInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -352,9 +352,9 @@ type DayInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DayInfo) MarshalJSON() ([]byte, error) {
+func (s DayInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DayInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
@@ -399,9 +399,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndexInfo: This object contains data representing specific pollen index
@@ -440,9 +440,9 @@ type IndexInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexInfo) MarshalJSON() ([]byte, error) {
+func (s IndexInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LookupForecastResponse struct {
@@ -472,9 +472,9 @@ type LookupForecastResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupForecastResponse) MarshalJSON() ([]byte, error) {
+func (s LookupForecastResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupForecastResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlantDescription: Contains general information about plants, including
@@ -522,9 +522,9 @@ type PlantDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlantDescription) MarshalJSON() ([]byte, error) {
+func (s PlantDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod PlantDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlantInfo: This object contains the daily information on specific plant.
@@ -575,9 +575,9 @@ type PlantInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlantInfo) MarshalJSON() ([]byte, error) {
+func (s PlantInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PlantInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PollenTypeInfo: This object contains the pollen type index and health
@@ -615,9 +615,9 @@ type PollenTypeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PollenTypeInfo) MarshalJSON() ([]byte, error) {
+func (s PollenTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PollenTypeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ForecastLookupCall struct {
@@ -644,8 +644,8 @@ func (c *ForecastLookupCall) Days(days int64) *ForecastLookupCall {
 
 // LanguageCode sets the optional parameter "languageCode": Allows the client
 // to choose the language for the response. If data cannot be provided for that
-// language the API uses the closest match. Allowed values rely on the IETF
-// BCP-47 standard. Default value is "en".
+// language, the API uses the closest match. Allowed values rely on the IETF
+// BCP-47 standard. The default value is "en".
 func (c *ForecastLookupCall) LanguageCode(languageCode string) *ForecastLookupCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -666,8 +666,8 @@ func (c *ForecastLookupCall) LocationLongitude(locationLongitude float64) *Forec
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of daily
-// info records to return per page. The default and max value is 5 (5 days of
-// data).
+// info records to return per page. The default and max value is 5, indicating
+// 5 days of data.
 func (c *ForecastLookupCall) PageSize(pageSize int64) *ForecastLookupCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -675,7 +675,7 @@ func (c *ForecastLookupCall) PageSize(pageSize int64) *ForecastLookupCall {
 
 // PageToken sets the optional parameter "pageToken": A page token received
 // from a previous daily call. It is used to retrieve the subsequent page. Note
-// that when providing a value for the page token all other request parameters
+// that when providing a value for the page token, all other request parameters
 // provided must match the previous call that provided the page token.
 func (c *ForecastLookupCall) PageToken(pageToken string) *ForecastLookupCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -685,7 +685,7 @@ func (c *ForecastLookupCall) PageToken(pageToken string) *ForecastLookupCall {
 // PlantsDescription sets the optional parameter "plantsDescription": Contains
 // general information about plants, including details on their seasonality,
 // special shapes and colors, information about allergic cross-reactions, and
-// plant photos.
+// plant photos. The default value is "true".
 func (c *ForecastLookupCall) PlantsDescription(plantsDescription bool) *ForecastLookupCall {
 	c.urlParams_.Set("plantsDescription", fmt.Sprint(plantsDescription))
 	return c

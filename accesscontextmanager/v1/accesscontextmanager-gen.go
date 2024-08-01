@@ -263,7 +263,7 @@ type AccessLevel struct {
 	// Description: Description of the `AccessLevel` and its use. Does not affect
 	// behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `AccessLevel`. Format:
+	// Name: Identifier. Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 	// `access_level` component must begin with a letter, followed by alphanumeric
 	// characters or `_`. Its maximum length is 50 characters. After you create an
@@ -287,9 +287,9 @@ type AccessLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessLevel) MarshalJSON() ([]byte, error) {
+func (s AccessLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessPolicy: `AccessPolicy` is a container for `AccessLevels` (which define
@@ -301,10 +301,10 @@ func (s *AccessLevel) MarshalJSON() ([]byte, error) {
 type AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Polices will be identical if and only if their etags are
+	// two Access Policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud Resource
@@ -341,9 +341,9 @@ type AccessPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
+func (s AccessPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApiOperation: Identification for an API Operation.
@@ -371,9 +371,9 @@ type ApiOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiOperation) MarshalJSON() ([]byte, error) {
+func (s ApiOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Application: An application that accesses Google Cloud APIs.
@@ -395,9 +395,9 @@ type Application struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Application) MarshalJSON() ([]byte, error) {
+func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -436,9 +436,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -471,9 +471,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizedOrgsDesc: `AuthorizedOrgsDesc` contains data for an organization's
@@ -515,7 +515,7 @@ type AuthorizedOrgsDesc struct {
 	//   "AUTHORIZATION_TYPE_UNSPECIFIED" - No authorization type specified.
 	//   "AUTHORIZATION_TYPE_TRUST" - This authorization relationship is "trust".
 	AuthorizationType string `json:"authorizationType,omitempty"`
-	// Name: Resource name for the `AuthorizedOrgsDesc`. Format:
+	// Name: Identifier. Resource name for the `AuthorizedOrgsDesc`. Format:
 	// `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`.
 	// The `authorized_orgs_desc` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`,
@@ -540,9 +540,9 @@ type AuthorizedOrgsDesc struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedOrgsDesc) MarshalJSON() ([]byte, error) {
+func (s AuthorizedOrgsDesc) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedOrgsDesc
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasicLevel: `BasicLevel` is an `AccessLevel` using a set of recommended
@@ -574,9 +574,9 @@ type BasicLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasicLevel) MarshalJSON() ([]byte, error) {
+func (s BasicLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -673,9 +673,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -705,9 +705,9 @@ type CommitServicePerimetersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitServicePerimetersRequest) MarshalJSON() ([]byte, error) {
+func (s CommitServicePerimetersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitServicePerimetersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitServicePerimetersResponse: A response to
@@ -730,9 +730,9 @@ type CommitServicePerimetersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitServicePerimetersResponse) MarshalJSON() ([]byte, error) {
+func (s CommitServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitServicePerimetersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Condition: A condition necessary for an `AccessLevel` to be granted. The
@@ -789,9 +789,9 @@ type Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Condition) MarshalJSON() ([]byte, error) {
+func (s Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod Condition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomLevel: `CustomLevel` is an `AccessLevel` using the Cloud Common
@@ -813,9 +813,9 @@ type CustomLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomLevel) MarshalJSON() ([]byte, error) {
+func (s CustomLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DevicePolicy: `DevicePolicy` specifies device specific restrictions
@@ -876,9 +876,9 @@ type DevicePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DevicePolicy) MarshalJSON() ([]byte, error) {
+func (s DevicePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod DevicePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EgressFrom: Defines the conditions under which an EgressPolicy matches a
@@ -935,9 +935,9 @@ type EgressFrom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EgressFrom) MarshalJSON() ([]byte, error) {
+func (s EgressFrom) MarshalJSON() ([]byte, error) {
 	type NoMethod EgressFrom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EgressPolicy: Policy for egress from perimeter. EgressPolicies match
@@ -972,9 +972,9 @@ type EgressPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EgressPolicy) MarshalJSON() ([]byte, error) {
+func (s EgressPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod EgressPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EgressSource: The source that EgressPolicy authorizes access from inside the
@@ -1003,9 +1003,9 @@ type EgressSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EgressSource) MarshalJSON() ([]byte, error) {
+func (s EgressSource) MarshalJSON() ([]byte, error) {
 	type NoMethod EgressSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EgressTo: Defines the conditions under which an EgressPolicy matches a
@@ -1047,9 +1047,9 @@ type EgressTo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EgressTo) MarshalJSON() ([]byte, error) {
+func (s EgressTo) MarshalJSON() ([]byte, error) {
 	type NoMethod EgressTo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1104,9 +1104,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcpUserAccessBinding: Restricts access to Cloud Console and Google Cloud
@@ -1157,9 +1157,9 @@ type GcpUserAccessBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcpUserAccessBinding) MarshalJSON() ([]byte, error) {
+func (s GcpUserAccessBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpUserAccessBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcpUserAccessBindingOperationMetadata: Metadata of GCP Access Binding Long
@@ -1185,9 +1185,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -1217,9 +1217,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngressFrom: Defines the conditions under which an IngressPolicy matches a
@@ -1261,9 +1261,9 @@ type IngressFrom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngressFrom) MarshalJSON() ([]byte, error) {
+func (s IngressFrom) MarshalJSON() ([]byte, error) {
 	type NoMethod IngressFrom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngressPolicy: Policy for ingress into ServicePerimeter. IngressPolicies
@@ -1297,9 +1297,9 @@ type IngressPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngressPolicy) MarshalJSON() ([]byte, error) {
+func (s IngressPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IngressPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngressSource: The source that IngressPolicy authorizes access from.
@@ -1335,9 +1335,9 @@ type IngressSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngressSource) MarshalJSON() ([]byte, error) {
+func (s IngressSource) MarshalJSON() ([]byte, error) {
 	type NoMethod IngressSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IngressTo: Defines the conditions under which an IngressPolicy matches a
@@ -1367,9 +1367,9 @@ type IngressTo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IngressTo) MarshalJSON() ([]byte, error) {
+func (s IngressTo) MarshalJSON() ([]byte, error) {
 	type NoMethod IngressTo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccessLevelsResponse: A response to `ListAccessLevelsRequest`.
@@ -1395,9 +1395,9 @@ type ListAccessLevelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccessLevelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccessLevelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccessLevelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccessPoliciesResponse: A response to `ListAccessPoliciesRequest`.
@@ -1423,9 +1423,9 @@ type ListAccessPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccessPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAuthorizedOrgsDescsResponse: A response to
@@ -1452,9 +1452,9 @@ type ListAuthorizedOrgsDescsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAuthorizedOrgsDescsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAuthorizedOrgsDescsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthorizedOrgsDescsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGcpUserAccessBindingsResponse: Response of ListGcpUserAccessBindings.
@@ -1480,9 +1480,9 @@ type ListGcpUserAccessBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGcpUserAccessBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGcpUserAccessBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGcpUserAccessBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1508,9 +1508,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServicePerimetersResponse: A response to `ListServicePerimetersRequest`.
@@ -1536,9 +1536,9 @@ type ListServicePerimetersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServicePerimetersResponse) MarshalJSON() ([]byte, error) {
+func (s ListServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicePerimetersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSupportedServicesResponse: A response to `ListSupportedServicesRequest`.
@@ -1565,9 +1565,9 @@ type ListSupportedServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSupportedServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MethodSelector: An allowed method or permission of a service specified in
@@ -1593,9 +1593,9 @@ type MethodSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MethodSelector) MarshalJSON() ([]byte, error) {
+func (s MethodSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod MethodSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1640,9 +1640,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OsConstraint: A restriction on the OS type and version of devices making
@@ -1682,9 +1682,9 @@ type OsConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OsConstraint) MarshalJSON() ([]byte, error) {
+func (s OsConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod OsConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1774,9 +1774,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceAccessLevelsRequest: A request to replace all existing Access Levels
@@ -1806,9 +1806,9 @@ type ReplaceAccessLevelsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceAccessLevelsRequest) MarshalJSON() ([]byte, error) {
+func (s ReplaceAccessLevelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceAccessLevelsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceAccessLevelsResponse: A response to ReplaceAccessLevelsRequest. This
@@ -1829,9 +1829,9 @@ type ReplaceAccessLevelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceAccessLevelsResponse) MarshalJSON() ([]byte, error) {
+func (s ReplaceAccessLevelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceAccessLevelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceServicePerimetersRequest: A request to replace all existing Service
@@ -1861,9 +1861,9 @@ type ReplaceServicePerimetersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceServicePerimetersRequest) MarshalJSON() ([]byte, error) {
+func (s ReplaceServicePerimetersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceServicePerimetersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceServicePerimetersResponse: A response to
@@ -1885,9 +1885,9 @@ type ReplaceServicePerimetersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
+func (s ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceServicePerimetersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServicePerimeter: `ServicePerimeter` describes a set of Google Cloud
@@ -1905,7 +1905,7 @@ type ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `ServicePerimeter`. Format:
+	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create a `ServicePerimeter`, you
@@ -1960,9 +1960,9 @@ type ServicePerimeter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServicePerimeter) MarshalJSON() ([]byte, error) {
+func (s ServicePerimeter) MarshalJSON() ([]byte, error) {
 	type NoMethod ServicePerimeter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServicePerimeterConfig: `ServicePerimeterConfig` specifies a set of Google
@@ -2012,9 +2012,9 @@ type ServicePerimeterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
+func (s ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServicePerimeterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2041,9 +2041,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2075,9 +2075,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SupportedService: `SupportedService` specifies the VPC Service Controls and
@@ -2096,6 +2096,17 @@ type SupportedService struct {
 	// Name: The service name or address of the supported service, such as
 	// `service.googleapis.com`.
 	Name string `json:"name,omitempty"`
+	// ServiceSupportStage: The support stage of the service.
+	//
+	// Possible values:
+	//   "SERVICE_SUPPORT_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "GA" - GA features are open to all developers and are considered stable
+	// and fully qualified for production use.
+	//   "PREVIEW" - PREVIEW indicates a pre-release stage where the product is
+	// functionally complete but undergoing real-world testing.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down and
+	// removed.
+	ServiceSupportStage string `json:"serviceSupportStage,omitempty"`
 	// SupportStage: The support stage of the service.
 	//
 	// Possible values:
@@ -2152,9 +2163,9 @@ type SupportedService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupportedService) MarshalJSON() ([]byte, error) {
+func (s SupportedService) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -2177,9 +2188,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2204,9 +2215,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VpcAccessibleServices: Specifies how APIs are allowed to communicate within
@@ -2233,9 +2244,9 @@ type VpcAccessibleServices struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VpcAccessibleServices) MarshalJSON() ([]byte, error) {
+func (s VpcAccessibleServices) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcAccessibleServices
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VpcNetworkSource: The originating network source in Google Cloud.
@@ -2255,9 +2266,9 @@ type VpcNetworkSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VpcNetworkSource) MarshalJSON() ([]byte, error) {
+func (s VpcNetworkSource) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcNetworkSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VpcSubNetwork: Sub-segment ranges inside of a VPC Network.
@@ -2289,9 +2300,9 @@ type VpcSubNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VpcSubNetwork) MarshalJSON() ([]byte, error) {
+func (s VpcSubNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcSubNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccessPoliciesCreateCall struct {
@@ -2858,8 +2869,8 @@ type AccessPoliciesPatchCall struct {
 // has a successful status after the changes to the access policy propagate to
 // long-lasting storage.
 //
-//   - name: Output only. Resource name of the `AccessPolicy`. Format:
-//     `accessPolicies/{access_policy}`.
+//   - name: Output only. Identifier. Resource name of the `AccessPolicy`.
+//     Format: `accessPolicies/{access_policy}`.
 func (r *AccessPoliciesService) Patch(name string, accesspolicy *AccessPolicy) *AccessPoliciesPatchCall {
 	c := &AccessPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3681,7 +3692,7 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 // long-lasting storage. If access levels contain errors, an error response is
 // returned for the first error encountered.
 //
-//   - name: Resource name for the `AccessLevel`. Format:
+//   - name: Identifier. Resource name for the `AccessLevel`. Format:
 //     `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 //     `access_level` component must begin with a letter, followed by
 //     alphanumeric characters or `_`. Its maximum length is 50 characters. After
@@ -4473,7 +4484,7 @@ type AccessPoliciesAuthorizedOrgsDescsPatchCall struct {
 // list in `AuthorizedOrgsDesc` can be updated. The name, authorization_type,
 // asset_type and authorization_direction cannot be updated.
 //
-//   - name: Resource name for the `AuthorizedOrgsDesc`. Format:
+//   - name: Identifier. Resource name for the `AuthorizedOrgsDesc`. Format:
 //     `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`
 //     . The `authorized_orgs_desc` component must begin with a letter, followed
 //     by alphanumeric characters or `_`. After you create an
@@ -5158,7 +5169,7 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 // long-lasting storage. If a service perimeter contains errors, an error
 // response is returned for the first error encountered.
 //
-//   - name: Resource name for the `ServicePerimeter`. Format:
+//   - name: Identifier. Resource name for the `ServicePerimeter`. Format:
 //     `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`.
 //     The `service_perimeter` component must begin with a letter, followed by
 //     alphanumeric characters or `_`. After you create a `ServicePerimeter`, you

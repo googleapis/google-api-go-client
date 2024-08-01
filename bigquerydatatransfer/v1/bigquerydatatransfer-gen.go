@@ -316,9 +316,9 @@ type CheckValidCredsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
+func (s CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckValidCredsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSource: Defines the properties and custom parameters for a data source.
@@ -415,9 +415,9 @@ type DataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSource) MarshalJSON() ([]byte, error) {
+func (s DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataSourceParameter: A parameter used to define custom fields in a data
@@ -483,9 +483,9 @@ type DataSourceParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataSourceParameter) MarshalJSON() ([]byte, error) {
+func (s DataSourceParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DataSourceParameter) UnmarshalJSON(data []byte) error {
@@ -523,9 +523,9 @@ type EmailPreferences struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailPreferences) MarshalJSON() ([]byte, error) {
+func (s EmailPreferences) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailPreferences
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -555,9 +555,9 @@ type EncryptionConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfiguration) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnrollDataSourcesRequest: A request to enroll a set of data sources so they
@@ -579,9 +579,9 @@ type EnrollDataSourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
+func (s EnrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollDataSourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDataSourcesResponse: Returns list of supported data sources and their
@@ -610,9 +610,9 @@ type ListDataSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -638,9 +638,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTransferConfigsResponse: The returned list of pipelines in the project.
@@ -668,9 +668,9 @@ type ListTransferConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTransferConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTransferConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTransferLogsResponse: The returned list transfer run messages.
@@ -698,9 +698,9 @@ type ListTransferLogsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferLogsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTransferRunsResponse: The returned list of pipelines in the project.
@@ -728,9 +728,9 @@ type ListTransferRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTransferRunsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -766,9 +766,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduleOptions: Options customizing the data transfer schedule.
@@ -802,9 +802,9 @@ type ScheduleOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScheduleOptions) MarshalJSON() ([]byte, error) {
+func (s ScheduleOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduleTransferRunsRequest: A request to schedule transfer runs for a time
@@ -829,9 +829,9 @@ type ScheduleTransferRunsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScheduleTransferRunsRequest) MarshalJSON() ([]byte, error) {
+func (s ScheduleTransferRunsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleTransferRunsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduleTransferRunsResponse: A response to schedule transfer runs for a
@@ -855,9 +855,9 @@ type ScheduleTransferRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
+func (s ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleTransferRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartManualTransferRunsRequest: A request to start manual transfer runs.
@@ -885,9 +885,9 @@ type StartManualTransferRunsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartManualTransferRunsRequest) MarshalJSON() ([]byte, error) {
+func (s StartManualTransferRunsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartManualTransferRunsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartManualTransferRunsResponse: A response to start manual transfer runs.
@@ -910,9 +910,9 @@ type StartManualTransferRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartManualTransferRunsResponse) MarshalJSON() ([]byte, error) {
+func (s StartManualTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StartManualTransferRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -944,9 +944,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeRange: A specification for a time range, this will request transfer runs
@@ -975,9 +975,9 @@ type TimeRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeRange) MarshalJSON() ([]byte, error) {
+func (s TimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferConfig: Represents a data transfer configuration. A transfer
@@ -1084,9 +1084,9 @@ type TransferConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferConfig) MarshalJSON() ([]byte, error) {
+func (s TransferConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferMessage: Represents a user facing message for a particular data
@@ -1117,9 +1117,9 @@ type TransferMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferMessage) MarshalJSON() ([]byte, error) {
+func (s TransferMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferRun: Represents a data transfer run.
@@ -1197,9 +1197,9 @@ type TransferRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferRun) MarshalJSON() ([]byte, error) {
+func (s TransferRun) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnenrollDataSourcesRequest: A request to unenroll a set of data sources so
@@ -1221,9 +1221,9 @@ type UnenrollDataSourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnenrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
+func (s UnenrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnenrollDataSourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserInfo: Information about a user.
@@ -1243,9 +1243,9 @@ type UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInfo) MarshalJSON() ([]byte, error) {
+func (s UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsEnrollDataSourcesCall struct {

@@ -17,15 +17,17 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/google/go-github/v61/github"
+	"github.com/go-git/go-git/v5"
+	"github.com/google/go-github/v59/github"
 	"golang.org/x/oauth2"
 )
 
 const (
-	branchName  = "discogen"
-	commitTitle = "feat(all): auto-regenerate discovery clients"
-	owner       = "googleapis"
-	repo        = "google-api-go-client"
+	branchName     = "discogen"
+	commitTitle    = "feat(all): auto-regenerate discovery clients"
+	owner          = "googleapis"
+	repo           = "google-api-go-client"
+	remoteCacheEnv = "REMOTE_CACHE_DIR"
 )
 
 func main() {
@@ -36,6 +38,7 @@ func main() {
 	githubName := flag.String("github-name", os.Getenv("GITHUB_NAME"), "The name of the author for git commits. Required.")
 	githubEmail := flag.String("github-email", os.Getenv("GITHUB_EMAIL"), "The email address of the author. Required.")
 	discoDir := flag.String("discovery-dir", os.Getenv("DISCOVERY_DIR"), "Directory where sources of googleapis/google-api-go-client resides. Required.")
+	dryRun := flag.Bool("dry-run", false, "Dry run will not commit changes or open a pull request.")
 
 	flag.Parse()
 
@@ -47,6 +50,11 @@ func main() {
 		log.Fatalf("unable to set git credentials: %v", err)
 	}
 
+	discoSpecDir, err := cloneDiscoArtifactManager()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if prIsOpen, err := isPROpen(ctx, *githubAccessToken, *githubUsername); err != nil || prIsOpen {
 		if err != nil {
 			log.Fatalf("unable to check PR status: %v", err)
@@ -55,7 +63,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := generate(*discoDir); err != nil {
+	if err := generate(*discoDir, discoSpecDir); err != nil {
 		log.Fatalf("unable to generate discovery clients: %v", err)
 	}
 
@@ -67,7 +75,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := makePR(ctx, *githubAccessToken, *discoDir); err != nil {
+	if err := makePR(ctx, *githubAccessToken, *discoDir, *dryRun); err != nil {
 		log.Fatalf("unable to make regen PR: %v", err)
 	}
 }
@@ -131,7 +139,12 @@ func isPROpen(ctx context.Context, accessToken, username string) (bool, error) {
 }
 
 // generate regenerates the whole project.
-func generate(dir string) error {
+func generate(dir, remoteCacheDir string) error {
+	oldCache := os.Getenv(remoteCacheEnv)
+	os.Setenv(remoteCacheEnv, remoteCacheDir)
+	defer func() {
+		os.Setenv(remoteCacheEnv, oldCache)
+	}()
 	fp := filepath.Join(dir, "google-api-go-generator")
 	cmd := exec.Command("make", "all")
 	cmd.Dir = fp
@@ -149,7 +162,12 @@ func hasChanges(dir string) (bool, error) {
 }
 
 // makePR commits local changes and makes a regen PR.
-func makePR(ctx context.Context, accessToken, dir string) error {
+func makePR(ctx context.Context, accessToken, dir string, dryRun bool) error {
+	if dryRun {
+		log.Println("dry run, not making PR")
+		return nil
+	}
+
 	log.Println("creating commit and pushing")
 	c := exec.Command("/bin/bash", "-c", `
 	set -ex
@@ -195,4 +213,22 @@ func makePR(ctx context.Context, accessToken, dir string) error {
 		return err
 	}
 	return nil
+}
+
+// cloneDiscoArtifactManager returns the directory of discovery documents found
+// in the cloned repo.
+func cloneDiscoArtifactManager() (string, error) {
+	tmpDir, err := os.MkdirTemp("", "discogen")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if _, err := git.PlainClone(tmpDir, false, &git.CloneOptions{
+		URL:      "https://github.com/googleapis/discovery-artifact-manager.git",
+		Progress: os.Stdout,
+		Depth:    1,
+		Tags:     git.NoTags,
+	}); err != nil {
+		return "", err
+	}
+	return filepath.Join(tmpDir, "discoveries"), nil
 }

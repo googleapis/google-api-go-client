@@ -220,9 +220,9 @@ type NotificationSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationSetting) MarshalJSON() ([]byte, error) {
+func (s NotificationSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsGetNotificationSettingCall struct {

@@ -220,9 +220,9 @@ type ApplyParametersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApplyParametersRequest) MarshalJSON() ([]byte, error) {
+func (s ApplyParametersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplyParametersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -248,9 +248,9 @@ type DailyCycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DailyCycle) MarshalJSON() ([]byte, error) {
+func (s DailyCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod DailyCycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -286,9 +286,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DenyMaintenancePeriod: DenyMaintenancePeriod definition. Maintenance is
@@ -321,9 +321,9 @@ type DenyMaintenancePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod DenyMaintenancePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -355,9 +355,9 @@ type GoogleCloudMemcacheV1LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMemcacheV1LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudMemcacheV1LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMemcacheV1LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudMemcacheV1MaintenancePolicy: Maintenance policy per instance.
@@ -386,9 +386,9 @@ type GoogleCloudMemcacheV1MaintenancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMemcacheV1MaintenancePolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudMemcacheV1MaintenancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMemcacheV1MaintenancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudMemcacheV1OperationMetadata: Represents the metadata of a
@@ -425,9 +425,9 @@ type GoogleCloudMemcacheV1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMemcacheV1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudMemcacheV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMemcacheV1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudMemcacheV1UpgradeInstanceRequest: Request for UpgradeInstance.
@@ -454,9 +454,9 @@ type GoogleCloudMemcacheV1UpgradeInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudMemcacheV1UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudMemcacheV1UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMemcacheV1UpgradeInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudMemcacheV1ZoneMetadata struct {
@@ -577,9 +577,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule:
@@ -616,9 +616,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings:
@@ -652,9 +652,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata: Node
@@ -684,9 +684,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter:
@@ -708,9 +708,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility:
@@ -742,9 +742,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource:
@@ -773,9 +773,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility:
@@ -802,9 +802,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata: SloMetadata
@@ -835,9 +835,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: A Memorystore for Memcached instance
@@ -944,9 +944,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InstanceMessage struct {
@@ -971,9 +971,9 @@ type InstanceMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceMessage) MarshalJSON() ([]byte, error) {
+func (s InstanceMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancesResponse: Response for ListInstances.
@@ -1004,9 +1004,9 @@ type ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1032,9 +1032,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1060,9 +1060,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1098,9 +1098,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Metadata for the given google.cloud.location.Location.
@@ -1122,9 +1122,9 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenancePolicy: Defines policies to service maintenance events.
@@ -1170,9 +1170,9 @@ type MaintenancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+func (s MaintenancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceSchedule: Upcoming maintenance schedule.
@@ -1199,9 +1199,9 @@ type MaintenanceSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+func (s MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: MaintenanceWindow definition.
@@ -1223,9 +1223,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MemcacheParameters struct {
@@ -1250,9 +1250,9 @@ type MemcacheParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MemcacheParameters) MarshalJSON() ([]byte, error) {
+func (s MemcacheParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod MemcacheParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Node struct {
@@ -1302,9 +1302,9 @@ type Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Node) MarshalJSON() ([]byte, error) {
+func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeConfig: Configuration for a Memcached Node.
@@ -1326,9 +1326,9 @@ type NodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeConfig) MarshalJSON() ([]byte, error) {
+func (s NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1373,9 +1373,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of a long-running operation.
@@ -1411,9 +1411,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RescheduleMaintenanceRequest: Request for RescheduleMaintenance.
@@ -1446,9 +1446,9 @@ type RescheduleMaintenanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
+func (s RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RescheduleMaintenanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Schedule: Configure the schedule.
@@ -1482,9 +1482,9 @@ type Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Schedule) MarshalJSON() ([]byte, error) {
+func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1516,9 +1516,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -1549,9 +1549,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateParametersRequest: Request for UpdateParameters.
@@ -1573,9 +1573,9 @@ type UpdateParametersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateParametersRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateParametersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateParametersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdatePolicy: Maintenance policy applicable to instance updates.
@@ -1621,9 +1621,9 @@ type UpdatePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdatePolicy) MarshalJSON() ([]byte, error) {
+func (s UpdatePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklyCycle: Time window specified for weekly operations.
@@ -1643,9 +1643,9 @@ type WeeklyCycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklyCycle) MarshalJSON() ([]byte, error) {
+func (s WeeklyCycle) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyCycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklyMaintenanceWindow: Time window specified for weekly operations.
@@ -1680,9 +1680,9 @@ type WeeklyMaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s WeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyMaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ZoneMetadata struct {

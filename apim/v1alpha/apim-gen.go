@@ -282,9 +282,9 @@ type ApiObservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiObservation) MarshalJSON() ([]byte, error) {
+func (s ApiObservation) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiObservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApiOperation: Message describing ApiOperation object
@@ -315,9 +315,59 @@ type ApiOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiOperation) MarshalJSON() ([]byte, error) {
+func (s ApiOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchEditTagsApiObservationsRequest: Message for requesting batch edit tags
+// for ApiObservations
+type BatchEditTagsApiObservationsRequest struct {
+	// Requests: Required. The request message specifying the resources to update.
+	// A maximum of 1000 apiObservations can be modified in a batch.
+	Requests []*EditTagsApiObservationsRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchEditTagsApiObservationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchEditTagsApiObservationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchEditTagsApiObservationsResponse: Message for response to edit Tags for
+// ApiObservations
+type BatchEditTagsApiObservationsResponse struct {
+	// ApiObservations: ApiObservations that were changed
+	ApiObservations []*ApiObservation `json:"apiObservations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApiObservations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiObservations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchEditTagsApiObservationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchEditTagsApiObservationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -326,6 +376,32 @@ type CancelOperationRequest struct {
 
 // DisableObservationJobRequest: Message for disabling an ObservationJob
 type DisableObservationJobRequest struct {
+}
+
+// EditTagsApiObservationsRequest: Message for requesting edit tags for
+// ApiObservation
+type EditTagsApiObservationsRequest struct {
+	// ApiObservationId: Required. Identifier of ApiObservation need to be edit
+	// tags Format example: "apigee.googleapis.com|us-west1|443"
+	ApiObservationId string `json:"apiObservationId,omitempty"`
+	// TagActions: Required. Tag actions to be applied
+	TagActions []*TagAction `json:"tagActions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiObservationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiObservationId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EditTagsApiObservationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EditTagsApiObservationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -360,9 +436,9 @@ type GclbObservationSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GclbObservationSource) MarshalJSON() ([]byte, error) {
+func (s GclbObservationSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GclbObservationSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GclbObservationSourcePscNetworkConfig: Network information for setting up a
@@ -389,9 +465,9 @@ type GclbObservationSourcePscNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GclbObservationSourcePscNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s GclbObservationSourcePscNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GclbObservationSourcePscNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperation: An HTTP-based API Operation, sometimes called a "REST"
@@ -434,9 +510,9 @@ type HttpOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperation) MarshalJSON() ([]byte, error) {
+func (s HttpOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperationHeader: An aggregation of HTTP header occurrences.
@@ -468,9 +544,9 @@ type HttpOperationHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperationHeader) MarshalJSON() ([]byte, error) {
+func (s HttpOperationHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperationHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperationHttpRequest: An aggregation of HTTP requests.
@@ -490,9 +566,9 @@ type HttpOperationHttpRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperationHttpRequest) MarshalJSON() ([]byte, error) {
+func (s HttpOperationHttpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperationHttpRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperationHttpResponse: An aggregation of HTTP responses.
@@ -514,9 +590,9 @@ type HttpOperationHttpResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperationHttpResponse) MarshalJSON() ([]byte, error) {
+func (s HttpOperationHttpResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperationHttpResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperationPathParam: HTTP Path parameter.
@@ -546,9 +622,9 @@ type HttpOperationPathParam struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperationPathParam) MarshalJSON() ([]byte, error) {
+func (s HttpOperationPathParam) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperationPathParam
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpOperationQueryParam: An aggregation of HTTP query parameter occurrences.
@@ -581,9 +657,37 @@ type HttpOperationQueryParam struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpOperationQueryParam) MarshalJSON() ([]byte, error) {
+func (s HttpOperationQueryParam) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpOperationQueryParam
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListApiObservationTagsResponse: Message for response to listing tags
+type ListApiObservationTagsResponse struct {
+	// ApiObservationTags: The tags from the specified project
+	ApiObservationTags []string `json:"apiObservationTags,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApiObservationTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiObservationTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListApiObservationTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListApiObservationTagsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListApiObservationsResponse: Message for response to listing ApiObservations
@@ -610,9 +714,9 @@ type ListApiObservationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListApiObservationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListApiObservationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListApiObservationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListApiOperationsResponse: Message for response to listing ApiOperations
@@ -639,9 +743,9 @@ type ListApiOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListApiOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListApiOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListApiOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -667,9 +771,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListObservationJobsResponse: Message for response to listing ObservationJobs
@@ -697,9 +801,9 @@ type ListObservationJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListObservationJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListObservationJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListObservationJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListObservationSourcesResponse: Message for response to listing
@@ -729,9 +833,9 @@ type ListObservationSourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListObservationSourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListObservationSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListObservationSourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -757,9 +861,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -795,9 +899,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObservationJob: Message describing ObservationJob object
@@ -839,9 +943,9 @@ type ObservationJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObservationJob) MarshalJSON() ([]byte, error) {
+func (s ObservationJob) MarshalJSON() ([]byte, error) {
 	type NoMethod ObservationJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObservationSource: Observation source configuration types
@@ -880,9 +984,9 @@ type ObservationSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObservationSource) MarshalJSON() ([]byte, error) {
+func (s ObservationSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ObservationSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -927,9 +1031,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -965,9 +1069,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -999,9 +1103,38 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TagAction: Message for edit tag action
+type TagAction struct {
+	// Action: Required. Action to be applied
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Unspecified.
+	//   "ADD" - Addition of a Tag.
+	//   "REMOVE" - Removal of a Tag.
+	Action string `json:"action,omitempty"`
+	// Tag: Required. Tag to be added or removed
+	Tag string `json:"tag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TagAction) MarshalJSON() ([]byte, error) {
+	type NoMethod TagAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -1247,6 +1380,155 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsListApiObservationTagsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListApiObservationTags: ListApiObservationTags lists all extant tags on any
+// observation in the given project.
+//
+//   - parent: The parent, which owns this collection of tags. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) ListApiObservationTags(parent string) *ProjectsLocationsListApiObservationTagsCall {
+	c := &ProjectsLocationsListApiObservationTagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of tags
+// to return. The service may return fewer than this value. If unspecified, at
+// most 10 tags will be returned. The maximum value is 1000; values above 1000
+// will be coerced to 1000.
+func (c *ProjectsLocationsListApiObservationTagsCall) PageSize(pageSize int64) *ProjectsLocationsListApiObservationTagsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListApiObservationTags` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListApiObservationTags` must match the call that provided the page token.
+func (c *ProjectsLocationsListApiObservationTagsCall) PageToken(pageToken string) *ProjectsLocationsListApiObservationTagsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsListApiObservationTagsCall) Fields(s ...googleapi.Field) *ProjectsLocationsListApiObservationTagsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsListApiObservationTagsCall) IfNoneMatch(entityTag string) *ProjectsLocationsListApiObservationTagsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsListApiObservationTagsCall) Context(ctx context.Context) *ProjectsLocationsListApiObservationTagsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsListApiObservationTagsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsListApiObservationTagsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}:listApiObservationTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apim.projects.locations.listApiObservationTags" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListApiObservationTagsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsListApiObservationTagsCall) Do(opts ...googleapi.CallOption) (*ListApiObservationTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListApiObservationTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsListApiObservationTagsCall) Pages(ctx context.Context, f func(*ListApiObservationTagsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -1812,7 +2094,7 @@ type ProjectsLocationsObservationJobsListCall struct {
 }
 
 // List: ListObservationJobs gets all ObservationJobs for a given project and
-// location
+// location.
 //
 //   - parent: The parent, which owns this collection of ObservationJobs. Format:
 //     projects/{project}/locations/{location}.
@@ -1951,6 +2233,111 @@ func (c *ProjectsLocationsObservationJobsListCall) Pages(ctx context.Context, f 
 	}
 }
 
+type ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall struct {
+	s                                   *Service
+	parent                              string
+	batchedittagsapiobservationsrequest *BatchEditTagsApiObservationsRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// BatchEditTags: BatchEditTagsApiObservations adds or removes Tags for
+// ApiObservations.
+//
+//   - parent: The parent resource shared by all ApiObservations being edited.
+//     Format:
+//     projects/{project}/locations/{location}/observationJobs/{observation_job}.
+func (r *ProjectsLocationsObservationJobsApiObservationsService) BatchEditTags(parent string, batchedittagsapiobservationsrequest *BatchEditTagsApiObservationsRequest) *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall {
+	c := &ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchedittagsapiobservationsrequest = batchedittagsapiobservationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall) Fields(s ...googleapi.Field) *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall) Context(ctx context.Context) *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchedittagsapiobservationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/apiObservations:batchEditTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apim.projects.locations.observationJobs.apiObservations.batchEditTags" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchEditTagsApiObservationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsObservationJobsApiObservationsBatchEditTagsCall) Do(opts ...googleapi.CallOption) (*BatchEditTagsApiObservationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchEditTagsApiObservationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsObservationJobsApiObservationsGetCall struct {
 	s            *Service
 	name         string
@@ -2070,7 +2457,7 @@ type ProjectsLocationsObservationJobsApiObservationsListCall struct {
 }
 
 // List: ListApiObservations gets all ApiObservations for a given project and
-// location and ObservationJob
+// location and ObservationJob.
 //
 //   - parent: The parent, which owns this collection of ApiObservations. Format:
 //     projects/{project}/locations/{location}/observationJobs/{observation_job}.
@@ -2328,7 +2715,7 @@ type ProjectsLocationsObservationJobsApiObservationsApiOperationsListCall struct
 }
 
 // List: ListApiOperations gets all ApiOperations for a given project and
-// location and ObservationJob and ApiObservation
+// location and ObservationJob and ApiObservation.
 //
 //   - parent: The parent, which owns this collection of ApiOperations. Format:
 //     projects/{project}/locations/{location}/observationJobs/{observation_job}/a
@@ -2813,7 +3200,7 @@ type ProjectsLocationsObservationSourcesListCall struct {
 }
 
 // List: ListObservationSources gets all ObservationSources for a given project
-// and location
+// and location.
 //
 //   - parent: The parent, which owns this collection of ObservationSources.
 //     Format: projects/{project}/locations/{location}.

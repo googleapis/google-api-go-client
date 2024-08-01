@@ -274,9 +274,9 @@ type AcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcceleratorType: A accelerator type that a Node can be configured with.
@@ -303,9 +303,9 @@ type AcceleratorType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceleratorType) MarshalJSON() ([]byte, error) {
+func (s AcceleratorType) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcceptedData: Further data for the accepted state.
@@ -330,9 +330,9 @@ type AccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessConfig) MarshalJSON() ([]byte, error) {
+func (s AccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActiveData: Further data for the active state.
@@ -367,9 +367,9 @@ type AttachedDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttachedDisk) MarshalJSON() ([]byte, error) {
+func (s AttachedDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod AttachedDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BestEffort: BestEffort tier definition.
@@ -396,9 +396,9 @@ type BootDiskConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BootDiskConfig) MarshalJSON() ([]byte, error) {
+func (s BootDiskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BootDiskConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreatingData: Further data for the creating state.
@@ -428,9 +428,9 @@ type CustomerEncryptionKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
+func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerEncryptionKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeletingData: Further data for the deleting state.
@@ -463,9 +463,9 @@ type FailedData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FailedData) MarshalJSON() ([]byte, error) {
+func (s FailedData) MarshalJSON() ([]byte, error) {
 	type NoMethod FailedData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateServiceIdentityRequest: Request for GenerateServiceIdentity.
@@ -492,9 +492,9 @@ type GenerateServiceIdentityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateServiceIdentityResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateServiceIdentityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetGuestAttributesRequest: Request for GetGuestAttributes.
@@ -517,9 +517,9 @@ type GetGuestAttributesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetGuestAttributesRequest) MarshalJSON() ([]byte, error) {
+func (s GetGuestAttributesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetGuestAttributesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetGuestAttributesResponse: Response for GetGuestAttributes.
@@ -542,9 +542,9 @@ type GetGuestAttributesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetGuestAttributesResponse) MarshalJSON() ([]byte, error) {
+func (s GetGuestAttributesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetGuestAttributesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Guaranteed: Guaranteed tier definition.
@@ -569,9 +569,9 @@ type Guaranteed struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Guaranteed) MarshalJSON() ([]byte, error) {
+func (s Guaranteed) MarshalJSON() ([]byte, error) {
 	type NoMethod Guaranteed
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestAttributes: A guest attributes.
@@ -594,9 +594,9 @@ type GuestAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestAttributes) MarshalJSON() ([]byte, error) {
+func (s GuestAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestAttributesEntry: A guest attributes namespace/key/value entry.
@@ -620,9 +620,9 @@ type GuestAttributesEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestAttributesEntry) MarshalJSON() ([]byte, error) {
+func (s GuestAttributesEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestAttributesEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestAttributesValue: Array of guest attribute namespace/key/value tuples.
@@ -642,9 +642,9 @@ type GuestAttributesValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestAttributesValue) MarshalJSON() ([]byte, error) {
+func (s GuestAttributesValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestAttributesValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -673,9 +673,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAcceleratorTypesResponse: Response for ListAcceleratorTypes.
@@ -702,9 +702,9 @@ type ListAcceleratorTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAcceleratorTypesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAcceleratorTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAcceleratorTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -730,9 +730,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNodesResponse: Response for ListNodes.
@@ -759,9 +759,9 @@ type ListNodesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNodesResponse) MarshalJSON() ([]byte, error) {
+func (s ListNodesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNodesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -787,9 +787,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListQueuedResourcesResponse: Response for ListQueuedResources.
@@ -816,9 +816,9 @@ type ListQueuedResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListQueuedResourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListQueuedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQueuedResourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReservationsResponse: Response for ListReservations.
@@ -843,9 +843,9 @@ type ListReservationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReservationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReservationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReservationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRuntimeVersionsResponse: Response for ListRuntimeVersions.
@@ -872,9 +872,9 @@ type ListRuntimeVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRuntimeVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRuntimeVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRuntimeVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -910,9 +910,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiNodeParams: Parameters to specify for multi-node QueuedResource
@@ -942,9 +942,9 @@ type MultiNodeParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiNodeParams) MarshalJSON() ([]byte, error) {
+func (s MultiNodeParams) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiNodeParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkConfig: Network related configurations.
@@ -980,9 +980,9 @@ type NetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkEndpoint: A network endpoint over which a TPU worker can be reached.
@@ -1006,9 +1006,9 @@ type NetworkEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkEndpoint) MarshalJSON() ([]byte, error) {
+func (s NetworkEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Node: A TPU instance.
@@ -1133,9 +1133,9 @@ type Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Node) MarshalJSON() ([]byte, error) {
+func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeSpec: Details of the TPU node(s) being requested. Users can request
@@ -1167,9 +1167,9 @@ type NodeSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeSpec) MarshalJSON() ([]byte, error) {
+func (s NodeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1214,9 +1214,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Metadata describing an Operation
@@ -1249,9 +1249,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProvisioningData: Further data for the provisioning state.
@@ -1298,9 +1298,9 @@ type QueuedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueuedResource) MarshalJSON() ([]byte, error) {
+func (s QueuedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod QueuedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueuedResourceState: QueuedResourceState defines the details of the
@@ -1378,9 +1378,9 @@ type QueuedResourceState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueuedResourceState) MarshalJSON() ([]byte, error) {
+func (s QueuedResourceState) MarshalJSON() ([]byte, error) {
 	type NoMethod QueuedResourceState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueueingPolicy: Defines the policy of the QueuedRequest.
@@ -1413,9 +1413,9 @@ type QueueingPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueueingPolicy) MarshalJSON() ([]byte, error) {
+func (s QueueingPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod QueueingPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reservation: A reservation describes the amount of a resource 'allotted' for
@@ -1449,9 +1449,9 @@ type Reservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reservation) MarshalJSON() ([]byte, error) {
+func (s Reservation) MarshalJSON() ([]byte, error) {
 	type NoMethod Reservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetQueuedResourceRequest: Request for ResetQueuedResource.
@@ -1480,9 +1480,9 @@ type RuntimeVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RuntimeVersion) MarshalJSON() ([]byte, error) {
+func (s RuntimeVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SchedulingConfig: Sets the scheduling options for this node.
@@ -1506,9 +1506,9 @@ type SchedulingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SchedulingConfig) MarshalJSON() ([]byte, error) {
+func (s SchedulingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccount: A service account.
@@ -1532,9 +1532,9 @@ type ServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceIdentity: The per-product per-project service identity for Cloud TPU
@@ -1555,9 +1555,9 @@ type ServiceIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
+func (s ServiceIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShieldedInstanceConfig: A set of Shielded Instance options.
@@ -1577,9 +1577,9 @@ type ShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimulateMaintenanceEventRequest: Request for SimulateMaintenanceEvent.
@@ -1602,9 +1602,9 @@ type SimulateMaintenanceEventRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimulateMaintenanceEventRequest) MarshalJSON() ([]byte, error) {
+func (s SimulateMaintenanceEventRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulateMaintenanceEventRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Spot: Spot tier definition.
@@ -1638,9 +1638,9 @@ type Standard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Standard) MarshalJSON() ([]byte, error) {
+func (s Standard) MarshalJSON() ([]byte, error) {
 	type NoMethod Standard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartNodeRequest: Request for StartNode.
@@ -1676,9 +1676,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopNodeRequest: Request for StopNode.
@@ -1727,9 +1727,9 @@ type Symptom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Symptom) MarshalJSON() ([]byte, error) {
+func (s Symptom) MarshalJSON() ([]byte, error) {
 	type NoMethod Symptom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tpu: Details of the TPU resource(s) being requested.
@@ -1749,9 +1749,9 @@ type Tpu struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tpu) MarshalJSON() ([]byte, error) {
+func (s Tpu) MarshalJSON() ([]byte, error) {
 	type NoMethod Tpu
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Usage struct {
@@ -1771,9 +1771,9 @@ type Usage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Usage) MarshalJSON() ([]byte, error) {
+func (s Usage) MarshalJSON() ([]byte, error) {
 	type NoMethod Usage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGenerateServiceIdentityCall struct {

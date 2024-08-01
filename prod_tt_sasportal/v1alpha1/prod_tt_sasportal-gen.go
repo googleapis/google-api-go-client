@@ -422,9 +422,9 @@ type SasPortalAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalAssignment) MarshalJSON() ([]byte, error) {
+func (s SasPortalAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalChannelWithScore: The channel with score.
@@ -446,9 +446,9 @@ type SasPortalChannelWithScore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalChannelWithScore) MarshalJSON() ([]byte, error) {
+func (s SasPortalChannelWithScore) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalChannelWithScore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SasPortalChannelWithScore) UnmarshalJSON(data []byte) error {
@@ -487,9 +487,9 @@ type SasPortalCreateSignedDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalCreateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalCreateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalCreateSignedDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalCustomer: Entity representing a SAS customer.
@@ -517,9 +517,9 @@ type SasPortalCustomer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalCustomer) MarshalJSON() ([]byte, error) {
+func (s SasPortalCustomer) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalCustomer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeployment: The Deployment.
@@ -550,9 +550,9 @@ type SasPortalDeployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeployment) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeploymentAssociation: Association between a gcp project and a SAS
@@ -575,9 +575,9 @@ type SasPortalDeploymentAssociation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeploymentAssociation) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeploymentAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeploymentAssociation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SasPortalDevice struct {
@@ -633,9 +633,9 @@ type SasPortalDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDevice) MarshalJSON() ([]byte, error) {
+func (s SasPortalDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeviceAirInterface: Information about the device's air interface.
@@ -671,9 +671,9 @@ type SasPortalDeviceAirInterface struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeviceAirInterface) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeviceAirInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeviceAirInterface
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeviceConfig: Information about the device configuration.
@@ -726,9 +726,9 @@ type SasPortalDeviceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeviceConfig) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeviceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeviceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeviceGrant: Device grant. It is an authorization provided by the
@@ -784,9 +784,9 @@ type SasPortalDeviceGrant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeviceGrant) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeviceGrant) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeviceGrant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SasPortalDeviceGrant) UnmarshalJSON(data []byte) error {
@@ -837,9 +837,9 @@ type SasPortalDeviceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeviceMetadata) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeviceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeviceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeviceModel: Information about the model of the device.
@@ -867,9 +867,9 @@ type SasPortalDeviceModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDeviceModel) MarshalJSON() ([]byte, error) {
+func (s SasPortalDeviceModel) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDeviceModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDpaMoveList: An entry in a DPA's move list.
@@ -891,9 +891,9 @@ type SasPortalDpaMoveList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalDpaMoveList) MarshalJSON() ([]byte, error) {
+func (s SasPortalDpaMoveList) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalDpaMoveList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalEmpty: A generic empty message that you can re-use to avoid
@@ -926,9 +926,9 @@ type SasPortalFrequencyRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalFrequencyRange) MarshalJSON() ([]byte, error) {
+func (s SasPortalFrequencyRange) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalFrequencyRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SasPortalFrequencyRange) UnmarshalJSON(data []byte) error {
@@ -967,9 +967,9 @@ type SasPortalGcpProjectDeployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalGcpProjectDeployment) MarshalJSON() ([]byte, error) {
+func (s SasPortalGcpProjectDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalGcpProjectDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalGenerateSecretRequest: Request for GenerateSecret.
@@ -996,9 +996,9 @@ type SasPortalGenerateSecretResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalGenerateSecretResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalGenerateSecretResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalGenerateSecretResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalGetPolicyRequest: Request message for `GetPolicy` method.
@@ -1018,9 +1018,9 @@ type SasPortalGetPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalGetPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalGetPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalGetPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalInstallationParams: Information about the device installation
@@ -1105,9 +1105,9 @@ type SasPortalInstallationParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalInstallationParams) MarshalJSON() ([]byte, error) {
+func (s SasPortalInstallationParams) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalInstallationParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
@@ -1158,9 +1158,9 @@ type SasPortalListCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalListDeploymentsResponse: Response for ListDeployments.
@@ -1187,9 +1187,9 @@ type SasPortalListDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalListDevicesResponse: Response for ListDevices.
@@ -1216,9 +1216,9 @@ type SasPortalListDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalListGcpProjectDeploymentsResponse: Response for
@@ -1242,9 +1242,9 @@ type SasPortalListGcpProjectDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListGcpProjectDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListGcpProjectDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListGcpProjectDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalListLegacyOrganizationsResponse: Response for
@@ -1269,9 +1269,9 @@ type SasPortalListLegacyOrganizationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListLegacyOrganizationsResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListLegacyOrganizationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListLegacyOrganizationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalListNodesResponse: Response for ListNodes.
@@ -1298,9 +1298,9 @@ type SasPortalListNodesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalListNodesResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalListNodesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalListNodesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMigrateOrganizationMetadata: Long-running operation metadata
@@ -1328,9 +1328,9 @@ type SasPortalMigrateOrganizationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMigrateOrganizationMetadata) MarshalJSON() ([]byte, error) {
+func (s SasPortalMigrateOrganizationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMigrateOrganizationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMigrateOrganizationRequest: Request for [MigrateOrganization].
@@ -1354,9 +1354,9 @@ type SasPortalMigrateOrganizationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMigrateOrganizationRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalMigrateOrganizationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMigrateOrganizationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMigrateOrganizationResponse: Response for [MigrateOrganization].
@@ -1378,9 +1378,9 @@ type SasPortalMigrateOrganizationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMigrateOrganizationResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalMigrateOrganizationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMigrateOrganizationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMoveDeploymentRequest: Request for MoveDeployment.
@@ -1401,9 +1401,9 @@ type SasPortalMoveDeploymentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMoveDeploymentRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalMoveDeploymentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMoveDeploymentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMoveDeviceRequest: Request for MoveDevice.
@@ -1424,9 +1424,9 @@ type SasPortalMoveDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMoveDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalMoveDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMoveDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalMoveNodeRequest: Request for MoveNode.
@@ -1447,9 +1447,9 @@ type SasPortalMoveNodeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalMoveNodeRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalMoveNodeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalMoveNodeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalNode: The Node.
@@ -1476,9 +1476,9 @@ type SasPortalNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
+func (s SasPortalNode) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalNrqzValidation: Information about National Radio Quiet Zone
@@ -1512,9 +1512,9 @@ type SasPortalNrqzValidation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalNrqzValidation) MarshalJSON() ([]byte, error) {
+func (s SasPortalNrqzValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalNrqzValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SasPortalNrqzValidation) UnmarshalJSON(data []byte) error {
@@ -1575,9 +1575,9 @@ type SasPortalOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalOperation) MarshalJSON() ([]byte, error) {
+func (s SasPortalOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalOrganization: Organization details.
@@ -1599,9 +1599,9 @@ type SasPortalOrganization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalOrganization) MarshalJSON() ([]byte, error) {
+func (s SasPortalOrganization) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalOrganization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalPolicy: Defines an access control policy to the resources.
@@ -1634,9 +1634,9 @@ type SasPortalPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalPolicy) MarshalJSON() ([]byte, error) {
+func (s SasPortalPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalProvisionDeploymentRequest: Request for [ProvisionDeployment].
@@ -1669,9 +1669,9 @@ type SasPortalProvisionDeploymentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalProvisionDeploymentRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalProvisionDeploymentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalProvisionDeploymentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalProvisionDeploymentResponse: Response for [ProvisionDeployment].
@@ -1696,9 +1696,9 @@ type SasPortalProvisionDeploymentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalProvisionDeploymentResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalProvisionDeploymentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalProvisionDeploymentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalSetPolicyRequest: Request message for `SetPolicy` method.
@@ -1724,9 +1724,9 @@ type SasPortalSetPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalSetPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalSetPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalSetPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalSetupSasAnalyticsMetadata: Metadata returned by the long running
@@ -1752,9 +1752,9 @@ type SasPortalSetupSasAnalyticsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalSetupSasAnalyticsRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalSetupSasAnalyticsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalSetupSasAnalyticsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalSetupSasAnalyticsResponse: Response returned by the long running
@@ -1780,9 +1780,9 @@ type SasPortalSignDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalSignDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalSignDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalSignDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalStatus: The `Status` type defines a logical error model that is
@@ -1814,9 +1814,9 @@ type SasPortalStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalStatus) MarshalJSON() ([]byte, error) {
+func (s SasPortalStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalTestPermissionsRequest: Request message for `TestPermissions`
@@ -1840,9 +1840,9 @@ type SasPortalTestPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalTestPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalTestPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalTestPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalTestPermissionsResponse: Response message for `TestPermissions`
@@ -1866,9 +1866,9 @@ type SasPortalTestPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalTestPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s SasPortalTestPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalTestPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalUpdateSignedDeviceRequest: Request for UpdateSignedDevice.
@@ -1893,9 +1893,9 @@ type SasPortalUpdateSignedDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalUpdateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalUpdateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalUpdateSignedDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalValidateInstallerRequest: Request for ValidateInstaller.
@@ -1921,9 +1921,9 @@ type SasPortalValidateInstallerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SasPortalValidateInstallerRequest) MarshalJSON() ([]byte, error) {
+func (s SasPortalValidateInstallerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalValidateInstallerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalValidateInstallerResponse: Response for ValidateInstaller.

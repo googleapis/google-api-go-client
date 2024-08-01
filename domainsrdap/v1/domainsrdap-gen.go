@@ -253,9 +253,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Link: Links object defined in section 4.2 of RFC 7483
@@ -289,9 +289,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Notice: Notices object defined in section 4.3 of RFC 7483
@@ -321,9 +321,9 @@ type Notice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Notice) MarshalJSON() ([]byte, error) {
+func (s Notice) MarshalJSON() ([]byte, error) {
 	type NoMethod Notice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RdapResponse: Response to a general RDAP query.
@@ -360,9 +360,9 @@ type RdapResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RdapResponse) MarshalJSON() ([]byte, error) {
+func (s RdapResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RdapResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AutnumGetCall struct {

@@ -231,9 +231,9 @@ type AdditionalInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdditionalInfo) MarshalJSON() ([]byte, error) {
+func (s AdditionalInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AdditionalInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AirQualityIndex: The basic object for representing different air quality
@@ -281,9 +281,9 @@ type AirQualityIndex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AirQualityIndex) MarshalJSON() ([]byte, error) {
+func (s AirQualityIndex) MarshalJSON() ([]byte, error) {
 	type NoMethod AirQualityIndex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Color: Represents a color in the RGBA color space. This representation is
@@ -364,9 +364,9 @@ type Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Color) MarshalJSON() ([]byte, error) {
+func (s Color) MarshalJSON() ([]byte, error) {
 	type NoMethod Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Color) UnmarshalJSON(data []byte) error {
@@ -414,9 +414,9 @@ type Concentration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Concentration) MarshalJSON() ([]byte, error) {
+func (s Concentration) MarshalJSON() ([]byte, error) {
 	type NoMethod Concentration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Concentration) UnmarshalJSON(data []byte) error {
@@ -457,9 +457,9 @@ type CustomLocalAqi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomLocalAqi) MarshalJSON() ([]byte, error) {
+func (s CustomLocalAqi) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomLocalAqi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HealthRecommendations: Health recommendations for different population
@@ -493,9 +493,9 @@ type HealthRecommendations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HealthRecommendations) MarshalJSON() ([]byte, error) {
+func (s HealthRecommendations) MarshalJSON() ([]byte, error) {
 	type NoMethod HealthRecommendations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HourInfo: Contains the air quality information for each hour in the
@@ -534,9 +534,9 @@ type HourInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HourInfo) MarshalJSON() ([]byte, error) {
+func (s HourInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod HourInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HourlyForecast: Contains the air quality information for each hour in the
@@ -574,9 +574,9 @@ type HourlyForecast struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HourlyForecast) MarshalJSON() ([]byte, error) {
+func (s HourlyForecast) MarshalJSON() ([]byte, error) {
 	type NoMethod HourlyForecast
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
@@ -621,9 +621,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
@@ -652,9 +652,9 @@ type Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Interval) MarshalJSON() ([]byte, error) {
+func (s Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -680,9 +680,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -782,9 +782,9 @@ type LookupCurrentConditionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupCurrentConditionsRequest) MarshalJSON() ([]byte, error) {
+func (s LookupCurrentConditionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupCurrentConditionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LookupCurrentConditionsResponse struct {
@@ -828,9 +828,9 @@ type LookupCurrentConditionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupCurrentConditionsResponse) MarshalJSON() ([]byte, error) {
+func (s LookupCurrentConditionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupCurrentConditionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupForecastRequest: The request object of the air quality forecast API.
@@ -927,9 +927,9 @@ type LookupForecastRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupForecastRequest) MarshalJSON() ([]byte, error) {
+func (s LookupForecastRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupForecastRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupForecastResponse: The response object of the air quality forecast API.
@@ -961,9 +961,9 @@ type LookupForecastResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupForecastResponse) MarshalJSON() ([]byte, error) {
+func (s LookupForecastResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupForecastResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupHistoryRequest: The request object of the air quality history API.
@@ -1069,9 +1069,9 @@ type LookupHistoryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupHistoryRequest) MarshalJSON() ([]byte, error) {
+func (s LookupHistoryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupHistoryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LookupHistoryResponse struct {
@@ -1102,9 +1102,9 @@ type LookupHistoryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupHistoryResponse) MarshalJSON() ([]byte, error) {
+func (s LookupHistoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupHistoryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pollutant: Data regarding an air quality pollutant.
@@ -1137,9 +1137,9 @@ type Pollutant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pollutant) MarshalJSON() ([]byte, error) {
+func (s Pollutant) MarshalJSON() ([]byte, error) {
 	type NoMethod Pollutant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CurrentConditionsLookupCall struct {

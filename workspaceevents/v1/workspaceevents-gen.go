@@ -103,27 +103,28 @@ const (
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
-	// View, add, update, and remove members from conversations in Google Chat
+	// See, add, update, and remove members from conversations and spaces in Google
+	// Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// View, compose, send, update, and delete messages, and add, view, and delete
-	// reactions to messages.
+	// See, compose, send, update, and delete messages and their associated
+	// attachments, and add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
-	// View, add, and delete reactions to messages in Google Chat
+	// See, add, and delete reactions to messages in Google Chat
 	ChatMessagesReactionsScope = "https://www.googleapis.com/auth/chat.messages.reactions"
 
 	// View reactions to messages in Google Chat
 	ChatMessagesReactionsReadonlyScope = "https://www.googleapis.com/auth/chat.messages.reactions.readonly"
 
-	// View messages and reactions in Google Chat
+	// See messages and their associated reactions and attachments in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
-	// Create conversations and spaces and see or edit metadata (including history
-	// settings and access settings) in Google Chat
+	// Create conversations and spaces and see or update metadata (including
+	// history settings and access settings) in Google Chat
 	ChatSpacesScope = "https://www.googleapis.com/auth/chat.spaces"
 
 	// View chat and spaces in Google Chat
@@ -246,9 +247,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationEndpoint: The endpoint where the subscription delivers events.
@@ -274,9 +275,9 @@ type NotificationEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationEndpoint) MarshalJSON() ([]byte, error) {
+func (s NotificationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -321,9 +322,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PayloadOptions: Options about what data to include in the event payload.
@@ -356,9 +357,9 @@ type PayloadOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PayloadOptions) MarshalJSON() ([]byte, error) {
+func (s PayloadOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PayloadOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReactivateSubscriptionRequest: The request message for
@@ -395,9 +396,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: Developer Preview
@@ -514,9 +515,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OperationsGetCall struct {

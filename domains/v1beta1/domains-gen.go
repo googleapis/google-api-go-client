@@ -235,9 +235,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -270,9 +270,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizationCode: Defines an authorization code.
@@ -296,9 +296,9 @@ type AuthorizationCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizationCode) MarshalJSON() ([]byte, error) {
+func (s AuthorizationCode) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizationCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -395,9 +395,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigureContactSettingsRequest: Request for the `ConfigureContactSettings`
@@ -435,9 +435,9 @@ type ConfigureContactSettingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigureContactSettingsRequest) MarshalJSON() ([]byte, error) {
+func (s ConfigureContactSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigureContactSettingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigureDnsSettingsRequest: Request for the `ConfigureDnsSettings` method.
@@ -468,9 +468,9 @@ type ConfigureDnsSettingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigureDnsSettingsRequest) MarshalJSON() ([]byte, error) {
+func (s ConfigureDnsSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigureDnsSettingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigureManagementSettingsRequest: Request for the
@@ -495,9 +495,9 @@ type ConfigureManagementSettingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigureManagementSettingsRequest) MarshalJSON() ([]byte, error) {
+func (s ConfigureManagementSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigureManagementSettingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Contact: Details required for a contact associated with a `Registration`.
@@ -525,9 +525,9 @@ type Contact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Contact) MarshalJSON() ([]byte, error) {
+func (s Contact) MarshalJSON() ([]byte, error) {
 	type NoMethod Contact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactSettings: Defines the contact information associated with a
@@ -582,9 +582,9 @@ type ContactSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactSettings) MarshalJSON() ([]byte, error) {
+func (s ContactSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDns: Configuration for an arbitrary DNS provider.
@@ -610,9 +610,9 @@ type CustomDns struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDns) MarshalJSON() ([]byte, error) {
+func (s CustomDns) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDns
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsSettings: Defines the DNS configuration of a `Registration`, including
@@ -628,6 +628,17 @@ type DnsSettings struct {
 	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 	// The free DNS zone provided by Google Domains (https://domains.google/).
 	GoogleDomainsDns *GoogleDomainsDns `json:"googleDomainsDns,omitempty"`
+	// GoogleDomainsRedirectsDataAvailable: Output only. Indicates if this
+	// `Registration` has configured one of the following deprecated Google Domains
+	// DNS features: * Domain forwarding (HTTP `301` and `302` response status
+	// codes), * Email forwarding. See
+	// https://cloud.google.com/domains/docs/deprecations/feature-deprecations for
+	// more details. If any of these features is enabled call the
+	// `RetrieveGoogleDomainsForwardingConfig` method to get details about the
+	// feature's configuration. A forwarding configuration might not work correctly
+	// if required DNS records are not present in the domain's authoritative DNS
+	// Zone.
+	GoogleDomainsRedirectsDataAvailable bool `json:"googleDomainsRedirectsDataAvailable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomDns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -641,9 +652,9 @@ type DnsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsSettings) MarshalJSON() ([]byte, error) {
+func (s DnsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Domain: A domain that the calling user manages in Google Domains.
@@ -685,9 +696,9 @@ type Domain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Domain) MarshalJSON() ([]byte, error) {
+func (s Domain) MarshalJSON() ([]byte, error) {
 	type NoMethod Domain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainForwarding: Domain forwarding configuration.
@@ -729,9 +740,9 @@ type DomainForwarding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DomainForwarding) MarshalJSON() ([]byte, error) {
+func (s DomainForwarding) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainForwarding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DsRecord: Defines a Delegation Signer (DS) record, which is needed to enable
@@ -789,9 +800,9 @@ type DsRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DsRecord) MarshalJSON() ([]byte, error) {
+func (s DsRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod DsRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailForwarding: Email forwarding configuration.
@@ -815,9 +826,9 @@ type EmailForwarding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailForwarding) MarshalJSON() ([]byte, error) {
+func (s EmailForwarding) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailForwarding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportRegistrationRequest: Deprecated: For more information, see Cloud
@@ -870,9 +881,74 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeoPolicy: Configures a `RRSetRoutingPolicy` that routes based on the geo
+// location of the querying user.
+type GeoPolicy struct {
+	// EnableFencing: Without fencing, if health check fails for all configured
+	// items in the current geo bucket, we failover to the next nearest geo bucket.
+	// With fencing, if health checking is enabled, as long as some targets in the
+	// current geo bucket are healthy, we return only the healthy targets. However,
+	// if all targets are unhealthy, we don't failover to the next nearest bucket;
+	// instead, we return all the items in the current bucket even when all targets
+	// are unhealthy.
+	EnableFencing bool `json:"enableFencing,omitempty"`
+	// Item: The primary geo routing configuration. If there are multiple items
+	// with the same location, an error is returned instead.
+	Item []*GeoPolicyItem `json:"item,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableFencing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableFencing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeoPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeoPolicyItem: ResourceRecordSet data for one geo location.
+type GeoPolicyItem struct {
+	// HealthCheckedTargets: For A and AAAA types only. Endpoints to return in the
+	// query result only if they are healthy. These can be specified along with
+	// `rrdata` within this item.
+	HealthCheckedTargets *HealthCheckTargets `json:"healthCheckedTargets,omitempty"`
+	// Location: The geo-location granularity is a GCP region. This location string
+	// should correspond to a GCP region. e.g. "us-east1", "southamerica-east1",
+	// "asia-east1", etc.
+	Location string   `json:"location,omitempty"`
+	Rrdata   []string `json:"rrdata,omitempty"`
+	// SignatureRrdata: DNSSEC generated signatures for all the `rrdata` within
+	// this item. If health checked targets are provided for DNSSEC enabled zones,
+	// there's a restriction of 1 IP address per item.
+	SignatureRrdata []string `json:"signatureRrdata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HealthCheckedTargets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HealthCheckedTargets") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeoPolicyItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoPolicyItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlueRecord: Defines a host on your domain that is a DNS name server for your
@@ -905,9 +981,9 @@ type GlueRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlueRecord) MarshalJSON() ([]byte, error) {
+func (s GlueRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod GlueRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDomainsDns: Deprecated: For more information, see Cloud Domains
@@ -952,9 +1028,34 @@ type GoogleDomainsDns struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDomainsDns) MarshalJSON() ([]byte, error) {
+func (s GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDomainsDns
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HealthCheckTargets: HealthCheckTargets describes endpoints to health-check
+// when responding to Routing Policy queries. Only the healthy endpoints will
+// be included in the response.
+type HealthCheckTargets struct {
+	// InternalLoadBalancer: Configuration for internal load balancers to be health
+	// checked.
+	InternalLoadBalancer []*LoadBalancerTarget `json:"internalLoadBalancer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternalLoadBalancer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InternalLoadBalancer") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HealthCheckTargets) MarshalJSON() ([]byte, error) {
+	type NoMethod HealthCheckTargets
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportDomainRequest: Deprecated: For more information, see Cloud Domains
@@ -980,9 +1081,9 @@ type ImportDomainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportDomainRequest) MarshalJSON() ([]byte, error) {
+func (s ImportDomainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportDomainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InitiatePushTransferRequest: Request for the `InitiatePushTransfer` method.
@@ -1003,9 +1104,9 @@ type InitiatePushTransferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InitiatePushTransferRequest) MarshalJSON() ([]byte, error) {
+func (s InitiatePushTransferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InitiatePushTransferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1031,9 +1132,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1059,9 +1160,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRegistrationsResponse: Response for the `ListRegistrations` method.
@@ -1088,9 +1189,66 @@ type ListRegistrationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRegistrationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRegistrationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRegistrationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LoadBalancerTarget: The configuration for an individual load balancer to
+// health check.
+type LoadBalancerTarget struct {
+	// IpAddress: The frontend IP address of the load balancer to health check.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// IpProtocol: The protocol of the load balancer to health check.
+	//
+	// Possible values:
+	//   "UNDEFINED"
+	//   "TCP" - Indicates the load balancer is accessible via TCP.
+	//   "UDP" - Indicates the load balancer is accessible via UDP.
+	IpProtocol string `json:"ipProtocol,omitempty"`
+	// LoadBalancerType: The type of load balancer specified by this target. This
+	// value must match the configuration of the load balancer located at the
+	// LoadBalancerTarget's IP address, port, and region. Use the following: -
+	// *regionalL4ilb*: for a regional internal passthrough Network Load Balancer.
+	// - *regionalL7ilb*: for a regional internal Application Load Balancer. -
+	// *globalL7ilb*: for a global internal Application Load Balancer.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "GLOBAL_L7ILB" - Indicates the load balancer is a Cross-Region Application
+	// Load Balancer.
+	//   "REGIONAL_L4ILB" - Indicates the load balancer is a Regional Network
+	// Passthrough Load Balancer.
+	//   "REGIONAL_L7ILB" - Indicates the load balancer is a Regional Application
+	// Load Balancer.
+	LoadBalancerType string `json:"loadBalancerType,omitempty"`
+	// NetworkUrl: The fully qualified URL of the network that the load balancer is
+	// attached to. This should be formatted like
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{ne
+	// twork}`.
+	NetworkUrl string `json:"networkUrl,omitempty"`
+	// Port: The configured port of the load balancer.
+	Port string `json:"port,omitempty"`
+	// Project: The project ID in which the load balancer is located.
+	Project string `json:"project,omitempty"`
+	// Region: The region in which the load balancer is located.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LoadBalancerTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadBalancerTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1126,9 +1284,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagementSettings: Defines renewal, billing, and transfer settings for a
@@ -1214,9 +1372,9 @@ type ManagementSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagementSettings) MarshalJSON() ([]byte, error) {
+func (s ManagementSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagementSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -1245,9 +1403,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1292,9 +1450,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1325,9 +1483,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1417,9 +1575,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostalAddress: Represents a postal address, e.g. for postal delivery or
@@ -1516,9 +1674,83 @@ type PostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
+func (s PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrimaryBackupPolicy: Configures a RRSetRoutingPolicy such that all queries
+// are responded with the primary_targets if they are healthy. And if all of
+// them are unhealthy, then we fallback to a geo localized policy.
+type PrimaryBackupPolicy struct {
+	// BackupGeoTargets: Backup targets provide a regional failover policy for the
+	// otherwise global primary targets. If serving state is set to `BACKUP`, this
+	// policy essentially becomes a geo routing policy.
+	BackupGeoTargets *GeoPolicy `json:"backupGeoTargets,omitempty"`
+	// PrimaryTargets: Endpoints that are health checked before making the routing
+	// decision. Unhealthy endpoints are omitted from the results. If all endpoints
+	// are unhealthy, we serve a response based on the `backup_geo_targets`.
+	PrimaryTargets *HealthCheckTargets `json:"primaryTargets,omitempty"`
+	// TrickleTraffic: When serving state is `PRIMARY`, this field provides the
+	// option of sending a small percentage of the traffic to the backup targets.
+	TrickleTraffic float64 `json:"trickleTraffic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupGeoTargets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupGeoTargets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrimaryBackupPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PrimaryBackupPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *PrimaryBackupPolicy) UnmarshalJSON(data []byte) error {
+	type NoMethod PrimaryBackupPolicy
+	var s1 struct {
+		TrickleTraffic gensupport.JSONFloat64 `json:"trickleTraffic"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TrickleTraffic = float64(s1.TrickleTraffic)
+	return nil
+}
+
+// RRSetRoutingPolicy: A RRSetRoutingPolicy represents ResourceRecordSet data
+// that is returned dynamically with the response varying based on configured
+// properties such as geolocation or by weighted random selection.
+type RRSetRoutingPolicy struct {
+	Geo           *GeoPolicy           `json:"geo,omitempty"`
+	GeoPolicy     *GeoPolicy           `json:"geoPolicy,omitempty"`
+	PrimaryBackup *PrimaryBackupPolicy `json:"primaryBackup,omitempty"`
+	Wrr           *WrrPolicy           `json:"wrr,omitempty"`
+	WrrPolicy     *WrrPolicy           `json:"wrrPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Geo") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Geo") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RRSetRoutingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RRSetRoutingPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterDomainRequest: Request for the `RegisterDomain` method.
@@ -1566,9 +1798,9 @@ type RegisterDomainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterDomainRequest) MarshalJSON() ([]byte, error) {
+func (s RegisterDomainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterDomainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterParameters: Parameters required to register a new domain.
@@ -1638,9 +1870,9 @@ type RegisterParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterParameters) MarshalJSON() ([]byte, error) {
+func (s RegisterParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Registration: The `Registration` resource facilitates managing and
@@ -1849,9 +2081,9 @@ type Registration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Registration) MarshalJSON() ([]byte, error) {
+func (s Registration) MarshalJSON() ([]byte, error) {
 	type NoMethod Registration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RenewDomainRequest: Request for the `RenewDomain` method.
@@ -1878,14 +2110,82 @@ type RenewDomainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RenewDomainRequest) MarshalJSON() ([]byte, error) {
+func (s RenewDomainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RenewDomainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetAuthorizationCodeRequest: Request for the `ResetAuthorizationCode`
 // method.
 type ResetAuthorizationCodeRequest struct {
+}
+
+// ResourceRecordSet: A unit of data that is returned by the DNS servers.
+type ResourceRecordSet struct {
+	// Name: For example, www.example.com.
+	Name string `json:"name,omitempty"`
+	// RoutingPolicy: Configures dynamic query responses based on either the geo
+	// location of the querying user or a weighted round robin based routing
+	// policy. A valid `ResourceRecordSet` contains only `rrdata` (for static
+	// resolution) or a `routing_policy` (for dynamic resolution).
+	RoutingPolicy *RRSetRoutingPolicy `json:"routingPolicy,omitempty"`
+	// Rrdata: As defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1) --
+	// see examples.
+	Rrdata []string `json:"rrdata,omitempty"`
+	// SignatureRrdata: As defined in RFC 4034 (section 3.2).
+	SignatureRrdata []string `json:"signatureRrdata,omitempty"`
+	// Ttl: Number of seconds that this `ResourceRecordSet` can be cached by
+	// resolvers.
+	Ttl int64 `json:"ttl,omitempty"`
+	// Type: The identifier of a supported record type. See the list of Supported
+	// DNS record types.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceRecordSet) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceRecordSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrieveGoogleDomainsDnsRecordsResponse: Response for the
+// `RetrieveGoogleDomainsDnsRecords` method.
+type RetrieveGoogleDomainsDnsRecordsResponse struct {
+	// NextPageToken: When present, there are more results to retrieve. Set
+	// `page_token` to this value on a subsequent call to get the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rrset: The resource record set resources (DNS Zone records).
+	Rrset []*ResourceRecordSet `json:"rrset,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrieveGoogleDomainsDnsRecordsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveGoogleDomainsDnsRecordsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveGoogleDomainsForwardingConfigResponse: Response for the
@@ -1915,9 +2215,9 @@ type RetrieveGoogleDomainsForwardingConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveGoogleDomainsForwardingConfigResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveGoogleDomainsForwardingConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveGoogleDomainsForwardingConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveImportableDomainsResponse: Deprecated: For more information, see
@@ -1947,9 +2247,9 @@ type RetrieveImportableDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveImportableDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveImportableDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveImportableDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveRegisterParametersResponse: Response for the
@@ -1974,9 +2274,9 @@ type RetrieveRegisterParametersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveRegisterParametersResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveRegisterParametersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveRegisterParametersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveTransferParametersResponse: Deprecated: For more information, see
@@ -2003,9 +2303,9 @@ type RetrieveTransferParametersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetrieveTransferParametersResponse) MarshalJSON() ([]byte, error) {
+func (s RetrieveTransferParametersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveTransferParametersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchDomainsResponse: Response for the `SearchDomains` method.
@@ -2028,9 +2328,9 @@ type SearchDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2057,9 +2357,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2091,9 +2391,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -2116,9 +2416,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2143,9 +2443,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferDomainRequest: Deprecated: For more information, see Cloud Domains
@@ -2192,9 +2492,9 @@ type TransferDomainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferDomainRequest) MarshalJSON() ([]byte, error) {
+func (s TransferDomainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferDomainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferParameters: Deprecated: For more information, see Cloud Domains
@@ -2262,9 +2562,83 @@ type TransferParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferParameters) MarshalJSON() ([]byte, error) {
+func (s TransferParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WrrPolicy: Configures a RRSetRoutingPolicy that routes in a weighted round
+// robin fashion.
+type WrrPolicy struct {
+	Item []*WrrPolicyItem `json:"item,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Item") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Item") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WrrPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod WrrPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WrrPolicyItem: A routing block which contains the routing information for
+// one WRR item.
+type WrrPolicyItem struct {
+	// HealthCheckedTargets: Endpoints that are health checked before making the
+	// routing decision. The unhealthy endpoints are omitted from the result. If
+	// all endpoints within a bucket are unhealthy, we choose a different bucket
+	// (sampled with respect to its weight) for responding. If DNSSEC is enabled
+	// for this zone, only one of `rrdata` or `health_checked_targets` can be set.
+	HealthCheckedTargets *HealthCheckTargets `json:"healthCheckedTargets,omitempty"`
+	Rrdata               []string            `json:"rrdata,omitempty"`
+	// SignatureRrdata: DNSSEC generated signatures for all the `rrdata` within
+	// this item. Note that if health checked targets are provided for DNSSEC
+	// enabled zones, there's a restriction of 1 IP address per item.
+	SignatureRrdata []string `json:"signatureRrdata,omitempty"`
+	// Weight: The weight corresponding to this `WrrPolicyItem` object. When
+	// multiple `WrrPolicyItem` objects are configured, the probability of
+	// returning an `WrrPolicyItem` object's data is proportional to its weight
+	// relative to the sum of weights configured for all items. This weight must be
+	// non-negative.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HealthCheckedTargets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HealthCheckedTargets") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WrrPolicyItem) MarshalJSON() ([]byte, error) {
+	type NoMethod WrrPolicyItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *WrrPolicyItem) UnmarshalJSON(data []byte) error {
+	type NoMethod WrrPolicyItem
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 type ProjectsLocationsGetCall struct {
@@ -4490,6 +4864,153 @@ func (c *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall) Do(opts ..
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall struct {
+	s            *Service
+	registration string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveGoogleDomainsDnsRecords: Lists the DNS records from the Google
+// Domains DNS zone for domains that use the deprecated `google_domains_dns` in
+// the `Registration`'s `dns_settings`.
+//
+//   - registration: The name of the `Registration` whose Google Domains DNS
+//     records details you are retrieving, in the format
+//     `projects/*/locations/*/registrations/*`.
+func (r *ProjectsLocationsRegistrationsService) RetrieveGoogleDomainsDnsRecords(registration string) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c := &ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.registration = registration
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) PageSize(pageSize int64) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": When set to the
+// `next_page_token` from a prior response, provides the next page of results.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) PageToken(pageToken string) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) IfNoneMatch(entityTag string) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+registration}:retrieveGoogleDomainsDnsRecords")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"registration": c.registration,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.retrieveGoogleDomainsDnsRecords" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrieveGoogleDomainsDnsRecordsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) Do(opts ...googleapi.CallOption) (*RetrieveGoogleDomainsDnsRecordsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrieveGoogleDomainsDnsRecordsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsDnsRecordsCall) Pages(ctx context.Context, f func(*RetrieveGoogleDomainsDnsRecordsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall struct {

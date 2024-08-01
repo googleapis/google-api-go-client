@@ -181,9 +181,9 @@ type Bin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Bin) MarshalJSON() ([]byte, error) {
+func (s Bin) MarshalJSON() ([]byte, error) {
 	type NoMethod Bin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Bin) UnmarshalJSON(data []byte) error {
@@ -220,9 +220,9 @@ type CollectionPeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CollectionPeriod) MarshalJSON() ([]byte, error) {
+func (s CollectionPeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod CollectionPeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -258,9 +258,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FractionTimeseries: For enum metrics, provides fraction timeseries which add
@@ -282,9 +282,9 @@ type FractionTimeseries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FractionTimeseries) MarshalJSON() ([]byte, error) {
+func (s FractionTimeseries) MarshalJSON() ([]byte, error) {
 	type NoMethod FractionTimeseries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FractionTimeseries) UnmarshalJSON(data []byte) error {
@@ -340,9 +340,9 @@ type HistoryKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryKey) MarshalJSON() ([]byte, error) {
+func (s HistoryKey) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HistoryRecord: HistoryRecord is a timeseries of Chrome UX Report data. It
@@ -376,9 +376,9 @@ type HistoryRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryRecord) MarshalJSON() ([]byte, error) {
+func (s HistoryRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Key: Key defines all the dimensions that identify this record as unique.
@@ -421,9 +421,9 @@ type Key struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Key) MarshalJSON() ([]byte, error) {
+func (s Key) MarshalJSON() ([]byte, error) {
 	type NoMethod Key
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metric: A `metric` is a set of user experience data for a single web
@@ -453,9 +453,9 @@ type Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metric) MarshalJSON() ([]byte, error) {
+func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricTimeseries: A `metric timeseries` is a set of user experience data for
@@ -487,9 +487,9 @@ type MetricTimeseries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricTimeseries) MarshalJSON() ([]byte, error) {
+func (s MetricTimeseries) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricTimeseries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Percentiles: Percentiles contains synthetic values of a metric at a given
@@ -511,9 +511,9 @@ type Percentiles struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Percentiles) MarshalJSON() ([]byte, error) {
+func (s Percentiles) MarshalJSON() ([]byte, error) {
 	type NoMethod Percentiles
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryHistoryRequest: Request payload sent by a physical web client. This
@@ -558,9 +558,9 @@ type QueryHistoryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryHistoryRequest) MarshalJSON() ([]byte, error) {
+func (s QueryHistoryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryHistoryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryHistoryResponse: Response payload sent back to a physical web client.
@@ -590,9 +590,9 @@ type QueryHistoryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryHistoryResponse) MarshalJSON() ([]byte, error) {
+func (s QueryHistoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryHistoryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequest: Request payload sent by a physical web client. This request
@@ -644,9 +644,9 @@ type QueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRequest) MarshalJSON() ([]byte, error) {
+func (s QueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponse: Response payload sent back to a physical web client. This
@@ -676,9 +676,9 @@ type QueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResponse) MarshalJSON() ([]byte, error) {
+func (s QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Record: Record is a single Chrome UX report data record. It contains use
@@ -709,9 +709,9 @@ type Record struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Record) MarshalJSON() ([]byte, error) {
+func (s Record) MarshalJSON() ([]byte, error) {
 	type NoMethod Record
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeseriesBin: A bin is a discrete portion of data spanning from start to
@@ -748,9 +748,9 @@ type TimeseriesBin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeseriesBin) MarshalJSON() ([]byte, error) {
+func (s TimeseriesBin) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeseriesBin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TimeseriesBin) UnmarshalJSON(data []byte) error {
@@ -793,9 +793,9 @@ type TimeseriesPercentiles struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeseriesPercentiles) MarshalJSON() ([]byte, error) {
+func (s TimeseriesPercentiles) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeseriesPercentiles
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlNormalization: Object representing the normalization actions taken to
@@ -822,9 +822,9 @@ type UrlNormalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlNormalization) MarshalJSON() ([]byte, error) {
+func (s UrlNormalization) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNormalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RecordsQueryHistoryRecordCall struct {

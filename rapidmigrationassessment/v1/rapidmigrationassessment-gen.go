@@ -245,9 +245,9 @@ type Annotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Annotation) MarshalJSON() ([]byte, error) {
+func (s Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod Annotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -316,9 +316,9 @@ type Collector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Collector) MarshalJSON() ([]byte, error) {
+func (s Collector) MarshalJSON() ([]byte, error) {
 	type NoMethod Collector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -347,9 +347,9 @@ type GuestOsScan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestOsScan) MarshalJSON() ([]byte, error) {
+func (s GuestOsScan) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestOsScan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCollectorsResponse: Message for response to listing Collectors.
@@ -377,9 +377,9 @@ type ListCollectorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCollectorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCollectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCollectorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -405,9 +405,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -433,9 +433,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -471,9 +471,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -518,9 +518,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -556,9 +556,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PauseCollectorRequest: Message for pausing a Collector.
@@ -588,9 +588,9 @@ type PauseCollectorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PauseCollectorRequest) MarshalJSON() ([]byte, error) {
+func (s PauseCollectorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PauseCollectorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterCollectorRequest: Message for registering a Collector.
@@ -620,9 +620,9 @@ type RegisterCollectorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterCollectorRequest) MarshalJSON() ([]byte, error) {
+func (s RegisterCollectorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterCollectorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResumeCollectorRequest: Message for resuming a Collector.
@@ -652,9 +652,9 @@ type ResumeCollectorRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResumeCollectorRequest) MarshalJSON() ([]byte, error) {
+func (s ResumeCollectorRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResumeCollectorRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -686,9 +686,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VSphereScan: Message describing a MC Source of type VSphere Scan.
@@ -708,9 +708,9 @@ type VSphereScan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VSphereScan) MarshalJSON() ([]byte, error) {
+func (s VSphereScan) MarshalJSON() ([]byte, error) {
 	type NoMethod VSphereScan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

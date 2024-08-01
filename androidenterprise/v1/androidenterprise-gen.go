@@ -360,9 +360,9 @@ type Administrator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Administrator) MarshalJSON() ([]byte, error) {
+func (s Administrator) MarshalJSON() ([]byte, error) {
 	type NoMethod Administrator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdministratorWebToken: A token authorizing an admin to access an iframe.
@@ -386,9 +386,9 @@ type AdministratorWebToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebToken) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebToken) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdministratorWebTokenSpec: Specification for a token used to generate
@@ -432,9 +432,9 @@ type AdministratorWebTokenSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecManagedConfigurations struct {
@@ -454,9 +454,9 @@ type AdministratorWebTokenSpecManagedConfigurations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecManagedConfigurations) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecManagedConfigurations) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecManagedConfigurations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecPlaySearch struct {
@@ -478,9 +478,9 @@ type AdministratorWebTokenSpecPlaySearch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecPlaySearch) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecPlaySearch) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecPlaySearch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecPrivateApps struct {
@@ -499,9 +499,9 @@ type AdministratorWebTokenSpecPrivateApps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecPrivateApps) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecPrivateApps) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecPrivateApps
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecStoreBuilder struct {
@@ -520,9 +520,9 @@ type AdministratorWebTokenSpecStoreBuilder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecStoreBuilder) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecStoreBuilder) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecStoreBuilder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecWebApps struct {
@@ -541,9 +541,9 @@ type AdministratorWebTokenSpecWebApps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecWebApps) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecWebApps) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecWebApps
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdministratorWebTokenSpecZeroTouch struct {
@@ -563,9 +563,9 @@ type AdministratorWebTokenSpecZeroTouch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdministratorWebTokenSpecZeroTouch) MarshalJSON() ([]byte, error) {
+func (s AdministratorWebTokenSpecZeroTouch) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpecZeroTouch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppRestrictionsSchema: Represents the list of app restrictions available to
@@ -591,9 +591,9 @@ type AppRestrictionsSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppRestrictionsSchema) MarshalJSON() ([]byte, error) {
+func (s AppRestrictionsSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRestrictionsSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppRestrictionsSchemaChangeEvent: An event generated when a new app version
@@ -617,9 +617,9 @@ type AppRestrictionsSchemaChangeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppRestrictionsSchemaChangeEvent) MarshalJSON() ([]byte, error) {
+func (s AppRestrictionsSchemaChangeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRestrictionsSchemaChangeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppRestrictionsSchemaRestriction: A restriction in the App Restriction
@@ -676,9 +676,9 @@ type AppRestrictionsSchemaRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppRestrictionsSchemaRestriction) MarshalJSON() ([]byte, error) {
+func (s AppRestrictionsSchemaRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRestrictionsSchemaRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppRestrictionsSchemaRestrictionRestrictionValue: A typed value for the
@@ -722,9 +722,9 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppRestrictionsSchemaRestrictionRestrictionValue) MarshalJSON() ([]byte, error) {
+func (s AppRestrictionsSchemaRestrictionRestrictionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRestrictionsSchemaRestrictionRestrictionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppState: List of states set by the app.
@@ -746,9 +746,9 @@ type AppState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppState) MarshalJSON() ([]byte, error) {
+func (s AppState) MarshalJSON() ([]byte, error) {
 	type NoMethod AppState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppUpdateEvent: An event generated when a new version of an app is uploaded
@@ -772,9 +772,9 @@ type AppUpdateEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppUpdateEvent) MarshalJSON() ([]byte, error) {
+func (s AppUpdateEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AppUpdateEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppVersion: This represents a single version of the app.
@@ -816,9 +816,9 @@ type AppVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppVersion) MarshalJSON() ([]byte, error) {
+func (s AppVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AppVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApprovalUrlInfo: Information on an approval URL.
@@ -839,9 +839,9 @@ type ApprovalUrlInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApprovalUrlInfo) MarshalJSON() ([]byte, error) {
+func (s ApprovalUrlInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ApprovalUrlInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthenticationToken: An AuthenticationToken is used by the EMM's device
@@ -868,9 +868,9 @@ type AuthenticationToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
+func (s AuthenticationToken) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthenticationToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoInstallConstraint: The auto-install constraint. Defines a set of
@@ -911,9 +911,9 @@ type AutoInstallConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoInstallConstraint) MarshalJSON() ([]byte, error) {
+func (s AutoInstallConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoInstallConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AutoInstallPolicy struct {
@@ -955,9 +955,9 @@ type AutoInstallPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoInstallPolicy) MarshalJSON() ([]byte, error) {
+func (s AutoInstallPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoInstallPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigurationVariables: A configuration variables resource contains the
@@ -982,9 +982,9 @@ type ConfigurationVariables struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigurationVariables) MarshalJSON() ([]byte, error) {
+func (s ConfigurationVariables) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigurationVariables
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateEnrollmentTokenResponse: Response message for create enrollment token.
@@ -1007,9 +1007,9 @@ type CreateEnrollmentTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateEnrollmentTokenResponse) MarshalJSON() ([]byte, error) {
+func (s CreateEnrollmentTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateEnrollmentTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Device: A Devices resource represents a mobile device managed by the EMM and
@@ -1073,9 +1073,9 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
+func (s Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceReport: Device report updated with the latest app states for managed
@@ -1100,9 +1100,9 @@ type DeviceReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceReport) MarshalJSON() ([]byte, error) {
+func (s DeviceReport) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceReportUpdateEvent: An event generated when an updated device report is
@@ -1128,9 +1128,9 @@ type DeviceReportUpdateEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceReportUpdateEvent) MarshalJSON() ([]byte, error) {
+func (s DeviceReportUpdateEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceReportUpdateEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceState: The state of a user's device, as accessed by the getState and
@@ -1161,9 +1161,9 @@ type DeviceState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceState) MarshalJSON() ([]byte, error) {
+func (s DeviceState) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DevicesListResponse struct {
@@ -1185,9 +1185,9 @@ type DevicesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
+func (s DevicesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DevicesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Enterprise: An Enterprises resource represents the binding between an EMM
@@ -1231,9 +1231,9 @@ type Enterprise struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Enterprise) MarshalJSON() ([]byte, error) {
+func (s Enterprise) MarshalJSON() ([]byte, error) {
 	type NoMethod Enterprise
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnterpriseAccount: A service account that can be used to authenticate as the
@@ -1257,9 +1257,9 @@ type EnterpriseAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnterpriseAccount) MarshalJSON() ([]byte, error) {
+func (s EnterpriseAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnterpriseAuthenticationAppLinkConfig: An authentication URL configuration
@@ -1280,9 +1280,9 @@ type EnterpriseAuthenticationAppLinkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnterpriseAuthenticationAppLinkConfig) MarshalJSON() ([]byte, error) {
+func (s EnterpriseAuthenticationAppLinkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseAuthenticationAppLinkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EnterprisesListResponse struct {
@@ -1304,9 +1304,9 @@ type EnterprisesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnterprisesListResponse) MarshalJSON() ([]byte, error) {
+func (s EnterprisesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterprisesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EnterprisesSendTestPushNotificationResponse struct {
@@ -1331,30 +1331,31 @@ type EnterprisesSendTestPushNotificationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, error) {
+func (s EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterprisesSendTestPushNotificationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Entitlement: The presence of an Entitlements resource indicates that a user
-// has the right to use a particular app. Entitlements are user specific, not
-// device specific. This allows a user with an entitlement to an app to install
-// the app on all their devices. It's also possible for a user to hold an
-// entitlement to an app without installing the app on any device. The API can
-// be used to create an entitlement. As an option, you can also use the API to
-// trigger the installation of an app on all a user's managed devices at the
-// same time the entitlement is created. If the app is free, creating the
-// entitlement also creates a group license for that app. For paid apps,
-// creating the entitlement consumes one license, and that license remains
-// consumed until the entitlement is removed. If the enterprise hasn't
-// purchased enough licenses, then no entitlement is created and the
-// installation fails. An entitlement is also not created for an app if the app
-// requires permissions that the enterprise hasn't accepted. If an entitlement
-// is deleted, the app may be uninstalled from a user's device. As a best
-// practice, uninstall the app by calling Installs.delete() before deleting the
-// entitlement. Entitlements for apps that a user pays for on an unmanaged
-// profile have "userPurchase" as the entitlement reason. These entitlements
-// cannot be removed via the API.
+// Entitlement:  *Deprecated:* New integrations cannot use this method and can
+// refer to our new recommendations. The presence of an Entitlements resource
+// indicates that a user has the right to use a particular app. Entitlements
+// are user specific, not device specific. This allows a user with an
+// entitlement to an app to install the app on all their devices. It's also
+// possible for a user to hold an entitlement to an app without installing the
+// app on any device. The API can be used to create an entitlement. As an
+// option, you can also use the API to trigger the installation of an app on
+// all a user's managed devices at the same time the entitlement is created. If
+// the app is free, creating the entitlement also creates a group license for
+// that app. For paid apps, creating the entitlement consumes one license, and
+// that license remains consumed until the entitlement is removed. If the
+// enterprise hasn't purchased enough licenses, then no entitlement is created
+// and the installation fails. An entitlement is also not created for an app if
+// the app requires permissions that the enterprise hasn't accepted. If an
+// entitlement is deleted, the app may be uninstalled from a user's device. As
+// a best practice, uninstall the app by calling Installs.delete() before
+// deleting the entitlement. Entitlements for apps that a user pays for on an
+// unmanaged profile have "userPurchase" as the entitlement reason. These
+// entitlements cannot be removed via the API.
 type Entitlement struct {
 	// ProductId: The ID of the product that the entitlement is for. For example,
 	// "app:com.google.android.gm".
@@ -1384,9 +1385,9 @@ type Entitlement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entitlement) MarshalJSON() ([]byte, error) {
+func (s Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EntitlementsListResponse struct {
@@ -1410,9 +1411,9 @@ type EntitlementsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
+func (s EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EntitlementsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAuthenticationSettings: Contains settings for Google-provided user
@@ -1445,24 +1446,26 @@ type GoogleAuthenticationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAuthenticationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupLicense: Group license objects allow you to keep track of licenses
-// (called entitlements) for both free and paid apps. For a free app, a group
-// license is created when an enterprise admin first approves the product in
-// Google Play or when the first entitlement for the product is created for a
-// user via the API. For a paid app, a group license object is only created
-// when an enterprise admin purchases the product in Google Play for the first
-// time. Use the API to query group licenses. A Grouplicenses resource includes
-// the total number of licenses purchased (paid apps only) and the total number
-// of licenses currently in use. In other words, the total number of
-// Entitlements that exist for the product. Only one group license object is
-// created per product and group license objects are never deleted. If a
-// product is unapproved, its group license remains. This allows enterprise
-// admins to keep track of any remaining entitlements for the product.
+// GroupLicense:  *Deprecated:* New integrations cannot use this method and can
+// refer to our new recommendations. Group license objects allow you to keep
+// track of licenses (called entitlements) for both free and paid apps. For a
+// free app, a group license is created when an enterprise admin first approves
+// the product in Google Play or when the first entitlement for the product is
+// created for a user via the API. For a paid app, a group license object is
+// only created when an enterprise admin purchases the product in Google Play
+// for the first time. Use the API to query group licenses. A Grouplicenses
+// resource includes the total number of licenses purchased (paid apps only)
+// and the total number of licenses currently in use. In other words, the total
+// number of Entitlements that exist for the product. Only one group license
+// object is created per product and group license objects are never deleted.
+// If a product is unapproved, its group license remains. This allows
+// enterprise admins to keep track of any remaining entitlements for the
+// product.
 type GroupLicense struct {
 	// AcquisitionKind: How this group license was acquired. "bulkPurchase" means
 	// that this Grouplicenses resource was created because the enterprise
@@ -1527,9 +1530,9 @@ type GroupLicense struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupLicense) MarshalJSON() ([]byte, error) {
+func (s GroupLicense) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupLicense
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupLicenseUsersListResponse struct {
@@ -1551,9 +1554,9 @@ type GroupLicenseUsersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupLicenseUsersListResponse) MarshalJSON() ([]byte, error) {
+func (s GroupLicenseUsersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupLicenseUsersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupLicensesListResponse struct {
@@ -1576,9 +1579,9 @@ type GroupLicensesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupLicensesListResponse) MarshalJSON() ([]byte, error) {
+func (s GroupLicensesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupLicensesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Install: The existence of an Installs resource indicates that an app is
@@ -1631,9 +1634,9 @@ type Install struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Install) MarshalJSON() ([]byte, error) {
+func (s Install) MarshalJSON() ([]byte, error) {
 	type NoMethod Install
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallFailureEvent: An event generated when an app installation failed on a
@@ -1670,9 +1673,9 @@ type InstallFailureEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallFailureEvent) MarshalJSON() ([]byte, error) {
+func (s InstallFailureEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallFailureEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InstallsListResponse struct {
@@ -1696,9 +1699,9 @@ type InstallsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallsListResponse) MarshalJSON() ([]byte, error) {
+func (s InstallsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyedAppState: Represents a keyed app state containing a key, timestamp,
@@ -1740,9 +1743,9 @@ type KeyedAppState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyedAppState) MarshalJSON() ([]byte, error) {
+func (s KeyedAppState) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyedAppState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizedText: A localized string with its locale.
@@ -1764,9 +1767,9 @@ type LocalizedText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedText) MarshalJSON() ([]byte, error) {
+func (s LocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: Maintenance window for managed Google Play Accounts. This
@@ -1792,15 +1795,16 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ManagedConfiguration: A managed configuration resource contains the set of
-// managed properties defined by the app developer in the app's managed
-// configurations schema, as well as any configuration variables defined for
-// the user.
+// ManagedConfiguration:  *Deprecated:* New integrations cannot use this method
+// and can refer to our new recommendations. A managed configuration resource
+// contains the set of managed properties defined by the app developer in the
+// app's managed configurations schema, as well as any configuration variables
+// defined for the user.
 type ManagedConfiguration struct {
 	// ConfigurationVariables: Contains the ID of the managed configuration profile
 	// and the set of configuration variables (if any) defined for the user.
@@ -1828,9 +1832,9 @@ type ManagedConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfiguration) MarshalJSON() ([]byte, error) {
+func (s ManagedConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ManagedConfigurationsForDeviceListResponse struct {
@@ -1853,9 +1857,9 @@ type ManagedConfigurationsForDeviceListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfigurationsForDeviceListResponse) MarshalJSON() ([]byte, error) {
+func (s ManagedConfigurationsForDeviceListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfigurationsForDeviceListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ManagedConfigurationsForUserListResponse struct {
@@ -1878,9 +1882,9 @@ type ManagedConfigurationsForUserListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfigurationsForUserListResponse) MarshalJSON() ([]byte, error) {
+func (s ManagedConfigurationsForUserListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfigurationsForUserListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedConfigurationsSettings: A managed configurations settings resource
@@ -1908,9 +1912,9 @@ type ManagedConfigurationsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfigurationsSettings) MarshalJSON() ([]byte, error) {
+func (s ManagedConfigurationsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfigurationsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ManagedConfigurationsSettingsListResponse struct {
@@ -1933,9 +1937,9 @@ type ManagedConfigurationsSettingsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedConfigurationsSettingsListResponse) MarshalJSON() ([]byte, error) {
+func (s ManagedConfigurationsSettingsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedConfigurationsSettingsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedProperty: A managed property of a managed configuration. The property
@@ -1976,9 +1980,9 @@ type ManagedProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedProperty) MarshalJSON() ([]byte, error) {
+func (s ManagedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedPropertyBundle: A bundle of managed properties.
@@ -1998,9 +2002,9 @@ type ManagedPropertyBundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedPropertyBundle) MarshalJSON() ([]byte, error) {
+func (s ManagedPropertyBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedPropertyBundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NewDeviceEvent: An event generated when a new device is ready to be managed.
@@ -2033,9 +2037,9 @@ type NewDeviceEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NewDeviceEvent) MarshalJSON() ([]byte, error) {
+func (s NewDeviceEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod NewDeviceEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NewPermissionsEvent: An event generated when new permissions are added to an
@@ -2065,9 +2069,9 @@ type NewPermissionsEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NewPermissionsEvent) MarshalJSON() ([]byte, error) {
+func (s NewPermissionsEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod NewPermissionsEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Notification: A notification of one event relating to an enterprise.
@@ -2129,9 +2133,9 @@ type Notification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Notification) MarshalJSON() ([]byte, error) {
+func (s Notification) MarshalJSON() ([]byte, error) {
 	type NoMethod Notification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationSet: A resource returned by the PullNotificationSet API, which
@@ -2161,9 +2165,9 @@ type NotificationSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationSet) MarshalJSON() ([]byte, error) {
+func (s NotificationSet) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageInfo: Information about the current page. List operations that supports
@@ -2191,9 +2195,9 @@ type PageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageInfo) MarshalJSON() ([]byte, error) {
+func (s PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Permission: A Permissions resource represents some extra capability, to be
@@ -2227,9 +2231,9 @@ type Permission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permission) MarshalJSON() ([]byte, error) {
+func (s Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: The device policy for a given managed device.
@@ -2294,9 +2298,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: A Products resource represents an app in the Google Play store that
@@ -2421,9 +2425,9 @@ type Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Product) MarshalJSON() ([]byte, error) {
+func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductApprovalEvent: An event generated when a product's approval status is
@@ -2453,9 +2457,9 @@ type ProductApprovalEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductApprovalEvent) MarshalJSON() ([]byte, error) {
+func (s ProductApprovalEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductApprovalEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductAvailabilityChangeEvent: An event generated whenever a product's
@@ -2487,9 +2491,9 @@ type ProductAvailabilityChangeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductAvailabilityChangeEvent) MarshalJSON() ([]byte, error) {
+func (s ProductAvailabilityChangeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductAvailabilityChangeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPermission: A product permissions resource represents the set of
@@ -2520,9 +2524,9 @@ type ProductPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPermission) MarshalJSON() ([]byte, error) {
+func (s ProductPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPermissions: Information about the permissions required by a specific
@@ -2549,9 +2553,9 @@ type ProductPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPermissions) MarshalJSON() ([]byte, error) {
+func (s ProductPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPolicy: The policy for a product.
@@ -2618,9 +2622,9 @@ type ProductPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPolicy) MarshalJSON() ([]byte, error) {
+func (s ProductPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductSet: A set of products.
@@ -2672,9 +2676,9 @@ type ProductSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductSet) MarshalJSON() ([]byte, error) {
+func (s ProductSet) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProductSigningCertificate struct {
@@ -2698,9 +2702,9 @@ type ProductSigningCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductSigningCertificate) MarshalJSON() ([]byte, error) {
+func (s ProductSigningCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductSigningCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductVisibility: A product to be made visible to a user.
@@ -2732,9 +2736,9 @@ type ProductVisibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductVisibility) MarshalJSON() ([]byte, error) {
+func (s ProductVisibility) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductVisibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProductsApproveRequest struct {
@@ -2773,9 +2777,9 @@ type ProductsApproveRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductsApproveRequest) MarshalJSON() ([]byte, error) {
+func (s ProductsApproveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductsApproveRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProductsGenerateApprovalUrlResponse struct {
@@ -2804,9 +2808,9 @@ type ProductsGenerateApprovalUrlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
+func (s ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductsGenerateApprovalUrlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProductsListResponse struct {
@@ -2833,9 +2837,9 @@ type ProductsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
+func (s ProductsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccount: A service account identity, including the name and
@@ -2862,13 +2866,14 @@ type ServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceAccountKey: Credentials that can be used to authenticate as a service
-// account.
+// ServiceAccountKey:  *Deprecated:* New integrations cannot use this method
+// and can refer to our new recommendations. Credentials that can be used to
+// authenticate as a service account.
 type ServiceAccountKey struct {
 	// Data: The body of the private key credentials file, in string format. This
 	// is only populated when the ServiceAccountKey is created, and is not stored
@@ -2907,9 +2912,9 @@ type ServiceAccountKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccountKey) MarshalJSON() ([]byte, error) {
+func (s ServiceAccountKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ServiceAccountKeysListResponse struct {
@@ -2931,9 +2936,9 @@ type ServiceAccountKeysListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccountKeysListResponse) MarshalJSON() ([]byte, error) {
+func (s ServiceAccountKeysListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountKeysListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignupInfo: A resource returned by the GenerateSignupUrl API, which contains
@@ -2963,9 +2968,9 @@ type SignupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignupInfo) MarshalJSON() ([]byte, error) {
+func (s SignupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SignupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StoreCluster: Definition of a managed Google Play store cluster, a list of
@@ -3004,9 +3009,9 @@ type StoreCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StoreCluster) MarshalJSON() ([]byte, error) {
+func (s StoreCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod StoreCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StoreLayout: General setting for the managed Google Play store layout,
@@ -3044,9 +3049,9 @@ type StoreLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StoreLayout) MarshalJSON() ([]byte, error) {
+func (s StoreLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod StoreLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StoreLayoutClustersListResponse struct {
@@ -3068,9 +3073,9 @@ type StoreLayoutClustersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StoreLayoutClustersListResponse) MarshalJSON() ([]byte, error) {
+func (s StoreLayoutClustersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StoreLayoutClustersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StoreLayoutPagesListResponse struct {
@@ -3092,17 +3097,14 @@ type StoreLayoutPagesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
+func (s StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StoreLayoutPagesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorePage: Definition of a managed Google Play store page, made of a
 // localized name and links to other pages. A page also contains clusters
-// defined as a subcollection. *Deprecated* The managed Google Play Store
-// homepage shows all apps listed in the Devices policy. If IT admins want to
-// customize the homepage layout, they can organize apps into collections in
-// the managed Google Play iframe.
+// defined as a subcollection.
 type StorePage struct {
 	// Id: Unique ID of this page. Assigned by the server. Immutable once assigned.
 	Id string `json:"id,omitempty"`
@@ -3131,9 +3133,9 @@ type StorePage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorePage) MarshalJSON() ([]byte, error) {
+func (s StorePage) MarshalJSON() ([]byte, error) {
 	type NoMethod StorePage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TokenPagination: Pagination information returned by a List operation when
@@ -3163,9 +3165,9 @@ type TokenPagination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TokenPagination) MarshalJSON() ([]byte, error) {
+func (s TokenPagination) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPagination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackInfo: Id to name association of a track.
@@ -3190,9 +3192,9 @@ type TrackInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackInfo) MarshalJSON() ([]byte, error) {
+func (s TrackInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: A Users resource represents an account associated with an enterprise.
@@ -3256,9 +3258,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsersListResponse struct {
@@ -3280,9 +3282,9 @@ type UsersListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsersListResponse) MarshalJSON() ([]byte, error) {
+func (s UsersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UsersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VariableSet: A variable set is a key-value pair of EMM-provided placeholders
@@ -3307,9 +3309,9 @@ type VariableSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VariableSet) MarshalJSON() ([]byte, error) {
+func (s VariableSet) MarshalJSON() ([]byte, error) {
 	type NoMethod VariableSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebApp: A WebApps resource represents a web app created for an enterprise.
@@ -3373,9 +3375,9 @@ type WebApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebApp) MarshalJSON() ([]byte, error) {
+func (s WebApp) MarshalJSON() ([]byte, error) {
 	type NoMethod WebApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebAppIcon: Icon for a web app.
@@ -3398,9 +3400,9 @@ type WebAppIcon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
+func (s WebAppIcon) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAppIcon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type WebAppsListResponse struct {
@@ -3422,9 +3424,9 @@ type WebAppsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAppsListResponse) MarshalJSON() ([]byte, error) {
+func (s WebAppsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAppsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DevicesForceReportUploadCall struct {
@@ -4596,6 +4598,14 @@ type EnterprisesGenerateSignupUrlCall struct {
 // GenerateSignupUrl: Generates a sign-up URL.
 func (r *EnterprisesService) GenerateSignupUrl() *EnterprisesGenerateSignupUrlCall {
 	c := &EnterprisesGenerateSignupUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdminEmail sets the optional parameter "adminEmail": Email address used to
+// prefill the admin field of the enterprise signup form. This value is a hint
+// only and can be altered by the user.
+func (c *EnterprisesGenerateSignupUrlCall) AdminEmail(adminEmail string) *EnterprisesGenerateSignupUrlCall {
+	c.urlParams_.Set("adminEmail", adminEmail)
 	return c
 }
 

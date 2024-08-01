@@ -227,9 +227,9 @@ type DataRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataRange) MarshalJSON() ([]byte, error) {
+func (s DataRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -265,9 +265,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterPair: Filter used to match traffic data in your report.
@@ -289,9 +289,9 @@ type FilterPair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterPair) MarshalJSON() ([]byte, error) {
+func (s FilterPair) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterPair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListQueriesResponse struct {
@@ -316,9 +316,9 @@ type ListQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListReportsResponse struct {
@@ -343,9 +343,9 @@ type ListReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Options: Additional query options.
@@ -367,9 +367,9 @@ type Options struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Options) MarshalJSON() ([]byte, error) {
+func (s Options) MarshalJSON() ([]byte, error) {
 	type NoMethod Options
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Parameters: Parameters of a query or report.
@@ -398,6 +398,8 @@ type Parameters struct {
 	// report.
 	//   "REACH" - Reach report.
 	//   "UNIQUE_REACH_AUDIENCE" - Unique Reach Audience report.
+	//   "FULL_PATH" - Full Path report.
+	//   "PATH_ATTRIBUTION" - Path Attribution report.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -412,9 +414,9 @@ type Parameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Parameters) MarshalJSON() ([]byte, error) {
+func (s Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Query: Represents a query.
@@ -445,9 +447,9 @@ type Query struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Query) MarshalJSON() ([]byte, error) {
+func (s Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryMetadata: Query metadata.
@@ -485,9 +487,9 @@ type QueryMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryMetadata) MarshalJSON() ([]byte, error) {
+func (s QueryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuerySchedule: Information on when and how frequently to run a query.
@@ -527,9 +529,9 @@ type QuerySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuerySchedule) MarshalJSON() ([]byte, error) {
+func (s QuerySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod QuerySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Report: Represents a report.
@@ -556,9 +558,9 @@ type Report struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportKey: Key used to identify a report.
@@ -580,9 +582,9 @@ type ReportKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportKey) MarshalJSON() ([]byte, error) {
+func (s ReportKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportMetadata: Report metadata.
@@ -610,9 +612,9 @@ type ReportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportMetadata) MarshalJSON() ([]byte, error) {
+func (s ReportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStatus: Report status.
@@ -651,9 +653,9 @@ type ReportStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportStatus) MarshalJSON() ([]byte, error) {
+func (s ReportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryRequest: Request to run a stored query to generate a report.
@@ -674,9 +676,9 @@ type RunQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type QueriesCreateCall struct {

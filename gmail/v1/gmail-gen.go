@@ -434,9 +434,9 @@ type AutoForwarding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoForwarding) MarshalJSON() ([]byte, error) {
+func (s AutoForwarding) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoForwarding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BatchDeleteMessagesRequest struct {
@@ -455,9 +455,9 @@ type BatchDeleteMessagesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeleteMessagesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeleteMessagesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteMessagesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BatchModifyMessagesRequest struct {
@@ -481,9 +481,9 @@ type BatchModifyMessagesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchModifyMessagesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CseIdentity: The client-side encryption (CSE) configuration for the email
@@ -516,9 +516,9 @@ type CseIdentity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CseIdentity) MarshalJSON() ([]byte, error) {
+func (s CseIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod CseIdentity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CseKeyPair: A client-side encryption S/MIME key pair, which is comprised of
@@ -577,9 +577,9 @@ type CseKeyPair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CseKeyPair) MarshalJSON() ([]byte, error) {
+func (s CseKeyPair) MarshalJSON() ([]byte, error) {
 	type NoMethod CseKeyPair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CsePrivateKeyMetadata: Metadata for a private key instance.
@@ -605,9 +605,9 @@ type CsePrivateKeyMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CsePrivateKeyMetadata) MarshalJSON() ([]byte, error) {
+func (s CsePrivateKeyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CsePrivateKeyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Delegate: Settings for a delegate. Delegates can read, send, and delete
@@ -645,9 +645,9 @@ type Delegate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Delegate) MarshalJSON() ([]byte, error) {
+func (s Delegate) MarshalJSON() ([]byte, error) {
 	type NoMethod Delegate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableCseKeyPairRequest: Requests to turn off a client-side encryption key
@@ -677,9 +677,9 @@ type Draft struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Draft) MarshalJSON() ([]byte, error) {
+func (s Draft) MarshalJSON() ([]byte, error) {
 	type NoMethod Draft
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnableCseKeyPairRequest: Requests to turn on a client-side encryption key
@@ -712,9 +712,9 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterAction: A set of actions to perform on a message.
@@ -738,9 +738,9 @@ type FilterAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterAction) MarshalJSON() ([]byte, error) {
+func (s FilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterCriteria: Message matching criteria.
@@ -791,9 +791,9 @@ type FilterCriteria struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterCriteria) MarshalJSON() ([]byte, error) {
+func (s FilterCriteria) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterCriteria
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ForwardingAddress: Settings for a forwarding address.
@@ -824,9 +824,9 @@ type ForwardingAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ForwardingAddress) MarshalJSON() ([]byte, error) {
+func (s ForwardingAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod ForwardingAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HardwareKeyMetadata: Metadata for hardware keys.
@@ -846,9 +846,9 @@ type HardwareKeyMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HardwareKeyMetadata) MarshalJSON() ([]byte, error) {
+func (s HardwareKeyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareKeyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // History: A record of a change to the user's mailbox. Each history change may
@@ -883,9 +883,9 @@ type History struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *History) MarshalJSON() ([]byte, error) {
+func (s History) MarshalJSON() ([]byte, error) {
 	type NoMethod History
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HistoryLabelAdded struct {
@@ -905,9 +905,9 @@ type HistoryLabelAdded struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryLabelAdded) MarshalJSON() ([]byte, error) {
+func (s HistoryLabelAdded) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryLabelAdded
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HistoryLabelRemoved struct {
@@ -927,9 +927,9 @@ type HistoryLabelRemoved struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryLabelRemoved) MarshalJSON() ([]byte, error) {
+func (s HistoryLabelRemoved) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryLabelRemoved
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HistoryMessageAdded struct {
@@ -947,9 +947,9 @@ type HistoryMessageAdded struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryMessageAdded) MarshalJSON() ([]byte, error) {
+func (s HistoryMessageAdded) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryMessageAdded
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HistoryMessageDeleted struct {
@@ -967,9 +967,9 @@ type HistoryMessageDeleted struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HistoryMessageDeleted) MarshalJSON() ([]byte, error) {
+func (s HistoryMessageDeleted) MarshalJSON() ([]byte, error) {
 	type NoMethod HistoryMessageDeleted
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImapSettings: IMAP settings for an account.
@@ -1010,9 +1010,9 @@ type ImapSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImapSettings) MarshalJSON() ([]byte, error) {
+func (s ImapSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ImapSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KaclsKeyMetadata: Metadata for private keys managed by an external key
@@ -1039,9 +1039,9 @@ type KaclsKeyMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KaclsKeyMetadata) MarshalJSON() ([]byte, error) {
+func (s KaclsKeyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod KaclsKeyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Label: Labels are used to categorize messages and threads within the user's
@@ -1108,9 +1108,9 @@ type Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Label) MarshalJSON() ([]byte, error) {
+func (s Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LabelColor struct {
@@ -1161,9 +1161,9 @@ type LabelColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelColor) MarshalJSON() ([]byte, error) {
+func (s LabelColor) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageSettings: Language settings for an account. These settings
@@ -1196,9 +1196,9 @@ type LanguageSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageSettings) MarshalJSON() ([]byte, error) {
+func (s LanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCseIdentitiesResponse struct {
@@ -1226,9 +1226,9 @@ type ListCseIdentitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCseIdentitiesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCseIdentitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCseIdentitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCseKeyPairsResponse struct {
@@ -1254,9 +1254,9 @@ type ListCseKeyPairsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCseKeyPairsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCseKeyPairsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCseKeyPairsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDelegatesResponse: Response for the ListDelegates method.
@@ -1280,9 +1280,9 @@ type ListDelegatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDelegatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDelegatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDelegatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListDraftsResponse struct {
@@ -1310,9 +1310,9 @@ type ListDraftsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDraftsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDraftsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDraftsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFiltersResponse: Response for the ListFilters method.
@@ -1335,9 +1335,9 @@ type ListFiltersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFiltersResponse) MarshalJSON() ([]byte, error) {
+func (s ListFiltersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFiltersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListForwardingAddressesResponse: Response for the ListForwardingAddresses
@@ -1361,9 +1361,9 @@ type ListForwardingAddressesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListForwardingAddressesResponse) MarshalJSON() ([]byte, error) {
+func (s ListForwardingAddressesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListForwardingAddressesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListHistoryResponse struct {
@@ -1390,9 +1390,9 @@ type ListHistoryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHistoryResponse) MarshalJSON() ([]byte, error) {
+func (s ListHistoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHistoryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListLabelsResponse struct {
@@ -1416,9 +1416,9 @@ type ListLabelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLabelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLabelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLabelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListMessagesResponse struct {
@@ -1446,9 +1446,9 @@ type ListMessagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMessagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListMessagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMessagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSendAsResponse: Response for the ListSendAs method.
@@ -1471,9 +1471,9 @@ type ListSendAsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSendAsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSendAsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSendAsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListSmimeInfoResponse struct {
@@ -1495,9 +1495,9 @@ type ListSmimeInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSmimeInfoResponse) MarshalJSON() ([]byte, error) {
+func (s ListSmimeInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSmimeInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListThreadsResponse struct {
@@ -1525,9 +1525,9 @@ type ListThreadsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListThreadsResponse) MarshalJSON() ([]byte, error) {
+func (s ListThreadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListThreadsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Message: An email message.
@@ -1577,9 +1577,9 @@ type Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Message) MarshalJSON() ([]byte, error) {
+func (s Message) MarshalJSON() ([]byte, error) {
 	type NoMethod Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MessagePart: A single MIME message part.
@@ -1616,9 +1616,9 @@ type MessagePart struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MessagePart) MarshalJSON() ([]byte, error) {
+func (s MessagePart) MarshalJSON() ([]byte, error) {
 	type NoMethod MessagePart
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MessagePartBody: The body of a single MIME message part.
@@ -1651,9 +1651,9 @@ type MessagePartBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MessagePartBody) MarshalJSON() ([]byte, error) {
+func (s MessagePartBody) MarshalJSON() ([]byte, error) {
 	type NoMethod MessagePartBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MessagePartHeader struct {
@@ -1675,9 +1675,9 @@ type MessagePartHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MessagePartHeader) MarshalJSON() ([]byte, error) {
+func (s MessagePartHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod MessagePartHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ModifyMessageRequest struct {
@@ -1700,9 +1700,9 @@ type ModifyMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyMessageRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ModifyThreadRequest struct {
@@ -1725,9 +1725,9 @@ type ModifyThreadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyThreadRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyThreadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyThreadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObliterateCseKeyPairRequest: Request to obliterate a CSE key pair.
@@ -1771,9 +1771,9 @@ type PopSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PopSettings) MarshalJSON() ([]byte, error) {
+func (s PopSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod PopSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Profile: Profile for a Gmail user.
@@ -1802,9 +1802,9 @@ type Profile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Profile) MarshalJSON() ([]byte, error) {
+func (s Profile) MarshalJSON() ([]byte, error) {
 	type NoMethod Profile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SendAs: Settings associated with a send-as alias, which can be either the
@@ -1875,9 +1875,9 @@ type SendAs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SendAs) MarshalJSON() ([]byte, error) {
+func (s SendAs) MarshalJSON() ([]byte, error) {
 	type NoMethod SendAs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignAndEncryptKeyPairs: The configuration of a CSE identity that uses
@@ -1901,9 +1901,9 @@ type SignAndEncryptKeyPairs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignAndEncryptKeyPairs) MarshalJSON() ([]byte, error) {
+func (s SignAndEncryptKeyPairs) MarshalJSON() ([]byte, error) {
 	type NoMethod SignAndEncryptKeyPairs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SmimeInfo: An S/MIME email config.
@@ -1945,9 +1945,9 @@ type SmimeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SmimeInfo) MarshalJSON() ([]byte, error) {
+func (s SmimeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SmimeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SmtpMsa: Configuration for communication with an SMTP service.
@@ -1988,9 +1988,9 @@ type SmtpMsa struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SmtpMsa) MarshalJSON() ([]byte, error) {
+func (s SmtpMsa) MarshalJSON() ([]byte, error) {
 	type NoMethod SmtpMsa
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Thread: A collection of messages representing a conversation.
@@ -2019,9 +2019,9 @@ type Thread struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Thread) MarshalJSON() ([]byte, error) {
+func (s Thread) MarshalJSON() ([]byte, error) {
 	type NoMethod Thread
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VacationSettings: Vacation auto-reply settings for an account. These
@@ -2076,9 +2076,9 @@ type VacationSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VacationSettings) MarshalJSON() ([]byte, error) {
+func (s VacationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod VacationSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WatchRequest: Set up or update a new push notification watch on this user's
@@ -2129,9 +2129,9 @@ type WatchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WatchRequest) MarshalJSON() ([]byte, error) {
+func (s WatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WatchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WatchResponse: Push notification watch response.
@@ -2157,9 +2157,9 @@ type WatchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WatchResponse) MarshalJSON() ([]byte, error) {
+func (s WatchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WatchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsersGetProfileCall struct {

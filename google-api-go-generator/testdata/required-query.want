@@ -167,9 +167,9 @@ type Google3CorpSupportToolsTshealthServiceApiV1TechsMessagesTechsCountResponse 
 	NullFields []string `json:"-"`
 }
 
-func (s *Google3CorpSupportToolsTshealthServiceApiV1TechsMessagesTechsCountResponse) MarshalJSON() ([]byte, error) {
+func (s Google3CorpSupportToolsTshealthServiceApiV1TechsMessagesTechsCountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod Google3CorpSupportToolsTshealthServiceApiV1TechsMessagesTechsCountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TechsCountCall struct {

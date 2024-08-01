@@ -207,9 +207,9 @@ type CustomApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomApp) MarshalJSON() ([]byte, error) {
+func (s CustomApp) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Organization: Represents an organization that can access a custom app.
@@ -232,9 +232,9 @@ type Organization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Organization) MarshalJSON() ([]byte, error) {
+func (s Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsCustomAppsCreateCall struct {

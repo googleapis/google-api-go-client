@@ -301,9 +301,9 @@ type ClaimDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClaimDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s ClaimDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ClaimDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClaimDeviceResponse: Response message containing device id of the claim.
@@ -329,9 +329,9 @@ type ClaimDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClaimDeviceResponse) MarshalJSON() ([]byte, error) {
+func (s ClaimDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ClaimDeviceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClaimDevicesRequest: Request to claim devices asynchronously in batch.
@@ -353,9 +353,9 @@ type ClaimDevicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
+func (s ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ClaimDevicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Company: A reseller, vendor, or customer in the zero-touch reseller and
@@ -431,9 +431,9 @@ type Company struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Company) MarshalJSON() ([]byte, error) {
+func (s Company) MarshalJSON() ([]byte, error) {
 	type NoMethod Company
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Configuration: A configuration collects the provisioning options for Android
@@ -506,9 +506,9 @@ type Configuration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Configuration) MarshalJSON() ([]byte, error) {
+func (s Configuration) MarshalJSON() ([]byte, error) {
 	type NoMethod Configuration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateCustomerRequest: Request message to create a customer.
@@ -531,9 +531,9 @@ type CreateCustomerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateCustomerRequest) MarshalJSON() ([]byte, error) {
+func (s CreateCustomerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateCustomerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerApplyConfigurationRequest: Request message for customer to assign a
@@ -558,9 +558,9 @@ type CustomerApplyConfigurationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerApplyConfigurationRequest) MarshalJSON() ([]byte, error) {
+func (s CustomerApplyConfigurationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerApplyConfigurationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerListConfigurationsResponse: Response message of customer's listing
@@ -584,9 +584,9 @@ type CustomerListConfigurationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerListConfigurationsResponse) MarshalJSON() ([]byte, error) {
+func (s CustomerListConfigurationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerListConfigurationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerListCustomersResponse: Response message for listing my customers.
@@ -612,9 +612,9 @@ type CustomerListCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerListCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s CustomerListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerListCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerListDevicesResponse: Response message of customer's liting devices.
@@ -640,9 +640,9 @@ type CustomerListDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerListDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s CustomerListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerListDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerListDpcsResponse: Response message of customer's listing DPCs.
@@ -666,9 +666,9 @@ type CustomerListDpcsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerListDpcsResponse) MarshalJSON() ([]byte, error) {
+func (s CustomerListDpcsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerListDpcsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerRemoveConfigurationRequest: Request message for customer to remove
@@ -690,9 +690,9 @@ type CustomerRemoveConfigurationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerRemoveConfigurationRequest) MarshalJSON() ([]byte, error) {
+func (s CustomerRemoveConfigurationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerRemoveConfigurationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerUnclaimDeviceRequest: Request message for customer to unclaim a
@@ -714,9 +714,9 @@ type CustomerUnclaimDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerUnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s CustomerUnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerUnclaimDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Device: An Android or Chrome OS device registered for zero-touch enrollment.
@@ -758,9 +758,9 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
+func (s Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceClaim: A record of a device claimed by a reseller for a customer.
@@ -810,9 +810,9 @@ type DeviceClaim struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
+func (s DeviceClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceClaim
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceIdentifier: Encapsulates hardware and product IDs to identify a
@@ -858,9 +858,9 @@ type DeviceIdentifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
+func (s DeviceIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceIdentifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceMetadata: Metadata entries that can be attached to a `Device`. To
@@ -885,9 +885,9 @@ type DeviceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
+func (s DeviceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceReference: A `DeviceReference` is an API abstraction that lets you
@@ -915,9 +915,9 @@ type DeviceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceReference) MarshalJSON() ([]byte, error) {
+func (s DeviceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DevicesLongRunningOperationMetadata: Tracks the status of a long-running
@@ -956,9 +956,9 @@ type DevicesLongRunningOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DevicesLongRunningOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s DevicesLongRunningOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DevicesLongRunningOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DevicesLongRunningOperationResponse: Tracks the status of a long-running
@@ -986,9 +986,9 @@ type DevicesLongRunningOperationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
+func (s DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DevicesLongRunningOperationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Dpc: An EMM's DPC (device policy controller
@@ -1022,9 +1022,9 @@ type Dpc struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dpc) MarshalJSON() ([]byte, error) {
+func (s Dpc) MarshalJSON() ([]byte, error) {
 	type NoMethod Dpc
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1058,9 +1058,9 @@ type FindDevicesByDeviceIdentifierRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindDevicesByDeviceIdentifierRequest) MarshalJSON() ([]byte, error) {
+func (s FindDevicesByDeviceIdentifierRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FindDevicesByDeviceIdentifierRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindDevicesByDeviceIdentifierResponse: Response containing found devices.
@@ -1088,9 +1088,9 @@ type FindDevicesByDeviceIdentifierResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindDevicesByDeviceIdentifierResponse) MarshalJSON() ([]byte, error) {
+func (s FindDevicesByDeviceIdentifierResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FindDevicesByDeviceIdentifierResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindDevicesByOwnerRequest: Request to find devices by customers.
@@ -1125,9 +1125,9 @@ type FindDevicesByOwnerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindDevicesByOwnerRequest) MarshalJSON() ([]byte, error) {
+func (s FindDevicesByOwnerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FindDevicesByOwnerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindDevicesByOwnerResponse: Response containing found devices.
@@ -1155,9 +1155,9 @@ type FindDevicesByOwnerResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindDevicesByOwnerResponse) MarshalJSON() ([]byte, error) {
+func (s FindDevicesByOwnerResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FindDevicesByOwnerResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetDeviceSimLockStateRequest: Request to get a device's SIM lock status.
@@ -1177,9 +1177,9 @@ type GetDeviceSimLockStateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetDeviceSimLockStateRequest) MarshalJSON() ([]byte, error) {
+func (s GetDeviceSimLockStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDeviceSimLockStateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetDeviceSimLockStateResponse: Response containing a device's SimLock state.
@@ -1207,9 +1207,9 @@ type GetDeviceSimLockStateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetDeviceSimLockStateResponse) MarshalJSON() ([]byte, error) {
+func (s GetDeviceSimLockStateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDeviceSimLockStateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleWorkspaceAccount: A Google Workspace customer.
@@ -1232,9 +1232,9 @@ type GoogleWorkspaceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleWorkspaceAccount) MarshalJSON() ([]byte, error) {
+func (s GoogleWorkspaceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleWorkspaceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCustomersResponse: Response message of all customers related to this
@@ -1263,9 +1263,9 @@ type ListCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVendorCustomersResponse: Response message to list customers of the
@@ -1294,9 +1294,9 @@ type ListVendorCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVendorCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s ListVendorCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVendorCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVendorsResponse: Response message to list vendors of the partner.
@@ -1325,9 +1325,9 @@ type ListVendorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVendorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVendorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVendorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1370,9 +1370,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationPerDevice: A task for each device in the operation. Corresponds to
@@ -1401,9 +1401,9 @@ type OperationPerDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationPerDevice) MarshalJSON() ([]byte, error) {
+func (s OperationPerDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationPerDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerClaim: Identifies one claim request.
@@ -1446,9 +1446,9 @@ type PartnerClaim struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerClaim) MarshalJSON() ([]byte, error) {
+func (s PartnerClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerClaim
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerUnclaim: Identifies one unclaim request.
@@ -1483,9 +1483,9 @@ type PartnerUnclaim struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerUnclaim) MarshalJSON() ([]byte, error) {
+func (s PartnerUnclaim) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerUnclaim
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerDeviceStatusInBatch: Captures the processing status for each device in
@@ -1531,9 +1531,9 @@ type PerDeviceStatusInBatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerDeviceStatusInBatch) MarshalJSON() ([]byte, error) {
+func (s PerDeviceStatusInBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod PerDeviceStatusInBatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1565,9 +1565,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnclaimDeviceRequest: Request message to unclaim a device.
@@ -1602,9 +1602,9 @@ type UnclaimDeviceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
+func (s UnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnclaimDeviceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnclaimDevicesRequest: Request to unclaim devices asynchronously in batch.
@@ -1624,9 +1624,9 @@ type UnclaimDevicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnclaimDevicesRequest) MarshalJSON() ([]byte, error) {
+func (s UnclaimDevicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnclaimDevicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDeviceMetadataInBatchRequest: Request to update device metadata in
@@ -1647,9 +1647,9 @@ type UpdateDeviceMetadataInBatchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDeviceMetadataInBatchRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDeviceMetadataInBatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeviceMetadataInBatchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDeviceMetadataRequest: Request to set metadata for a device.
@@ -1669,9 +1669,9 @@ type UpdateDeviceMetadataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDeviceMetadataRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDeviceMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeviceMetadataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateMetadataArguments: Identifies metadata updates to one device.
@@ -1695,9 +1695,9 @@ type UpdateMetadataArguments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateMetadataArguments) MarshalJSON() ([]byte, error) {
+func (s UpdateMetadataArguments) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateMetadataArguments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersListCall struct {

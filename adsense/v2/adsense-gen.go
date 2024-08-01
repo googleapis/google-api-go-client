@@ -334,9 +334,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdBlockingRecoveryTag: Representation of an ad blocking recovery tag. See
@@ -368,9 +368,9 @@ type AdBlockingRecoveryTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdBlockingRecoveryTag) MarshalJSON() ([]byte, error) {
+func (s AdBlockingRecoveryTag) MarshalJSON() ([]byte, error) {
 	type NoMethod AdBlockingRecoveryTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdClient: Representation of an ad client. An ad client represents a user's
@@ -413,9 +413,9 @@ type AdClient struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdClient) MarshalJSON() ([]byte, error) {
+func (s AdClient) MarshalJSON() ([]byte, error) {
 	type NoMethod AdClient
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdClientAdCode: Representation of the AdSense code for a given ad client.
@@ -447,9 +447,9 @@ type AdClientAdCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdClientAdCode) MarshalJSON() ([]byte, error) {
+func (s AdClientAdCode) MarshalJSON() ([]byte, error) {
 	type NoMethod AdClientAdCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnit: Representation of an ad unit. An ad unit represents a saved ad unit
@@ -492,9 +492,9 @@ type AdUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnit) MarshalJSON() ([]byte, error) {
+func (s AdUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnitAdCode: Representation of the ad unit code for a given ad unit. For
@@ -520,9 +520,9 @@ type AdUnitAdCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUnitAdCode) MarshalJSON() ([]byte, error) {
+func (s AdUnitAdCode) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitAdCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Alert: Representation of an alert.
@@ -558,9 +558,9 @@ type Alert struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Alert) MarshalJSON() ([]byte, error) {
+func (s Alert) MarshalJSON() ([]byte, error) {
 	type NoMethod Alert
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cell: Cell representation.
@@ -581,9 +581,9 @@ type Cell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cell) MarshalJSON() ([]byte, error) {
+func (s Cell) MarshalJSON() ([]byte, error) {
 	type NoMethod Cell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentAdsSettings: Settings specific to content ads (AFC).
@@ -615,9 +615,9 @@ type ContentAdsSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentAdsSettings) MarshalJSON() ([]byte, error) {
+func (s ContentAdsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentAdsSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomChannel: Representation of a custom channel.
@@ -649,9 +649,9 @@ type CustomChannel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomChannel) MarshalJSON() ([]byte, error) {
+func (s CustomChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -687,9 +687,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -733,9 +733,9 @@ type Header struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Header) MarshalJSON() ([]byte, error) {
+func (s Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
@@ -780,9 +780,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response definition for the account list rpc.
@@ -809,9 +809,9 @@ type ListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdClientsResponse: Response definition for the ad client list rpc.
@@ -838,9 +838,9 @@ type ListAdClientsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdClientsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdClientsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdClientsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdUnitsResponse: Response definition for the adunit list rpc.
@@ -867,9 +867,9 @@ type ListAdUnitsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdUnitsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAlertsResponse: Response definition for the alerts list rpc.
@@ -892,9 +892,9 @@ type ListAlertsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAlertsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAlertsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAlertsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListChildAccountsResponse: Response definition for the child account list
@@ -922,9 +922,9 @@ type ListChildAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListChildAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListChildAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListChildAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCustomChannelsResponse: Response definition for the custom channel list
@@ -952,9 +952,9 @@ type ListCustomChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLinkedAdUnitsResponse: Response definition for the ad units linked to a
@@ -982,9 +982,9 @@ type ListLinkedAdUnitsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLinkedAdUnitsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLinkedAdUnitsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLinkedAdUnitsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLinkedCustomChannelsResponse: Response definition for the custom
@@ -1012,9 +1012,9 @@ type ListLinkedCustomChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLinkedCustomChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLinkedCustomChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLinkedCustomChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPaymentsResponse: Response definition for the payments list rpc.
@@ -1037,9 +1037,9 @@ type ListPaymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPaymentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPaymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPaymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPolicyIssuesResponse: Response definition for the policy issues list
@@ -1069,9 +1069,9 @@ type ListPolicyIssuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPolicyIssuesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPolicyIssuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPolicyIssuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSavedReportsResponse: Response definition for the saved reports list
@@ -1099,9 +1099,9 @@ type ListSavedReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSavedReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSavedReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSavedReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSitesResponse: Response definition for the sites list rpc.
@@ -1128,9 +1128,9 @@ type ListSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSitesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUrlChannelsResponse: Response definition for the url channels list rpc.
@@ -1157,9 +1157,9 @@ type ListUrlChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUrlChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListUrlChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUrlChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Payment: Representation of an unpaid or paid payment. See Payment timelines
@@ -1195,9 +1195,9 @@ type Payment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Payment) MarshalJSON() ([]byte, error) {
+func (s Payment) MarshalJSON() ([]byte, error) {
 	type NoMethod Payment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyIssue: Representation of a policy issue for a single entity (site,
@@ -1289,9 +1289,9 @@ type PolicyIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyIssue) MarshalJSON() ([]byte, error) {
+func (s PolicyIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyTopic: Information about a particular policy topic. A policy topic
@@ -1322,9 +1322,9 @@ type PolicyTopic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyTopic) MarshalJSON() ([]byte, error) {
+func (s PolicyTopic) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyTopic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportResult: Result of a generated report.
@@ -1367,9 +1367,9 @@ type ReportResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportResult) MarshalJSON() ([]byte, error) {
+func (s ReportResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Row: Row representation.
@@ -1389,9 +1389,9 @@ type Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Row) MarshalJSON() ([]byte, error) {
+func (s Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SavedReport: Representation of a saved report.
@@ -1417,9 +1417,9 @@ type SavedReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedReport) MarshalJSON() ([]byte, error) {
+func (s SavedReport) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Site: Representation of a Site.
@@ -1468,9 +1468,9 @@ type Site struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Site) MarshalJSON() ([]byte, error) {
+func (s Site) MarshalJSON() ([]byte, error) {
 	type NoMethod Site
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeZone: Represents a time zone from the IANA Time Zone Database
@@ -1493,9 +1493,9 @@ type TimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeZone) MarshalJSON() ([]byte, error) {
+func (s TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlChannel: Representation of a URL channel. URL channels allow you to track
@@ -1527,9 +1527,9 @@ type UrlChannel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlChannel) MarshalJSON() ([]byte, error) {
+func (s UrlChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsGetCall struct {

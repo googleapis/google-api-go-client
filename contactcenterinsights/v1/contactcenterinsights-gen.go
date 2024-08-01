@@ -169,6 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
+	rs.EncryptionSpec = NewProjectsLocationsEncryptionSpecService(s)
 	rs.Insightsdata = NewProjectsLocationsInsightsdataService(s)
 	rs.IssueModels = NewProjectsLocationsIssueModelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -181,6 +182,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Conversations *ProjectsLocationsConversationsService
+
+	EncryptionSpec *ProjectsLocationsEncryptionSpecService
 
 	Insightsdata *ProjectsLocationsInsightsdataService
 
@@ -211,6 +214,15 @@ func NewProjectsLocationsConversationsAnalysesService(s *Service) *ProjectsLocat
 }
 
 type ProjectsLocationsConversationsAnalysesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEncryptionSpecService(s *Service) *ProjectsLocationsEncryptionSpecService {
+	rs := &ProjectsLocationsEncryptionSpecService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEncryptionSpecService struct {
 	s *Service
 }
 
@@ -304,9 +316,9 @@ type GoogleCloudContactcenterinsightsV1Analysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Analysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Analysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Analysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnalysisResult: The result of an analysis.
@@ -328,9 +340,9 @@ type GoogleCloudContactcenterinsightsV1AnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata:
@@ -364,9 +376,9 @@ type GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnnotationBoundary: A point in a
@@ -391,9 +403,9 @@ type GoogleCloudContactcenterinsightsV1AnnotationBoundary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnnotationBoundary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnnotationBoundary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnnotationBoundary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnnotatorSelector: Selector of all
@@ -444,9 +456,9 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnnotatorSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnnotatorSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnnotatorSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig:
@@ -477,9 +489,9 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1AnswerFeedback: The feedback that the
@@ -511,9 +523,9 @@ type GoogleCloudContactcenterinsightsV1AnswerFeedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1AnswerFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1AnswerFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnswerFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ArticleSuggestionData: Agent Assist
@@ -549,9 +561,9 @@ type GoogleCloudContactcenterinsightsV1ArticleSuggestionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ArticleSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ArticleSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ArticleSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1ArticleSuggestionData) UnmarshalJSON(data []byte) error {
@@ -603,9 +615,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest: The
@@ -635,9 +647,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest) UnmarshalJSON(data []byte) error {
@@ -674,9 +686,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata: The
@@ -704,9 +716,9 @@ type GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest: The
@@ -736,9 +748,9 @@ type GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1BulkDeleteConversationsResponse: The
@@ -768,9 +780,9 @@ type GoogleCloudContactcenterinsightsV1CalculateIssueModelStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CalculateIssueModelStatsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CalculateIssueModelStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CalculateIssueModelStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CalculateStatsResponse: The response for
@@ -817,9 +829,9 @@ type GoogleCloudContactcenterinsightsV1CalculateStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CalculateStatsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CalculateStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CalculateStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeries: A time
@@ -844,9 +856,9 @@ type GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeries) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeriesInterval:
@@ -869,9 +881,9 @@ type GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeriesInterval 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeriesInterval) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeriesInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CalculateStatsResponseTimeSeriesInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CallAnnotation: A piece of metadata that
@@ -915,9 +927,9 @@ type GoogleCloudContactcenterinsightsV1CallAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CallAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CallAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CallAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1Conversation: The conversation resource.
@@ -999,9 +1011,9 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Conversation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Conversation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Conversation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationCallMetadata: Call-specific
@@ -1024,9 +1036,9 @@ type GoogleCloudContactcenterinsightsV1ConversationCallMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationCallMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationDataSource: The conversation
@@ -1050,9 +1062,9 @@ type GoogleCloudContactcenterinsightsV1ConversationDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationDataSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationLevelSentiment: One channel of
@@ -1075,9 +1087,9 @@ type GoogleCloudContactcenterinsightsV1ConversationLevelSentiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationLevelSentiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationLevelSentiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationLevelSentiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationLevelSilence:
@@ -1100,9 +1112,9 @@ type GoogleCloudContactcenterinsightsV1ConversationLevelSilence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationLevelSilence) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationLevelSilence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationLevelSilence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1ConversationLevelSilence) UnmarshalJSON(data []byte) error {
@@ -1159,9 +1171,9 @@ type GoogleCloudContactcenterinsightsV1ConversationParticipant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationParticipant) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationParticipant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationParticipant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationQualityMetadata: Conversation
@@ -1191,9 +1203,9 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationQualityMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationQualityMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationQualityMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo:
@@ -1221,9 +1233,9 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData:
@@ -1261,9 +1273,9 @@ type GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData) UnmarshalJSON(data []byte) error {
@@ -1299,9 +1311,9 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationTranscript) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscript) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment: A
@@ -1345,9 +1357,9 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment) UnmarshalJSON(data []byte) error {
@@ -1384,9 +1396,9 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWord
@@ -1416,9 +1428,9 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWordInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWordInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWordInfo) UnmarshalJSON(data []byte) error {
@@ -1461,9 +1473,9 @@ type GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata: Metadata for
@@ -1488,9 +1500,9 @@ type GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CreateIssueModelRequest: The request to
@@ -1513,9 +1525,9 @@ type GoogleCloudContactcenterinsightsV1CreateIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1CreateIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DeleteIssueModelMetadata: Metadata for
@@ -1540,9 +1552,9 @@ type GoogleCloudContactcenterinsightsV1DeleteIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DeleteIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DeleteIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DeleteIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DeleteIssueModelRequest: The request to
@@ -1563,9 +1575,9 @@ type GoogleCloudContactcenterinsightsV1DeleteIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DeleteIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DeleteIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DeleteIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DeployIssueModelMetadata: Metadata for
@@ -1590,9 +1602,9 @@ type GoogleCloudContactcenterinsightsV1DeployIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DeployIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DeployIssueModelRequest: The request to
@@ -1613,9 +1625,9 @@ type GoogleCloudContactcenterinsightsV1DeployIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DeployIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DeployIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DeployIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DeployIssueModelResponse: The response to
@@ -1642,9 +1654,9 @@ type GoogleCloudContactcenterinsightsV1DialogflowIntent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DialogflowIntent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DialogflowIntent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DialogflowIntent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1DialogflowInteractionData: Dialogflow
@@ -1669,9 +1681,9 @@ type GoogleCloudContactcenterinsightsV1DialogflowInteractionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DialogflowInteractionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DialogflowInteractionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DialogflowInteractionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1DialogflowInteractionData) UnmarshalJSON(data []byte) error {
@@ -1711,9 +1723,43 @@ type GoogleCloudContactcenterinsightsV1DialogflowSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1DialogflowSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1DialogflowSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DialogflowSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1EncryptionSpec: A customer-managed
+// encryption key specification that can be applied to all created resources
+// (e.g. Conversation).
+type GoogleCloudContactcenterinsightsV1EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1Entity: The data for an entity annotation.
@@ -1779,9 +1825,9 @@ type GoogleCloudContactcenterinsightsV1Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Entity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1Entity) UnmarshalJSON(data []byte) error {
@@ -1827,9 +1873,9 @@ type GoogleCloudContactcenterinsightsV1EntityMentionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1EntityMentionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1EntityMentionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1EntityMentionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExactMatchConfig: Exact match
@@ -1851,9 +1897,9 @@ type GoogleCloudContactcenterinsightsV1ExactMatchConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExactMatchConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExactMatchConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExactMatchConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata: Metadata for
@@ -1881,9 +1927,9 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportInsightsDataMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest: The request to
@@ -1925,9 +1971,9 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestinatio
@@ -1958,9 +2004,9 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestinat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportInsightsDataResponse: Response for
@@ -1990,17 +2036,17 @@ type GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportIssueModelRequest: Request to export
 // an issue model.
 type GoogleCloudContactcenterinsightsV1ExportIssueModelRequest struct {
-	// GcsDestination: Google Cloud Storage URI to export the Issue Model to.
+	// GcsDestination: Google Cloud Storage URI to export the issue model to.
 	GcsDestination *GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
-	// Name: Required. The issue model to export
+	// Name: Required. The issue model to export.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2015,9 +2061,9 @@ type GoogleCloudContactcenterinsightsV1ExportIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination:
@@ -2038,9 +2084,9 @@ type GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ExportIssueModelResponse: Response from
@@ -2081,9 +2127,9 @@ type GoogleCloudContactcenterinsightsV1FaqAnswerData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1FaqAnswerData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1FaqAnswerData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1FaqAnswerData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1FaqAnswerData) UnmarshalJSON(data []byte) error {
@@ -2122,9 +2168,9 @@ type GoogleCloudContactcenterinsightsV1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1HoldData: The data for a hold annotation.
@@ -2153,15 +2199,15 @@ type GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ImportIssueModelRequest: Request to import
 // an issue model.
 type GoogleCloudContactcenterinsightsV1ImportIssueModelRequest struct {
-	// CreateNewModel: Optional. If set to true, will create a new issue model from
+	// CreateNewModel: Optional. If set to true, will create an issue model from
 	// the imported file with randomly generated IDs for the issue model and
 	// corresponding issues. Otherwise, replaces an existing model with the same ID
 	// as the file.
@@ -2183,9 +2229,9 @@ type GoogleCloudContactcenterinsightsV1ImportIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource: Google
@@ -2206,9 +2252,9 @@ type GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ImportIssueModelResponse: Response from
@@ -2244,9 +2290,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversati
@@ -2278,9 +2324,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversa
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsRequest: The request to
@@ -2298,8 +2344,8 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequest struct {
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
 	// SampleSize: Optional. If set, this fields indicates the number of objects to
 	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
-	// ingested. Note that conversations produced via sampling will not be ingested
-	// by subsequent ingest requests unless they are first deleted.
+	// ingested. Unless they are first deleted, conversations produced through
+	// sampling won't be ingested by subsequent ingest requests.
 	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
@@ -2320,9 +2366,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfi
@@ -2334,7 +2380,7 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationCon
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 	// AgentId: Optional. An opaque, user-specified string representing a human
 	// agent who handled all conversations in the import. Note that this will be
-	// overridden if per-conversation metadata is provided via the
+	// overridden if per-conversation metadata is provided through the
 	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
@@ -2354,9 +2400,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationCon
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource:
@@ -2378,10 +2424,13 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	// field will be ignored. Note that there is a limit of 20 labels per
 	// conversation.
 	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
-	// MetadataBucketUri: Optional. The Cloud Storage path to the source object
-	// metadata. Note that: [1] metadata files are expected to be in JSON format
-	// [2] metadata and source objects must be in separate buckets [3] a source
-	// object's metadata object must share the same name to be properly ingested
+	// MetadataBucketUri: Optional. The Cloud Storage path to the conversation
+	// metadata. Note that: [1] Metadata files are expected to be in JSON format.
+	// [2] Metadata and source files (transcripts or audio) must be in separate
+	// buckets. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2396,9 +2445,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectC
@@ -2426,14 +2475,75 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjec
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsResponse: The response
 // to an IngestConversations operation.
 type GoogleCloudContactcenterinsightsV1IngestConversationsResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata: Metadata
+// for initializing a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Partial errors during initialising operation that might cause
+	// the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest: The
+// request to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudContactcenterinsightsV1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecResponse: The
+// response to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1Intent: The data for an intent. Represents
@@ -2456,9 +2566,9 @@ type GoogleCloudContactcenterinsightsV1Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IntentMatchData: The data for an intent
@@ -2482,9 +2592,9 @@ type GoogleCloudContactcenterinsightsV1IntentMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IntentMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IntentMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IntentMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1InterruptionData: The data for an
@@ -2523,9 +2633,9 @@ type GoogleCloudContactcenterinsightsV1Issue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Issue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Issue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Issue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueAssignment: Information about the
@@ -2552,9 +2662,9 @@ type GoogleCloudContactcenterinsightsV1IssueAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueAssignment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1IssueAssignment) UnmarshalJSON(data []byte) error {
@@ -2589,9 +2699,9 @@ type GoogleCloudContactcenterinsightsV1IssueMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueModel: The issue model resource.
@@ -2650,9 +2760,9 @@ type GoogleCloudContactcenterinsightsV1IssueModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig: Configs for the
@@ -2688,9 +2798,9 @@ type GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueModelLabelStats: Aggregated
@@ -2717,9 +2827,9 @@ type GoogleCloudContactcenterinsightsV1IssueModelLabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueModelLabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueModelLabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueModelLabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats: Aggregated
@@ -2747,9 +2857,9 @@ type GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1IssueModelResult: Issue Modeling result on
@@ -2773,9 +2883,9 @@ type GoogleCloudContactcenterinsightsV1IssueModelResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1IssueModelResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1IssueModelResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IssueModelResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListAnalysesResponse: The response to list
@@ -2802,9 +2912,9 @@ type GoogleCloudContactcenterinsightsV1ListAnalysesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListAnalysesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListAnalysesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListAnalysesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListConversationsResponse: The response of
@@ -2832,9 +2942,9 @@ type GoogleCloudContactcenterinsightsV1ListConversationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListConversationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListConversationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListConversationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListIssueModelsResponse: The response of
@@ -2858,9 +2968,9 @@ type GoogleCloudContactcenterinsightsV1ListIssueModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListIssueModelsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListIssueModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListIssueModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListIssuesResponse: The response of
@@ -2884,9 +2994,9 @@ type GoogleCloudContactcenterinsightsV1ListIssuesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListIssuesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListIssuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListIssuesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse: The response
@@ -2913,9 +3023,9 @@ type GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListPhraseMatchersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1ListViewsResponse: The response of listing
@@ -2942,9 +3052,9 @@ type GoogleCloudContactcenterinsightsV1ListViewsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1ListViewsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1ListViewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListViewsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1PhraseMatchData: The data for a matched
@@ -2969,9 +3079,9 @@ type GoogleCloudContactcenterinsightsV1PhraseMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1PhraseMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1PhraseMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1PhraseMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1PhraseMatchRule: The data for a phrase
@@ -2998,9 +3108,9 @@ type GoogleCloudContactcenterinsightsV1PhraseMatchRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1PhraseMatchRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1PhraseMatchRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1PhraseMatchRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig: Configuration
@@ -3021,9 +3131,9 @@ type GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup: A message
@@ -3052,9 +3162,9 @@ type GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1PhraseMatcher: The phrase matcher
@@ -3123,19 +3233,19 @@ type GoogleCloudContactcenterinsightsV1PhraseMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1PhraseMatcher) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1PhraseMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1PhraseMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1RedactionConfig: DLP resources used for
 // redaction while ingesting conversations. DLP settings are applied to
-// conversations ingested from the UploadConversation and IngestConversations
-// endpoints, including conversation coming from CCAI Platform. They are not
-// applied to conversations ingested from the CreateConversation endpoint or
-// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
-// Agent Assist runtime integrations redaction should be performed in
-// Dialogflow / Agent Assist.
+// conversations ingested from the `UploadConversation` and
+// `IngestConversations` endpoints, including conversation coming from CCAI
+// Platform. They are not applied to conversations ingested from the
+// `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime
+// integrations. When using Dialogflow / Agent Assist runtime integrations,
+// redaction should be performed in Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -3157,9 +3267,9 @@ type GoogleCloudContactcenterinsightsV1RedactionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1RedactionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1RedactionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1RedactionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1RuntimeAnnotation: An annotation that was
@@ -3208,9 +3318,9 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1RuntimeAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1RuntimeAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1RuntimeAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput: Explicit input
@@ -3222,6 +3332,14 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput struct {
 	// Query: Query text. Article Search uses this to store the input query used to
 	// generate the search results.
 	Query string `json:"query,omitempty"`
+	// QuerySource: Query source for the answer.
+	//
+	// Possible values:
+	//   "QUERY_SOURCE_UNSPECIFIED" - Unknown query source.
+	//   "AGENT_QUERY" - The query is from agents.
+	//   "SUGGESTED_QUERY" - The query is a query from previous suggestions, e.g.
+	// from a preceding SuggestKnowledgeAssist response.
+	QuerySource string `json:"querySource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3235,9 +3353,9 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1SentimentData: The data for a sentiment
@@ -3261,9 +3379,9 @@ type GoogleCloudContactcenterinsightsV1SentimentData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SentimentData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1SentimentData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SentimentData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1SentimentData) UnmarshalJSON(data []byte) error {
@@ -3282,7 +3400,12 @@ func (s *GoogleCloudContactcenterinsightsV1SentimentData) UnmarshalJSON(data []b
 	return nil
 }
 
-// GoogleCloudContactcenterinsightsV1Settings: The settings resource.
+// GoogleCloudContactcenterinsightsV1Settings: The CCAI Insights project wide
+// settings. Use these settings to configure the behavior of Insights. View
+// these settings with `getsettings`
+// (https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/getSettings)
+// and change the settings with `updateSettings`
+// (https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/updateSettings).
 type GoogleCloudContactcenterinsightsV1Settings struct {
 	// AnalysisConfig: Default analysis settings.
 	AnalysisConfig *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig `json:"analysisConfig,omitempty"`
@@ -3308,22 +3431,22 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// occurs. * "create-analysis": Notify each time an analysis is created. *
 	// "create-conversation": Notify each time a conversation is created. *
 	// "export-insights-data": Notify each time an export is complete. *
-	// "ingest-conversations": Notify each time an IngestConversations LRO
-	// completes. * "update-conversation": Notify each time a conversation is
+	// "ingest-conversations": Notify each time an IngestConversations LRO is
+	// complete. * "update-conversation": Notify each time a conversation is
 	// updated via UpdateConversation. * "upload-conversation": Notify when an
-	// UploadConversation LRO completes. Values are Pub/Sub topics. The format of
+	// UploadConversation LRO is complete. Values are Pub/Sub topics. The format of
 	// each Pub/Sub topic is: projects/{project}/topics/{topic}
 	PubsubNotificationSettings map[string]string `json:"pubsubNotificationSettings,omitempty"`
 	// RedactionConfig: Default DLP redaction resources to be applied while
 	// ingesting conversations. This applies to conversations ingested from the
-	// UploadConversation and IngestConversations endpoints, including
+	// `UploadConversation` and `IngestConversations` endpoints, including
 	// conversations coming from CCAI Platform.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
-	// SpeechConfig: Optional. Default Speech-to-Text resources to be used while
+	// SpeechConfig: Optional. Default Speech-to-Text resources to use while
 	// ingesting audio files. Optional, CCAI Insights will create a default if not
-	// provided. This applies to conversations ingested from the UploadConversation
-	// and IngestConversations endpoints, including conversations coming from CCAI
-	// Platform.
+	// provided. This applies to conversations ingested from the
+	// `UploadConversation` and `IngestConversations` endpoints, including
+	// conversations coming from CCAI Platform.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
 	// UpdateTime: Output only. The time at which the settings were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3343,9 +3466,9 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1Settings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Settings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig: Default
@@ -3375,9 +3498,9 @@ type GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) UnmarshalJSON(data []byte) error {
@@ -3429,9 +3552,9 @@ type GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData) UnmarshalJSON(data []byte) error {
@@ -3476,9 +3599,9 @@ type GoogleCloudContactcenterinsightsV1SmartReplyData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1SmartReplyData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SmartReplyData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []byte) error {
@@ -3497,9 +3620,9 @@ func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []
 
 // GoogleCloudContactcenterinsightsV1SpeechConfig: Speech-to-Text
 // configuration. Speech-to-Text settings are applied to conversations ingested
-// from the UploadConversation and IngestConversations endpoints, including
+// from the `UploadConversation` and `IngestConversations` endpoints, including
 // conversation coming from CCAI Platform. They are not applied to
-// conversations ingested from the CreateConversation endpoint.
+// conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -3517,9 +3640,9 @@ type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SpeechConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata: Metadata for
@@ -3544,9 +3667,9 @@ type GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1UndeployIssueModelRequest: The request to
@@ -3567,9 +3690,9 @@ type GoogleCloudContactcenterinsightsV1UndeployIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1UndeployIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1UndeployIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1UndeployIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1UndeployIssueModelResponse: The response
@@ -3578,7 +3701,7 @@ type GoogleCloudContactcenterinsightsV1UndeployIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1UploadConversationMetadata: The metadata
-// for an UploadConversation operation.
+// for an `UploadConversation` operation.
 type GoogleCloudContactcenterinsightsV1UploadConversationMetadata struct {
 	// AnalysisOperation: Output only. The operation name for a successfully
 	// created analysis operation, if any.
@@ -3605,9 +3728,9 @@ type GoogleCloudContactcenterinsightsV1UploadConversationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1UploadConversationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1UploadConversationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1UploadConversationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1UploadConversationRequest: Request to
@@ -3642,9 +3765,9 @@ type GoogleCloudContactcenterinsightsV1UploadConversationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1UploadConversationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1UploadConversationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1UploadConversationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1View: The View resource.
@@ -3676,9 +3799,9 @@ type GoogleCloudContactcenterinsightsV1View struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1View) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1View) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1View
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1Analysis: The analysis resource.
@@ -3711,9 +3834,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Analysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1Analysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1Analysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Analysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnalysisResult: The result of an
@@ -3736,9 +3859,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnalysisResultCallAnalysisMetadata:
@@ -3772,9 +3895,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnalysisResultCallAnalysisMetadata 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnalysisResultCallAnalysisMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnalysisResultCallAnalysisMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnalysisResultCallAnalysisMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary: A point in a
@@ -3799,9 +3922,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector: Selector of all
@@ -3852,9 +3975,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig:
@@ -3886,9 +4009,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1AnswerFeedback: The feedback that
@@ -3920,9 +4043,9 @@ type GoogleCloudContactcenterinsightsV1alpha1AnswerFeedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1AnswerFeedback) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1AnswerFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnswerFeedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData: Agent Assist
@@ -3958,9 +4081,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData) UnmarshalJSON(data []byte) error {
@@ -4012,9 +4135,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest: The
@@ -4044,9 +4167,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest) UnmarshalJSON(data []byte) error {
@@ -4083,9 +4206,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsResponse st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata: The
@@ -4113,9 +4236,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest: The
@@ -4145,9 +4268,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsResponse: The
@@ -4196,9 +4319,9 @@ type GoogleCloudContactcenterinsightsV1alpha1CallAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1CallAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1CallAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CallAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1Conversation: The conversation
@@ -4278,9 +4401,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1Conversation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1Conversation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Conversation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata:
@@ -4303,9 +4426,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource: The
@@ -4329,9 +4452,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSentiment: One
@@ -4354,9 +4477,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSentiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSentiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSentiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSentiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence:
@@ -4379,9 +4502,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationLevelSilence) UnmarshalJSON(data []byte) error {
@@ -4438,9 +4561,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata:
@@ -4470,9 +4593,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInfo:
@@ -4501,9 +4624,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionDa
@@ -4541,9 +4664,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestion
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData) UnmarshalJSON(data []byte) error {
@@ -4579,9 +4702,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscript) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscript) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
@@ -4625,9 +4748,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegment) UnmarshalJSON(data []byte) error {
@@ -4664,9 +4787,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
@@ -4696,9 +4819,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentWordInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentWordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentWordInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentWordInfo) UnmarshalJSON(data []byte) error {
@@ -4741,9 +4864,9 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata: Metadata
@@ -4768,9 +4891,9 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest: The request
@@ -4793,9 +4916,9 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1CreateIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelMetadata: Metadata
@@ -4820,9 +4943,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelRequest: The request
@@ -4843,9 +4966,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DeleteIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelMetadata: Metadata
@@ -4870,9 +4993,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelRequest: The request
@@ -4893,9 +5016,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelResponse: The
@@ -4922,9 +5045,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DialogflowIntent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DialogflowIntent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DialogflowIntent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DialogflowIntent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData:
@@ -4949,9 +5072,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1DialogflowInteractionData) UnmarshalJSON(data []byte) error {
@@ -4991,9 +5114,40 @@ type GoogleCloudContactcenterinsightsV1alpha1DialogflowSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1DialogflowSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1DialogflowSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DialogflowSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec: A customer-managed
+// encryption key specification that can be applied to all created resources
+// (e.g. Conversation).
+type GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec struct {
+	// KmsKey: Required. The name of customer-managed encryption key that is used
+	// to secure a resource and its sub-resources. If empty, the resource is
+	// secured by the default Google encryption key. Only the key in the same
+	// location as this resource is allowed to be used for encryption. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Immutable. The resource name of the encryption key specification
+	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1Entity: The data for an entity
@@ -5059,9 +5213,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1Entity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1Entity) UnmarshalJSON(data []byte) error {
@@ -5107,9 +5261,9 @@ type GoogleCloudContactcenterinsightsV1alpha1EntityMentionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1EntityMentionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1EntityMentionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1EntityMentionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata: Metadata
@@ -5137,9 +5291,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest: The
@@ -5181,9 +5335,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDest
@@ -5214,9 +5368,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataResponse: Response
@@ -5246,17 +5400,17 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest: Request to
 // export an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest struct {
-	// GcsDestination: Google Cloud Storage URI to export the Issue Model to.
+	// GcsDestination: Google Cloud Storage URI to export the issue model to.
 	GcsDestination *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
-	// Name: Required. The issue model to export
+	// Name: Required. The issue model to export.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5271,9 +5425,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination
@@ -5294,9 +5448,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestinati
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse: Response
@@ -5337,9 +5491,9 @@ type GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData) UnmarshalJSON(data []byte) error {
@@ -5378,9 +5532,9 @@ type GoogleCloudContactcenterinsightsV1alpha1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1HoldData: The data for a hold
@@ -5410,15 +5564,15 @@ type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest: Request to
 // import an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest struct {
-	// CreateNewModel: Optional. If set to true, will create a new issue model from
+	// CreateNewModel: Optional. If set to true, will create an issue model from
 	// the imported file with randomly generated IDs for the issue model and
 	// corresponding issues. Otherwise, replaces an existing model with the same ID
 	// as the file.
@@ -5440,9 +5594,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource:
@@ -5463,9 +5617,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse: Response
@@ -5501,9 +5655,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConv
@@ -5535,9 +5689,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestCo
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest: The
@@ -5555,8 +5709,8 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest struct {
 	RedactionConfig *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig `json:"redactionConfig,omitempty"`
 	// SampleSize: Optional. If set, this fields indicates the number of objects to
 	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
-	// ingested. Note that conversations produced via sampling will not be ingested
-	// by subsequent ingest requests unless they are first deleted.
+	// ingested. Unless they are first deleted, conversations produced through
+	// sampling won't be ingested by subsequent ingest requests.
 	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
@@ -5577,9 +5731,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversatio
@@ -5591,7 +5745,7 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversat
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 	// AgentId: Optional. An opaque, user-specified string representing a human
 	// agent who handled all conversations in the import. Note that this will be
-	// overridden if per-conversation metadata is provided via the
+	// overridden if per-conversation metadata is provided through the
 	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
@@ -5611,9 +5765,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversat
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource:
@@ -5635,10 +5789,13 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	// field will be ignored. Note that there is a limit of 20 labels per
 	// conversation.
 	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
-	// MetadataBucketUri: Optional. The Cloud Storage path to the source object
-	// metadata. Note that: [1] metadata files are expected to be in JSON format
-	// [2] metadata and source objects must be in separate buckets [3] a source
-	// object's metadata object must share the same name to be properly ingested
+	// MetadataBucketUri: Optional. The Cloud Storage path to the conversation
+	// metadata. Note that: [1] Metadata files are expected to be in JSON format.
+	// [2] Metadata and source files (transcripts or audio) must be in separate
+	// buckets. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5653,9 +5810,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptO
@@ -5683,14 +5840,75 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscrip
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptObjectConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptObjectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptObjectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsResponse: The
 // response to an IngestConversations operation.
 type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsResponse struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata:
+// Metadata for initializing a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// PartialErrors: Partial errors during initialising operation that might cause
+	// the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Request: Output only. The original request for initialization.
+	Request *GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest `json:"request,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest: The
+// request to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest struct {
+	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
+	// is required that the kms key is in the same region as the endpoint. The same
+	// key will be used for all provisioned resources, if encryption is available.
+	// If the kms_key_name is left empty, no encryption will be enforced.
+	EncryptionSpec *GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecResponse:
+// The response to initialize a location-level encryption specification.
+type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1Intent: The data for an intent.
@@ -5713,9 +5931,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Intent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1Intent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1Intent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1Intent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IntentMatchData: The data for an
@@ -5739,9 +5957,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IntentMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IntentMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IntentMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IntentMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1InterruptionData: The data for an
@@ -5773,9 +5991,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueAssignment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1IssueAssignment) UnmarshalJSON(data []byte) error {
@@ -5810,9 +6028,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueModel: The issue model
@@ -5869,9 +6087,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig: Configs
@@ -5907,9 +6125,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStats: Aggregated
@@ -5936,9 +6154,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats:
@@ -5966,9 +6184,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IssueModelResult: Issue Modeling
@@ -5992,9 +6210,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModelResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1IssueModelResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1IssueModelResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IssueModelResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData: The data for a
@@ -6019,19 +6237,19 @@ type GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1RedactionConfig: DLP resources used
 // for redaction while ingesting conversations. DLP settings are applied to
-// conversations ingested from the UploadConversation and IngestConversations
-// endpoints, including conversation coming from CCAI Platform. They are not
-// applied to conversations ingested from the CreateConversation endpoint or
-// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
-// Agent Assist runtime integrations redaction should be performed in
-// Dialogflow / Agent Assist.
+// conversations ingested from the `UploadConversation` and
+// `IngestConversations` endpoints, including conversation coming from CCAI
+// Platform. They are not applied to conversations ingested from the
+// `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime
+// integrations. When using Dialogflow / Agent Assist runtime integrations,
+// redaction should be performed in Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1alpha1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -6053,9 +6271,9 @@ type GoogleCloudContactcenterinsightsV1alpha1RedactionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1RedactionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1RedactionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation: An annotation
@@ -6104,9 +6322,9 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput: Explicit
@@ -6118,6 +6336,14 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput struct {
 	// Query: Query text. Article Search uses this to store the input query used to
 	// generate the search results.
 	Query string `json:"query,omitempty"`
+	// QuerySource: Query source for the answer.
+	//
+	// Possible values:
+	//   "QUERY_SOURCE_UNSPECIFIED" - Unknown query source.
+	//   "AGENT_QUERY" - The query is from agents.
+	//   "SUGGESTED_QUERY" - The query is a query from previous suggestions, e.g.
+	// from a preceding SuggestKnowledgeAssist response.
+	QuerySource string `json:"querySource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6131,9 +6357,9 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1SentimentData: The data for a
@@ -6157,9 +6383,9 @@ type GoogleCloudContactcenterinsightsV1alpha1SentimentData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1SentimentData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1SentimentData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SentimentData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1SentimentData) UnmarshalJSON(data []byte) error {
@@ -6211,9 +6437,9 @@ type GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData) UnmarshalJSON(data []byte) error {
@@ -6258,9 +6484,9 @@ type GoogleCloudContactcenterinsightsV1alpha1SmartReplyData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SmartReplyData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(data []byte) error {
@@ -6279,9 +6505,9 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(d
 
 // GoogleCloudContactcenterinsightsV1alpha1SpeechConfig: Speech-to-Text
 // configuration. Speech-to-Text settings are applied to conversations ingested
-// from the UploadConversation and IngestConversations endpoints, including
+// from the `UploadConversation` and `IngestConversations` endpoints, including
 // conversation coming from CCAI Platform. They are not applied to
-// conversations ingested from the CreateConversation endpoint.
+// conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -6299,9 +6525,9 @@ type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1SpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SpeechConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata: Metadata
@@ -6326,9 +6552,9 @@ type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelRequest: The
@@ -6349,9 +6575,9 @@ type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelResponse: The
@@ -6360,7 +6586,7 @@ type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata: The
-// metadata for an UploadConversation operation.
+// metadata for an `UploadConversation` operation.
 type GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata struct {
 	// AnalysisOperation: Output only. The operation name for a successfully
 	// created analysis operation, if any.
@@ -6387,9 +6613,9 @@ type GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest: Request
@@ -6424,9 +6650,9 @@ type GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -6453,9 +6679,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -6500,9 +6726,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -6544,9 +6770,117 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsGetEncryptionSpecCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEncryptionSpec: Gets location-level encryption key specification.
+//
+// - name: The name of the encryption spec resource to get.
+func (r *ProjectsLocationsService) GetEncryptionSpec(name string) *ProjectsLocationsGetEncryptionSpecCall {
+	c := &ProjectsLocationsGetEncryptionSpecCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetEncryptionSpecCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetEncryptionSpecCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetEncryptionSpecCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Context(ctx context.Context) *ProjectsLocationsGetEncryptionSpecCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetEncryptionSpecCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.getEncryptionSpec" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1EncryptionSpec.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetEncryptionSpecCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1EncryptionSpec, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1EncryptionSpec{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsGetSettingsCall struct {
@@ -7097,8 +7431,8 @@ type ProjectsLocationsConversationsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a conversation. DEPRECATED: Use UploadConversation instead.
-// CreateConversation does not support audio transcription or DLP redaction.
+// Create: Creates a conversation. Does not support audio transcription or DLP
+// redaction. Use `conversations.upload` instead.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Create(parent string, googlecloudcontactcenterinsightsv1conversation *GoogleCloudContactcenterinsightsV1Conversation) *ProjectsLocationsConversationsCreateCall {
@@ -7563,8 +7897,8 @@ func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *Projects
 // by descending creation time. Supported values are one of the following: *
 // create_time * customer_satisfaction_rating * duration * latest_analysis *
 // start_time * turn_count The default sort order is ascending. To specify
-// order, append `asc` or `desc`, i.e. `create_time desc`. See
-// https://google.aip.dev/132#ordering for more details.
+// order, append `asc` or `desc` (`create_time desc`). For more details, see
+// Google AIPs Ordering (https://google.aip.dev/132#ordering).
 func (c *ProjectsLocationsConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7841,9 +8175,9 @@ type ProjectsLocationsConversationsUploadCall struct {
 	header_                                                     http.Header
 }
 
-// Upload: Create a longrunning conversation upload operation. This method
-// differs from CreateConversation by allowing audio transcription and optional
-// DLP redaction.
+// Upload: Create a long-running conversation upload operation. This method
+// differs from `CreateConversation` by allowing audio transcription and
+// optional DLP redaction.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Upload(parent string, googlecloudcontactcenterinsightsv1uploadconversationrequest *GoogleCloudContactcenterinsightsV1UploadConversationRequest) *ProjectsLocationsConversationsUploadCall {
@@ -8398,6 +8732,113 @@ func (c *ProjectsLocationsConversationsAnalysesListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsEncryptionSpecInitializeCall struct {
+	s                                                                 *Service
+	name                                                              string
+	googlecloudcontactcenterinsightsv1initializeencryptionspecrequest *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest
+	urlParams_                                                        gensupport.URLParams
+	ctx_                                                              context.Context
+	header_                                                           http.Header
+}
+
+// Initialize: Initializes a location-level encryption key specification. An
+// error will be thrown if the location has resources already created before
+// the initialization. Once the encryption specification is initialized at a
+// location, it is immutable and all newly created resources under the location
+// will be encrypted with the existing specification.
+//
+//   - name: Immutable. The resource name of the encryption key specification
+//     resource. Format: projects/{project}/locations/{location}/encryptionSpec.
+func (r *ProjectsLocationsEncryptionSpecService) Initialize(name string, googlecloudcontactcenterinsightsv1initializeencryptionspecrequest *GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c := &ProjectsLocationsEncryptionSpecInitializeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1initializeencryptionspecrequest = googlecloudcontactcenterinsightsv1initializeencryptionspecrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Fields(s ...googleapi.Field) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Context(ctx context.Context) *ProjectsLocationsEncryptionSpecInitializeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontactcenterinsightsv1initializeencryptionspecrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:initialize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.encryptionSpec.initialize" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEncryptionSpecInitializeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsInsightsdataExportCall struct {

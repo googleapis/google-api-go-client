@@ -21851,7 +21851,13 @@ type RegionsGetCall struct {
 // quota information (the `quotas` field). To exclude one or more fields, set
 // your request's `fields` query parameter to only include the fields you need.
 // For example, to only include the `id` and `selfLink` fields, add the query
-// parameter `?fields=id,selfLink` to your request.
+// parameter `?fields=id,selfLink` to your request. This method fails if the
+// quota information is unavailable for the region and if the organization
+// policy constraint compute.requireBasicQuotaInResponse is enforced. This
+// constraint, when enforced, disables the fail-open behaviour when quota
+// information (the `items.quotas` field) is unavailable for the region. It is
+// recommended to use the default setting for the constraint unless your
+// application requires the fail-closed behaviour for this method.
 //
 // - project: Project ID for this request.
 // - region: Name of the region resource to return.
@@ -34987,8 +34993,9 @@ type StoragePoolsUpdateCall struct {
 
 // Update: Updates the specified storagePool with the data included in the
 // request. The update is performed only on selected fields included as part of
-// update-mask. Only the following fields can be modified: size_tb and
-// provisioned_iops.
+// update-mask. Only the following fields can be modified:
+// pool_provisioned_capacity_gb, pool_provisioned_iops and
+// pool_provisioned_throughput.
 //
 // - project: Project ID for this request.
 // - storagePool: The storagePool name for this request.

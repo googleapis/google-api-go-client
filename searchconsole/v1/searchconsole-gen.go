@@ -6,7 +6,7 @@
 
 // Package searchconsole provides access to the Google Search Console API.
 //
-// For product documentation, see: https://developers.google.com/webmaster-tools/search-console-api/
+// For product documentation, see: https://developers.google.com/webmaster-tools/about
 //
 // # Library status
 //
@@ -328,9 +328,9 @@ type AmpInspectionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AmpInspectionResult) MarshalJSON() ([]byte, error) {
+func (s AmpInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpInspectionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AmpIssue: AMP issue.
@@ -357,9 +357,9 @@ type AmpIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AmpIssue) MarshalJSON() ([]byte, error) {
+func (s AmpIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ApiDataRow struct {
@@ -381,9 +381,9 @@ type ApiDataRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiDataRow) MarshalJSON() ([]byte, error) {
+func (s ApiDataRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDataRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ApiDataRow) UnmarshalJSON(data []byte) error {
@@ -442,9 +442,9 @@ type ApiDimensionFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiDimensionFilter) MarshalJSON() ([]byte, error) {
+func (s ApiDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDimensionFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApiDimensionFilterGroup: A set of dimension value filters to test against
@@ -469,9 +469,9 @@ type ApiDimensionFilterGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
+func (s ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDimensionFilterGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlockedResource: Blocked resource.
@@ -491,9 +491,9 @@ type BlockedResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockedResource) MarshalJSON() ([]byte, error) {
+func (s BlockedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockedResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectedItems: Rich Results items grouped by type.
@@ -515,9 +515,9 @@ type DetectedItems struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectedItems) MarshalJSON() ([]byte, error) {
+func (s DetectedItems) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectedItems
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Image: Describe image data.
@@ -540,9 +540,9 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndexStatusInspectionResult: Results of index status inspection for either
@@ -645,9 +645,9 @@ type IndexStatusInspectionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexStatusInspectionResult) MarshalJSON() ([]byte, error) {
+func (s IndexStatusInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexStatusInspectionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InspectUrlIndexRequest: Index inspection request.
@@ -677,9 +677,9 @@ type InspectUrlIndexRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InspectUrlIndexRequest) MarshalJSON() ([]byte, error) {
+func (s InspectUrlIndexRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InspectUrlIndexRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InspectUrlIndexResponse: Index-Status inspection response.
@@ -702,9 +702,9 @@ type InspectUrlIndexResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InspectUrlIndexResponse) MarshalJSON() ([]byte, error) {
+func (s InspectUrlIndexResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InspectUrlIndexResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Item: A specific rich result found on the page.
@@ -726,9 +726,9 @@ type Item struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Item) MarshalJSON() ([]byte, error) {
+func (s Item) MarshalJSON() ([]byte, error) {
 	type NoMethod Item
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileFriendlyIssue: Mobile-friendly issue.
@@ -768,9 +768,9 @@ type MobileFriendlyIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MobileFriendlyIssue) MarshalJSON() ([]byte, error) {
+func (s MobileFriendlyIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileFriendlyIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileUsabilityInspectionResult: Mobile-usability inspection results.
@@ -802,9 +802,9 @@ type MobileUsabilityInspectionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MobileUsabilityInspectionResult) MarshalJSON() ([]byte, error) {
+func (s MobileUsabilityInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileUsabilityInspectionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileUsabilityIssue: Mobile-usability issue.
@@ -853,9 +853,9 @@ type MobileUsabilityIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MobileUsabilityIssue) MarshalJSON() ([]byte, error) {
+func (s MobileUsabilityIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileUsabilityIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceIssue: Information about a resource with issue.
@@ -875,9 +875,9 @@ type ResourceIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceIssue) MarshalJSON() ([]byte, error) {
+func (s ResourceIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RichResultsInspectionResult: Rich-Results inspection result, including any
@@ -911,9 +911,9 @@ type RichResultsInspectionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RichResultsInspectionResult) MarshalJSON() ([]byte, error) {
+func (s RichResultsInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod RichResultsInspectionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RichResultsIssue: Severity and status of a single issue affecting a single
@@ -943,9 +943,9 @@ type RichResultsIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RichResultsIssue) MarshalJSON() ([]byte, error) {
+func (s RichResultsIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod RichResultsIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunMobileFriendlyTestRequest: Mobile-friendly test request.
@@ -967,9 +967,9 @@ type RunMobileFriendlyTestRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunMobileFriendlyTestRequest) MarshalJSON() ([]byte, error) {
+func (s RunMobileFriendlyTestRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunMobileFriendlyTestRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunMobileFriendlyTestResponse: Mobile-friendly test response, including
@@ -1008,9 +1008,9 @@ type RunMobileFriendlyTestResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunMobileFriendlyTestResponse) MarshalJSON() ([]byte, error) {
+func (s RunMobileFriendlyTestResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunMobileFriendlyTestResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnalyticsQueryRequest struct {
@@ -1106,9 +1106,9 @@ type SearchAnalyticsQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
+func (s SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAnalyticsQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchAnalyticsQueryResponse: A list of rows, one per result, grouped by
@@ -1142,9 +1142,9 @@ type SearchAnalyticsQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
+func (s SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAnalyticsQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SitemapsListResponse: List of sitemaps.
@@ -1168,9 +1168,9 @@ type SitemapsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
+func (s SitemapsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SitemapsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SitesListResponse: List of sites with access level information.
@@ -1195,9 +1195,9 @@ type SitesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SitesListResponse) MarshalJSON() ([]byte, error) {
+func (s SitesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SitesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestStatus: Final state of the test, including error details if necessary.
@@ -1230,9 +1230,9 @@ type TestStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestStatus) MarshalJSON() ([]byte, error) {
+func (s TestStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TestStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlInspectionResult: URL inspection result, including all inspection
@@ -1263,9 +1263,9 @@ type UrlInspectionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlInspectionResult) MarshalJSON() ([]byte, error) {
+func (s UrlInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlInspectionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WmxSite: Contains permission level information about a Search Console site.
@@ -1301,9 +1301,9 @@ type WmxSite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WmxSite) MarshalJSON() ([]byte, error) {
+func (s WmxSite) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WmxSitemap: Contains detailed information about a specific URL submitted as
@@ -1356,9 +1356,9 @@ type WmxSitemap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WmxSitemap) MarshalJSON() ([]byte, error) {
+func (s WmxSitemap) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSitemap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WmxSitemapContent: Information about the various content types in the
@@ -1394,9 +1394,9 @@ type WmxSitemapContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WmxSitemapContent) MarshalJSON() ([]byte, error) {
+func (s WmxSitemapContent) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSitemapContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SearchanalyticsQueryCall struct {

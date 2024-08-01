@@ -299,9 +299,9 @@ type AddFirebaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddFirebaseRequest) MarshalJSON() ([]byte, error) {
+func (s AddFirebaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddFirebaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AddGoogleAnalyticsRequest struct {
@@ -327,9 +327,9 @@ type AddGoogleAnalyticsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddGoogleAnalyticsRequest) MarshalJSON() ([]byte, error) {
+func (s AddGoogleAnalyticsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddGoogleAnalyticsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdminSdkConfig struct {
@@ -378,9 +378,9 @@ type AdminSdkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdminSdkConfig) MarshalJSON() ([]byte, error) {
+func (s AdminSdkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdminSdkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AnalyticsDetails struct {
@@ -411,9 +411,9 @@ type AnalyticsDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyticsDetails) MarshalJSON() ([]byte, error) {
+func (s AnalyticsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnalyticsProperty: Details of a Google Analytics property
@@ -445,9 +445,9 @@ type AnalyticsProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyticsProperty) MarshalJSON() ([]byte, error) {
+func (s AnalyticsProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidApp: Details of a Firebase App for Android.
@@ -533,9 +533,9 @@ type AndroidApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidApp) MarshalJSON() ([]byte, error) {
+func (s AndroidApp) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidAppConfig: Configuration metadata of a single Firebase App for
@@ -562,9 +562,9 @@ type AndroidAppConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidAppConfig) MarshalJSON() ([]byte, error) {
+func (s AndroidAppConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidAppConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DefaultResources: **DEPRECATED.** _Auto-provisioning of these resources is
@@ -633,9 +633,9 @@ type DefaultResources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DefaultResources) MarshalJSON() ([]byte, error) {
+func (s DefaultResources) MarshalJSON() ([]byte, error) {
 	type NoMethod DefaultResources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -665,9 +665,9 @@ type FinalizeDefaultLocationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FinalizeDefaultLocationRequest) MarshalJSON() ([]byte, error) {
+func (s FinalizeDefaultLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FinalizeDefaultLocationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FirebaseAppInfo: A high-level summary of an App.
@@ -746,9 +746,9 @@ type FirebaseAppInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
+func (s FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod FirebaseAppInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FirebaseProject: A `FirebaseProject` is the top-level Firebase entity. It is
@@ -825,9 +825,9 @@ type FirebaseProject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirebaseProject) MarshalJSON() ([]byte, error) {
+func (s FirebaseProject) MarshalJSON() ([]byte, error) {
 	type NoMethod FirebaseProject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IosApp: Details of a Firebase App for iOS.
@@ -915,9 +915,9 @@ type IosApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IosApp) MarshalJSON() ([]byte, error) {
+func (s IosApp) MarshalJSON() ([]byte, error) {
 	type NoMethod IosApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IosAppConfig: Configuration metadata of a single Firebase App for iOS.
@@ -943,9 +943,9 @@ type IosAppConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IosAppConfig) MarshalJSON() ([]byte, error) {
+func (s IosAppConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IosAppConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAndroidAppsResponse struct {
@@ -974,9 +974,9 @@ type ListAndroidAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAndroidAppsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAndroidAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAndroidAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAvailableLocationsResponse struct {
@@ -1004,9 +1004,9 @@ type ListAvailableLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAvailableLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAvailableLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAvailableLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAvailableProjectsResponse struct {
@@ -1035,9 +1035,9 @@ type ListAvailableProjectsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAvailableProjectsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAvailableProjectsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAvailableProjectsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListFirebaseProjectsResponse struct {
@@ -1065,9 +1065,9 @@ type ListFirebaseProjectsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFirebaseProjectsResponse) MarshalJSON() ([]byte, error) {
+func (s ListFirebaseProjectsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFirebaseProjectsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListIosAppsResponse struct {
@@ -1095,9 +1095,9 @@ type ListIosAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListIosAppsResponse) MarshalJSON() ([]byte, error) {
+func (s ListIosAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListIosAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListShaCertificatesResponse struct {
@@ -1120,9 +1120,9 @@ type ListShaCertificatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListShaCertificatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListShaCertificatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListShaCertificatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListWebAppsResponse struct {
@@ -1150,9 +1150,9 @@ type ListWebAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWebAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: **DEPRECATED.** _This Location is no longer used to determine
@@ -1209,9 +1209,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MessageSet: This is proto2's version of MessageSet.
@@ -1260,9 +1260,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Describes the progress of an LRO. It is included in the
@@ -1287,9 +1287,9 @@ type ProductMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductMetadata) MarshalJSON() ([]byte, error) {
+func (s ProductMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectInfo: A reference to a Google Cloud Platform (GCP) `Project`.
@@ -1324,9 +1324,9 @@ type ProjectInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectInfo) MarshalJSON() ([]byte, error) {
+func (s ProjectInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RemoveAnalyticsRequest struct {
@@ -1350,9 +1350,9 @@ type RemoveAnalyticsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveAnalyticsRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveAnalyticsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveAnalyticsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RemoveAndroidAppRequest struct {
@@ -1384,9 +1384,9 @@ type RemoveAndroidAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveAndroidAppRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveAndroidAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveAndroidAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RemoveIosAppRequest struct {
@@ -1418,9 +1418,9 @@ type RemoveIosAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveIosAppRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveIosAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveIosAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RemoveWebAppRequest struct {
@@ -1452,9 +1452,9 @@ type RemoveWebAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoveWebAppRequest) MarshalJSON() ([]byte, error) {
+func (s RemoveWebAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveWebAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SearchFirebaseAppsResponse struct {
@@ -1481,9 +1481,9 @@ type SearchFirebaseAppsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchFirebaseAppsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchFirebaseAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchFirebaseAppsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShaCertificate: A SHA-1 or SHA-256 certificate associated with the
@@ -1528,9 +1528,9 @@ type ShaCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShaCertificate) MarshalJSON() ([]byte, error) {
+func (s ShaCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod ShaCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1562,9 +1562,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatusProto: Wire-format for a Status object
@@ -1597,9 +1597,9 @@ type StatusProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatusProto) MarshalJSON() ([]byte, error) {
+func (s StatusProto) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StreamMapping: A mapping of a Firebase App to a Google Analytics data stream
@@ -1637,9 +1637,9 @@ type StreamMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StreamMapping) MarshalJSON() ([]byte, error) {
+func (s StreamMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UndeleteAndroidAppRequest struct {
@@ -1662,9 +1662,9 @@ type UndeleteAndroidAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteAndroidAppRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteAndroidAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteAndroidAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UndeleteIosAppRequest struct {
@@ -1687,9 +1687,9 @@ type UndeleteIosAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteIosAppRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteIosAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteIosAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UndeleteWebAppRequest struct {
@@ -1712,9 +1712,9 @@ type UndeleteWebAppRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteWebAppRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteWebAppRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteWebAppRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebApp: Details of a Firebase App for the web.
@@ -1801,9 +1801,9 @@ type WebApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebApp) MarshalJSON() ([]byte, error) {
+func (s WebApp) MarshalJSON() ([]byte, error) {
 	type NoMethod WebApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebAppConfig: Configuration metadata of a single Firebase App for the web.
@@ -1879,9 +1879,9 @@ type WebAppConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAppConfig) MarshalJSON() ([]byte, error) {
+func (s WebAppConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAppConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AvailableProjectsListCall struct {

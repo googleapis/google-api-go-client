@@ -572,9 +572,9 @@ type Abi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Abi) MarshalJSON() ([]byte, error) {
+func (s Abi) MarshalJSON() ([]byte, error) {
 	type NoMethod Abi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AbiTargeting: Targeting based on Abi.
@@ -597,9 +597,9 @@ type AbiTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AbiTargeting) MarshalJSON() ([]byte, error) {
+func (s AbiTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod AbiTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcquisitionTargetingRule: Represents a targeting rule of the form: User
@@ -621,9 +621,9 @@ type AcquisitionTargetingRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcquisitionTargetingRule) MarshalJSON() ([]byte, error) {
+func (s AcquisitionTargetingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AcquisitionTargetingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivateBasePlanRequest: Request message for ActivateBasePlan.
@@ -662,9 +662,9 @@ type ActivateBasePlanRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivateBasePlanRequest) MarshalJSON() ([]byte, error) {
+func (s ActivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivateBasePlanRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivateSubscriptionOfferRequest: Request message for
@@ -705,9 +705,9 @@ type ActivateSubscriptionOfferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+func (s ActivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivateSubscriptionOfferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddTargetingRequest: Request message for AddTargeting.
@@ -728,9 +728,9 @@ type AddTargetingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddTargetingRequest) MarshalJSON() ([]byte, error) {
+func (s AddTargetingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddTargetingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddTargetingResponse: Response message for AddTargeting.
@@ -756,9 +756,9 @@ type AllUsers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllUsers) MarshalJSON() ([]byte, error) {
+func (s AllUsers) MarshalJSON() ([]byte, error) {
 	type NoMethod AllUsers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AndroidSdks: Android api level targeting data for app recovery action
@@ -781,9 +781,9 @@ type AndroidSdks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidSdks) MarshalJSON() ([]byte, error) {
+func (s AndroidSdks) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidSdks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Apk: Information about an APK. The resource for ApksService.
@@ -808,9 +808,9 @@ type Apk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Apk) MarshalJSON() ([]byte, error) {
+func (s Apk) MarshalJSON() ([]byte, error) {
 	type NoMethod Apk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApkBinary: Represents the binary payload of an APK.
@@ -834,9 +834,9 @@ type ApkBinary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApkBinary) MarshalJSON() ([]byte, error) {
+func (s ApkBinary) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkBinary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApkDescription: Description of the created apks.
@@ -868,9 +868,9 @@ type ApkDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApkDescription) MarshalJSON() ([]byte, error) {
+func (s ApkDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApkSet: A set of apks representing a module.
@@ -892,9 +892,9 @@ type ApkSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApkSet) MarshalJSON() ([]byte, error) {
+func (s ApkSet) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApkTargeting: Represents a set of apk-level targetings.
@@ -925,9 +925,9 @@ type ApkTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApkTargeting) MarshalJSON() ([]byte, error) {
+func (s ApkTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApksAddExternallyHostedRequest: Request to create a new externally hosted
@@ -949,9 +949,9 @@ type ApksAddExternallyHostedRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApksAddExternallyHostedRequest) MarshalJSON() ([]byte, error) {
+func (s ApksAddExternallyHostedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApksAddExternallyHostedRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApksAddExternallyHostedResponse: Response for creating a new externally
@@ -976,9 +976,9 @@ type ApksAddExternallyHostedResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApksAddExternallyHostedResponse) MarshalJSON() ([]byte, error) {
+func (s ApksAddExternallyHostedResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApksAddExternallyHostedResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApksListResponse: Response listing all APKs.
@@ -1003,9 +1003,9 @@ type ApksListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApksListResponse) MarshalJSON() ([]byte, error) {
+func (s ApksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApksListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppDetails: The app details. The resource for DetailsService.
@@ -1034,9 +1034,9 @@ type AppDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppDetails) MarshalJSON() ([]byte, error) {
+func (s AppDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AppDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppEdit: An app edit. The resource for EditsService.
@@ -1063,9 +1063,9 @@ type AppEdit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppEdit) MarshalJSON() ([]byte, error) {
+func (s AppEdit) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEdit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppRecoveryAction: Information about an app recovery action.
@@ -1123,9 +1123,9 @@ type AppRecoveryAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppRecoveryAction) MarshalJSON() ([]byte, error) {
+func (s AppRecoveryAction) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRecoveryAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppVersionList: Data format for a list of app versions.
@@ -1145,9 +1145,9 @@ type AppVersionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppVersionList) MarshalJSON() ([]byte, error) {
+func (s AppVersionList) MarshalJSON() ([]byte, error) {
 	type NoMethod AppVersionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppVersionRange: Data format for a continuous range of app versions.
@@ -1169,9 +1169,9 @@ type AppVersionRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppVersionRange) MarshalJSON() ([]byte, error) {
+func (s AppVersionRange) MarshalJSON() ([]byte, error) {
 	type NoMethod AppVersionRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArchiveSubscriptionRequest: Deprecated: subscription archiving is not
@@ -1208,9 +1208,9 @@ type AssetModuleMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetModuleMetadata) MarshalJSON() ([]byte, error) {
+func (s AssetModuleMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetModuleMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssetSliceSet: Set of asset slices belonging to a single asset module.
@@ -1232,9 +1232,9 @@ type AssetSliceSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetSliceSet) MarshalJSON() ([]byte, error) {
+func (s AssetSliceSet) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetSliceSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoRenewingBasePlanType: Represents a base plan that automatically renews
@@ -1300,9 +1300,9 @@ type AutoRenewingBasePlanType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoRenewingBasePlanType) MarshalJSON() ([]byte, error) {
+func (s AutoRenewingBasePlanType) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoRenewingBasePlanType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoRenewingPlan: Information related to an auto renewing plan.
@@ -1329,9 +1329,9 @@ type AutoRenewingPlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoRenewingPlan) MarshalJSON() ([]byte, error) {
+func (s AutoRenewingPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoRenewingPlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BasePlan: A single base plan for a subscription.
@@ -1386,9 +1386,9 @@ type BasePlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BasePlan) MarshalJSON() ([]byte, error) {
+func (s BasePlan) MarshalJSON() ([]byte, error) {
 	type NoMethod BasePlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetSubscriptionOffersRequest: Request message for
@@ -1410,9 +1410,9 @@ type BatchGetSubscriptionOffersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
+func (s BatchGetSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetSubscriptionOffersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetSubscriptionOffersResponse: Response message for
@@ -1435,9 +1435,9 @@ type BatchGetSubscriptionOffersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetSubscriptionOffersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetSubscriptionsResponse: Response message for BatchGetSubscriptions
@@ -1462,9 +1462,9 @@ type BatchGetSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchMigrateBasePlanPricesRequest: Request message for
@@ -1486,9 +1486,9 @@ type BatchMigrateBasePlanPricesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchMigrateBasePlanPricesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchMigrateBasePlanPricesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchMigrateBasePlanPricesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchMigrateBasePlanPricesResponse: Response message for
@@ -1513,9 +1513,9 @@ type BatchMigrateBasePlanPricesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchMigrateBasePlanPricesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchMigrateBasePlanPricesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchMigrateBasePlanPricesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateBasePlanStatesRequest: Request message for
@@ -1537,9 +1537,9 @@ type BatchUpdateBasePlanStatesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateBasePlanStatesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateBasePlanStatesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateBasePlanStatesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateBasePlanStatesResponse: Response message for
@@ -1564,9 +1564,9 @@ type BatchUpdateBasePlanStatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateBasePlanStatesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateBasePlanStatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateBasePlanStatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionOfferStatesRequest: Request message for
@@ -1588,9 +1588,9 @@ type BatchUpdateSubscriptionOfferStatesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionOfferStatesRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionOfferStatesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionOfferStatesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionOfferStatesResponse: Response message for
@@ -1614,9 +1614,9 @@ type BatchUpdateSubscriptionOfferStatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionOfferStatesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionOfferStatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionOfferStatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionOffersRequest: Request message for
@@ -1638,9 +1638,9 @@ type BatchUpdateSubscriptionOffersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionOffersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionOffersResponse: Response message for
@@ -1664,9 +1664,9 @@ type BatchUpdateSubscriptionOffersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionOffersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionsRequest: Request message for
@@ -1688,9 +1688,9 @@ type BatchUpdateSubscriptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateSubscriptionsResponse: Response message for
@@ -1714,9 +1714,9 @@ type BatchUpdateSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Bundle: Information about an app bundle. The resource for BundlesService.
@@ -1746,9 +1746,9 @@ type Bundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Bundle) MarshalJSON() ([]byte, error) {
+func (s Bundle) MarshalJSON() ([]byte, error) {
 	type NoMethod Bundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BundlesListResponse: Response listing all app bundles.
@@ -1773,9 +1773,9 @@ type BundlesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BundlesListResponse) MarshalJSON() ([]byte, error) {
+func (s BundlesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BundlesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelAppRecoveryRequest: Request message for CancelAppRecovery.
@@ -1819,9 +1819,9 @@ type CancelSurveyResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelSurveyResult) MarshalJSON() ([]byte, error) {
+func (s CancelSurveyResult) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelSurveyResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CanceledStateContext: Information specific to a subscription in the
@@ -1850,9 +1850,9 @@ type CanceledStateContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CanceledStateContext) MarshalJSON() ([]byte, error) {
+func (s CanceledStateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CanceledStateContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Comment: An entry of conversation between user and developer.
@@ -1874,9 +1874,9 @@ type Comment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Comment) MarshalJSON() ([]byte, error) {
+func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConvertRegionPricesRequest: Request message for ConvertRegionPrices.
@@ -1896,9 +1896,9 @@ type ConvertRegionPricesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConvertRegionPricesRequest) MarshalJSON() ([]byte, error) {
+func (s ConvertRegionPricesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertRegionPricesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConvertRegionPricesResponse: Response message for ConvertRegionPrices.
@@ -1924,9 +1924,9 @@ type ConvertRegionPricesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConvertRegionPricesResponse) MarshalJSON() ([]byte, error) {
+func (s ConvertRegionPricesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertRegionPricesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConvertedOtherRegionsPrice: Converted other regions prices.
@@ -1950,9 +1950,9 @@ type ConvertedOtherRegionsPrice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConvertedOtherRegionsPrice) MarshalJSON() ([]byte, error) {
+func (s ConvertedOtherRegionsPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertedOtherRegionsPrice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConvertedRegionPrice: A converted region price.
@@ -1976,9 +1976,9 @@ type ConvertedRegionPrice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConvertedRegionPrice) MarshalJSON() ([]byte, error) {
+func (s ConvertedRegionPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertedRegionPrice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CountryTargeting: Country targeting specification.
@@ -2002,9 +2002,9 @@ type CountryTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CountryTargeting) MarshalJSON() ([]byte, error) {
+func (s CountryTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod CountryTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDraftAppRecoveryRequest: Request message for CreateDraftAppRecovery.
@@ -2029,9 +2029,9 @@ type CreateDraftAppRecoveryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDraftAppRecoveryRequest) MarshalJSON() ([]byte, error) {
+func (s CreateDraftAppRecoveryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDraftAppRecoveryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeactivateBasePlanRequest: Request message for DeactivateBasePlan.
@@ -2071,9 +2071,9 @@ type DeactivateBasePlanRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeactivateBasePlanRequest) MarshalJSON() ([]byte, error) {
+func (s DeactivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeactivateBasePlanRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeactivateSubscriptionOfferRequest: Request message for
@@ -2115,9 +2115,9 @@ type DeactivateSubscriptionOfferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeactivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+func (s DeactivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeactivateSubscriptionOfferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeferredItemReplacement: Information related to deferred item replacement.
@@ -2137,9 +2137,9 @@ type DeferredItemReplacement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeferredItemReplacement) MarshalJSON() ([]byte, error) {
+func (s DeferredItemReplacement) MarshalJSON() ([]byte, error) {
 	type NoMethod DeferredItemReplacement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeobfuscationFile: Represents a deobfuscation file.
@@ -2164,9 +2164,9 @@ type DeobfuscationFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeobfuscationFile) MarshalJSON() ([]byte, error) {
+func (s DeobfuscationFile) MarshalJSON() ([]byte, error) {
 	type NoMethod DeobfuscationFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeobfuscationFilesUploadResponse: Responses for the upload.
@@ -2189,9 +2189,9 @@ type DeobfuscationFilesUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeobfuscationFilesUploadResponse) MarshalJSON() ([]byte, error) {
+func (s DeobfuscationFilesUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeobfuscationFilesUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeployAppRecoveryRequest: Request message for DeployAppRecovery.
@@ -2224,9 +2224,9 @@ type DeveloperComment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeveloperComment) MarshalJSON() ([]byte, error) {
+func (s DeveloperComment) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperComment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeveloperInitiatedCancellation: Information specific to cancellations
@@ -2254,9 +2254,9 @@ type DeviceFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceFeature) MarshalJSON() ([]byte, error) {
+func (s DeviceFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceFeatureTargeting: Targeting for a device feature.
@@ -2276,9 +2276,9 @@ type DeviceFeatureTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceFeatureTargeting) MarshalJSON() ([]byte, error) {
+func (s DeviceFeatureTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceFeatureTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceGroup: A group of devices. A group is defined by a set of device
@@ -2303,9 +2303,9 @@ type DeviceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceGroup) MarshalJSON() ([]byte, error) {
+func (s DeviceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceId: Identifier of a device.
@@ -2327,9 +2327,9 @@ type DeviceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceId) MarshalJSON() ([]byte, error) {
+func (s DeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceMetadata: Characteristics of the user's device.
@@ -2370,9 +2370,9 @@ type DeviceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
+func (s DeviceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceRam: Conditions about a device's RAM capabilities.
@@ -2394,9 +2394,9 @@ type DeviceRam struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceRam) MarshalJSON() ([]byte, error) {
+func (s DeviceRam) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceRam
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceSelector: Selector for a device group. A selector consists of a set of
@@ -2433,9 +2433,9 @@ type DeviceSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceSelector) MarshalJSON() ([]byte, error) {
+func (s DeviceSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceSpec: The device spec used to generate a system APK.
@@ -2462,9 +2462,9 @@ type DeviceSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceSpec) MarshalJSON() ([]byte, error) {
+func (s DeviceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceTier: A single device tier. Devices matching any of the device groups
@@ -2496,9 +2496,9 @@ type DeviceTier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceTier) MarshalJSON() ([]byte, error) {
+func (s DeviceTier) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceTierConfig: Configuration describing device targeting criteria for the
@@ -2528,9 +2528,9 @@ type DeviceTierConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceTierConfig) MarshalJSON() ([]byte, error) {
+func (s DeviceTierConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTierConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceTierSet: A set of device tiers. A tier set determines what variation
@@ -2554,9 +2554,9 @@ type DeviceTierSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceTierSet) MarshalJSON() ([]byte, error) {
+func (s DeviceTierSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTierSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpansionFile: An expansion file. The resource for ExpansionFilesService.
@@ -2584,9 +2584,9 @@ type ExpansionFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpansionFile) MarshalJSON() ([]byte, error) {
+func (s ExpansionFile) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpansionFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpansionFilesUploadResponse: Response for uploading an expansion file.
@@ -2609,9 +2609,9 @@ type ExpansionFilesUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExpansionFilesUploadResponse) MarshalJSON() ([]byte, error) {
+func (s ExpansionFilesUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpansionFilesUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalAccountIdentifiers: User account identifier in the third-party
@@ -2647,9 +2647,9 @@ type ExternalAccountIdentifiers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
+func (s ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalAccountIdentifiers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalSubscription: Details of an external subscription.
@@ -2675,9 +2675,9 @@ type ExternalSubscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalSubscription) MarshalJSON() ([]byte, error) {
+func (s ExternalSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalSubscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalTransaction: The details of an external transaction.
@@ -2717,6 +2717,15 @@ type ExternalTransaction struct {
 	// TestPurchase: Output only. If set, this transaction was a test purchase.
 	// Google will not charge for a test transaction.
 	TestPurchase *ExternalTransactionTestPurchase `json:"testPurchase,omitempty"`
+	// TransactionProgramCode: Optional. The transaction program code, used to help
+	// determine service fee for eligible apps participating in partner programs.
+	// Developers participating in the Play Media Experience Program
+	// (https://play.google.com/console/about/programs/mediaprogram/) must provide
+	// the program code when reporting alternative billing transactions. If you are
+	// an eligible developer, please contact your BDM for more information on how
+	// to set this field. Note: this field can not be used for external offers
+	// transactions.
+	TransactionProgramCode int64 `json:"transactionProgramCode,omitempty"`
 	// TransactionState: Output only. The current state of the transaction.
 	//
 	// Possible values:
@@ -2745,9 +2754,9 @@ type ExternalTransaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalTransaction) MarshalJSON() ([]byte, error) {
+func (s ExternalTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalTransaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalTransactionAddress: User's address for the external transaction.
@@ -2779,9 +2788,9 @@ type ExternalTransactionAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalTransactionAddress) MarshalJSON() ([]byte, error) {
+func (s ExternalTransactionAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalTransactionAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExternalTransactionTestPurchase: Represents a transaction performed using a
@@ -2842,9 +2851,9 @@ type ExternallyHostedApk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternallyHostedApk) MarshalJSON() ([]byte, error) {
+func (s ExternallyHostedApk) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternallyHostedApk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FullRefund: A full refund of the remaining amount of a transaction.
@@ -2871,9 +2880,9 @@ type GeneratedApksListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedApksListResponse) MarshalJSON() ([]byte, error) {
+func (s GeneratedApksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedApksListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedApksPerSigningKey: Download metadata for split, standalone and
@@ -2915,9 +2924,9 @@ type GeneratedApksPerSigningKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedApksPerSigningKey) MarshalJSON() ([]byte, error) {
+func (s GeneratedApksPerSigningKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedApksPerSigningKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedAssetPackSlice: Download metadata for an asset pack slice.
@@ -2944,9 +2953,9 @@ type GeneratedAssetPackSlice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedAssetPackSlice) MarshalJSON() ([]byte, error) {
+func (s GeneratedAssetPackSlice) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedAssetPackSlice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedRecoveryApk: Download metadata for an app recovery module.
@@ -2987,9 +2996,9 @@ type GeneratedRecoveryApk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedRecoveryApk) MarshalJSON() ([]byte, error) {
+func (s GeneratedRecoveryApk) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedRecoveryApk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedSplitApk: Download metadata for a split APK.
@@ -3016,9 +3025,9 @@ type GeneratedSplitApk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedSplitApk) MarshalJSON() ([]byte, error) {
+func (s GeneratedSplitApk) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedSplitApk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedStandaloneApk: Download metadata for a standalone APK.
@@ -3041,9 +3050,9 @@ type GeneratedStandaloneApk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedStandaloneApk) MarshalJSON() ([]byte, error) {
+func (s GeneratedStandaloneApk) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedStandaloneApk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeneratedUniversalApk: Download metadata for a universal APK.
@@ -3064,9 +3073,9 @@ type GeneratedUniversalApk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeneratedUniversalApk) MarshalJSON() ([]byte, error) {
+func (s GeneratedUniversalApk) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedUniversalApk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetSubscriptionOfferRequest: Request message for GetSubscriptionOffer.
@@ -3092,9 +3101,9 @@ type GetSubscriptionOfferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+func (s GetSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetSubscriptionOfferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Grant: An access grant resource.
@@ -3146,9 +3155,9 @@ type Grant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Grant) MarshalJSON() ([]byte, error) {
+func (s Grant) MarshalJSON() ([]byte, error) {
 	type NoMethod Grant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Image: An uploaded image. The resource for ImagesService.
@@ -3174,9 +3183,9 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImagesDeleteAllResponse: Response for deleting all images.
@@ -3199,9 +3208,9 @@ type ImagesDeleteAllResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImagesDeleteAllResponse) MarshalJSON() ([]byte, error) {
+func (s ImagesDeleteAllResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImagesDeleteAllResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImagesListResponse: Response listing all images.
@@ -3224,9 +3233,9 @@ type ImagesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImagesListResponse) MarshalJSON() ([]byte, error) {
+func (s ImagesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImagesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImagesUploadResponse: Response for uploading an image.
@@ -3249,9 +3258,9 @@ type ImagesUploadResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImagesUploadResponse) MarshalJSON() ([]byte, error) {
+func (s ImagesUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImagesUploadResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InAppProduct: An in-app product. The resource for InappproductsService.
@@ -3322,9 +3331,9 @@ type InAppProduct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InAppProduct) MarshalJSON() ([]byte, error) {
+func (s InAppProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod InAppProduct
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InAppProductListing: Store listing of a single in-app product.
@@ -3348,9 +3357,9 @@ type InAppProductListing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InAppProductListing) MarshalJSON() ([]byte, error) {
+func (s InAppProductListing) MarshalJSON() ([]byte, error) {
 	type NoMethod InAppProductListing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsBatchDeleteRequest: Request to delete multiple in-app products.
@@ -3372,9 +3381,9 @@ type InappproductsBatchDeleteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsBatchDeleteRequest) MarshalJSON() ([]byte, error) {
+func (s InappproductsBatchDeleteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsBatchDeleteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsBatchGetResponse: Response message for BatchGetSubscriptions
@@ -3399,9 +3408,9 @@ type InappproductsBatchGetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsBatchGetResponse) MarshalJSON() ([]byte, error) {
+func (s InappproductsBatchGetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsBatchGetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsBatchUpdateRequest: Request to update or insert one or more
@@ -3424,9 +3433,9 @@ type InappproductsBatchUpdateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsBatchUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s InappproductsBatchUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsBatchUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsBatchUpdateResponse: Response for a batch in-app product
@@ -3450,9 +3459,9 @@ type InappproductsBatchUpdateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsBatchUpdateResponse) MarshalJSON() ([]byte, error) {
+func (s InappproductsBatchUpdateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsBatchUpdateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsDeleteRequest: Request to delete an in-app product.
@@ -3487,9 +3496,9 @@ type InappproductsDeleteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsDeleteRequest) MarshalJSON() ([]byte, error) {
+func (s InappproductsDeleteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsDeleteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsListResponse: Response listing all in-app products.
@@ -3520,9 +3529,9 @@ type InappproductsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsListResponse) MarshalJSON() ([]byte, error) {
+func (s InappproductsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InappproductsUpdateRequest: Request to update an in-app product.
@@ -3567,9 +3576,9 @@ type InappproductsUpdateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InappproductsUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s InappproductsUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallmentPlan: Information to a installment plan.
@@ -3601,9 +3610,9 @@ type InstallmentPlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallmentPlan) MarshalJSON() ([]byte, error) {
+func (s InstallmentPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallmentPlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallmentsBasePlanType: Represents an installments base plan where a user
@@ -3670,9 +3679,9 @@ type InstallmentsBasePlanType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallmentsBasePlanType) MarshalJSON() ([]byte, error) {
+func (s InstallmentsBasePlanType) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallmentsBasePlanType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InternalAppSharingArtifact: An artifact resource which gets created when
@@ -3704,9 +3713,9 @@ type InternalAppSharingArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
+func (s InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod InternalAppSharingArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntroductoryPriceInfo: Contains the introductory price information for a
@@ -3742,9 +3751,9 @@ type IntroductoryPriceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
+func (s IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IntroductoryPriceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageTargeting: Targeting based on language.
@@ -3766,9 +3775,9 @@ type LanguageTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageTargeting) MarshalJSON() ([]byte, error) {
+func (s LanguageTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAppRecoveriesResponse: Response message for ListAppRecoveries. --
@@ -3793,9 +3802,9 @@ type ListAppRecoveriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAppRecoveriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAppRecoveriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppRecoveriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDeviceTierConfigsResponse: Response listing existing device tier
@@ -3822,9 +3831,9 @@ type ListDeviceTierConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDeviceTierConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDeviceTierConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDeviceTierConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionOffersResponse: Response message for ListSubscriptionOffers.
@@ -3850,9 +3859,9 @@ type ListSubscriptionOffersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionOffersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response message for ListSubscriptions.
@@ -3878,9 +3887,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUsersResponse: A response containing one or more users with access to an
@@ -3908,9 +3917,9 @@ type ListUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Listing: A localized store listing. The resource for ListingsService.
@@ -3942,9 +3951,9 @@ type Listing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Listing) MarshalJSON() ([]byte, error) {
+func (s Listing) MarshalJSON() ([]byte, error) {
 	type NoMethod Listing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListingsListResponse: Response listing all localized listings.
@@ -3969,9 +3978,9 @@ type ListingsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListingsListResponse) MarshalJSON() ([]byte, error) {
+func (s ListingsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListingsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizedText: Localized text in given language.
@@ -3994,9 +4003,9 @@ type LocalizedText struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedText) MarshalJSON() ([]byte, error) {
+func (s LocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedText
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedProductTaxAndComplianceSettings: Details about taxation and legal
@@ -4033,9 +4042,9 @@ type ManagedProductTaxAndComplianceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedProductTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
+func (s ManagedProductTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedProductTaxAndComplianceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrateBasePlanPricesRequest: Request message for MigrateBasePlanPrices.
@@ -4080,9 +4089,9 @@ type MigrateBasePlanPricesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrateBasePlanPricesRequest) MarshalJSON() ([]byte, error) {
+func (s MigrateBasePlanPricesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrateBasePlanPricesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrateBasePlanPricesResponse: Response message for MigrateBasePlanPrices.
@@ -4132,9 +4141,9 @@ type ModuleMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModuleMetadata) MarshalJSON() ([]byte, error) {
+func (s ModuleMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ModuleMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModuleTargeting: Targeting on the module level.
@@ -4158,9 +4167,9 @@ type ModuleTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModuleTargeting) MarshalJSON() ([]byte, error) {
+func (s ModuleTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod ModuleTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -4189,9 +4198,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiAbi: Represents a list of apis.
@@ -4211,9 +4220,9 @@ type MultiAbi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiAbi) MarshalJSON() ([]byte, error) {
+func (s MultiAbi) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiAbi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiAbiTargeting: Targeting based on multiple abis.
@@ -4236,9 +4245,9 @@ type MultiAbiTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiAbiTargeting) MarshalJSON() ([]byte, error) {
+func (s MultiAbiTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiAbiTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OfferDetails: Offer details information related to a purchase line item.
@@ -4263,9 +4272,9 @@ type OfferDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferDetails) MarshalJSON() ([]byte, error) {
+func (s OfferDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OfferTag: Represents a custom tag specified for base plans and subscription
@@ -4288,9 +4297,9 @@ type OfferTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OfferTag) MarshalJSON() ([]byte, error) {
+func (s OfferTag) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OneTimeExternalTransaction: Represents a one-time transaction.
@@ -4311,9 +4320,9 @@ type OneTimeExternalTransaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
+func (s OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod OneTimeExternalTransaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OtherRecurringProduct: Details of a recurring external transaction product
@@ -4347,9 +4356,9 @@ type OtherRegionsBasePlanConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OtherRegionsBasePlanConfig) MarshalJSON() ([]byte, error) {
+func (s OtherRegionsBasePlanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OtherRegionsBasePlanConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OtherRegionsSubscriptionOfferConfig: Configuration for any new locations
@@ -4374,9 +4383,9 @@ type OtherRegionsSubscriptionOfferConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OtherRegionsSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
+func (s OtherRegionsSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OtherRegionsSubscriptionOfferConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OtherRegionsSubscriptionOfferPhaseConfig: Configuration for any new
@@ -4419,9 +4428,9 @@ type OtherRegionsSubscriptionOfferPhaseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OtherRegionsSubscriptionOfferPhaseConfig) MarshalJSON() ([]byte, error) {
+func (s OtherRegionsSubscriptionOfferPhaseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OtherRegionsSubscriptionOfferPhaseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *OtherRegionsSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error {
@@ -4466,9 +4475,9 @@ type OtherRegionsSubscriptionOfferPhasePrices struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OtherRegionsSubscriptionOfferPhasePrices) MarshalJSON() ([]byte, error) {
+func (s OtherRegionsSubscriptionOfferPhasePrices) MarshalJSON() ([]byte, error) {
 	type NoMethod OtherRegionsSubscriptionOfferPhasePrices
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageInfo: Information about the current page. List operations that supports
@@ -4496,9 +4505,9 @@ type PageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageInfo) MarshalJSON() ([]byte, error) {
+func (s PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartialRefund: A partial refund of a transaction.
@@ -4523,9 +4532,9 @@ type PartialRefund struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartialRefund) MarshalJSON() ([]byte, error) {
+func (s PartialRefund) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialRefund
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PausedStateContext: Information specific to a subscription in paused state.
@@ -4546,9 +4555,9 @@ type PausedStateContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PausedStateContext) MarshalJSON() ([]byte, error) {
+func (s PausedStateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PausedStateContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PendingCancellation: This is an indicator of whether there is a pending
@@ -4586,9 +4595,9 @@ type PrepaidBasePlanType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrepaidBasePlanType) MarshalJSON() ([]byte, error) {
+func (s PrepaidBasePlanType) MarshalJSON() ([]byte, error) {
 	type NoMethod PrepaidBasePlanType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrepaidPlan: Information related to a prepaid plan.
@@ -4610,9 +4619,9 @@ type PrepaidPlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrepaidPlan) MarshalJSON() ([]byte, error) {
+func (s PrepaidPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod PrepaidPlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: Definition of a price, i.e. currency and units.
@@ -4636,9 +4645,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPurchase: A ProductPurchase resource indicates the status of a user's
@@ -4713,9 +4722,9 @@ type ProductPurchase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPurchase) MarshalJSON() ([]byte, error) {
+func (s ProductPurchase) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPurchase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductPurchasesAcknowledgeRequest: Request for the
@@ -4736,9 +4745,9 @@ type ProductPurchasesAcknowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPurchasesAcknowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecurringExternalTransaction: Represents a transaction that is part of a
@@ -4784,9 +4793,9 @@ type RecurringExternalTransaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecurringExternalTransaction) MarshalJSON() ([]byte, error) {
+func (s RecurringExternalTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringExternalTransaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefundExternalTransactionRequest: A request to refund an existing external
@@ -4811,9 +4820,9 @@ type RefundExternalTransactionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RefundExternalTransactionRequest) MarshalJSON() ([]byte, error) {
+func (s RefundExternalTransactionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RefundExternalTransactionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalBasePlanConfig: Configuration for a base plan specific to a region.
@@ -4843,9 +4852,9 @@ type RegionalBasePlanConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalBasePlanConfig) MarshalJSON() ([]byte, error) {
+func (s RegionalBasePlanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalBasePlanConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalPriceMigrationConfig: Configuration for a price migration.
@@ -4886,9 +4895,9 @@ type RegionalPriceMigrationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalPriceMigrationConfig) MarshalJSON() ([]byte, error) {
+func (s RegionalPriceMigrationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalPriceMigrationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalSubscriptionOfferConfig: Configuration for a subscription offer in a
@@ -4915,9 +4924,9 @@ type RegionalSubscriptionOfferConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
+func (s RegionalSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalSubscriptionOfferConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalSubscriptionOfferPhaseConfig: Configuration for a single phase of a
@@ -4960,9 +4969,9 @@ type RegionalSubscriptionOfferPhaseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalSubscriptionOfferPhaseConfig) MarshalJSON() ([]byte, error) {
+func (s RegionalSubscriptionOfferPhaseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalSubscriptionOfferPhaseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RegionalSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error {
@@ -5040,9 +5049,9 @@ type RegionalTaxRateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
+func (s RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalTaxRateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Regions: Region targeting data for app recovery action targeting.
@@ -5065,9 +5074,9 @@ type Regions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Regions) MarshalJSON() ([]byte, error) {
+func (s Regions) MarshalJSON() ([]byte, error) {
 	type NoMethod Regions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionsVersion: The version of the available regions being used for the
@@ -5096,9 +5105,9 @@ type RegionsVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionsVersion) MarshalJSON() ([]byte, error) {
+func (s RegionsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionsVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteInAppUpdate: Object representation for Remote in-app update action
@@ -5120,9 +5129,9 @@ type RemoteInAppUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteInAppUpdate) MarshalJSON() ([]byte, error) {
+func (s RemoteInAppUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteInAppUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteInAppUpdateData: Data related to Remote In-App Update action such as
@@ -5144,9 +5153,9 @@ type RemoteInAppUpdateData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteInAppUpdateData) MarshalJSON() ([]byte, error) {
+func (s RemoteInAppUpdateData) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteInAppUpdateData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteInAppUpdateDataPerBundle: Data related to the recovery action at
@@ -5172,9 +5181,9 @@ type RemoteInAppUpdateDataPerBundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
+func (s RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteInAppUpdateDataPerBundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplacementCancellation: Information specific to cancellations caused by
@@ -5202,9 +5211,9 @@ type RestrictedPaymentCountries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestrictedPaymentCountries) MarshalJSON() ([]byte, error) {
+func (s RestrictedPaymentCountries) MarshalJSON() ([]byte, error) {
 	type NoMethod RestrictedPaymentCountries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Review: An Android app review.
@@ -5231,9 +5240,9 @@ type Review struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Review) MarshalJSON() ([]byte, error) {
+func (s Review) MarshalJSON() ([]byte, error) {
 	type NoMethod Review
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReviewReplyResult: The result of replying/updating a reply to review.
@@ -5255,9 +5264,9 @@ type ReviewReplyResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReviewReplyResult) MarshalJSON() ([]byte, error) {
+func (s ReviewReplyResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewReplyResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReviewsListResponse: Response listing reviews.
@@ -5285,9 +5294,9 @@ type ReviewsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReviewsListResponse) MarshalJSON() ([]byte, error) {
+func (s ReviewsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReviewsReplyRequest: Request to reply to review or update existing reply.
@@ -5308,9 +5317,9 @@ type ReviewsReplyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReviewsReplyRequest) MarshalJSON() ([]byte, error) {
+func (s ReviewsReplyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewsReplyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReviewsReplyResponse: Response on status of replying to a review.
@@ -5333,9 +5342,9 @@ type ReviewsReplyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
+func (s ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewsReplyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevocationContext: Revocation context of the
@@ -5358,9 +5367,9 @@ type RevocationContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevocationContext) MarshalJSON() ([]byte, error) {
+func (s RevocationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RevocationContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevocationContextProratedRefund: Used to determine if the refund type in the
@@ -5387,9 +5396,9 @@ type RevokeSubscriptionPurchaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RevokeSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
+func (s RevokeSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RevokeSubscriptionPurchaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RevokeSubscriptionPurchaseResponse: Response for the
@@ -5420,9 +5429,9 @@ type SafetyLabelsUpdateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SafetyLabelsUpdateRequest) MarshalJSON() ([]byte, error) {
+func (s SafetyLabelsUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SafetyLabelsUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SafetyLabelsUpdateResponse: Response for SafetyLabelsUpdate rpc.
@@ -5461,9 +5470,9 @@ type ScreenDensity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScreenDensity) MarshalJSON() ([]byte, error) {
+func (s ScreenDensity) MarshalJSON() ([]byte, error) {
 	type NoMethod ScreenDensity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScreenDensityTargeting: Targeting based on screen density.
@@ -5486,9 +5495,9 @@ type ScreenDensityTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScreenDensityTargeting) MarshalJSON() ([]byte, error) {
+func (s ScreenDensityTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod ScreenDensityTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SdkVersion: Represents an sdk version.
@@ -5508,9 +5517,9 @@ type SdkVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SdkVersion) MarshalJSON() ([]byte, error) {
+func (s SdkVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod SdkVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SdkVersionTargeting: Targeting based on sdk version.
@@ -5533,9 +5542,9 @@ type SdkVersionTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SdkVersionTargeting) MarshalJSON() ([]byte, error) {
+func (s SdkVersionTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod SdkVersionTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SplitApkMetadata: Holds data specific to Split APKs.
@@ -5557,9 +5566,9 @@ type SplitApkMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SplitApkMetadata) MarshalJSON() ([]byte, error) {
+func (s SplitApkMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SplitApkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SplitApkVariant: Variant is a group of APKs that covers a part of the device
@@ -5588,9 +5597,9 @@ type SplitApkVariant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SplitApkVariant) MarshalJSON() ([]byte, error) {
+func (s SplitApkVariant) MarshalJSON() ([]byte, error) {
 	type NoMethod SplitApkVariant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandaloneApkMetadata: Holds data specific to Standalone APKs.
@@ -5610,9 +5619,9 @@ type StandaloneApkMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandaloneApkMetadata) MarshalJSON() ([]byte, error) {
+func (s StandaloneApkMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StandaloneApkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscribeWithGoogleInfo: Information associated with purchases made with
@@ -5644,9 +5653,9 @@ type SubscribeWithGoogleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscribeWithGoogleInfo) MarshalJSON() ([]byte, error) {
+func (s SubscribeWithGoogleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeWithGoogleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A single subscription for an app.
@@ -5688,9 +5697,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionCancelSurveyResult: Information provided by the user when they
@@ -5716,9 +5725,9 @@ type SubscriptionCancelSurveyResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionCancelSurveyResult) MarshalJSON() ([]byte, error) {
+func (s SubscriptionCancelSurveyResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionCancelSurveyResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the data
@@ -5745,9 +5754,9 @@ type SubscriptionDeferralInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
+func (s SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionDeferralInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionItemPriceChangeDetails: Price change related information of a
@@ -5795,9 +5804,9 @@ type SubscriptionItemPriceChangeDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionItemPriceChangeDetails) MarshalJSON() ([]byte, error) {
+func (s SubscriptionItemPriceChangeDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionItemPriceChangeDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionListing: The consumer-visible metadata of a subscription.
@@ -5828,9 +5837,9 @@ type SubscriptionListing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionListing) MarshalJSON() ([]byte, error) {
+func (s SubscriptionListing) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionListing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionOffer: A single, temporary offer
@@ -5895,9 +5904,9 @@ type SubscriptionOffer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionOffer) MarshalJSON() ([]byte, error) {
+func (s SubscriptionOffer) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionOffer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionOfferPhase: A single phase of a subscription offer.
@@ -5929,9 +5938,9 @@ type SubscriptionOfferPhase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionOfferPhase) MarshalJSON() ([]byte, error) {
+func (s SubscriptionOfferPhase) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionOfferPhase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionOfferTargeting: Defines the rule a user needs to satisfy to
@@ -5954,9 +5963,9 @@ type SubscriptionOfferTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionOfferTargeting) MarshalJSON() ([]byte, error) {
+func (s SubscriptionOfferTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionOfferTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPriceChange: Contains the price change information for a
@@ -5988,9 +5997,9 @@ type SubscriptionPriceChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPriceChange) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPriceChange) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPriceChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchase: A SubscriptionPurchase resource indicates the status
@@ -6135,9 +6144,9 @@ type SubscriptionPurchase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchase) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchase) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchaseLineItem: Item-level info for a subscription purchase.
@@ -6168,9 +6177,9 @@ type SubscriptionPurchaseLineItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchaseLineItem) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchaseLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchaseLineItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchaseV2: Indicates the status of a user's subscription
@@ -6270,9 +6279,9 @@ type SubscriptionPurchaseV2 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchaseV2) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchaseV2) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchaseV2
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchasesAcknowledgeRequest: Request for the
@@ -6293,9 +6302,9 @@ type SubscriptionPurchasesAcknowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchasesAcknowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchasesDeferRequest: Request for the
@@ -6317,9 +6326,9 @@ type SubscriptionPurchasesDeferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchasesDeferRequest) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchasesDeferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchasesDeferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPurchasesDeferResponse: Response for the
@@ -6344,9 +6353,9 @@ type SubscriptionPurchasesDeferResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPurchasesDeferResponse) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPurchasesDeferResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPurchasesDeferResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionTaxAndComplianceSettings: Details about taxation, Google Play
@@ -6383,9 +6392,9 @@ type SubscriptionTaxAndComplianceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
+func (s SubscriptionTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTaxAndComplianceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemApkOptions: Options for system APKs.
@@ -6411,9 +6420,9 @@ type SystemApkOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemApkOptions) MarshalJSON() ([]byte, error) {
+func (s SystemApkOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemApkOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemApksListResponse: Response to list previously created system APK
@@ -6437,9 +6446,9 @@ type SystemApksListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemApksListResponse) MarshalJSON() ([]byte, error) {
+func (s SystemApksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemApksListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemFeature: Representation of a system feature.
@@ -6459,9 +6468,9 @@ type SystemFeature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SystemFeature) MarshalJSON() ([]byte, error) {
+func (s SystemFeature) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemFeature
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SystemInitiatedCancellation: Information specific to cancellations initiated
@@ -6495,9 +6504,9 @@ type Targeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Targeting) MarshalJSON() ([]byte, error) {
+func (s Targeting) MarshalJSON() ([]byte, error) {
 	type NoMethod Targeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetingInfo: Targeting information about the generated apks.
@@ -6521,9 +6530,9 @@ type TargetingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetingInfo) MarshalJSON() ([]byte, error) {
+func (s TargetingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetingRuleScope: Defines the scope of subscriptions which a targeting
@@ -6553,9 +6562,9 @@ type TargetingRuleScope struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetingRuleScope) MarshalJSON() ([]byte, error) {
+func (s TargetingRuleScope) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingRuleScope
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetingRuleScopeAnySubscriptionInApp: Represents the targeting rule scope
@@ -6591,9 +6600,9 @@ type TargetingUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetingUpdate) MarshalJSON() ([]byte, error) {
+func (s TargetingUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestPurchase: Whether this subscription purchase is a test purchase.
@@ -6622,9 +6631,9 @@ type Testers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Testers) MarshalJSON() ([]byte, error) {
+func (s Testers) MarshalJSON() ([]byte, error) {
 	type NoMethod Testers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextureCompressionFormat: Represents texture compression format.
@@ -6657,9 +6666,9 @@ type TextureCompressionFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextureCompressionFormat) MarshalJSON() ([]byte, error) {
+func (s TextureCompressionFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod TextureCompressionFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextureCompressionFormatTargeting: Targeting by a texture compression
@@ -6683,9 +6692,9 @@ type TextureCompressionFormatTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextureCompressionFormatTargeting) MarshalJSON() ([]byte, error) {
+func (s TextureCompressionFormatTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod TextureCompressionFormatTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Timestamp: A Timestamp represents a point in time independent of any time
@@ -6711,9 +6720,9 @@ type Timestamp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Timestamp) MarshalJSON() ([]byte, error) {
+func (s Timestamp) MarshalJSON() ([]byte, error) {
 	type NoMethod Timestamp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TokenPagination: Pagination information returned by a List operation when
@@ -6743,9 +6752,9 @@ type TokenPagination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TokenPagination) MarshalJSON() ([]byte, error) {
+func (s TokenPagination) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPagination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Track: A track configuration. The resource for TracksService.
@@ -6774,9 +6783,9 @@ type Track struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Track) MarshalJSON() ([]byte, error) {
+func (s Track) MarshalJSON() ([]byte, error) {
 	type NoMethod Track
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackConfig: Configurations of the new track.
@@ -6817,9 +6826,9 @@ type TrackConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackConfig) MarshalJSON() ([]byte, error) {
+func (s TrackConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackCountryAvailability: Resource for per-track country availability
@@ -6855,9 +6864,9 @@ type TrackCountryAvailability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackCountryAvailability) MarshalJSON() ([]byte, error) {
+func (s TrackCountryAvailability) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackCountryAvailability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackRelease: A release within a track.
@@ -6908,9 +6917,9 @@ type TrackRelease struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackRelease) MarshalJSON() ([]byte, error) {
+func (s TrackRelease) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackRelease
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TrackRelease) UnmarshalJSON(data []byte) error {
@@ -6945,9 +6954,9 @@ type TrackTargetedCountry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackTargetedCountry) MarshalJSON() ([]byte, error) {
+func (s TrackTargetedCountry) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackTargetedCountry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TracksListResponse: Response listing all tracks.
@@ -6972,9 +6981,9 @@ type TracksListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TracksListResponse) MarshalJSON() ([]byte, error) {
+func (s TracksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TracksListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateBasePlanStateRequest: Request message to update the state of a
@@ -7000,9 +7009,9 @@ type UpdateBasePlanStateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateBasePlanStateRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateBasePlanStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBasePlanStateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSubscriptionOfferRequest: Request message for UpdateSubscriptionOffer.
@@ -7044,9 +7053,9 @@ type UpdateSubscriptionOfferRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSubscriptionOfferRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSubscriptionOfferStateRequest: Request message to update the state of
@@ -7074,9 +7083,9 @@ type UpdateSubscriptionOfferStateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSubscriptionOfferStateRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSubscriptionOfferStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSubscriptionOfferStateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSubscriptionRequest: Request message for UpdateSubscription.
@@ -7118,9 +7127,9 @@ type UpdateSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSubscriptionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeTargetingRule: Represents a targeting rule of the form: User
@@ -7151,9 +7160,9 @@ type UpgradeTargetingRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeTargetingRule) MarshalJSON() ([]byte, error) {
+func (s UpgradeTargetingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeTargetingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: A user resource.
@@ -7239,9 +7248,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserComment: User entry from conversation between user and developer.
@@ -7292,9 +7301,9 @@ type UserComment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserComment) MarshalJSON() ([]byte, error) {
+func (s UserComment) MarshalJSON() ([]byte, error) {
 	type NoMethod UserComment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserCountriesTargeting: Describes an inclusive/exclusive list of country
@@ -7317,9 +7326,9 @@ type UserCountriesTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserCountriesTargeting) MarshalJSON() ([]byte, error) {
+func (s UserCountriesTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod UserCountriesTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserCountrySet: A set of user countries. A country set determines what
@@ -7344,9 +7353,9 @@ type UserCountrySet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserCountrySet) MarshalJSON() ([]byte, error) {
+func (s UserCountrySet) MarshalJSON() ([]byte, error) {
 	type NoMethod UserCountrySet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserInitiatedCancellation: Information specific to cancellations initiated
@@ -7372,9 +7381,9 @@ type UserInitiatedCancellation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserInitiatedCancellation) MarshalJSON() ([]byte, error) {
+func (s UserInitiatedCancellation) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInitiatedCancellation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsesPermission: A permission used by this APK.
@@ -7397,9 +7406,9 @@ type UsesPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsesPermission) MarshalJSON() ([]byte, error) {
+func (s UsesPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod UsesPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Variant: APK that is suitable for inclusion in a system image. The resource
@@ -7427,9 +7436,9 @@ type Variant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Variant) MarshalJSON() ([]byte, error) {
+func (s Variant) MarshalJSON() ([]byte, error) {
 	type NoMethod Variant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VariantTargeting: Targeting on the level of variants.
@@ -7458,9 +7467,9 @@ type VariantTargeting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VariantTargeting) MarshalJSON() ([]byte, error) {
+func (s VariantTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod VariantTargeting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoidedPurchase: A VoidedPurchase resource indicates a purchase that was
@@ -7507,9 +7516,9 @@ type VoidedPurchase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoidedPurchase) MarshalJSON() ([]byte, error) {
+func (s VoidedPurchase) MarshalJSON() ([]byte, error) {
 	type NoMethod VoidedPurchase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoidedPurchasesListResponse: Response for the voidedpurchases.list API.
@@ -7535,9 +7544,9 @@ type VoidedPurchasesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoidedPurchasesListResponse) MarshalJSON() ([]byte, error) {
+func (s VoidedPurchasesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VoidedPurchasesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ApplicationsDataSafetyCall struct {
@@ -8121,111 +8130,6 @@ func (c *ApprecoveryAddTargetingCall) Do(opts ...googleapi.CallOption) (*AddTarg
 	return ret, nil
 }
 
-type ApprecoveryAppRecoveriesCall struct {
-	s           *Service
-	packageName string
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// AppRecoveries: List all app recovery action resources associated with a
-// particular package name and app version.
-//
-//   - packageName: Package name of the app for which list of recovery actions is
-//     requested.
-func (r *ApprecoveryService) AppRecoveries(packageName string) *ApprecoveryAppRecoveriesCall {
-	c := &ApprecoveryAppRecoveriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.packageName = packageName
-	return c
-}
-
-// VersionCode sets the optional parameter "versionCode": Required. Version
-// code targeted by the list of recovery actions.
-func (c *ApprecoveryAppRecoveriesCall) VersionCode(versionCode int64) *ApprecoveryAppRecoveriesCall {
-	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ApprecoveryAppRecoveriesCall) Fields(s ...googleapi.Field) *ApprecoveryAppRecoveriesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ApprecoveryAppRecoveriesCall) Context(ctx context.Context) *ApprecoveryAppRecoveriesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ApprecoveryAppRecoveriesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ApprecoveryAppRecoveriesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"packageName": c.packageName,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidpublisher.apprecovery.appRecoveries" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ApprecoveryAppRecoveriesCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListAppRecoveriesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ApprecoveryCancelCall struct {
 	s                        *Service
 	packageName              string
@@ -8535,6 +8439,123 @@ func (c *ApprecoveryDeployCall) Do(opts ...googleapi.CallOption) (*DeployAppReco
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeployAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ApprecoveryListCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all app recovery action resources associated with a particular
+// package name and app version.
+//
+//   - packageName: Package name of the app for which list of recovery actions is
+//     requested.
+func (r *ApprecoveryService) List(packageName string) *ApprecoveryListCall {
+	c := &ApprecoveryListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// VersionCode sets the optional parameter "versionCode": Required. Version
+// code targeted by the list of recovery actions.
+func (c *ApprecoveryListCall) VersionCode(versionCode int64) *ApprecoveryListCall {
+	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ApprecoveryListCall) Fields(s ...googleapi.Field) *ApprecoveryListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApprecoveryListCall) IfNoneMatch(entityTag string) *ApprecoveryListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ApprecoveryListCall) Context(ctx context.Context) *ApprecoveryListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ApprecoveryListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ApprecoveryListCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAppRecoveriesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

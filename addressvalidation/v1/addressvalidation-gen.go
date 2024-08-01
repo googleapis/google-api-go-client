@@ -207,9 +207,9 @@ type GoogleGeoTypeViewport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
+func (s GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleGeoTypeViewport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1Address: Details of the post-processed address.
@@ -263,9 +263,9 @@ type GoogleMapsAddressvalidationV1Address struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1Address) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1Address) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1Address
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1AddressComponent: Represents an address
@@ -325,9 +325,9 @@ type GoogleMapsAddressvalidationV1AddressComponent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1AddressComponent) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1AddressComponent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1AddressComponent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1AddressMetadata: The metadata for the address.
@@ -356,9 +356,9 @@ type GoogleMapsAddressvalidationV1AddressMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1AddressMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1AddressMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1AddressMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ComponentName: A wrapper for the name of the
@@ -383,9 +383,9 @@ type GoogleMapsAddressvalidationV1ComponentName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1ComponentName) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1ComponentName) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1ComponentName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1Geocode: Contains information about the place
@@ -429,9 +429,9 @@ type GoogleMapsAddressvalidationV1Geocode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1Geocode) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1Geocode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1Geocode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsAddressvalidationV1Geocode) UnmarshalJSON(data []byte) error {
@@ -476,9 +476,9 @@ type GoogleMapsAddressvalidationV1LanguageOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1LanguageOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1LanguageOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1LanguageOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1PlusCode: Plus code (http://plus.codes) is a
@@ -506,9 +506,9 @@ type GoogleMapsAddressvalidationV1PlusCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1PlusCode) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1PlusCode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1PlusCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ProvideValidationFeedbackRequest: The request
@@ -549,9 +549,9 @@ type GoogleMapsAddressvalidationV1ProvideValidationFeedbackRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1ProvideValidationFeedbackRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1ProvideValidationFeedbackRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1ProvideValidationFeedbackRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ProvideValidationFeedbackResponse: The response
@@ -596,9 +596,9 @@ type GoogleMapsAddressvalidationV1UspsAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1UspsAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1UspsAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1UspsAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1UspsData: The USPS data for the address.
@@ -669,11 +669,11 @@ type GoogleMapsAddressvalidationV1UspsData struct {
 	// confirmed for primary and any secondary numbers. * `N`: Primary and any
 	// secondary number information failed to DPV confirm. * `S`: Address was DPV
 	// confirmed for the primary number only, and the secondary number information
-	// was present by not confirmed, or a single trailing alpha on a primary number
-	// was dropped to make a DPV match and secondary information required. * `D`:
-	// Address was DPV confirmed for the primary number only, and the secondary
-	// number information was missing. * `R`: Address confirmed but assigned to
-	// phantom route R777 and R779 and USPS delivery is not provided.
+	// was present but not confirmed, or a single trailing alpha on a primary
+	// number was dropped to make a DPV match and secondary information required. *
+	// `D`: Address was DPV confirmed for the primary number only, and the
+	// secondary number information was missing. * `R`: Address confirmed but
+	// assigned to phantom route R777 and R779 and USPS delivery is not provided.
 	DpvEnhancedDeliveryCode string `json:"dpvEnhancedDeliveryCode,omitempty"`
 	// DpvFootnote: The footnotes from delivery point validation. Multiple
 	// footnotes may be strung together in the same string. * `AA`: Input address
@@ -783,9 +783,9 @@ type GoogleMapsAddressvalidationV1UspsData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1UspsData) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1UspsData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1UspsData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ValidateAddressRequest: The request for
@@ -861,9 +861,9 @@ type GoogleMapsAddressvalidationV1ValidateAddressRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1ValidateAddressRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1ValidateAddressRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1ValidateAddressRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ValidateAddressResponse: The response to an
@@ -890,9 +890,9 @@ type GoogleMapsAddressvalidationV1ValidateAddressResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1ValidateAddressResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1ValidateAddressResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1ValidateAddressResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1ValidationResult: The result of validating an
@@ -949,9 +949,9 @@ type GoogleMapsAddressvalidationV1ValidationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1ValidationResult) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1ValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1ValidationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsAddressvalidationV1Verdict: High level overview of the address
@@ -1047,9 +1047,9 @@ type GoogleMapsAddressvalidationV1Verdict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsAddressvalidationV1Verdict) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsAddressvalidationV1Verdict) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsAddressvalidationV1Verdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeLatLng: An object that represents a latitude/longitude pair. This
@@ -1075,9 +1075,9 @@ type GoogleTypeLatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
@@ -1190,9 +1190,9 @@ type GoogleTypePostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypePostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type V1ProvideValidationFeedbackCall struct {

@@ -185,9 +185,9 @@ type Challenge struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Challenge) MarshalJSON() ([]byte, error) {
+func (s Challenge) MarshalJSON() ([]byte, error) {
 	type NoMethod Challenge
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -216,9 +216,9 @@ type SignedData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignedData) MarshalJSON() ([]byte, error) {
+func (s SignedData) MarshalJSON() ([]byte, error) {
 	type NoMethod SignedData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyChallengeResponseRequest: signed ChallengeResponse
@@ -244,9 +244,9 @@ type VerifyChallengeResponseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
+func (s VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyChallengeResponseResult: Result message for
@@ -288,9 +288,9 @@ type VerifyChallengeResponseResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyChallengeResponseResult) MarshalJSON() ([]byte, error) {
+func (s VerifyChallengeResponseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChallengeCreateCall struct {

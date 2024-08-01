@@ -249,9 +249,9 @@ type AccessApprovalServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessApprovalServiceAccount) MarshalJSON() ([]byte, error) {
+func (s AccessApprovalServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessApprovalServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessApprovalSettings: Settings on a Project/Folder/Organization related to
@@ -345,9 +345,9 @@ type AccessApprovalSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessApprovalSettings) MarshalJSON() ([]byte, error) {
+func (s AccessApprovalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessApprovalSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccessLocations: Home office and physical location of the principal.
@@ -379,9 +379,9 @@ type AccessLocations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessLocations) MarshalJSON() ([]byte, error) {
+func (s AccessLocations) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessLocations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccessReason struct {
@@ -427,9 +427,9 @@ type AccessReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessReason) MarshalJSON() ([]byte, error) {
+func (s AccessReason) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApprovalRequest: A request for the customer to approve access to a resource.
@@ -479,9 +479,9 @@ type ApprovalRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApprovalRequest) MarshalJSON() ([]byte, error) {
+func (s ApprovalRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApprovalRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveApprovalRequestMessage: Request to approve an ApprovalRequest.
@@ -501,9 +501,9 @@ type ApproveApprovalRequestMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveApprovalRequestMessage) MarshalJSON() ([]byte, error) {
+func (s ApproveApprovalRequestMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveApprovalRequestMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveDecision: A decision that has been made to approve access to a
@@ -534,9 +534,9 @@ type ApproveDecision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveDecision) MarshalJSON() ([]byte, error) {
+func (s ApproveDecision) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveDecision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DismissApprovalRequestMessage: Request to dismiss an approval request.
@@ -565,9 +565,9 @@ type DismissDecision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DismissDecision) MarshalJSON() ([]byte, error) {
+func (s DismissDecision) MarshalJSON() ([]byte, error) {
 	type NoMethod DismissDecision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -627,9 +627,9 @@ type EnrolledService struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnrolledService) MarshalJSON() ([]byte, error) {
+func (s EnrolledService) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrolledService
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InvalidateApprovalRequestMessage: Request to invalidate an existing
@@ -661,9 +661,9 @@ type ListApprovalRequestsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListApprovalRequestsResponse) MarshalJSON() ([]byte, error) {
+func (s ListApprovalRequestsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListApprovalRequestsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceProperties: The properties associated with the resource of the
@@ -685,9 +685,9 @@ type ResourceProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceProperties) MarshalJSON() ([]byte, error) {
+func (s ResourceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignatureInfo: Information about the digital signature of the resource.
@@ -780,9 +780,9 @@ type SignatureInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignatureInfo) MarshalJSON() ([]byte, error) {
+func (s SignatureInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SignatureInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersDeleteAccessApprovalSettingsCall struct {

@@ -3025,6 +3025,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	// includes content that may be violent or toxic.
 	//   "NO_RELEVANT_CONTENT" - The no relevant content case. Google skips the
 	// answer if there is no relevant content in the retrieved search results.
+	//   "JAIL_BREAKING_QUERY_IGNORED" - The jail-breaking query ignored case. For
+	// example, "Reply in the tone of a competing company's CEO". Google skips the
+	// answer if the query is classified as a jail-breaking query.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -3179,6 +3182,8 @@ func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassi
 type GoogleCloudDiscoveryengineV1alphaAnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
+	// StructuredDocumentInfo: Structured document information.
+	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
 	UnstructuredDocumentInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfo `json:"unstructuredDocumentInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkInfo") to
@@ -3208,7 +3213,10 @@ type GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfo struct {
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfoDocumentMetadata `json:"documentMetadata,omitempty"`
-	// RelevanceScore: Relevance score.
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3274,6 +3282,31 @@ func (s GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfoDocumentMetadat
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo:
+// Structured search information.
+type GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo struct {
+	// Document: Document resource name.
+	Document string `json:"document,omitempty"`
+	// StructData: Structured search data.
+	StructData googleapi.RawMessage `json:"structData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Document") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfo:
 // Unstructured document information.
 type GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfo struct {
@@ -3313,6 +3346,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChu
 	Content string `json:"content,omitempty"`
 	// PageIdentifier: Page identifier.
 	PageIdentifier string `json:"pageIdentifier,omitempty"`
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3329,6 +3367,20 @@ type GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChu
 func (s GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChunkContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChunkContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChunkContent) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChunkContent
+	var s1 struct {
+		RelevanceScore gensupport.JSONFloat64 `json:"relevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaAnswerStep: Step information.
@@ -3454,7 +3506,10 @@ type GoogleCloudDiscoveryengineV1alphaAnswerStepActionObservationSearchResultChu
 	Chunk string `json:"chunk,omitempty"`
 	// Content: Chunk textual content.
 	Content string `json:"content,omitempty"`
-	// RelevanceScore: Relevance score.
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4952,7 +5007,7 @@ type GoogleCloudDiscoveryengineV1alphaEvaluation struct {
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// EvaluationSpec: Required. The specification of the evaluation.
 	EvaluationSpec *GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec `json:"evaluationSpec,omitempty"`
-	// Name: Immutable. The full resource name of the Evaluation, in the format of
+	// Name: Identifier. The full resource name of the Evaluation, in the format of
 	// `projects/{project}/locations/{location}/evaluations/{evaluation}`. This
 	// field must be a UTF-8 encoded string with a length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
@@ -5075,17 +5130,15 @@ func (s GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata) MarshalJSON()
 // this message is returned by the google.longrunning.Operations.response
 // field.
 type GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse struct {
-	// OutputResult: Output result indicating where the data were exported to.
-	OutputResult *GoogleCloudDiscoveryengineV1alphaOutputResult `json:"outputResult,omitempty"`
 	// Status: The status of the export operation.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OutputResult") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OutputResult") to include in API
+	// NullFields is a list of field names (e.g. "Status") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5771,54 +5824,6 @@ func (s GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaOutputResult: Output result that stores the
-// information about where the exported data is stored.
-type GoogleCloudDiscoveryengineV1alphaOutputResult struct {
-	// BigqueryResult: The BigQuery location where the result is stored.
-	BigqueryResult *GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult `json:"bigqueryResult,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BigqueryResult") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BigqueryResult") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaOutputResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaOutputResult
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult: A
-// BigQuery output result.
-type GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult struct {
-	// DatasetId: The ID of a BigQuery Dataset.
-	DatasetId string `json:"datasetId,omitempty"`
-	// TableId: The ID of a BigQuery Table.
-	TableId string `json:"tableId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatasetId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatasetId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaOutputResultBigQueryOutputResult
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1alphaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1alphaProject struct {
@@ -6492,9 +6497,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// OrderBy: The order in which documents are returned. Documents can be ordered
 	// by a field in an Document object. Leave it unset if ordered by relevance.
 	// `order_by` expression is case-sensitive. For more information on ordering
-	// for retail search, see Ordering
-	// (https://cloud.google.com/retail/docs/filter-and-order#order) If this field
-	// is unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// the website search results, see Order web search results
+	// (https://cloud.google.com/generative-ai-app-builder/docs/order-web-search-results).
+	// For more information on ordering the healthcare search results, see Order
+	// healthcare search results
+	// (https://cloud.google.com/generative-ai-app-builder/docs/order-hc-results).
+	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -6994,6 +7002,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec 
 	// skip generating summaries for adversarial queries and return fallback
 	// messages instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
+	// low relevance. The default value is `false`. If this field is set to
+	// `false`, all search results are used regardless of relevance to generate
+	// answers. If set to `true`, only queries with high relevance search results
+	// will generate answers.
+	IgnoreLowRelevantContent bool `json:"ignoreLowRelevantContent,omitempty"`
 	// IgnoreNonSummarySeekingQuery: Specifies whether to filter out queries that
 	// are not summary-seeking. The default value is `false`. Google employs
 	// search-query classification to detect summary-seeking queries. No summary is
@@ -8019,6 +8033,9 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	// includes content that may be violent or toxic.
 	//   "NO_RELEVANT_CONTENT" - The no relevant content case. Google skips the
 	// answer if there is no relevant content in the retrieved search results.
+	//   "JAIL_BREAKING_QUERY_IGNORED" - The jail-breaking query ignored case. For
+	// example, "Reply in the tone of a competing company's CEO". Google skips the
+	// answer if the query is classified as a jail-breaking query.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -8773,6 +8790,8 @@ func (s GoogleCloudDiscoveryengineV1betaAnswerQueryUnderstandingInfoQueryClassif
 type GoogleCloudDiscoveryengineV1betaAnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1betaAnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
+	// StructuredDocumentInfo: Structured document information.
+	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1betaAnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
 	UnstructuredDocumentInfo *GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfo `json:"unstructuredDocumentInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkInfo") to
@@ -8801,7 +8820,10 @@ type GoogleCloudDiscoveryengineV1betaAnswerReferenceChunkInfo struct {
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1betaAnswerReferenceChunkInfoDocumentMetadata `json:"documentMetadata,omitempty"`
-	// RelevanceScore: Relevance score.
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8867,6 +8889,31 @@ func (s GoogleCloudDiscoveryengineV1betaAnswerReferenceChunkInfoDocumentMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaAnswerReferenceStructuredDocumentInfo:
+// Structured search information.
+type GoogleCloudDiscoveryengineV1betaAnswerReferenceStructuredDocumentInfo struct {
+	// Document: Document resource name.
+	Document string `json:"document,omitempty"`
+	// StructData: Structured search data.
+	StructData googleapi.RawMessage `json:"structData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Document") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAnswerReferenceStructuredDocumentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerReferenceStructuredDocumentInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfo:
 // Unstructured document information.
 type GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfo struct {
@@ -8906,6 +8953,11 @@ type GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChun
 	Content string `json:"content,omitempty"`
 	// PageIdentifier: Page identifier.
 	PageIdentifier string `json:"pageIdentifier,omitempty"`
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -8922,6 +8974,20 @@ type GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChun
 func (s GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChunkContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChunkContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChunkContent) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerReferenceUnstructuredDocumentInfoChunkContent
+	var s1 struct {
+		RelevanceScore gensupport.JSONFloat64 `json:"relevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaAnswerStep: Step information.
@@ -9047,7 +9113,10 @@ type GoogleCloudDiscoveryengineV1betaAnswerStepActionObservationSearchResultChun
 	Chunk string `json:"chunk,omitempty"`
 	// Content: Chunk textual content.
 	Content string `json:"content,omitempty"`
-	// RelevanceScore: Relevance score.
+	// RelevanceScore: The relevance of the chunk for a given query. Values range
+	// from 0.0 (completely irrelevant) to 1.0 (completely relevant). This value is
+	// for informational purpose only. It may change for the same query and chunk
+	// at any time due to a model retraining or change in implementation.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11530,7 +11599,7 @@ type GoogleCloudDiscoveryengineV1betaEvaluation struct {
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// EvaluationSpec: Required. The specification of the evaluation.
 	EvaluationSpec *GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec `json:"evaluationSpec,omitempty"`
-	// Name: Immutable. The full resource name of the Evaluation, in the format of
+	// Name: Identifier. The full resource name of the Evaluation, in the format of
 	// `projects/{project}/locations/{location}/evaluations/{evaluation}`. This
 	// field must be a UTF-8 encoded string with a length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
@@ -13270,19 +13339,26 @@ func (s GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata) MarshalJSON() ([
 // GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest: Request message for
 // DocumentService.PurgeDocuments method.
 type GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest struct {
+	// ErrorConfig: The desired location of errors incurred during the purge.
+	ErrorConfig *GoogleCloudDiscoveryengineV1betaPurgeErrorConfig `json:"errorConfig,omitempty"`
 	// Filter: Required. Filter matching documents to purge. Only currently
 	// supported value is `*` (all items).
 	Filter string `json:"filter,omitempty"`
 	// Force: Actually performs the purge. If `force` is set to false, return the
 	// expected purge count without deleting any documents.
 	Force bool `json:"force,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// GcsSource: Cloud Storage location for the input content. Supported
+	// `data_schema`: * `document_id`: One valid Document.id per line.
+	GcsSource *GoogleCloudDiscoveryengineV1betaGcsSource `json:"gcsSource,omitempty"`
+	// InlineSource: Inline source for the input content for purge.
+	InlineSource *GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequestInlineSource `json:"inlineSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// NullFields is a list of field names (e.g. "ErrorConfig") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13291,6 +13367,33 @@ type GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest struct {
 
 func (s GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequestInlineSource: The
+// inline source for the input config for DocumentService.PurgeDocuments
+// method.
+type GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequestInlineSource struct {
+	// Documents: Required. A list of full resource name of documents to purge. In
+	// the format
+	// `projects/*/locations/*/collections/*/dataStores/*/branches/*/documents/*`.
+	// Recommended max of 100 items.
+	Documents []string `json:"documents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Documents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequestInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequestInlineSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13321,6 +13424,32 @@ type GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeErrorConfig: Configuration of
+// destination for Purge related errors.
+type GoogleCloudDiscoveryengineV1betaPurgeErrorConfig struct {
+	// GcsPrefix: Cloud Storage prefix for purge errors. This must be an empty,
+	// existing Cloud Storage directory. Purge errors are written to sharded files
+	// in this directory, one per line, as a JSON-encoded `google.rpc.Status`
+	// message.
+	GcsPrefix string `json:"gcsPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcsPrefix") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaPurgeErrorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeErrorConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13380,6 +13509,46 @@ type GoogleCloudDiscoveryengineV1betaPurgeSuggestionDenyListEntriesResponse stru
 
 func (s GoogleCloudDiscoveryengineV1betaPurgeSuggestionDenyListEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeSuggestionDenyListEntriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest: Request message for
+// PurgeUserEvents method.
+type GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest struct {
+	// Filter: Required. The filter string to specify the events to be deleted with
+	// a length limit of 5,000 characters. The eligible fields for filtering are: *
+	// `eventType`: Double quoted UserEvent.event_type string. * `eventTime`: in
+	// ISO 8601 "zulu" format. * `userPseudoId`: Double quoted string. Specifying
+	// this will delete all events associated with a visitor. * `userId`: Double
+	// quoted string. Specifying this will delete all events associated with a
+	// user. Examples: * Deleting all events in a time range: `eventTime >
+	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" *
+	// Deleting specific eventType: `eventType = "search" * Deleting all events
+	// for a specific visitor: `userPseudoId = "visitor1024" * Deleting all events
+	// inside a DataStore: `*` The filtering fields are assumed to have an implicit
+	// AND.
+	Filter string `json:"filter,omitempty"`
+	// Force: The `force` field is currently not supported. Purge user event
+	// requests will permanently delete all purgeable events. Once the development
+	// is complete: If `force` is set to false, the method will return the expected
+	// purge count without deleting any user events. This field will default to
+	// false if not included in the request.
+	Force bool `json:"force,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13872,11 +14041,11 @@ type GoogleCloudDiscoveryengineV1betaResumeEngineRequest struct {
 type GoogleCloudDiscoveryengineV1betaSampleQuery struct {
 	// CreateTime: Output only. Timestamp the SampleQuery was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// Name: Immutable. The full resource name of the sample query, in the format
+	// Name: Identifier. The full resource name of the sample query, in the format
 	// of
-	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}/sam
-	// pleQueries/{sampleQuery}`. This field must be a UTF-8 encoded string with a
-	// length limit of 1024 characters.
+	// `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}/s
+	// ampleQueries/{sample_query}`. This field must be a UTF-8 encoded string with
+	// a length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
 	// QueryEntry: The query entry.
 	QueryEntry *GoogleCloudDiscoveryengineV1betaSampleQueryQueryEntry `json:"queryEntry,omitempty"`
@@ -13981,10 +14150,10 @@ type GoogleCloudDiscoveryengineV1betaSampleQuerySet struct {
 	// DisplayName: Required. The sample query set display name. This field must be
 	// a UTF-8 encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Immutable. The full resource name of the SampleQuerySet, in the format
-	// of
-	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
-	// This field must be a UTF-8 encoded string with a length limit of 1024
+	// Name: Identifier. The full resource name of the SampleQuerySet, in the
+	// format of
+	// `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}`.
+	//  This field must be a UTF-8 encoded string with a length limit of 1024
 	// characters.
 	Name string `json:"name,omitempty"`
 
@@ -14155,9 +14324,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// OrderBy: The order in which documents are returned. Documents can be ordered
 	// by a field in an Document object. Leave it unset if ordered by relevance.
 	// `order_by` expression is case-sensitive. For more information on ordering
-	// for retail search, see Ordering
-	// (https://cloud.google.com/retail/docs/filter-and-order#order) If this field
-	// is unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// the website search results, see Order web search results
+	// (https://cloud.google.com/generative-ai-app-builder/docs/order-web-search-results).
+	// For more information on ordering the healthcare search results, see Order
+	// healthcare search results
+	// (https://cloud.google.com/generative-ai-app-builder/docs/order-hc-results).
+	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -14644,6 +14816,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec s
 	// skip generating summaries for adversarial queries and return fallback
 	// messages instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
+	// low relevance. The default value is `false`. If this field is set to
+	// `false`, all search results are used regardless of relevance to generate
+	// answers. If set to `true`, only queries with high relevance search results
+	// will generate answers.
+	IgnoreLowRelevantContent bool `json:"ignoreLowRelevantContent,omitempty"`
 	// IgnoreNonSummarySeekingQuery: Specifies whether to filter out queries that
 	// are not summary-seeking. The default value is `false`. Google employs
 	// search-query classification to detect summary-seeking queries. No summary is
@@ -15201,6 +15379,9 @@ type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
 	// retrieve the next page. If this field is omitted, there are no subsequent
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OneBoxResults: A list of One Box results. There can be multiple One Box
+	// results of different types.
+	OneBoxResults []*GoogleCloudDiscoveryengineV1betaSearchResponseOneBoxResult `json:"oneBoxResults,omitempty"`
 	// QueryExpansionInfo: Query expansion information for the returned results.
 	QueryExpansionInfo *GoogleCloudDiscoveryengineV1betaSearchResponseQueryExpansionInfo `json:"queryExpansionInfo,omitempty"`
 	// RedirectUri: The URI of a customer-defined redirect page. If redirect action
@@ -15633,6 +15814,38 @@ func (s GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnders
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSearchResponseOneBoxResult: OneBoxResult is
+// a holder for all results of specific type that we want to display in UI
+// differently.
+type GoogleCloudDiscoveryengineV1betaSearchResponseOneBoxResult struct {
+	// OneBoxType: The type of One Box result.
+	//
+	// Possible values:
+	//   "ONE_BOX_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "PEOPLE" - One Box result contains people results.
+	//   "ORGANIZATION" - One Box result contains organization results.
+	//   "SLACK" - One Box result contains slack results.
+	OneBoxType string `json:"oneBoxType,omitempty"`
+	// SearchResults: The search results for this One Box.
+	SearchResults []*GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult `json:"searchResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OneBoxType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneBoxType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchResponseOneBoxResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseOneBoxResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSearchResponseQueryExpansionInfo:
 // Information describing query expansion including whether expansion has
 // occurred.
@@ -15735,10 +15948,10 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	//   "SUMMARY_SKIPPED_REASON_UNSPECIFIED" - Default value. The summary skipped
 	// reason is not specified.
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case. Only
-	// populated when SummarySpec.ignore_adversarial_query is set to `true`.
+	// used when SummarySpec.ignore_adversarial_query is set to `true`.
 	//   "NON_SUMMARY_SEEKING_QUERY_IGNORED" - The non-summary seeking query
-	// ignored case. Only populated when
-	// SummarySpec.ignore_non_summary_seeking_query is set to `true`.
+	// ignored case. Only used when SummarySpec.ignore_non_summary_seeking_query is
+	// set to `true`.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the summary if there are no high-relevance search results. For
 	// example, the data store contains facts about company A but the user query is
@@ -15748,6 +15961,12 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// includes content that may be violent or toxic.
 	//   "LLM_ADDON_NOT_ENABLED" - The LLM addon not enabled case. Google skips the
 	// summary if the LLM addon is not enabled.
+	//   "NO_RELEVANT_CONTENT" - The no relevant content case. Google skips the
+	// summary if there is no relevant content in the retrieved search results.
+	//   "JAIL_BREAKING_QUERY_IGNORED" - The jail-breaking query ignored case. For
+	// example, "Reply in the tone of a competing company's CEO". Only used when
+	// [SearchRequest.ContentSearchSpec.SummarySpec.ignore_jail_breaking_query] is
+	// set to `true`.
 	SummarySkippedReasons []string `json:"summarySkippedReasons,omitempty"`
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
@@ -17745,6 +17964,18 @@ func (c *ProjectsLocationsCollectionsDataStoresCreateCall) CreateAdvancedSiteSea
 // characters. Otherwise, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresCreateCall) DataStoreId(dataStoreId string) *ProjectsLocationsCollectionsDataStoresCreateCall {
 	c.urlParams_.Set("dataStoreId", dataStoreId)
+	return c
+}
+
+// SkipDefaultSchemaCreation sets the optional parameter
+// "skipDefaultSchemaCreation": A boolean flag indicating whether to skip the
+// default schema creation for the data store. Only enable this flag if you are
+// certain that the default schema is incompatible with your use case. If set
+// to true, you must manually create a schema for the data store before any
+// documents can be ingested. This flag cannot be specified if
+// `data_store.starting_schema` is specified.
+func (c *ProjectsLocationsCollectionsDataStoresCreateCall) SkipDefaultSchemaCreation(skipDefaultSchemaCreation bool) *ProjectsLocationsCollectionsDataStoresCreateCall {
+	c.urlParams_.Set("skipDefaultSchemaCreation", fmt.Sprint(skipDefaultSchemaCreation))
 	return c
 }
 
@@ -26346,6 +26577,114 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) Do(opts ...
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddiscoveryenginev1betapurgeusereventsrequest *GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Purge: Deletes permanently all user events specified by the filter provided.
+// Depending on the number of events specified by the filter, this operation
+// could take hours or days to complete. To test a filter, use the list command
+// first.
+//
+//   - parent: The resource name of the catalog under which the events are
+//     created. The format is
+//     `projects/${projectId}/locations/global/collections/{$collectionId}/dataSto
+//     res/${dataStoreId}`.
+func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Purge(parent string, googleclouddiscoveryenginev1betapurgeusereventsrequest *GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest) *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall {
+	c := &ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1betapurgeusereventsrequest = googleclouddiscoveryenginev1betapurgeusereventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betapurgeusereventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/userEvents:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.purge" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresUserEventsWriteCall struct {
 	s                                         *Service
 	parent                                    string
@@ -30794,6 +31133,18 @@ func (c *ProjectsLocationsDataStoresCreateCall) CreateAdvancedSiteSearch(createA
 // characters. Otherwise, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsDataStoresCreateCall) DataStoreId(dataStoreId string) *ProjectsLocationsDataStoresCreateCall {
 	c.urlParams_.Set("dataStoreId", dataStoreId)
+	return c
+}
+
+// SkipDefaultSchemaCreation sets the optional parameter
+// "skipDefaultSchemaCreation": A boolean flag indicating whether to skip the
+// default schema creation for the data store. Only enable this flag if you are
+// certain that the default schema is incompatible with your use case. If set
+// to true, you must manually create a schema for the data store before any
+// documents can be ingested. This flag cannot be specified if
+// `data_store.starting_schema` is specified.
+func (c *ProjectsLocationsDataStoresCreateCall) SkipDefaultSchemaCreation(skipDefaultSchemaCreation bool) *ProjectsLocationsDataStoresCreateCall {
+	c.urlParams_.Set("skipDefaultSchemaCreation", fmt.Sprint(skipDefaultSchemaCreation))
 	return c
 }
 
@@ -38140,6 +38491,114 @@ func (c *ProjectsLocationsDataStoresUserEventsImportCall) Do(opts ...googleapi.C
 	return ret, nil
 }
 
+type ProjectsLocationsDataStoresUserEventsPurgeCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddiscoveryenginev1betapurgeusereventsrequest *GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Purge: Deletes permanently all user events specified by the filter provided.
+// Depending on the number of events specified by the filter, this operation
+// could take hours or days to complete. To test a filter, use the list command
+// first.
+//
+//   - parent: The resource name of the catalog under which the events are
+//     created. The format is
+//     `projects/${projectId}/locations/global/collections/{$collectionId}/dataSto
+//     res/${dataStoreId}`.
+func (r *ProjectsLocationsDataStoresUserEventsService) Purge(parent string, googleclouddiscoveryenginev1betapurgeusereventsrequest *GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest) *ProjectsLocationsDataStoresUserEventsPurgeCall {
+	c := &ProjectsLocationsDataStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1betapurgeusereventsrequest = googleclouddiscoveryenginev1betapurgeusereventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresUserEventsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) Context(ctx context.Context) *ProjectsLocationsDataStoresUserEventsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betapurgeusereventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/userEvents:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.userEvents.purge" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsDataStoresUserEventsWriteCall struct {
 	s                                         *Service
 	parent                                    string
@@ -39483,8 +39942,8 @@ type ProjectsLocationsSampleQuerySetsDeleteCall struct {
 // Delete: Deletes a SampleQuerySet.
 //
 //   - name: Full resource name of SampleQuerySet, such as
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
-//     If the caller does not have permission to delete the SampleQuerySet,
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     `. If the caller does not have permission to delete the SampleQuerySet,
 //     regardless of whether or not it exists, a `PERMISSION_DENIED` error is
 //     returned. If the SampleQuerySet to delete does not exist, a `NOT_FOUND`
 //     error is returned.
@@ -39585,8 +40044,8 @@ type ProjectsLocationsSampleQuerySetsGetCall struct {
 // Get: Gets a SampleQuerySet.
 //
 //   - name: Full resource name of SampleQuerySet, such as
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
-//     If the caller does not have permission to access the SampleQuerySet,
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     `. If the caller does not have permission to access the SampleQuerySet,
 //     regardless of whether or not it exists, a PERMISSION_DENIED error is
 //     returned. If the requested SampleQuerySet does not exist, a NOT_FOUND
 //     error is returned.
@@ -39850,10 +40309,10 @@ type ProjectsLocationsSampleQuerySetsPatchCall struct {
 
 // Patch: Updates a SampleQuerySet.
 //
-//   - name: Immutable. The full resource name of the SampleQuerySet, in the
+//   - name: Identifier. The full resource name of the SampleQuerySet, in the
 //     format of
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
-//     This field must be a UTF-8 encoded string with a length limit of 1024
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     `. This field must be a UTF-8 encoded string with a length limit of 1024
 //     characters.
 func (r *ProjectsLocationsSampleQuerySetsService) Patch(name string, googleclouddiscoveryenginev1betasamplequeryset *GoogleCloudDiscoveryengineV1betaSampleQuerySet) *ProjectsLocationsSampleQuerySetsPatchCall {
 	c := &ProjectsLocationsSampleQuerySetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -40191,8 +40650,8 @@ type ProjectsLocationsSampleQuerySetsSampleQueriesDeleteCall struct {
 // Delete: Deletes a SampleQuery.
 //
 //   - name: Full resource name of SampleQuery, such as
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}/s
-//     ampleQueries/{sampleQuery}`. If the caller does not have permission to
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     /sampleQueries/{sample_query}`. If the caller does not have permission to
 //     delete the SampleQuery, regardless of whether or not it exists, a
 //     `PERMISSION_DENIED` error is returned. If the SampleQuery to delete does
 //     not exist, a `NOT_FOUND` error is returned.
@@ -40293,8 +40752,8 @@ type ProjectsLocationsSampleQuerySetsSampleQueriesGetCall struct {
 // Get: Gets a SampleQuery.
 //
 //   - name: Full resource name of SampleQuery, such as
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}/s
-//     ampleQueries/{sampleQuery}`. If the caller does not have permission to
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     /sampleQueries/{sample_query}`. If the caller does not have permission to
 //     access the SampleQuery, regardless of whether or not it exists, a
 //     PERMISSION_DENIED error is returned. If the requested SampleQuery does not
 //     exist, a NOT_FOUND error is returned.
@@ -40666,10 +41125,10 @@ type ProjectsLocationsSampleQuerySetsSampleQueriesPatchCall struct {
 
 // Patch: Updates a SampleQuery.
 //
-//   - name: Immutable. The full resource name of the sample query, in the format
-//     of
-//     `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}/s
-//     ampleQueries/{sampleQuery}`. This field must be a UTF-8 encoded string
+//   - name: Identifier. The full resource name of the sample query, in the
+//     format of
+//     `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}
+//     /sampleQueries/{sample_query}`. This field must be a UTF-8 encoded string
 //     with a length limit of 1024 characters.
 func (r *ProjectsLocationsSampleQuerySetsSampleQueriesService) Patch(name string, googleclouddiscoveryenginev1betasamplequery *GoogleCloudDiscoveryengineV1betaSampleQuery) *ProjectsLocationsSampleQuerySetsSampleQueriesPatchCall {
 	c := &ProjectsLocationsSampleQuerySetsSampleQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

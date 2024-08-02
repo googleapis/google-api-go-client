@@ -719,24 +719,6 @@
             "https://www.googleapis.com/auth/analytics.edit"
           ]
         },
-        "createSubproperty": {
-          "description": "Create a subproperty and a subproperty event filter that applies to the created subproperty.",
-          "flatPath": "v1alpha/properties:createSubproperty",
-          "httpMethod": "POST",
-          "id": "analyticsadmin.properties.createSubproperty",
-          "parameterOrder": [],
-          "parameters": {},
-          "path": "v1alpha/properties:createSubproperty",
-          "request": {
-            "$ref": "GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest"
-          },
-          "response": {
-            "$ref": "GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/analytics.edit"
-          ]
-        },
         "delete": {
           "description": "Marks target Property as soft-deleted (ie: \"trashed\") and returns it. This API does not have a method to restore soft-deleted properties. However, they can be restored using the Trash Can UI. If the properties are not restored before the expiration time, the Property and all child resources (eg: GoogleAdsLinks, Streams, AccessBindings) will be permanently purged. https://support.google.com/analytics/answer/6154772 Returns an error if the target is not found, or is not a GA4 Property.",
           "flatPath": "v1alpha/properties/{propertiesId}",
@@ -1011,6 +993,24 @@
           },
           "response": {
             "$ref": "GoogleAnalyticsAdminV1alphaProperty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit"
+          ]
+        },
+        "provisionSubproperty": {
+          "description": "Create a subproperty and a subproperty event filter that applies to the created subproperty.",
+          "flatPath": "v1alpha/properties:provisionSubproperty",
+          "httpMethod": "POST",
+          "id": "analyticsadmin.properties.provisionSubproperty",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1alpha/properties:provisionSubproperty",
+          "request": {
+            "$ref": "GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest"
+          },
+          "response": {
+            "$ref": "GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/analytics.edit"
@@ -4886,7 +4886,7 @@
       }
     }
   },
-  "revision": "20240728",
+  "revision": "20240731",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -6655,36 +6655,6 @@
             "$ref": "GoogleAnalyticsAdminV1alphaRollupPropertySourceLink"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest": {
-      "description": "Request message for CreateSubproperty RPC.",
-      "id": "GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest",
-      "properties": {
-        "subproperty": {
-          "$ref": "GoogleAnalyticsAdminV1alphaProperty",
-          "description": "Required. The subproperty to create."
-        },
-        "subpropertyEventFilter": {
-          "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter",
-          "description": "Optional. The subproperty event filter to create on an ordinary property."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse": {
-      "description": "Response message for CreateSubproperty RPC.",
-      "id": "GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse",
-      "properties": {
-        "subproperty": {
-          "$ref": "GoogleAnalyticsAdminV1alphaProperty",
-          "description": "The created subproperty."
-        },
-        "subpropertyEventFilter": {
-          "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter",
-          "description": "The created subproperty event filter."
         }
       },
       "type": "object"
@@ -8528,6 +8498,36 @@
         "accountTicketId": {
           "description": "The param to be passed in the ToS link.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest": {
+      "description": "Request message for CreateSubproperty RPC.",
+      "id": "GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest",
+      "properties": {
+        "subproperty": {
+          "$ref": "GoogleAnalyticsAdminV1alphaProperty",
+          "description": "Required. The subproperty to create."
+        },
+        "subpropertyEventFilter": {
+          "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter",
+          "description": "Optional. The subproperty event filter to create on an ordinary property."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse": {
+      "description": "Response message for ProvisionSubproperty RPC.",
+      "id": "GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse",
+      "properties": {
+        "subproperty": {
+          "$ref": "GoogleAnalyticsAdminV1alphaProperty",
+          "description": "The created subproperty."
+        },
+        "subpropertyEventFilter": {
+          "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter",
+          "description": "The created subproperty event filter."
         }
       },
       "type": "object"

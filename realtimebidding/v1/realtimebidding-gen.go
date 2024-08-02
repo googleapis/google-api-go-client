@@ -2050,6 +2050,8 @@ type PretargetingConfig struct {
 	//   "DEVICE_ID" - Mobile device advertising ID.
 	//   "PUBLISHER_PROVIDED_ID" - The request has a publisher-provided ID
 	// available to the bidder.
+	//   "PUBLISHER_FIRST_PARTY_ID" - Publisher first party ID, scoped to a single
+	// site, app or vendor needs to be present on the bid request.
 	IncludedUserIdTypes []string `json:"includedUserIdTypes,omitempty"`
 	// InterstitialTargeting: The interstitial targeting specified for this
 	// configuration. The unset value will allow bid requests to be sent regardless

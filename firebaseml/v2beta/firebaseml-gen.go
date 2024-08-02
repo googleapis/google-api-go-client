@@ -265,6 +265,8 @@ func (s GoogleCloudAiplatformV1beta1Blob) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1beta1Candidate: A response candidate generated from
 // the model.
 type GoogleCloudAiplatformV1beta1Candidate struct {
+	// AvgLogprobs: Output only. Average log probability score of the candidate.
+	AvgLogprobs float64 `json:"avgLogprobs,omitempty"`
 	// CitationMetadata: Output only. Source attribution of the generated content.
 	CitationMetadata *GoogleCloudAiplatformV1beta1CitationMetadata `json:"citationMetadata,omitempty"`
 	// Content: Output only. Content parts of the candidate.
@@ -304,15 +306,15 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
+	// ForceSendFields is a list of field names (e.g. "AvgLogprobs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CitationMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AvgLogprobs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -320,6 +322,20 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 func (s GoogleCloudAiplatformV1beta1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Candidate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1Candidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1Candidate
+	var s1 struct {
+		AvgLogprobs gensupport.JSONFloat64 `json:"avgLogprobs"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AvgLogprobs = float64(s1.AvgLogprobs)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1Citation: Source attributions for content.

@@ -4697,6 +4697,98 @@ func (s RollbackFhirResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7 rollback.
+// Currently only supports a list of operation ids to roll back.
+type RollbackHL7MessagesFilteringFields struct {
+	// OperationIds: Optional. A list of operation IDs to roll back.
+	OperationIds googleapi.Uint64s `json:"operationIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OperationIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OperationIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RollbackHL7MessagesFilteringFields) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackHL7MessagesFilteringFields
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackHl7V2MessagesRequest: Point in time recovery rollback request.
+type RollbackHl7V2MessagesRequest struct {
+	// ChangeType: Optional. CREATE/UPDATE/DELETE/ALL for reverting all txns of a
+	// certain type.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - When unspecified, revert all transactions
+	//   "ALL" - All transactions
+	//   "CREATE" - Revert only CREATE transactions
+	//   "UPDATE" - Revert only Update transactions
+	//   "DELETE" - Revert only Delete transactions
+	ChangeType string `json:"changeType,omitempty"`
+	// ExcludeRollbacks: Optional. Specifies whether to exclude earlier rollbacks.
+	ExcludeRollbacks bool `json:"excludeRollbacks,omitempty"`
+	// FilteringFields: Optional. Parameters for filtering.
+	FilteringFields *RollbackHL7MessagesFilteringFields `json:"filteringFields,omitempty"`
+	// Force: Optional. When enabled, changes will be reverted without explicit
+	// confirmation.
+	Force bool `json:"force,omitempty"`
+	// InputGcsObject: Optional. Cloud storage object containing list of
+	// {resourceId} lines, identifying resources to be reverted
+	InputGcsObject string `json:"inputGcsObject,omitempty"`
+	// ResultGcsBucket: Required. Bucket to deposit result
+	ResultGcsBucket string `json:"resultGcsBucket,omitempty"`
+	// RollbackTime: Required. Times point to rollback to.
+	RollbackTime string `json:"rollbackTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RollbackHl7V2MessagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackHl7V2MessagesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackHl7V2MessagesResponse: Final response of rollback HL7v2 messages
+// request.
+type RollbackHl7V2MessagesResponse struct {
+	// Hl7v2Store: The name of the HL7 store to rollback, in the format of
+	// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+	// /hl7v2Stores/{hl7v2_store_id}".
+	Hl7v2Store string `json:"hl7v2Store,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hl7v2Store") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hl7v2Store") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RollbackHl7V2MessagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackHl7V2MessagesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SchemaConfig: Configuration for the FHIR BigQuery schema. Determines how the
 // server generates the schema.
 type SchemaConfig struct {
@@ -19223,6 +19315,116 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Hl7V2Store{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsHl7V2StoresRollbackCall struct {
+	s                            *Service
+	name                         string
+	rollbackhl7v2messagesrequest *RollbackHl7V2MessagesRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Rollback: Rolls back messages from the HL7 store to the specified time. This
+// method returns an Operation that can be used to track the status of the
+// rollback by calling GetOperation. Immediate fatal errors appear in the error
+// field, errors are also logged to Cloud Logging (see Viewing error logs in
+// Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// RollbackHl7V2MessagesResponse is returned in the response field. The
+// metadata field type for this operation is OperationMetadata.
+//
+//   - name: The name of the HL7v2 store to rollback, in the format of
+//     "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7V2Stores/{hl7v2_store_id}".
+func (r *ProjectsLocationsDatasetsHl7V2StoresService) Rollback(name string, rollbackhl7v2messagesrequest *RollbackHl7V2MessagesRequest) *ProjectsLocationsDatasetsHl7V2StoresRollbackCall {
+	c := &ProjectsLocationsDatasetsHl7V2StoresRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rollbackhl7v2messagesrequest = rollbackhl7v2messagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresRollbackCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresRollbackCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackhl7v2messagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rollback")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.rollback" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsHl7V2StoresRollbackCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

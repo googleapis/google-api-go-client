@@ -449,8 +449,9 @@ type CloudFunction struct {
 	// BuildName: Output only. The Cloud Build Name of the function deployment.
 	// `projects//locations//builds/`.
 	BuildName string `json:"buildName,omitempty"`
-	// BuildServiceAccount: Optional. A service account the user provides for use
-	// with Cloud Build.
+	// BuildServiceAccount: A service account the user provides for use with Cloud
+	// Build. The format of this field is
+	// `projects/{projectId}/serviceAccounts/{serviceAccountEmail}`.
 	BuildServiceAccount string `json:"buildServiceAccount,omitempty"`
 	// BuildWorkerPool: Name of the Cloud Build Custom Worker Pool that should be
 	// used to build the function. The format of this field is
@@ -906,6 +907,8 @@ func (s GoogleCloudFunctionsV2LocationMetadata) MarshalJSON() ([]byte, error) {
 type GoogleCloudFunctionsV2OperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,
@@ -1072,6 +1075,8 @@ func (s GoogleCloudFunctionsV2alphaLocationMetadata) MarshalJSON() ([]byte, erro
 type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,
@@ -1238,6 +1243,8 @@ func (s GoogleCloudFunctionsV2betaLocationMetadata) MarshalJSON() ([]byte, error
 type GoogleCloudFunctionsV2betaOperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,

@@ -442,8 +442,9 @@ type BuildConfig struct {
 	// list of possible choices, see the `gcloud` command reference
 	// (https://cloud.google.com/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
-	// ServiceAccount: [Preview] Service account to be used for building the
-	// container
+	// ServiceAccount: Service account to be used for building the container. The
+	// format of this field is
+	// `projects/{projectId}/serviceAccounts/{serviceAccountEmail}`.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Source: The location of the function source code.
 	Source *Source `json:"source,omitempty"`
@@ -885,6 +886,8 @@ func (s GoogleCloudFunctionsV2LocationMetadata) MarshalJSON() ([]byte, error) {
 type GoogleCloudFunctionsV2OperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,
@@ -1051,6 +1054,8 @@ func (s GoogleCloudFunctionsV2alphaLocationMetadata) MarshalJSON() ([]byte, erro
 type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,
@@ -1217,6 +1222,8 @@ func (s GoogleCloudFunctionsV2betaLocationMetadata) MarshalJSON() ([]byte, error
 type GoogleCloudFunctionsV2betaOperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BuildName: The build name of the function for create and update operations.
+	BuildName string `json:"buildName,omitempty"`
 	// CancelRequested: Identifies whether the user has requested cancellation of
 	// the operation. Operations that have successfully been cancelled have
 	// google.longrunning.Operation.error value with a google.rpc.Status.code of 1,
@@ -3527,8 +3534,7 @@ func (r *ProjectsLocationsFunctionsService) Patch(name string, function *Functio
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// be updated. If no field mask is provided, all provided fields in the request
-// will be updated.
+// be updated. If no field mask is provided, all fields will be updated.
 func (c *ProjectsLocationsFunctionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFunctionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

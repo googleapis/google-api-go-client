@@ -2358,7 +2358,8 @@ type RunReportRequest struct {
 	Limit int64 `json:"limit,omitempty,string"`
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values will be
 	// shown in rows where the dimension_values are set to
-	// "RESERVED_(MetricAggregation)".
+	// "RESERVED_(MetricAggregation)". Aggregates including both comparisons and
+	// multiple date ranges will be aggregated based on the date ranges.
 	//
 	// Possible values:
 	//   "METRIC_AGGREGATION_UNSPECIFIED" - Unspecified operator.
@@ -2381,7 +2382,9 @@ type RunReportRequest struct {
 	// pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
-	// OrderBys: Specifies how rows are ordered in the response.
+	// OrderBys: Specifies how rows are ordered in the response. Requests including
+	// both comparisons and multiple date ranges will have order bys applied on the
+	// comparisons.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 	// Property: A Google Analytics GA4 property identifier whose events are
 	// tracked. Specified in the URL path and not the body. To learn more, see

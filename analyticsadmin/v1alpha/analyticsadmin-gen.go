@@ -2872,60 +2872,6 @@ func (s GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest: Request message for
-// CreateSubproperty RPC.
-type GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest struct {
-	// Subproperty: Required. The subproperty to create.
-	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
-	// SubpropertyEventFilter: Optional. The subproperty event filter to create on
-	// an ordinary property.
-	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Subproperty") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Subproperty") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse: Response message for
-// CreateSubproperty RPC.
-type GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse struct {
-	// Subproperty: The created subproperty.
-	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
-	// SubpropertyEventFilter: The created subproperty event filter.
-	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Subproperty") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Subproperty") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleAnalyticsAdminV1alphaCustomDimension: A definition for a
 // CustomDimension.
 type GoogleAnalyticsAdminV1alphaCustomDimension struct {
@@ -5530,6 +5476,60 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse struct {
 
 func (s GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest: Request message for
+// CreateSubproperty RPC.
+type GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest struct {
+	// Subproperty: Required. The subproperty to create.
+	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
+	// SubpropertyEventFilter: Optional. The subproperty event filter to create on
+	// an ordinary property.
+	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Subproperty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Subproperty") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse: Response message
+// for ProvisionSubproperty RPC.
+type GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse struct {
+	// Subproperty: The created subproperty.
+	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
+	// SubpropertyEventFilter: The created subproperty event filter.
+	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Subproperty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Subproperty") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8662,102 +8662,6 @@ func (c *PropertiesCreateRollupPropertyCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 }
 
-type PropertiesCreateSubpropertyCall struct {
-	s                                                   *Service
-	googleanalyticsadminv1alphacreatesubpropertyrequest *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest
-	urlParams_                                          gensupport.URLParams
-	ctx_                                                context.Context
-	header_                                             http.Header
-}
-
-// CreateSubproperty: Create a subproperty and a subproperty event filter that
-// applies to the created subproperty.
-func (r *PropertiesService) CreateSubproperty(googleanalyticsadminv1alphacreatesubpropertyrequest *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) *PropertiesCreateSubpropertyCall {
-	c := &PropertiesCreateSubpropertyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.googleanalyticsadminv1alphacreatesubpropertyrequest = googleanalyticsadminv1alphacreatesubpropertyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PropertiesCreateSubpropertyCall) Fields(s ...googleapi.Field) *PropertiesCreateSubpropertyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PropertiesCreateSubpropertyCall) Context(ctx context.Context) *PropertiesCreateSubpropertyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PropertiesCreateSubpropertyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesCreateSubpropertyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphacreatesubpropertyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:createSubproperty")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.createSubproperty" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse.ServerResponse.Header
-// or (if a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PropertiesCreateSubpropertyCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type PropertiesDeleteCall struct {
 	s          *Service
 	name       string
@@ -9969,6 +9873,102 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAnalyticsAdminV1alphaProperty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PropertiesProvisionSubpropertyCall struct {
+	s                                                      *Service
+	googleanalyticsadminv1alphaprovisionsubpropertyrequest *GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// ProvisionSubproperty: Create a subproperty and a subproperty event filter
+// that applies to the created subproperty.
+func (r *PropertiesService) ProvisionSubproperty(googleanalyticsadminv1alphaprovisionsubpropertyrequest *GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest) *PropertiesProvisionSubpropertyCall {
+	c := &PropertiesProvisionSubpropertyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphaprovisionsubpropertyrequest = googleanalyticsadminv1alphaprovisionsubpropertyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesProvisionSubpropertyCall) Fields(s ...googleapi.Field) *PropertiesProvisionSubpropertyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesProvisionSubpropertyCall) Context(ctx context.Context) *PropertiesProvisionSubpropertyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesProvisionSubpropertyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesProvisionSubpropertyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaprovisionsubpropertyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:provisionSubproperty")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.provisionSubproperty" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesProvisionSubpropertyCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaProvisionSubpropertyResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

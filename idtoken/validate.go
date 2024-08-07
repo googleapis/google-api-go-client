@@ -50,6 +50,7 @@ type Payload struct {
 	Expires  int64                  `json:"exp"`
 	IssuedAt int64                  `json:"iat"`
 	Subject  string                 `json:"sub,omitempty"`
+	Email    string                 `json:"email,omitempty`
 	Claims   map[string]interface{} `json:"-"`
 }
 

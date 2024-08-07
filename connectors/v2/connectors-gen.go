@@ -288,6 +288,35 @@ func (s Action) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AuthCodeData: AuthCodeData contains the data the runtime plane will give the
+// connector backend in exchange for access and refresh tokens.
+type AuthCodeData struct {
+	// AuthCode: OAuth authorization code.
+	AuthCode string `json:"authCode,omitempty"`
+	// PkceVerifier: OAuth PKCE verifier, needed if PKCE is enabled for this
+	// particular connection.
+	PkceVerifier string `json:"pkceVerifier,omitempty"`
+	// RedirectUri: OAuth redirect URI passed in during the auth code flow,
+	// required by some OAuth backends.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthCodeData) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthCodeData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckReadinessResponse: Response containing status of the connector for
 // readiness prober.
 type CheckReadinessResponse struct {
@@ -529,9 +558,29 @@ func (s EntityType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExchangeAuthCodeRequest: ExchangeAuthCodeRequest currently includes no
-// fields.
+// ExchangeAuthCodeRequest: ExchangeAuthCodeRequest currently includes the auth
+// code data.
 type ExchangeAuthCodeRequest struct {
+	// AuthCodeData: Optional. AuthCodeData contains the data the runtime requires
+	// to exchange for access and refresh tokens. If the data is not provided, the
+	// runtime will read the data from the secret manager.
+	AuthCodeData *AuthCodeData `json:"authCodeData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCodeData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCodeData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExchangeAuthCodeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeAuthCodeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeAuthCodeResponse: ExchangeAuthCodeResponse includes the returned
@@ -1533,9 +1582,28 @@ func (s Reference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RefreshAccessTokenRequest: RefreshAccessTokenRequest currently includes no
-// fields.
+// RefreshAccessTokenRequest: RefreshAccessTokenRequest includes the refresh
+// token.
 type RefreshAccessTokenRequest struct {
+	// RefreshToken: Optional. Refresh Token String. If the Refresh Token is not
+	// provided, the runtime will read the data from the secret manager.
+	RefreshToken string `json:"refreshToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefreshToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefreshToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefreshAccessTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshAccessTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RefreshAccessTokenResponse: RefreshAccessTokenResponse includes the returned

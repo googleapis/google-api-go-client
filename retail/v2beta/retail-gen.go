@@ -2712,6 +2712,93 @@ func (s GoogleCloudRetailV2betaAddLocalInventoriesRequest) MarshalJSON() ([]byte
 type GoogleCloudRetailV2betaAddLocalInventoriesResponse struct {
 }
 
+// GoogleCloudRetailV2betaAlertConfig: Project level alert config.
+type GoogleCloudRetailV2betaAlertConfig struct {
+	// AlertPolicies: Alert policies for a customer. They must be unique by
+	// [AlertPolicy.alert_group]
+	AlertPolicies []*GoogleCloudRetailV2betaAlertConfigAlertPolicy `json:"alertPolicies,omitempty"`
+	// Name: Required. Immutable. The name of the AlertConfig singleton resource.
+	// Format: projects/*/alertConfig
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaAlertConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaAlertConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaAlertConfigAlertPolicy: Alert policy for a customer.
+type GoogleCloudRetailV2betaAlertConfigAlertPolicy struct {
+	// AlertGroup: The feature that provides alerting capability. Supported value:
+	// - `search-data-quality` for retail search customers. - `conv-data-quality`
+	// for retail conversation customers.
+	AlertGroup string `json:"alertGroup,omitempty"`
+	// EnrollStatus: The enrollment status of a customer.
+	//
+	// Possible values:
+	//   "ENROLL_STATUS_UNSPECIFIED" - Default value. Used for customers who have
+	// not responded to the alert policy.
+	//   "ENROLLED" - Customer is enrolled in this policy.
+	//   "DECLINED" - Customer declined this policy.
+	EnrollStatus string `json:"enrollStatus,omitempty"`
+	// Recipients: Recipients for the alert policy. One alert policy should not
+	// exceed 20 recipients.
+	Recipients []*GoogleCloudRetailV2betaAlertConfigAlertPolicyRecipient `json:"recipients,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaAlertConfigAlertPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaAlertConfigAlertPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaAlertConfigAlertPolicyRecipient: Recipient contact
+// information.
+type GoogleCloudRetailV2betaAlertConfigAlertPolicyRecipient struct {
+	// EmailAddress: Email address of the recipient.
+	EmailAddress string `json:"emailAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaAlertConfigAlertPolicyRecipient) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaAlertConfigAlertPolicyRecipient
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaAttributesConfig: Catalog level attribute config.
 type GoogleCloudRetailV2betaAttributesConfig struct {
 	// AttributeConfigLevel: Output only. The AttributeConfigLevel used for this
@@ -3320,6 +3407,10 @@ func (s GoogleCloudRetailV2betaColorInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2betaCompleteQueryResponse: Response of the autocomplete
 // query.
 type GoogleCloudRetailV2betaCompleteQueryResponse struct {
+	// AttributeResults: A map of matched attribute suggestions. This field is only
+	// available for "cloud-retail" dataset. Current supported keys: * `brands` *
+	// `categories`
+	AttributeResults map[string]GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult `json:"attributeResults,omitempty"`
 	// AttributionToken: A unique complete token. This should be included in the
 	// UserEvent.completion_detail for search events resulting from this
 	// completion, which enables accurate attribution of complete model
@@ -3341,13 +3432,13 @@ type GoogleCloudRetailV2betaCompleteQueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// ForceSendFields is a list of field names (e.g. "AttributeResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttributionToken") to include in
+	// NullFields is a list of field names (e.g. "AttributeResults") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3356,6 +3447,28 @@ type GoogleCloudRetailV2betaCompleteQueryResponse struct {
 
 func (s GoogleCloudRetailV2betaCompleteQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaCompleteQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult: Resource that
+// represents attribute results.
+type GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult struct {
+	Suggestions []string `json:"suggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Suggestions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3957,6 +4070,59 @@ type GoogleCloudRetailV2betaExportMetadata struct {
 
 func (s GoogleCloudRetailV2betaExportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaExportProductsRequest: Request message for
+// ExportProducts method.
+type GoogleCloudRetailV2betaExportProductsRequest struct {
+	// Filter: A filtering expression to specify restrictions on returned events.
+	// The expression is a sequence of terms. Each term applies a restriction to
+	// the returned products. Use this expression to restrict results to a specific
+	// time range, tag, or stock state or to filter products by product type. For
+	// example, `lastModifiedTime > "2012-04-23T18:25:43.511Z"
+	// lastModifiedTime<"2012-04-23T18:25:43.511Z" productType=primary` We expect
+	// only four types of fields: * `lastModifiedTime`: This can be specified
+	// twice, once with a less than operator and once with a greater than operator.
+	// The `lastModifiedTime` restriction should result in one, contiguous, valid,
+	// last-modified, time range. * `productType`: Supported values are `primary`
+	// and `variant`. The Boolean operators `OR` and `NOT` are supported if the
+	// expression is enclosed in parentheses and must be separated from the
+	// `productType` values by a space. * `availability`: Supported values are
+	// `IN_STOCK`, `OUT_OF_STOCK`, `PREORDER`, and `BACKORDER`. Boolean operators
+	// `OR` and `NOT` are supported if the expression is enclosed in parentheses
+	// and must be separated from the `availability` values by a space. * `Tag
+	// expressions`: Restricts output to products that match all of the specified
+	// tags. Boolean operators `OR` and `NOT` are supported if the expression is
+	// enclosed in parentheses and the operators are separated from the tag values
+	// by a space. Also supported is '`-"tagA"', which is equivalent to '`NOT
+	// "tagA"'. Tag values must be double-quoted, UTF-8 encoded strings and have a
+	// size limit of 1,000 characters. Some examples of valid filters expressions:
+	// * Example 1: `lastModifiedTime > "2012-04-23T18:25:43.511Z" lastModifiedTime
+	// < "2012-04-23T18:30:43.511Z" * Example 2: `lastModifiedTime >
+	// "2012-04-23T18:25:43.511Z" productType = "variant" * Example 3: `tag=("Red"
+	// OR "Blue") tag="New-Arrival" tag=(NOT "promotional") productType = "primary"
+	// lastModifiedTime < "2018-04-23T18:30:43.511Z" * Example 4:
+	// `lastModifiedTime > "2012-04-23T18:25:43.511Z" * Example 5: `availability =
+	// (IN_STOCK OR BACKORDER)`
+	Filter string `json:"filter,omitempty"`
+	// OutputConfig: Required. The output location of the data.
+	OutputConfig *GoogleCloudRetailV2betaOutputConfig `json:"outputConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaExportProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaExportProductsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8350,6 +8516,226 @@ func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ProjectsGetAlertConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAlertConfig: Get the AlertConfig of the requested project.
+//
+//   - name: Full AlertConfig resource name. Format:
+//     projects/{project_number}/alertConfig.
+func (r *ProjectsService) GetAlertConfig(name string) *ProjectsGetAlertConfigCall {
+	c := &ProjectsGetAlertConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsGetAlertConfigCall) Fields(s ...googleapi.Field) *ProjectsGetAlertConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsGetAlertConfigCall) IfNoneMatch(entityTag string) *ProjectsGetAlertConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsGetAlertConfigCall) Context(ctx context.Context) *ProjectsGetAlertConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsGetAlertConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetAlertConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.getAlertConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2betaAlertConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsGetAlertConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaAlertConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2betaAlertConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsUpdateAlertConfigCall struct {
+	s                                  *Service
+	name                               string
+	googlecloudretailv2betaalertconfig *GoogleCloudRetailV2betaAlertConfig
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// UpdateAlertConfig: Update the alert config of the requested project.
+//
+//   - name: Immutable. The name of the AlertConfig singleton resource. Format:
+//     projects/*/alertConfig.
+func (r *ProjectsService) UpdateAlertConfig(name string, googlecloudretailv2betaalertconfig *GoogleCloudRetailV2betaAlertConfig) *ProjectsUpdateAlertConfigCall {
+	c := &ProjectsUpdateAlertConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudretailv2betaalertconfig = googlecloudretailv2betaalertconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided AlertConfig to update. If not set, all supported fields are
+// updated.
+func (c *ProjectsUpdateAlertConfigCall) UpdateMask(updateMask string) *ProjectsUpdateAlertConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsUpdateAlertConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateAlertConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsUpdateAlertConfigCall) Context(ctx context.Context) *ProjectsUpdateAlertConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsUpdateAlertConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateAlertConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaalertconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.updateAlertConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2betaAlertConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsUpdateAlertConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaAlertConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2betaAlertConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsCatalogsCompleteQueryCall struct {
 	s            *Service
 	catalog      string
@@ -10582,6 +10968,111 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Do(opts ...googlea
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsBranchesProductsExportCall struct {
+	s                                            *Service
+	parent                                       string
+	googlecloudretailv2betaexportproductsrequest *GoogleCloudRetailV2betaExportProductsRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Export: Exports multiple Products.
+//
+//   - parent: Resource name of a Branch, and `default_branch` for branch_id
+//     component is supported. For example
+//     `projects/1234/locations/global/catalogs/default_catalog/branches/default_b
+//     ranch`.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) Export(parent string, googlecloudretailv2betaexportproductsrequest *GoogleCloudRetailV2betaExportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudretailv2betaexportproductsrequest = googlecloudretailv2betaexportproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaexportproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/products:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.export" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

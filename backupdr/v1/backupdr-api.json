@@ -399,12 +399,12 @@
                   ],
                   "parameters": {
                     "force": {
-                      "description": "Optional. If set to true, will not check plan duration against backup vault enforcement duration. Non-standard field.",
+                      "description": "Optional. If set to true, will not check plan duration against backup vault enforcement duration.",
                       "location": "query",
                       "type": "boolean"
                     },
                     "name": {
-                      "description": "Output only. The resource name.",
+                      "description": "Output only. Identifier. The resource name.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/backupVaults/[^/]+$",
                       "required": true,
@@ -668,7 +668,7 @@
                           "type": "boolean"
                         },
                         "name": {
-                          "description": "Output only. The resource name.",
+                          "description": "Output only. Identifier. The resource name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/backupVaults/[^/]+/dataSources/[^/]+$",
                           "required": true,
@@ -868,7 +868,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Output only. Name of the resource.",
+                              "description": "Output only. Identifier. Name of the resource.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/backupVaults/[^/]+/dataSources/[^/]+/backups/[^/]+$",
                               "required": true,
@@ -1261,7 +1261,7 @@
       }
     }
   },
-  "revision": "20240711",
+  "revision": "20240725",
   "rootUrl": "https://backupdr.googleapis.com/",
   "schemas": {
     "AbandonBackupRequest": {
@@ -1366,6 +1366,42 @@
       },
       "type": "object"
     },
+    "AssetLocation": {
+      "description": "Provides the mapping of a cloud asset to a direct physical location or to a proxy that defines the location on its behalf.",
+      "id": "AssetLocation",
+      "properties": {
+        "ccfeRmsPath": {
+          "description": "Spanner path of the CCFE RMS database. It is only applicable for CCFE tenants that use CCFE RMS for storing resource metadata.",
+          "type": "string"
+        },
+        "expected": {
+          "$ref": "IsolationExpectations",
+          "description": "Defines the customer expectation around ZI/ZS for this asset and ZI/ZS state of the region at the time of asset creation."
+        },
+        "extraParameters": {
+          "description": "Defines extra parameters required for specific asset types.",
+          "items": {
+            "$ref": "ExtraParameter"
+          },
+          "type": "array"
+        },
+        "locationData": {
+          "description": "Contains all kinds of physical location definitions for this asset.",
+          "items": {
+            "$ref": "LocationData"
+          },
+          "type": "array"
+        },
+        "parentAsset": {
+          "description": "Defines parents assets if any in order to allow later generation of child_asset_location data via child assets.",
+          "items": {
+            "$ref": "CloudAsset"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "AttachedDisk": {
       "description": "An instance-attached disk resource.",
       "id": "AttachedDisk",
@@ -1410,7 +1446,13 @@
           "type": "string"
         },
         "diskType": {
-          "description": "Optional. Specifies the type of the disk.",
+          "description": "Optional. Output only. The URI of the disk type resource. For example: projects/project/zones/zone/diskTypes/pd-standard or pd-ssd",
+          "readOnly": true,
+          "type": "string"
+        },
+        "diskTypeDeprecated": {
+          "deprecated": true,
+          "description": "Specifies the type of the disk.",
           "enum": [
             "DISK_TYPE_UNSPECIFIED",
             "SCRATCH",
@@ -1421,11 +1463,6 @@
             "A scratch disk type.",
             "A persistent disk type."
           ],
-          "type": "string"
-        },
-        "diskTypeUri": {
-          "description": "Optional. Output only. The URI of the disk type resource. For example: projects/project/zones/zone/diskTypes/pd-standard or pd-ssd",
-          "readOnly": true,
           "type": "string"
         },
         "guestOsFeature": {
@@ -1487,6 +1524,20 @@
         "source": {
           "description": "Optional. Specifies a valid partial or full URL to an existing Persistent Disk resource.",
           "type": "string"
+        },
+        "type": {
+          "description": "Optional. Specifies the type of the disk.",
+          "enum": [
+            "DISK_TYPE_UNSPECIFIED",
+            "SCRATCH",
+            "PERSISTENT"
+          ],
+          "enumDescriptions": [
+            "Default value, which is unused.",
+            "A scratch disk type.",
+            "A persistent disk type."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -1545,6 +1596,7 @@
       "properties": {
         "backupApplianceBackupProperties": {
           "$ref": "BackupApplianceBackupProperties",
+          "description": "Output only. Backup Appliance specific backup properties.",
           "readOnly": true
         },
         "backupApplianceLocks": {
@@ -1555,21 +1607,23 @@
           "type": "array"
         },
         "backupType": {
+          "description": "Output only. Type of the backup, unspecified, scheduled or ondemand.",
           "enum": [
             "BACKUP_TYPE_UNSPECIFIED",
             "SCHEDULED",
             "ON_DEMAND"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            ""
+            "Backup type is unspecified.",
+            "Scheduled backup.",
+            "On demand backup."
           ],
           "readOnly": true,
           "type": "string"
         },
         "computeInstanceBackupProperties": {
           "$ref": "ComputeInstanceBackupProperties",
+          "description": "Output only. Compute Engine specific backup properties.",
           "readOnly": true
         },
         "consistencyTime": {
@@ -1616,7 +1670,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. Name of the resource.",
+          "description": "Output only. Identifier. Name of the resource.",
           "readOnly": true,
           "type": "string"
         },
@@ -1886,7 +1940,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The resource name.",
+          "description": "Output only. Identifier. The resource name.",
           "readOnly": true,
           "type": "string"
         },
@@ -1956,10 +2010,47 @@
       },
       "type": "object"
     },
+    "BlobstoreLocation": {
+      "description": "Policy ID that identified data placement in Blobstore as per go/blobstore-user-guide#data-metadata-placement-and-failure-domains",
+      "id": "BlobstoreLocation",
+      "properties": {
+        "policyId": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "CloudAsset": {
+      "id": "CloudAsset",
+      "properties": {
+        "assetName": {
+          "type": "string"
+        },
+        "assetType": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAssetComposition": {
+      "id": "CloudAssetComposition",
+      "properties": {
+        "childAsset": {
+          "items": {
+            "$ref": "CloudAsset"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "ComputeInstanceBackupProperties": {
@@ -2110,7 +2201,7 @@
           "type": "string"
         },
         "configState": {
-          "description": "The backup configuration state.",
+          "description": "Output only. The backup configuration state.",
           "enum": [
             "BACKUP_CONFIG_STATE_UNSPECIFIED",
             "ACTIVE",
@@ -2121,6 +2212,7 @@
             "The data source is actively protected (i.e. there is a BackupPlanAssociation or Appliance SLA pointing to it)",
             "The data source is no longer protected (but may have backups under it)"
           ],
+          "readOnly": true,
           "type": "string"
         },
         "createTime": {
@@ -2149,7 +2241,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The resource name.",
+          "description": "Output only. Identifier. The resource name.",
           "readOnly": true,
           "type": "string"
         },
@@ -2248,6 +2340,18 @@
       },
       "type": "object"
     },
+    "DirectLocationAssignment": {
+      "id": "DirectLocationAssignment",
+      "properties": {
+        "location": {
+          "items": {
+            "$ref": "LocationAssignment"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
@@ -2288,6 +2392,17 @@
         "title": {
           "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExtraParameter": {
+      "description": "Defines parameters that should only be used for specific asset types.",
+      "id": "ExtraParameter",
+      "properties": {
+        "regionalMigDistributionPolicy": {
+          "$ref": "RegionalMigDistributionPolicy",
+          "description": "Details about zones used by regional compute.googleapis.com/InstanceGroupManager to create instances."
         }
       },
       "type": "object"
@@ -2532,6 +2647,131 @@
       },
       "type": "object"
     },
+    "IsolationExpectations": {
+      "id": "IsolationExpectations",
+      "properties": {
+        "requirementOverride": {
+          "$ref": "RequirementOverride",
+          "description": "Explicit overrides for ZI and ZS requirements to be used for resources that should be excluded from ZI/ZS verification logic."
+        },
+        "ziOrgPolicy": {
+          "enum": [
+            "ZI_UNSPECIFIED",
+            "ZI_UNKNOWN",
+            "ZI_NOT_REQUIRED",
+            "ZI_PREFERRED",
+            "ZI_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "ziRegionPolicy": {
+          "enum": [
+            "ZI_REGION_POLICY_UNSPECIFIED",
+            "ZI_REGION_POLICY_UNKNOWN",
+            "ZI_REGION_POLICY_NOT_SET",
+            "ZI_REGION_POLICY_FAIL_OPEN",
+            "ZI_REGION_POLICY_FAIL_CLOSED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "ziRegionState": {
+          "enum": [
+            "ZI_REGION_UNSPECIFIED",
+            "ZI_REGION_UNKNOWN",
+            "ZI_REGION_NOT_ENABLED",
+            "ZI_REGION_ENABLED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zoneIsolation": {
+          "deprecated": true,
+          "description": "Deprecated: use zi_org_policy, zi_region_policy and zi_region_state instead for setting ZI expectations as per go/zicy-publish-physical-location.",
+          "enum": [
+            "ZI_UNSPECIFIED",
+            "ZI_UNKNOWN",
+            "ZI_NOT_REQUIRED",
+            "ZI_PREFERRED",
+            "ZI_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zoneSeparation": {
+          "deprecated": true,
+          "description": "Deprecated: use zs_org_policy, and zs_region_stateinstead for setting Zs expectations as per go/zicy-publish-physical-location.",
+          "enum": [
+            "ZS_UNSPECIFIED",
+            "ZS_UNKNOWN",
+            "ZS_NOT_REQUIRED",
+            "ZS_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zsOrgPolicy": {
+          "enum": [
+            "ZS_UNSPECIFIED",
+            "ZS_UNKNOWN",
+            "ZS_NOT_REQUIRED",
+            "ZS_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zsRegionState": {
+          "enum": [
+            "ZS_REGION_UNSPECIFIED",
+            "ZS_REGION_UNKNOWN",
+            "ZS_REGION_NOT_ENABLED",
+            "ZS_REGION_ENABLED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking of the asset ZS-bit is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListBackupVaultsResponse": {
       "description": "Response message for listing BackupVaults.",
       "id": "ListBackupVaultsResponse",
@@ -2698,6 +2938,64 @@
         "name": {
           "description": "Resource name for the location, which may vary between implementations. For example: `\"projects/example-project/locations/us-east1\"`",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocationAssignment": {
+      "id": "LocationAssignment",
+      "properties": {
+        "location": {
+          "type": "string"
+        },
+        "locationType": {
+          "enum": [
+            "UNSPECIFIED",
+            "CLUSTER",
+            "POP",
+            "CLOUD_ZONE",
+            "CLOUD_REGION",
+            "MULTI_REGION_GEO",
+            "MULTI_REGION_JURISDICTION",
+            "GLOBAL",
+            "OTHER"
+          ],
+          "enumDescriptions": [
+            "",
+            "1-10: Physical failure domains.",
+            "",
+            "11-20: Logical failure domains.",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocationData": {
+      "id": "LocationData",
+      "properties": {
+        "blobstoreLocation": {
+          "$ref": "BlobstoreLocation"
+        },
+        "childAssetLocation": {
+          "$ref": "CloudAssetComposition"
+        },
+        "directLocation": {
+          "$ref": "DirectLocationAssignment"
+        },
+        "gcpProjectProxy": {
+          "$ref": "TenantProjectProxy"
+        },
+        "placerLocation": {
+          "$ref": "PlacerLocation"
+        },
+        "spannerLocation": {
+          "$ref": "SpannerLocation"
         }
       },
       "type": "object"
@@ -3101,6 +3399,17 @@
       },
       "type": "object"
     },
+    "PlacerLocation": {
+      "description": "Message describing that the location of the customer resource is tied to placer allocations",
+      "id": "PlacerLocation",
+      "properties": {
+        "placerConfig": {
+          "description": "Directory with a config related to it in placer (e.g. \"/placer/prod/home/my-root/my-dir\")",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Policy": {
       "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
@@ -3132,12 +3441,69 @@
       },
       "type": "object"
     },
+    "RegionalMigDistributionPolicy": {
+      "description": "To be used for specifying the intended distribution of regional compute.googleapis.com/InstanceGroupManager instances",
+      "id": "RegionalMigDistributionPolicy",
+      "properties": {
+        "targetShape": {
+          "description": "The shape in which the group converges around distribution of resources. Instance of proto2 enum",
+          "format": "int32",
+          "type": "integer"
+        },
+        "zones": {
+          "description": "Cloud zones used by regional MIG to create instances.",
+          "items": {
+            "$ref": "ZoneConfiguration"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "RemoveDataSourceRequest": {
       "description": "Message for deleting a DataSource.",
       "id": "RemoveDataSourceRequest",
       "properties": {
         "requestId": {
           "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RequirementOverride": {
+      "id": "RequirementOverride",
+      "properties": {
+        "ziOverride": {
+          "enum": [
+            "ZI_UNSPECIFIED",
+            "ZI_UNKNOWN",
+            "ZI_NOT_REQUIRED",
+            "ZI_PREFERRED",
+            "ZI_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zsOverride": {
+          "enum": [
+            "ZS_UNSPECIFIED",
+            "ZS_UNKNOWN",
+            "ZS_NOT_REQUIRED",
+            "ZS_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -3284,7 +3650,7 @@
       "id": "SetInternalStatusRequest",
       "properties": {
         "backupConfigState": {
-          "description": "Required. The new BackupConfigState to set for the DataSource.",
+          "description": "Required. Output only. The new BackupConfigState to set for the DataSource.",
           "enum": [
             "BACKUP_CONFIG_STATE_UNSPECIFIED",
             "ACTIVE",
@@ -3295,6 +3661,7 @@
             "The data source is actively protected (i.e. there is a BackupPlanAssociation or Appliance SLA pointing to it)",
             "The data source is no longer protected (but may have backups under it)"
           ],
+          "readOnly": true,
           "type": "string"
         },
         "requestId": {
@@ -3305,6 +3672,26 @@
           "description": "Required. The value required for this method to work. This field must be the 32-byte SHA256 hash of the DataSourceID. The DataSourceID used here is only the final piece of the fully qualified resource path for this DataSource (i.e. the part after '.../dataSources/'). This field exists to make this method difficult to call since it is intended for use only by Backup Appliances.",
           "format": "byte",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SpannerLocation": {
+      "id": "SpannerLocation",
+      "properties": {
+        "backupName": {
+          "description": "Set of backups used by the resource with name in the same format as what is available at http://table/spanner_automon.backup_metadata",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dbName": {
+          "description": "Set of databases used by the resource in format /span//",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3342,6 +3729,18 @@
       "properties": {
         "items": {
           "description": "Optional. An array of tags. Each tag must be 1-63 characters long, and comply with RFC1035.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TenantProjectProxy": {
+      "id": "TenantProjectProxy",
+      "properties": {
+        "projectNumbers": {
           "items": {
             "type": "string"
           },
@@ -3407,6 +3806,15 @@
         "thirdPartyOauth2ClientId": {
           "description": "Output only. Third party OAuth Client ID for External Identity Providers.",
           "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ZoneConfiguration": {
+      "id": "ZoneConfiguration",
+      "properties": {
+        "zone": {
           "type": "string"
         }
       },

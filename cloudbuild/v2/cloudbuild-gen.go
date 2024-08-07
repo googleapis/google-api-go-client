@@ -1577,7 +1577,7 @@ func (s ParamValue) MarshalJSON() ([]byte, error) {
 // PipelineRef: PipelineRef can be used to refer to a specific instance of a
 // Pipeline.
 type PipelineRef struct {
-	// Name: Name of the Pipeline.
+	// Name: Optional. Name of the Pipeline.
 	Name string `json:"name,omitempty"`
 	// Params: Params contains the parameters used to identify the referenced
 	// Tekton resource. Example entries might include "repo" or "path" but the set
@@ -2558,7 +2558,7 @@ func (s StepTemplate) MarshalJSON() ([]byte, error) {
 // TaskRef: TaskRef can be used to refer to a specific instance of a task.
 // PipelineRef can be used to refer to a specific instance of a Pipeline.
 type TaskRef struct {
-	// Name: Name of the task.
+	// Name: Optional. Name of the task.
 	Name string `json:"name,omitempty"`
 	// Params: Params contains the parameters used to identify the referenced
 	// Tekton resource. Example entries might include "repo" or "path" but the set

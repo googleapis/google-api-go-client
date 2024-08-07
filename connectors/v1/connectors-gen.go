@@ -1132,6 +1132,9 @@ type ConnectorInfraConfig struct {
 	// InternalclientRatelimitThreshold: Max QPS supported for internal requests
 	// originating from Connd.
 	InternalclientRatelimitThreshold int64 `json:"internalclientRatelimitThreshold,omitempty,string"`
+	// MaxInstanceRequestConcurrency: Max Instance Request Conncurrency for Cloud
+	// Run service.
+	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 	// MigrateDeploymentModel: Indicate whether connector is being migrated to
 	// cloud run deployment model.
 	MigrateDeploymentModel bool `json:"migrateDeploymentModel,omitempty"`
@@ -1189,6 +1192,10 @@ type ConnectorVersion struct {
 	// EventingConfigTemplate: Output only. Eventing configuration supported by the
 	// Connector.
 	EventingConfigTemplate *EventingConfigTemplate `json:"eventingConfigTemplate,omitempty"`
+	// IsCustomActionsSupported: Output only. Is custom actions supported.
+	IsCustomActionsSupported bool `json:"isCustomActionsSupported,omitempty"`
+	// IsCustomEntitiesSupported: Output only. Is custom entities supported.
+	IsCustomEntitiesSupported bool `json:"isCustomEntitiesSupported,omitempty"`
 	// Labels: Output only. Resource labels to represent user-provided metadata.
 	// Refer to cloud documentation on labels for more details.
 	// https://cloud.google.com/compute/docs/labeling-resources
@@ -1225,6 +1232,10 @@ type ConnectorVersion struct {
 	// SupportedRuntimeFeatures: Output only. Information about the runtime
 	// features supported by the Connector.
 	SupportedRuntimeFeatures *SupportedRuntimeFeatures `json:"supportedRuntimeFeatures,omitempty"`
+	// SupportedStandardActions: Output only. Supported standard actions.
+	SupportedStandardActions []*StandardAction `json:"supportedStandardActions,omitempty"`
+	// SupportedStandardEntities: Output only. Supported standard entities.
+	SupportedStandardEntities []*StandardEntity `json:"supportedStandardEntities,omitempty"`
 	// UnsupportedConnectionTypes: Output only. Unsupported connection types.
 	//
 	// Possible values:
@@ -1280,12 +1291,16 @@ type ConnectorVersionInfraConfig struct {
 	//   "IN_PROGRESS" - Deployment model migration is in progress.
 	//   "COMPLETED" - Deployment model migration is completed.
 	//   "ROLLEDBACK" - Deployment model migration rolledback.
+	//   "ROLLBACK_IN_PROGRESS" - Deployment model migration rollback in progress.
 	DeploymentModelMigrationState string `json:"deploymentModelMigrationState,omitempty"`
 	// HpaConfig: Output only. HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
 	// InternalclientRatelimitThreshold: Output only. Max QPS supported for
 	// internal requests originating from Connd.
 	InternalclientRatelimitThreshold int64 `json:"internalclientRatelimitThreshold,omitempty,string"`
+	// MaxInstanceRequestConcurrency: Output only. Max instance request
+	// concurrency.
+	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 	// RatelimitThreshold: Output only. Max QPS supported by the connector version
 	// before throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
@@ -5009,6 +5024,50 @@ type SslConfigTemplate struct {
 
 func (s SslConfigTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod SslConfigTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StandardAction: Standard action
+type StandardAction struct {
+	// Name: Name of the standard action.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StandardAction) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StandardEntity: Standard entity
+type StandardEntity struct {
+	// Name: Name of the standard entity.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StandardEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardEntity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1270,6 +1270,10 @@ func (s GoogleCloudRetailV2ColorInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2CompleteQueryResponse: Response of the autocomplete
 // query.
 type GoogleCloudRetailV2CompleteQueryResponse struct {
+	// AttributeResults: A map of matched attribute suggestions. This field is only
+	// available for "cloud-retail" dataset. Current supported keys: * `brands` *
+	// `categories`
+	AttributeResults map[string]GoogleCloudRetailV2CompleteQueryResponseAttributeResult `json:"attributeResults,omitempty"`
 	// AttributionToken: A unique complete token. This should be included in the
 	// UserEvent.completion_detail for search events resulting from this
 	// completion, which enables accurate attribution of complete model
@@ -1291,13 +1295,13 @@ type GoogleCloudRetailV2CompleteQueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// ForceSendFields is a list of field names (e.g. "AttributeResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttributionToken") to include in
+	// NullFields is a list of field names (e.g. "AttributeResults") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1306,6 +1310,28 @@ type GoogleCloudRetailV2CompleteQueryResponse struct {
 
 func (s GoogleCloudRetailV2CompleteQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompleteQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2CompleteQueryResponseAttributeResult: Resource that
+// represents attribute results.
+type GoogleCloudRetailV2CompleteQueryResponseAttributeResult struct {
+	Suggestions []string `json:"suggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Suggestions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2CompleteQueryResponseAttributeResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2CompleteQueryResponseAttributeResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

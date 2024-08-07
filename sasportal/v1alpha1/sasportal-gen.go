@@ -653,6 +653,7 @@ type SasPortalDeviceAirInterface struct {
 	//   "CW"
 	//   "REDLINE"
 	//   "TARANA_WIRELESS"
+	//   "FAROS"
 	RadioTechnology string `json:"radioTechnology,omitempty"`
 	// SupportedSpec: Optional. This field is related to the `radioTechnology` and
 	// provides the air interface specification that the CBSD is compliant with at

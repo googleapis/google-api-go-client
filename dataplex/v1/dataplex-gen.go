@@ -4093,7 +4093,9 @@ type GoogleCloudDataplexV1Entry struct {
 	// e_id}.
 	EntryType string `json:"entryType,omitempty"`
 	// FullyQualifiedName: Optional. A name for the entry that can be referenced by
-	// an external system. The maximum size of the field is 4000 characters.
+	// an external system. For more information, see Fully qualified names
+	// (https://cloud.google.com/data-catalog/docs/fully-qualified-names). The
+	// maximum size of the field is 4000 characters.
 	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
 	// Name: Identifier. The relative resource name of the entry, in the format
 	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr

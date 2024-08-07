@@ -624,7 +624,7 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
 	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: Enables StackDriver logging.
+	// EnableStackdriverLogging: Enables Google Cloud Logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
@@ -1093,7 +1093,7 @@ func (s GoogleCloudDialogflowCxV3DeployFlowMetadata) MarshalJSON() ([]byte, erro
 // Environments.DeployFlow.
 type GoogleCloudDialogflowCxV3DeployFlowResponse struct {
 	// Deployment: The name of the flow version Deployment. Format:
-	// `projects//locations//agents// environments//deployments/`.
+	// `projects//locations//agents//environments//deployments/`.
 	Deployment string `json:"deployment,omitempty"`
 	// Environment: The updated environment where the flow is deployed.
 	Environment *GoogleCloudDialogflowCxV3Environment `json:"environment,omitempty"`
@@ -1197,8 +1197,8 @@ type GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig struct {
 	// environment. Default false.
 	EnablePredeploymentRun bool `json:"enablePredeploymentRun,omitempty"`
 	// TestCases: A list of test case names to run. They should be under the same
-	// agent. Format of each test case name: `projects//locations/
-	// /agents//testCases/`
+	// agent. Format of each test case name:
+	// `projects//locations//agents//testCases/`
 	TestCases []string `json:"testCases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableContinuousRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3146,7 +3146,7 @@ type GoogleCloudDialogflowCxV3TestCase struct {
 	LastTestResult *GoogleCloudDialogflowCxV3TestCaseResult `json:"lastTestResult,omitempty"`
 	// Name: The unique identifier of the test case. TestCases.CreateTestCase will
 	// populate the name automatically. Otherwise use format:
-	// `projects//locations//agents/ /testCases/`.
+	// `projects//locations//agents//testCases/`.
 	Name string `json:"name,omitempty"`
 	// Notes: Additional freeform notes about the test case. Limit of 400
 	// characters.
@@ -3213,7 +3213,7 @@ type GoogleCloudDialogflowCxV3TestCaseResult struct {
 	// the draft environment.
 	Environment string `json:"environment,omitempty"`
 	// Name: The resource name for the test case result. Format:
-	// `projects//locations//agents//testCases/ /results/`.
+	// `projects//locations//agents//testCases//results/`.
 	Name string `json:"name,omitempty"`
 	// TestResult: Whether the test case passed in the agent environment.
 	//
@@ -4101,7 +4101,7 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings struct {
 	EnableConsentBasedRedaction bool `json:"enableConsentBasedRedaction,omitempty"`
 	// EnableInteractionLogging: Enables DF Interaction logging.
 	EnableInteractionLogging bool `json:"enableInteractionLogging,omitempty"`
-	// EnableStackdriverLogging: Enables StackDriver logging.
+	// EnableStackdriverLogging: Enables Google Cloud Logging.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableConsentBasedRedaction") to unconditionally include in API requests.
@@ -4580,8 +4580,8 @@ func (s GoogleCloudDialogflowCxV3beta1BargeInConfig) MarshalJSON() ([]byte, erro
 // GoogleCloudDialogflowCxV3beta1BatchDeleteTestCasesRequest: The request
 // message for TestCases.BatchDeleteTestCases.
 type GoogleCloudDialogflowCxV3beta1BatchDeleteTestCasesRequest struct {
-	// Names: Required. Format of test case names: `projects//locations/
-	// /agents//testCases/`.
+	// Names: Required. Format of test case names:
+	// `projects//locations//agents//testCases/`.
 	Names []string `json:"names,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5755,7 +5755,7 @@ func (s GoogleCloudDialogflowCxV3beta1DeployFlowMetadata) MarshalJSON() ([]byte,
 // Environments.DeployFlow.
 type GoogleCloudDialogflowCxV3beta1DeployFlowRequest struct {
 	// FlowVersion: Required. The flow version to deploy. Format:
-	// `projects//locations//agents// flows//versions/`.
+	// `projects//locations//agents//flows//versions/`.
 	FlowVersion string `json:"flowVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FlowVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5779,7 +5779,7 @@ func (s GoogleCloudDialogflowCxV3beta1DeployFlowRequest) MarshalJSON() ([]byte, 
 // Environments.DeployFlow.
 type GoogleCloudDialogflowCxV3beta1DeployFlowResponse struct {
 	// Deployment: The name of the flow version deployment. Format:
-	// `projects//locations//agents// environments//deployments/`.
+	// `projects//locations//agents//environments//deployments/`.
 	Deployment string `json:"deployment,omitempty"`
 	// Environment: The updated environment where the flow is deployed.
 	Environment *GoogleCloudDialogflowCxV3beta1Environment `json:"environment,omitempty"`
@@ -6194,8 +6194,8 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig struct {
 	// environment. Default false.
 	EnablePredeploymentRun bool `json:"enablePredeploymentRun,omitempty"`
 	// TestCases: A list of test case names to run. They should be under the same
-	// agent. Format of each test case name: `projects//locations/
-	// /agents//testCases/`
+	// agent. Format of each test case name:
+	// `projects//locations//agents//testCases/`
 	TestCases []string `json:"testCases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableContinuousRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6412,7 +6412,7 @@ type GoogleCloudDialogflowCxV3beta1Experiment struct {
 	// LastUpdateTime: Last update time of this experiment.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 	// Name: The name of the experiment. Format:
-	// projects//locations//agents//environments//experiments/..
+	// projects//locations//agents//environments//experiments/.
 	Name string `json:"name,omitempty"`
 	// Result: Inference result of the experiment.
 	Result *GoogleCloudDialogflowCxV3beta1ExperimentResult `json:"result,omitempty"`
@@ -7168,6 +7168,9 @@ type GoogleCloudDialogflowCxV3beta1Flow struct {
 	EventHandlers []*GoogleCloudDialogflowCxV3beta1EventHandler `json:"eventHandlers,omitempty"`
 	// KnowledgeConnectorSettings: Optional. Knowledge connector configuration.
 	KnowledgeConnectorSettings *GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings `json:"knowledgeConnectorSettings,omitempty"`
+	// Locked: Indicates whether the flow is locked for changes. If the flow is
+	// locked, modifications to the flow will be rejected.
+	Locked bool `json:"locked,omitempty"`
 	// MultiLanguageSettings: Optional. Multi-lingual agent settings for this flow.
 	MultiLanguageSettings *GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings `json:"multiLanguageSettings,omitempty"`
 	// Name: The unique identifier of the flow. Format:
@@ -7257,7 +7260,7 @@ func (s GoogleCloudDialogflowCxV3beta1FlowImportStrategy) MarshalJSON() ([]byte,
 // invocation of a CX flow. Next Id: 7
 type GoogleCloudDialogflowCxV3beta1FlowInvocation struct {
 	// Flow: Required. The unique identifier of the flow. Format:
-	// `projects//locations//agents/`.
+	// `projects//locations//agents//flows/`.
 	Flow string `json:"flow,omitempty"`
 	// FlowState: Required. Flow invocation's output state.
 	//
@@ -8423,6 +8426,38 @@ type GoogleCloudDialogflowCxV3beta1InlineDestination struct {
 
 func (s GoogleCloudDialogflowCxV3beta1InlineDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1InlineDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1InlineSchema: A type schema object that's
+// specified inline.
+type GoogleCloudDialogflowCxV3beta1InlineSchema struct {
+	// Items: Schema of the elements if this is an ARRAY type.
+	Items *GoogleCloudDialogflowCxV3beta1TypeSchema `json:"items,omitempty"`
+	// Type: Data type of the schema.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "STRING" - Represents any string value.
+	//   "NUMBER" - Represents any number value.
+	//   "BOOLEAN" - Represents a boolean value.
+	//   "ARRAY" - Represents a repeated value.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1InlineSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1InlineSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10124,7 +10159,7 @@ type GoogleCloudDialogflowCxV3beta1ParameterDefinition struct {
 	Description string `json:"description,omitempty"`
 	// Name: Required. Name of parameter.
 	Name string `json:"name,omitempty"`
-	// Type: Required. Type of parameter.
+	// Type: Type of parameter.
 	//
 	// Possible values:
 	//   "PARAMETER_TYPE_UNSPECIFIED" - Not specified. No validation will be
@@ -10136,6 +10171,8 @@ type GoogleCloudDialogflowCxV3beta1ParameterDefinition struct {
 	//   "OBJECT" - Represents any object value.
 	//   "LIST" - Represents a repeated value.
 	Type string `json:"type,omitempty"`
+	// TypeSchema: Optional. Type schema of parameter.
+	TypeSchema *GoogleCloudDialogflowCxV3beta1TypeSchema `json:"typeSchema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11866,7 +11903,7 @@ type GoogleCloudDialogflowCxV3beta1TestCase struct {
 	LastTestResult *GoogleCloudDialogflowCxV3beta1TestCaseResult `json:"lastTestResult,omitempty"`
 	// Name: The unique identifier of the test case. TestCases.CreateTestCase will
 	// populate the name automatically. Otherwise use format:
-	// `projects//locations//agents/ /testCases/`.
+	// `projects//locations//agents//testCases/`.
 	Name string `json:"name,omitempty"`
 	// Notes: Additional freeform notes about the test case. Limit of 400
 	// characters.
@@ -11937,7 +11974,7 @@ type GoogleCloudDialogflowCxV3beta1TestCaseResult struct {
 	// the draft environment.
 	Environment string `json:"environment,omitempty"`
 	// Name: The resource name for the test case result. Format:
-	// `projects//locations//agents//testCases/ /results/`.
+	// `projects//locations//agents//testCases//results/`.
 	Name string `json:"name,omitempty"`
 	// TestResult: Whether the test case passed in the agent environment.
 	//
@@ -12471,7 +12508,7 @@ func (s GoogleCloudDialogflowCxV3beta1ToolOpenApiTool) MarshalJSON() ([]byte, er
 type GoogleCloudDialogflowCxV3beta1ToolServiceDirectoryConfig struct {
 	// Service: Required. The name of Service Directory
 	// (https://cloud.google.com/service-directory) service. Format:
-	// `projects//locations//namespaces//services/`. `Location ID` of the service
+	// `projects//locations//namespaces//services/`. `LocationID` of the service
 	// directory must be the same as the location of the agent.
 	Service string `json:"service,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
@@ -12954,6 +12991,58 @@ func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) e
 	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
 	s.SentimentScore = float64(s1.SentimentScore)
 	return nil
+}
+
+// GoogleCloudDialogflowCxV3beta1TypeSchema: Encapsulates different type schema
+// variations: either a reference to an a schema that's already defined by a
+// tool, or an inline definition.
+type GoogleCloudDialogflowCxV3beta1TypeSchema struct {
+	// InlineSchema: Set if this is an inline schema definition.
+	InlineSchema *GoogleCloudDialogflowCxV3beta1InlineSchema `json:"inlineSchema,omitempty"`
+	// SchemaReference: Set if this is a schema reference.
+	SchemaReference *GoogleCloudDialogflowCxV3beta1TypeSchemaSchemaReference `json:"schemaReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InlineSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InlineSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1TypeSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TypeSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1TypeSchemaSchemaReference: A reference to the
+// schema of an existing tool.
+type GoogleCloudDialogflowCxV3beta1TypeSchemaSchemaReference struct {
+	// Schema: The name of the schema.
+	Schema string `json:"schema,omitempty"`
+	// Tool: The tool that contains this schema definition. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schema") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1TypeSchemaSchemaReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TypeSchemaSchemaReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata: Metadata for
@@ -24067,7 +24156,7 @@ type ProjectsLocationsAgentsEnvironmentsDeployFlowCall struct {
 // `metadata`: DeployFlowMetadata - `response`: DeployFlowResponse
 //
 //   - environment: The environment to deploy the flow to. Format:
-//     `projects//locations//agents// environments/`.
+//     `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) DeployFlow(environment string, googleclouddialogflowcxv3beta1deployflowrequest *GoogleCloudDialogflowCxV3beta1DeployFlowRequest) *ProjectsLocationsAgentsEnvironmentsDeployFlowCall {
 	c := &ProjectsLocationsAgentsEnvironmentsDeployFlowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -24792,7 +24881,7 @@ type ProjectsLocationsAgentsEnvironmentsContinuousTestResultsListCall struct {
 // List: Fetches a list of continuous test results for a given environment.
 //
 //   - parent: The environment to list results for. Format:
-//     `projects//locations//agents// environments/`.
+//     `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsContinuousTestResultsService) List(parent string) *ProjectsLocationsAgentsEnvironmentsContinuousTestResultsListCall {
 	c := &ProjectsLocationsAgentsEnvironmentsContinuousTestResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25642,7 +25731,7 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall struct {
 // Patch: Updates the specified Experiment.
 //
 //   - name: The name of the experiment. Format:
-//     projects//locations//agents//environments//experiments/..
+//     projects//locations//agents//environments//experiments/.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Patch(name string, googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29491,7 +29580,7 @@ type ProjectsLocationsAgentsFlowsVersionsCompareVersionsCall struct {
 //
 //   - baseVersion: Name of the base flow version to compare with the target
 //     version. Use version ID `0` to indicate the draft version of the specified
-//     flow. Format: `projects//locations//agents/ /flows//versions/`.
+//     flow. Format: `projects//locations//agents//flows//versions/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) CompareVersions(baseVersion string, googleclouddialogflowcxv3beta1compareversionsrequest *GoogleCloudDialogflowCxV3beta1CompareVersionsRequest) *ProjectsLocationsAgentsFlowsVersionsCompareVersionsCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsCompareVersionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.baseVersion = baseVersion
@@ -34554,7 +34643,7 @@ type ProjectsLocationsAgentsTestCasesBatchRunCall struct {
 // `metadata`: BatchRunTestCasesMetadata - `response`:
 // BatchRunTestCasesResponse
 //
-// - parent: Agent name. Format: `projects//locations//agents/ `.
+// - parent: Agent name. Format: `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) BatchRun(parent string, googleclouddialogflowcxv3beta1batchruntestcasesrequest *GoogleCloudDialogflowCxV3beta1BatchRunTestCasesRequest) *ProjectsLocationsAgentsTestCasesBatchRunCall {
 	c := &ProjectsLocationsAgentsTestCasesBatchRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35375,7 +35464,7 @@ type ProjectsLocationsAgentsTestCasesPatchCall struct {
 //
 //   - name: The unique identifier of the test case. TestCases.CreateTestCase
 //     will populate the name automatically. Otherwise use format:
-//     `projects//locations//agents/ /testCases/`.
+//     `projects//locations//agents//testCases/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Patch(nameid string, googleclouddialogflowcxv3beta1testcase *GoogleCloudDialogflowCxV3beta1TestCase) *ProjectsLocationsAgentsTestCasesPatchCall {
 	c := &ProjectsLocationsAgentsTestCasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -35488,8 +35577,8 @@ type ProjectsLocationsAgentsTestCasesRunCall struct {
 // The returned `Operation` type has the following method-specific fields: -
 // `metadata`: RunTestCaseMetadata - `response`: RunTestCaseResponse
 //
-//   - name: Format of test case name to run: `projects//locations/
-//     /agents//testCases/`.
+//   - name: Format of test case name to run:
+//     `projects//locations//agents//testCases/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Run(name string, googleclouddialogflowcxv3beta1runtestcaserequest *GoogleCloudDialogflowCxV3beta1RunTestCaseRequest) *ProjectsLocationsAgentsTestCasesRunCall {
 	c := &ProjectsLocationsAgentsTestCasesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35702,8 +35791,8 @@ type ProjectsLocationsAgentsTestCasesResultsListCall struct {
 // 100 results are kept for each test case.
 //
 //   - parent: The test case to list results for. Format:
-//     `projects//locations//agents// testCases/`. Specify a `-` as a wildcard
-//     for TestCase ID to list results across multiple test cases.
+//     `projects//locations//agents//testCases/`. Specify a `-` as a wildcard for
+//     TestCase ID to list results across multiple test cases.
 func (r *ProjectsLocationsAgentsTestCasesResultsService) List(parent string) *ProjectsLocationsAgentsTestCasesResultsListCall {
 	c := &ProjectsLocationsAgentsTestCasesResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

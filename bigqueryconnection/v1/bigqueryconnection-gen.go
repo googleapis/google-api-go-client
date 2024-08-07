@@ -625,7 +625,8 @@ type Connection struct {
 	// HasCredential: Output only. True, if credential is configured for this
 	// connection.
 	HasCredential bool `json:"hasCredential,omitempty"`
-	// KmsKeyName: Optional. The Cloud KMS key that is used for encryption.
+	// KmsKeyName: Optional. The Cloud KMS key that is used for credentials
+	// encryption. If omitted, internal Google owned encryption keys are used.
 	// Example:
 	// `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKey
 	// s/[key]`

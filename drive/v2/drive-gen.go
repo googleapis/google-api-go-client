@@ -1797,10 +1797,12 @@ type File struct {
 	// thumbnail cannot be generated.
 	Thumbnail *FileThumbnail `json:"thumbnail,omitempty"`
 	// ThumbnailLink: Output only. A short-lived link to the file's thumbnail, if
-	// available. Typically lasts on the order of hours. Only populated when the
-	// requesting app can access the file's content. If the file isn't shared
-	// publicly, the URL returned in `Files.thumbnailLink` must be fetched using a
-	// credentialed request.
+	// available. Typically lasts on the order of hours. Not intended for direct
+	// usage on web applications due to Cross-Origin Resource Sharing (CORS)
+	// (https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), consider using a
+	// proxy server. Only populated when the requesting app can access the file's
+	// content. If the file isn't shared publicly, the URL returned in
+	// `Files.thumbnailLink` must be fetched using a credentialed request.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
 	// ThumbnailVersion: Output only. The thumbnail version for use in thumbnail
 	// cache invalidation.

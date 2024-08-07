@@ -1413,9 +1413,11 @@ func (s GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [EgressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access to
 	// outside the perimeter. If left unspecified, then members of `identities`
@@ -1586,9 +1588,11 @@ func (s GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, err
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [IngressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access from
 	// outside the perimeter. If left unspecified, then members of `identities`

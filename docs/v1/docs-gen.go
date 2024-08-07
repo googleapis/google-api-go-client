@@ -1164,29 +1164,69 @@ func (s *Dimension) UnmarshalJSON(data []byte) error {
 
 // Document: A Google Docs document.
 type Document struct {
-	// Body: Output only. The main body of the document.
+	// Body: Output only. The main body of the document. Legacy field: Instead, use
+	// Document.tabs.documentTab.body, which exposes the actual document content
+	// from all tabs when the includeTabsContent parameter is set to `true`. If
+	// `false` or unset, this field contains information about the first tab in the
+	// document.
 	Body *Body `json:"body,omitempty"`
 	// DocumentId: Output only. The ID of the document.
 	DocumentId string `json:"documentId,omitempty"`
-	// DocumentStyle: Output only. The style of the document.
+	// DocumentStyle: Output only. The style of the document. Legacy field:
+	// Instead, use Document.tabs.documentTab.documentStyle, which exposes the
+	// actual document content from all tabs when the includeTabsContent parameter
+	// is set to `true`. If `false` or unset, this field contains information about
+	// the first tab in the document.
 	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
 	// Footers: Output only. The footers in the document, keyed by footer ID.
+	// Legacy field: Instead, use Document.tabs.documentTab.footers, which exposes
+	// the actual document content from all tabs when the includeTabsContent
+	// parameter is set to `true`. If `false` or unset, this field contains
+	// information about the first tab in the document.
 	Footers map[string]Footer `json:"footers,omitempty"`
 	// Footnotes: Output only. The footnotes in the document, keyed by footnote ID.
+	// Legacy field: Instead, use Document.tabs.documentTab.footnotes, which
+	// exposes the actual document content from all tabs when the
+	// includeTabsContent parameter is set to `true`. If `false` or unset, this
+	// field contains information about the first tab in the document.
 	Footnotes map[string]Footnote `json:"footnotes,omitempty"`
 	// Headers: Output only. The headers in the document, keyed by header ID.
+	// Legacy field: Instead, use Document.tabs.documentTab.headers, which exposes
+	// the actual document content from all tabs when the includeTabsContent
+	// parameter is set to `true`. If `false` or unset, this field contains
+	// information about the first tab in the document.
 	Headers map[string]Header `json:"headers,omitempty"`
 	// InlineObjects: Output only. The inline objects in the document, keyed by
-	// object ID.
+	// object ID. Legacy field: Instead, use
+	// Document.tabs.documentTab.inlineObjects, which exposes the actual document
+	// content from all tabs when the includeTabsContent parameter is set to
+	// `true`. If `false` or unset, this field contains information about the first
+	// tab in the document.
 	InlineObjects map[string]InlineObject `json:"inlineObjects,omitempty"`
-	// Lists: Output only. The lists in the document, keyed by list ID.
+	// Lists: Output only. The lists in the document, keyed by list ID. Legacy
+	// field: Instead, use Document.tabs.documentTab.lists, which exposes the
+	// actual document content from all tabs when the includeTabsContent parameter
+	// is set to `true`. If `false` or unset, this field contains information about
+	// the first tab in the document.
 	Lists map[string]List `json:"lists,omitempty"`
 	// NamedRanges: Output only. The named ranges in the document, keyed by name.
+	// Legacy field: Instead, use Document.tabs.documentTab.namedRanges, which
+	// exposes the actual document content from all tabs when the
+	// includeTabsContent parameter is set to `true`. If `false` or unset, this
+	// field contains information about the first tab in the document.
 	NamedRanges map[string]NamedRanges `json:"namedRanges,omitempty"`
-	// NamedStyles: Output only. The named styles of the document.
+	// NamedStyles: Output only. The named styles of the document. Legacy field:
+	// Instead, use Document.tabs.documentTab.namedStyles, which exposes the actual
+	// document content from all tabs when the includeTabsContent parameter is set
+	// to `true`. If `false` or unset, this field contains information about the
+	// first tab in the document.
 	NamedStyles *NamedStyles `json:"namedStyles,omitempty"`
 	// PositionedObjects: Output only. The positioned objects in the document,
-	// keyed by object ID.
+	// keyed by object ID. Legacy field: Instead, use
+	// Document.tabs.documentTab.positionedObjects, which exposes the actual
+	// document content from all tabs when the includeTabsContent parameter is set
+	// to `true`. If `false` or unset, this field contains information about the
+	// first tab in the document.
 	PositionedObjects map[string]PositionedObject `json:"positionedObjects,omitempty"`
 	// RevisionId: Output only. The revision ID of the document. Can be used in
 	// update requests to specify which revision of a document to apply updates to
@@ -1201,10 +1241,18 @@ type Document struct {
 	// can also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 	// SuggestedDocumentStyleChanges: Output only. The suggested changes to the
-	// style of the document, keyed by suggestion ID.
+	// style of the document, keyed by suggestion ID. Legacy field: Instead, use
+	// Document.tabs.documentTab.suggestedDocumentStyleChanges, which exposes the
+	// actual document content from all tabs when the includeTabsContent parameter
+	// is set to `true`. If `false` or unset, this field contains information about
+	// the first tab in the document.
 	SuggestedDocumentStyleChanges map[string]SuggestedDocumentStyle `json:"suggestedDocumentStyleChanges,omitempty"`
 	// SuggestedNamedStylesChanges: Output only. The suggested changes to the named
-	// styles of the document, keyed by suggestion ID.
+	// styles of the document, keyed by suggestion ID. Legacy field: Instead, use
+	// Document.tabs.documentTab.suggestedNamedStylesChanges, which exposes the
+	// actual document content from all tabs when the includeTabsContent parameter
+	// is set to `true`. If `false` or unset, this field contains information about
+	// the first tab in the document.
 	SuggestedNamedStylesChanges map[string]SuggestedNamedStyles `json:"suggestedNamedStylesChanges,omitempty"`
 	// SuggestionsViewMode: Output only. The suggestions view mode applied to the
 	// document. Note: When editing a document, changes must be based on a document
@@ -1227,7 +1275,7 @@ type Document struct {
 	// all suggested changes rejected if there are any suggestions in the document.
 	SuggestionsViewMode string `json:"suggestionsViewMode,omitempty"`
 	// Tabs: Tabs that are part of a document. Tabs can contain child tabs, a tab
-	// nested within another tab. Child tabs are represented by the Tab.child_tabs
+	// nested within another tab. Child tabs are represented by the Tab.childTabs
 	// field.
 	Tabs []*Tab `json:"tabs,omitempty"`
 	// Title: The title of the document.
@@ -2411,17 +2459,31 @@ func (s InsertTextRequest) MarshalJSON() ([]byte, error) {
 type Link struct {
 	// Bookmark: A bookmark in this document. In documents containing a single tab,
 	// links to bookmarks within the singular tab continue to return
-	// Link.bookmark_id when the includeTabsContent parameter is set to `false` or
+	// Link.bookmarkId when the includeTabsContent parameter is set to `false` or
 	// unset. Otherwise, this field is returned.
 	Bookmark *BookmarkLink `json:"bookmark,omitempty"`
-	// BookmarkId: The ID of a bookmark in this document.
+	// BookmarkId: The ID of a bookmark in this document. Legacy field: Instead,
+	// set includeTabsContent to `true` and use Link.bookmark for read and write
+	// operations. This field is only returned when includeTabsContent is set to
+	// `false` in documents containing a single tab and links to a bookmark within
+	// the singular tab. Otherwise, Link.bookmark is returned. If this field is
+	// used in a write request, the bookmark is considered to be from the tab ID
+	// specified in the request. If a tab ID is not specified in the request, it is
+	// considered to be from the first tab in the document.
 	BookmarkId string `json:"bookmarkId,omitempty"`
 	// Heading: A heading in this document. In documents containing a single tab,
-	// links to headings within the singular tab continue to return Link.heading_id
+	// links to headings within the singular tab continue to return Link.headingId
 	// when the includeTabsContent parameter is set to `false` or unset. Otherwise,
 	// this field is returned.
 	Heading *HeadingLink `json:"heading,omitempty"`
-	// HeadingId: The ID of a heading in this document.
+	// HeadingId: The ID of a heading in this document. Legacy field: Instead, set
+	// includeTabsContent to `true` and use Link.heading for read and write
+	// operations. This field is only returned when includeTabsContent is set to
+	// `false` in documents containing a single tab and links to a heading within
+	// the singular tab. Otherwise, Link.heading is returned. If this field is used
+	// in a write request, the heading is considered to be from the tab ID
+	// specified in the request. If a tab ID is not specified in the request, it is
+	// considered to be from the first tab in the document.
 	HeadingId string `json:"headingId,omitempty"`
 	// TabId: The ID of a tab in this document.
 	TabId string `json:"tabId,omitempty"`
@@ -4830,7 +4892,7 @@ func (s Tab) MarshalJSON() ([]byte, error) {
 
 // TabProperties: Properties of a tab.
 type TabProperties struct {
-	// Index: The index of the tab within the parent.
+	// Index: The zero-based index of the tab within the parent.
 	Index int64 `json:"index,omitempty"`
 	// NestingLevel: Output only. The depth of the tab within the document.
 	// Root-level tabs start at 0.

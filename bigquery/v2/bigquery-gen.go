@@ -3873,6 +3873,44 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// IdentityColumnInfo: Metadata for value generation for an identity column.
+type IdentityColumnInfo struct {
+	// GeneratedMode: Optional. Dictates when system generated values are used to
+	// populate the field.
+	//
+	// Possible values:
+	//   "GENERATED_MODE_UNSPECIFIED" - Unspecified GeneratedMode will default to
+	// GENERATED_ALWAYS.
+	//   "GENERATED_ALWAYS" - Field can only have system generated values. Users
+	// cannot manually insert values into the field.
+	//   "GENERATED_BY_DEFAULT" - Use system generated values only if the user does
+	// not explicitly provide a value.
+	GeneratedMode string `json:"generatedMode,omitempty"`
+	// Increment: Optional. The minimum difference between two successive generated
+	// values. Should be INTEGER compatible. Can be negative or positive but not 0.
+	// The default value is 1 if the field is not specified.
+	Increment string `json:"increment,omitempty"`
+	// Start: Optional. The first generated value. Should be INTEGER compatible.
+	// The default value is 1 if the field is not specified.
+	Start string `json:"start,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratedMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratedMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityColumnInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityColumnInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IndexUnusedReason: Reason about why no search index was used in the search
 // query (or sub-query).
 type IndexUnusedReason struct {
@@ -8969,6 +9007,10 @@ type TableFieldSchema struct {
 	// valid for top-level schema fields (not nested fields). If the type is
 	// FOREIGN, this field is required.
 	ForeignTypeDefinition string `json:"foreignTypeDefinition,omitempty"`
+	// IdentityColumnInfo: Optional. Definition of how values are generated for the
+	// field. Setting this option means that the field is an identity column. Only
+	// valid for top-level schema INTEGER fields (not nested fields).
+	IdentityColumnInfo *IdentityColumnInfo `json:"identityColumnInfo,omitempty"`
 	// MaxLength: Optional. Maximum length of values of this field for STRINGS or
 	// BYTES. If max_length is not specified, no maximum length constraint is
 	// imposed on this field. If type = "STRING", then max_length represents the

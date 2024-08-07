@@ -1003,6 +1003,9 @@ type DropInfo struct {
 	//   "DROPPED_INSIDE_GOOGLE_MANAGED_SERVICE" - Packet is dropped due to an
 	// unspecified reason inside a Google-managed service. Used only for return
 	// traces.
+	//   "LOAD_BALANCER_BACKEND_INVALID_NETWORK" - Packet is dropped due to a load
+	// balancer backend instance not having a network interface in the network
+	// expected by the load balancer.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1255,14 +1258,14 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 }
 
 // FirewallInfo: For display only. Metadata associated with a VPC firewall
-// rule, an implied VPC firewall rule, or a hierarchical firewall policy rule.
+// rule, an implied VPC firewall rule, or a firewall policy rule.
 type FirewallInfo struct {
 	// Action: Possible values: ALLOW, DENY, APPLY_SECURITY_PROFILE_GROUP
 	Action string `json:"action,omitempty"`
 	// Direction: Possible values: INGRESS, EGRESS
 	Direction string `json:"direction,omitempty"`
-	// DisplayName: The display name of the VPC firewall rule. This field is not
-	// applicable to hierarchical firewall policy rules.
+	// DisplayName: The display name of the firewall rule. This field might be
+	// empty for firewall policy rules.
 	DisplayName string `json:"displayName,omitempty"`
 	// FirewallRuleType: The firewall rule's type.
 	//
@@ -1303,19 +1306,24 @@ type FirewallInfo struct {
 	// NetworkUri: The URI of the VPC network that the firewall rule is associated
 	// with. This field is not applicable to hierarchical firewall policy rules.
 	NetworkUri string `json:"networkUri,omitempty"`
-	// Policy: The hierarchical firewall policy that this rule is associated with.
-	// This field is not applicable to VPC firewall rules.
+	// Policy: The name of the firewall policy that this rule is associated with.
+	// This field is not applicable to VPC firewall rules and implied VPC firewall
+	// rules.
 	Policy string `json:"policy,omitempty"`
+	// PolicyUri: The URI of the firewall policy that this rule is associated with.
+	// This field is not applicable to VPC firewall rules and implied VPC firewall
+	// rules.
+	PolicyUri string `json:"policyUri,omitempty"`
 	// Priority: The priority of the firewall rule.
 	Priority int64 `json:"priority,omitempty"`
 	// TargetServiceAccounts: The target service accounts specified by the firewall
 	// rule.
 	TargetServiceAccounts []string `json:"targetServiceAccounts,omitempty"`
 	// TargetTags: The target tags defined by the VPC firewall rule. This field is
-	// not applicable to hierarchical firewall policy rules.
+	// not applicable to firewall policy rules.
 	TargetTags []string `json:"targetTags,omitempty"`
-	// Uri: The URI of the VPC firewall rule. This field is not applicable to
-	// implied firewall rules or hierarchical firewall policy rules.
+	// Uri: The URI of the firewall rule. This field is not applicable to implied
+	// VPC firewall rules.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

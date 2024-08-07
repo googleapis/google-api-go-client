@@ -1,5 +1,20 @@
 # Changes
 
+## [0.191.0](https://github.com/googleapis/google-api-go-client/compare/v0.190.0...v0.191.0) (2024-08-07)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2719](https://github.com/googleapis/google-api-go-client/issues/2719)) ([a5ddb40](https://github.com/googleapis/google-api-go-client/commit/a5ddb40265f42b2ccb81e3fdcdf63b876ec4c8d3))
+* **all:** Auto-regenerate discovery clients ([#2722](https://github.com/googleapis/google-api-go-client/issues/2722)) ([0d15913](https://github.com/googleapis/google-api-go-client/commit/0d159138dde17f67b95506a9b75f61654616ab1e))
+* **all:** Auto-regenerate discovery clients ([#2724](https://github.com/googleapis/google-api-go-client/issues/2724)) ([918e3d2](https://github.com/googleapis/google-api-go-client/commit/918e3d247ec3b8846ef27768755753653e6c9810))
+
+
+### Bug Fixes
+
+* Reference gax import in storage libs ([#2720](https://github.com/googleapis/google-api-go-client/issues/2720)) ([fffff7f](https://github.com/googleapis/google-api-go-client/commit/fffff7f0c447dfa6ad3b74b7ef948fc1b8b78e66))
+* **transport:** Disable automatic universe domain check ([#2717](https://github.com/googleapis/google-api-go-client/issues/2717)) ([f5b0bb5](https://github.com/googleapis/google-api-go-client/commit/f5b0bb5ac5ffd3d26c49135c6ce3cfb9167508b0))
+
 ## [0.190.0](https://github.com/googleapis/google-api-go-client/compare/v0.189.0...v0.190.0) (2024-08-01)
 
 

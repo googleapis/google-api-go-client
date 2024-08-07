@@ -1037,18 +1037,22 @@ func (s GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 // when responding to Routing Policy queries. Only the healthy endpoints will
 // be included in the response.
 type HealthCheckTargets struct {
+	// ExternalEndpoints: The Internet IP addresses to be health checked. The
+	// format matches the format of ResourceRecordSet.rrdata as defined in RFC 1035
+	// (section 5) and RFC 1034 (section 3.6.1)
+	ExternalEndpoints []string `json:"externalEndpoints,omitempty"`
 	// InternalLoadBalancer: Configuration for internal load balancers to be health
 	// checked.
 	InternalLoadBalancer []*LoadBalancerTarget `json:"internalLoadBalancer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InternalLoadBalancer") to
+	// ForceSendFields is a list of field names (e.g. "ExternalEndpoints") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InternalLoadBalancer") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExternalEndpoints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1730,8 +1734,12 @@ func (s *PrimaryBackupPolicy) UnmarshalJSON(data []byte) error {
 // that is returned dynamically with the response varying based on configured
 // properties such as geolocation or by weighted random selection.
 type RRSetRoutingPolicy struct {
-	Geo           *GeoPolicy           `json:"geo,omitempty"`
-	GeoPolicy     *GeoPolicy           `json:"geoPolicy,omitempty"`
+	Geo       *GeoPolicy `json:"geo,omitempty"`
+	GeoPolicy *GeoPolicy `json:"geoPolicy,omitempty"`
+	// HealthCheck: The selfLink attribute of the HealthCheck resource to use for
+	// this RRSetRoutingPolicy.
+	// https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks
+	HealthCheck   string               `json:"healthCheck,omitempty"`
 	PrimaryBackup *PrimaryBackupPolicy `json:"primaryBackup,omitempty"`
 	Wrr           *WrrPolicy           `json:"wrr,omitempty"`
 	WrrPolicy     *WrrPolicy           `json:"wrrPolicy,omitempty"`

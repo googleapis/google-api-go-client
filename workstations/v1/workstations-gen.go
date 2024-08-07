@@ -711,9 +711,9 @@ type GceInstance struct {
 	// rules (https://cloud.google.com/workstations/docs/configure-firewall-rules).
 	Tags []string `json:"tags,omitempty"`
 	// VmTags: Optional. Resource manager tags to be bound to this instance. Tag
-	// keys and values have the same definition as
-	// https://cloud.google.com/resource-manager/docs/tags/tags-overview Keys must
-	// be in the format `tagKeys/{tag_key_id}`, and values are in the format
+	// keys and values have the same definition as resource manager tags
+	// (https://cloud.google.com/resource-manager/docs/tags/tags-overview). Keys
+	// must be in the format `tagKeys/{tag_key_id}`, and values are in the format
 	// `tagValues/456`.
 	VmTags map[string]string `json:"vmTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
@@ -1394,9 +1394,11 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // PortRange: A PortRange defines a range of ports. Both first and last are
 // inclusive. To specify a single port, both first and last should be the same.
 type PortRange struct {
-	// First: Required. Starting port number for the current range of ports.
+	// First: Required. Starting port number for the current range of ports. Valid
+	// ports are 22, 80, and ports within the range 1024-65535.
 	First int64 `json:"first,omitempty"`
-	// Last: Required. Ending port number for the current range of ports.
+	// Last: Required. Ending port number for the current range of ports. Valid
+	// ports are 22, 80, and ports within the range 1024-65535.
 	Last int64 `json:"last,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "First") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1811,9 +1813,10 @@ func (s WorkstationCluster) MarshalJSON() ([]byte, error) {
 // Management (IAM) (https://cloud.google.com/iam/docs/overview) rules to grant
 // access to teams or to individual developers.
 type WorkstationConfig struct {
-	// AllowedPorts: Optional. A Single or Range of ports externally accessible in
-	// the workstation. If not specified defaults to ports 22, 80 and ports
-	// 1024-65535.
+	// AllowedPorts: Optional. A list of PortRanges specifying single ports or
+	// ranges of ports that are externally accessible in the workstation. Allowed
+	// ports must be one of 22, 80, or within range 1024-65535. If not specified
+	// defaults to ports 22, 80, and ports 1024-65535.
 	AllowedPorts []*PortRange `json:"allowedPorts,omitempty"`
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`

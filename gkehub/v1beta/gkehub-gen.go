@@ -1775,6 +1775,8 @@ type ConfigManagementMembershipSpec struct {
 	// cluster.
 	Management string `json:"management,omitempty"`
 	// PolicyController: Policy Controller configuration for the cluster.
+	// Deprecated: Configuring Policy Controller through the configmanagement
+	// feature is no longer recommended. Use the policycontroller feature instead.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
 	// Version: Version of ACM installed.
 	Version string `json:"version,omitempty"`
@@ -2353,6 +2355,9 @@ type Feature struct {
 	Spec *CommonFeatureSpec `json:"spec,omitempty"`
 	// State: Output only. The Hub-wide Feature state.
 	State *CommonFeatureState `json:"state,omitempty"`
+	// Unreachable: Output only. List of locations that could not be reached while
+	// fetching this feature.
+	Unreachable []string `json:"unreachable,omitempty"`
 	// UpdateTime: Output only. When the Feature resource was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -6542,6 +6547,15 @@ func (r *ProjectsLocationsFeaturesService) Get(name string) *ProjectsLocationsFe
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable and the unreachable field in Feature proto will be populated. If
+// set to false, the request will fail when some regions are unreachable.
+func (c *ProjectsLocationsFeaturesGetCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsFeaturesGetCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6809,6 +6823,15 @@ func (c *ProjectsLocationsFeaturesListCall) PageSize(pageSize int64) *ProjectsLo
 // from where to continue listing the resources.
 func (c *ProjectsLocationsFeaturesListCall) PageToken(pageToken string) *ProjectsLocationsFeaturesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set to true, the response will return partial results when some regions are
+// unreachable and the unreachable field in Feature proto will be populated. If
+// set to false, the request will fail when some regions are unreachable.
+func (c *ProjectsLocationsFeaturesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsFeaturesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

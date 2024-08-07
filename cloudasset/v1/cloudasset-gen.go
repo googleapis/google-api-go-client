@@ -2941,9 +2941,11 @@ func (s GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [EgressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access to
 	// outside the perimeter. If left unspecified, then members of `identities`
@@ -3114,9 +3116,11 @@ func (s GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, err
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [IngressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access from
 	// outside the perimeter. If left unspecified, then members of `identities`
@@ -4648,17 +4652,19 @@ func (s QueryAssetsRequest) MarshalJSON() ([]byte, error) {
 // QueryAssetsResponse: QueryAssets response.
 type QueryAssetsResponse struct {
 	// Done: The query response, which can be either an `error` or a valid
-	// `response`. If `done` == `false` and the query result is being saved in a
+	// `response`. If `done` == `false` and the query result is being saved in an
 	// output, the output_config field will be set. If `done` == `true`, exactly
-	// one of `error`, `query_result` or `output_config` will be set.
+	// one of `error`, `query_result` or `output_config` will be set. [done] is
+	// unset unless the [QueryAssetsResponse] contains a
+	// [QueryAssetsResponse.job_reference].
 	Done bool `json:"done,omitempty"`
 	// Error: Error status.
 	Error *Status `json:"error,omitempty"`
 	// JobReference: Reference to a query job.
 	JobReference string `json:"jobReference,omitempty"`
-	// OutputConfig: Output configuration which indicates instead of being returned
-	// in API response on the fly, the query result will be saved in a specific
-	// output.
+	// OutputConfig: Output configuration, which indicates that instead of being
+	// returned in an API response on the fly, the query result will be saved in a
+	// specific output.
 	OutputConfig *QueryAssetsOutputConfig `json:"outputConfig,omitempty"`
 	// QueryResult: Result of the query.
 	QueryResult *QueryResult `json:"queryResult,omitempty"`

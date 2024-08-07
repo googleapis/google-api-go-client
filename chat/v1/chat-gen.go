@@ -2652,7 +2652,6 @@ type GoogleAppsCardV1PlatformDataSource struct {
 	//   "UNKNOWN" - Default value. Don't use.
 	//   "USER" - Google Workspace users. The user can only view and select users
 	// from their Google Workspace organization.
-	//   "DRIVE" - Represents a data source from Google Drive OnePick.
 	CommonDataSource string `json:"commonDataSource,omitempty"`
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such spaces in Google Chat.

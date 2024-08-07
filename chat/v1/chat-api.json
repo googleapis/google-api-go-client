@@ -1241,7 +1241,7 @@
       }
     }
   },
-  "revision": "20240728",
+  "revision": "20240801",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -2744,13 +2744,11 @@
           "description": "A data source shared by all Google Workspace applications, such as users in a Google Workspace organization.",
           "enum": [
             "UNKNOWN",
-            "USER",
-            "DRIVE"
+            "USER"
           ],
           "enumDescriptions": [
             "Default value. Don't use.",
-            "Google Workspace users. The user can only view and select users from their Google Workspace organization.",
-            "Represents a data source from Google Drive OnePick."
+            "Google Workspace users. The user can only view and select users from their Google Workspace organization."
           ],
           "type": "string"
         },

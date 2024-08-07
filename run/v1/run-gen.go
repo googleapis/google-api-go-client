@@ -3917,8 +3917,8 @@ type ObjectMeta struct {
 	// `run.googleapis.com/binary-authorization-breakglass`: Service, Job, *
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
 	// `run.googleapis.com/build-environment-variables`: Service. *
-	// `run.googleapis.com/build-id`: Service. *
-	// `run.googleapis.com/build-service-account`: Service. *
+	// `run.googleapis.com/build-id`: Service. * `run.googleapis.com/build-name`:
+	// Service. * `run.googleapis.com/build-service-account`: Service. *
 	// `run.googleapis.com/build-worker-pool`: Service. *
 	// `run.googleapis.com/client-name`: All resources. *
 	// `run.googleapis.com/cloudsql-instances`: Revision, Execution. *
@@ -3932,13 +3932,14 @@ type ObjectMeta struct {
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/function-target`: Service. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
-	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
-	// Service, Job. * `run.googleapis.com/minScale`: Service (ALPHA) *
+	// `run.googleapis.com/image-uri`: Service. * `run.googleapis.com/ingress`:
+	// Service. * `run.googleapis.com/launch-stage`: Service, Job. *
+	// `run.googleapis.com/minScale`: Service (ALPHA) *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
-	// `run.googleapis.com/secrets`: Revision, Execution. *
-	// `run.googleapis.com/secure-session-agent`: Revision. *
-	// `run.googleapis.com/sessionAffinity`: Revision. *
+	// `run.googleapis.com/runtime`: Service. * `run.googleapis.com/secrets`:
+	// Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision.
+	// * `run.googleapis.com/sessionAffinity`: Revision. *
 	// `run.googleapis.com/source-location`: Service. *
 	// `run.googleapis.com/startup-cpu-boost`: Revision. *
 	// `run.googleapis.com/vpc-access-connector`: Revision, Execution. *

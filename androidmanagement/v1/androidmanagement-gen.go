@@ -319,10 +319,11 @@ type AdvancedSecurityOverrides struct {
 	// Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common
 	// Criteria Mode increases certain security components on a device, including
 	// AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration
-	// stores.Warning: Common Criteria Mode enforces a strict security model
-	// typically only required for IT products used in national security systems
-	// and other highly sensitive organizations. Standard device use may be
-	// affected. Only enabled if required.
+	// stores.Common Criteria Mode is only supported on company-owned devices
+	// running Android 11 or above.Warning: Common Criteria Mode enforces a strict
+	// security model typically only required for IT products used in national
+	// security systems and other highly sensitive organizations. Standard device
+	// use may be affected. Only enabled if required.
 	//
 	// Possible values:
 	//   "COMMON_CRITERIA_MODE_UNSPECIFIED" - Unspecified. Defaults to
@@ -1875,7 +1876,7 @@ type Device struct {
 	// standards defined in the Common Criteria for Information Technology Security
 	// Evaluation (https://www.commoncriteriaportal.org/) (CC).This information is
 	// only available if statusReportingSettings.commonCriteriaModeEnabled is true
-	// in the device's policy.
+	// in the device's policy the device is company-owned.
 	CommonCriteriaModeInfo *CommonCriteriaModeInfo `json:"commonCriteriaModeInfo,omitempty"`
 	// DeviceSettings: Device settings information. This information is only
 	// available if deviceSettingsEnabled is true in the device's policy.
@@ -5909,7 +5910,7 @@ type StatusReportingSettings struct {
 	// ApplicationReportsEnabled: Whether app reports are enabled.
 	ApplicationReportsEnabled bool `json:"applicationReportsEnabled,omitempty"`
 	// CommonCriteriaModeEnabled: Whether Common Criteria Mode reporting is
-	// enabled.
+	// enabled. This is supported only on company-owned devices.
 	CommonCriteriaModeEnabled bool `json:"commonCriteriaModeEnabled,omitempty"`
 	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
 	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`

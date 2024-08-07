@@ -4857,27 +4857,28 @@ func (s RegionalBasePlanConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RegionalPriceMigrationConfig: Configuration for a price migration.
+// RegionalPriceMigrationConfig: Configuration for migration of a legacy price
+// cohort.
 type RegionalPriceMigrationConfig struct {
-	// OldestAllowedPriceVersionTime: Required. The cutoff time for historical
-	// prices that subscribers can remain paying. Subscribers on prices which were
-	// available at this cutoff time or later will stay on their existing price.
-	// Subscribers on older prices will be migrated to the currently-offered price.
-	// The migrated subscribers will receive a notification that they will be
-	// paying a different price. Subscribers who do not agree to the new price will
-	// have their subscription ended at the next renewal.
+	// OldestAllowedPriceVersionTime: Required. Subscribers in all legacy price
+	// cohorts before this time will be migrated to the current price. Subscribers
+	// in any newer price cohorts are unaffected. Affected subscribers will receive
+	// one or more notifications from Google Play about the price change. Price
+	// decreases occur at the subscriber's next billing date. Price increases occur
+	// at the subscriber's next billing date following a notification period that
+	// varies by region and price increase type.
 	OldestAllowedPriceVersionTime string `json:"oldestAllowedPriceVersionTime,omitempty"`
-	// PriceIncreaseType: Optional. The behavior the caller wants users to see when
-	// there is a price increase during migration. If left unset, the behavior
-	// defaults to PRICE_INCREASE_TYPE_OPT_IN. Note that the first opt-out price
-	// increase migration for each app must be initiated in Play Console.
+	// PriceIncreaseType: Optional. The requested type of price increase
 	//
 	// Possible values:
 	//   "PRICE_INCREASE_TYPE_UNSPECIFIED" - Unspecified state.
-	//   "PRICE_INCREASE_TYPE_OPT_IN" - Price increase will be presented to users
-	// on an opt-in basis.
-	//   "PRICE_INCREASE_TYPE_OPT_OUT" - Price increase will be presented to users
-	// on an opt-out basis.
+	//   "PRICE_INCREASE_TYPE_OPT_IN" - Subscribers must accept the price increase
+	// or their subscription is canceled.
+	//   "PRICE_INCREASE_TYPE_OPT_OUT" - Subscribers are notified but do not have
+	// to accept the price increase. Opt-out price increases not meeting regional,
+	// frequency, and amount limits will proceed as opt-in price increase. The
+	// first opt-out price increase for each app must be initiated in the Google
+	// Play Console.
 	PriceIncreaseType string `json:"priceIncreaseType,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
 	// by ISO 3166-2, e.g. "US".
@@ -16741,12 +16742,9 @@ type MonetizationSubscriptionsBasePlansMigratePricesCall struct {
 	header_                      http.Header
 }
 
-// MigratePrices: Migrates subscribers who are receiving an historical
-// subscription price to the currently-offered price for the specified region.
-// Requests will cause price change notifications to be sent to users who are
-// currently receiving an historical price older than the supplied timestamp.
-// Subscribers who do not agree to the new price will have their subscription
-// ended at the next renewal.
+// MigratePrices: Migrates subscribers from one or more legacy price cohorts to
+// the current price. Requests result in Google Play notifying affected
+// subscribers. Only up to 250 simultaneous legacy price cohorts are supported.
 //
 //   - basePlanId: The unique base plan ID of the base plan to update prices on.
 //   - packageName: Package name of the parent app. Must be equal to the

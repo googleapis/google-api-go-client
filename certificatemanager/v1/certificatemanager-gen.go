@@ -290,7 +290,7 @@ type AuthorizationAttemptInfo struct {
 	// Provided to help address the configuration issues. Not guaranteed to be
 	// stable. For programmatic access use FailureReason enum.
 	Details string `json:"details,omitempty"`
-	// Domain: Domain name of the authorization attempt.
+	// Domain: Output only. Domain name of the authorization attempt.
 	Domain string `json:"domain,omitempty"`
 	// FailureReason: Output only. Reason for failure of the authorization attempt
 	// for the domain.
@@ -342,16 +342,18 @@ type CancelOperationRequest struct {
 type Certificate struct {
 	// CreateTime: Output only. The creation timestamp of a Certificate.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a certificate.
+	// Description: Optional. One or more paragraphs of text description of a
+	// certificate.
 	Description string `json:"description,omitempty"`
 	// ExpireTime: Output only. The expiry timestamp of a Certificate.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Labels: Set of labels associated with a Certificate.
+	// Labels: Optional. Set of labels associated with a Certificate.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Managed: If set, contains configuration and state of a managed certificate.
 	Managed *ManagedCertificate `json:"managed,omitempty"`
-	// Name: A user-defined name of the certificate. Certificate names must be
-	// unique globally and match pattern `projects/*/locations/*/certificates/*`.
+	// Name: Identifier. A user-defined name of the certificate. Certificate names
+	// must be unique globally and match pattern
+	// `projects/*/locations/*/certificates/*`.
 	Name string `json:"name,omitempty"`
 	// PemCertificate: Output only. The PEM-encoded certificate chain.
 	PemCertificate string `json:"pemCertificate,omitempty"`
@@ -360,7 +362,7 @@ type Certificate struct {
 	// that haven't been provisioned yet have this field populated with a value of
 	// the managed.domains field.
 	SanDnsnames []string `json:"sanDnsnames,omitempty"`
-	// Scope: Immutable. The scope of the certificate.
+	// Scope: Optional. Immutable. The scope of the certificate.
 	//
 	// Possible values:
 	//   "DEFAULT" - Certificates with default scope are served from core Google
@@ -458,7 +460,7 @@ type CertificateIssuanceConfig struct {
 	// CreateTime: Output only. The creation timestamp of a
 	// CertificateIssuanceConfig.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a
+	// Description: Optional. One or more paragraphs of text description of a
 	// CertificateIssuanceConfig.
 	Description string `json:"description,omitempty"`
 	// KeyAlgorithm: Required. The key algorithm to use when generating the private
@@ -469,11 +471,11 @@ type CertificateIssuanceConfig struct {
 	//   "RSA_2048" - Specifies RSA with a 2048-bit modulus.
 	//   "ECDSA_P256" - Specifies ECDSA with curve P256.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
-	// Labels: Set of labels associated with a CertificateIssuanceConfig.
+	// Labels: Optional. Set of labels associated with a CertificateIssuanceConfig.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Lifetime: Required. Workload certificate lifetime requested.
 	Lifetime string `json:"lifetime,omitempty"`
-	// Name: A user-defined name of the certificate issuance config.
+	// Name: Identifier. A user-defined name of the certificate issuance config.
 	// CertificateIssuanceConfig names must be unique globally and match pattern
 	// `projects/*/locations/*/certificateIssuanceConfigs/*`.
 	Name string `json:"name,omitempty"`
@@ -509,17 +511,17 @@ func (s CertificateIssuanceConfig) MarshalJSON() ([]byte, error) {
 type CertificateMap struct {
 	// CreateTime: Output only. The creation timestamp of a Certificate Map.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a certificate
-	// map.
+	// Description: Optional. One or more paragraphs of text description of a
+	// certificate map.
 	Description string `json:"description,omitempty"`
 	// GclbTargets: Output only. A list of GCLB targets that use this Certificate
 	// Map. A Target Proxy is only present on this list if it's attached to a
 	// Forwarding Rule.
 	GclbTargets []*GclbTarget `json:"gclbTargets,omitempty"`
-	// Labels: Set of labels associated with a Certificate Map.
+	// Labels: Optional. Set of labels associated with a Certificate Map.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: A user-defined name of the Certificate Map. Certificate Map names must
-	// be unique globally and match pattern
+	// Name: Identifier. A user-defined name of the Certificate Map. Certificate
+	// Map names must be unique globally and match pattern
 	// `projects/*/locations/*/certificateMaps/*`.
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The update timestamp of a Certificate Map.
@@ -547,20 +549,21 @@ func (s CertificateMap) MarshalJSON() ([]byte, error) {
 
 // CertificateMapEntry: Defines a certificate map entry.
 type CertificateMapEntry struct {
-	// Certificates: A set of Certificates defines for the given `hostname`. There
-	// can be defined up to four certificates in each Certificate Map Entry. Each
-	// certificate must match pattern `projects/*/locations/*/certificates/*`.
+	// Certificates: Optional. A set of Certificates defines for the given
+	// `hostname`. There can be defined up to four certificates in each Certificate
+	// Map Entry. Each certificate must match pattern
+	// `projects/*/locations/*/certificates/*`.
 	Certificates []string `json:"certificates,omitempty"`
 	// CreateTime: Output only. The creation timestamp of a Certificate Map Entry.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a certificate map
-	// entry.
+	// Description: Optional. One or more paragraphs of text description of a
+	// certificate map entry.
 	Description string `json:"description,omitempty"`
 	// Hostname: A Hostname (FQDN, e.g. `example.com`) or a wildcard hostname
 	// expression (`*.example.com`) for a set of hostnames with common suffix. Used
 	// as Server Name Indication (SNI) for selecting a proper certificate.
 	Hostname string `json:"hostname,omitempty"`
-	// Labels: Set of labels associated with a Certificate Map Entry.
+	// Labels: Optional. Set of labels associated with a Certificate Map Entry.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Matcher: A predefined matcher for particular cases, other than SNI
 	// selection.
@@ -570,8 +573,8 @@ type CertificateMapEntry struct {
 	//   "PRIMARY" - A primary certificate that is served when SNI wasn't specified
 	// in the request or SNI couldn't be found in the map.
 	Matcher string `json:"matcher,omitempty"`
-	// Name: A user-defined name of the Certificate Map Entry. Certificate Map
-	// Entry names must be unique globally and match pattern
+	// Name: Identifier. A user-defined name of the Certificate Map Entry.
+	// Certificate Map Entry names must be unique globally and match pattern
 	// `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. A serving state of this Certificate Map Entry.
@@ -610,7 +613,7 @@ func (s CertificateMapEntry) MarshalJSON() ([]byte, error) {
 type DnsAuthorization struct {
 	// CreateTime: Output only. The creation timestamp of a DnsAuthorization.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a
+	// Description: Optional. One or more paragraphs of text description of a
 	// DnsAuthorization.
 	Description string `json:"description,omitempty"`
 	// DnsResourceRecord: Output only. DNS Resource Record that needs to be added
@@ -621,15 +624,15 @@ type DnsAuthorization struct {
 	// authorization for `example.com` can be used to issue certificates for
 	// `example.com` and `*.example.com`.
 	Domain string `json:"domain,omitempty"`
-	// Labels: Set of labels associated with a DnsAuthorization.
+	// Labels: Optional. Set of labels associated with a DnsAuthorization.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: A user-defined name of the dns authorization. DnsAuthorization names
-	// must be unique globally and match pattern
+	// Name: Identifier. A user-defined name of the dns authorization.
+	// DnsAuthorization names must be unique globally and match pattern
 	// `projects/*/locations/*/dnsAuthorizations/*`.
 	Name string `json:"name,omitempty"`
-	// Type: Immutable. Type of DnsAuthorization. If unset during resource creation
-	// the following default will be used: - in location `global`: FIXED_RECORD, -
-	// in other locations: PER_PROJECT_RECORD.
+	// Type: Optional. Immutable. Type of DnsAuthorization. If unset during
+	// resource creation the following default will be used: - in location
+	// `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
@@ -1078,17 +1081,18 @@ type ManagedCertificate struct {
 	// authorization attempt for each domain specified for managed certificate
 	// resource.
 	AuthorizationAttemptInfo []*AuthorizationAttemptInfo `json:"authorizationAttemptInfo,omitempty"`
-	// DnsAuthorizations: Immutable. Authorizations that will be used for
+	// DnsAuthorizations: Optional. Immutable. Authorizations that will be used for
 	// performing domain authorization.
 	DnsAuthorizations []string `json:"dnsAuthorizations,omitempty"`
-	// Domains: Immutable. The domains for which a managed SSL certificate will be
-	// generated. Wildcard domains are only supported with DNS challenge
-	// resolution.
+	// Domains: Optional. Immutable. The domains for which a managed SSL
+	// certificate will be generated. Wildcard domains are only supported with DNS
+	// challenge resolution.
 	Domains []string `json:"domains,omitempty"`
-	// IssuanceConfig: Immutable. The resource name for a CertificateIssuanceConfig
-	// used to configure private PKI certificates in the format
-	// `projects/*/locations/*/certificateIssuanceConfigs/*`. If this field is not
-	// set, the certificates will instead be publicly signed as documented at
+	// IssuanceConfig: Optional. Immutable. The resource name for a
+	// CertificateIssuanceConfig used to configure private PKI certificates in the
+	// format `projects/*/locations/*/certificateIssuanceConfigs/*`. If this field
+	// is not set, the certificates will instead be publicly signed as documented
+	// at
 	// https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs#caa.
 	IssuanceConfig string `json:"issuanceConfig,omitempty"`
 	// ProvisioningIssue: Output only. Information about issues with provisioning a
@@ -1249,10 +1253,10 @@ func (s ProvisioningIssue) MarshalJSON() ([]byte, error) {
 // SelfManaged Certificates are uploaded by the user. Updating such
 // certificates before they expire remains the user's responsibility.
 type SelfManagedCertificate struct {
-	// PemCertificate: Input only. The PEM-encoded certificate chain. Leaf
-	// certificate comes first, followed by intermediate ones if any.
+	// PemCertificate: Optional. Input only. The PEM-encoded certificate chain.
+	// Leaf certificate comes first, followed by intermediate ones if any.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-	// PemPrivateKey: Input only. The PEM-encoded private key of the leaf
+	// PemPrivateKey: Optional. Input only. The PEM-encoded private key of the leaf
 	// certificate.
 	PemPrivateKey string `json:"pemPrivateKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
@@ -1339,21 +1343,23 @@ type TrustConfig struct {
 	AllowlistedCertificates []*AllowlistedCertificate `json:"allowlistedCertificates,omitempty"`
 	// CreateTime: Output only. The creation timestamp of a TrustConfig.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: One or more paragraphs of text description of a TrustConfig.
+	// Description: Optional. One or more paragraphs of text description of a
+	// TrustConfig.
 	Description string `json:"description,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Set of labels associated with a TrustConfig.
+	// Labels: Optional. Set of labels associated with a TrustConfig.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: A user-defined name of the trust config. TrustConfig names must be
-	// unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.
+	// Name: Identifier. A user-defined name of the trust config. TrustConfig names
+	// must be unique globally and match pattern
+	// `projects/*/locations/*/trustConfigs/*`.
 	Name string `json:"name,omitempty"`
-	// TrustStores: Set of trust stores to perform validation against. This field
-	// is supported when TrustConfig is configured with Load Balancers, currently
-	// not supported for SPIFFE certificate validation. Only one TrustStore
-	// specified is currently allowed.
+	// TrustStores: Optional. Set of trust stores to perform validation against.
+	// This field is supported when TrustConfig is configured with Load Balancers,
+	// currently not supported for SPIFFE certificate validation. Only one
+	// TrustStore specified is currently allowed.
 	TrustStores []*TrustStore `json:"trustStores,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of a TrustConfig.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1380,12 +1386,12 @@ func (s TrustConfig) MarshalJSON() ([]byte, error) {
 
 // TrustStore: Defines a trust store.
 type TrustStore struct {
-	// IntermediateCas: Set of intermediate CA certificates used for the path
-	// building phase of chain validation. The field is currently not supported if
-	// TrustConfig is used for the workload certificate feature.
+	// IntermediateCas: Optional. Set of intermediate CA certificates used for the
+	// path building phase of chain validation. The field is currently not
+	// supported if TrustConfig is used for the workload certificate feature.
 	IntermediateCas []*IntermediateCA `json:"intermediateCas,omitempty"`
-	// TrustAnchors: List of Trust Anchors to be used while performing validation
-	// against a given TrustStore.
+	// TrustAnchors: Optional. List of Trust Anchors to be used while performing
+	// validation against a given TrustStore.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntermediateCas") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2143,6 +2149,117 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Pages(ctx context.
 	}
 }
 
+type ProjectsLocationsCertificateIssuanceConfigsPatchCall struct {
+	s                         *Service
+	name                      string
+	certificateissuanceconfig *CertificateIssuanceConfig
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Patch: Updates a CertificateIssuanceConfig.
+//
+//   - name: Identifier. A user-defined name of the certificate issuance config.
+//     CertificateIssuanceConfig names must be unique globally and match pattern
+//     `projects/*/locations/*/certificateIssuanceConfigs/*`.
+func (r *ProjectsLocationsCertificateIssuanceConfigsService) Patch(name string, certificateissuanceconfig *CertificateIssuanceConfig) *ProjectsLocationsCertificateIssuanceConfigsPatchCall {
+	c := &ProjectsLocationsCertificateIssuanceConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.certificateissuanceconfig = certificateissuanceconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCertificateIssuanceConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateIssuanceConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsCertificateIssuanceConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificateissuanceconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "certificatemanager.projects.locations.certificateIssuanceConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCertificateIssuanceConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsCertificateMapsCreateCall struct {
 	s              *Service
 	parent         string
@@ -2631,8 +2748,8 @@ type ProjectsLocationsCertificateMapsPatchCall struct {
 
 // Patch: Updates a CertificateMap.
 //
-//   - name: A user-defined name of the Certificate Map. Certificate Map names
-//     must be unique globally and match pattern
+//   - name: Identifier. A user-defined name of the Certificate Map. Certificate
+//     Map names must be unique globally and match pattern
 //     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Patch(name string, certificatemap *CertificateMap) *ProjectsLocationsCertificateMapsPatchCall {
 	c := &ProjectsLocationsCertificateMapsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3221,8 +3338,8 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall struct {
 
 // Patch: Updates a CertificateMapEntry.
 //
-//   - name: A user-defined name of the Certificate Map Entry. Certificate Map
-//     Entry names must be unique globally and match pattern
+//   - name: Identifier. A user-defined name of the Certificate Map Entry.
+//     Certificate Map Entry names must be unique globally and match pattern
 //     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Patch(name string, certificatemapentry *CertificateMapEntry) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3807,8 +3924,9 @@ type ProjectsLocationsCertificatesPatchCall struct {
 
 // Patch: Updates a Certificate.
 //
-//   - name: A user-defined name of the certificate. Certificate names must be
-//     unique globally and match pattern `projects/*/locations/*/certificates/*`.
+//   - name: Identifier. A user-defined name of the certificate. Certificate
+//     names must be unique globally and match pattern
+//     `projects/*/locations/*/certificates/*`.
 func (r *ProjectsLocationsCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCertificatesPatchCall {
 	c := &ProjectsLocationsCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4393,8 +4511,8 @@ type ProjectsLocationsDnsAuthorizationsPatchCall struct {
 
 // Patch: Updates a DnsAuthorization.
 //
-//   - name: A user-defined name of the dns authorization. DnsAuthorization names
-//     must be unique globally and match pattern
+//   - name: Identifier. A user-defined name of the dns authorization.
+//     DnsAuthorization names must be unique globally and match pattern
 //     `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Patch(name string, dnsauthorization *DnsAuthorization) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c := &ProjectsLocationsDnsAuthorizationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5455,8 +5573,9 @@ type ProjectsLocationsTrustConfigsPatchCall struct {
 
 // Patch: Updates a TrustConfig.
 //
-//   - name: A user-defined name of the trust config. TrustConfig names must be
-//     unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.
+//   - name: Identifier. A user-defined name of the trust config. TrustConfig
+//     names must be unique globally and match pattern
+//     `projects/*/locations/*/trustConfigs/*`.
 func (r *ProjectsLocationsTrustConfigsService) Patch(name string, trustconfig *TrustConfig) *ProjectsLocationsTrustConfigsPatchCall {
 	c := &ProjectsLocationsTrustConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

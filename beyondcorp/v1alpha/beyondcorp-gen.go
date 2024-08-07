@@ -7189,6 +7189,31 @@ func (r *OrganizationsLocationsInsightsService) List(parent string) *Organizatio
 	return c
 }
 
+// Aggregation sets the optional parameter "aggregation": Aggregation type. The
+// default is 'DAILY'.
+//
+// Possible values:
+//
+//	"AGGREGATION_UNSPECIFIED" - Unspecified.
+//	"HOURLY" - Insight should be aggregated at hourly level.
+//	"DAILY" - Insight should be aggregated at daily level.
+//	"WEEKLY" - Insight should be aggregated at weekly level.
+//	"MONTHLY" - Insight should be aggregated at monthly level.
+//	"CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom date
+//
+// range passed in as the start and end time in the request.
+func (c *OrganizationsLocationsInsightsListCall) Aggregation(aggregation string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("aggregation", aggregation)
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Ending time for the duration
+// for which insights are to be pulled. The default is the current time.
+func (c *OrganizationsLocationsInsightsListCall) EndTime(endTime string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
 // Filter sets the optional parameter "filter": Filter expression to restrict
 // the insights returned. Supported filter fields: * `type` * `category` *
 // `subCategory` Examples: * "category = application AND type = count" *
@@ -7224,6 +7249,14 @@ func (c *OrganizationsLocationsInsightsListCall) PageSize(pageSize int64) *Organ
 // page of results the server should return.
 func (c *OrganizationsLocationsInsightsListCall) PageToken(pageToken string) *OrganizationsLocationsInsightsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Starting time for the
+// duration for which insights are to be pulled. The default is 7 days before
+// the current time.
+func (c *OrganizationsLocationsInsightsListCall) StartTime(startTime string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
@@ -16251,6 +16284,31 @@ func (r *ProjectsLocationsInsightsService) List(parent string) *ProjectsLocation
 	return c
 }
 
+// Aggregation sets the optional parameter "aggregation": Aggregation type. The
+// default is 'DAILY'.
+//
+// Possible values:
+//
+//	"AGGREGATION_UNSPECIFIED" - Unspecified.
+//	"HOURLY" - Insight should be aggregated at hourly level.
+//	"DAILY" - Insight should be aggregated at daily level.
+//	"WEEKLY" - Insight should be aggregated at weekly level.
+//	"MONTHLY" - Insight should be aggregated at monthly level.
+//	"CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom date
+//
+// range passed in as the start and end time in the request.
+func (c *ProjectsLocationsInsightsListCall) Aggregation(aggregation string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("aggregation", aggregation)
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Ending time for the duration
+// for which insights are to be pulled. The default is the current time.
+func (c *ProjectsLocationsInsightsListCall) EndTime(endTime string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
 // Filter sets the optional parameter "filter": Filter expression to restrict
 // the insights returned. Supported filter fields: * `type` * `category` *
 // `subCategory` Examples: * "category = application AND type = count" *
@@ -16286,6 +16344,14 @@ func (c *ProjectsLocationsInsightsListCall) PageSize(pageSize int64) *ProjectsLo
 // page of results the server should return.
 func (c *ProjectsLocationsInsightsListCall) PageToken(pageToken string) *ProjectsLocationsInsightsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Starting time for the
+// duration for which insights are to be pulled. The default is 7 days before
+// the current time.
+func (c *ProjectsLocationsInsightsListCall) StartTime(startTime string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 

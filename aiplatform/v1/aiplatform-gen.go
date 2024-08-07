@@ -5075,6 +5075,10 @@ type GoogleCloudAiplatformV1CustomJob struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Resource name of a CustomJob.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: Output only. Time when the CustomJob for the first time entered
 	// the `JOB_STATE_RUNNING` state.
 	StartTime string `json:"startTime,omitempty"`
@@ -5612,6 +5616,9 @@ type GoogleCloudAiplatformV1DedicatedResources struct {
 	// dynamically be deployed onto more replicas, and as traffic decreases, some
 	// of these extra replicas may be freed.
 	MinReplicaCount int64 `json:"minReplicaCount,omitempty"`
+	// Spot: Optional. If true, schedule the deployment workload on spot VMs
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/spot-vms).
+	Spot bool `json:"spot,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingMetricSpecs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11118,8 +11125,8 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	// response_mime_type must also be set. Compatible mimetypes:
 	// `application/json`: Schema for JSON response.
 	ResponseSchema *GoogleCloudAiplatformV1Schema `json:"responseSchema,omitempty"`
-	// Seed: Optional. Seed.
-	Seed int64 `json:"seed,omitempty"`
+	// RoutingConfig: Optional. Routing configuration.
+	RoutingConfig *GoogleCloudAiplatformV1GenerationConfigRoutingConfig `json:"routingConfig,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
@@ -11166,6 +11173,84 @@ func (s *GoogleCloudAiplatformV1GenerationConfig) UnmarshalJSON(data []byte) err
 	s.TopK = float64(s1.TopK)
 	s.TopP = float64(s1.TopP)
 	return nil
+}
+
+// GoogleCloudAiplatformV1GenerationConfigRoutingConfig: Routing config.
+type GoogleCloudAiplatformV1GenerationConfigRoutingConfig struct {
+	// AutoMode: Automated routing.
+	AutoMode *GoogleCloudAiplatformV1GenerationConfigRoutingConfigAutoRoutingMode `json:"autoMode,omitempty"`
+	// ManualMode: Manual routing.
+	ManualMode *GoogleCloudAiplatformV1GenerationConfigRoutingConfigManualRoutingMode `json:"manualMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1GenerationConfigRoutingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1GenerationConfigRoutingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1GenerationConfigRoutingConfigAutoRoutingMode: When
+// automated routing is specified, the routing will be determined by the
+// pretrained routing model and customer provided model routing preference.
+type GoogleCloudAiplatformV1GenerationConfigRoutingConfigAutoRoutingMode struct {
+	// ModelRoutingPreference: The model routing preference.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unspecified model routing preference.
+	//   "PRIORITIZE_QUALITY" - Prefer higher quality over low cost.
+	//   "BALANCED" - Balanced model routing preference.
+	//   "PRIORITIZE_COST" - Prefer lower cost over higher quality.
+	ModelRoutingPreference string `json:"modelRoutingPreference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelRoutingPreference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelRoutingPreference") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1GenerationConfigRoutingConfigAutoRoutingMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1GenerationConfigRoutingConfigAutoRoutingMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1GenerationConfigRoutingConfigManualRoutingMode: When
+// manual routing is set, the specified model will be used directly.
+type GoogleCloudAiplatformV1GenerationConfigRoutingConfigManualRoutingMode struct {
+	// ModelName: The model name to use. Only the public LLM models are accepted.
+	// e.g. gemini-1.5-pro-001.
+	ModelName string `json:"modelName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1GenerationConfigRoutingConfigManualRoutingMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1GenerationConfigRoutingConfigManualRoutingMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1GenericOperationMetadata: Generic Metadata shared by
@@ -11532,6 +11617,10 @@ type GoogleCloudAiplatformV1HyperparameterTuningJob struct {
 	// ParallelTrialCount: Required. The desired number of Trials to run in
 	// parallel.
 	ParallelTrialCount int64 `json:"parallelTrialCount,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: Output only. Time when the HyperparameterTuningJob for the first
 	// time entered the `JOB_STATE_RUNNING` state.
 	StartTime string `json:"startTime,omitempty"`
@@ -13992,7 +14081,8 @@ type GoogleCloudAiplatformV1MachineSpec struct {
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Unspecified accelerator type, which means
 	// no accelerator.
-	//   "NVIDIA_TESLA_K80" - Nvidia Tesla K80 GPU.
+	//   "NVIDIA_TESLA_K80" - Deprecated: Nvidia Tesla K80 GPU has reached end of
+	// support, see https://cloud.google.com/compute/docs/eol/k80-eol.
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
@@ -14015,6 +14105,9 @@ type GoogleCloudAiplatformV1MachineSpec struct {
 	// `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this
 	// field is required.
 	MachineType string `json:"machineType,omitempty"`
+	// ReservationAffinity: Optional. Immutable. Configuration controlling how this
+	// resource pool consumes reservation.
+	ReservationAffinity *GoogleCloudAiplatformV1ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// TpuTopology: Immutable. The topology of the TPUs. Corresponds to the TPU
 	// topologies available from GKE. (Example: tpu_topology: "2x2x1").
 	TpuTopology string `json:"tpuTopology,omitempty"`
@@ -16391,6 +16484,10 @@ type GoogleCloudAiplatformV1NasJob struct {
 	NasJobOutput *GoogleCloudAiplatformV1NasJobOutput `json:"nasJobOutput,omitempty"`
 	// NasJobSpec: Required. The specification of a NasJob.
 	NasJobSpec *GoogleCloudAiplatformV1NasJobSpec `json:"nasJobSpec,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: Output only. Time when the NasJob for the first time entered the
 	// `JOB_STATE_RUNNING` state.
 	StartTime string `json:"startTime,omitempty"`
@@ -17286,6 +17383,10 @@ type GoogleCloudAiplatformV1NotebookExecutionJob struct {
 	// DisplayName: The display name of the NotebookExecutionJob. The name can be
 	// up to 128 characters long and can consist of any UTF-8 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EncryptionSpec: Customer-managed encryption key spec for the notebook
+	// execution job. This field is auto-populated if the NotebookRuntimeTemplate
+	// has an encryption spec.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// ExecutionTimeout: Max running time of the execution job in seconds (default
 	// 86400s / 24 hrs).
 	ExecutionTimeout string `json:"executionTimeout,omitempty"`
@@ -18935,6 +19036,10 @@ type GoogleCloudAiplatformV1PrivateServiceConnectConfig struct {
 	// ProjectAllowlist: A list of Projects from which the forwarding rule will
 	// target the service attachment.
 	ProjectAllowlist []string `json:"projectAllowlist,omitempty"`
+	// ServiceAttachment: Output only. The name of the generated service attachment
+	// resource. This is only populated if the endpoint is deployed with
+	// PrivateServiceConnect.
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EnablePrivateServiceConnect") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -20835,6 +20940,48 @@ type GoogleCloudAiplatformV1RemoveDatapointsResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleCloudAiplatformV1ReservationAffinity: A ReservationAffinity can be
+// used to configure a Vertex AI resource (e.g., a DeployedModel) to draw its
+// Compute Engine resources from a Shared Reservation, or exclusively from
+// on-demand capacity.
+type GoogleCloudAiplatformV1ReservationAffinity struct {
+	// Key: Optional. Corresponds to the label key of a reservation resource. To
+	// target a SPECIFIC_RESERVATION by name, use
+	// `compute.googleapis.com/reservation-name` as the key and specify the name of
+	// your reservation as its value.
+	Key string `json:"key,omitempty"`
+	// ReservationAffinityType: Required. Specifies the reservation affinity type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This should not be used.
+	//   "NO_RESERVATION" - Do not consume from any reserved capacity, only use
+	// on-demand.
+	//   "ANY_RESERVATION" - Consume any reservation available, falling back to
+	// on-demand.
+	//   "SPECIFIC_RESERVATION" - Consume from a specific reservation. When chosen,
+	// the reservation must be identified via the `key` and `values` fields.
+	ReservationAffinityType string `json:"reservationAffinityType,omitempty"`
+	// Values: Optional. Corresponds to the label values of a reservation resource.
+	// This must be the full resource name of the reservation.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ReservationAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ReservationAffinity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1ResourcePool: Represents the spec of a group of
 // resources of the same type, for example machine type, disk, and
 // accelerators, in a PersistentResource.
@@ -21800,9 +21947,12 @@ type GoogleCloudAiplatformV1Scheduling struct {
 	// use.
 	//
 	// Possible values:
-	//   "STRATEGY_UNSPECIFIED" - Strategy will default to ON_DEMAND.
+	//   "STRATEGY_UNSPECIFIED" - Strategy will default to STANDARD.
 	//   "ON_DEMAND" - Regular on-demand provisioning strategy.
 	//   "LOW_COST" - Low cost by making potential use of spot resources.
+	//   "STANDARD" - Standard provisioning strategy uses regular on-demand
+	// resources.
+	//   "SPOT" - Spot provisioning strategy uses spot resources.
 	Strategy string `json:"strategy,omitempty"`
 	// Timeout: The maximum job running time. The default is 7 days.
 	Timeout string `json:"timeout,omitempty"`

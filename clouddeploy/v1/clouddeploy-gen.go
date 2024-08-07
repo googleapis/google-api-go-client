@@ -1516,6 +1516,49 @@ func (s CustomTargetType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomTargetTypeNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/customtargettype_notification" Platform Log
+// event that describes the failure to send a custom target type status change
+// Pub/Sub notification.
+type CustomTargetTypeNotificationEvent struct {
+	// CustomTargetType: The name of the `CustomTargetType`.
+	CustomTargetType string `json:"customTargetType,omitempty"`
+	// CustomTargetTypeUid: Unique identifier of the `CustomTargetType`.
+	CustomTargetTypeUid string `json:"customTargetTypeUid,omitempty"`
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed to be
+	// sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
+	// release_render log type instead.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomTargetType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomTargetType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomTargetTypeNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetTypeNotificationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -1831,6 +1874,50 @@ func (s DeployParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeployPolicyNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/deploypolicy_notification". Platform Log event
+// that describes the failure to send a pub/sub notification when there is a
+// DeployPolicy status change.
+type DeployPolicyNotificationEvent struct {
+	// DeployPolicy: The name of the `DeployPolicy`.
+	DeployPolicy string `json:"deployPolicy,omitempty"`
+	// DeployPolicyUid: Unique identifier of the deploy policy.
+	DeployPolicyUid string `json:"deployPolicyUid,omitempty"`
+	// Message: Debug message for when a deploy policy fails to send a pub/sub
+	// notification.
+	Message string `json:"message,omitempty"`
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed to be
+	// sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
+	// release_render log type instead.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeployPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeployPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeployPolicyNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployPolicyNotificationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeploymentJobs: Deployment job composition.
 type DeploymentJobs struct {
 	// DeployJob: Output only. The deploy Job. This is the deploy job in the phase.
@@ -1983,6 +2070,10 @@ type GatewayServiceMesh struct {
 	Deployment string `json:"deployment,omitempty"`
 	// HttpRoute: Required. Name of the Gateway API HTTPRoute.
 	HttpRoute string `json:"httpRoute,omitempty"`
+	// PodSelectorLabel: Optional. The label to use when selecting Pods for the
+	// Deployment and Service resources. This label must already be present in both
+	// resources.
+	PodSelectorLabel string `json:"podSelectorLabel,omitempty"`
 	// RouteUpdateWaitTime: Optional. The time to wait for route updates to
 	// propagate. The maximum configurable time is 3 hours, in seconds format. If
 	// unspecified, there is no wait time.
@@ -3258,7 +3349,7 @@ func (s PromoteReleaseOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PromoteReleaseRule: `PromoteRelease` rule will automatically promote a
+// PromoteReleaseRule: The `PromoteRelease` rule will automatically promote a
 // release from the current target to a specified target.
 type PromoteReleaseRule struct {
 	// Condition: Output only. Information around the state of the Automation rule.
@@ -4210,6 +4301,9 @@ type ServiceNetworking struct {
 	// limit the number of total Pods used for the deployment strategy to the
 	// number of Pods the Deployment has on the cluster.
 	DisablePodOverprovisioning bool `json:"disablePodOverprovisioning,omitempty"`
+	// PodSelectorLabel: Optional. The label to use when selecting Pods for the
+	// Deployment resource. This label must already be present in the Deployment.
+	PodSelectorLabel string `json:"podSelectorLabel,omitempty"`
 	// Service: Required. Name of the Kubernetes Service.
 	Service string `json:"service,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
@@ -5366,9 +5460,8 @@ type ProjectsLocationsCustomTargetTypesCreateCall struct {
 
 // Create: Creates a new CustomTargetType in a given project and location.
 //
-//   - parent: The parent collection in which the `CustomTargetType` should be
-//     created. Format should be
-//     `projects/{project_id}/locations/{location_name}`.
+//   - parent: The parent collection in which the `CustomTargetType` must be
+//     created. The format is `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsCustomTargetTypesService) Create(parent string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesCreateCall {
 	c := &ProjectsLocationsCustomTargetTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6072,10 +6165,10 @@ func (c *ProjectsLocationsCustomTargetTypesPatchCall) RequestId(requestId string
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the `CustomTargetType`
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it's
-// in the mask. If the user doesn't provide a mask then all fields are
+// used to specify the fields to be overwritten by the update in the
+// `CustomTargetType` resource. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be overwritten
+// if it's in the mask. If the user doesn't provide a mask then all fields are
 // overwritten.
 func (c *ProjectsLocationsCustomTargetTypesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCustomTargetTypesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -6288,9 +6381,8 @@ type ProjectsLocationsDeliveryPipelinesCreateCall struct {
 
 // Create: Creates a new DeliveryPipeline in a given project and location.
 //
-//   - parent: The parent collection in which the `DeliveryPipeline` should be
-//     created. Format should be
-//     `projects/{project_id}/locations/{location_name}`.
+//   - parent: The parent collection in which the `DeliveryPipeline` must be
+//     created. The format is `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Create(parent string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6421,7 +6513,7 @@ type ProjectsLocationsDeliveryPipelinesDeleteCall struct {
 
 // Delete: Deletes a single DeliveryPipeline.
 //
-//   - name: The name of the `DeliveryPipeline` to delete. Format should be
+//   - name: The name of the `DeliveryPipeline` to delete. The format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Delete(name string) *ProjectsLocationsDeliveryPipelinesDeleteCall {
@@ -7002,10 +7094,10 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) RequestId(requestId string
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the `DeliveryPipeline`
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it's
-// in the mask. If the user doesn't provide a mask then all fields are
+// used to specify the fields to be overwritten by the update in the
+// `DeliveryPipeline` resource. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be overwritten
+// if it's in the mask. If the user doesn't provide a mask then all fields are
 // overwritten.
 func (c *ProjectsLocationsDeliveryPipelinesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -7113,8 +7205,8 @@ type ProjectsLocationsDeliveryPipelinesRollbackTargetCall struct {
 
 // RollbackTarget: Creates a `Rollout` to roll back the specified target.
 //
-//   - name: The `DeliveryPipeline` for which the rollback `Rollout` should be
-//     created. Format should be
+//   - name: The `DeliveryPipeline` for which the rollback `Rollout` must be
+//     created. The format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) RollbackTarget(name string, rollbacktargetrequest *RollbackTargetRequest) *ProjectsLocationsDeliveryPipelinesRollbackTargetCall {
@@ -7811,8 +7903,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsCreateCall struct {
 
 // Create: Creates a new Automation in a given project and location.
 //
-//   - parent: The parent collection in which the `Automation` should be created.
-//     Format should be
+//   - parent: The parent collection in which the `Automation` must be created.
+//     The format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Create(parent string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
@@ -7945,7 +8037,7 @@ type ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall struct {
 
 // Delete: Deletes a single Automation resource.
 //
-//   - name: The name of the `Automation` to delete. Format should be
+//   - name: The name of the `Automation` to delete. The format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}/automations/{automation_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Delete(name string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
@@ -8390,10 +8482,11 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) RequestId(reque
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the `Automation` resource by
-// the update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it's in the
-// mask. If the user doesn't provide a mask then all fields are overwritten.
+// used to specify the fields to be overwritten by the update in the
+// `Automation` resource. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it's
+// in the mask. If the user doesn't provide a mask then all fields are
+// overwritten.
 func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8604,8 +8697,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesCreateCall struct {
 
 // Create: Creates a new Release in a given project and location.
 //
-//   - parent: The parent collection in which the `Release` should be created.
-//     Format should be
+//   - parent: The parent collection in which the `Release` is created. The
+//     format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Create(parent string, release *Release) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
@@ -9322,8 +9415,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall struct {
 
 // Create: Creates a new Rollout in a given project and location.
 //
-//   - parent: The parent collection in which the `Rollout` should be created.
-//     Format should be
+//   - parent: The parent collection in which the `Rollout` must be created. The
+//     format is
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipelin
 //     e_name}/releases/{release_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(parent string, rollout *Rollout) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
@@ -10784,8 +10877,8 @@ type ProjectsLocationsTargetsCreateCall struct {
 
 // Create: Creates a new Target in a given project and location.
 //
-//   - parent: The parent collection in which the `Target` should be created.
-//     Format should be `projects/{project_id}/locations/{location_name}`.
+//   - parent: The parent collection in which the `Target` must be created. The
+//     format is `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsTargetsService) Create(parent string, target *Target) *ProjectsLocationsTargetsCreateCall {
 	c := &ProjectsLocationsTargetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10916,7 +11009,7 @@ type ProjectsLocationsTargetsDeleteCall struct {
 
 // Delete: Deletes a single Target.
 //
-//   - name: The name of the `Target` to delete. Format should be
+//   - name: The name of the `Target` to delete. The format is
 //     `projects/{project_id}/locations/{location_name}/targets/{target_name}`.
 func (r *ProjectsLocationsTargetsService) Delete(name string) *ProjectsLocationsTargetsDeleteCall {
 	c := &ProjectsLocationsTargetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11484,8 +11577,8 @@ func (c *ProjectsLocationsTargetsPatchCall) RequestId(requestId string) *Project
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Target resource by the
-// update. The fields specified in the update_mask are relative to the
+// used to specify the fields to be overwritten by the update in the `Target`
+// resource. The fields specified in the update_mask are relative to the
 // resource, not the full request. A field will be overwritten if it's in the
 // mask. If the user doesn't provide a mask then all fields are overwritten.
 func (c *ProjectsLocationsTargetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTargetsPatchCall {

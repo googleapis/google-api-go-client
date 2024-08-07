@@ -1610,8 +1610,9 @@ func (s GoogleCloudRetailV2alphaAlertConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRetailV2alphaAlertConfigAlertPolicy: Alert policy for a customer.
 type GoogleCloudRetailV2alphaAlertConfigAlertPolicy struct {
-	// AlertGroup: The feature that provides alerting capability. Supported value
-	// is only `search-data-quality` for now.
+	// AlertGroup: The feature that provides alerting capability. Supported value:
+	// - `search-data-quality` for retail search customers. - `conv-data-quality`
+	// for retail conversation customers.
 	AlertGroup string `json:"alertGroup,omitempty"`
 	// EnrollStatus: The enrollment status of a customer.
 	//
@@ -2483,7 +2484,6 @@ func (s GoogleCloudRetailV2alphaCompleteQueryResponse) MarshalJSON() ([]byte, er
 // GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult: Resource that
 // represents attribute results.
 type GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult struct {
-	// Suggestions: The list of suggestions for the attribute.
 	Suggestions []string `json:"suggestions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Suggestions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3199,6 +3199,59 @@ type GoogleCloudRetailV2alphaExportMetadata struct {
 
 func (s GoogleCloudRetailV2alphaExportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaExportProductsRequest: Request message for
+// ExportProducts method.
+type GoogleCloudRetailV2alphaExportProductsRequest struct {
+	// Filter: A filtering expression to specify restrictions on returned events.
+	// The expression is a sequence of terms. Each term applies a restriction to
+	// the returned products. Use this expression to restrict results to a specific
+	// time range, tag, or stock state or to filter products by product type. For
+	// example, `lastModifiedTime > "2012-04-23T18:25:43.511Z"
+	// lastModifiedTime<"2012-04-23T18:25:43.511Z" productType=primary` We expect
+	// only four types of fields: * `lastModifiedTime`: This can be specified
+	// twice, once with a less than operator and once with a greater than operator.
+	// The `lastModifiedTime` restriction should result in one, contiguous, valid,
+	// last-modified, time range. * `productType`: Supported values are `primary`
+	// and `variant`. The Boolean operators `OR` and `NOT` are supported if the
+	// expression is enclosed in parentheses and must be separated from the
+	// `productType` values by a space. * `availability`: Supported values are
+	// `IN_STOCK`, `OUT_OF_STOCK`, `PREORDER`, and `BACKORDER`. Boolean operators
+	// `OR` and `NOT` are supported if the expression is enclosed in parentheses
+	// and must be separated from the `availability` values by a space. * `Tag
+	// expressions`: Restricts output to products that match all of the specified
+	// tags. Boolean operators `OR` and `NOT` are supported if the expression is
+	// enclosed in parentheses and the operators are separated from the tag values
+	// by a space. Also supported is '`-"tagA"', which is equivalent to '`NOT
+	// "tagA"'. Tag values must be double-quoted, UTF-8 encoded strings and have a
+	// size limit of 1,000 characters. Some examples of valid filters expressions:
+	// * Example 1: `lastModifiedTime > "2012-04-23T18:25:43.511Z" lastModifiedTime
+	// < "2012-04-23T18:30:43.511Z" * Example 2: `lastModifiedTime >
+	// "2012-04-23T18:25:43.511Z" productType = "variant" * Example 3: `tag=("Red"
+	// OR "Blue") tag="New-Arrival" tag=(NOT "promotional") productType = "primary"
+	// lastModifiedTime < "2018-04-23T18:30:43.511Z" * Example 4:
+	// `lastModifiedTime > "2012-04-23T18:25:43.511Z" * Example 5: `availability =
+	// (IN_STOCK OR BACKORDER)`
+	Filter string `json:"filter,omitempty"`
+	// OutputConfig: Required. The output location of the data.
+	OutputConfig *GoogleCloudRetailV2alphaOutputConfig `json:"outputConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaExportProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaExportProductsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12365,6 +12418,111 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Do(opts ...googlea
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsBranchesProductsExportCall struct {
+	s                                             *Service
+	parent                                        string
+	googlecloudretailv2alphaexportproductsrequest *GoogleCloudRetailV2alphaExportProductsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Export: Exports multiple Products.
+//
+//   - parent: Resource name of a Branch, and `default_branch` for branch_id
+//     component is supported. For example
+//     `projects/1234/locations/global/catalogs/default_catalog/branches/default_b
+//     ranch`.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) Export(parent string, googlecloudretailv2alphaexportproductsrequest *GoogleCloudRetailV2alphaExportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudretailv2alphaexportproductsrequest = googlecloudretailv2alphaexportproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphaexportproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/products:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.export" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

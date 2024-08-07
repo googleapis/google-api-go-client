@@ -4179,8 +4179,8 @@ type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
 	// the inspection rules defined by the `InspectTemplate` change. If not set,
 	// changing the template will not cause a data profile to update.
 	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
-	// RefreshFrequency: Frequency to update profiles regardless of whether the
-	// underlying resource has changed. Defaults to never.
+	// RefreshFrequency: Frequency at which profiles should be updated, regardless
+	// of whether the underlying resource has changed. Defaults to never.
 	//
 	// Possible values:
 	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
@@ -4298,7 +4298,7 @@ func (s GooglePrivacyDlpV2DiscoverySchemaModifiedCadence) MarshalJSON() ([]byte,
 // discovery scan. Denotes an organization ID or folder ID within an
 // organization.
 type GooglePrivacyDlpV2DiscoveryStartingLocation struct {
-	// FolderId: The ID of the folder within an organization to scan.
+	// FolderId: The ID of the folder within an organization to be scanned.
 	FolderId int64 `json:"folderId,omitempty,string"`
 	// OrganizationId: The ID of an organization to scan.
 	OrganizationId int64 `json:"organizationId,omitempty,string"`
@@ -12482,7 +12482,7 @@ type OrganizationsLocationsConnectionsListCall struct {
 // List: Lists Connections in a parent. Use SearchConnections to see all
 // connections within an organization.
 //
-//   - parent: Resource name of the organization or project, for example
+//   - parent: Resource name of the organization or project, for example,
 //     `organizations/433245324/locations/europe` or
 //     `projects/project-id/locations/asia`.
 func (r *OrganizationsLocationsConnectionsService) List(parent string) *OrganizationsLocationsConnectionsListCall {
@@ -12739,7 +12739,7 @@ type OrganizationsLocationsConnectionsSearchCall struct {
 // Search: Searches for Connections in a parent.
 //
 //   - parent: Resource name of the organization or project with a wildcard
-//     location, for example `organizations/433245324/locations/-` or
+//     location, for example, `organizations/433245324/locations/-` or
 //     `projects/project-id/locations/-`.
 func (r *OrganizationsLocationsConnectionsService) Search(parent string) *OrganizationsLocationsConnectionsSearchCall {
 	c := &OrganizationsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -21506,7 +21506,7 @@ type ProjectsLocationsConnectionsListCall struct {
 // List: Lists Connections in a parent. Use SearchConnections to see all
 // connections within an organization.
 //
-//   - parent: Resource name of the organization or project, for example
+//   - parent: Resource name of the organization or project, for example,
 //     `organizations/433245324/locations/europe` or
 //     `projects/project-id/locations/asia`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
@@ -21763,7 +21763,7 @@ type ProjectsLocationsConnectionsSearchCall struct {
 // Search: Searches for Connections in a parent.
 //
 //   - parent: Resource name of the organization or project with a wildcard
-//     location, for example `organizations/433245324/locations/-` or
+//     location, for example, `organizations/433245324/locations/-` or
 //     `projects/project-id/locations/-`.
 func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLocationsConnectionsSearchCall {
 	c := &ProjectsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

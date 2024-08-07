@@ -697,8 +697,9 @@ type AlertPolicy struct {
 	// policy. If provided in a call to create or update, this field will be
 	// ignored.
 	MutationRecord *MutationRecord `json:"mutationRecord,omitempty"`
-	// Name: Required if the policy exists. The resource name for this policy. The
-	// format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+	// Name: Identifier. Required if the policy exists. The resource name for this
+	// policy. The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
 	// [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is
 	// created. When calling the alertPolicies.create method, do not include the
 	// name field in the alerting policy passed as part of the request.
@@ -7656,8 +7657,8 @@ type ProjectsAlertPoliciesPatchCall struct {
 // modify the state of alerting policies in a single project. This includes
 // calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
 //
-//   - name: Required if the policy exists. The resource name for this policy.
-//     The format is:
+//   - name: Identifier. Required if the policy exists. The resource name for
+//     this policy. The format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
 //     [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is
 //     created. When calling the alertPolicies.create method, do not include the

@@ -558,7 +558,7 @@ type GoogleCloudAiplatformV1beta1FunctionCallingConfig struct {
 	//   "MODE_UNSPECIFIED" - Unspecified function calling mode. This value should
 	// not be used.
 	//   "AUTO" - Default model behavior, model decides to predict either a
-	// function call or a natural language repspose.
+	// function call or a natural language response.
 	//   "ANY" - Model is constrained to always predicting a function call only. If
 	// "allowed_function_names" are set, the predicted function call will be
 	// limited to any one of "allowed_function_names", else the predicted function
@@ -780,7 +780,9 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback) Marsh
 type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	// CandidatesTokenCount: Number of tokens in the response(s).
 	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
-	// PromptTokenCount: Number of tokens in the request.
+	// PromptTokenCount: Number of tokens in the request. When `cached_content` is
+	// set, this is still the total effective prompt size meaning this includes the
+	// number of tokens in the cached content.
 	PromptTokenCount int64 `json:"promptTokenCount,omitempty"`
 	TotalTokenCount  int64 `json:"totalTokenCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to

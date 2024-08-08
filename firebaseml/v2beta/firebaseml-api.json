@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240802",
+  "revision": "20240805",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -717,6 +717,11 @@
         "routingConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig",
           "description": "Optional. Routing configuration."
+        },
+        "seed": {
+          "description": "Optional. Seed.",
+          "format": "int32",
+          "type": "integer"
         },
         "stopSequences": {
           "description": "Optional. Stop sequences.",

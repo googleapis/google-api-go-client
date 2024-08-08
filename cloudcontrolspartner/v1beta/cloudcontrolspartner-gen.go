@@ -360,8 +360,8 @@ type Customer struct {
 	// CustomerOnboardingState: Output only. Container for customer onboarding
 	// steps
 	CustomerOnboardingState *CustomerOnboardingState `json:"customerOnboardingState,omitempty"`
-	// DisplayName: Output only. The customer organization's display name. E.g.
-	// "google.com".
+	// DisplayName: Optional. The customer organization's display name. E.g.
+	// "Google".
 	DisplayName string `json:"displayName,omitempty"`
 	// IsOnboarded: Output only. Indicates whether a customer is fully onboarded
 	IsOnboarded bool `json:"isOnboarded,omitempty"`
@@ -821,6 +821,8 @@ type PartnerPermissions struct {
 	//   "ACCESS_APPROVAL_REQUESTS" - Permission for Access Approval requests
 	//   "ASSURED_WORKLOADS_EKM_CONNECTION_STATUS" - Permission for External Key
 	// Manager connection status
+	//   "ACCESS_TRANSPARENCY_LOGS_SUPPORT_CASE_VIEWER" - Permission for support
+	// case details for Access Transparency log entries
 	PartnerPermissions []string `json:"partnerPermissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

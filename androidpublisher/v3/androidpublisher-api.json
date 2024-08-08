@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240805",
+  "revision": "20240806",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7513,7 +7513,7 @@
       "type": "object"
     },
     "MultiAbi": {
-      "description": "Represents a list of apis.",
+      "description": "Represents a list of ABIs.",
       "id": "MultiAbi",
       "properties": {
         "abi": {

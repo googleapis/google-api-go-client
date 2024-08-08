@@ -976,6 +976,21 @@ type CreativeServingDecision struct {
 	//   "RENDERING_PLAYABLE" - The creative is considered a playable display
 	// creative.
 	DetectedAttributes []string `json:"detectedAttributes,omitempty"`
+	// DetectedCategories: Output only. IDs of the detected categories, if any. The
+	// taxonomy in which the categories are expressed is specified by the
+	// detected_categories_taxonomy field. Can be used to filter the response of
+	// the creatives.list method.
+	DetectedCategories []string `json:"detectedCategories,omitempty"`
+	// DetectedCategoriesTaxonomy: Output only. The taxonomy in which the
+	// detected_categories field is expressed.
+	//
+	// Possible values:
+	//   "AD_CATEGORY_TAXONOMY_UNSPECIFIED" - Default value that should never be
+	// used.
+	//   "IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See
+	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%201.0.tsv
+	// for more details.
+	DetectedCategoriesTaxonomy string `json:"detectedCategoriesTaxonomy,omitempty"`
 	// DetectedClickThroughUrls: The set of detected destination URLs for the
 	// creative. Can be used to filter the response of the creatives.list method.
 	DetectedClickThroughUrls []string `json:"detectedClickThroughUrls,omitempty"`

@@ -2267,7 +2267,8 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
+	// for XLSX files, only digital parsing and layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3822,6 +3823,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestQueryUnderstandingSpecQu
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
 	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4256,6 +4258,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassific
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
 	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6752,6 +6755,9 @@ func (s GoogleCloudDiscoveryengineV1alphaDocumentContent) MarshalJSON() ([]byte,
 type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	// Id: The Document resource ID.
 	Id string `json:"id,omitempty"`
+	// Joined: Output only. Whether the referenced Document can be found in the
+	// data store.
+	Joined bool `json:"joined,omitempty"`
 	// Name: The Document resource full name, of the form:
 	// `projects/{project_id}/locations/{location}/collections/{collection_id}/dataS
 	// tores/{data_store_id}/branches/{branch_id}/documents/{document_id}`
@@ -6807,7 +6813,8 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
+	// for XLSX files, only digital parsing and layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7723,58 +7730,6 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec) M
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata: Metadata related
-// to the progress of the Export operation. This is returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata struct {
-	// CreateTime: Operation create time.
-	CreateTime string `json:"createTime,omitempty"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaExportUserEventsMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse: Response of the
-// ExportUserEventsRequest. If the long running operation was successful, then
-// this message is returned by the google.longrunning.Operations.response
-// field.
-type GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse struct {
-	// Status: The status of the export operation.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Status") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaExportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1alphaFactChunk: Fact Chunk.
 type GoogleCloudDiscoveryengineV1alphaFactChunk struct {
 	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
@@ -7851,6 +7806,11 @@ type GoogleCloudDiscoveryengineV1alphaFhirStoreSource struct {
 	// a length limit of 2,000 characters. Can be specified if one wants to have
 	// the FhirStore export to a specific Cloud Storage directory.
 	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
+	// ResourceTypes: The FHIR resource types to import. The resource types should
+	// be a subset of all supported FHIR resource types
+	// (https://cloud.google.com/generative-ai-app-builder/docs/fhir-schema-reference#resource-level-specification).
+	// Default to all supported FHIR resource types if empty.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FhirStore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7882,6 +7842,8 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "ADVANCED_SITE_SEARCH_DATA_SOURCE_UNSPECIFIED" - Value used when unset.
 	//   "METATAGS" - Retrieve value from meta tag.
 	//   "PAGEMAP" - Retrieve value from page map.
+	//   "URI_PATTERN_MAPPING" - Retrieve value from the attributes set by
+	// SiteSearchEngineService.SetUriPatternDocumentData API.
 	//   "SCHEMA_ORG" - Retrieve value from schema.org data.
 	AdvancedSiteSearchDataSources []string `json:"advancedSiteSearchDataSources,omitempty"`
 	// CompletableOption: If completable_option is COMPLETABLE_ENABLED, field
@@ -12582,6 +12544,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUndersta
 	Address string `json:"address,omitempty"`
 	// FieldName: The name of the geolocation field as defined in the schema.
 	FieldName string `json:"fieldName,omitempty"`
+	// Latitude: The latitude of the geolocation inferred from the input query.
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude of the geolocation inferred from the input query.
+	Longitude float64 `json:"longitude,omitempty"`
 	// RadiusInMeters: The radius in meters around the address. The record is
 	// returned if the location of the geolocation field is within the radius.
 	RadiusInMeters float64 `json:"radiusInMeters,omitempty"`
@@ -12606,6 +12572,8 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnder
 func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint
 	var s1 struct {
+		Latitude       gensupport.JSONFloat64 `json:"latitude"`
+		Longitude      gensupport.JSONFloat64 `json:"longitude"`
 		RadiusInMeters gensupport.JSONFloat64 `json:"radiusInMeters"`
 		*NoMethod
 	}
@@ -12613,6 +12581,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnde
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
 	s.RadiusInMeters = float64(s1.RadiusInMeters)
 	return nil
 }
@@ -14953,7 +14923,8 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
+	// for XLSX files, only digital parsing and layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or

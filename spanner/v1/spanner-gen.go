@@ -997,17 +997,16 @@ func (s ChangeQuorumMetadata) MarshalJSON() ([]byte, error) {
 
 // ChangeQuorumRequest: The request for ChangeQuorum.
 type ChangeQuorumRequest struct {
-	// Etag: Optional. The etag is the hash of the QuorumInfo. The ChangeQuorum
-	// operation will only be performed if the etag matches that of the QuorumInfo
-	// in the current database resource. Otherwise the API will return an `ABORTED`
-	// error. The etag is used for optimistic concurrency control as a way to help
-	// prevent simultaneous change quorum requests that could create a race
-	// condition.
+	// Etag: Optional. The etag is the hash of the `QuorumInfo`. The `ChangeQuorum`
+	// operation is only performed if the etag matches that of the `QuorumInfo` in
+	// the current database resource. Otherwise the API returns an `ABORTED` error.
+	// The etag is used for optimistic concurrency control as a way to help prevent
+	// simultaneous change quorum requests that could create a race condition.
 	Etag string `json:"etag,omitempty"`
-	// Name: Required. Name of the database in which to apply the ChangeQuorum.
+	// Name: Required. Name of the database in which to apply `ChangeQuorum`.
 	// Values are of the form `projects//instances//databases/`.
 	Name string `json:"name,omitempty"`
-	// QuorumType: Required. The type of this Quorum.
+	// QuorumType: Required. The type of this quorum.
 	QuorumType *QuorumType `json:"quorumType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1814,7 +1813,7 @@ type Database struct {
 	// DATABASE` statement. This name can be passed to other API methods to
 	// identify the database.
 	Name string `json:"name,omitempty"`
-	// QuorumInfo: Output only. Applicable only for databases that use dual region
+	// QuorumInfo: Output only. Applicable only for databases that use dual-region
 	// instance configurations. Contains information about the quorum.
 	QuorumInfo *QuorumInfo `json:"quorumInfo,omitempty"`
 	// Reconciling: Output only. If true, the database is being updated. If false,
@@ -2860,16 +2859,16 @@ type InstanceConfig struct {
 	// QuorumType: Output only. The `QuorumType` of the instance configuration.
 	//
 	// Possible values:
-	//   "QUORUM_TYPE_UNSPECIFIED" - Not specified.
-	//   "REGION" - An instance configuration tagged with REGION quorum type forms
-	// a write quorum in a single region.
-	//   "DUAL_REGION" - An instance configuration tagged with DUAL_REGION quorum
-	// type forms a write quorums with exactly two read-write regions in a
-	// multi-region configuration. This instance configurations requires
-	// reconfiguration in the event of regional failures.
-	//   "MULTI_REGION" - An instance configuration tagged with MULTI_REGION quorum
-	// type forms a write quorums from replicas are spread across more than one
-	// region in a multi-region configuration.
+	//   "QUORUM_TYPE_UNSPECIFIED" - Quorum type not specified.
+	//   "REGION" - An instance configuration tagged with `REGION` quorum type
+	// forms a write quorum in a single region.
+	//   "DUAL_REGION" - An instance configuration tagged with the `DUAL_REGION`
+	// quorum type forms a write quorum with exactly two read-write regions in a
+	// multi-region configuration. This instance configuration requires failover in
+	// the event of regional failures.
+	//   "MULTI_REGION" - An instance configuration tagged with the `MULTI_REGION`
+	// quorum type forms a write quorum from replicas that are spread across more
+	// than one region in a multi-region configuration.
 	QuorumType string `json:"quorumType,omitempty"`
 	// Reconciling: Output only. If true, the instance configuration is being
 	// created or updated. If false, there are no ongoing operations for the
@@ -2985,10 +2984,11 @@ type InstancePartition struct {
 	// be zero in API responses for instance partitions that are not yet in the
 	// `READY` state.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
-	// ReferencingBackups: Output only. The names of the backups that reference
-	// this instance partition. Referencing backups should share the parent
-	// instance. The existence of any referencing backup prevents the instance
-	// partition from being deleted.
+	// ReferencingBackups: Output only. Deprecated: This field is not populated.
+	// Output only. The names of the backups that reference this instance
+	// partition. Referencing backups should share the parent instance. The
+	// existence of any referencing backup prevents the instance partition from
+	// being deleted.
 	ReferencingBackups []string `json:"referencingBackups,omitempty"`
 	// ReferencingDatabases: Output only. The names of the databases that reference
 	// this instance partition. Referencing databases should share the parent
@@ -4542,19 +4542,19 @@ func (s QueryPlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QuorumInfo: Information about the dual region quorum.
+// QuorumInfo: Information about the dual-region quorum.
 type QuorumInfo struct {
 	// Etag: Output only. The etag is used for optimistic concurrency control as a
-	// way to help prevent simultaneous ChangeQuorum requests that could create a
+	// way to help prevent simultaneous `ChangeQuorum` requests that might create a
 	// race condition.
 	Etag string `json:"etag,omitempty"`
-	// Initiator: Output only. Whether this ChangeQuorum is a Google or User
+	// Initiator: Output only. Whether this `ChangeQuorum` is Google or User
 	// initiated.
 	//
 	// Possible values:
 	//   "INITIATOR_UNSPECIFIED" - Unspecified.
-	//   "GOOGLE" - ChangeQuorum initiated by Google.
-	//   "USER" - ChangeQuorum initiated by User.
+	//   "GOOGLE" - `ChangeQuorum` initiated by Google.
+	//   "USER" - `ChangeQuorum` initiated by User.
 	Initiator string `json:"initiator,omitempty"`
 	// QuorumType: Output only. The type of this quorum. See QuorumType for more
 	// information about quorum type specifications.
@@ -4579,12 +4579,12 @@ func (s QuorumInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QuorumType: Information about the database quorum type. this applies only
-// for dual region instance configs.
+// QuorumType: Information about the database quorum type. This only applies to
+// dual-region instance configs.
 type QuorumType struct {
-	// DualRegion: Dual region quorum type.
+	// DualRegion: Dual-region quorum type.
 	DualRegion *DualRegionQuorum `json:"dualRegion,omitempty"`
-	// SingleRegion: Single region quorum type.
+	// SingleRegion: Single-region quorum type.
 	SingleRegion *SingleRegionQuorum `json:"singleRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DualRegion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5408,11 +5408,10 @@ func (s ShortRepresentation) MarshalJSON() ([]byte, error) {
 // SingleRegionQuorum: Message type for a single-region quorum.
 type SingleRegionQuorum struct {
 	// ServingLocation: Required. The location of the serving region, e.g.
-	// "us-central1". The location must be one of the regions within the dual
-	// region instance configuration of your database. The list of valid locations
-	// is available via [GetInstanceConfig[InstanceAdmin.GetInstanceConfig] API.
-	// This should only be used if you plan to change quorum in single-region
-	// quorum type.
+	// "us-central1". The location must be one of the regions within the
+	// dual-region instance configuration of your database. The list of valid
+	// locations is available using the GetInstanceConfig API. This should only be
+	// used if you plan to change quorum to the single-region quorum type.
 	ServingLocation string `json:"servingLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServingLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11164,17 +11163,17 @@ type ProjectsInstancesDatabasesChangequorumCall struct {
 	header_             http.Header
 }
 
-// Changequorum: ChangeQuorum is strictly restricted to databases that use dual
-// region instance configurations. Initiates a background operation to change
-// quorum a database from dual-region mode to single-region mode and vice
-// versa. The returned long-running operation will have a name of the format
+// Changequorum: `ChangeQuorum` is strictly restricted to databases that use
+// dual-region instance configurations. Initiates a background operation to
+// change the quorum of a database from dual-region mode to single-region mode
+// or vice versa. The returned long-running operation has a name of the format
 // `projects//instances//databases//operations/` and can be used to track
-// execution of the ChangeQuorum. The metadata field type is
+// execution of the `ChangeQuorum`. The metadata field type is
 // ChangeQuorumMetadata. Authorization requires
 // `spanner.databases.changequorum` permission on the resource database.
 //
-//   - name: Name of the database in which to apply the ChangeQuorum. Values are
-//     of the form `projects//instances//databases/`.
+//   - name: Name of the database in which to apply `ChangeQuorum`. Values are of
+//     the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) Changequorum(name string, changequorumrequest *ChangeQuorumRequest) *ProjectsInstancesDatabasesChangequorumCall {
 	c := &ProjectsInstancesDatabasesChangequorumCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

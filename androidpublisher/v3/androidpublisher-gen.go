@@ -4203,7 +4203,7 @@ func (s Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MultiAbi: Represents a list of apis.
+// MultiAbi: Represents a list of ABIs.
 type MultiAbi struct {
 	// Abi: A list of targeted ABIs, as represented by the Android Platform
 	Abi []*Abi `json:"abi,omitempty"`

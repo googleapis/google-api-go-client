@@ -829,6 +829,8 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	ResponseSchema *GoogleCloudAiplatformV1beta1Schema `json:"responseSchema,omitempty"`
 	// RoutingConfig: Optional. Routing configuration.
 	RoutingConfig *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig `json:"routingConfig,omitempty"`
+	// Seed: Optional. Seed.
+	Seed int64 `json:"seed,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.

@@ -2750,8 +2750,8 @@ type GoogleAppsCardV1SelectionInput struct {
 	// characters for static data sources and 3 characters for external data
 	// sources.
 	MultiSelectMinQueryLength int64 `json:"multiSelectMinQueryLength,omitempty"`
-	// Name: The name that identifies the selection input in a form input event.
-	// For details about working with form inputs, see Receive form data
+	// Name: Required. The name that identifies the selection input in a form input
+	// event. For details about working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Name string `json:"name,omitempty"`
 	// OnChangeAction: If specified, the form is submitted when the selection

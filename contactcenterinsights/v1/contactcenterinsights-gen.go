@@ -2606,6 +2606,8 @@ type GoogleCloudContactcenterinsightsV1InterruptionData struct {
 type GoogleCloudContactcenterinsightsV1Issue struct {
 	// CreateTime: Output only. The time at which this issue was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DisplayDescription: Representative description of the issue.
+	DisplayDescription string `json:"displayDescription,omitempty"`
 	// DisplayName: The representative name for the issue.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Immutable. The resource name of the issue. Format:

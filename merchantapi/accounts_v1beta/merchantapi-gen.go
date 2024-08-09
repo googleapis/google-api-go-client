@@ -699,8 +699,11 @@ type CreateAndConfigureAccountRequest struct {
 	AcceptTermsOfService *AcceptTermsOfService `json:"acceptTermsOfService,omitempty"`
 	// Account: Required. The account to be created.
 	Account *Account `json:"account,omitempty"`
-	// Service: Optional. If specified, an account service between the account to
-	// be created and the provider account is initialized as part of the creation.
+	// Service: Required. An account service between the account to be created and
+	// the provider account is initialized as part of the creation. At least one
+	// such service needs to be provided. Currently only `account_aggregation` is
+	// supported which means the newly created account will be a subaccount of the
+	// provider defined in the `account_aggregation` service.
 	Service []*AddAccountService `json:"service,omitempty"`
 	// Users: Optional. Users to be added to the account.
 	Users []*CreateUserRequest `json:"users,omitempty"`

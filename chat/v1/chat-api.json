@@ -1241,7 +1241,7 @@
       }
     }
   },
-  "revision": "20240801",
+  "revision": "20240804",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -2816,7 +2816,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "The name that identifies the selection input in a form input event. For details about working with form inputs, see [Receive form data](https://developers.google.com/workspace/chat/read-form-data).",
+          "description": "Required. The name that identifies the selection input in a form input event. For details about working with form inputs, see [Receive form data](https://developers.google.com/workspace/chat/read-form-data).",
           "type": "string"
         },
         "onChangeAction": {

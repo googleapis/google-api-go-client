@@ -792,11 +792,7 @@ func (s Document) MarshalJSON() ([]byte, error) {
 // DocumentChange: A Document has changed. May be the result of multiple
 // writes, including deletes, that ultimately resulted in a new value for the
 // Document. Multiple DocumentChange messages may be returned for the same
-// logical change, if multiple targets are affected. For PipelineQueryTargets,
-// `document` will be in the new pipeline format, For a Listen stream with both
-// QueryTargets and PipelineQueryTargets present, if a document matches both
-// types of queries, then a separate DocumentChange messages will be sent out
-// one for each set.
+// logical change, if multiple targets are affected.
 type DocumentChange struct {
 	// Document: The new state of the Document. If `mask` is set, contains only
 	// fields that were updated or added.
@@ -1292,16 +1288,20 @@ type FindNearest struct {
 	// Possible values:
 	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
 	//   "EUCLIDEAN" - Measures the EUCLIDEAN distance between the vectors. See
-	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more
-	//   "COSINE" - Compares vectors based on the angle between them, which allows
-	// you to measure similarity that isn't based on the vectors magnitude. We
-	// recommend using DOT_PRODUCT with unit normalized vectors instead of COSINE
-	// distance, which is mathematically equivalent with better performance. See
-	// [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to
-	// learn more.
+	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more.
+	// The resulting distance decreases the more similar two vectors are.
+	//   "COSINE" - COSINE distance compares vectors based on the angle between
+	// them, which allows you to measure similarity that isn't based on the vectors
+	// magnitude. We recommend using DOT_PRODUCT with unit normalized vectors
+	// instead of COSINE distance, which is mathematically equivalent with better
+	// performance. See [Cosine
+	// Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to learn more
+	// about COSINE similarity and COSINE distance. The resulting COSINE distance
+	// decreases the more similar two vectors are.
 	//   "DOT_PRODUCT" - Similar to cosine but is affected by the magnitude of the
 	// vectors. See [Dot Product](https://en.wikipedia.org/wiki/Dot_product) to
-	// learn more.
+	// learn more. The resulting distance increases the more similar two vectors
+	// are.
 	DistanceMeasure string `json:"distanceMeasure,omitempty"`
 	// Limit: Required. The number of nearest neighbors to return. Must be a
 	// positive integer of no more than 1000.

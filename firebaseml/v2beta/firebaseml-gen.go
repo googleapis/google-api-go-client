@@ -1800,8 +1800,11 @@ type ProjectsLocationsPublishersModelsGenerateContentCall struct {
 
 // GenerateContent: Generate content with multimodal inputs.
 //
-//   - model: The name of the publisher model requested to serve the prediction.
-//     Format: `projects/{project}/locations/{location}/publishers/*/models/*`.
+//   - model: The fully qualified name of the publisher model or tuned model
+//     endpoint to use. Publisher model format:
+//     `projects/{project}/locations/{location}/publishers/*/models/*` Tuned
+//     model endpoint format:
+//     `projects/{project}/locations/{location}/endpoints/{endpoint}`.
 func (r *ProjectsLocationsPublishersModelsService) GenerateContent(model string, googlecloudaiplatformv1beta1generatecontentrequest *GoogleCloudAiplatformV1beta1GenerateContentRequest) *ProjectsLocationsPublishersModelsGenerateContentCall {
 	c := &ProjectsLocationsPublishersModelsGenerateContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.model = model
@@ -1904,8 +1907,11 @@ type ProjectsLocationsPublishersModelsStreamGenerateContentCall struct {
 // StreamGenerateContent: Generate content with multimodal inputs with
 // streaming support.
 //
-//   - model: The name of the publisher model requested to serve the prediction.
-//     Format: `projects/{project}/locations/{location}/publishers/*/models/*`.
+//   - model: The fully qualified name of the publisher model or tuned model
+//     endpoint to use. Publisher model format:
+//     `projects/{project}/locations/{location}/publishers/*/models/*` Tuned
+//     model endpoint format:
+//     `projects/{project}/locations/{location}/endpoints/{endpoint}`.
 func (r *ProjectsLocationsPublishersModelsService) StreamGenerateContent(model string, googlecloudaiplatformv1beta1generatecontentrequest *GoogleCloudAiplatformV1beta1GenerateContentRequest) *ProjectsLocationsPublishersModelsStreamGenerateContentCall {
 	c := &ProjectsLocationsPublishersModelsStreamGenerateContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.model = model

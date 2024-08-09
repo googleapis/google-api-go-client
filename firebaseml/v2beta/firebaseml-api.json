@@ -151,7 +151,7 @@
                       ],
                       "parameters": {
                         "model": {
-                          "description": "Required. The name of the publisher model requested to serve the prediction. Format: `projects/{project}/locations/{location}/publishers/*/models/*`",
+                          "description": "Required. The fully qualified name of the publisher model or tuned model endpoint to use. Publisher model format: `projects/{project}/locations/{location}/publishers/*/models/*` Tuned model endpoint format: `projects/{project}/locations/{location}/endpoints/{endpoint}`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+/models/[^/]+$",
                           "required": true,
@@ -179,7 +179,7 @@
                       ],
                       "parameters": {
                         "model": {
-                          "description": "Required. The name of the publisher model requested to serve the prediction. Format: `projects/{project}/locations/{location}/publishers/*/models/*`",
+                          "description": "Required. The fully qualified name of the publisher model or tuned model endpoint to use. Publisher model format: `projects/{project}/locations/{location}/publishers/*/models/*` Tuned model endpoint format: `projects/{project}/locations/{location}/endpoints/{endpoint}`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+/models/[^/]+$",
                           "required": true,
@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240805",
+  "revision": "20240806",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {

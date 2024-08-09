@@ -864,11 +864,7 @@ func (s Document) MarshalJSON() ([]byte, error) {
 // DocumentChange: A Document has changed. May be the result of multiple
 // writes, including deletes, that ultimately resulted in a new value for the
 // Document. Multiple DocumentChange messages may be returned for the same
-// logical change, if multiple targets are affected. For PipelineQueryTargets,
-// `document` will be in the new pipeline format, For a Listen stream with both
-// QueryTargets and PipelineQueryTargets present, if a document matches both
-// types of queries, then a separate DocumentChange messages will be sent out
-// one for each set.
+// logical change, if multiple targets are affected.
 type DocumentChange struct {
 	// Document: The new state of the Document. If `mask` is set, contains only
 	// fields that were updated or added.
@@ -1364,16 +1360,20 @@ type FindNearest struct {
 	// Possible values:
 	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
 	//   "EUCLIDEAN" - Measures the EUCLIDEAN distance between the vectors. See
-	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more
-	//   "COSINE" - Compares vectors based on the angle between them, which allows
-	// you to measure similarity that isn't based on the vectors magnitude. We
-	// recommend using DOT_PRODUCT with unit normalized vectors instead of COSINE
-	// distance, which is mathematically equivalent with better performance. See
-	// [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to
-	// learn more.
+	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more.
+	// The resulting distance decreases the more similar two vectors are.
+	//   "COSINE" - COSINE distance compares vectors based on the angle between
+	// them, which allows you to measure similarity that isn't based on the vectors
+	// magnitude. We recommend using DOT_PRODUCT with unit normalized vectors
+	// instead of COSINE distance, which is mathematically equivalent with better
+	// performance. See [Cosine
+	// Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to learn more
+	// about COSINE similarity and COSINE distance. The resulting COSINE distance
+	// decreases the more similar two vectors are.
 	//   "DOT_PRODUCT" - Similar to cosine but is affected by the magnitude of the
 	// vectors. See [Dot Product](https://en.wikipedia.org/wiki/Dot_product) to
-	// learn more.
+	// learn more. The resulting distance increases the more similar two vectors
+	// are.
 	DistanceMeasure string `json:"distanceMeasure,omitempty"`
 	// Limit: Required. The number of nearest neighbors to return. Must be a
 	// positive integer of no more than 1000.
@@ -1633,6 +1633,35 @@ func (s GoogleFirestoreAdminV1CmekConfig) MarshalJSON() ([]byte, error) {
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
 }
 
+// GoogleFirestoreAdminV1CustomerManagedEncryptionOptions: The configuration
+// options for using CMEK (Customer Managed Encryption Key) encryption.
+type GoogleFirestoreAdminV1CustomerManagedEncryptionOptions struct {
+	// KmsKeyName: Required. Only keys in the same location as the database are
+	// allowed to be used for encryption. For Firestore's nam5 multi-region, this
+	// corresponds to Cloud KMS multi-region us. For Firestore's eur3 multi-region,
+	// this corresponds to Cloud KMS multi-region europe. See
+	// https://cloud.google.com/kms/docs/locations. The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1CustomerManagedEncryptionOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CustomerManagedEncryptionOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1DailyRecurrence: Represents a recurring schedule that
 // runs every day. The time zone is UTC.
 type GoogleFirestoreAdminV1DailyRecurrence struct {
@@ -1768,6 +1797,36 @@ func (s GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the delete
 // database operation.
 type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1EncryptionConfig: Encryption configuration for a new
+// database being created from another source. The source could be a Backup or
+// a DatabaseSnapshot.
+type GoogleFirestoreAdminV1EncryptionConfig struct {
+	// CustomerManagedEncryption: Use Customer Managed Encryption Keys (CMEK) for
+	// encryption.
+	CustomerManagedEncryption *GoogleFirestoreAdminV1CustomerManagedEncryptionOptions `json:"customerManagedEncryption,omitempty"`
+	// GoogleDefaultEncryption: Use Google default encryption.
+	GoogleDefaultEncryption *GoogleFirestoreAdminV1GoogleDefaultEncryptionOptions `json:"googleDefaultEncryption,omitempty"`
+	// UseSourceEncryption: The database will use the same encryption configuration
+	// as the source.
+	UseSourceEncryption *GoogleFirestoreAdminV1SourceEncryptionOptions `json:"useSourceEncryption,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerManagedEncryption")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomerManagedEncryption") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1ExportDocumentsMetadata: Metadata for
@@ -2004,6 +2063,11 @@ func (s GoogleFirestoreAdminV1FieldOperationMetadata) MarshalJSON() ([]byte, err
 // GoogleFirestoreAdminV1FlatIndex: An index that stores vectors in a flat data
 // structure, and supports exhaustive search.
 type GoogleFirestoreAdminV1FlatIndex struct {
+}
+
+// GoogleFirestoreAdminV1GoogleDefaultEncryptionOptions: The configuration
+// options for using Google default encryption.
+type GoogleFirestoreAdminV1GoogleDefaultEncryptionOptions struct {
 }
 
 // GoogleFirestoreAdminV1ImportDocumentsMetadata: Metadata for
@@ -2584,21 +2648,10 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id is also
 	// valid.
 	DatabaseId string `json:"databaseId,omitempty"`
-	// KmsKeyName: Use Customer Managed Encryption Keys (CMEK) for encryption. Only
-	// keys in the same location as the restored database are allowed to be used
-	// for encryption. For Firestore's nam5 multi-region, this corresponds to Cloud
-	// KMS multi-region us. For Firestore's eur3 multi-region, this corresponds to
-	// Cloud KMS multi-region europe. See
-	// https://cloud.google.com/kms/docs/locations. The expected format is
-	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKey
-	// s/{crypto_key}`.
-	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// UseBackupEncryption: The restored database will use the same encryption
-	// configuration as the backup. This is the default option when no
-	// `encryption_config` is specified.
-	UseBackupEncryption *Empty `json:"useBackupEncryption,omitempty"`
-	// UseGoogleDefaultEncryption: Use Google default encryption.
-	UseGoogleDefaultEncryption *Empty `json:"useGoogleDefaultEncryption,omitempty"`
+	// EncryptionConfig: Optional. Encryption configuration for the restored
+	// database. If this field is not specified, the restored database will use the
+	// same encryption configuration as the backup, namely use_source_encryption.
+	EncryptionConfig *GoogleFirestoreAdminV1EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2615,6 +2668,11 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 func (s GoogleFirestoreAdminV1RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SourceEncryptionOptions: The configuration options for
+// using the same encryption method as the source.
+type GoogleFirestoreAdminV1SourceEncryptionOptions struct {
 }
 
 // GoogleFirestoreAdminV1Stats: Backup specific statistics.

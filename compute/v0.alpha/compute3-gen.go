@@ -13287,27 +13287,27 @@ func (c *RegionInstantSnapshotGroupsDeleteCall) Do(opts ...googleapi.CallOption)
 }
 
 type RegionInstantSnapshotGroupsGetCall struct {
-	s               *Service
-	project         string
-	region          string
-	instantSnapshot string
-	urlParams_      gensupport.URLParams
-	ifNoneMatch_    string
-	ctx_            context.Context
-	header_         http.Header
+	s                    *Service
+	project              string
+	region               string
+	instantSnapshotGroup string
+	urlParams_           gensupport.URLParams
+	ifNoneMatch_         string
+	ctx_                 context.Context
+	header_              http.Header
 }
 
 // Get: returns the specified InstantSnapshotGroup resource in the specified
 // region.
 //
-// - instantSnapshot: Name of the InstantSnapshotGroup resource to return.
+// - instantSnapshotGroup: Name of the InstantSnapshotGroup resource to return.
 // - project: Project ID for this request.
 // - region: The name of the region for this request.
-func (r *RegionInstantSnapshotGroupsService) Get(project string, region string, instantSnapshot string) *RegionInstantSnapshotGroupsGetCall {
+func (r *RegionInstantSnapshotGroupsService) Get(project string, region string, instantSnapshotGroup string) *RegionInstantSnapshotGroupsGetCall {
 	c := &RegionInstantSnapshotGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
-	c.instantSnapshot = instantSnapshot
+	c.instantSnapshotGroup = instantSnapshotGroup
 	return c
 }
 
@@ -13350,7 +13350,7 @@ func (c *RegionInstantSnapshotGroupsGetCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/instantSnapshotGroups/{instantSnapshot}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/instantSnapshotGroups/{instantSnapshotGroup}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13358,9 +13358,9 @@ func (c *RegionInstantSnapshotGroupsGetCall) doRequest(alt string) (*http.Respon
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"project":         c.project,
-		"region":          c.region,
-		"instantSnapshot": c.instantSnapshot,
+		"project":              c.project,
+		"region":               c.region,
+		"instantSnapshotGroup": c.instantSnapshotGroup,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }

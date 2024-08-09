@@ -5983,11 +5983,11 @@ func (s Link) MarshalJSON() ([]byte, error) {
 
 // LookerDataSourceSpec: The specification of a Looker data source.
 type LookerDataSourceSpec struct {
-	// Explore: Name of a LookerML model explore.
+	// Explore: Name of a Looker model explore.
 	Explore string `json:"explore,omitempty"`
 	// InstanceUri: A Looker instance URL.
 	InstanceUri string `json:"instanceUri,omitempty"`
-	// Model: Name of a LookerML model.
+	// Model: Name of a Looker model.
 	Model string `json:"model,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Explore") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

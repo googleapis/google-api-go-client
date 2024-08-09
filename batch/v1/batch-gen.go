@@ -1999,10 +1999,16 @@ type Runnable struct {
 	// Task's overall max_run_duration. If the max_run_duration has expired then no
 	// further Runnables will execute, not even always_run Runnables.
 	AlwaysRun bool `json:"alwaysRun,omitempty"`
-	// Background: This flag allows a Runnable to continue running in the
-	// background while the Task executes subsequent Runnables. This is useful to
-	// provide services to other Runnables (or to provide debugging support tools
-	// like SSH servers).
+	// Background: Normally, a runnable that doesn't exit causes its task to fail.
+	// However, you can set this field to `true` to configure a background
+	// runnable. Background runnables are allowed continue running in the
+	// background while the task executes subsequent runnables. For example,
+	// background runnables are useful for providing services to other runnables or
+	// providing debugging-support tools like SSH servers. Specifically, background
+	// runnables are killed automatically (if they have not already exited) a short
+	// time after all foreground runnables have completed. Even though this is
+	// likely to result in a non-zero exit status for the background runnable,
+	// these automatic kills are not treated as task failures.
 	Background bool `json:"background,omitempty"`
 	// Barrier: Barrier runnable.
 	Barrier *Barrier `json:"barrier,omitempty"`
@@ -2016,8 +2022,10 @@ type Runnable struct {
 	// Environment: Environment variables for this Runnable (overrides variables
 	// set for the whole Task or TaskGroup).
 	Environment *Environment `json:"environment,omitempty"`
-	// IgnoreExitStatus: Normally, a non-zero exit status causes the Task to fail.
-	// This flag allows execution of other Runnables to continue instead.
+	// IgnoreExitStatus: Normally, a runnable that returns a non-zero exit status
+	// fails and causes the task to fail. However, you can set this field to `true`
+	// to allow the task to continue executing its other runnables even if this
+	// runnable fails.
 	IgnoreExitStatus bool `json:"ignoreExitStatus,omitempty"`
 	// Labels: Labels for this Runnable.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2366,12 +2374,11 @@ type TaskSpec struct {
 	// Runnables: Required. The sequence of one or more runnables (executable
 	// scripts, executable containers, and/or barriers) for each task in this task
 	// group to run. Each task runs this list of runnables in order. For a task to
-	// succeed, all of its script and container runnables each must either exit
-	// with a zero status or enable the `ignore_exit_status` subfield and exit with
-	// any status. Background runnables are killed automatically (if they have not
-	// already exited) a short time after all foreground runnables have completed.
-	// Even though this is likely to result in a non-zero exit status for the
-	// background runnable, these automatic kills are not treated as Task failures.
+	// succeed, all of its script and container runnables each must meet at least
+	// one of the following conditions: + The runnable exited with a zero status. +
+	// The runnable didn't finish, but you enabled its `background` subfield. + The
+	// runnable exited with a non-zero status, but you enabled its
+	// `ignore_exit_status` subfield.
 	Runnables []*Runnable `json:"runnables,omitempty"`
 	// Volumes: Volumes to mount before running Tasks using this TaskSpec.
 	Volumes []*Volume `json:"volumes,omitempty"`

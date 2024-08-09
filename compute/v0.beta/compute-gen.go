@@ -2765,8 +2765,10 @@ type AllocationAggregateReservation struct {
 	// reservation must belong to.
 	//
 	// Possible values:
+	//   "VM_FAMILY_CLOUD_TPU_DEVICE_CT3"
 	//   "VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L"
 	//   "VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP"
+	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT3P"
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P"
 	VmFamily string `json:"vmFamily,omitempty"`
 	// WorkloadType: The workload type of the instances that will target this
@@ -11433,7 +11435,9 @@ func (s FirewallPolicyListWarningData) MarshalJSON() ([]byte, error) {
 // condition (allow or deny).
 type FirewallPolicyRule struct {
 	// Action: The Action to perform when the client connection triggers the rule.
-	// Valid actions are "allow", "deny" and "goto_next".
+	// Valid actions for firewall rules are: "allow", "deny",
+	// "apply_security_profile_group" and "goto_next". Valid actions for packet
+	// mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
 	Action string `json:"action,omitempty"`
 	// Description: An optional description for this resource.
 	Description string `json:"description,omitempty"`
@@ -11453,8 +11457,9 @@ type FirewallPolicyRule struct {
 	// destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub.
 	// Note: you cannot enable logging on "goto_next" rules.
 	EnableLogging bool `json:"enableLogging,omitempty"`
-	// Kind: [Output only] Type of the resource. Always compute#firewallPolicyRule
-	// for firewall policy rules
+	// Kind: [Output only] Type of the resource. Returns compute#firewallPolicyRule
+	// for firewall rules and compute#packetMirroringRule for packet mirroring
+	// rules.
 	Kind string `json:"kind,omitempty"`
 	// Match: A match condition that incoming traffic is evaluated against. If it
 	// evaluates to true, the corresponding 'action' is enforced.
@@ -11462,7 +11467,7 @@ type FirewallPolicyRule struct {
 	// Priority: An integer indicating the priority of a rule in the list. The
 	// priority must be a positive value between 0 and 2147483647. Rules are
 	// evaluated from highest to lowest priority where 0 is the highest priority
-	// and 2147483647 is the lowest prority.
+	// and 2147483647 is the lowest priority.
 	Priority int64 `json:"priority,omitempty"`
 	// RuleName: An optional name for the rule. This field is not a unique
 	// identifier and can be updated.
@@ -11473,8 +11478,8 @@ type FirewallPolicyRule struct {
 	// SecurityProfileGroup: A fully-qualified URL of a SecurityProfile resource
 	// instance. Example:
 	// https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group
-	// Must be specified if action = 'apply_security_profile_group' and cannot be
-	// specified for other actions.
+	// Must be specified if action is one of 'apply_security_profile_group' or
+	// 'mirror'. Cannot be specified for other actions.
 	SecurityProfileGroup string `json:"securityProfileGroup,omitempty"`
 	// TargetResources: A list of network resource URLs to which this rule applies.
 	// This field allows you to control which network's VMs get this rule. If this
@@ -12556,6 +12561,12 @@ type FutureReservation struct {
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 	// ShareSettings: List of Projects/Folders to share with.
 	ShareSettings *ShareSettings `json:"shareSettings,omitempty"`
+	// SpecificReservationRequired: Indicates whether the auto-created reservation
+	// can be consumed by VMs with affinity for "any" reservation. If the field is
+	// set, then only VMs that target the reservation by name can consume from the
+	// delivered reservation. If set to true,the delivered resevervation will have
+	// the same name as the future reservation.
+	SpecificReservationRequired bool `json:"specificReservationRequired,omitempty"`
 	// SpecificSkuProperties: Future Reservation configuration to indicate instance
 	// properties and total count.
 	SpecificSkuProperties *FutureReservationSpecificSKUProperties `json:"specificSkuProperties,omitempty"`
@@ -12633,6 +12644,9 @@ type FutureReservationStatus struct {
 	// AutoCreatedReservations: Fully qualified urls of the automatically created
 	// reservations at start_time.
 	AutoCreatedReservations []string `json:"autoCreatedReservations,omitempty"`
+	// ExistingMatchingUsageInfo: [Output Only] Represents the existing matching
+	// usage for the future reservation.
+	ExistingMatchingUsageInfo *FutureReservationStatusExistingMatchingUsageInfo `json:"existingMatchingUsageInfo,omitempty"`
 	// FulfilledCount: This count indicates the fulfilled capacity so far. This is
 	// set during "PROVISIONING" state. This count also includes capacity delivered
 	// as part of existing matching reservations.
@@ -12696,13 +12710,42 @@ func (s FutureReservationStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FutureReservationStatusExistingMatchingUsageInfo: [Output Only] Represents
+// the existing matching usage for the future reservation.
+type FutureReservationStatusExistingMatchingUsageInfo struct {
+	// Count: Count to represent min(FR total_count,
+	// matching_reserved_capacity+matching_unreserved_instances)
+	Count int64 `json:"count,omitempty,string"`
+	// Timestamp: Timestamp when the matching usage was calculated
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FutureReservationStatusExistingMatchingUsageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod FutureReservationStatusExistingMatchingUsageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FutureReservationStatusLastKnownGoodState: The state that the future
 // reservation will be reverted to should the amendment be declined.
 type FutureReservationStatusLastKnownGoodState struct {
 	// Description: [Output Only] The description of the FutureReservation before
 	// an amendment was requested.
-	Description            string                                                           `json:"description,omitempty"`
-	FutureReservationSpecs *FutureReservationStatusLastKnownGoodStateFutureReservationSpecs `json:"futureReservationSpecs,omitempty"`
+	Description string `json:"description,omitempty"`
+	// ExistingMatchingUsageInfo: [Output Only] Represents the matching usage for
+	// the future reservation before an amendment was requested.
+	ExistingMatchingUsageInfo *FutureReservationStatusExistingMatchingUsageInfo                `json:"existingMatchingUsageInfo,omitempty"`
+	FutureReservationSpecs    *FutureReservationStatusLastKnownGoodStateFutureReservationSpecs `json:"futureReservationSpecs,omitempty"`
 	// LockTime: [Output Only] The lock time of the FutureReservation before an
 	// amendment was requested.
 	LockTime string `json:"lockTime,omitempty"`
@@ -18205,7 +18248,8 @@ type InstanceGroupManagerResizeRequest struct {
 	// deleted.
 	RequestedRunDuration *Duration `json:"requestedRunDuration,omitempty"`
 	// ResizeBy: The number of instances to be created by this resize request. The
-	// group's target size will be increased by this number.
+	// group's target size will be increased by this number. This field cannot be
+	// used together with 'instances'.
 	ResizeBy int64 `json:"resizeBy,omitempty"`
 	// SelfLink: [Output Only] The URL for this resize request. The server defines
 	// this URL.

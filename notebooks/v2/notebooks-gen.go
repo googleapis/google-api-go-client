@@ -806,6 +806,10 @@ type GceSetup struct {
 	MachineType string `json:"machineType,omitempty"`
 	// Metadata: Optional. Custom metadata to apply to this instance.
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// MinCpuPlatform: Optional. The minimum CPU platform to use for this instance.
+	// The list of valid values can be found in
+	// https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform#availablezones
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 	// NetworkInterfaces: Optional. The network interfaces for the VM. Supports
 	// only one interface.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`

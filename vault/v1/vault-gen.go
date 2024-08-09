@@ -1616,6 +1616,14 @@ type Matter struct {
 	// Currently there is no programmer defined limit on the number of permissions
 	// a matter can have.
 	MatterPermissions []*MatterPermission `json:"matterPermissions,omitempty"`
+	// MatterRegion: Optional. The requested data region for the matter.
+	//
+	// Possible values:
+	//   "MATTER_REGION_UNSPECIFIED" - The region is unspecified. Defaults to ANY.
+	//   "ANY" - Any region.
+	//   "US" - United States region.
+	//   "EUROPE" - Europe region.
+	MatterRegion string `json:"matterRegion,omitempty"`
 	// Name: The name of the matter.
 	Name string `json:"name,omitempty"`
 	// State: The state of the matter.

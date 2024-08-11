@@ -879,7 +879,8 @@ func (s *GoogleCloudAiplatformV1beta1GenerationConfig) UnmarshalJSON(data []byte
 	return nil
 }
 
-// GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig: Routing config.
+// GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig: The configuration
+// for routing the request to a specific model.
 type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig struct {
 	// AutoMode: Automated routing.
 	AutoMode *GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode `json:"autoMode,omitempty"`
@@ -937,7 +938,7 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigAutoRoutingMode
 // When manual routing is set, the specified model will be used directly.
 type GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode struct {
 	// ModelName: The model name to use. Only the public LLM models are accepted.
-	// e.g. gemini-1.5-pro-001.
+	// e.g. 'gemini-1.5-pro-001'.
 	ModelName string `json:"modelName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ModelName") to
 	// unconditionally include in API requests. By default, fields with empty or

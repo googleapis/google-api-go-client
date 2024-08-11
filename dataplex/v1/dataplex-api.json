@@ -5599,7 +5599,7 @@
       }
     }
   },
-  "revision": "20240725",
+  "revision": "20240802",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -9884,15 +9884,17 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The name of the resource that the configuration is applied to, in the format projects/{project_number}/locations/{location_id}/metadataJobs/{metadata_job_id}.",
+          "description": "Output only. Identifier. The name of the resource that the configuration is applied to, in the format projects/{project_number}/locations/{location_id}/metadataJobs/{metadata_job_id}.",
           "readOnly": true,
           "type": "string"
         },
         "status": {
           "$ref": "GoogleCloudDataplexV1MetadataJobStatus",
+          "description": "Output only. Metadata job status.",
           "readOnly": true
         },
         "type": {
+          "description": "Required. Metadata job type.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "IMPORT"

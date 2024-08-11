@@ -2713,6 +2713,10 @@ func (s V1LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 // Chemist. ResourceEvent proto should be serialized into the
 // ReportRequest.operations.extensions.
 type V1ResourceEvent struct {
+	// ContextId: The ESF unique context id of the api request, from which this
+	// resource event originated. This field is only needed for CAIS integration
+	// via api annotation. See go/cais-lro-delete for more details.
+	ContextId int64 `json:"contextId,omitempty,string"`
 	// Destinations: The destinations field determines which backend services
 	// should handle the event. This should be specified as a comma-delimited
 	// string.
@@ -2745,13 +2749,13 @@ type V1ResourceEvent struct {
 	//   "DELETE" - The resource is deleted.
 	//   "UNDELETE" - The resource is un-deleted.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// ForceSendFields is a list of field names (e.g. "ContextId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// NullFields is a list of field names (e.g. "ContextId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

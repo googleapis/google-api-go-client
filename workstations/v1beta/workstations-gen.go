@@ -1959,6 +1959,15 @@ type WorkstationConfig struct {
 	// applied to the workstation configuration and that are also propagated to the
 	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaxUsableWorkstations: Optional. Maximum number of workstations under this
+	// config a user can have `workstations.workstation.use` permission on. Only
+	// enforced on CreateWorkstation API calls on the user issuing the API request.
+	// Can be overridden by: - granting a user
+	// workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission,
+	// or - having a user with that permission create a workstation and granting
+	// another user `workstations.workstation.use` permission on that workstation.
+	// If not specified defaults to 0 which indicates unlimited.
+	MaxUsableWorkstations int64 `json:"maxUsableWorkstations,omitempty"`
 	// Name: Identifier. Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`
 	// PersistentDirectories: Optional. Directories to persist across workstation

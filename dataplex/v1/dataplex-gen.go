@@ -5643,12 +5643,15 @@ type GoogleCloudDataplexV1MetadataJob struct {
 	ImportSpec *GoogleCloudDataplexV1MetadataJobImportJobSpec `json:"importSpec,omitempty"`
 	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The name of the resource that the configuration is
-	// applied to, in the format
+	// Name: Output only. Identifier. The name of the resource that the
+	// configuration is applied to, in the format
 	// projects/{project_number}/locations/{location_id}/metadataJobs/{metadata_job_
 	// id}.
-	Name   string                                  `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+	// Status: Output only. Metadata job status.
 	Status *GoogleCloudDataplexV1MetadataJobStatus `json:"status,omitempty"`
+	// Type: Required. Metadata job type.
+	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
 	//   "IMPORT" - Import job.

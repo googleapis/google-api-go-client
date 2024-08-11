@@ -934,6 +934,13 @@ func (r *ProjectsLocationsDataPoliciesService) Delete(name string) *ProjectsLoca
 	return c
 }
 
+// Force sets the optional parameter "force": If true, the data policy will be
+// deleted even when it is referenced by one or more table columns.
+func (c *ProjectsLocationsDataPoliciesDeleteCall) Force(force bool) *ProjectsLocationsDataPoliciesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -1401,6 +1408,14 @@ func (r *ProjectsLocationsDataPoliciesService) Patch(name string, datapolicy *Da
 	c := &ProjectsLocationsDataPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.datapolicy = datapolicy
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the data policy is not found, a new data policy will be created. In this
+// situation, update_mask is ignored.
+func (c *ProjectsLocationsDataPoliciesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsDataPoliciesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 

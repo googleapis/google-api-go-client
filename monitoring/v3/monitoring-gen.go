@@ -5067,7 +5067,7 @@ type TimeSeries struct {
 	// Unit: The units in which the metric value is reported. It is only applicable
 	// if the value_type is INT64, DOUBLE, or DISTRIBUTION. The unit defines the
 	// representation of the stored metric values. This field can only be changed
-	// through CreateTimeSeries when it is empty or "1".
+	// through CreateTimeSeries when it is empty.
 	Unit string `json:"unit,omitempty"`
 	// ValueType: The value type of the time series. When listing time series, this
 	// value type might be different from the value type of the associated metric

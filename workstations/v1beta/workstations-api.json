@@ -1127,7 +1127,7 @@
       }
     }
   },
-  "revision": "20240723",
+  "revision": "20240803",
   "rootUrl": "https://workstations.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -2375,6 +2375,11 @@
           },
           "description": "Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation configuration and that are also propagated to the underlying Compute Engine resources.",
           "type": "object"
+        },
+        "maxUsableWorkstations": {
+          "description": "Optional. Maximum number of workstations under this config a user can have `workstations.workstation.use` permission on. Only enforced on CreateWorkstation API calls on the user issuing the API request. Can be overridden by: - granting a user workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission, or - having a user with that permission create a workstation and granting another user `workstations.workstation.use` permission on that workstation. If not specified defaults to 0 which indicates unlimited.",
+          "format": "int32",
+          "type": "integer"
         },
         "name": {
           "description": "Identifier. Full name of this workstation configuration.",

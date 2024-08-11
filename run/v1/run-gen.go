@@ -3913,9 +3913,10 @@ type ObjectMeta struct {
 	// restricted, and the accepted annotations will be different depending on the
 	// resource type. * `autoscaling.knative.dev/maxScale`: Revision. *
 	// `autoscaling.knative.dev/minScale`: Revision. *
-	// `run.googleapis.com/base-images`: Revision, Service. *
+	// `run.googleapis.com/base-images`: Service, Revision. *
 	// `run.googleapis.com/binary-authorization-breakglass`: Service, Job, *
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
+	// `run.googleapis.com/build-base-image`: Service. *
 	// `run.googleapis.com/build-environment-variables`: Service. *
 	// `run.googleapis.com/build-id`: Service. * `run.googleapis.com/build-name`:
 	// Service. * `run.googleapis.com/build-service-account`: Service. *
@@ -3927,6 +3928,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/default-url-disabled`: Service. *
 	// `run.googleapis.com/description`: Service. *
+	// `run.googleapis.com/enable-automatic-updates`: Service. *
 	// `run.googleapis.com/encryption-key-shutdown-hours`: Revision *
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
@@ -3937,9 +3939,9 @@ type ObjectMeta struct {
 	// `run.googleapis.com/minScale`: Service (ALPHA) *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
-	// `run.googleapis.com/runtime`: Service. * `run.googleapis.com/secrets`:
-	// Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision.
-	// * `run.googleapis.com/sessionAffinity`: Revision. *
+	// `run.googleapis.com/secrets`: Revision, Execution. *
+	// `run.googleapis.com/secure-session-agent`: Revision. *
+	// `run.googleapis.com/sessionAffinity`: Revision. *
 	// `run.googleapis.com/source-location`: Service. *
 	// `run.googleapis.com/startup-cpu-boost`: Revision. *
 	// `run.googleapis.com/vpc-access-connector`: Revision, Execution. *

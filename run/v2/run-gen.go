@@ -1812,6 +1812,8 @@ type GoogleCloudRunV2Revision struct {
 	// revision of the service. The service account represents the identity of the
 	// running revision, and determines what permissions the revision has.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ServiceMesh: Enables service mesh connectivity.
+	ServiceMesh *GoogleCloudRunV2ServiceMesh `json:"serviceMesh,omitempty"`
 	// SessionAffinity: Enable session affinity.
 	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 	// Timeout: Max allowed time for an instance to respond to a request.
@@ -1957,6 +1959,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// revision has. If not provided, the revision will use the project's default
 	// service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ServiceMesh: Optional. Enables service mesh connectivity.
+	ServiceMesh *GoogleCloudRunV2ServiceMesh `json:"serviceMesh,omitempty"`
 	// SessionAffinity: Optional. Enable session affinity.
 	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 	// Timeout: Optional. Max allowed time for an instance to respond to a request.
@@ -2296,6 +2300,29 @@ type GoogleCloudRunV2Service struct {
 
 func (s GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2Service
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ServiceMesh: Service mesh configuration.
+type GoogleCloudRunV2ServiceMesh struct {
+	// Mesh: The service mesh resource name. Format:
+	// projects/{project_number}/locations/global/meshes/{mesh}.
+	Mesh string `json:"mesh,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mesh") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mesh") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2ServiceMesh) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ServiceMesh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

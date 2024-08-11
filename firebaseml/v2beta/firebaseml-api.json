@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240806",
+  "revision": "20240808",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -749,7 +749,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig": {
-      "description": "Routing config.",
+      "description": "The configuration for routing the request to a specific model.",
       "id": "GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfig",
       "properties": {
         "autoMode": {
@@ -791,7 +791,7 @@
       "id": "GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMode",
       "properties": {
         "modelName": {
-          "description": "The model name to use. Only the public LLM models are accepted. e.g. gemini-1.5-pro-001.",
+          "description": "The model name to use. Only the public LLM models are accepted. e.g. 'gemini-1.5-pro-001'.",
           "type": "string"
         }
       },

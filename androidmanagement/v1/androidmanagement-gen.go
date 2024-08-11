@@ -5656,6 +5656,24 @@ type SigninDetail struct {
 	// single user, and thus both personal usage and corporate identity
 	// authentication are not expected.
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
+	// DefaultStatus: Optional. Whether the sign-in URL should be used by default
+	// for the enterprise. The SigninDetail with defaultStatus set to
+	// SIGNIN_DETAIL_IS_DEFAULT is used for Google account enrollment method. Only
+	// one of an enterprise's signinDetails can have defaultStatus set to
+	// SIGNIN_DETAIL_IS_DEFAULT. If an Enterprise has at least one signinDetails
+	// and none of them have defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT then the
+	// first one from the list is selected and has set defaultStatus to
+	// SIGNIN_DETAIL_IS_DEFAULT. If no signinDetails specified for the Enterprise
+	// then the Google Account device enrollment will fail.
+	//
+	// Possible values:
+	//   "SIGNIN_DETAIL_DEFAULT_STATUS_UNSPECIFIED" - Equivalent to
+	// SIGNIN_DETAIL_IS_NOT_DEFAULT.
+	//   "SIGNIN_DETAIL_IS_DEFAULT" - The sign-in URL will be used by default for
+	// the enterprise.
+	//   "SIGNIN_DETAIL_IS_NOT_DEFAULT" - The sign-in URL will not be used by
+	// default for the enterprise.
+	DefaultStatus string `json:"defaultStatus,omitempty"`
 	// QrCode: A JSON string whose UTF-8 representation can be used to generate a
 	// QR code to enroll a device with this enrollment token. To enroll a device
 	// using NFC, the NFC record must contain a serialized java.util.Properties

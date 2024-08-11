@@ -2137,6 +2137,19 @@ type EventTicketObject struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#eventTicketObject".
 	Kind string `json:"kind,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this event ticket object. If a user had
+	// saved this event ticket, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinkedOfferIds: A list of offer objects linked to this event ticket. The
 	// offer objects must already exist. Offer object IDs should follow the format
 	// issuer ID. identifier where the former is issued by Google and latter is
@@ -2884,6 +2897,19 @@ type FlightObject struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#flightObject".
 	Kind string `json:"kind,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this flight object. If a user had saved
+	// this boarding pass, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinksModuleData: Links module data. If links module data is also defined on
 	// the class, both will be displayed.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
@@ -3260,6 +3286,19 @@ type GenericObject struct {
 	// ImageModulesData: Image module data. Only one of the image from class and
 	// one from object level will be rendered when both set.
 	ImageModulesData []*ImageModuleData `json:"imageModulesData,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this generic object. If a user had saved
+	// this generic card, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinksModuleData: Links module data. If `linksModuleData` is also defined on
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from class and 10 from object.
@@ -3704,6 +3743,19 @@ type GiftCardObject struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#giftCardObject".
 	Kind string `json:"kind,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this giftcard object. If a user had
+	// saved this gift card, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinksModuleData: Links module data. If links module data is also defined on
 	// the class, both will be displayed.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
@@ -4647,6 +4699,19 @@ type LoyaltyObject struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#loyaltyObject".
 	Kind string `json:"kind,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this loyalty object. If a user had saved
+	// this loyalty card, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinkedOfferIds: A list of offer objects linked to this loyalty card. The
 	// offer objects must already exist. Offer object IDs should follow the format
 	// issuer ID. identifier where the former is issued by Google and latter is
@@ -5587,6 +5652,19 @@ type OfferObject struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#offerObject".
 	Kind string `json:"kind,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this offer object. If a user had saved
+	// this offer, then these linked_object_ids would be automatically pushed to
+	// the user's wallet (unless they turned off the setting to receive such linked
+	// passes). Make sure that objects present in linked_object_ids are already
+	// inserted - if not, calls would fail. Once linked, the linked objects cannot
+	// be unlinked. You cannot link objects belonging to another issuer. There is a
+	// limit to the number of objects that can be linked to a single object. After
+	// the limit is reached, new linked objects in the call will be ignored
+	// silently. Object IDs should follow the format issuer ID.identifier where the
+	// former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinksModuleData: Links module data. If links module data is also defined on
 	// the class, both will be displayed.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
@@ -6999,6 +7077,19 @@ type TransitObject struct {
 	ImageModulesData []*ImageModuleData `json:"imageModulesData,omitempty"`
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
+	// LinkedObjectIds: linked_object_ids are a list of other objects such as event
+	// ticket, loyalty, offer, generic, giftcard, transit and boarding pass that
+	// should be automatically attached to this transit object. If a user had saved
+	// this transit card, then these linked_object_ids would be automatically
+	// pushed to the user's wallet (unless they turned off the setting to receive
+	// such linked passes). Make sure that objects present in linked_object_ids are
+	// already inserted - if not, calls would fail. Once linked, the linked objects
+	// cannot be unlinked. You cannot link objects belonging to another issuer.
+	// There is a limit to the number of objects that can be linked to a single
+	// object. After the limit is reached, new linked objects in the call will be
+	// ignored silently. Object IDs should follow the format issuer ID. identifier
+	// where the former is issued by Google and the latter is chosen by you.
+	LinkedObjectIds []string `json:"linkedObjectIds,omitempty"`
 	// LinksModuleData: Links module data. If links module data is also defined on
 	// the class, both will be displayed.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`

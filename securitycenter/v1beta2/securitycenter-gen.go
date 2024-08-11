@@ -1413,6 +1413,9 @@ type Cve struct {
 	// Cvssv3: Describe Common Vulnerability Scoring System specified at
 	// https://www.first.org/cvss/v3.1/specification-document
 	Cvssv3 *Cvssv3 `json:"cvssv3,omitempty"`
+	// ExploitReleaseDate: Date the first publicly available exploit or PoC was
+	// released.
+	ExploitReleaseDate string `json:"exploitReleaseDate,omitempty"`
 	// ExploitationActivity: The exploitation activity of the vulnerability in the
 	// wild.
 	//
@@ -1753,6 +1756,34 @@ type DiskPath struct {
 
 func (s DiskPath) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskPath
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicMuteRecord: The record of a dynamic mute rule that matches the
+// finding.
+type DynamicMuteRecord struct {
+	// MatchTime: When the dynamic mute rule first matched the finding.
+	MatchTime string `json:"matchTime,omitempty"`
+	// MuteConfig: The relative resource name of the mute rule, represented by a
+	// mute config, that created this record, for example
+	// `organizations/123/muteConfigs/mymuteconfig` or
+	// `organizations/123/locations/global/muteConfigs/mymuteconfig`.
+	MuteConfig string `json:"muteConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicMuteRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicMuteRecord
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2106,6 +2137,8 @@ type Finding struct {
 	//   "UNMUTED" - Finding has been unmuted.
 	//   "UNDEFINED" - Finding has never been muted/unmuted.
 	Mute string `json:"mute,omitempty"`
+	// MuteInfo: Output only. The mute information regarding this finding.
+	MuteInfo *MuteInfo `json:"muteInfo,omitempty"`
 	// MuteInitiator: Records additional information about the mute operation, for
 	// example, the mute configuration
 	// (/security-command-center/docs/how-to-mute-findings) that muted the finding
@@ -2607,6 +2640,10 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name to be displayed for the mute config.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for
+	// dynamic configs. If the expiry is set, when the config expires, it is
+	// removed from all findings.
+	ExpiryTime string `json:"expiryTime,omitempty"`
 	// Filter: Required. An expression that defines the filter to apply across
 	// create/update events of findings. While creating a filter string, be mindful
 	// of the scope in which the mute configuration is being created. E.g., If a
@@ -2631,6 +2668,23 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	// `folders/{folder}/locations/global/muteConfigs/{mute_config}`
 	// `projects/{project}/locations/global/muteConfigs/{mute_config}`
 	Name string `json:"name,omitempty"`
+	// Type: Optional. The type of the mute config, which determines what type of
+	// mute state the config affects. The static mute state takes precedence over
+	// the dynamic mute state. Immutable after creation. STATIC by default if not
+	// set during creation.
+	//
+	// Possible values:
+	//   "MUTE_CONFIG_TYPE_UNSPECIFIED" - Unused.
+	//   "STATIC" - A static mute config, which sets the static mute state of
+	// future matching findings to muted. Once the static mute state has been set,
+	// finding or config modifications will not affect the state.
+	//   "DYNAMIC" - A dynamic mute config, which is applied to existing and future
+	// matching findings, setting their dynamic mute state to "muted". If the
+	// config is updated or deleted, or a matching finding is updated, such that
+	// the finding doesn't match the config, the config will be removed from the
+	// finding, and the finding's dynamic mute state may become "unmuted" (unless
+	// other configs still match).
+	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the mute config was
 	// updated. This field is set by the server and will be ignored if provided on
 	// config creation or update.
@@ -4273,6 +4327,9 @@ type GoogleCloudSecuritycenterV2Cve struct {
 	// Cvssv3: Describe Common Vulnerability Scoring System specified at
 	// https://www.first.org/cvss/v3.1/specification-document
 	Cvssv3 *GoogleCloudSecuritycenterV2Cvssv3 `json:"cvssv3,omitempty"`
+	// ExploitReleaseDate: Date the first publicly available exploit or PoC was
+	// released.
+	ExploitReleaseDate string `json:"exploitReleaseDate,omitempty"`
 	// ExploitationActivity: The exploitation activity of the vulnerability in the
 	// wild.
 	//
@@ -4581,6 +4638,34 @@ type GoogleCloudSecuritycenterV2DiskPath struct {
 
 func (s GoogleCloudSecuritycenterV2DiskPath) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2DiskPath
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2DynamicMuteRecord: The record of a dynamic mute
+// rule that matches the finding.
+type GoogleCloudSecuritycenterV2DynamicMuteRecord struct {
+	// MatchTime: When the dynamic mute rule first matched the finding.
+	MatchTime string `json:"matchTime,omitempty"`
+	// MuteConfig: The relative resource name of the mute rule, represented by a
+	// mute config, that created this record, for example
+	// `organizations/123/muteConfigs/mymuteconfig` or
+	// `organizations/123/locations/global/muteConfigs/mymuteconfig`.
+	MuteConfig string `json:"muteConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DynamicMuteRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DynamicMuteRecord
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4910,6 +4995,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	//   "UNMUTED" - Finding has been unmuted.
 	//   "UNDEFINED" - Finding has never been muted/unmuted.
 	Mute string `json:"mute,omitempty"`
+	// MuteInfo: Output only. The mute information regarding this finding.
+	MuteInfo *GoogleCloudSecuritycenterV2MuteInfo `json:"muteInfo,omitempty"`
 	// MuteInitiator: Records additional information about the mute operation, for
 	// example, the mute configuration
 	// (https://cloud.google.com/security-command-center/docs/how-to-mute-findings)
@@ -5607,6 +5694,10 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of the mute config.
 	Description string `json:"description,omitempty"`
+	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for
+	// dynamic configs. If the expiry is set, when the config expires, it is
+	// removed from all findings.
+	ExpiryTime string `json:"expiryTime,omitempty"`
 	// Filter: Required. An expression that defines the filter to apply across
 	// create/update events of findings. While creating a filter string, be mindful
 	// of the scope in which the mute configuration is being created. E.g., If a
@@ -5640,6 +5731,12 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	//   "STATIC" - A static mute config, which sets the static mute state of
 	// future matching findings to muted. Once the static mute state has been set,
 	// finding or config modifications will not affect the state.
+	//   "DYNAMIC" - A dynamic mute config, which is applied to existing and future
+	// matching findings, setting their dynamic mute state to "muted". If the
+	// config is updated or deleted, or a matching finding is updated, such that
+	// the finding doesn't match the config, the config will be removed from the
+	// finding, and the finding's dynamic mute state may become "unmuted" (unless
+	// other configs still match).
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the mute config was
 	// updated. This field is set by the server and will be ignored if provided on
@@ -5660,6 +5757,34 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 
 func (s GoogleCloudSecuritycenterV2MuteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2MuteConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2MuteInfo: Mute information about the finding,
+// including whether the finding has a static mute or any matching dynamic mute
+// rules.
+type GoogleCloudSecuritycenterV2MuteInfo struct {
+	// DynamicMuteRecords: The list of dynamic mute rules that currently match the
+	// finding.
+	DynamicMuteRecords []*GoogleCloudSecuritycenterV2DynamicMuteRecord `json:"dynamicMuteRecords,omitempty"`
+	// StaticMute: If set, the static mute applied to this finding. Static mutes
+	// override dynamic mutes. If unset, there is no static mute.
+	StaticMute *GoogleCloudSecuritycenterV2StaticMute `json:"staticMute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicMuteRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicMuteRecords") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2MuteInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2MuteInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6531,6 +6656,40 @@ func (s GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2StaticMute: Information about the static mute
+// state. A static mute state overrides any dynamic mute rules that apply to
+// this finding. The static mute state can be set by a static mute rule or by
+// muting the finding directly.
+type GoogleCloudSecuritycenterV2StaticMute struct {
+	// ApplyTime: When the static mute was applied.
+	ApplyTime string `json:"applyTime,omitempty"`
+	// State: The static mute state. If the value is `MUTED` or `UNMUTED`, then the
+	// finding's overall mute state will have the same value.
+	//
+	// Possible values:
+	//   "MUTE_UNSPECIFIED" - Unspecified.
+	//   "MUTED" - Finding has been muted.
+	//   "UNMUTED" - Finding has been unmuted.
+	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplyTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplyTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2StaticMute) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2StaticMute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Subject: Represents a Kubernetes subject.
 type GoogleCloudSecuritycenterV2Subject struct {
 	// Kind: Authentication type for the subject.
@@ -7191,6 +7350,33 @@ type MitreAttack struct {
 
 func (s MitreAttack) MarshalJSON() ([]byte, error) {
 	type NoMethod MitreAttack
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MuteInfo: Mute information about the finding, including whether the finding
+// has a static mute or any matching dynamic mute rules.
+type MuteInfo struct {
+	// DynamicMuteRecords: The list of dynamic mute rules that currently match the
+	// finding.
+	DynamicMuteRecords []*DynamicMuteRecord `json:"dynamicMuteRecords,omitempty"`
+	// StaticMute: If set, the static mute applied to this finding. Static mutes
+	// override dynamic mutes. If unset, there is no static mute.
+	StaticMute *StaticMute `json:"staticMute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicMuteRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicMuteRecords") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MuteInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MuteInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7971,6 +8157,39 @@ type ServiceAccountDelegationInfo struct {
 
 func (s ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountDelegationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StaticMute: Information about the static mute state. A static mute state
+// overrides any dynamic mute rules that apply to this finding. The static mute
+// state can be set by a static mute rule or by muting the finding directly.
+type StaticMute struct {
+	// ApplyTime: When the static mute was applied.
+	ApplyTime string `json:"applyTime,omitempty"`
+	// State: The static mute state. If the value is `MUTED` or `UNMUTED`, then the
+	// finding's overall mute state will have the same value.
+	//
+	// Possible values:
+	//   "MUTE_UNSPECIFIED" - Unspecified.
+	//   "MUTED" - Finding has been muted.
+	//   "UNMUTED" - Finding has been unmuted.
+	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplyTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplyTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StaticMute) MarshalJSON() ([]byte, error) {
+	type NoMethod StaticMute
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

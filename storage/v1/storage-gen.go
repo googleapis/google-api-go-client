@@ -460,6 +460,8 @@ type Bucket struct {
 	Encryption *BucketEncryption `json:"encryption,omitempty"`
 	// Etag: HTTP 1.1 Entity tag for the bucket.
 	Etag string `json:"etag,omitempty"`
+	// Generation: The generation of this bucket.
+	Generation int64 `json:"generation,omitempty,string"`
 	// HierarchicalNamespace: The bucket's hierarchical namespace configuration.
 	HierarchicalNamespace *BucketHierarchicalNamespace `json:"hierarchicalNamespace,omitempty"`
 	// IamConfiguration: The bucket's IAM configuration.
@@ -511,6 +513,8 @@ type Bucket struct {
 	// Rpo: The Recovery Point Objective (RPO) of this bucket. Set to ASYNC_TURBO
 	// to turn on Turbo Replication on a bucket.
 	Rpo string `json:"rpo,omitempty"`
+	// SatisfiesPZI: Reserved for future use.
+	SatisfiesPZI bool `json:"satisfiesPZI,omitempty"`
 	// SatisfiesPZS: Reserved for future use.
 	SatisfiesPZS bool `json:"satisfiesPZS,omitempty"`
 	// SelfLink: The URI of this bucket.
@@ -4173,7 +4177,8 @@ type BucketsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Permanently deletes an empty bucket.
+// Delete: Deletes an empty bucket. Deletions are permanent unless soft delete
+// is enabled on the bucket.
 //
 // - bucket: Name of a bucket.
 func (r *BucketsService) Delete(bucket string) *BucketsDeleteCall {
@@ -4277,6 +4282,13 @@ func (r *BucketsService) Get(bucket string) *BucketsGetCall {
 	return c
 }
 
+// Generation sets the optional parameter "generation": If present, specifies
+// the generation of the bucket. This is required if softDeleted is true.
+func (c *BucketsGetCall) Generation(generation int64) *BucketsGetCall {
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
+	return c
+}
+
 // IfMetagenerationMatch sets the optional parameter "ifMetagenerationMatch":
 // Makes the return of the bucket metadata conditional on whether the bucket's
 // current metageneration matches the given value.
@@ -4303,6 +4315,15 @@ func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 //	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.urlParams_.Set("projection", projection)
+	return c
+}
+
+// SoftDeleted sets the optional parameter "softDeleted": If true, return the
+// soft-deleted version of this bucket. The default is false. For more
+// information, see Soft Delete
+// (https://cloud.google.com/storage/docs/soft-delete).
+func (c *BucketsGetCall) SoftDeleted(softDeleted bool) *BucketsGetCall {
+	c.urlParams_.Set("softDeleted", fmt.Sprint(softDeleted))
 	return c
 }
 
@@ -4874,6 +4895,15 @@ func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	return c
 }
 
+// SoftDeleted sets the optional parameter "softDeleted": If true, only
+// soft-deleted bucket versions will be returned. The default is false. For
+// more information, see Soft Delete
+// (https://cloud.google.com/storage/docs/soft-delete).
+func (c *BucketsListCall) SoftDeleted(softDeleted bool) *BucketsListCall {
+	c.urlParams_.Set("softDeleted", fmt.Sprint(softDeleted))
+	return c
+}
+
 // UserProject sets the optional parameter "userProject": The project to be
 // billed for this request.
 func (c *BucketsListCall) UserProject(userProject string) *BucketsListCall {
@@ -5286,6 +5316,87 @@ func (c *BucketsPatchCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 		return nil, err
 	}
 	return ret, nil
+}
+
+type BucketsRestoreCall struct {
+	s          *Service
+	bucket     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Restore: Restores a soft-deleted bucket.
+//
+// - bucket: Name of a bucket.
+// - generation: Generation of a bucket.
+func (r *BucketsService) Restore(bucket string, generation int64) *BucketsRestoreCall {
+	c := &BucketsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.bucket = bucket
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
+	return c
+}
+
+// UserProject sets the optional parameter "userProject": The project to be
+// billed for this request. Required for Requester Pays buckets.
+func (c *BucketsRestoreCall) UserProject(userProject string) *BucketsRestoreCall {
+	c.urlParams_.Set("userProject", userProject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BucketsRestoreCall) Fields(s ...googleapi.Field) *BucketsRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BucketsRestoreCall) Context(ctx context.Context) *BucketsRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BucketsRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BucketsRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "storage.buckets.restore" call.
+func (c *BucketsRestoreCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
 }
 
 type BucketsSetIamPolicyCall struct {
@@ -9840,7 +9951,8 @@ func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 
 // SoftDeleted sets the optional parameter "softDeleted": If true, only
 // soft-deleted object versions will be listed. The default is false. For more
-// information, see Soft Delete.
+// information, see Soft Delete
+// (https://cloud.google.com/storage/docs/soft-delete).
 func (c *ObjectsGetCall) SoftDeleted(softDeleted bool) *ObjectsGetCall {
 	c.urlParams_.Set("softDeleted", fmt.Sprint(softDeleted))
 	return c
@@ -10503,7 +10615,8 @@ func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 
 // SoftDeleted sets the optional parameter "softDeleted": If true, only
 // soft-deleted object versions will be listed. The default is false. For more
-// information, see Soft Delete.
+// information, see Soft Delete
+// (https://cloud.google.com/storage/docs/soft-delete).
 func (c *ObjectsListCall) SoftDeleted(softDeleted bool) *ObjectsListCall {
 	c.urlParams_.Set("softDeleted", fmt.Sprint(softDeleted))
 	return c

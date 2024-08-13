@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	cloud.google.com/go v0.115.0
-	cloud.google.com/go/auth v0.7.3
+	cloud.google.com/go/auth v0.8.1
 	cloud.google.com/go/auth/oauth2adapt v0.2.3
 	cloud.google.com/go/compute/metadata v0.5.0
 	github.com/google/go-cmp v0.6.0

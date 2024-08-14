@@ -41,7 +41,7 @@ golint ./... 2>&1 | (
     grep -vE "\.pb\.go:" || true
 ) | tee /dev/stderr | (! read)
 
-staticcheck -go 1.9 ./... 2>&1 | (
+staticcheck -go 1.23 ./... 2>&1 | (
   grep -v "SA1019" |
     grep -v "S1007" |
     grep -v "error var Done should have name of the form ErrFoo" |

@@ -232,7 +232,6 @@ func New(client *http.Client) (*Service, error) {
 	s.RegionInstances = NewRegionInstancesService(s)
 	s.RegionInstantSnapshotGroups = NewRegionInstantSnapshotGroupsService(s)
 	s.RegionInstantSnapshots = NewRegionInstantSnapshotsService(s)
-	s.RegionMultiMigs = NewRegionMultiMigsService(s)
 	s.RegionNetworkEndpointGroups = NewRegionNetworkEndpointGroupsService(s)
 	s.RegionNetworkFirewallPolicies = NewRegionNetworkFirewallPoliciesService(s)
 	s.RegionNotificationEndpoints = NewRegionNotificationEndpointsService(s)
@@ -422,8 +421,6 @@ type Service struct {
 	RegionInstantSnapshotGroups *RegionInstantSnapshotGroupsService
 
 	RegionInstantSnapshots *RegionInstantSnapshotsService
-
-	RegionMultiMigs *RegionMultiMigsService
 
 	RegionNetworkEndpointGroups *RegionNetworkEndpointGroupsService
 
@@ -1144,15 +1141,6 @@ func NewRegionInstantSnapshotsService(s *Service) *RegionInstantSnapshotsService
 }
 
 type RegionInstantSnapshotsService struct {
-	s *Service
-}
-
-func NewRegionMultiMigsService(s *Service) *RegionMultiMigsService {
-	rs := &RegionMultiMigsService{s: s}
-	return rs
-}
-
-type RegionMultiMigsService struct {
 	s *Service
 }
 
@@ -5461,15 +5449,16 @@ type BackendCustomMetric struct {
 	// MaxUtilization: Optional parameter to define a target utilization for the
 	// Custom Metrics balancing mode. The valid range is [0.0, 1.0].
 	MaxUtilization float64 `json:"maxUtilization,omitempty"`
-	// Name: Name of a custom utilization signal. The name must be 1-24 characters
-	// long, and comply with RFC1035. Specifically, the name must be 1-24
-	// characters long and match the regular expression a-z ([-a-z0-9]*[a-z0-9])?
+	// Name: Name of a custom utilization signal. The name must be 1-64 characters
+	// long, and comply with relaxed RFC1035. Specifically, the name must be 1-64
+	// characters long and match the regular expression a-z ([-_.a-z0-9]*[a-z0-9])?
 	// which means the first character must be a lowercase letter, and all
-	// following characters must be a dash, lowercase letter, or digit, except the
-	// last character, which cannot be a dash. For usage guidelines, see Custom
-	// Metrics balancing mode. This field can only be used for a global or regional
-	// backend service with the loadBalancingScheme set to EXTERNAL_MANAGED,
-	// INTERNAL_MANAGED INTERNAL_SELF_MANAGED.
+	// following characters must be a dash, period, underscore, lowercase letter,
+	// or digit, except the last character, which cannot be a dash, period, or
+	// underscore. For usage guidelines, see Custom Metrics balancing mode. This
+	// field can only be used for a global or regional backend service with the
+	// loadBalancingScheme set to EXTERNAL_MANAGED, INTERNAL_MANAGED
+	// INTERNAL_SELF_MANAGED.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -30010,316 +29999,6 @@ type Money struct {
 
 func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MultiMig: MultiMIG represents a group of Managed Instance Groups.
-type MultiMig struct {
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text format.
-	CreationTimestamp string `json:"creationTimestamp,omitempty"`
-	// Description: An optional description of this resource. Provide this property
-	// when you create the resource.
-	Description string `json:"description,omitempty"`
-	// Id: [Output Only] The unique identifier for the resource. This identifier is
-	// defined by the server.
-	Id uint64 `json:"id,omitempty,string"`
-	// Kind: [Output Only] Type of the resource. Always compute#multiMig for
-	// MultiMIGs.
-	Kind           string                  `json:"kind,omitempty"`
-	LocationPolicy *MultiMigLocationPolicy `json:"locationPolicy,omitempty"`
-	// Name: Name of the resource. Provided by the client when the resource is
-	// created. The name must be 1-63 characters long, and comply with RFC1035.
-	// Specifically, the name must be 1-63 characters long and match the regular
-	// expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must
-	// be a lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last character, which cannot be a
-	// dash.
-	Name string `json:"name,omitempty"`
-	// Parts: User-provided names for Parts of MultiMIG and the Parts themselves.
-	Parts map[string]MultiMigPart `json:"parts,omitempty"`
-	// Region: [Output Only] URL of the region where the resource resides. Only
-	// applicable for regional resources. You must specify this field as part of
-	// the HTTP request URL. It is not settable as a field in the request body.
-	Region string `json:"region,omitempty"`
-	// SchedulingPolicy: Policy for handling provisioning and other
-	// scheduling-related events.
-	SchedulingPolicy *MultiMigSchedulingPolicy `json:"schedulingPolicy,omitempty"`
-	// SelfLink: [Output only] Server-defined URL for the resource.
-	SelfLink string `json:"selfLink,omitempty"`
-	// SelfLinkWithId: [Output Only] Server-defined URL for this resource with the
-	// resource id.
-	SelfLinkWithId string          `json:"selfLinkWithId,omitempty"`
-	Status         *MultiMigStatus `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreationTimestamp") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreationTimestamp") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMig) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MultiMigLocationPolicy: Policy regarding where to create MIGs Initially only
-// zonal MIGs in the same zone are supported.
-type MultiMigLocationPolicy struct {
-	// ProvisioningZones: List of zones where MIGs will be provisioned. Should be
-	// valid RFC1035 name
-	ProvisioningZones []string `json:"provisioningZones,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProvisioningZones") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProvisioningZones") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigLocationPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigLocationPolicy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MultiMigPart: Config for an MMIG part.
-type MultiMigPart struct {
-	// InstanceGroupManager: Link to an existing InstanceGroupManager that will be
-	// adopted by a MultiMIG.
-	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
-	// InstanceGroupManagerProperties: InstanceGroupManager to be created by the
-	// multiMig
-	InstanceGroupManagerProperties *InstanceGroupManager `json:"instanceGroupManagerProperties,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstanceGroupManager") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstanceGroupManager") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigPart) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigPart
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MultiMigSchedulingPolicy: Policy for handling provisioning and other
-// scheduling-related events.
-type MultiMigSchedulingPolicy struct {
-	// Provisioning: How provisioning of MIGs should be scheduled (coordinated or
-	// not)
-	//
-	// Possible values:
-	//   "ANY" - Allows idependent lifecycles of parts.
-	//   "COOORDINATED" - Requires all parts at the same time.
-	Provisioning string `json:"provisioning,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Provisioning") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Provisioning") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigSchedulingPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigSchedulingPolicy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type MultiMigStatus struct {
-	MemberInstanceGroupManagers []string `json:"memberInstanceGroupManagers,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "MemberInstanceGroupManagers") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MemberInstanceGroupManagers") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigStatus
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type MultiMigsList struct {
-	Etag string `json:"etag,omitempty"`
-	// Id: Unique identifier for the resource; defined by the server.
-	Id string `json:"id,omitempty"`
-	// Items: A list of MultiMig resources.
-	Items []*MultiMig `json:"items,omitempty"`
-	// Kind: Type of resource.
-	Kind string `json:"kind,omitempty"`
-	// NextPageToken: This token allows you to get the next page of results for
-	// maxResults, use the nextPageToken as a value for the query parameter
-	// pageToken in the next list request. Subsequent list requests will have their
-	// own nextPageToken to continue paging through the results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SelfLink: [Output only] Server-defined URL for this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-	// Unreachables: [Output only] Unreachable resources.
-	Unreachables []string `json:"unreachables,omitempty"`
-	// Warning: Informational warning message.
-	Warning *MultiMigsListWarning `json:"warning,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigsList) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigsList
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MultiMigsListWarning: Informational warning message.
-type MultiMigsListWarning struct {
-	// Code: [Output Only] A warning code, if applicable. For example, Compute
-	// Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.
-	//
-	// Possible values:
-	//   "CLEANUP_FAILED" - Warning about failed cleanup of transient changes made
-	// by a failed operation.
-	//   "DEPRECATED_RESOURCE_USED" - A link to a deprecated resource was created.
-	//   "DEPRECATED_TYPE_USED" - When deploying and at least one of the resources
-	// has a type marked as deprecated
-	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE" - The user created a boot disk that is
-	// larger than image size.
-	//   "EXPERIMENTAL_TYPE_USED" - When deploying and at least one of the
-	// resources has a type marked as experimental
-	//   "EXTERNAL_API_WARNING" - Warning that is present in an external api call
-	//   "FIELD_VALUE_OVERRIDEN" - Warning that value of a field has been
-	// overridden. Deprecated unused field.
-	//   "INJECTED_KERNELS_DEPRECATED" - The operation involved use of an injected
-	// kernel, which is deprecated.
-	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV backend
-	// service is associated with a health check that is not of type
-	// HTTP/HTTPS/HTTP2.
-	//   "LARGE_DEPLOYMENT_WARNING" - When deploying a deployment with a
-	// exceedingly large number of resources
-	//   "LIST_OVERHEAD_QUOTA_EXCEED" - Resource can't be retrieved due to list
-	// overhead quota exceed which captures the amount of resources filtered out by
-	// user-defined list filter.
-	//   "MISSING_TYPE_DEPENDENCY" - A resource depends on a missing type
-	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED" - The route's nextHopIp address is not
-	// assigned to an instance on the network.
-	//   "NEXT_HOP_CANNOT_IP_FORWARD" - The route's next hop instance cannot ip
-	// forward.
-	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's nextHopInstance
-	// URL refers to an instance that does not have an ipv6 interface on the same
-	// network as the route.
-	//   "NEXT_HOP_INSTANCE_NOT_FOUND" - The route's nextHopInstance URL refers to
-	// an instance that does not exist.
-	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK" - The route's nextHopInstance URL
-	// refers to an instance that is not on the same network as the route.
-	//   "NEXT_HOP_NOT_RUNNING" - The route's next hop instance does not have a
-	// status of RUNNING.
-	//   "NOT_CRITICAL_ERROR" - Error which is not critical. We decided to continue
-	// the process despite the mentioned error.
-	//   "NO_RESULTS_ON_PAGE" - No results are present on a particular list page.
-	//   "PARTIAL_SUCCESS" - Success is reported, but some results may be missing
-	// due to errors
-	//   "REQUIRED_TOS_AGREEMENT" - The user attempted to use a resource that
-	// requires a TOS they have not accepted.
-	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING" - Warning that a resource is
-	// in use.
-	//   "RESOURCE_NOT_DELETED" - One or more of the resources set to auto-delete
-	// could not be deleted because they were in use.
-	//   "SCHEMA_VALIDATION_IGNORED" - When a resource schema validation is
-	// ignored.
-	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE" - Instance template used in instance
-	// group manager is valid as such, but its application does not make a lot of
-	// sense, because it allows only single instance in instance group.
-	//   "UNDECLARED_PROPERTIES" - When undeclared properties in the schema are
-	// present
-	//   "UNREACHABLE" - A given scope cannot be reached.
-	Code string `json:"code,omitempty"`
-	// Data: [Output Only] Metadata about this warning in key: value format. For
-	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-	Data []*MultiMigsListWarningData `json:"data,omitempty"`
-	// Message: [Output Only] A human-readable description of the warning code.
-	Message string `json:"message,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Code") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigsListWarning) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigsListWarning
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type MultiMigsListWarningData struct {
-	// Key: [Output Only] A key that provides more detail on the warning being
-	// returned. For example, for warnings where there are no results in a list
-	// request for a particular zone, this key might be scope and the key value
-	// might be the zone name. Other examples might be a key indicating a
-	// deprecated resource and a suggested replacement, or a warning about invalid
-	// network settings (for example, if an instance attempts to perform IP
-	// forwarding but is not enabled for IP forwarding).
-	Key string `json:"key,omitempty"`
-	// Value: [Output Only] A warning data value corresponding to the key.
-	Value string `json:"value,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Key") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MultiMigsListWarningData) MarshalJSON() ([]byte, error) {
-	type NoMethod MultiMigsListWarningData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -63318,7 +62997,8 @@ type VpnTunnel struct {
 	// LocalTrafficSelector: Local traffic selector to use when establishing the
 	// VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted
 	// string, for example: 192.168.0.0/16. The ranges must be disjoint. Only IPv4
-	// is supported.
+	// is supported for Classic VPN tunnels. This field is output only for HA VPN
+	// tunnels.
 	LocalTrafficSelector []string `json:"localTrafficSelector,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
 	// created. The name must be 1-63 characters long, and comply with RFC1035.
@@ -63344,7 +63024,8 @@ type VpnTunnel struct {
 	// provided, the VPN tunnel will automatically use the same vpnGatewayInterface
 	// ID in the peer Google Cloud VPN gateway.
 	PeerGcpGateway string `json:"peerGcpGateway,omitempty"`
-	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported.
+	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported. This
+	// field can be set only for Classic VPN tunnels.
 	PeerIp string `json:"peerIp,omitempty"`
 	// Region: [Output Only] URL of the region where the VPN tunnel resides. You
 	// must specify this field as part of the HTTP request URL. It is not settable
@@ -63353,7 +63034,8 @@ type VpnTunnel struct {
 	// RemoteTrafficSelector: Remote traffic selectors to use when establishing the
 	// VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted
 	// string, for example: 192.168.0.0/16. The ranges should be disjoint. Only
-	// IPv4 is supported.
+	// IPv4 is supported for Classic VPN tunnels. This field is output only for HA
+	// VPN tunnels.
 	RemoteTrafficSelector []string `json:"remoteTrafficSelector,omitempty"`
 	// Router: URL of the router resource to be used for dynamic routing.
 	Router string `json:"router,omitempty"`
@@ -63405,7 +63087,8 @@ type VpnTunnel struct {
 	// resources are needed to setup VPN tunnel.
 	Status string `json:"status,omitempty"`
 	// TargetVpnGateway: URL of the Target VPN gateway with which this VPN tunnel
-	// is associated. Provided by the client when the VPN tunnel is created.
+	// is associated. Provided by the client when the VPN tunnel is created. This
+	// field can be set only for Classic VPN tunnels.
 	TargetVpnGateway string `json:"targetVpnGateway,omitempty"`
 	// VpnGateway: URL of the VPN gateway with which this VPN tunnel is associated.
 	// Provided by the client when the VPN tunnel is created. This must be used

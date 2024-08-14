@@ -3683,6 +3683,8 @@ type GoogleCloudAiplatformV1CancelTuningJobRequest struct {
 // GoogleCloudAiplatformV1Candidate: A response candidate generated from the
 // model.
 type GoogleCloudAiplatformV1Candidate struct {
+	// AvgLogprobs: Output only. Average log probability score of the candidate.
+	AvgLogprobs float64 `json:"avgLogprobs,omitempty"`
 	// CitationMetadata: Output only. Source attribution of the generated content.
 	CitationMetadata *GoogleCloudAiplatformV1CitationMetadata `json:"citationMetadata,omitempty"`
 	// Content: Output only. Content parts of the candidate.
@@ -3722,15 +3724,15 @@ type GoogleCloudAiplatformV1Candidate struct {
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1SafetyRating `json:"safetyRatings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
+	// ForceSendFields is a list of field names (e.g. "AvgLogprobs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CitationMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AvgLogprobs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3738,6 +3740,20 @@ type GoogleCloudAiplatformV1Candidate struct {
 func (s GoogleCloudAiplatformV1Candidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Candidate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1Candidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1Candidate
+	var s1 struct {
+		AvgLogprobs gensupport.JSONFloat64 `json:"avgLogprobs"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AvgLogprobs = float64(s1.AvgLogprobs)
+	return nil
 }
 
 // GoogleCloudAiplatformV1CheckTrialEarlyStoppingStateMetatdata: This message
@@ -6777,6 +6793,10 @@ type GoogleCloudAiplatformV1EntityType struct {
 	// generation time. If unset (or explicitly set to 0), default to 4000 days
 	// TTL.
 	OfflineStorageTtlDays int64 `json:"offlineStorageTtlDays,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Timestamp when this EntityType was most recently
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -6947,12 +6967,16 @@ type GoogleCloudAiplatformV1EvaluateInstancesRequest struct {
 	FulfillmentInput *GoogleCloudAiplatformV1FulfillmentInput `json:"fulfillmentInput,omitempty"`
 	// GroundednessInput: Input for groundedness metric.
 	GroundednessInput *GoogleCloudAiplatformV1GroundednessInput `json:"groundednessInput,omitempty"`
+	// PairwiseMetricInput: Input for pairwise metric.
+	PairwiseMetricInput *GoogleCloudAiplatformV1PairwiseMetricInput `json:"pairwiseMetricInput,omitempty"`
 	// PairwiseQuestionAnsweringQualityInput: Input for pairwise question answering
 	// quality metric.
 	PairwiseQuestionAnsweringQualityInput *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput `json:"pairwiseQuestionAnsweringQualityInput,omitempty"`
 	// PairwiseSummarizationQualityInput: Input for pairwise summarization quality
 	// metric.
 	PairwiseSummarizationQualityInput *GoogleCloudAiplatformV1PairwiseSummarizationQualityInput `json:"pairwiseSummarizationQualityInput,omitempty"`
+	// PointwiseMetricInput: Input for pointwise metric.
+	PointwiseMetricInput *GoogleCloudAiplatformV1PointwiseMetricInput `json:"pointwiseMetricInput,omitempty"`
 	// QuestionAnsweringCorrectnessInput: Input for question answering correctness
 	// metric.
 	QuestionAnsweringCorrectnessInput *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessInput `json:"questionAnsweringCorrectnessInput,omitempty"`
@@ -7018,12 +7042,16 @@ type GoogleCloudAiplatformV1EvaluateInstancesResponse struct {
 	FulfillmentResult *GoogleCloudAiplatformV1FulfillmentResult `json:"fulfillmentResult,omitempty"`
 	// GroundednessResult: Result for groundedness metric.
 	GroundednessResult *GoogleCloudAiplatformV1GroundednessResult `json:"groundednessResult,omitempty"`
+	// PairwiseMetricResult: Result for pairwise metric.
+	PairwiseMetricResult *GoogleCloudAiplatformV1PairwiseMetricResult `json:"pairwiseMetricResult,omitempty"`
 	// PairwiseQuestionAnsweringQualityResult: Result for pairwise question
 	// answering quality metric.
 	PairwiseQuestionAnsweringQualityResult *GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityResult `json:"pairwiseQuestionAnsweringQualityResult,omitempty"`
 	// PairwiseSummarizationQualityResult: Result for pairwise summarization
 	// quality metric.
 	PairwiseSummarizationQualityResult *GoogleCloudAiplatformV1PairwiseSummarizationQualityResult `json:"pairwiseSummarizationQualityResult,omitempty"`
+	// PointwiseMetricResult: Generic metrics. Result for pointwise metric.
+	PointwiseMetricResult *GoogleCloudAiplatformV1PointwiseMetricResult `json:"pointwiseMetricResult,omitempty"`
 	// QuestionAnsweringCorrectnessResult: Result for question answering
 	// correctness metric.
 	QuestionAnsweringCorrectnessResult *GoogleCloudAiplatformV1QuestionAnsweringCorrectnessResult `json:"questionAnsweringCorrectnessResult,omitempty"`
@@ -8865,6 +8893,12 @@ type GoogleCloudAiplatformV1FeatureGroupBigQuery struct {
 	// EntityIdColumns: Optional. Columns to construct entity_id / row keys. If not
 	// provided defaults to `entity_id`.
 	EntityIdColumns []string `json:"entityIdColumns,omitempty"`
+	// TimeSeries: Optional. If the source is a time-series source, this can be set
+	// to control how downstream sources (ex: FeatureOnlineStore.FeatureView) will
+	// treat time series sources. If not set, will treat the source as a
+	// time-series source with feature_timestamp as timestamp column and no scan
+	// boundary.
+	TimeSeries *GoogleCloudAiplatformV1FeatureGroupBigQueryTimeSeries `json:"timeSeries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigQuerySource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8880,6 +8914,30 @@ type GoogleCloudAiplatformV1FeatureGroupBigQuery struct {
 
 func (s GoogleCloudAiplatformV1FeatureGroupBigQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1FeatureGroupBigQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudAiplatformV1FeatureGroupBigQueryTimeSeries struct {
+	// TimestampColumn: Optional. Column hosting timestamp values for a time-series
+	// source. Will be used to determine the latest featureValues for each entity.
+	// Optional. If not provided, a feature_timestamp column of type TIMESTAMP will
+	// be used.
+	TimestampColumn string `json:"timestampColumn,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TimestampColumn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TimestampColumn") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1FeatureGroupBigQueryTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1FeatureGroupBigQueryTimeSeries
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9023,6 +9081,10 @@ type GoogleCloudAiplatformV1FeatureOnlineStore struct {
 	// PrivateServiceConnectConfig.enable_private_service_connect to use private
 	// endpoint. Otherwise will use public endpoint by default.
 	Optimized *GoogleCloudAiplatformV1FeatureOnlineStoreOptimized `json:"optimized,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. State of the featureOnlineStore.
 	//
 	// Possible values:
@@ -9431,6 +9493,10 @@ type GoogleCloudAiplatformV1FeatureView struct {
 	// `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_
 	// store}/featureViews/{feature_view}`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SyncConfig: Configures when data is to be synced/updated for this
 	// FeatureView. At the end of the sync the latest featureValues for each
 	// entityId of this FeatureView are made ready for online serving.
@@ -9690,6 +9756,10 @@ type GoogleCloudAiplatformV1FeatureViewSync struct {
 	Name string `json:"name,omitempty"`
 	// RunTime: Output only. Time when this FeatureViewSync is finished.
 	RunTime *GoogleTypeInterval `json:"runTime,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SyncSummary: Output only. Summary of the sync job.
 	SyncSummary *GoogleCloudAiplatformV1FeatureViewSyncSyncSummary `json:"syncSummary,omitempty"`
 
@@ -9806,6 +9876,10 @@ type GoogleCloudAiplatformV1Featurestore struct {
 	// `offline_storage_ttl_days` for each EntityType under a featurestore. If not
 	// set, default to 4000 days
 	OnlineStorageTtlDays int64 `json:"onlineStorageTtlDays,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. State of the featurestore.
 	//
 	// Possible values:
@@ -10818,7 +10892,7 @@ type GoogleCloudAiplatformV1FunctionCallingConfig struct {
 	//   "MODE_UNSPECIFIED" - Unspecified function calling mode. This value should
 	// not be used.
 	//   "AUTO" - Default model behavior, model decides to predict either a
-	// function call or a natural language repspose.
+	// function call or a natural language response.
 	//   "ANY" - Model is constrained to always predicting a function call only. If
 	// "allowed_function_names" are set, the predicted function call will be
 	// limited to any one of "allowed_function_names", else the predicted function
@@ -11080,7 +11154,9 @@ func (s GoogleCloudAiplatformV1GenerateContentResponsePromptFeedback) MarshalJSO
 type GoogleCloudAiplatformV1GenerateContentResponseUsageMetadata struct {
 	// CandidatesTokenCount: Number of tokens in the response(s).
 	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
-	// PromptTokenCount: Number of tokens in the request.
+	// PromptTokenCount: Number of tokens in the request. When `cached_content` is
+	// set, this is still the total effective prompt size meaning this includes the
+	// number of tokens in the cached content.
 	PromptTokenCount int64 `json:"promptTokenCount,omitempty"`
 	TotalTokenCount  int64 `json:"totalTokenCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
@@ -11127,6 +11203,8 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	ResponseSchema *GoogleCloudAiplatformV1Schema `json:"responseSchema,omitempty"`
 	// RoutingConfig: Optional. Routing configuration.
 	RoutingConfig *GoogleCloudAiplatformV1GenerationConfigRoutingConfig `json:"routingConfig,omitempty"`
+	// Seed: Optional. Seed.
+	Seed int64 `json:"seed,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
@@ -12034,6 +12112,10 @@ type GoogleCloudAiplatformV1Index struct {
 	MetadataSchemaUri string `json:"metadataSchemaUri,omitempty"`
 	// Name: Output only. The resource name of the Index.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Timestamp when this Index was most recently
 	// updated. This also includes any update to the contents of the Index. Note
 	// that Operations working on this Index may have their
@@ -12329,6 +12411,10 @@ type GoogleCloudAiplatformV1IndexEndpoint struct {
 	// PublicEndpointEnabled: Optional. If true, the deployed index will be
 	// accessible through public endpoint.
 	PublicEndpointEnabled bool `json:"publicEndpointEnabled,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Timestamp when this IndexEndpoint was last updated.
 	// This timestamp is not updated when the endpoint's DeployedIndexes are
 	// updated, e.g. due to updates of the original Indexes they are the
@@ -15354,6 +15440,10 @@ type GoogleCloudAiplatformV1ModelDeploymentMonitoringJob struct {
 	// ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we
 	// will generate predict schema from collected predict requests.
 	SamplePredictInstance interface{} `json:"samplePredictInstance,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduleState: Output only. Schedule state when the monitoring job is in
 	// Running state.
 	//
@@ -17810,6 +17900,108 @@ func (s GoogleCloudAiplatformV1NotebookRuntimeTemplateRef) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1PairwiseMetricInput: Input for pairwise metric.
+type GoogleCloudAiplatformV1PairwiseMetricInput struct {
+	// Instance: Required. Pairwise metric instance.
+	Instance *GoogleCloudAiplatformV1PairwiseMetricInstance `json:"instance,omitempty"`
+	// MetricSpec: Required. Spec for pairwise metric.
+	MetricSpec *GoogleCloudAiplatformV1PairwiseMetricSpec `json:"metricSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PairwiseMetricInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PairwiseMetricInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PairwiseMetricInstance: Pairwise metric instance.
+// Usually one instance corresponds to one row in an evaluation dataset.
+type GoogleCloudAiplatformV1PairwiseMetricInstance struct {
+	// JsonInstance: Instance specified as a json string. String key-value pairs
+	// are expected in the json_instance to render
+	// PairwiseMetricSpec.instance_prompt_template.
+	JsonInstance string `json:"jsonInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonInstance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonInstance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PairwiseMetricInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PairwiseMetricInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PairwiseMetricResult: Spec for pairwise metric
+// result.
+type GoogleCloudAiplatformV1PairwiseMetricResult struct {
+	// Explanation: Output only. Explanation for pairwise metric score.
+	Explanation string `json:"explanation,omitempty"`
+	// PairwiseChoice: Output only. Pairwise metric choice.
+	//
+	// Possible values:
+	//   "PAIRWISE_CHOICE_UNSPECIFIED" - Unspecified prediction choice.
+	//   "BASELINE" - Baseline prediction wins
+	//   "CANDIDATE" - Candidate prediction wins
+	//   "TIE" - Winner cannot be determined
+	PairwiseChoice string `json:"pairwiseChoice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Explanation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PairwiseMetricResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PairwiseMetricResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PairwiseMetricSpec: Spec for pairwise metric.
+type GoogleCloudAiplatformV1PairwiseMetricSpec struct {
+	// MetricPromptTemplate: Required. Metric prompt template for pairwise metric.
+	MetricPromptTemplate string `json:"metricPromptTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetricPromptTemplate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricPromptTemplate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PairwiseMetricSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PairwiseMetricSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput: Input for
 // pairwise question answering quality metric.
 type GoogleCloudAiplatformV1PairwiseQuestionAnsweringQualityInput struct {
@@ -18722,6 +18914,116 @@ type GoogleCloudAiplatformV1PipelineTemplateMetadata struct {
 
 func (s GoogleCloudAiplatformV1PipelineTemplateMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1PipelineTemplateMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PointwiseMetricInput: Input for pointwise metric.
+type GoogleCloudAiplatformV1PointwiseMetricInput struct {
+	// Instance: Required. Pointwise metric instance.
+	Instance *GoogleCloudAiplatformV1PointwiseMetricInstance `json:"instance,omitempty"`
+	// MetricSpec: Required. Spec for pointwise metric.
+	MetricSpec *GoogleCloudAiplatformV1PointwiseMetricSpec `json:"metricSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PointwiseMetricInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PointwiseMetricInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PointwiseMetricInstance: Pointwise metric instance.
+// Usually one instance corresponds to one row in an evaluation dataset.
+type GoogleCloudAiplatformV1PointwiseMetricInstance struct {
+	// JsonInstance: Instance specified as a json string. String key-value pairs
+	// are expected in the json_instance to render
+	// PointwiseMetricSpec.instance_prompt_template.
+	JsonInstance string `json:"jsonInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonInstance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonInstance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PointwiseMetricInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PointwiseMetricInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1PointwiseMetricResult: Spec for pointwise metric
+// result.
+type GoogleCloudAiplatformV1PointwiseMetricResult struct {
+	// Explanation: Output only. Explanation for pointwise metric score.
+	Explanation string `json:"explanation,omitempty"`
+	// Score: Output only. Pointwise metric score.
+	Score float64 `json:"score,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Explanation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PointwiseMetricResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PointwiseMetricResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1PointwiseMetricResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1PointwiseMetricResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// GoogleCloudAiplatformV1PointwiseMetricSpec: Spec for pointwise metric.
+type GoogleCloudAiplatformV1PointwiseMetricSpec struct {
+	// MetricPromptTemplate: Required. Metric prompt template for pointwise metric.
+	MetricPromptTemplate string `json:"metricPromptTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetricPromptTemplate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricPromptTemplate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1PointwiseMetricSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PointwiseMetricSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -95128,6 +95430,13 @@ type PublishersModelsGetCall struct {
 func (r *PublishersModelsService) Get(name string) *PublishersModelsGetCall {
 	c := &PublishersModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// HuggingFaceToken sets the optional parameter "huggingFaceToken": Token used
+// to access Hugging Face gated models.
+func (c *PublishersModelsGetCall) HuggingFaceToken(huggingFaceToken string) *PublishersModelsGetCall {
+	c.urlParams_.Set("huggingFaceToken", huggingFaceToken)
 	return c
 }
 

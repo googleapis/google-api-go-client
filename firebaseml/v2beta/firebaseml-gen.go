@@ -284,8 +284,8 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	//   "MAX_TOKENS" - Token generation reached the configured maximum output
 	// tokens.
 	//   "SAFETY" - Token generation stopped because the content potentially
-	// contains safety violations. NOTE: When streaming, Candidate.content is empty
-	// if content filters blocks the output.
+	// contains safety violations. NOTE: When streaming, content is empty if
+	// content filters blocks the output.
 	//   "RECITATION" - Token generation stopped because the content potentially
 	// contains copyright violations.
 	//   "OTHER" - All other reasons that stopped the token generation.

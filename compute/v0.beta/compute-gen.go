@@ -5082,6 +5082,33 @@ type BackendService struct {
 	// EnableCDN: If true, enables Cloud CDN for the backend service of a global
 	// external Application Load Balancer.
 	EnableCDN bool `json:"enableCDN,omitempty"`
+	// ExternalManagedMigrationState: Specifies the canary migration state.
+	// Possible values are PREPARE, TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC. To
+	// begin the migration from EXTERNAL to EXTERNAL_MANAGED, the state must be
+	// changed to PREPARE. The state must be changed to TEST_ALL_TRAFFIC before the
+	// loadBalancingScheme can be changed to EXTERNAL_MANAGED. Optionally, the
+	// TEST_BY_PERCENTAGE state can be used to migrate traffic by percentage using
+	// externalManagedMigrationTestingPercentage. Rolling back a migration requires
+	// the states to be set in reverse order. So changing the scheme from
+	// EXTERNAL_MANAGED to EXTERNAL requires the state to be set to
+	// TEST_ALL_TRAFFIC at the same time. Optionally, the TEST_BY_PERCENTAGE state
+	// can be used to migrate some traffic back to EXTERNAL or PREPARE can be used
+	// to migrate all traffic back to EXTERNAL.
+	//
+	// Possible values:
+	//   "PREPARE"
+	//   "TEST_ALL_TRAFFIC"
+	//   "TEST_BY_PERCENTAGE"
+	ExternalManagedMigrationState string `json:"externalManagedMigrationState,omitempty"`
+	// ExternalManagedMigrationTestingPercentage: Determines the fraction of
+	// requests that should be processed by the Global external Application Load
+	// Balancer. The value of this field must be in the range [0, 100]. Session
+	// affinity options will slightly affect this routing behavior, for more
+	// details, see: Session Affinity. This value can only be set if the
+	// loadBalancingScheme in the BackendService is set to EXTERNAL (when using the
+	// classic Application Load Balancer) and the migration state is
+	// TEST_BY_PERCENTAGE.
+	ExternalManagedMigrationTestingPercentage float64 `json:"externalManagedMigrationTestingPercentage,omitempty"`
 	// FailoverPolicy: Requires at least one backend instance group to be defined
 	// as a backup (failover) backend. For load balancers that have configurable
 	// failover: Internal passthrough Network Load Balancers
@@ -5410,6 +5437,20 @@ type BackendService struct {
 func (s BackendService) MarshalJSON() ([]byte, error) {
 	type NoMethod BackendService
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BackendService) UnmarshalJSON(data []byte) error {
+	type NoMethod BackendService
+	var s1 struct {
+		ExternalManagedMigrationTestingPercentage gensupport.JSONFloat64 `json:"externalManagedMigrationTestingPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ExternalManagedMigrationTestingPercentage = float64(s1.ExternalManagedMigrationTestingPercentage)
+	return nil
 }
 
 // BackendServiceAggregatedList: Contains a list of BackendServicesScopedList.
@@ -11773,6 +11814,33 @@ type ForwardingRule struct {
 	// Description: An optional description of this resource. Provide this property
 	// when you create the resource.
 	Description string `json:"description,omitempty"`
+	// ExternalManagedBackendBucketMigrationState: Specifies the canary migration
+	// state for the backend buckets attached to this forwarding rule. Possible
+	// values are PREPARE, TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC. To begin the
+	// migration from EXTERNAL to EXTERNAL_MANAGED, the state must be changed to
+	// PREPARE. The state must be changed to TEST_ALL_TRAFFIC before the
+	// loadBalancingScheme can be changed to EXTERNAL_MANAGED. Optionally, the
+	// TEST_BY_PERCENTAGE state can be used to migrate traffic to backend buckets
+	// attached to this forwarding rule by percentage using
+	// externalManagedBackendBucketMigrationTestingPercentage. Rolling back a
+	// migration requires the states to be set in reverse order. So changing the
+	// scheme from EXTERNAL_MANAGED to EXTERNAL requires the state to be set to
+	// TEST_ALL_TRAFFIC at the same time. Optionally, the TEST_BY_PERCENTAGE state
+	// can be used to migrate some traffic back to EXTERNAL or PREPARE can be used
+	// to migrate all traffic back to EXTERNAL.
+	//
+	// Possible values:
+	//   "PREPARE"
+	//   "TEST_ALL_TRAFFIC"
+	//   "TEST_BY_PERCENTAGE"
+	ExternalManagedBackendBucketMigrationState string `json:"externalManagedBackendBucketMigrationState,omitempty"`
+	// ExternalManagedBackendBucketMigrationTestingPercentage: Determines the
+	// fraction of requests to backend buckets that should be processed by the
+	// global external Application Load Balancer. The value of this field must be
+	// in the range [0, 100]. This value can only be set if the loadBalancingScheme
+	// in the BackendService is set to EXTERNAL (when using the classic Application
+	// Load Balancer) and the migration state is TEST_BY_PERCENTAGE.
+	ExternalManagedBackendBucketMigrationTestingPercentage float64 `json:"externalManagedBackendBucketMigrationTestingPercentage,omitempty"`
 	// Fingerprint: Fingerprint of this resource. A hash of the contents stored in
 	// this object. This field is used in optimistic locking. This field will be
 	// ignored when inserting a ForwardingRule. Include the fingerprint in patch
@@ -12000,6 +12068,20 @@ type ForwardingRule struct {
 func (s ForwardingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod ForwardingRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ForwardingRule) UnmarshalJSON(data []byte) error {
+	type NoMethod ForwardingRule
+	var s1 struct {
+		ExternalManagedBackendBucketMigrationTestingPercentage gensupport.JSONFloat64 `json:"externalManagedBackendBucketMigrationTestingPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ExternalManagedBackendBucketMigrationTestingPercentage = float64(s1.ExternalManagedBackendBucketMigrationTestingPercentage)
+	return nil
 }
 
 type ForwardingRuleAggregatedList struct {
@@ -25899,6 +25981,14 @@ type MachineType struct {
 	// Accelerators: [Output Only] A list of accelerator configurations assigned to
 	// this machine type.
 	Accelerators []*MachineTypeAccelerators `json:"accelerators,omitempty"`
+	// Architecture: [Output Only] The architecture of the machine type.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Default value indicating Architecture is not
+	// set.
+	//   "ARM64" - Machines with architecture ARM64
+	//   "X86_64" - Machines with architecture X86_64
+	Architecture string `json:"architecture,omitempty"`
 	// BundledLocalSsds: [Output Only] The configuration of bundled local SSD for
 	// the machine type.
 	BundledLocalSsds *BundledLocalSsds `json:"bundledLocalSsds,omitempty"`
@@ -56089,7 +56179,8 @@ type VpnTunnel struct {
 	// LocalTrafficSelector: Local traffic selector to use when establishing the
 	// VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted
 	// string, for example: 192.168.0.0/16. The ranges must be disjoint. Only IPv4
-	// is supported.
+	// is supported for Classic VPN tunnels. This field is output only for HA VPN
+	// tunnels.
 	LocalTrafficSelector []string `json:"localTrafficSelector,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
 	// created. The name must be 1-63 characters long, and comply with RFC1035.
@@ -56115,7 +56206,8 @@ type VpnTunnel struct {
 	// provided, the VPN tunnel will automatically use the same vpnGatewayInterface
 	// ID in the peer Google Cloud VPN gateway.
 	PeerGcpGateway string `json:"peerGcpGateway,omitempty"`
-	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported.
+	// PeerIp: IP address of the peer VPN gateway. Only IPv4 is supported. This
+	// field can be set only for Classic VPN tunnels.
 	PeerIp string `json:"peerIp,omitempty"`
 	// Region: [Output Only] URL of the region where the VPN tunnel resides. You
 	// must specify this field as part of the HTTP request URL. It is not settable
@@ -56124,7 +56216,8 @@ type VpnTunnel struct {
 	// RemoteTrafficSelector: Remote traffic selectors to use when establishing the
 	// VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted
 	// string, for example: 192.168.0.0/16. The ranges should be disjoint. Only
-	// IPv4 is supported.
+	// IPv4 is supported for Classic VPN tunnels. This field is output only for HA
+	// VPN tunnels.
 	RemoteTrafficSelector []string `json:"remoteTrafficSelector,omitempty"`
 	// Router: URL of the router resource to be used for dynamic routing.
 	Router string `json:"router,omitempty"`
@@ -56176,7 +56269,8 @@ type VpnTunnel struct {
 	// resources are needed to setup VPN tunnel.
 	Status string `json:"status,omitempty"`
 	// TargetVpnGateway: URL of the Target VPN gateway with which this VPN tunnel
-	// is associated. Provided by the client when the VPN tunnel is created.
+	// is associated. Provided by the client when the VPN tunnel is created. This
+	// field can be set only for Classic VPN tunnels.
 	TargetVpnGateway string `json:"targetVpnGateway,omitempty"`
 	// VpnGateway: URL of the VPN gateway with which this VPN tunnel is associated.
 	// Provided by the client when the VPN tunnel is created. This must be used

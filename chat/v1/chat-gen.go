@@ -1296,10 +1296,10 @@ type DeprecatedEvent struct {
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`
-	// ConfigCompleteRedirectUrl: The URL the Chat app should redirect the user to
-	// after they have completed an authorization or configuration flow outside of
-	// Google Chat. For more information, see Connect a Chat app with other
-	// services & tools
+	// ConfigCompleteRedirectUrl: For `MESSAGE` interaction events, the URL that
+	// users must be redirected to after they complete an authorization or
+	// configuration flow outside of Google Chat. For more information, see Connect
+	// a Chat app with other services and tools
 	// (https://developers.google.com/workspace/chat/connect-web-services-tools).
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 	// DialogEventType: The type of dialog
@@ -5084,7 +5084,7 @@ func (s TextParagraph) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/create#messagereplyoption)
 // field to determine what happens if no matching thread is found.
 type Thread struct {
-	// Name: Output only. Resource name of the thread. Example:
+	// Name: Resource name of the thread. Example:
 	// `spaces/{space}/threads/{thread}`
 	Name string `json:"name,omitempty"`
 	// ThreadKey: Optional. Input for creating or updating a thread. Otherwise,

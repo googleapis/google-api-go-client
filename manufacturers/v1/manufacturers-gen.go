@@ -259,6 +259,12 @@ type Attributes struct {
 	// "ClientShoppingCatalog" or "PartnerShoppingCatalog". For more information,
 	// see https://support.google.com/manufacturers/answer/7443550
 	IncludedDestination []string `json:"includedDestination,omitempty"`
+	// IntendedCountry: Optional. List of countries to show this product in.
+	// Countries provided in this attribute will override any of the countries
+	// configured at feed level. The values should be: the CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// countries in which this item will be shown.
+	IntendedCountry []string `json:"intendedCountry,omitempty"`
 	// ItemGroupId: The item group id of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#itemgroupid.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
@@ -436,8 +442,17 @@ func (s Count) MarshalJSON() ([]byte, error) {
 
 // DestinationStatus: The destination status.
 type DestinationStatus struct {
+	// ApprovedCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where the offer is approved.
+	ApprovedCountries []string `json:"approvedCountries,omitempty"`
 	// Destination: The name of the destination.
 	Destination string `json:"destination,omitempty"`
+	// DisapprovedCountries: Output only. List of country codes (ISO 3166-1
+	// alpha-2) where the offer is disapproved.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+	// PendingCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where the offer is pending approval.
+	PendingCountries []string `json:"pendingCountries,omitempty"`
 	// Status: The status of the destination.
 	//
 	// Possible values:
@@ -446,15 +461,15 @@ type DestinationStatus struct {
 	//   "PENDING" - The decision is still pending.
 	//   "DISAPPROVED" - The product is disapproved. Please look at the issues.
 	Status string `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Destination") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApprovedCountries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -970,6 +985,8 @@ type Product struct {
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 	// DestinationStatuses: The status of the destinations.
 	DestinationStatuses []*DestinationStatus `json:"destinationStatuses,omitempty"`
+	// FeedLabel: Optional. The feed label for the product.
+	FeedLabel string `json:"feedLabel,omitempty"`
 	// Issues: A server-generated list of issues associated with the product.
 	Issues []*Issue `json:"issues,omitempty"`
 	// Name: Name in the format `{target_country}:{content_language}:{product_id}`.

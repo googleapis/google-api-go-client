@@ -99,7 +99,7 @@ func TestApply(t *testing.T) {
 		cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain"),
 	}
 	if !cmp.Equal(got, want, ignore...) {
-		t.Errorf(cmp.Diff(got, want, ignore...))
+		t.Error(cmp.Diff(got, want, ignore...))
 	}
 }
 
@@ -130,6 +130,6 @@ func TestApplyClientCertSource(t *testing.T) {
 		t.Error(err)
 	}
 	if !cmp.Equal(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")) {
-		t.Errorf(cmp.Diff(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")))
+		t.Error(cmp.Diff(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")))
 	}
 }

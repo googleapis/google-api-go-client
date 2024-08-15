@@ -1078,18 +1078,6 @@ type BackupRule struct {
 	// will be kept. It is defined in “days”. The value should be greater than
 	// or equal to minimum enforced retention of the backup vault.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
-	// BackupVault: Optional. TODO b/341576760: Remove deprecated BV and Datasource
-	// field form BP and BPA once UI removed all dependencies on them Required.
-	// Resource name of backup vault which will be used as storage location for
-	// backups. Format:
-	// projects/{project}/locations/{location}/backupVaults/{backupvault}
-	BackupVault string `json:"backupVault,omitempty"`
-	// BackupVaultServiceAccount: Output only. TODO b/341576760: Remove deprecated
-	// BV and Datasource field form BP and BPA once UI removed all dependencies on
-	// them Output only. The Google Cloud Platform Service Account to be used by
-	// the BackupVault for taking backups. Specify the email address of the Backup
-	// Vault Service Account.
-	BackupVaultServiceAccount string `json:"backupVaultServiceAccount,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a
 	// lowercase letter followed by up to 62 lowercase letters, numbers, or
@@ -3440,13 +3428,6 @@ func (s RestoreBackupRequest) MarshalJSON() ([]byte, error) {
 
 // RuleConfigInfo: Message for rules config info.
 type RuleConfigInfo struct {
-	// DataSource: Output only. TODO b/341576760: Remove deprecated BV and
-	// Datasource field form BP and BPA once UI removed all dependencies on them
-	// Output Only. Resource name of data source which will be used as storage
-	// location for backups taken by specified rule. Format :
-	// projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSource
-	// s/{datasource}
-	DataSource string `json:"dataSource,omitempty"`
 	// LastBackupError: Output only. Output Only. google.rpc.Status object to store
 	// the last backup error.
 	LastBackupError *Status `json:"lastBackupError,omitempty"`
@@ -3465,15 +3446,15 @@ type RuleConfigInfo struct {
 	LastSuccessfulBackupConsistencyTime string `json:"lastSuccessfulBackupConsistencyTime,omitempty"`
 	// RuleId: Output only. Output Only. Backup Rule id fetched from backup plan.
 	RuleId string `json:"ruleId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// ForceSendFields is a list of field names (e.g. "LastBackupError") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataSource") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LastBackupError") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

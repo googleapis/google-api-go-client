@@ -648,6 +648,8 @@ type InternalRange struct {
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Migration: Optional. Should be present if usage is set to FOR_MIGRATION.
+	Migration *Migration `json:"migration,omitempty"`
 	// Name: Immutable. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
 	// https://google.aip.dev/122#fields-representing-resource-names
@@ -718,6 +720,10 @@ type InternalRange struct {
 	// associated with VPC resources and are meant to block out address ranges for
 	// various use cases such as usage on-premises, with dynamic route
 	// announcements via Interconnect.
+	//   "FOR_MIGRATION" - Ranges created FOR_MIGRATION can be used to lock a CIDR
+	// range between a source and target subnet. If usage is set to FOR_MIGRATION
+	// the peering value has to be set to FOR_SELF or default to FOR_SELF when
+	// unset.
 	Usage string `json:"usage,omitempty"`
 	// Users: Output only. The list of resources that refer to this internal range.
 	// Resources that use the internal range for their range allocation are
@@ -903,6 +909,37 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Migration: Specification for migration with source and target resource
+// names.
+type Migration struct {
+	// Source: Immutable. Resource path as an URI of the source resource, for
+	// example a subnet. The project for the source resource should match the
+	// project for the InternalRange. An example:
+	// /projects/{project}/regions/{region}/subnetworks/{subnet}
+	Source string `json:"source,omitempty"`
+	// Target: Immutable. Resource path of the target resource. The target project
+	// can be different, as in the cases when migrating to peer networks. The
+	// resource For example:
+	// /projects/{project}/regions/{region}/subnetworks/{subnet}
+	Target string `json:"target,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Migration) MarshalJSON() ([]byte, error) {
+	type NoMethod Migration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

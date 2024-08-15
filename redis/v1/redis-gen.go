@@ -409,6 +409,8 @@ type Cluster struct {
 	// CreateTime: Output only. The timestamp associated with the cluster creation
 	// request.
 	CreateTime string `json:"createTime,omitempty"`
+	// CrossClusterReplicationConfig: Optional. Cross cluster replication config.
+	CrossClusterReplicationConfig *CrossClusterReplicationConfig `json:"crossClusterReplicationConfig,omitempty"`
 	// DeletionProtectionEnabled: Optional. The delete operation will fail when the
 	// value is set to true.
 	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
@@ -447,7 +449,7 @@ type Cluster struct {
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 	// ReplicaCount: Optional. The number of replica nodes per shard.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
-	// ShardCount: Required. Number of shards for the Redis cluster.
+	// ShardCount: Optional. Number of shards for the Redis cluster.
 	ShardCount int64 `json:"shardCount,omitempty"`
 	// SizeGb: Output only. Redis memory size in GB for the entire cluster rounded
 	// up to the next integer.
@@ -574,58 +576,84 @@ func (s Compliance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomMetadataData: Any custom metadata associated with the resource. i.e. A
-// spanner instance can have multiple databases with its own unique metadata.
-// Information for these individual databases can be captured in custom
-// metadata data
-type CustomMetadataData struct {
-	DatabaseMetadata []*DatabaseMetadata `json:"databaseMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatabaseMetadata") to
+// CrossClusterReplicationConfig: Cross cluster replication config.
+type CrossClusterReplicationConfig struct {
+	// ClusterRole: The role of the cluster in cross cluster replication.
+	//
+	// Possible values:
+	//   "CLUSTER_ROLE_UNSPECIFIED" - Cluster role is not set. The behavior is
+	// equivalent to NONE.
+	//   "NONE" - This cluster does not participate in cross cluster replication.
+	// It is an independent cluster and does not replicate to or from any other
+	// clusters.
+	//   "PRIMARY" - A cluster that allows both reads and writes. Any data written
+	// to this cluster is also replicated to the attached secondary clusters.
+	//   "SECONDARY" - A cluster that allows only reads and replicates data from a
+	// primary cluster.
+	ClusterRole string `json:"clusterRole,omitempty"`
+	// Membership: Output only. An output only view of all the member clusters
+	// participating in the cross cluster replication. This view will be provided
+	// by every member cluster irrespective of its cluster role(primary or
+	// secondary). A primary cluster can provide information about all the
+	// secondary clusters replicating from it. However, a secondary cluster only
+	// knows about the primary cluster from which it is replicating. However, for
+	// scenarios, where the primary cluster is unavailable(e.g. regional outage), a
+	// GetCluster request can be sent to any other member cluster and this field
+	// will list all the member clusters participating in cross cluster
+	// replication.
+	Membership *Membership `json:"membership,omitempty"`
+	// PrimaryCluster: Details of the primary cluster that is used as the
+	// replication source for this secondary cluster. This field is only set for a
+	// secondary cluster.
+	PrimaryCluster *RemoteCluster `json:"primaryCluster,omitempty"`
+	// SecondaryClusters: List of secondary clusters that are replicating from this
+	// primary cluster. This field is only set for a primary cluster.
+	SecondaryClusters []*RemoteCluster `json:"secondaryClusters,omitempty"`
+	// UpdateTime: Output only. The last time cross cluster replication config was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterRole") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatabaseMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClusterRole") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossClusterReplicationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossClusterReplicationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomMetadataData: Any custom metadata associated with the resource. e.g. A
+// spanner instance can have multiple databases with its own unique metadata.
+// Information for these individual databases can be captured in custom
+// metadata data
+type CustomMetadataData struct {
+	// InternalResourceMetadata: Metadata for individual internal resources in an
+	// instance. e.g. spanner instance can have multiple databases with unique
+	// configuration.
+	InternalResourceMetadata []*InternalResourceMetadata `json:"internalResourceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternalResourceMetadata")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InternalResourceMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s CustomMetadataData) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMetadataData
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DatabaseMetadata: Metadata for individual databases created in an instance.
-// i.e. spanner instance can have multiple databases with unique configuration
-// settings.
-type DatabaseMetadata struct {
-	// BackupConfiguration: Backup configuration for this database
-	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Information about the last backup attempt for this database
-	BackupRun  *BackupRun          `json:"backupRun,omitempty"`
-	Product    *Product            `json:"product,omitempty"`
-	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
-	// ResourceName: Required. Database name. Resource name to follow CAIS
-	// resource_name format as noted here go/condor-common-datamodel
-	ResourceName string `json:"resourceName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DatabaseMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod DatabaseMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -736,6 +764,22 @@ type DatabaseResourceHealthSignalData struct {
 	// SignalId: Required. Unique identifier for the signal. This is an unique id
 	// which would be mainatined by partner to identify a signal.
 	SignalId string `json:"signalId,omitempty"`
+	// SignalSeverity: The severity of the signal, such as if it's a HIGH or LOW
+	// severity.
+	//
+	// Possible values:
+	//   "SIGNAL_SEVERITY_UNSPECIFIED" - This value is used for findings when a
+	// source doesn't write a severity value.
+	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
+	// external actor, exploitable.
+	//   "HIGH" - A high risk vulnerability can be easily discovered and exploited
+	// in combination with other vulnerabilities.
+	//   "MEDIUM" - A medium risk vulnerability could be used by an actor to gain
+	// access to resources or privileges that enable them to eventually gain access
+	// and the ability to execute arbitrary code or exfiltrate data.
+	//   "LOW" - A low risk vulnerability hampers a security organization's ability
+	// to detect vulnerabilities or active threats in their deployment.
+	SignalSeverity string `json:"signalSeverity,omitempty"`
 	// SignalType: Required. Type of signal, for example,
 	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
 	//
@@ -973,8 +1017,10 @@ type DatabaseResourceId struct {
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
 	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
 	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
-	// spanner.googleapis.com/Instance REQUIRED Please refer
-	// go/condor-common-datamodel
+	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
+	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
+	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
+	// REQUIRED Please refer go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
 	// from other resources within the same service.
@@ -1875,6 +1921,39 @@ func (s InstanceAuthString) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InternalResourceMetadata: Metadata for individual internal resources in an
+// instance. e.g. spanner instance can have multiple databases with unique
+// configuration settings. Similarly bigtable can have multiple clusters within
+// same bigtable instance.
+type InternalResourceMetadata struct {
+	// BackupConfiguration: Backup configuration for this database
+	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
+	// BackupRun: Information about the last backup attempt for this database
+	BackupRun  *BackupRun          `json:"backupRun,omitempty"`
+	Product    *Product            `json:"product,omitempty"`
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+	// ResourceName: Required. internal resource name for spanner this will be
+	// database name
+	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InternalResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod InternalResourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response for ListClusters.
 type ListClustersResponse struct {
 	// Clusters: A list of Redis clusters in the project in the specified location,
@@ -2156,6 +2235,33 @@ type ManagedCertificateAuthority struct {
 
 func (s ManagedCertificateAuthority) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedCertificateAuthority
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Membership: An output only view of all the member clusters participating in
+// the cross cluster replication.
+type Membership struct {
+	// PrimaryCluster: Output only. The primary cluster that acts as the source of
+	// replication for the secondary clusters.
+	PrimaryCluster *RemoteCluster `json:"primaryCluster,omitempty"`
+	// SecondaryClusters: Output only. The list of secondary clusters replicating
+	// from the primary cluster.
+	SecondaryClusters []*RemoteCluster `json:"secondaryClusters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrimaryCluster") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrimaryCluster") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Membership) MarshalJSON() ([]byte, error) {
+	type NoMethod Membership
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2456,6 +2562,8 @@ type Product struct {
 	// dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
+	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
+	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//
@@ -2473,6 +2581,7 @@ type Product struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
+	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	Type string `json:"type,omitempty"`
 	// Version: Version of the underlying database engine. Example values: For
 	// MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be "14", "15"
@@ -2620,6 +2729,32 @@ type ReconciliationOperationMetadata struct {
 
 func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ReconciliationOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoteCluster: Details of the remote cluster associated with this cluster in
+// a cross cluster replication setup.
+type RemoteCluster struct {
+	// Cluster: The full resource path of the remote cluster in the format:
+	// projects//locations//clusters/
+	Cluster string `json:"cluster,omitempty"`
+	// Uid: Output only. The unique identifier of the remote cluster.
+	Uid string `json:"uid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cluster") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoteCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteCluster
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

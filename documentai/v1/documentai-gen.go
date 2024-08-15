@@ -4839,6 +4839,8 @@ type GoogleCloudDocumentaiV1ProcessRequest struct {
 	FieldMask string `json:"fieldMask,omitempty"`
 	// GcsDocument: A raw document on Google Cloud Storage.
 	GcsDocument *GoogleCloudDocumentaiV1GcsDocument `json:"gcsDocument,omitempty"`
+	// ImagelessMode: Optional. Option to remove images from the document.
+	ImagelessMode bool `json:"imagelessMode,omitempty"`
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1Document `json:"inlineDocument,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata for the request.

@@ -428,7 +428,7 @@ func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeviceIntegrity: Contains the device attestation information. Next tag: 4
+// DeviceIntegrity: Contains the device attestation information.
 type DeviceIntegrity struct {
 	// DeviceRecall: Details about the device recall bits set by the developer.
 	DeviceRecall *DeviceRecall `json:"deviceRecall,omitempty"`
@@ -470,8 +470,7 @@ func (s DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeviceRecall: Contains the recall bits per device set by the developer. Next
-// tag: 3
+// DeviceRecall: Contains the recall bits per device set by the developer.
 type DeviceRecall struct {
 	// Values: Required. Contains the recall bits values.
 	Values *Values `json:"values,omitempty"`
@@ -721,9 +720,7 @@ func (s WriteDates) MarshalJSON() ([]byte, error) {
 // WriteDeviceRecallRequest: Request to write device recall bits.
 type WriteDeviceRecallRequest struct {
 	// IntegrityToken: Required. Integrity token obtained from calling Play
-	// Integrity API. Note that the integrity token contains the existing device
-	// recall bits. The write will only succeed if those bits in the integrity
-	// token are up to date.
+	// Integrity API.
 	IntegrityToken string `json:"integrityToken,omitempty"`
 	// NewValues: Required. The new values for the device recall bits to be
 	// written.

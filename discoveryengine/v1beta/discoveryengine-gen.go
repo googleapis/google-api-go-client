@@ -1269,7 +1269,7 @@ func (s GoogleCloudDiscoveryengineV1ConditionTimeRange) MarshalJSON() ([]byte, e
 // employ during serving. Must be attached to a ServingConfig to be considered
 // at serving time. Permitted actions dependent on `SolutionType`.
 type GoogleCloudDiscoveryengineV1Control struct {
-	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig IDs this
 	// control is attached to. May take up to 10 minutes to update after changes.
 	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
 	// BoostAction: Defines a boost-type control
@@ -1584,6 +1584,8 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	//   "NO_CONTENT" - Only contains documents without any Document.content.
 	//   "CONTENT_REQUIRED" - Only contains documents with Document.content.
 	//   "PUBLIC_WEBSITE" - The data store is used for public website search.
+	//   "GOOGLE_WORKSPACE" - The data store is used for workspace search. Details
+	// of workspace data store are specified in the WorkspaceConfig.
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1637,6 +1639,10 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// against certain rules on schema. Learn more from this doc
 	// (https://cloud.google.com/generative-ai-app-builder/docs/provide-schema).
 	StartingSchema *GoogleCloudDiscoveryengineV1Schema `json:"startingSchema,omitempty"`
+	// WorkspaceConfig: Config to store data store type configuration for workspace
+	// data. This must be set when DataStore.content_config is set as
+	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
+	WorkspaceConfig *GoogleCloudDiscoveryengineV1WorkspaceConfig `json:"workspaceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2929,6 +2935,72 @@ func (s GoogleCloudDiscoveryengineV1TargetSiteFailureReasonQuotaFailure) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1TrainCustomModelMetadata: Metadata related to
+// the progress of the TrainCustomModel operation. This is returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1TrainCustomModelMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1TrainCustomModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1TrainCustomModelMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1TrainCustomModelResponse: Response of the
+// TrainCustomModelRequest. This message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1TrainCustomModelResponse struct {
+	// ErrorConfig: Echoes the destination for the complete errors in the request
+	// if set.
+	ErrorConfig *GoogleCloudDiscoveryengineV1ImportErrorConfig `json:"errorConfig,omitempty"`
+	// ErrorSamples: A sample of errors encountered while processing the data.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// Metrics: The metrics of the trained model.
+	Metrics map[string]float64 `json:"metrics,omitempty"`
+	// ModelName: Fully qualified name of the CustomTuningModel.
+	ModelName string `json:"modelName,omitempty"`
+	// ModelStatus: The trained model status. Possible values are: * **bad-data**:
+	// The training data quality is bad. * **no-improvement**: Tuning didn't
+	// improve performance. Won't deploy. * **in-progress**: Model training job
+	// creation is in progress. * **training**: Model is actively training. *
+	// **evaluating**: The model is evaluating trained metrics. * **indexing**: The
+	// model trained metrics are indexing. * **ready**: The model is ready for
+	// serving.
+	ModelStatus string `json:"modelStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1TrainCustomModelResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1TrainCustomModelResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1UpdateSchemaMetadata: Metadata for UpdateSchema
 // LRO.
 type GoogleCloudDiscoveryengineV1UpdateSchemaMetadata struct {
@@ -2982,6 +3054,43 @@ func (s GoogleCloudDiscoveryengineV1UpdateTargetSiteMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1WorkspaceConfig: Config to store data store type
+// configuration for workspace data
+type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
+	// DasherCustomerId: Obfuscated Dasher customer ID.
+	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// Type: The Google Workspace data source.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
+	// Drive.
+	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
+	//   "GOOGLE_SITES" - The data store is used to store content from Google
+	// Sites.
+	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
+	// Calendar.
+	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
+	// Groups.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DasherCustomerId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1WorkspaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1WorkspaceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaAclConfig: Access Control Configuration.
 type GoogleCloudDiscoveryengineV1alphaAclConfig struct {
 	// IdpConfig: Identity provider config.
@@ -3029,6 +3138,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "JAIL_BREAKING_QUERY_IGNORED" - The jail-breaking query ignored case. For
 	// example, "Reply in the tone of a competing company's CEO". Google skips the
 	// answer if the query is classified as a jail-breaking query.
+	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
+	// skips the summary if there is a customer policy violation detected. The
+	// policy is defined by the customer.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -3727,7 +3839,7 @@ func (s GoogleCloudDiscoveryengineV1alphaConditionTimeRange) MarshalJSON() ([]by
 // employ during serving. Must be attached to a ServingConfig to be considered
 // at serving time. Permitted actions dependent on `SolutionType`.
 type GoogleCloudDiscoveryengineV1alphaControl struct {
-	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig IDs this
 	// control is attached to. May take up to 10 minutes to update after changes.
 	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
 	// BoostAction: Defines a boost-type control
@@ -4128,6 +4240,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "NO_CONTENT" - Only contains documents without any Document.content.
 	//   "CONTENT_REQUIRED" - Only contains documents with Document.content.
 	//   "PUBLIC_WEBSITE" - The data store is used for public website search.
+	//   "GOOGLE_WORKSPACE" - The data store is used for workspace search. Details
+	// of workspace data store are specified in the WorkspaceConfig.
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4185,6 +4299,10 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// against certain rules on schema. Learn more from this doc
 	// (https://cloud.google.com/generative-ai-app-builder/docs/provide-schema).
 	StartingSchema *GoogleCloudDiscoveryengineV1alphaSchema `json:"startingSchema,omitempty"`
+	// WorkspaceConfig: Config to store data store type configuration for workspace
+	// data. This must be set when DataStore.content_config is set as
+	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
+	WorkspaceConfig *GoogleCloudDiscoveryengineV1alphaWorkspaceConfig `json:"workspaceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7925,6 +8043,43 @@ func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaWorkspaceConfig: Config to store data store
+// type configuration for workspace data
+type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
+	// DasherCustomerId: Obfuscated Dasher customer ID.
+	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// Type: The Google Workspace data source.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
+	// Drive.
+	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
+	//   "GOOGLE_SITES" - The data store is used to store content from Google
+	// Sites.
+	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
+	// Calendar.
+	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
+	// Groups.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DasherCustomerId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaWorkspaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaWorkspaceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaAlloyDbSource: AlloyDB source import data
 // from.
 type GoogleCloudDiscoveryengineV1betaAlloyDbSource struct {
@@ -7943,9 +8098,9 @@ type GoogleCloudDiscoveryengineV1betaAlloyDbSource struct {
 	// LocationId: Required. The AlloyDB location to copy the data from with a
 	// length limit of 256 characters.
 	LocationId string `json:"locationId,omitempty"`
-	// ProjectId: The project ID that the AlloyDB source is in with a length limit
-	// of 128 characters. If not specified, inherits the project ID from the parent
-	// request.
+	// ProjectId: The project ID that contains the AlloyDB source. Has a length
+	// limit of 128 characters. If not specified, inherits the project ID from the
+	// parent request.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Required. The AlloyDB table to copy the data from with a length
 	// limit of 256 characters.
@@ -7989,6 +8144,9 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	//   "JAIL_BREAKING_QUERY_IGNORED" - The jail-breaking query ignored case. For
 	// example, "Reply in the tone of a competing company's CEO". Google skips the
 	// answer if the query is classified as a jail-breaking query.
+	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
+	// skips the summary if there is a customer policy violation detected. The
+	// policy is defined by the customer.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -9227,6 +9385,91 @@ func (s GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse: Response
+// message for DocumentService.BatchGetDocumentsMetadata method.
+type GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse struct {
+	// DocumentsMetadata: The metadata of the Documents.
+	DocumentsMetadata []*GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadata `json:"documentsMetadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DocumentsMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentsMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMeta
+// data: The metadata of a Document.
+type GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadata struct {
+	// LastRefreshedTime: The timestamp of the last time the Document was last
+	// indexed.
+	LastRefreshedTime string `json:"lastRefreshedTime,omitempty"`
+	// MatcherValue: The value of the matcher that was used to match the Document.
+	MatcherValue *GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue `json:"matcherValue,omitempty"`
+	// Status: The status of the document.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Should never be set.
+	//   "STATUS_INDEXED" - The Document is indexed.
+	//   "STATUS_NOT_IN_TARGET_SITE" - The Document is not indexed because its URI
+	// is not in the TargetSite.
+	//   "STATUS_NOT_IN_INDEX" - The Document is not indexed.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastRefreshedTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastRefreshedTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMeta
+// dataMatcherValue: The value of the matcher that was used to match the
+// Document.
+type GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue struct {
+	// Uri: If match by URI, the URI of the Document.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Uri") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaBatchVerifyTargetSitesRequest: Request
 // message for SiteSearchEngineService.BatchVerifyTargetSites method.
 type GoogleCloudDiscoveryengineV1betaBatchVerifyTargetSitesRequest struct {
@@ -9254,8 +9497,8 @@ type GoogleCloudDiscoveryengineV1betaBigQuerySource struct {
 	// PartitionDate: BigQuery time partitioned table's _PARTITIONDATE in
 	// YYYY-MM-DD format.
 	PartitionDate *GoogleTypeDate `json:"partitionDate,omitempty"`
-	// ProjectId: The project ID (can be project # or ID) that the BigQuery source
-	// is in with a length limit of 128 characters. If not specified, inherits the
+	// ProjectId: The project ID or the project number that contains the BigQuery
+	// source. Has a length limit of 128 characters. If not specified, inherits the
 	// project ID from the parent request.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Required. The BigQuery table to copy the data from with a length
@@ -9427,9 +9670,9 @@ type GoogleCloudDiscoveryengineV1betaBigtableSource struct {
 	// InstanceId: Required. The instance ID of the Cloud Bigtable that needs to be
 	// imported.
 	InstanceId string `json:"instanceId,omitempty"`
-	// ProjectId: The project ID that the Bigtable source is in with a length limit
-	// of 128 characters. If not specified, inherits the project ID from the parent
-	// request.
+	// ProjectId: The project ID that contains the Bigtable source. Has a length
+	// limit of 128 characters. If not specified, inherits the project ID from the
+	// parent request.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Required. The table ID of the Cloud Bigtable that needs to be
 	// imported.
@@ -9562,6 +9805,9 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 	// done for the claim and therefore citation_indices, and anti_citation_indices
 	// should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
+	// Score: Confidence score for the claim in the answer candidate, in the range
+	// of [0, 1].
+	Score float64 `json:"score,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes.
 	StartPos int64 `json:"startPos,omitempty"`
@@ -9581,6 +9827,20 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 func (s GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaCheckGroundingSpec: Specification for the
@@ -9783,7 +10043,7 @@ type GoogleCloudDiscoveryengineV1betaCloudSqlSource struct {
 	// additional cost. More info can be found here
 	// (https://cloud.google.com/sql/pricing#serverless).
 	Offload bool `json:"offload,omitempty"`
-	// ProjectId: The project ID that the Cloud SQL source is in with a length
+	// ProjectId: The project ID that contains the Cloud SQL source. Has a length
 	// limit of 128 characters. If not specified, inherits the project ID from the
 	// parent request.
 	ProjectId string `json:"projectId,omitempty"`
@@ -10033,7 +10293,7 @@ func (s GoogleCloudDiscoveryengineV1betaConditionTimeRange) MarshalJSON() ([]byt
 // employ during serving. Must be attached to a ServingConfig to be considered
 // at serving time. Permitted actions dependent on `SolutionType`.
 type GoogleCloudDiscoveryengineV1betaControl struct {
-	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig IDs this
 	// control is attached to. May take up to 10 minutes to update after changes.
 	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
 	// BoostAction: Defines a boost-type control
@@ -10679,6 +10939,8 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "NO_CONTENT" - Only contains documents without any Document.content.
 	//   "CONTENT_REQUIRED" - Only contains documents with Document.content.
 	//   "PUBLIC_WEBSITE" - The data store is used for public website search.
+	//   "GOOGLE_WORKSPACE" - The data store is used for workspace search. Details
+	// of workspace data store are specified in the WorkspaceConfig.
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
@@ -10734,6 +10996,10 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// against certain rules on schema. Learn more from this doc
 	// (https://cloud.google.com/generative-ai-app-builder/docs/provide-schema).
 	StartingSchema *GoogleCloudDiscoveryengineV1betaSchema `json:"startingSchema,omitempty"`
+	// WorkspaceConfig: Config to store data store type configuration for workspace
+	// data. This must be set when DataStore.content_config is set as
+	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
+	WorkspaceConfig *GoogleCloudDiscoveryengineV1betaWorkspaceConfig `json:"workspaceConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -14340,6 +14606,19 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
 	// will be boosted based on the region_code provided.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RelevanceThreshold: The relevance threshold of the search results. Default
+	// to Google defined threshold, leveraging a balance of precision and recall to
+	// deliver both highly accurate results and comprehensive coverage of relevant
+	// information.
+	//
+	// Possible values:
+	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
+	// behavior defaults to Google defined threshold.
+	//   "LOWEST" - Lowest relevance threshold.
+	//   "LOW" - Low relevance threshold.
+	//   "MEDIUM" - Medium relevance threshold.
+	//   "HIGH" - High relevance threshold.
+	RelevanceThreshold string `json:"relevanceThreshold,omitempty"`
 	// SafeSearch: Whether to turn on safe search. This is only supported for
 	// website search.
 	SafeSearch bool `json:"safeSearch,omitempty"`
@@ -15765,6 +16044,9 @@ func (s GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnders
 type GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterStringConstraint struct {
 	// FieldName: Name of the string field as defined in the schema.
 	FieldName string `json:"fieldName,omitempty"`
+	// QuerySegment: Identifies the keywords within the search query that match a
+	// filter.
+	QuerySegment string `json:"querySegment,omitempty"`
 	// Values: Values of the string field. The record will only be returned if the
 	// field value matches one of the values specified here.
 	Values []string `json:"values,omitempty"`
@@ -15939,6 +16221,9 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// example, "Reply in the tone of a competing company's CEO". Only used when
 	// [SearchRequest.ContentSearchSpec.SummarySpec.ignore_jail_breaking_query] is
 	// set to `true`.
+	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
+	// skips the summary if there is a customer policy violation detected. The
+	// policy is defined by the customer.
 	SummarySkippedReasons []string `json:"summarySkippedReasons,omitempty"`
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
@@ -16520,9 +16805,9 @@ type GoogleCloudDiscoveryengineV1betaSpannerSource struct {
 	EnableDataBoost bool `json:"enableDataBoost,omitempty"`
 	// InstanceId: Required. The instance ID of the source Spanner table.
 	InstanceId string `json:"instanceId,omitempty"`
-	// ProjectId: The project ID that the Spanner source is in with a length limit
-	// of 128 characters. If not specified, inherits the project ID from the parent
-	// request.
+	// ProjectId: The project ID that contains the Spanner source. Has a length
+	// limit of 128 characters. If not specified, inherits the project ID from the
+	// parent request.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Required. The table name of the Spanner database that needs to be
 	// imported.
@@ -17206,6 +17491,43 @@ type GoogleCloudDiscoveryengineV1betaUserInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaUserInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaWorkspaceConfig: Config to store data store
+// type configuration for workspace data
+type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
+	// DasherCustomerId: Obfuscated Dasher customer ID.
+	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// Type: The Google Workspace data source.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
+	// Drive.
+	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
+	//   "GOOGLE_SITES" - The data store is used to store content from Google
+	// Sites.
+	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
+	// Calendar.
+	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
+	// Groups.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DasherCustomerId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaWorkspaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaWorkspaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18728,6 +19050,124 @@ func (c *ProjectsLocationsCollectionsDataStoresTrainCustomModelCall) Do(opts ...
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGetDocumentsMetadata: Gets index freshness metadata for Documents.
+// Supported for website search only.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}/branches/{branch}`.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesService) BatchGetDocumentsMetadata(parent string) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// MatcherUrisMatcherUris sets the optional parameter
+// "matcher.urisMatcher.uris": The exact URIs to match by.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) MatcherUrisMatcherUris(matcherUrisMatcherUris ...string) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.SetMulti("matcher.urisMatcher.uris", append([]string{}, matcherUrisMatcherUris...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/batchGetDocumentsMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.batchGetDocumentsMetadata" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -31792,6 +32232,124 @@ func (c *ProjectsLocationsDataStoresPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDiscoveryengineV1betaDataStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGetDocumentsMetadata: Gets index freshness metadata for Documents.
+// Supported for website search only.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}/branches/{branch}`.
+func (r *ProjectsLocationsDataStoresBranchesService) BatchGetDocumentsMetadata(parent string) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c := &ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// MatcherUrisMatcherUris sets the optional parameter
+// "matcher.urisMatcher.uris": The exact URIs to match by.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) MatcherUrisMatcherUris(matcherUrisMatcherUris ...string) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.SetMulti("matcher.urisMatcher.uris", append([]string{}, matcherUrisMatcherUris...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) Context(ctx context.Context) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/batchGetDocumentsMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.branches.batchGetDocumentsMetadata" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

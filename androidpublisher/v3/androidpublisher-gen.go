@@ -5351,19 +5351,22 @@ func (s ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 // RevocationContext: Revocation context of the
 // purchases.subscriptionsv2.revoke API.
 type RevocationContext struct {
+	// FullRefund: Optional. Used when users should be refunded the full amount of
+	// the latest order of the subscription.
+	FullRefund *RevocationContextFullRefund `json:"fullRefund,omitempty"`
 	// ProratedRefund: Optional. Used when users should be refunded a prorated
 	// amount they paid for their subscription based on the amount of time
 	// remaining in a subscription.
 	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProratedRefund") to
+	// ForceSendFields is a list of field names (e.g. "FullRefund") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProratedRefund") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FullRefund") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5371,6 +5374,11 @@ type RevocationContext struct {
 func (s RevocationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RevocationContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RevocationContextFullRefund: Used to determine if the refund type in the
+// RevocationContext is a full refund.
+type RevocationContextFullRefund struct {
 }
 
 // RevocationContextProratedRefund: Used to determine if the refund type in the

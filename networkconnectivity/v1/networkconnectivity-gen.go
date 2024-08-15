@@ -643,6 +643,9 @@ type ConsumerPscConfig struct {
 	// network and Service Class
 	//   "POLICY_LIMIT_REACHED" - Service Connection Policy limit reached for this
 	// network and Service Class
+	//   "CONSUMER_INSTANCE_PROJECT_NOT_ALLOWLISTED" - The consumer instance
+	// project is not in AllowedGoogleProducersResourceHierarchyLevels of the
+	// matching ServiceConnectionPolicy.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsumerInstanceProject") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1377,6 +1380,10 @@ type LinkedVpcNetwork struct {
 	// IncludeExportRanges: Optional. IP ranges allowed to be included from
 	// peering.
 	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
+	// ProducerVpcSpokes: Output only. The list of Producer VPC spokes that this
+	// VPC spoke is a service consumer VPC spoke for. These producer VPCs are
+	// connected through VPC peering to this spoke's backing VPC network.
+	ProducerVpcSpokes []string `json:"producerVpcSpokes,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to

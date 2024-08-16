@@ -4458,6 +4458,8 @@ type NodeConfig struct {
 	// Spot: Spot flag for enabling Spot VM, which is a rebrand of the existing
 	// preemptible flag.
 	Spot bool `json:"spot,omitempty"`
+	// StoragePools: List of Storage Pools where boot disks are provisioned.
+	StoragePools []string `json:"storagePools,omitempty"`
 	// Tags: The list of instance tags applied to all nodes. Tags are used to
 	// identify valid sources or targets for network firewalls and are specified by
 	// the client during cluster or node pool creation. Each tag within the list
@@ -6110,8 +6112,7 @@ type SecondaryBootDiskUpdateStrategy struct {
 // SecretManagerConfig: SecretManagerConfig is config for secret manager
 // enablement.
 type SecretManagerConfig struct {
-	// Enabled: Whether the cluster is configured to use secret manager CSI
-	// component.
+	// Enabled: Enable/Disable Secret Manager Config.
 	Enabled bool `json:"enabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7377,6 +7378,9 @@ type UpdateNodePoolRequest struct {
 	// attached to the nodes for managing Compute Engine firewalls using Network
 	// Firewall Policies. Existing tags will be replaced with new values.
 	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+	// StoragePools: List of Storage Pools where boot disks are provisioned.
+	// Existing Storage Pools will be replaced with storage-pools.
+	StoragePools []string `json:"storagePools,omitempty"`
 	// Tags: The desired network tags to be applied to all nodes in the node pool.
 	// If this field is not present, the tags will not be changed. Otherwise, the
 	// existing network tags will be *replaced* with the provided tags.

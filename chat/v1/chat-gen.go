@@ -1888,8 +1888,10 @@ type GoogleAppsCardV1Card struct {
 	//
 	// Possible values:
 	//   "DIVIDER_STYLE_UNSPECIFIED" - Don't use. Unspecified.
-	//   "SOLID_DIVIDER" - Default option. Render a solid divider between sections.
-	//   "NO_DIVIDER" - If set, no divider is rendered between sections.
+	//   "SOLID_DIVIDER" - Default option. Render a solid divider.
+	//   "NO_DIVIDER" - If set, no divider is rendered. This style completely
+	// removes the divider from the layout. The result is equivalent to not adding
+	// a divider at all.
 	SectionDividerStyle string `json:"sectionDividerStyle,omitempty"`
 	// Sections: Contains a collection of widgets. Each section has its own,
 	// optional header. Sections are visually separated by a line divider. For an

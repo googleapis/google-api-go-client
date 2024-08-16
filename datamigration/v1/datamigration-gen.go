@@ -222,10 +222,22 @@ type ProjectsLocationsConversionWorkspacesMappingRulesService struct {
 
 func NewProjectsLocationsMigrationJobsService(s *Service) *ProjectsLocationsMigrationJobsService {
 	rs := &ProjectsLocationsMigrationJobsService{s: s}
+	rs.Objects = NewProjectsLocationsMigrationJobsObjectsService(s)
 	return rs
 }
 
 type ProjectsLocationsMigrationJobsService struct {
+	s *Service
+
+	Objects *ProjectsLocationsMigrationJobsObjectsService
+}
+
+func NewProjectsLocationsMigrationJobsObjectsService(s *Service) *ProjectsLocationsMigrationJobsObjectsService {
+	rs := &ProjectsLocationsMigrationJobsObjectsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMigrationJobsObjectsService struct {
 	s *Service
 }
 
@@ -790,6 +802,7 @@ type CloudSqlSettings struct {
 	// version is 36.
 	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
 	// version is 37.
+	//   "MYSQL_8_4" - MySQL 8.4.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.
@@ -3158,6 +3171,42 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OracleAsmConfig: Configuration for Oracle Automatic Storage Management (ASM)
+// connection.
+type OracleAsmConfig struct {
+	// AsmService: Required. ASM service name for the Oracle ASM connection.
+	AsmService string `json:"asmService,omitempty"`
+	// Hostname: Required. Hostname for the Oracle ASM connection.
+	Hostname string `json:"hostname,omitempty"`
+	// Password: Required. Input only. Password for the Oracle ASM connection.
+	Password string `json:"password,omitempty"`
+	// PasswordSet: Output only. Indicates whether a new password is included in
+	// the request.
+	PasswordSet bool `json:"passwordSet,omitempty"`
+	// Port: Required. Port for the Oracle ASM connection.
+	Port int64 `json:"port,omitempty"`
+	// Ssl: Optional. SSL configuration for the Oracle connection.
+	Ssl *SslConfig `json:"ssl,omitempty"`
+	// Username: Required. Username for the Oracle ASM connection.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AsmService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AsmService") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OracleAsmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleAsmConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OracleConnectionProfile: Specifies connection parameters required
 // specifically for Oracle databases.
 type OracleConnectionProfile struct {
@@ -3167,6 +3216,8 @@ type OracleConnectionProfile struct {
 	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
 	// Host: Required. The IP or hostname of the source Oracle database.
 	Host string `json:"host,omitempty"`
+	// OracleAsmConfig: Optional. Configuration for Oracle ASM connection.
+	OracleAsmConfig *OracleAsmConfig `json:"oracleAsmConfig,omitempty"`
 	// Password: Required. Input only. The password for the user that Database
 	// Migration Service will be using to connect to the database. This field is
 	// not returned on request, and the value is encrypted when stored in Database
@@ -10844,6 +10895,347 @@ func (c *ProjectsLocationsMigrationJobsVerifyCall) Do(opts ...googleapi.CallOpti
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsMigrationJobsObjectsService) GetIamPolicy(resource string) *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall {
+	c := &ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsObjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsMigrationJobsObjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall {
+	c := &ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsObjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsMigrationJobsObjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall {
+	c := &ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.objects.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsObjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

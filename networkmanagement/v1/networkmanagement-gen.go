@@ -1002,6 +1002,10 @@ type DropInfo struct {
 	//   "LOAD_BALANCER_BACKEND_INVALID_NETWORK" - Packet is dropped due to a load
 	// balancer backend instance not having a network interface in the network
 	// expected by the load balancer.
+	//   "BACKEND_SERVICE_NAMED_PORT_NOT_DEFINED" - Packet is dropped due to a
+	// backend service named port not being defined on the instance group level.
+	//   "DESTINATION_IS_PRIVATE_NAT_IP_RANGE" - Packet is dropped due to a
+	// destination IP range being part of a Private NAT IP range.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`

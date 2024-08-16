@@ -1697,7 +1697,9 @@ type File struct {
 	LabelInfo *FileLabelInfo `json:"labelInfo,omitempty"`
 	// Labels: A group of labels for the file.
 	Labels *FileLabels `json:"labels,omitempty"`
-	// LastModifyingUser: Output only. The last user to modify this file.
+	// LastModifyingUser: Output only. The last user to modify this file. This
+	// field is only populated when the last modification was performed by a
+	// signed-in user.
 	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
 	// LastModifyingUserName: Output only. Name of the last user to modify this
 	// file.
@@ -1744,12 +1746,13 @@ type File struct {
 	// have more than one owner. This field isn't populated for items in shared
 	// drives.
 	Owners []*User `json:"owners,omitempty"`
-	// Parents: Collection of parent folders which contain this file. If not
-	// specified as part of an insert request, the file will be placed directly in
-	// the user's My Drive folder. If not specified as part of a copy request, the
-	// file will inherit any discoverable parents of the source file. Update
-	// requests can also use the `addParents` and `removeParents` parameters to
-	// modify the parents list.
+	// Parents: The ID of the parent folder containing the file. A file can only
+	// have one parent folder; specifying multiple parents isn't supported. If not
+	// specified as part of an insert request, the file is placed directly in the
+	// user's My Drive folder. If not specified as part of a copy request, the file
+	// inherits any discoverable parent of the source file. Update requests must
+	// use the `addParents` and `removeParents` parameters to modify the parents
+	// list.
 	Parents []*ParentReference `json:"parents,omitempty"`
 	// PermissionIds: Output only. List of permission IDs for users with access to
 	// this file.
@@ -2677,9 +2680,10 @@ func (s ParentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ParentReference: A reference to a file's parent. Some resource methods (such
-// as `parents.get`) require a `parentId`. Use the `parents.list` method to
-// retrieve the ID for a parent.
+// ParentReference: A reference to a file's parent. A file can only have one
+// parent folder; specifying multiple parents isn't supported. Some resource
+// methods (such as `parents.get`) require a `parentId`. Use the `parents.list`
+// method to retrieve the ID for a parent.
 type ParentReference struct {
 	// Id: The ID of the parent.
 	Id string `json:"id,omitempty"`
@@ -3035,7 +3039,9 @@ type Revision struct {
 	Id string `json:"id,omitempty"`
 	// Kind: Output only. This is always `drive#revision`.
 	Kind string `json:"kind,omitempty"`
-	// LastModifyingUser: Output only. The last user to modify this revision.
+	// LastModifyingUser: Output only. The last user to modify this revision. This
+	// field is only populated when the last modification was performed by a
+	// signed-in user.
 	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
 	// LastModifyingUserName: Output only. Name of the last user to modify this
 	// revision.

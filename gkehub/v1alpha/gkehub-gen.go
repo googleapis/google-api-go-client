@@ -1254,6 +1254,57 @@ func (s CommonFleetDefaultMemberConfigSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CompliancePostureConfig: CompliancePostureConfig defines the settings needed
+// to enable/disable features for the Compliance Posture.
+type CompliancePostureConfig struct {
+	// ComplianceStandards: List of enabled compliance standards.
+	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
+	// Mode: Defines the enablement mode for Compliance Posture.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "DISABLED" - Disables Compliance Posture features on the cluster.
+	//   "ENABLED" - Enables Compliance Posture features on the cluster.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComplianceStandards") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComplianceStandards") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompliancePostureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CompliancePostureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ComplianceStandard struct {
+	// Standard: Name of the compliance standard.
+	Standard string `json:"standard,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Standard") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComplianceStandard) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplianceStandard
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementBinauthzConfig: Configuration for Binauthz
 type ConfigManagementBinauthzConfig struct {
 	// Enabled: Whether binauthz is enabled in this cluster.
@@ -2331,6 +2382,11 @@ type DefaultClusterConfig struct {
 	// BinaryAuthorizationConfig: Optional. Enable/Disable binary authorization
 	// features for the cluster.
 	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`
+	// CompliancePostureConfig: Optional. Enable/Disable Compliance Posture
+	// features for the cluster. Note that on UpdateFleet, only full replacement of
+	// this field is allowed. Users are not allowed for partial updates through
+	// field mask.
+	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
 	// SecurityPostureConfig: Enable/Disable Security Posture features for the
 	// cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`

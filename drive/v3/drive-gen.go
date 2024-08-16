@@ -1286,7 +1286,9 @@ type File struct {
 	Kind string `json:"kind,omitempty"`
 	// LabelInfo: Output only. An overview of the labels on the file.
 	LabelInfo *FileLabelInfo `json:"labelInfo,omitempty"`
-	// LastModifyingUser: Output only. The last user to modify the file.
+	// LastModifyingUser: Output only. The last user to modify the file. This field
+	// is only populated when the last modification was performed by a signed-in
+	// user.
 	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
 	// LinkShareMetadata: Contains details about the link URLs that clients are
 	// using to refer to this item.
@@ -1325,10 +1327,11 @@ type File struct {
 	// have more than one owner. This field isn't populated for items in shared
 	// drives.
 	Owners []*User `json:"owners,omitempty"`
-	// Parents: The IDs of the parent folders which contain the file. If not
+	// Parents: The ID of the parent folder containing the file. A file can only
+	// have one parent folder; specifying multiple parents isn't supported. If not
 	// specified as part of a create request, the file is placed directly in the
 	// user's My Drive folder. If not specified as part of a copy request, the file
-	// inherits any discoverable parents of the source file. Update requests must
+	// inherits any discoverable parent of the source file. Update requests must
 	// use the `addParents` and `removeParents` parameters to modify the parents
 	// list.
 	Parents []string `json:"parents,omitempty"`
@@ -2487,7 +2490,9 @@ type Revision struct {
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#revision".
 	Kind string `json:"kind,omitempty"`
-	// LastModifyingUser: Output only. The last user to modify this revision.
+	// LastModifyingUser: Output only. The last user to modify this revision. This
+	// field is only populated when the last modification was performed by a
+	// signed-in user.
 	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
 	// Md5Checksum: Output only. The MD5 checksum of the revision's content. This
 	// is only applicable to files with binary content in Drive.

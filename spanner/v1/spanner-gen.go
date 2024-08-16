@@ -549,12 +549,34 @@ type Backup struct {
 	// restored. If a key version is revoked in the middle of a restore, the
 	// restore behavior is undefined.
 	EncryptionInformation []*EncryptionInfo `json:"encryptionInformation,omitempty"`
+	// ExclusiveSizeBytes: Output only. For a backup in an incremental backup
+	// chain, this is the storage space needed to keep the data that has changed
+	// since the previous backup. For all other backups, this is always the size of
+	// the backup. This value may change if backups on the same chain get deleted
+	// or expired. This field can be used to calculate the total storage space used
+	// by a set of backups. For example, the total space used by all backups of a
+	// database can be computed by summing up this field.
+	ExclusiveSizeBytes int64 `json:"exclusiveSizeBytes,omitempty,string"`
 	// ExpireTime: Required for the CreateBackup operation. The expiration time of
 	// the backup, with microseconds granularity that must be at least 6 hours and
 	// at most 366 days from the time the CreateBackup request is processed. Once
 	// the `expire_time` has passed, the backup is eligible to be automatically
 	// deleted by Cloud Spanner to free the resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FreeableSizeBytes: Output only. The number of bytes that will be freed by
+	// deleting this backup. This value will be zero if, for example, this backup
+	// is part of an incremental backup chain and younger backups in the chain
+	// require that we keep its data. For backups not in an incremental backup
+	// chain, this is always the size of the backup. This value may change if
+	// backups on the same chain get created, deleted or expired.
+	FreeableSizeBytes int64 `json:"freeableSizeBytes,omitempty,string"`
+	// IncrementalBackupChainId: Output only. Populated only for backups in an
+	// incremental backup chain. Backups share the same chain id if and only if
+	// they belong to the same incremental backup chain. Use this field to
+	// determine which backups are part of the same incremental backup chain. The
+	// ordering of backups in the chain can be determined by ordering the backup
+	// `version_time`.
+	IncrementalBackupChainId string `json:"incrementalBackupChainId,omitempty"`
 	// MaxExpireTime: Output only. The max allowed expiration time of the backup,
 	// with microseconds granularity. A backup's expiration time can be configured
 	// in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or
@@ -570,6 +592,13 @@ type Backup struct {
 	// containing the backup, identified by the prefix of the backup name of the
 	// form `projects//instances/`.
 	Name string `json:"name,omitempty"`
+	// OldestVersionTime: Output only. Data deleted at a time older than this is
+	// guaranteed not to be retained in order to support this backup. For a backup
+	// in an incremental backup chain, this is the version time of the oldest
+	// backup that exists or ever existed in the chain. For all other backups, this
+	// is the version time of the backup. This field can be used to understand what
+	// data is being retained by the backup system.
+	OldestVersionTime string `json:"oldestVersionTime,omitempty"`
 	// ReferencingBackups: Output only. The names of the destination backups being
 	// created by copying this source backup. The backup names are of the form
 	// `projects//instances//backups/`. Referencing backups may exist in different
@@ -585,7 +614,9 @@ type Backup struct {
 	// backup from being deleted. When a restored database from the backup enters
 	// the `READY` state, the reference to the backup is removed.
 	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
-	// SizeBytes: Output only. Size of the backup in bytes.
+	// SizeBytes: Output only. Size of the backup in bytes. For a backup in an
+	// incremental backup chain, this is the sum of the `exclusive_size_bytes` of
+	// itself and all older backups in the chain.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 	// State: Output only. The current state of the backup.
 	//
@@ -661,6 +692,8 @@ type BackupSchedule struct {
 	EncryptionConfig *CreateBackupEncryptionConfig `json:"encryptionConfig,omitempty"`
 	// FullBackupSpec: The schedule creates only full backups.
 	FullBackupSpec *FullBackupSpec `json:"fullBackupSpec,omitempty"`
+	// IncrementalBackupSpec: The schedule creates incremental backup chains.
+	IncrementalBackupSpec *IncrementalBackupSpec `json:"incrementalBackupSpec,omitempty"`
 	// Name: Identifier. Output only for the CreateBackupSchedule operation.
 	// Required for the UpdateBackupSchedule operation. A globally unique
 	// identifier for the backup schedule which cannot be changed. Values are of
@@ -1540,9 +1573,9 @@ func (s CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 
 // CreateInstanceConfigRequest: The request for CreateInstanceConfigRequest.
 type CreateInstanceConfigRequest struct {
-	// InstanceConfig: Required. The InstanceConfig proto of the configuration to
-	// create. instance_config.name must be `/instanceConfigs/`.
-	// instance_config.base_config must be a Google-managed configuration name,
+	// InstanceConfig: Required. The `InstanceConfig` proto of the configuration to
+	// create. `instance_config.name` must be `/instanceConfigs/`.
+	// `instance_config.base_config` must be a Google-managed configuration name,
 	// e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// InstanceConfigId: Required. The ID of the instance configuration to create.
@@ -2580,6 +2613,15 @@ func (s IncludeReplicas) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IncrementalBackupSpec: The specification for incremental backup chains. An
+// incremental backup stores the delta of changes between a previous backup and
+// the database contents at a given version time. An incremental backup chain
+// consists of a full backup and zero or more successive incremental backups.
+// The first backup created for an incremental backup chain is always a full
+// backup.
+type IncrementalBackupSpec struct {
+}
+
 // IndexAdvice: Recommendation to add new indexes to run queries more
 // efficiently.
 type IndexAdvice struct {
@@ -2690,6 +2732,14 @@ type Instance struct {
 	// in UIs. Must be unique per project and between 4 and 30 characters in
 	// length.
 	DisplayName string `json:"displayName,omitempty"`
+	// Edition: Optional. The `Edition` of the current instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Edition not specified.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
+	Edition string `json:"edition,omitempty"`
 	// EndpointUris: Deprecated. This field is not populated.
 	EndpointUris []string `json:"endpointUris,omitempty"`
 	// FreeInstanceMetadata: Free instance metadata. Only populated for free
@@ -2729,12 +2779,12 @@ type Instance struct {
 	Name string `json:"name,omitempty"`
 	// NodeCount: The number of nodes allocated to this instance. At most, one of
 	// either `node_count` or `processing_units` should be present in the message.
-	// Users can set the node_count field to specify the target number of nodes
-	// allocated to the instance. If autoscaling is enabled, node_count is treated
-	// as an OUTPUT_ONLY field and reflects the current number of nodes allocated
-	// to the instance. This might be zero in API responses for instances that are
-	// not yet in the `READY` state. For more information, see Compute capacity,
-	// nodes, and processing units
+	// Users can set the `node_count` field to specify the target number of nodes
+	// allocated to the instance. If autoscaling is enabled, `node_count` is
+	// treated as an `OUTPUT_ONLY` field and reflects the current number of nodes
+	// allocated to the instance. This might be zero in API responses for instances
+	// that are not yet in the `READY` state. For more information, see Compute
+	// capacity, nodes, and processing units
 	// (https://cloud.google.com/spanner/docs/compute-capacity).
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance.
@@ -2744,9 +2794,8 @@ type Instance struct {
 	// is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and
 	// reflects the current number of processing units allocated to the instance.
 	// This might be zero in API responses for instances that are not yet in the
-	// `READY` state. See the documentation
-	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
-	// information about nodes and processing units.
+	// `READY` state. For more information, see Compute capacity, nodes and
+	// processing units (https://cloud.google.com/spanner/docs/compute-capacity).
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
 	// State: Output only. The current instance state. For CreateInstance, the
 	// state must be either omitted or set to `CREATING`. For UpdateInstance, the
@@ -2792,8 +2841,8 @@ type InstanceConfig struct {
 	// configurations. `base_config` must refer to a configuration of type
 	// `GOOGLE_MANAGED` in the same project as this configuration.
 	BaseConfig string `json:"baseConfig,omitempty"`
-	// ConfigType: Output only. Whether this instance configuration is a Google- or
-	// user-managed configuration.
+	// ConfigType: Output only. Whether this instance configuration is a
+	// Google-managed or user-managed configuration.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
@@ -2814,16 +2863,16 @@ type InstanceConfig struct {
 	// instance configuration is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 	// FreeInstanceAvailability: Output only. Describes whether free instances are
-	// available to be created in this instance config.
+	// available to be created in this instance configuration.
 	//
 	// Possible values:
 	//   "FREE_INSTANCE_AVAILABILITY_UNSPECIFIED" - Not specified.
 	//   "AVAILABLE" - Indicates that free instances are available to be created in
-	// this instance config.
+	// this instance configuration.
 	//   "UNSUPPORTED" - Indicates that free instances are not supported in this
-	// instance config.
+	// instance configuration.
 	//   "DISABLED" - Indicates that free instances are currently not available to
-	// be created in this instance config.
+	// be created in this instance configuration.
 	//   "QUOTA_EXCEEDED" - Indicates that additional free instances cannot be
 	// created in this instance configuration because the project has reached its
 	// limit of free instances.
@@ -2872,7 +2921,7 @@ type InstanceConfig struct {
 	QuorumType string `json:"quorumType,omitempty"`
 	// Reconciling: Output only. If true, the instance configuration is being
 	// created or updated. If false, there are no ongoing operations for the
-	// instance config.
+	// instance configuration.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// Replicas: The geographic placement of nodes in this instance configuration
 	// and their replication properties. To create user-managed configurations,
@@ -3397,9 +3446,9 @@ type ListInstanceConfigOperationsResponse struct {
 	// ListInstanceConfigOperations call to fetch more of the matching metadata.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Operations: The list of matching instance configuration long-running
-	// operations. Each operation's name will be prefixed by the instance config's
-	// name. The operation's metadata field type `metadata.type_url` describes the
-	// type of the metadata.
+	// operations. Each operation's name will be prefixed by the name of the
+	// instance configuration. The operation's metadata field type
+	// `metadata.type_url` describes the type of the metadata.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3802,8 +3851,8 @@ func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
 
 // MoveInstanceRequest: The request for MoveInstance.
 type MoveInstanceRequest struct {
-	// TargetConfig: Required. The target instance configuration for the instance
-	// to move. Values are of the form `projects//instanceConfigs/`.
+	// TargetConfig: Required. The target instance configuration where to move the
+	// instance. Values are of the form `projects//instanceConfigs/`.
 	TargetConfig string `json:"targetConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6605,25 +6654,26 @@ type ProjectsInstanceConfigsCreateCall struct {
 
 // Create: Creates an instance configuration and begins preparing it to be
 // used. The returned long-running operation can be used to track the progress
-// of preparing the new instance config. The instance configuration name is
-// assigned by the caller. If the named instance configuration already exists,
-// `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after the
-// request returns: * The instance configuration is readable via the API, with
-// all requested attributes. The instance config's reconciling field is set to
-// true. Its state is `CREATING`. While the operation is pending: * Cancelling
-// the operation renders the instance configuration immediately unreadable via
-// the API. * Except for deleting the creating resource, all other attempts to
-// modify the instance configuration are rejected. Upon completion of the
-// returned operation: * Instances can be created using the instance
-// configuration. * The instance config's reconciling field becomes false. Its
-// state becomes `READY`. The returned long-running operation will have a name
-// of the format `/operations/` and can be used to track creation of the
-// instance config. The metadata field type is CreateInstanceConfigMetadata.
-// The response field type is InstanceConfig, if successful. Authorization
-// requires `spanner.instanceConfigs.create` permission on the resource parent.
+// of preparing the new instance configuration. The instance configuration name
+// is assigned by the caller. If the named instance configuration already
+// exists, `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after
+// the request returns: * The instance configuration is readable via the API,
+// with all requested attributes. The instance configuration's reconciling
+// field is set to true. Its state is `CREATING`. While the operation is
+// pending: * Cancelling the operation renders the instance configuration
+// immediately unreadable via the API. * Except for deleting the creating
+// resource, all other attempts to modify the instance configuration are
+// rejected. Upon completion of the returned operation: * Instances can be
+// created using the instance configuration. * The instance configuration's
+// reconciling field becomes false. Its state becomes `READY`. The returned
+// long-running operation will have a name of the format `/operations/` and can
+// be used to track creation of the instance configuration. The metadata field
+// type is CreateInstanceConfigMetadata. The response field type is
+// InstanceConfig, if successful. Authorization requires
+// `spanner.instanceConfigs.create` permission on the resource parent.
 //
-//   - parent: The name of the project in which to create the instance config.
-//     Values are of the form `projects/`.
+//   - parent: The name of the project in which to create the instance
+//     configuration. Values are of the form `projects/`.
 func (r *ProjectsInstanceConfigsService) Create(parent string, createinstanceconfigrequest *CreateInstanceConfigRequest) *ProjectsInstanceConfigsCreateCall {
 	c := &ProjectsInstanceConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6721,11 +6771,11 @@ type ProjectsInstanceConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the instance config. Deletion is only allowed when no
+// Delete: Deletes the instance configuration. Deletion is only allowed when no
 // instances are using the configuration. If any instances are using the
-// config, returns `FAILED_PRECONDITION`. Only user-managed configurations can
-// be deleted. Authorization requires `spanner.instanceConfigs.delete`
-// permission on the resource name.
+// configuration, returns `FAILED_PRECONDITION`. Only user-managed
+// configurations can be deleted. Authorization requires
+// `spanner.instanceConfigs.delete` permission on the resource name.
 //
 //   - name: The name of the instance configuration to be deleted. Values are of
 //     the form `projects//instanceConfigs/`.
@@ -6739,9 +6789,9 @@ func (r *ProjectsInstanceConfigsService) Delete(name string) *ProjectsInstanceCo
 // control as a way to help prevent simultaneous deletes of an instance
 // configuration from overwriting each other. If not empty, the API only
 // deletes the instance configuration when the etag provided matches the
-// current status of the requested instance config. Otherwise, deletes the
-// instance configuration without checking the current status of the requested
-// instance config.
+// current status of the requested instance configuration. Otherwise, deletes
+// the instance configuration without checking the current status of the
+// requested instance configuration.
 func (c *ProjectsInstanceConfigsDeleteCall) Etag(etag string) *ProjectsInstanceConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -7097,23 +7147,24 @@ type ProjectsInstanceConfigsPatchCall struct {
 	header_                     http.Header
 }
 
-// Patch: Updates an instance config. The returned long-running operation can
-// be used to track the progress of updating the instance. If the named
-// instance configuration does not exist, returns `NOT_FOUND`. Only
+// Patch: Updates an instance configuration. The returned long-running
+// operation can be used to track the progress of updating the instance. If the
+// named instance configuration does not exist, returns `NOT_FOUND`. Only
 // user-managed configurations can be updated. Immediately after the request
-// returns: * The instance config's reconciling field is set to true. While the
-// operation is pending: * Cancelling the operation sets its metadata's
-// cancel_time. The operation is guaranteed to succeed at undoing all changes,
-// after which point it terminates with a `CANCELLED` status. * All other
-// attempts to modify the instance configuration are rejected. * Reading the
-// instance configuration via the API continues to give the pre-request values.
-// Upon completion of the returned operation: * Creating instances using the
-// instance configuration uses the new values. * The instance config's new
-// values are readable via the API. * The instance config's reconciling field
-// becomes false. The returned long-running operation will have a name of the
-// format `/operations/` and can be used to track the instance configuration
-// modification. The metadata field type is UpdateInstanceConfigMetadata. The
-// response field type is InstanceConfig, if successful. Authorization requires
+// returns: * The instance configuration's reconciling field is set to true.
+// While the operation is pending: * Cancelling the operation sets its
+// metadata's cancel_time. The operation is guaranteed to succeed at undoing
+// all changes, after which point it terminates with a `CANCELLED` status. *
+// All other attempts to modify the instance configuration are rejected. *
+// Reading the instance configuration via the API continues to give the
+// pre-request values. Upon completion of the returned operation: * Creating
+// instances using the instance configuration uses the new values. * The new
+// values of the instance configuration are readable via the API. * The
+// instance configuration's reconciling field becomes false. The returned
+// long-running operation will have a name of the format `/operations/` and can
+// be used to track the instance configuration modification. The metadata field
+// type is UpdateInstanceConfigMetadata. The response field type is
+// InstanceConfig, if successful. Authorization requires
 // `spanner.instanceConfigs.update` permission on the resource name.
 //
 //   - name: A unique identifier for the instance configuration. Values are of
@@ -8747,34 +8798,35 @@ type ProjectsInstancesMoveCall struct {
 	header_             http.Header
 }
 
-// Move: Moves the instance to the target instance config. The returned
-// long-running operation can be used to track the progress of moving the
+// Move: Moves an instance to the target instance configuration. You can use
+// the returned long-running operation to track the progress of moving the
 // instance. `MoveInstance` returns `FAILED_PRECONDITION` if the instance meets
-// any of the following criteria: * Has an ongoing move to a different instance
-// config * Has backups * Has an ongoing update * Is under free trial *
-// Contains any CMEK-enabled databases While the operation is pending: * All
-// other attempts to modify the instance, including changes to its compute
-// capacity, are rejected. * The following database and backup admin operations
-// are rejected: * DatabaseAdmin.CreateDatabase, *
-// DatabaseAdmin.UpdateDatabaseDdl (Disabled if default_leader is specified in
-// the request.) * DatabaseAdmin.RestoreDatabase * DatabaseAdmin.CreateBackup *
-// DatabaseAdmin.CopyBackup * Both the source and target instance
-// configurations are subject to hourly compute and storage charges. * The
-// instance may experience higher read-write latencies and a higher transaction
-// abort rate. However, moving an instance does not cause any downtime. The
-// returned long-running operation will have a name of the format
+// any of the following criteria: * Is undergoing a move to a different
+// instance configuration * Has backups * Has an ongoing update * Contains any
+// CMEK-enabled databases * Is a free trial instance While the operation is
+// pending: * All other attempts to modify the instance, including changes to
+// its compute capacity, are rejected. * The following database and backup
+// admin operations are rejected: * `DatabaseAdmin.CreateDatabase` *
+// `DatabaseAdmin.UpdateDatabaseDdl` (disabled if default_leader is specified
+// in the request.) * `DatabaseAdmin.RestoreDatabase` *
+// `DatabaseAdmin.CreateBackup` * `DatabaseAdmin.CopyBackup` * Both the source
+// and target instance configurations are subject to hourly compute and storage
+// charges. * The instance might experience higher read-write latencies and a
+// higher transaction abort rate. However, moving an instance doesn't cause any
+// downtime. The returned long-running operation has a name of the format
 // `/operations/` and can be used to track the move instance operation. The
 // metadata field type is MoveInstanceMetadata. The response field type is
 // Instance, if successful. Cancelling the operation sets its metadata's
-// cancel_time. Cancellation is not immediate since it involves moving any data
-// previously moved to target instance configuration back to the original
-// instance config. The same operation can be used to track the progress of the
-// cancellation. Upon successful completion of the cancellation, the operation
-// terminates with `CANCELLED` status. Upon completion(if not cancelled) of the
-// returned operation: * Instance would be successfully moved to the target
-// instance config. * You are billed for compute and storage in target instance
-// config. Authorization requires `spanner.instances.update` permission on the
-// resource instance. For more details, please see documentation
+// cancel_time. Cancellation is not immediate because it involves moving any
+// data previously moved to the target instance configuration back to the
+// original instance configuration. You can use this operation to track the
+// progress of the cancellation. Upon successful completion of the
+// cancellation, the operation terminates with `CANCELLED` status. If not
+// cancelled, upon completion of the returned operation: * The instance
+// successfully moves to the target instance configuration. * You are billed
+// for compute and storage in target instance configuration. Authorization
+// requires the `spanner.instances.update` permission on the resource instance.
+// For more details, see Move an instance
 // (https://cloud.google.com/spanner/docs/move-instance).
 //
 // - name: The instance to move. Values are of the form `projects//instances/`.

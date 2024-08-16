@@ -168,6 +168,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Builds = NewProjectsLocationsBuildsService(s)
 	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Services = NewProjectsLocationsServicesService(s)
@@ -177,11 +178,22 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Builds *ProjectsLocationsBuildsService
+
 	Jobs *ProjectsLocationsJobsService
 
 	Operations *ProjectsLocationsOperationsService
 
 	Services *ProjectsLocationsServicesService
+}
+
+func NewProjectsLocationsBuildsService(s *Service) *ProjectsLocationsBuildsService {
+	rs := &ProjectsLocationsBuildsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBuildsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsJobsService(s *Service) *ProjectsLocationsJobsService {
@@ -276,6 +288,48 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 
 func (s GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2BinaryAuthorization
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildpacksBuild: Build the source using Buildpacks.
+type GoogleCloudRunV2BuildpacksBuild struct {
+	// BaseImage: Optional. The base image used to opt into automatic base image
+	// updates.
+	BaseImage string `json:"baseImage,omitempty"`
+	// CacheImageUri: Optional. cache_image_uri is the GCR/AR URL where the cache
+	// image will be stored. cache_image_uri is optional and omitting it will
+	// disable caching. This URL must be stable across builds. It is used to derive
+	// a build-specific temporary URL by substituting the tag with the build ID.
+	// The build will clean up the temporary image on a best-effort basis.
+	CacheImageUri string `json:"cacheImageUri,omitempty"`
+	// EnableAutomaticUpdates: Optional. Whether or not the application container
+	// will be enrolled in automatic base image updates. When true, the application
+	// will be built on a scratch base image, so the base layers can be appended at
+	// run time.
+	EnableAutomaticUpdates bool `json:"enableAutomaticUpdates,omitempty"`
+	// EnvironmentVariables: Optional. User-provided build-time environment
+	// variables.
+	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
+	// FunctionTarget: Optional. Name of the function target if the source is a
+	// function source. Required for function builds.
+	FunctionTarget string `json:"functionTarget,omitempty"`
+	// Runtime: The runtime name, e.g. 'go113'. Leave blank for generic builds.
+	Runtime string `json:"runtime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseImage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildpacksBuild) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildpacksBuild
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -567,6 +621,11 @@ func (s GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2DockerBuild: Build the source using Docker. This means the
+// source has a Dockerfile.
+type GoogleCloudRunV2DockerBuild struct {
+}
+
 // GoogleCloudRunV2EmptyDirVolumeSource: In memory (tmpfs) ephemeral storage.
 // It is ephemeral in the sense that when the sandbox is taken down, the data
 // is destroyed with it (it does not persist across sandbox runs).
@@ -613,13 +672,9 @@ type GoogleCloudRunV2EnvVar struct {
 	// Name: Required. Name of the environment variable. Must not exceed 32768
 	// characters.
 	Name string `json:"name,omitempty"`
-	// Value: Variable references $(VAR_NAME) are expanded using the previous
-	// defined environment variables in the container and any route environment
-	// variables. If a variable cannot be resolved, the reference in the input
-	// string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-	// double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-	// regardless of whether the variable exists or not. Defaults to "", and the
-	// maximum length is 32768 bytes.
+	// Value: Literal value of the environment variable. Defaults to "", and the
+	// maximum length is 32768 bytes. Variable references are not supported in
+	// Cloud Run.
 	Value string `json:"value,omitempty"`
 	// ValueSource: Source for the environment variable's value.
 	ValueSource *GoogleCloudRunV2EnvVarSource `json:"valueSource,omitempty"`
@@ -2348,6 +2403,108 @@ type GoogleCloudRunV2ServiceScaling struct {
 
 func (s GoogleCloudRunV2ServiceScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ServiceScaling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2StorageSource: Location of the source in an archive file in
+// Google Cloud Storage.
+type GoogleCloudRunV2StorageSource struct {
+	// Bucket: Required. Google Cloud Storage bucket containing the source (see
+	// Bucket Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
+	Bucket string `json:"bucket,omitempty"`
+	// Generation: Optional. Google Cloud Storage generation for the object. If the
+	// generation is omitted, the latest generation will be used.
+	Generation int64 `json:"generation,omitempty,string"`
+	// Object: Required. Google Cloud Storage object containing the source. This
+	// object must be a gzipped archive file (`.tar.gz`) containing source to
+	// build.
+	Object string `json:"object,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2StorageSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2StorageSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SubmitBuildRequest: Request message for submitting a Build.
+type GoogleCloudRunV2SubmitBuildRequest struct {
+	// BuildpackBuild: Build the source using Buildpacks.
+	BuildpackBuild *GoogleCloudRunV2BuildpacksBuild `json:"buildpackBuild,omitempty"`
+	// DockerBuild: Build the source using Docker. This means the source has a
+	// Dockerfile.
+	DockerBuild *GoogleCloudRunV2DockerBuild `json:"dockerBuild,omitempty"`
+	// ImageUri: Required. Artifact Registry URI to store the built image.
+	ImageUri string `json:"imageUri,omitempty"`
+	// ServiceAccount: Optional. The service account to use for the build. If not
+	// set, the default Cloud Build service account for the project will be used.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// StorageSource: Required. Source for the build.
+	StorageSource *GoogleCloudRunV2StorageSource `json:"storageSource,omitempty"`
+	// Tags: Optional. Additional tags to annotate the build.
+	Tags []string `json:"tags,omitempty"`
+	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
+	// be used to build the function. The format of this field is
+	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
+	// {project} and {region} are the project id and region respectively where the
+	// worker pool is defined and {workerPool} is the short name of the worker
+	// pool.
+	WorkerPool string `json:"workerPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildpackBuild") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildpackBuild") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SubmitBuildRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SubmitBuildRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SubmitBuildResponse: Response message for submitting a
+// Build.
+type GoogleCloudRunV2SubmitBuildResponse struct {
+	// BaseImageUri: URI of the base builder image in Artifact Registry being used
+	// in the build. Used to opt into automatic base image updates.
+	BaseImageUri string `json:"baseImageUri,omitempty"`
+	// BuildOperation: Cloud Build operation to be polled via CloudBuild API.
+	BuildOperation *GoogleLongrunningOperation `json:"buildOperation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BaseImageUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseImageUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SubmitBuildResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SubmitBuildResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5349,6 +5506,110 @@ func (c *ProjectsLocationsExportProjectMetadataCall) Do(opts ...googleapi.CallOp
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRunV2Metadata{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsBuildsSubmitCall struct {
+	s                                  *Service
+	parent                             string
+	googlecloudrunv2submitbuildrequest *GoogleCloudRunV2SubmitBuildRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Submit: Submits a build in a given project.
+//
+//   - parent: The project and location to build in. Location must be a region,
+//     e.g., 'us-central1' or 'global' if the global builder is to be used.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsBuildsService) Submit(parent string, googlecloudrunv2submitbuildrequest *GoogleCloudRunV2SubmitBuildRequest) *ProjectsLocationsBuildsSubmitCall {
+	c := &ProjectsLocationsBuildsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrunv2submitbuildrequest = googlecloudrunv2submitbuildrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBuildsSubmitCall) Fields(s ...googleapi.Field) *ProjectsLocationsBuildsSubmitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBuildsSubmitCall) Context(ctx context.Context) *ProjectsLocationsBuildsSubmitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBuildsSubmitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBuildsSubmitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2submitbuildrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/builds:submit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.builds.submit" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2SubmitBuildResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBuildsSubmitCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2SubmitBuildResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2SubmitBuildResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

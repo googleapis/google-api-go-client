@@ -520,6 +520,33 @@ func (s CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudSQLBackupRunSource: The source CloudSQL backup resource.
+type CloudSQLBackupRunSource struct {
+	// BackupRunId: Required. The CloudSQL backup run ID.
+	BackupRunId int64 `json:"backupRunId,omitempty,string"`
+	// InstanceId: Required. The CloudSQL instance ID.
+	InstanceId string `json:"instanceId,omitempty"`
+	// Project: The project ID of the source CloudSQL instance. This should be the
+	// same as the AlloyDB cluster's project.
+	Project string `json:"project,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupRunId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupRunId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSQLBackupRunSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLBackupRunSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Cluster: A cluster is a collection of regional AlloyDB resources. It can
 // include a primary instance and one or more read pool instances. All cluster
 // resources share a storage layer, which scales as needed.
@@ -535,6 +562,9 @@ type Cluster struct {
 	AutomatedBackupPolicy *AutomatedBackupPolicy `json:"automatedBackupPolicy,omitempty"`
 	// BackupSource: Output only. Cluster created from backup.
 	BackupSource *BackupSource `json:"backupSource,omitempty"`
+	// CloudsqlBackupRunSource: Output only. Cluster created from CloudSQL
+	// snapshot.
+	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
 	// ClusterType: Output only. The type of the cluster. This is an output-only
 	// field and it's populated at the Cluster creation time or the Cluster
 	// promotion time. The cluster type is determined by which RPC was used to
@@ -687,6 +717,61 @@ type Cluster struct {
 
 func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeDetails: Upgrade details of a cluster. This cluster can be
+// primary or secondary.
+type ClusterUpgradeDetails struct {
+	// ClusterType: Cluster type which can either be primary or secondary.
+	//
+	// Possible values:
+	//   "CLUSTER_TYPE_UNSPECIFIED" - The type of the cluster is unknown.
+	//   "PRIMARY" - Primary cluster that support read and write operations.
+	//   "SECONDARY" - Secondary cluster that is replicating from another region.
+	// This only supports read.
+	ClusterType string `json:"clusterType,omitempty"`
+	// DatabaseVersion: Database version of the cluster after the upgrade
+	// operation. This will be the target version if the upgrade was successful
+	// otherwise it remains the same as that before the upgrade operation.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
+	// with this cluster.
+	InstanceUpgradeDetails []*InstanceUpgradeDetails `json:"instanceUpgradeDetails,omitempty"`
+	// Name: Normalized name of the cluster
+	Name string `json:"name,omitempty"`
+	// StageInfo: Array containing stage info associated with this cluster.
+	StageInfo []*StageInfo `json:"stageInfo,omitempty"`
+	// UpgradeStatus: Upgrade status of the cluster.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	UpgradeStatus string `json:"upgradeStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1331,6 +1416,50 @@ func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceUpgradeDetails: Details regarding the upgrade of instaces associated
+// with a cluster.
+type InstanceUpgradeDetails struct {
+	// InstanceType: Instance type.
+	//
+	// Possible values:
+	//   "INSTANCE_TYPE_UNSPECIFIED" - The type of the instance is unknown.
+	//   "PRIMARY" - PRIMARY instances support read and write operations.
+	//   "READ_POOL" - READ POOL instances support read operations only. Each read
+	// pool instance consists of one or more homogeneous nodes. * Read pool of size
+	// 1 can only have zonal availability. * Read pools with node count of 2 or
+	// more can have regional availability (nodes are present in 2 or more zones in
+	// a region).
+	//   "SECONDARY" - SECONDARY instances support read operations only. SECONDARY
+	// instance is a cross-region read replica
+	InstanceType string `json:"instanceType,omitempty"`
+	// Name: Normalized name of the instance.
+	Name string `json:"name,omitempty"`
+	// UpgradeStatus: Upgrade status of the instance.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	UpgradeStatus string `json:"upgradeStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceUpgradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceUpgradeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IntegerRestrictions: Restrictions on INTEGER type values.
 type IntegerRestrictions struct {
 	// MaxValue: The maximum value that can be specified, if applicable.
@@ -1760,6 +1889,9 @@ type ObservabilityInstanceConfig struct {
 	// TrackActiveQueries: Track actively running queries on the instance. If not
 	// set, this flag is "off" by default.
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackClientAddress: Track client address for an instance. If not set,
+	// default value is "off".
+	TrackClientAddress bool `json:"trackClientAddress,omitempty"`
 	// TrackWaitEventTypes: Output only. Track wait event types during query
 	// execution for an instance. This flag is turned "on" by default but tracking
 	// is enabled only after observability enabled flag is also turned on. This is
@@ -2104,6 +2236,9 @@ func (s ReadPoolConfig) MarshalJSON() ([]byte, error) {
 }
 
 type RestartInstanceRequest struct {
+	// NodeIds: Optional. Full name of the nodes as obtained from
+	// INSTANCE_VIEW_FULL to restart upon. Only applicable for read instances.
+	NodeIds []string `json:"nodeIds,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -2120,13 +2255,13 @@ type RestartInstanceRequest struct {
 	// checks and any other type of validation), but do not actually execute the
 	// restart.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "NodeIds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "NodeIds") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2253,6 +2388,49 @@ type SslConfig struct {
 
 func (s SslConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SslConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StageInfo: Stage information for different stages in the upgrade process.
+type StageInfo struct {
+	// LogsUrl: logs_url is the URL for the logs associated with a stage if that
+	// stage has logs. Right now, only three stages have logs: ALLOYDB_PRECHECK,
+	// PG_UPGRADE_CHECK, PRIMARY_INSTANCE_UPGRADE.
+	LogsUrl string `json:"logsUrl,omitempty"`
+	// Stage: The stage.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Unspecified stage.
+	//   "ALLOYDB_PRECHECK" - This stage is for the custom checks done before
+	// upgrade.
+	//   "PG_UPGRADE_CHECK" - This stage is for `pg_upgrade --check` run before
+	// upgrade.
+	//   "PRIMARY_INSTANCE_UPGRADE" - This stage is primary upgrade.
+	//   "READ_POOL_UPGRADE" - This stage is read pool upgrade.
+	Stage string `json:"stage,omitempty"`
+	// Status: Status of the stage.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogsUrl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogsUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StageInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2419,57 +2597,29 @@ func (s StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, 
 }
 
 // StorageDatabasecenterPartnerapiV1mainCustomMetadataData: Any custom metadata
-// associated with the resource. i.e. A spanner instance can have multiple
+// associated with the resource. e.g. A spanner instance can have multiple
 // databases with its own unique metadata. Information for these individual
 // databases can be captured in custom metadata data
 type StorageDatabasecenterPartnerapiV1mainCustomMetadataData struct {
-	DatabaseMetadata []*StorageDatabasecenterPartnerapiV1mainDatabaseMetadata `json:"databaseMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatabaseMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// InternalResourceMetadata: Metadata for individual internal resources in an
+	// instance. e.g. spanner instance can have multiple databases with unique
+	// configuration.
+	InternalResourceMetadata []*StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata `json:"internalResourceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternalResourceMetadata")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatabaseMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "InternalResourceMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainCustomMetadataData
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// StorageDatabasecenterPartnerapiV1mainDatabaseMetadata: Metadata for
-// individual databases created in an instance. i.e. spanner instance can have
-// multiple databases with unique configuration settings.
-type StorageDatabasecenterPartnerapiV1mainDatabaseMetadata struct {
-	// BackupConfiguration: Backup configuration for this database
-	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Information about the last backup attempt for this database
-	BackupRun  *StorageDatabasecenterPartnerapiV1mainBackupRun          `json:"backupRun,omitempty"`
-	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
-	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// ResourceName: Required. Database name. Resource name to follow CAIS
-	// resource_name format as noted here go/condor-common-datamodel
-	ResourceName string `json:"resourceName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s StorageDatabasecenterPartnerapiV1mainDatabaseMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2488,8 +2638,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
-	FeedType string `json:"feedType,omitempty"`
-	// ObservabilityMetricData: More feed data would be added in subsequent CLs
+	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`
@@ -2582,6 +2731,22 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// SignalId: Required. Unique identifier for the signal. This is an unique id
 	// which would be mainatined by partner to identify a signal.
 	SignalId string `json:"signalId,omitempty"`
+	// SignalSeverity: The severity of the signal, such as if it's a HIGH or LOW
+	// severity.
+	//
+	// Possible values:
+	//   "SIGNAL_SEVERITY_UNSPECIFIED" - This value is used for findings when a
+	// source doesn't write a severity value.
+	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
+	// external actor, exploitable.
+	//   "HIGH" - A high risk vulnerability can be easily discovered and exploited
+	// in combination with other vulnerabilities.
+	//   "MEDIUM" - A medium risk vulnerability could be used by an actor to gain
+	// access to resources or privileges that enable them to eventually gain access
+	// and the ability to execute arbitrary code or exfiltrate data.
+	//   "LOW" - A low risk vulnerability hampers a security organization's ability
+	// to detect vulnerabilities or active threats in their deployment.
+	SignalSeverity string `json:"signalSeverity,omitempty"`
 	// SignalType: Required. Type of signal, for example,
 	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
 	//
@@ -2819,8 +2984,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
 	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
 	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
-	// spanner.googleapis.com/Instance REQUIRED Please refer
-	// go/condor-common-datamodel
+	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
+	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
+	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
+	// REQUIRED Please refer go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
 	// from other resources within the same service.
@@ -3235,6 +3402,39 @@ func (s StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata: Metadata for
+// individual internal resources in an instance. e.g. spanner instance can have
+// multiple databases with unique configuration settings. Similarly bigtable
+// can have multiple clusters within same bigtable instance.
+type StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata struct {
+	// BackupConfiguration: Backup configuration for this database
+	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
+	// BackupRun: Information about the last backup attempt for this database
+	BackupRun  *StorageDatabasecenterPartnerapiV1mainBackupRun          `json:"backupRun,omitempty"`
+	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	// ResourceName: Required. internal resource name for spanner this will be
+	// database name
+	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainMachineConfiguration:
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
@@ -3432,6 +3632,8 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
+	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
+	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//
@@ -3449,6 +3651,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
+	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	Type string `json:"type,omitempty"`
 	// Version: Version of the underlying database engine. Example values: For
 	// MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be "14", "15"
@@ -3662,6 +3865,8 @@ func (s TimeBasedRetention) MarshalJSON() ([]byte, error) {
 type TrialMetadata struct {
 	// EndTime: End time of the trial cluster.
 	EndTime string `json:"endTime,omitempty"`
+	// GraceEndTime: grace end time of the cluster.
+	GraceEndTime string `json:"graceEndTime,omitempty"`
 	// StartTime: start time of the trial cluster.
 	StartTime string `json:"startTime,omitempty"`
 	// UpgradeTime: Upgrade time of trial cluster to Standard cluster.
@@ -3709,6 +3914,41 @@ type UpdatePolicy struct {
 
 func (s UpdatePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeClusterResponse: UpgradeClusterResponse contains the response for
+// upgrade cluster operation.
+type UpgradeClusterResponse struct {
+	// ClusterUpgradeDetails: Array of upgrade details for the current cluster and
+	// all the secondary clusters associated with this cluster.
+	ClusterUpgradeDetails []*ClusterUpgradeDetails `json:"clusterUpgradeDetails,omitempty"`
+	// Message: A user friendly message summarising the upgrade operation details
+	// and the next steps for the user if there is any.
+	Message string `json:"message,omitempty"`
+	// Status: Status of upgrade operation.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterUpgradeDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterUpgradeDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeClusterResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeClusterResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

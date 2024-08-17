@@ -1283,29 +1283,6 @@ func (s GoogleCloudDialogflowCxV3ConversationTurnVirtualAgentOutput) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata: Metadata for
-// CreateDocument operation.
-type GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowCxV3CreateVersionOperationMetadata: Metadata associated
 // with the long running operation for Versions.CreateVersion.
 type GoogleCloudDialogflowCxV3CreateVersionOperationMetadata struct {
@@ -1364,29 +1341,6 @@ type GoogleCloudDialogflowCxV3DataStoreConnection struct {
 
 func (s GoogleCloudDialogflowCxV3DataStoreConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3DataStoreConnection
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata: Metadata for
-// DeleteDocument operation.
-type GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2118,81 +2072,6 @@ type GoogleCloudDialogflowCxV3GcsDestination struct {
 
 func (s GoogleCloudDialogflowCxV3GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3GcsDestination
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata: Metadata in
-// google::longrunning::Operation for Knowledge operations.
-type GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata struct {
-	// State: Required. Output only. The current state of this operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "PENDING" - The operation has been created.
-	//   "RUNNING" - The operation is currently running.
-	//   "DONE" - The operation is done, either cancelled or completed.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata: Metadata for
-// ImportDocuments operation.
-type GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3ImportDocumentsResponse: Response message for
-// Documents.ImportDocuments.
-type GoogleCloudDialogflowCxV3ImportDocumentsResponse struct {
-	// Warnings: Includes details about skipped documents or any other warnings.
-	Warnings []*GoogleRpcStatus `json:"warnings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Warnings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Warnings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3ImportDocumentsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3009,29 +2888,6 @@ func (s GoogleCloudDialogflowCxV3QueryInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata: Metadata for
-// ReloadDocument operation.
-type GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowCxV3ResponseMessage: Represents a response message that
 // can be returned by a conversational agent. Response messages are also used
 // for output audio synthesis. The approach is as follows: * If at least one
@@ -3331,7 +3187,8 @@ type GoogleCloudDialogflowCxV3ResponseMessageText struct {
 	// can be interrupted by the end user's speech and the client can then starts
 	// the next Dialogflow request.
 	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
-	// Text: Required. A collection of text responses.
+	// Text: Required. A collection of text response variants. If multiple variants
+	// are defined, only one text response variant is returned at runtime.
 	Text []string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowPlaybackInterruption")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -3801,29 +3658,6 @@ func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error 
 	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
 	s.SentimentScore = float64(s1.SentimentScore)
 	return nil
-}
-
-// GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata for
-// UpdateDocument operation.
-type GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3Webhook: Webhooks host the developer's business
@@ -4726,29 +4560,6 @@ func (s GoogleCloudDialogflowCxV3beta1ConversationTurnVirtualAgentOutput) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata: Metadata for
-// CreateDocument operation.
-type GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata: Metadata
 // associated with the long running operation for Versions.CreateVersion.
 type GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata struct {
@@ -4807,29 +4618,6 @@ type GoogleCloudDialogflowCxV3beta1DataStoreConnection struct {
 
 func (s GoogleCloudDialogflowCxV3beta1DataStoreConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1DataStoreConnection
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata: Metadata for
-// DeleteDocument operation.
-type GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5562,81 +5350,6 @@ type GoogleCloudDialogflowCxV3beta1GcsDestination struct {
 
 func (s GoogleCloudDialogflowCxV3beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata: Metadata in
-// google::longrunning::Operation for Knowledge operations.
-type GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata struct {
-	// State: Required. Output only. The current state of this operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "PENDING" - The operation has been created.
-	//   "RUNNING" - The operation is currently running.
-	//   "DONE" - The operation is done, either cancelled or completed.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata: Metadata for
-// ImportDocuments operation.
-type GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse: Response message for
-// Documents.ImportDocuments.
-type GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse struct {
-	// Warnings: Includes details about skipped documents or any other warnings.
-	Warnings []*GoogleRpcStatus `json:"warnings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Warnings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Warnings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6456,29 +6169,6 @@ func (s GoogleCloudDialogflowCxV3beta1QueryInput) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata: Metadata for
-// ReloadDocument operation.
-type GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowCxV3beta1ResponseMessage: Represents a response message
 // that can be returned by a conversational agent. Response messages are also
 // used for output audio synthesis. The approach is as follows: * If at least
@@ -6773,7 +6463,8 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageText struct {
 	// can be interrupted by the end user's speech and the client can then starts
 	// the next Dialogflow request.
 	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
-	// Text: Required. A collection of text responses.
+	// Text: Required. A collection of text response variants. If multiple variants
+	// are defined, only one text response variant is returned at runtime.
 	Text []string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowPlaybackInterruption")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -7325,29 +7016,6 @@ func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) e
 	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
 	s.SentimentScore = float64(s1.SentimentScore)
 	return nil
-}
-
-// GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata: Metadata for
-// UpdateDocument operation.
-type GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Webhook: Webhooks host the developer's
@@ -17898,7 +17566,8 @@ func (s GoogleCloudDialogflowV2beta1ResponseMessageTelephonyTransferCall) Marsha
 
 // GoogleCloudDialogflowV2beta1ResponseMessageText: The text response message.
 type GoogleCloudDialogflowV2beta1ResponseMessageText struct {
-	// Text: A collection of text responses.
+	// Text: A collection of text response variants. If multiple variants are
+	// defined, only one text response variant is returned at runtime.
 	Text []string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -18061,7 +17730,7 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeRequest struct {
 	Parent string `json:"parent,omitempty"`
 	// Query: Required. The natural language text query for knowledge search.
 	Query *GoogleCloudDialogflowV2beta1TextInput `json:"query,omitempty"`
-	// SessionId: Optional. The ID of the search session. The session_id can be
+	// SessionId: Required. The ID of the search session. The session_id can be
 	// combined with Dialogflow V3 Agent ID retrieved from conversation profile or
 	// on its own to identify a search session. The search history of the same
 	// session will impact the search result. It's up to the API caller to choose
@@ -19896,150 +19565,6 @@ func (s GoogleCloudDialogflowV3alpha1ConversationSignals) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata: Metadata for
-// CreateDocument operation.
-type GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata: Metadata for
-// DeleteDocument operation.
-type GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1DeleteDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata: Metadata in
-// google::longrunning::Operation for Knowledge operations.
-type GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata struct {
-	// State: Required. Output only. The current state of this operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "PENDING" - The operation has been created.
-	//   "RUNNING" - The operation is currently running.
-	//   "DONE" - The operation is done, either cancelled or completed.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata: Metadata for
-// ImportDocuments operation.
-type GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1ImportDocumentsOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1ImportDocumentsResponse: Response message for
-// Documents.ImportDocuments.
-type GoogleCloudDialogflowV3alpha1ImportDocumentsResponse struct {
-	// Warnings: Includes details about skipped documents or any other warnings.
-	Warnings []*GoogleRpcStatus `json:"warnings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Warnings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Warnings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1ImportDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata: Metadata for
-// ReloadDocument operation.
-type GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV3alpha1TurnSignals: Collection of all signals that
 // were extracted for a single turn of the conversation.
 type GoogleCloudDialogflowV3alpha1TurnSignals struct {
@@ -20106,29 +19631,6 @@ func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) er
 	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
 	s.SentimentScore = float64(s1.SentimentScore)
 	return nil
-}
-
-// GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata: Metadata for
-// UpdateDocument operation.
-type GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata struct {
-	// GenericMetadata: The generic information of the operation.
-	GenericMetadata *GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata `json:"genericMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenericMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for

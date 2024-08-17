@@ -527,6 +527,8 @@ type AuthConfigTemplate struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name for authentication template.
 	DisplayName string `json:"displayName,omitempty"`
+	// IsDefault: Whether the auth config is the default one.
+	IsDefault bool `json:"isDefault,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -886,6 +888,9 @@ type Connection struct {
 	EventingEnablementType string `json:"eventingEnablementType,omitempty"`
 	// EventingRuntimeData: Output only. Eventing Runtime Data.
 	EventingRuntimeData *EventingRuntimeData `json:"eventingRuntimeData,omitempty"`
+	// Host: Output only. The name of the Hostname of the Service Directory service
+	// with TLS.
+	Host string `json:"host,omitempty"`
 	// ImageLocation: Output only. GCR location where the runtime image is stored.
 	// formatted like: gcr.io/{bucketName}/{imageName}
 	ImageLocation string `json:"imageLocation,omitempty"`
@@ -929,6 +934,9 @@ type Connection struct {
 	// Suspended: Optional. Suspended indicates if a user has suspended a
 	// connection or not.
 	Suspended bool `json:"suspended,omitempty"`
+	// TlsServiceDirectory: Output only. The name of the Service Directory service
+	// with TLS.
+	TlsServiceDirectory string `json:"tlsServiceDirectory,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1192,6 +1200,8 @@ type ConnectorVersion struct {
 	// EventingConfigTemplate: Output only. Eventing configuration supported by the
 	// Connector.
 	EventingConfigTemplate *EventingConfigTemplate `json:"eventingConfigTemplate,omitempty"`
+	// IsAsyncOperationsSupported: Output only. Is async operations supported.
+	IsAsyncOperationsSupported bool `json:"isAsyncOperationsSupported,omitempty"`
 	// IsCustomActionsSupported: Output only. Is custom actions supported.
 	IsCustomActionsSupported bool `json:"isCustomActionsSupported,omitempty"`
 	// IsCustomEntitiesSupported: Output only. Is custom entities supported.

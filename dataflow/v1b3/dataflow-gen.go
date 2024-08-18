@@ -3164,6 +3164,9 @@ type LeaseWorkItemRequest struct {
 	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 	// contains the WorkItem's job.
 	Location string `json:"location,omitempty"`
+	// ProjectNumber: Optional. The project number of the project this worker
+	// belongs to.
+	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 	// RequestedLeaseDuration: The initial lease period.
 	RequestedLeaseDuration string `json:"requestedLeaseDuration,omitempty"`
 	// UnifiedWorkerRequest: Untranslated bag-of-bytes WorkRequest from
@@ -4320,6 +4323,9 @@ type ReportWorkItemStatusRequest struct {
 	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 	// contains the WorkItem's job.
 	Location string `json:"location,omitempty"`
+	// ProjectNumber: Optional. The project number of the project which owns the
+	// WorkItem's job.
+	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 	// UnifiedWorkerRequest: Untranslated bag-of-bytes WorkProgressUpdateRequest
 	// from UnifiedWorker.
 	UnifiedWorkerRequest googleapi.RawMessage `json:"unifiedWorkerRequest,omitempty"`
@@ -11837,7 +11843,12 @@ type ProjectsLocationsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template. Do not enter
-// confidential information when you supply string values using the API.
+// confidential information when you supply string values using the API. To
+// create a job, we recommend using `projects.locations.templates.create` with
+// a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.create` is not recommended, because your job will always
+// start in `us-central1`.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -11944,7 +11955,12 @@ type ProjectsLocationsTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the template associated with a template.
+// Get: Get the template associated with a template. To get the template, we
+// recommend using `projects.locations.templates.get` with a [regional
+// endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.get` is not recommended, because only templates that are
+// running in `us-central1` are retrieved.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -12079,7 +12095,11 @@ type ProjectsLocationsTemplatesLaunchCall struct {
 	header_                  http.Header
 }
 
-// Launch: Launch a template.
+// Launch: Launches a template. To launch a template, we recommend using
+// `projects.locations.templates.launch` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.launch` is not recommended, because jobs launched from
+// the template will always start in `us-central1`.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -12460,7 +12480,12 @@ type ProjectsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template. Do not enter
-// confidential information when you supply string values using the API.
+// confidential information when you supply string values using the API. To
+// create a job, we recommend using `projects.locations.templates.create` with
+// a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.create` is not recommended, because your job will always
+// start in `us-central1`.
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
@@ -12561,7 +12586,12 @@ type ProjectsTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the template associated with a template.
+// Get: Get the template associated with a template. To get the template, we
+// recommend using `projects.locations.templates.get` with a [regional
+// endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.get` is not recommended, because only templates that are
+// running in `us-central1` are retrieved.
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCall {
@@ -12698,7 +12728,11 @@ type ProjectsTemplatesLaunchCall struct {
 	header_                  http.Header
 }
 
-// Launch: Launch a template.
+// Launch: Launches a template. To launch a template, we recommend using
+// `projects.locations.templates.launch` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
+// `projects.templates.launch` is not recommended, because jobs launched from
+// the template will always start in `us-central1`.
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsTemplatesLaunchCall {

@@ -4355,7 +4355,7 @@ func (s GoogleCloudRetailV2RuleFilterAction) MarshalJSON() ([]byte, error) {
 // current rank.
 type GoogleCloudRetailV2RuleForceReturnFacetAction struct {
 	// FacetPositionAdjustments: Each instance corresponds to a force return
-	// attribute for the given condition. There can't be more 3 instances here.
+	// attribute for the given condition. There can't be more 15 instances here.
 	FacetPositionAdjustments []*GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment `json:"facetPositionAdjustments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FacetPositionAdjustments")
 	// to unconditionally include in API requests. By default, fields with empty or

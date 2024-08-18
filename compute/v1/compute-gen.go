@@ -12188,12 +12188,6 @@ type FutureReservation struct {
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 	// ShareSettings: List of Projects/Folders to share with.
 	ShareSettings *ShareSettings `json:"shareSettings,omitempty"`
-	// SpecificReservationRequired: Indicates whether the auto-created reservation
-	// can be consumed by VMs with affinity for "any" reservation. If the field is
-	// set, then only VMs that target the reservation by name can consume from the
-	// delivered reservation. If set to true,the delivered resevervation will have
-	// the same name as the future reservation.
-	SpecificReservationRequired bool `json:"specificReservationRequired,omitempty"`
 	// SpecificSkuProperties: Future Reservation configuration to indicate instance
 	// properties and total count.
 	SpecificSkuProperties *FutureReservationSpecificSKUProperties `json:"specificSkuProperties,omitempty"`

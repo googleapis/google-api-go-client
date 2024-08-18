@@ -6381,6 +6381,12 @@ func (s PlaylistSnippet) MarshalJSON() ([]byte, error) {
 }
 
 type PlaylistStatus struct {
+	// PodcastStatus: The playlist's podcast status.
+	//
+	// Possible values:
+	//   "enabled"
+	//   "disabled"
+	PodcastStatus string `json:"podcastStatus,omitempty"`
 	// PrivacyStatus: The playlist's privacy status.
 	//
 	// Possible values:
@@ -6388,13 +6394,13 @@ type PlaylistStatus struct {
 	//   "unlisted"
 	//   "private"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
+	// ForceSendFields is a list of field names (e.g. "PodcastStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrivacyStatus") to include in API
+	// NullFields is a list of field names (e.g. "PodcastStatus") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13159,7 +13165,8 @@ type LiveChatMessagesListCall struct {
 //
 //   - liveChatId: The id of the live chat for which comments should be returned.
 //   - part: The *part* parameter specifies the liveChatComment resource parts
-//     that the API response will include. Supported values are id and snippet.
+//     that the API response will include. Supported values are id, snippet, and
+//     authorDetails.
 func (r *LiveChatMessagesService) List(liveChatId string, part []string) *LiveChatMessagesListCall {
 	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)

@@ -232,7 +232,6 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsSourcesService(s *Service) *ProjectsLocationsSourcesService {
 	rs := &ProjectsLocationsSourcesService{s: s}
 	rs.DatacenterConnectors = NewProjectsLocationsSourcesDatacenterConnectorsService(s)
-	rs.DiskMigrationJobs = NewProjectsLocationsSourcesDiskMigrationJobsService(s)
 	rs.MigratingVms = NewProjectsLocationsSourcesMigratingVmsService(s)
 	rs.UtilizationReports = NewProjectsLocationsSourcesUtilizationReportsService(s)
 	return rs
@@ -242,8 +241,6 @@ type ProjectsLocationsSourcesService struct {
 	s *Service
 
 	DatacenterConnectors *ProjectsLocationsSourcesDatacenterConnectorsService
-
-	DiskMigrationJobs *ProjectsLocationsSourcesDiskMigrationJobsService
 
 	MigratingVms *ProjectsLocationsSourcesMigratingVmsService
 
@@ -256,15 +253,6 @@ func NewProjectsLocationsSourcesDatacenterConnectorsService(s *Service) *Project
 }
 
 type ProjectsLocationsSourcesDatacenterConnectorsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsSourcesDiskMigrationJobsService(s *Service) *ProjectsLocationsSourcesDiskMigrationJobsService {
-	rs := &ProjectsLocationsSourcesDiskMigrationJobsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsSourcesDiskMigrationJobsService struct {
 	s *Service
 }
 
@@ -545,9 +533,6 @@ type AwsSourceDetails struct {
 	// tags that are set as part of the migration process. The tags must not begin
 	// with the reserved prefix `m2vm`.
 	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
-	// NetworkInsights: Output only. Information about the network coniguration of
-	// the source. Only gatherred upon request.
-	NetworkInsights *NetworkInsights `json:"networkInsights,omitempty"`
 	// PublicIp: Output only. The source's public IP. All communication initiated
 	// by this source will originate from this IP.
 	PublicIp string `json:"publicIp,omitempty"`
@@ -969,11 +954,6 @@ type CancelCloneJobRequest struct {
 type CancelCutoverJobRequest struct {
 }
 
-// CancelDiskMigrationJobRequest: Request message for 'CancelDiskMigrationJob'
-// request.
-type CancelDiskMigrationJobRequest struct {
-}
-
 // CancelImageImportJobRequest: Request message for 'CancelImageImportJob'
 // request.
 type CancelImageImportJobRequest struct {
@@ -1175,6 +1155,16 @@ type ComputeEngineTargetDefaults struct {
 	// AppliedLicense: Output only. The OS license returned from the adaptation
 	// module report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
+	// BootConversion: Optional. By default the virtual machine will keep its
+	// existing boot option. Setting this property will trigger an internal process
+	// which will convert the virtual machine from using the existing boot option
+	// to another.
+	//
+	// Possible values:
+	//   "BOOT_CONVERSION_UNSPECIFIED" - Unspecified conversion type.
+	//   "NONE" - No conversion.
+	//   "BIOS_TO_EFI" - Convert from BIOS to EFI.
+	BootConversion string `json:"bootConversion,omitempty"`
 	// BootOption: Output only. The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
@@ -1197,6 +1187,13 @@ type ComputeEngineTargetDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
 	DiskType string `json:"diskType,omitempty"`
+	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
+	// integrity monitoring enabled. This can be set to true only if the VM boot
+	// option is EFI, and vTPM is enabled.
+	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
+	// EnableVtpm: Optional. Defines whether the instance has vTPM enabled. This
+	// can be set to true only if the VM boot option is EFI.
+	EnableVtpm bool `json:"enableVtpm,omitempty"`
 	// Encryption: Optional. Immutable. The encryption to apply to the VM disks.
 	Encryption *Encryption `json:"encryption,omitempty"`
 	// Hostname: The hostname to assign to the VM.
@@ -1260,6 +1257,16 @@ type ComputeEngineTargetDetails struct {
 	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
 	// AppliedLicense: The OS license returned from the adaptation module report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
+	// BootConversion: Optional. By default the virtual machine will keep its
+	// existing boot option. Setting this property will trigger an internal process
+	// which will convert the virtual machine from using the existing boot option
+	// to another.
+	//
+	// Possible values:
+	//   "BOOT_CONVERSION_UNSPECIFIED" - Unspecified conversion type.
+	//   "NONE" - No conversion.
+	//   "BIOS_TO_EFI" - Convert from BIOS to EFI.
+	BootConversion string `json:"bootConversion,omitempty"`
 	// BootOption: The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
@@ -1282,6 +1289,11 @@ type ComputeEngineTargetDetails struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
 	DiskType string `json:"diskType,omitempty"`
+	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
+	// integrity monitoring enabled.
+	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
+	// EnableVtpm: Optional. Defines whether the instance has vTPM enabled.
+	EnableVtpm bool `json:"enableVtpm,omitempty"`
 	// Encryption: Optional. The encryption to apply to the VM disks.
 	Encryption *Encryption `json:"encryption,omitempty"`
 	// Hostname: The hostname to assign to the VM.
@@ -1750,6 +1762,11 @@ type DisksMigrationVmTargetDefaults struct {
 	// ComputeScheduling: Optional. Compute instance scheduling information (if
 	// empty default is used).
 	ComputeScheduling *ComputeScheduling `json:"computeScheduling,omitempty"`
+	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
+	// integrity monitoring enabled.
+	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
+	// EnableVtpm: Optional. Defines whether the instance has vTPM enabled.
+	EnableVtpm bool `json:"enableVtpm,omitempty"`
 	// Encryption: Optional. The encryption to apply to the VM.
 	Encryption *Encryption `json:"encryption,omitempty"`
 	// Hostname: Optional. The hostname to assign to the VM.
@@ -2915,32 +2932,6 @@ func (s MigrationWarning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkInsights: Information about the network coniguration of the source.
-type NetworkInsights struct {
-	// SourceNetworkConfig: Output only. The gathered network configuration of the
-	// source. Presented in json format.
-	SourceNetworkConfig string `json:"sourceNetworkConfig,omitempty"`
-	// SourceNetworkTerraform: Output only. The gathered network configuration of
-	// the source. Presented in terraform format.
-	SourceNetworkTerraform string `json:"sourceNetworkTerraform,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SourceNetworkConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SourceNetworkConfig") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s NetworkInsights) MarshalJSON() ([]byte, error) {
-	type NoMethod NetworkInsights
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // NetworkInterface: NetworkInterface represents a NIC of a VM.
 type NetworkInterface struct {
 	// ExternalIp: Optional. The external IP to define in the NIC.
@@ -2951,8 +2942,9 @@ type NetworkInterface struct {
 	InternalIp string `json:"internalIp,omitempty"`
 	// Network: The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
-	// NetworkTier: Optional. The networking tier used for configuring network
-	// access configuration. If left empty, will default to PREMIUM.
+	// NetworkTier: Optional. The networking tier used for optimizing connectivity
+	// between instances and systems on the internet. Applies only for external
+	// ephemeral IP addresses. If left empty, will default to PREMIUM.
 	//
 	// Possible values:
 	//   "COMPUTE_ENGINE_NETWORK_TIER_UNSPECIFIED" - An unspecified network tier.
@@ -3335,11 +3327,6 @@ func (s ReplicationSync) MarshalJSON() ([]byte, error) {
 
 // ResumeMigrationRequest: Request message for 'ResumeMigration' request.
 type ResumeMigrationRequest struct {
-}
-
-// RunDiskMigrationJobRequest: Request message for 'RunDiskMigrationJobRequest'
-// request.
-type RunDiskMigrationJobRequest struct {
 }
 
 // SchedulePolicy: A policy for scheduling replications.
@@ -7856,208 +7843,6 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) doReq
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsSourcesDiskMigrationJobsCancelCall struct {
-	s                             *Service
-	name                          string
-	canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest
-	urlParams_                    gensupport.URLParams
-	ctx_                          context.Context
-	header_                       http.Header
-}
-
-// Cancel: Cancels the disk migration job.
-//
-// - name: The name of the DiskMigrationJob.
-func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Cancel(name string, canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
-	c := &ProjectsLocationsSourcesDiskMigrationJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.canceldiskmigrationjobrequest = canceldiskmigrationjobrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceldiskmigrationjobrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.cancel" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsSourcesDiskMigrationJobsRunCall struct {
-	s                          *Service
-	name                       string
-	rundiskmigrationjobrequest *RunDiskMigrationJobRequest
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// Run: Runs the disk migration job.
-//
-// - name: The name of the DiskMigrationJob.
-func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Run(name string, rundiskmigrationjobrequest *RunDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
-	c := &ProjectsLocationsSourcesDiskMigrationJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.rundiskmigrationjobrequest = rundiskmigrationjobrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rundiskmigrationjobrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.run" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

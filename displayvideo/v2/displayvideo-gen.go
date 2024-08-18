@@ -6829,6 +6829,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6961,6 +6962,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -7077,6 +7079,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -7196,6 +7199,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8228,6 +8232,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -9010,6 +9015,7 @@ type InventorySource struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is
@@ -11968,11 +11974,13 @@ type ParentEntityFilter struct {
 	// filter IDs must be Insertion Order IDs that belong to the Advertiser or
 	// Partner specified in CreateSdfDownloadTaskRequest. Can only be used for
 	// downloading `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`,
-	// `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM_QA`, `FILE_TYPE_AD_GROUP`, `FILE_TYPE_AD_GROUP_QA`, and
+	// `FILE_TYPE_AD`.
 	//   "FILTER_TYPE_LINE_ITEM_ID" - Line Item ID. If selected, all filter IDs
 	// must be Line Item IDs that belong to the Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest. Can only be used for downloading
-	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_LINE_ITEM_QA`,`FILE_TYPE_AD_GROUP`,
+	// `FILE_TYPE_AD_GROUP_QA`, and `FILE_TYPE_AD`.
 	FilterType string `json:"filterType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13105,10 +13113,6 @@ type ReviewStatusInfo struct {
 	// ExchangeReviewStatuses: Exchange review statuses for the creative.
 	ExchangeReviewStatuses []*ExchangeReviewStatus `json:"exchangeReviewStatuses,omitempty"`
 	// PublisherReviewStatuses: Publisher review statuses for the creative.
-	// **Warning:** This field will be deprecated on June 26th, 2024. After this
-	// date, this field will be empty. Read our feature deprecation announcement
-	// (/display-video/api/deprecations#features.creative_publisher_review_statuses)
-	//  for more information.
 	PublisherReviewStatuses []*PublisherReviewStatus `json:"publisherReviewStatuses,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or

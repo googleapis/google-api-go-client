@@ -1682,6 +1682,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
@@ -7604,6 +7605,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7736,6 +7738,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -7852,6 +7855,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -7971,6 +7975,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9003,6 +9008,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -9801,6 +9807,7 @@ type InventorySource struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is

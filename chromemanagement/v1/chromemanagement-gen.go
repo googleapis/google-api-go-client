@@ -7311,7 +7311,8 @@ func (r *CustomersTelemetryUsersService) Get(name string) *CustomersTelemetryUse
 // fields to return. Supported read_mask paths are: - name - org_unit_id -
 // user_id - user_email - user_device.device_id -
 // user_device.audio_status_report - user_device.device_activity_report -
-// user_device.network_bandwidth_report - user_device.peripherals_report
+// user_device.network_bandwidth_report - user_device.peripherals_report -
+// user_device.app_report
 func (c *CustomersTelemetryUsersGetCall) ReadMask(readMask string) *CustomersTelemetryUsersGetCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -7451,7 +7452,8 @@ func (c *CustomersTelemetryUsersListCall) PageToken(pageToken string) *Customers
 // fields to return. Supported read_mask paths are: - name - org_unit_id -
 // user_id - user_email - user_device.device_id -
 // user_device.audio_status_report - user_device.device_activity_report -
-// user_device.network_bandwidth_report - user_device.peripherals_report
+// user_device.network_bandwidth_report - user_device.peripherals_report -
+// user_device.app_report
 func (c *CustomersTelemetryUsersListCall) ReadMask(readMask string) *CustomersTelemetryUsersListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c

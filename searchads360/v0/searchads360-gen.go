@@ -267,6 +267,28 @@ func (s GoogleAdsSearchads360V0Common__AdScheduleInfo) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Common__AdTextAsset: A text asset used inside an ad.
+type GoogleAdsSearchads360V0Common__AdTextAsset struct {
+	// Text: Asset text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Common__AdTextAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__AdTextAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__AgeRangeInfo: An age range criterion.
 type GoogleAdsSearchads360V0Common__AgeRangeInfo struct {
 	// Type: Type of the age range.
@@ -1035,6 +1057,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// metrics_currency parameter at
 	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
 	AverageCpm float64 `json:"averageCpm,omitempty"`
+	// AverageQualityScore: The average quality score.
+	AverageQualityScore float64 `json:"averageQualityScore,omitempty"`
 	// Clicks: The number of clicks.
 	Clicks int64 `json:"clicks,omitempty,string"`
 	// ClientAccountConversions: The number of client account conversions. This
@@ -1574,6 +1598,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		AverageCost                                       gensupport.JSONFloat64 `json:"averageCost"`
 		AverageCpc                                        gensupport.JSONFloat64 `json:"averageCpc"`
 		AverageCpm                                        gensupport.JSONFloat64 `json:"averageCpm"`
+		AverageQualityScore                               gensupport.JSONFloat64 `json:"averageQualityScore"`
 		ClientAccountConversions                          gensupport.JSONFloat64 `json:"clientAccountConversions"`
 		ClientAccountConversionsValue                     gensupport.JSONFloat64 `json:"clientAccountConversionsValue"`
 		ClientAccountCrossSellUnitsSold                   gensupport.JSONFloat64 `json:"clientAccountCrossSellUnitsSold"`
@@ -1640,6 +1665,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.AverageCost = float64(s1.AverageCost)
 	s.AverageCpc = float64(s1.AverageCpc)
 	s.AverageCpm = float64(s1.AverageCpm)
+	s.AverageQualityScore = float64(s1.AverageQualityScore)
 	s.ClientAccountConversions = float64(s1.ClientAccountConversions)
 	s.ClientAccountConversionsValue = float64(s1.ClientAccountConversionsValue)
 	s.ClientAccountCrossSellUnitsSold = float64(s1.ClientAccountCrossSellUnitsSold)
@@ -1849,6 +1875,12 @@ type GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo struct {
 type GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo struct {
 	// AdTrackingId: The tracking id of the ad.
 	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+	// Descriptions: List of text assets for descriptions. When the ad serves the
+	// descriptions will be selected from this list.
+	Descriptions []*GoogleAdsSearchads360V0Common__AdTextAsset `json:"descriptions,omitempty"`
+	// Headlines: List of text assets for headlines. When the ad serves the
+	// headlines will be selected from this list.
+	Headlines []*GoogleAdsSearchads360V0Common__AdTextAsset `json:"headlines,omitempty"`
 	// Path1: Text appended to the auto-generated visible URL with a delimiter.
 	Path1 string `json:"path1,omitempty"`
 	// Path2: Text appended to path1 with a delimiter.
@@ -2008,6 +2040,20 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	//   "CONNECTED_TV" - Smart TVs and game consoles.
 	//   "OTHER" - Other device types.
 	Device string `json:"device,omitempty"`
+	// GeoTargetCity: Resource name of the geo target constant that represents a
+	// city.
+	GeoTargetCity string `json:"geoTargetCity,omitempty"`
+	// GeoTargetCountry: Resource name of the geo target constant that represents a
+	// country.
+	GeoTargetCountry string `json:"geoTargetCountry,omitempty"`
+	// GeoTargetMetro: Resource name of the geo target constant that represents a
+	// metro.
+	GeoTargetMetro string `json:"geoTargetMetro,omitempty"`
+	// GeoTargetRegion: Resource name of the geo target constant that represents a
+	// region.
+	GeoTargetRegion string `json:"geoTargetRegion,omitempty"`
+	// Hour: Hour of day as a number between 0 and 23, inclusive.
+	Hour int64 `json:"hour,omitempty"`
 	// Keyword: Keyword criterion.
 	Keyword *GoogleAdsSearchads360V0Common__Keyword `json:"keyword,omitempty"`
 	// Month: Month as represented by the date of the first day of a month.
@@ -2377,10 +2423,11 @@ type GoogleAdsSearchads360V0Common__TargetSpend struct {
 	// CpcBidCeilingMicros: Maximum bid limit that can be set by the bid strategy.
 	// The limit applies to all keywords managed by the strategy.
 	CpcBidCeilingMicros int64 `json:"cpcBidCeilingMicros,omitempty,string"`
-	// TargetSpendMicros: The spend target under which to maximize clicks. A
-	// TargetSpend bidder will attempt to spend the smaller of this value or the
-	// natural throttling spend amount. If not specified, the budget is used as the
-	// spend target. This field is deprecated and should no longer be used. See
+	// TargetSpendMicros: Deprecated: The spend target under which to maximize
+	// clicks. A TargetSpend bidder will attempt to spend the smaller of this value
+	// or the natural throttling spend amount. If not specified, the budget is used
+	// as the spend target. This field is deprecated and should no longer be used.
+	// See
 	// https://ads-developers.googleblog.com/2020/05/reminder-about-sunset-creation-of.html
 	// for details.
 	TargetSpendMicros int64 `json:"targetSpendMicros,omitempty,string"`
@@ -2453,7 +2500,7 @@ func (s GoogleAdsSearchads360V0Common__TextAsset) MarshalJSON() ([]byte, error) 
 // GoogleAdsSearchads360V0Common__TextLabel: A type of label displaying text on
 // a colored background.
 type GoogleAdsSearchads360V0Common__TextLabel struct {
-	// BackgroundColor: Background color of the label in RGB format. This string
+	// BackgroundColor: Background color of the label in HEX format. This string
 	// must match the regular expression '^\#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$'.
 	// Note: The background color may not be visible for manager accounts.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
@@ -3339,7 +3386,7 @@ func (s GoogleAdsSearchads360V0Errors__QuotaErrorDetails) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Errors__SearchAds360Error: SearchAds360-specific
+// GoogleAdsSearchads360V0Errors__SearchAds360Error: Search Ads 360-specific
 // error.
 type GoogleAdsSearchads360V0Errors__SearchAds360Error struct {
 	// Details: Additional error details, which are returned by certain error
@@ -4481,6 +4528,7 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	//   "DISCOVERY_CAROUSEL_AD" - Discovery carousel ad.
 	//   "TRAVEL_AD" - Travel ad.
 	//   "DISCOVERY_VIDEO_RESPONSIVE_AD" - Discovery video responsive ad.
+	//   "MULTIMEDIA_AD" - Multimedia ad.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4644,8 +4692,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
 	// HH:mm:ss.ssssss" format.
 	CreationTime string `json:"creationTime,omitempty"`
 	// EngineId: Output only. ID of the ad in the external engine account. This
-	// field is for SearchAds 360 account only, for example, Yahoo Japan,
-	// Microsoft, Baidu etc. For non-SearchAds 360 entity, use "ad_group_ad.ad.id"
+	// field is for Search Ads 360 account only, for example, Yahoo Japan,
+	// Microsoft, Baidu etc. For non-Search Ads 360 entity, use "ad_group_ad.ad.id"
 	// instead.
 	EngineId string `json:"engineId,omitempty"`
 	// EngineStatus: Output only. Additional status of the ad in the external
@@ -5915,6 +5963,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "VIDEO_REACH_TARGET_FREQUENCY" - Video reach campaign with Target
 	// Frequency bidding strategy.
 	//   "TRAVEL_ACTIVITIES" - Travel Activities campaigns.
+	//   "SOCIAL_FACEBOOK_TRACKING_ONLY" - Facebook tracking only social campaigns.
 	AdvertisingChannelSubType string `json:"advertisingChannelSubType,omitempty"`
 	// AdvertisingChannelType: Immutable. The primary serving target for ads within
 	// the campaign. The targeting options can be refined in `network_settings`.
@@ -5941,6 +5990,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "LOCAL_SERVICES" - Local services campaigns.
 	//   "DISCOVERY" - Discovery campaigns.
 	//   "TRAVEL" - Travel campaigns.
+	//   "SOCIAL" - Social campaigns.
 	AdvertisingChannelType string `json:"advertisingChannelType,omitempty"`
 	// BiddingStrategy: Portfolio bidding strategy used by campaign.
 	BiddingStrategy string `json:"biddingStrategy,omitempty"`
@@ -6711,9 +6761,9 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	FloodlightOriginalRevenue int64 `json:"floodlightOriginalRevenue,omitempty,string"`
 	// Id: Output only. The ID of the conversion
 	Id int64 `json:"id,omitempty,string"`
-	// MerchantId: Output only. The SearchAds360 inventory account ID containing
-	// the product that was clicked on. SearchAds360 generates this ID when you
-	// link an inventory account in SearchAds360.
+	// MerchantId: Output only. The Search Ads 360 inventory account ID containing
+	// the product that was clicked on. Search Ads 360 generates this ID when you
+	// link an inventory account in Search Ads 360.
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 	// ProductChannel: Output only. The sales channel of the product that was
 	// clicked on: Online or Local.
@@ -6752,7 +6802,7 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	//   "ENABLED" - The conversion is enabled.
 	//   "REMOVED" - The conversion has been removed.
 	Status string `json:"status,omitempty"`
-	// VisitId: Output only. The SearchAds360 visit ID that the conversion is
+	// VisitId: Output only. The Search Ads 360 visit ID that the conversion is
 	// attributed to.
 	VisitId int64 `json:"visitId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AdId") to unconditionally
@@ -7467,6 +7517,10 @@ type GoogleAdsSearchads360V0Resources__CustomerManagerLink struct {
 	// `customers/{customer_id}/customerManagerLinks/{manager_customer_id}~{manager_
 	// link_id}`
 	ResourceName string `json:"resourceName,omitempty"`
+	// StartTime: Output only. The timestamp when the CustomerManagerLink was
+	// created. The timestamp is in the customer's time zone and in "yyyy-MM-dd
+	// HH:mm:ss" format.
+	StartTime string `json:"startTime,omitempty"`
 	// Status: Status of the link between the customer and the manager.
 	//
 	// Possible values:

@@ -1832,6 +1832,11 @@ type DatabaseDeploymentTopology struct {
 	MemoryBytes int64 `json:"memoryBytes,omitempty,string"`
 	// MemoryLimitBytes: Optional. Total memory in bytes limited by db deployment.
 	MemoryLimitBytes int64 `json:"memoryLimitBytes,omitempty,string"`
+	// PhysicalCoreCount: Optional. Number of total physical cores.
+	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
+	// PhysicalCoreLimit: Optional. Number of total physical cores limited by db
+	// deployment.
+	PhysicalCoreLimit int64 `json:"physicalCoreLimit,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CoreCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1909,6 +1914,8 @@ func (s DatabaseDetailsParentDatabaseDeployment) MarshalJSON() ([]byte, error) {
 type DatabaseInstance struct {
 	// InstanceName: The instance's name.
 	InstanceName string `json:"instanceName,omitempty"`
+	// Network: Optional. Networking details.
+	Network *DatabaseInstanceNetwork `json:"network,omitempty"`
 	// Role: The instance role in the database engine.
 	//
 	// Possible values:
@@ -1932,6 +1939,32 @@ type DatabaseInstance struct {
 
 func (s DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseInstanceNetwork: Network details of a database instance.
+type DatabaseInstanceNetwork struct {
+	// HostNames: Optional. The instance's host names.
+	HostNames []string `json:"hostNames,omitempty"`
+	// IpAddresses: Optional. The instance's IP addresses.
+	IpAddresses []string `json:"ipAddresses,omitempty"`
+	// PrimaryMacAddress: Optional. The instance's primary MAC address.
+	PrimaryMacAddress string `json:"primaryMacAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HostNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HostNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseInstanceNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseInstanceNetwork
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5542,6 +5575,9 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MonthlyCostDatabaseLicensing: Output only. Database licensing monthly cost
 	// for this preference set. Only present for databases.
 	MonthlyCostDatabaseLicensing *Money `json:"monthlyCostDatabaseLicensing,omitempty"`
+	// MonthlyCostGcveProtected: Output only. GCVE Protected nodes cost for this
+	// preference set.
+	MonthlyCostGcveProtected *Money `json:"monthlyCostGcveProtected,omitempty"`
 	// MonthlyCostNetworkEgress: Output only. Network Egress monthly cost for this
 	// preference set. Only present for virtual machines.
 	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
@@ -5551,6 +5587,11 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MonthlyCostOther: Output only. Miscellaneous monthly cost for this
 	// preference set.
 	MonthlyCostOther *Money `json:"monthlyCostOther,omitempty"`
+	// MonthlyCostPortableVmwareLicense: Output only. VMware portable license
+	// monthly cost for this preference set. Only present for VMware target with
+	// portable license service type. This cost is not paid to google, but is an
+	// estimate of license costs paid to VMware.
+	MonthlyCostPortableVmwareLicense *Money `json:"monthlyCostPortableVmwareLicense,omitempty"`
 	// MonthlyCostStorage: Output only. Storage monthly cost for this preference
 	// set.
 	MonthlyCostStorage *Money `json:"monthlyCostStorage,omitempty"`
@@ -6451,6 +6492,24 @@ func (s SqlServerFeature) MarshalJSON() ([]byte, error) {
 
 // SqlServerSchemaDetails: Specific details for a SqlServer database.
 type SqlServerSchemaDetails struct {
+	// ClrObjectCount: Optional. SqlServer number of CLR objects.
+	ClrObjectCount int64 `json:"clrObjectCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClrObjectCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClrObjectCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerSchemaDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSchemaDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlServerServerFlag: SQL Server server flag details.
@@ -6635,6 +6694,50 @@ type UploadFileInfo struct {
 
 func (s UploadFileInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadFileInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VMwareEngineMachinePreferences: The type of machines to consider when
+// calculating virtual machine migration insights and recommendations for
+// VMware Engine. Not all machine types are available in all zones and regions.
+type VMwareEngineMachinePreferences struct {
+	// AllowedMachineSeries: Optional. VMware Engine on Google Cloud machine series
+	// to consider for insights and recommendations. If empty, no restriction is
+	// applied on the machine series.
+	AllowedMachineSeries []*MachineSeries `json:"allowedMachineSeries,omitempty"`
+	// ProtectedNodes: Optional. Whether to use VMware Engine Protected offering.
+	//
+	// Possible values:
+	//   "PROTECTED_NODES_UNSPECIFIED" - Unspecified protected nodes preference.
+	//   "PROTECTED_NODES_ENABLED" - Use only protected nodes for the selected
+	// allowed_machine_series.
+	//   "PROTECTED_NODES_DISABLED" - Do not use protected nodes.
+	ProtectedNodes string `json:"protectedNodes,omitempty"`
+	// StorageOnlyNodes: Optional. Whether to use storage-only nodes, if those are
+	// available.
+	//
+	// Possible values:
+	//   "STORAGE_ONLY_NODES_UNSPECIFIED" - Unspecified storage-only nodes
+	// preference.
+	//   "STORAGE_ONLY_NODES_ENABLED" - Use storage-only nodes for selected
+	// allowed_machine_series, if available.
+	//   "STORAGE_ONLY_NODES_DISABLED" - Do not use storage-only nodes.
+	StorageOnlyNodes string `json:"storageOnlyNodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMachineSeries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMachineSeries") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VMwareEngineMachinePreferences) MarshalJSON() ([]byte, error) {
+	type NoMethod VMwareEngineMachinePreferences
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7108,9 +7211,24 @@ type VmwareEnginePreferences struct {
 	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are between 1.0
 	// and 8.0, with 0.1 increment.
 	CpuOvercommitRatio float64 `json:"cpuOvercommitRatio,omitempty"`
+	// LicenseDiscountPercentage: Optional. Discount percentage for the license
+	// type offered to you by Broadcom. Must be between 0 and 100. Only valid when
+	// service_type is set to SERVICE_TYPE_PORTABLE_LICENSE.
+	LicenseDiscountPercentage float64 `json:"licenseDiscountPercentage,omitempty"`
+	// MachinePreferences: Optional. Preferences concerning the machine types to
+	// consider on Google Cloud VMware Engine.
+	MachinePreferences *VMwareEngineMachinePreferences `json:"machinePreferences,omitempty"`
 	// MemoryOvercommitRatio: Memory overcommit ratio. Acceptable values are 1.0,
 	// 1.25, 1.5, 1.75 and 2.0.
 	MemoryOvercommitRatio float64 `json:"memoryOvercommitRatio,omitempty"`
+	// ServiceType: Optional. VMWare Service Type (Fully Licensed or Portable
+	// License).
+	//
+	// Possible values:
+	//   "SERVICE_TYPE_UNSPECIFIED" - Same as SERVICE_TYPE_FULLY_LICENSED.
+	//   "SERVICE_TYPE_FULLY_LICENSED" - Google provided VCF license.
+	//   "SERVICE_TYPE_PORTABLE_LICENSE" - Bring Your Own License.
+	ServiceType string `json:"serviceType,omitempty"`
 	// StorageDeduplicationCompressionRatio: The Deduplication and Compression
 	// ratio is based on the logical (Used Before) space required to store data
 	// before applying deduplication and compression, in relation to the physical
@@ -7142,6 +7260,7 @@ func (s *VmwareEnginePreferences) UnmarshalJSON(data []byte) error {
 	type NoMethod VmwareEnginePreferences
 	var s1 struct {
 		CpuOvercommitRatio                   gensupport.JSONFloat64 `json:"cpuOvercommitRatio"`
+		LicenseDiscountPercentage            gensupport.JSONFloat64 `json:"licenseDiscountPercentage"`
 		MemoryOvercommitRatio                gensupport.JSONFloat64 `json:"memoryOvercommitRatio"`
 		StorageDeduplicationCompressionRatio gensupport.JSONFloat64 `json:"storageDeduplicationCompressionRatio"`
 		*NoMethod
@@ -7151,6 +7270,7 @@ func (s *VmwareEnginePreferences) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.CpuOvercommitRatio = float64(s1.CpuOvercommitRatio)
+	s.LicenseDiscountPercentage = float64(s1.LicenseDiscountPercentage)
 	s.MemoryOvercommitRatio = float64(s1.MemoryOvercommitRatio)
 	s.StorageDeduplicationCompressionRatio = float64(s1.StorageDeduplicationCompressionRatio)
 	return nil

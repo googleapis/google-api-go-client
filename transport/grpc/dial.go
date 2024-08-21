@@ -10,6 +10,7 @@ package grpc
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -118,6 +119,10 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 	return dial(ctx, true, o)
 }
 
+func prefixTime(msg string) {
+	fmt.Printf("%v: "+msg, time.Now().Format("2006/01/02 15:04:05"))
+}
+
 // DialPool returns a pool of GRPC connections for the given service.
 // This differs from the connection pooling implementation used by Dial, which uses a custom GRPC load balancer.
 // DialPool should be used instead of Dial when a pool is used by default or a different custom GRPC load balancer is needed.
@@ -131,10 +136,13 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 		return nil, err
 	}
 	if o.GRPCConnPool != nil {
+		prefixTime(fmt.Sprintf("o.GRPCConnPool != nil\n"))
 		return o.GRPCConnPool, nil
 	}
 
 	if o.IsNewAuthLibraryEnabled() {
+		prefixTime(fmt.Sprintf("o.IsNewAuthLibraryEnabled\n"))
+
 		if o.GRPCConn != nil {
 			return &singleConnPool{o.GRPCConn}, nil
 		}
@@ -179,12 +187,16 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 	// honor options if set
 	var creds *auth.Credentials
 	if ds.InternalCredentials != nil {
+		prefixTime(fmt.Sprintf("ds.InternalCredentials != nil\n"))
 		creds = oauth2adapt.AuthCredentialsFromOauth2Credentials(ds.InternalCredentials)
 	} else if ds.Credentials != nil {
+		prefixTime(fmt.Sprintf("ds.Credentials != nil\n"))
 		creds = oauth2adapt.AuthCredentialsFromOauth2Credentials(ds.Credentials)
 	} else if ds.AuthCredentials != nil {
+		prefixTime(fmt.Sprintf("ds.AuthCredentials != nil \n"))
 		creds = ds.AuthCredentials
 	} else if ds.TokenSource != nil {
+		prefixTime(fmt.Sprintf("ds.TokenSource != nil\n"))
 		credOpts := &auth.CredentialsOptions{
 			TokenProvider: oauth2adapt.TokenProviderFromTokenSource(ds.TokenSource),
 		}
@@ -221,6 +233,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
+	prefixTime(fmt.Sprintf("Before dialContextNewAuth\n"))
 	pool, err := dialContextNewAuth(ctx, secure, &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,

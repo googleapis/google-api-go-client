@@ -542,6 +542,15 @@ type AddSubnetworkRequest struct {
 	// SecondaryIpRangeSpecs: Optional. A list of secondary IP ranges to be created
 	// within the new subnetwork.
 	SecondaryIpRangeSpecs []*SecondaryIpRangeSpec `json:"secondaryIpRangeSpecs,omitempty"`
+	// SkipRequestedAddressValidation: Optional. Skips validating if the
+	// requested_address is in use by SN VPC’s peering group. Compute Engine will
+	// still perform this check and fail the request if the requested_address is in
+	// use. Note that Compute Engine does not check for the existence of dynamic
+	// routes when performing this check. Caller of this API should make sure that
+	// there are no dynamic routes overlapping with the
+	// requested_address/prefix_length IP address range otherwise the created
+	// subnet could cause misrouting.
+	SkipRequestedAddressValidation bool `json:"skipRequestedAddressValidation,omitempty"`
 	// Subnetwork: Required. A name for the new subnet. For information about the
 	// naming requirements, see subnetwork
 	// (/compute/docs/reference/rest/v1/subnetworks) in the Compute API

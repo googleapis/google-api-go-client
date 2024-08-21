@@ -2656,7 +2656,10 @@ type GoogleAppsCardV1PlatformDataSource struct {
 	// from their Google Workspace organization.
 	CommonDataSource string `json:"commonDataSource,omitempty"`
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
-	// application, such spaces in Google Chat.
+	// application, such spaces in Google Chat. This field supports the Google API
+	// Client Libraries but isn't available in the Cloud Client Libraries. To learn
+	// more, see Install the client libraries
+	// (https://developers.google.com/workspace/chat/libraries).
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6710,33 +6713,19 @@ type SpacesMembersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a human membership or app membership for the calling app.
-// Creating memberships for other apps isn't supported. For an example, see
-// Invite or add a user or a Google Chat app to a space
-// (https://developers.google.com/workspace/chat/create-members). When creating
-// a membership, if the specified member has their auto-accept policy turned
-// off, then they're invited, and must accept the space invitation before
-// joining. Otherwise, creating a membership adds the member directly to the
-// specified space. Requires user authentication
+// Create: Creates a membership for the calling Chat app, a user, or a Google
+// Group. Creating memberships for other Chat apps isn't supported. When
+// creating a membership, if the specified member has their auto-accept policy
+// turned off, then they're invited, and must accept the space invitation
+// before joining. Otherwise, creating a membership adds the member directly to
+// the specified space. Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// To specify the member to add, set the `membership.member.name` for the human
-// or app member, or set the `membership.group_member.name` for the group
-// member. - To add the calling app to a space or a direct message between two
-// human users, use `users/app`. Unable to add other apps to the space. - To
-// add a human user, use `users/{user}`, where `{user}` can be the email
-// address for the user. For users in the same Workspace organization `{user}`
-// can also be the `id` for the person from the People API, or the `id` for the
-// user in the Directory API. For example, if the People API Person profile ID
-// for `user@example.com` is `123456789`, you can add the user to the space by
-// setting the `membership.member.name` to `users/user@example.com` or
-// `users/123456789`. - To add or invite a Google group in a named space, use
-// `groups/{group}`, where `{group}` is the `id` for the group from the Cloud
-// Identity Groups API. For example, you can use Cloud Identity Groups lookup
-// API (https://cloud.google.com/identity/docs/reference/rest/v1/groups/lookup)
-// to retrieve the ID `123456789` for group email `group@example.com`, then you
-// can add or invite the group to a named space by setting the
-// `membership.group_member.name` to `groups/123456789`. Group email is not
-// supported, and Google groups can only be added as members in named spaces.
+// For example usage, see: - Invite or add a user to a space
+// (https://developers.google.com/workspace/chat/create-members#create-user-membership).
+// - Invite or add a Google Group to a space
+// (https://developers.google.com/workspace/chat/create-members#create-group-membership).
+// - Add the Chat app to a space
+// (https://developers.google.com/workspace/chat/create-members#create-membership-calling-api).
 //
 //   - parent: The resource name of the space for which to create the membership.
 //     Format: spaces/{space}.
@@ -7798,8 +7787,12 @@ type SpacesMessagesListCall struct {
 }
 
 // List: Lists messages in a space that the caller is a member of, including
-// messages from blocked members and spaces. For an example, see List messages
-// (/chat/api/guides/v1/messages/list). Requires user authentication
+// messages from blocked members and spaces. If you list messages from a space
+// with no messages, the response is an empty object. When using a REST/HTTP
+// interface, the response contains an empty JSON object, `{}`. For an example,
+// see List messages
+// (https://developers.google.com/workspace/chat/api/guides/v1/messages/list).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - parent: The resource name of the space to list messages from. Format:

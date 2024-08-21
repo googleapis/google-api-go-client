@@ -114,7 +114,12 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 	return oauth2adapt.Oauth2CredentialsFromAuthCredentials(creds), nil
 }
 
+func prefixTime(msg string) {
+	fmt.Printf("%v: "+msg, time.Now().Format("2006/01/02 15:04:05"))
+}
+
 func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
+	prefixTime(fmt.Sprintf("In baseCreds\n"))
 	if ds.InternalCredentials != nil {
 		return ds.InternalCredentials, nil
 	}
@@ -134,6 +139,8 @@ func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, erro
 	if ds.TokenSource != nil {
 		return &google.Credentials{TokenSource: ds.TokenSource}, nil
 	}
+
+	prefixTime(fmt.Sprintf("Calling FindDefaultCredentials\n"))
 	cred, err := google.FindDefaultCredentials(ctx, ds.GetScopes()...)
 	if err != nil {
 		return nil, err

@@ -639,7 +639,10 @@ type GoogleCloudAiplatformV1beta1FunctionResponse struct {
 	// Name: Required. The name of the function to call. Matches
 	// [FunctionDeclaration.name] and [FunctionCall.name].
 	Name string `json:"name,omitempty"`
-	// Response: Required. The function response in JSON object format.
+	// Response: Required. The function response in JSON object format. Use
+	// "output" key to specify function output and "error" key to specify error
+	// details (if any). If "output" and "error" keys are not specified, then whole
+	// "response" is treated as function output.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -778,22 +781,26 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback) Marsh
 // GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata: Usage
 // metadata about response(s).
 type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
+	// CachedContentTokenCount: Output only. Number of tokens in the cached part in
+	// the input (the cached content).
+	CachedContentTokenCount int64 `json:"cachedContentTokenCount,omitempty"`
 	// CandidatesTokenCount: Number of tokens in the response(s).
 	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
 	// PromptTokenCount: Number of tokens in the request. When `cached_content` is
 	// set, this is still the total effective prompt size meaning this includes the
 	// number of tokens in the cached content.
 	PromptTokenCount int64 `json:"promptTokenCount,omitempty"`
-	TotalTokenCount  int64 `json:"totalTokenCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
+	// TotalTokenCount: Total token count for prompt and response candidates.
+	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CachedContentTokenCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CandidatesTokenCount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CachedContentTokenCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -590,7 +590,7 @@ type SynthesizeLongAudioRequest struct {
 	// AudioConfig: Required. The configuration of the synthesized audio.
 	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
 	// Input: Required. The Synthesizer requires either plain text or SSML as
-	// input. While Long Audio is in preview, SSML is temporarily unsupported.
+	// input.
 	Input *SynthesisInput `json:"input,omitempty"`
 	// OutputGcsUri: Required. Specifies a Cloud Storage URI for the synthesis
 	// results. Must be specified in the format: `gs://bucket_name/object_name`,

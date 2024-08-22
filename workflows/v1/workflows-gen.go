@@ -541,6 +541,14 @@ type Workflow struct {
 	// most 1000 Unicode characters long. This is a workflow-wide field and is not
 	// tied to a specific revision.
 	Description string `json:"description,omitempty"`
+	// ExecutionHistoryLevel: Optional. Describes the level of the execution
+	// history feature to apply to this workflow.
+	//
+	// Possible values:
+	//   "EXECUTION_HISTORY_LEVEL_UNSPECIFIED" - The default/unset value.
+	//   "EXECUTION_HISTORY_BASIC" - Enable execution history basic feature.
+	//   "EXECUTION_HISTORY_DETAILED" - Enable execution history detailed feature.
+	ExecutionHistoryLevel string `json:"executionHistoryLevel,omitempty"`
 	// Labels: Labels associated with this workflow. Labels can contain at most 64
 	// entries. Keys and values can be no longer than 63 characters and can only
 	// contain lowercase letters, numeric characters, underscores, and dashes.

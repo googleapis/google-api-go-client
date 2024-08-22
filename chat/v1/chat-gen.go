@@ -2656,7 +2656,10 @@ type GoogleAppsCardV1PlatformDataSource struct {
 	// from their Google Workspace organization.
 	CommonDataSource string `json:"commonDataSource,omitempty"`
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
-	// application, such spaces in Google Chat.
+	// application, such spaces in Google Chat. This field supports the Google API
+	// Client Libraries but isn't available in the Cloud Client Libraries. To learn
+	// more, see Install the client libraries
+	// (https://developers.google.com/workspace/chat/libraries).
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3836,6 +3839,33 @@ func (s MembershipBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MembershipCount: Developer Preview
+// (https://developers.google.com/workspace/preview). Represents the count of
+// memberships of a space, grouped into categories.
+type MembershipCount struct {
+	// JoinedDirectHumanUserCount: Count of human users that have directly joined
+	// the space, not counting users joined by having membership in a joined group.
+	JoinedDirectHumanUserCount int64 `json:"joinedDirectHumanUserCount,omitempty"`
+	// JoinedGroupCount: Count of all groups that have directly joined the space.
+	JoinedGroupCount int64 `json:"joinedGroupCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JoinedDirectHumanUserCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JoinedDirectHumanUserCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MembershipCount) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipCount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MembershipCreatedEventData: Event payload for a new membership. Event type:
 // `google.workspace.chat.membership.v1.created`.
 type MembershipCreatedEventData struct {
@@ -4434,6 +4464,38 @@ func (s RichLinkMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchSpacesResponse: Response with a list of spaces corresponding to the
+// search spaces request.
+type SearchSpacesResponse struct {
+	// NextPageToken: A token that can be used to retrieve the next page. If this
+	// field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Spaces: A page of the requested spaces.
+	Spaces []*Space `json:"spaces,omitempty"`
+	// TotalSize: The total number of spaces that match the query, across all
+	// pages. If the result is over 10,000 spaces, this value is an estimate.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSpacesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSpacesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Section: A section contains a collection of widgets that are rendered
 // (vertically) in the order that they are specified. Across all platforms,
 // cards have a narrow fixed width, so there's currently no need for layout
@@ -4646,6 +4708,14 @@ type Space struct {
 	// of a data migration into Google Workspace. While spaces are being imported,
 	// they aren't visible to users until the import is complete.
 	ImportMode bool `json:"importMode,omitempty"`
+	// LastActiveTime: Output only. Timestamp of the last message in the space.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	LastActiveTime string `json:"lastActiveTime,omitempty"`
+	// MembershipCount: Output only. The count of joined memberships grouped by
+	// member type. Populated when the `space_type` is `SPACE`, `DIRECT_MESSAGE` or
+	// `GROUP_CHAT`. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	MembershipCount *MembershipCount `json:"membershipCount,omitempty"`
 	// Name: Resource name of the space. Format: `spaces/{space}`
 	Name string `json:"name,omitempty"`
 	// SingleUserBotDm: Optional. Whether the space is a DM between a Chat app and
@@ -5925,6 +5995,19 @@ func (r *SpacesService) Delete(name string) *SpacesDeleteCall {
 	return c
 }
 
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.delete` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+func (c *SpacesDeleteCall) UseAdminAccess(useAdminAccess bool) *SpacesDeleteCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6156,6 +6239,19 @@ type SpacesGetCall struct {
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.spaces` or `chat.admin.spaces.readonly` OAuth 2.0 scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+func (c *SpacesGetCall) UseAdminAccess(useAdminAccess bool) *SpacesGetCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
 
@@ -6487,6 +6583,21 @@ func (c *SpacesPatchCall) UpdateMask(updateMask string) *SpacesPatchCall {
 	return c
 }
 
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.spaces` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// Some `FieldMask` values are not supported using admin access. For details,
+// see the description of `update_mask`.
+func (c *SpacesPatchCall) UseAdminAccess(useAdminAccess bool) *SpacesPatchCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6567,6 +6678,226 @@ func (c *SpacesPatchCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 		return nil, err
 	}
 	return ret, nil
+}
+
+type SpacesSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Developer Preview (https://developers.google.com/workspace/preview).
+// Returns a list of spaces based on a user's search. Requires user
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// The user must be an administrator for the Google Workspace organization. In
+// the request, set `use_admin_access` to `true`.
+func (r *SpacesService) Search() *SpacesSearchCall {
+	c := &SpacesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": How the list of spaces is
+// ordered. Supported attributes to order by are: -
+// `membership_count.joined_direct_human_user_count` — Denotes the count of
+// human users that have directly joined a space. - `last_active_time` —
+// Denotes the time when last eligible item is added to any topic of this
+// space. - `create_time` — Denotes the time of the space creation. Valid
+// ordering operation values are: - `ASC` for ascending. Default value. -
+// `DESC` for descending. The supported syntax are: -
+// `membership_count.joined_direct_human_user_count DESC` -
+// `membership_count.joined_direct_human_user_count ASC` - `last_active_time
+// DESC` - `last_active_time ASC` - `create_time DESC` - `create_time ASC`
+func (c *SpacesSearchCall) OrderBy(orderBy string) *SpacesSearchCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// spaces to return. The service may return fewer than this value. If
+// unspecified, at most 100 spaces are returned. The maximum value is 1000. If
+// you use a value more than 1000, it's automatically changed to 1000.
+func (c *SpacesSearchCall) PageSize(pageSize int64) *SpacesSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token, received from
+// the previous search spaces call. Provide this parameter to retrieve the
+// subsequent page. When paginating, all other parameters provided should match
+// the call that provided the page token. Passing different values to the other
+// parameters might lead to unexpected results.
+func (c *SpacesSearchCall) PageToken(pageToken string) *SpacesSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Query sets the optional parameter "query": Required. A search query. You can
+// search by using the following parameters: - `create_time` - `customer` -
+// `display_name` - `external_user_allowed` - `last_active_time` -
+// `space_history_state` - `space_type` `create_time` and `last_active_time`
+// accept a timestamp in RFC-3339 (https://www.rfc-editor.org/rfc/rfc3339)
+// format and the supported comparison operators are: `=`, `<`, `>`, `<=`,
+// `>=`. `customer` is required and is used to indicate which customer to fetch
+// spaces from. `customers/my_customer` is the only supported value.
+// `display_name` only accepts the `HAS` (`:`) operator. The text to match is
+// first tokenized into tokens and each token is prefix-matched
+// case-insensitively and independently as a substring anywhere in the space's
+// `display_name`. For example, `Fun Eve` matches `Fun event` or `The evening
+// was fun`, but not `notFun event` or `even`. `external_user_allowed` accepts
+// either `true` or `false`. `space_history_state` only accepts values from the
+// [`historyState`]
+// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces#Space.HistoryState)
+// field of a `space` resource. `space_type` is required and the only valid
+// value is `SPACE`. Across different fields, only `AND` operators are
+// supported. A valid example is `space_type = "SPACE" AND
+// display_name:"Hello" and an invalid example is `space_type = "SPACE" OR
+// display_name:"Hello". Among the same field, `space_type` doesn't support
+// `AND` or `OR` operators. `display_name`, 'space_history_state', and
+// 'external_user_allowed' only support `OR` operators. `last_active_time` and
+// `create_time` support both `AND` and `OR` operators. `AND` can only be used
+// to represent an interval, such as `last_active_time <
+// "2022-01-01T00:00:00+00:00" AND last_active_time >
+// "2023-01-01T00:00:00+00:00". The following example queries are valid: ```
+// customer = "customers/my_customer" AND space_type = "SPACE" customer =
+// "customers/my_customer" AND space_type = "SPACE" AND display_name:"Hello
+// World" customer = "customers/my_customer" AND space_type = "SPACE" AND
+// (last_active_time < "2020-01-01T00:00:00+00:00" OR last_active_time >
+// "2022-01-01T00:00:00+00:00") customer = "customers/my_customer" AND
+// space_type = "SPACE" AND (display_name:"Hello World" OR display_name:"Fun
+// event") AND (last_active_time > "2020-01-01T00:00:00+00:00" AND
+// last_active_time < "2022-01-01T00:00:00+00:00") customer =
+// "customers/my_customer" AND space_type = "SPACE" AND (create_time >
+// "2019-01-01T00:00:00+00:00" AND create_time < "2020-01-01T00:00:00+00:00")
+// AND (external_user_allowed = "true") AND (space_history_state = "HISTORY_ON"
+// OR space_history_state = "HISTORY_OFF") ```
+func (c *SpacesSearchCall) Query(query string) *SpacesSearchCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires either the
+// `chat.admin.spaces.readonly` or `chat.admin.spaces` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// This method currently only supports admin access, thus only `true` is
+// accepted for this field.
+func (c *SpacesSearchCall) UseAdminAccess(useAdminAccess bool) *SpacesSearchCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesSearchCall) Fields(s ...googleapi.Field) *SpacesSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SpacesSearchCall) IfNoneMatch(entityTag string) *SpacesSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesSearchCall) Context(ctx context.Context) *SpacesSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchSpacesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *SpacesSearchCall) Do(opts ...googleapi.CallOption) (*SearchSpacesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchSpacesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesSearchCall) Pages(ctx context.Context, f func(*SearchSpacesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type SpacesSetupCall struct {
@@ -6710,33 +7041,19 @@ type SpacesMembersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a human membership or app membership for the calling app.
-// Creating memberships for other apps isn't supported. For an example, see
-// Invite or add a user or a Google Chat app to a space
-// (https://developers.google.com/workspace/chat/create-members). When creating
-// a membership, if the specified member has their auto-accept policy turned
-// off, then they're invited, and must accept the space invitation before
-// joining. Otherwise, creating a membership adds the member directly to the
-// specified space. Requires user authentication
+// Create: Creates a membership for the calling Chat app, a user, or a Google
+// Group. Creating memberships for other Chat apps isn't supported. When
+// creating a membership, if the specified member has their auto-accept policy
+// turned off, then they're invited, and must accept the space invitation
+// before joining. Otherwise, creating a membership adds the member directly to
+// the specified space. Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// To specify the member to add, set the `membership.member.name` for the human
-// or app member, or set the `membership.group_member.name` for the group
-// member. - To add the calling app to a space or a direct message between two
-// human users, use `users/app`. Unable to add other apps to the space. - To
-// add a human user, use `users/{user}`, where `{user}` can be the email
-// address for the user. For users in the same Workspace organization `{user}`
-// can also be the `id` for the person from the People API, or the `id` for the
-// user in the Directory API. For example, if the People API Person profile ID
-// for `user@example.com` is `123456789`, you can add the user to the space by
-// setting the `membership.member.name` to `users/user@example.com` or
-// `users/123456789`. - To add or invite a Google group in a named space, use
-// `groups/{group}`, where `{group}` is the `id` for the group from the Cloud
-// Identity Groups API. For example, you can use Cloud Identity Groups lookup
-// API (https://cloud.google.com/identity/docs/reference/rest/v1/groups/lookup)
-// to retrieve the ID `123456789` for group email `group@example.com`, then you
-// can add or invite the group to a named space by setting the
-// `membership.group_member.name` to `groups/123456789`. Group email is not
-// supported, and Google groups can only be added as members in named spaces.
+// For example usage, see: - Invite or add a user to a space
+// (https://developers.google.com/workspace/chat/create-members#create-user-membership).
+// - Invite or add a Google Group to a space
+// (https://developers.google.com/workspace/chat/create-members#create-group-membership).
+// - Add the Chat app to a space
+// (https://developers.google.com/workspace/chat/create-members#create-membership-calling-api).
 //
 //   - parent: The resource name of the space for which to create the membership.
 //     Format: spaces/{space}.
@@ -6744,6 +7061,22 @@ func (r *SpacesMembersService) Create(parent string, membership *Membership) *Sp
 	c := &SpacesMembersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.membership = membership
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.memberships` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// Creating app memberships or creating memberships for users outside the
+// administrator's Google Workspace organization isn't supported using admin
+// access.
+func (c *SpacesMembersCreateCall) UseAdminAccess(useAdminAccess bool) *SpacesMembersCreateCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
 
@@ -6859,6 +7192,20 @@ func (r *SpacesMembersService) Delete(name string) *SpacesMembersDeleteCall {
 	return c
 }
 
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.memberships` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// Deleting app memberships in a space isn't supported using admin access.
+func (c *SpacesMembersDeleteCall) UseAdminAccess(useAdminAccess bool) *SpacesMembersDeleteCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6969,6 +7316,21 @@ type SpacesMembersGetCall struct {
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.memberships` or `chat.admin.memberships.readonly` OAuth 2.0
+// scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// Getting app memberships in a space isn't supported when using admin access.
+func (c *SpacesMembersGetCall) UseAdminAccess(useAdminAccess bool) *SpacesMembersGetCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
 
@@ -7157,6 +7519,21 @@ func (c *SpacesMembersListCall) ShowInvited(showInvited bool) *SpacesMembersList
 	return c
 }
 
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires either the
+// `chat.admin.memberships.readonly` or `chat.admin.memberships` OAuth 2.0
+// scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+// Listing app memberships in a space isn't supported when using admin access.
+func (c *SpacesMembersListCall) UseAdminAccess(useAdminAccess bool) *SpacesMembersListCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -7296,6 +7673,19 @@ func (r *SpacesMembersService) Patch(name string, membership *Membership) *Space
 // all field paths. Currently supported field paths: - `role`
 func (c *SpacesMembersPatchCall) UpdateMask(updateMask string) *SpacesMembersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
+// Preview (https://developers.google.com/workspace/preview). When `true`, the
+// method runs using the user's Google Workspace administrator privileges. The
+// calling user must be a Google Workspace administrator with the manage chat
+// and spaces conversations privilege
+// (https://support.google.com/a/answer/13369245). Requires the
+// `chat.admin.memberships` OAuth 2.0 scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
+func (c *SpacesMembersPatchCall) UseAdminAccess(useAdminAccess bool) *SpacesMembersPatchCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
 
@@ -7798,8 +8188,12 @@ type SpacesMessagesListCall struct {
 }
 
 // List: Lists messages in a space that the caller is a member of, including
-// messages from blocked members and spaces. For an example, see List messages
-// (/chat/api/guides/v1/messages/list). Requires user authentication
+// messages from blocked members and spaces. If you list messages from a space
+// with no messages, the response is an empty object. When using a REST/HTTP
+// interface, the response contains an empty JSON object, `{}`. For an example,
+// see List messages
+// (https://developers.google.com/workspace/chat/api/guides/v1/messages/list).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - parent: The resource name of the space to list messages from. Format:

@@ -215,6 +215,8 @@ type BuildingInsights struct {
 	// high-altitude and processed at 0.25 m/pixel.
 	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
 	// 0.25 m/pixel.
+	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
+	// at 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// Name: The resource name for the building, of the format `building/`.
 	Name string `json:"name,omitempty"`
@@ -359,6 +361,8 @@ type DataLayers struct {
 	// high-altitude and processed at 0.25 m/pixel.
 	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
 	// 0.25 m/pixel.
+	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
+	// at 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// MaskUrl: The URL for the building mask image: one bit per pixel saying
 	// whether that pixel is considered to be part of a rooftop or not.
@@ -1210,6 +1214,20 @@ func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall
 	return c
 }
 
+// Experiments sets the optional parameter "experiments": Specifies the pre-GA
+// features to enable.
+//
+// Possible values:
+//
+//	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
+//	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
+//
+// solar data.
+func (c *BuildingInsightsFindClosestCall) Experiments(experiments ...string) *BuildingInsightsFindClosestCall {
+	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
+	return c
+}
+
 // LocationLatitude sets the optional parameter "location.latitude": The
 // latitude in degrees. It must be in the range [-90.0, +90.0].
 func (c *BuildingInsightsFindClosestCall) LocationLatitude(locationLatitude float64) *BuildingInsightsFindClosestCall {
@@ -1243,6 +1261,10 @@ func (c *BuildingInsightsFindClosestCall) LocationLongitude(locationLongitude fl
 //	"LOW" - Solar data is derived from enhanced satellite imagery processed at
 //
 // 0.25 m/pixel.
+//
+//	"BASE" - Solar data is derived from enhanced satellite imagery processed
+//
+// at 0.25 m/pixel.
 func (c *BuildingInsightsFindClosestCall) RequiredQuality(requiredQuality string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c
@@ -1362,6 +1384,20 @@ func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *Dat
 	return c
 }
 
+// Experiments sets the optional parameter "experiments": Specifies the pre-GA
+// experiments to enable.
+//
+// Possible values:
+//
+//	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
+//	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
+//
+// solar data.
+func (c *DataLayersGetCall) Experiments(experiments ...string) *DataLayersGetCall {
+	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
+	return c
+}
+
 // LocationLatitude sets the optional parameter "location.latitude": The
 // latitude in degrees. It must be in the range [-90.0, +90.0].
 func (c *DataLayersGetCall) LocationLatitude(locationLatitude float64) *DataLayersGetCall {
@@ -1420,6 +1456,10 @@ func (c *DataLayersGetCall) RadiusMeters(radiusMeters float64) *DataLayersGetCal
 //	"LOW" - Solar data is derived from enhanced satellite imagery processed at
 //
 // 0.25 m/pixel.
+//
+//	"BASE" - Solar data is derived from enhanced satellite imagery processed
+//
+// at 0.25 m/pixel.
 func (c *DataLayersGetCall) RequiredQuality(requiredQuality string) *DataLayersGetCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c

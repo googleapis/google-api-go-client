@@ -2431,6 +2431,10 @@ func (s GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponse) MarshalJS
 // GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetadata
 // : The metadata of a Document.
 type GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetadata struct {
+	// DataIngestionSource: The data ingestion source of the Document. Allowed
+	// values are: * `batch`: Data ingested via Batch API, e.g., ImportDocuments. *
+	// `streaming` Data ingested via Streaming API, e.g., FHIR streaming.
+	DataIngestionSource string `json:"dataIngestionSource,omitempty"`
 	// LastRefreshedTime: The timestamp of the last time the Document was last
 	// indexed.
 	LastRefreshedTime string `json:"lastRefreshedTime,omitempty"`
@@ -2445,15 +2449,15 @@ type GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetada
 	// is not in the TargetSite.
 	//   "STATUS_NOT_IN_INDEX" - The Document is not indexed.
 	Status string `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LastRefreshedTime") to
+	// ForceSendFields is a list of field names (e.g. "DataIngestionSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LastRefreshedTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DataIngestionSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2466,17 +2470,21 @@ func (s GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMet
 // GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetadata
 // MatcherValue: The value of the matcher that was used to match the Document.
 type GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue struct {
+	// FhirResource: Required. Format:
+	// projects/{project}/locations/{location}/datasets/{dataset}/fhirStores/{fhir_s
+	// tore}/fhir/{resource_type}/{fhir_resource_id}
+	FhirResource string `json:"fhirResource,omitempty"`
 	// Uri: If match by URI, the URI of the Document.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "FhirResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Uri") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "FhirResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3908,6 +3916,8 @@ type GoogleCloudDiscoveryengineV1CustomTuningModel struct {
 	//   "TRAINING_FAILED" - The model training failed.
 	//   "NO_IMPROVEMENT" - The model training finished successfully but metrics
 	// did not improve.
+	//   "INPUT_VALIDATION_FAILED" - Input data validation failed. Model training
+	// didn't start.
 	ModelState string `json:"modelState,omitempty"`
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
@@ -7618,7 +7628,8 @@ func (s GoogleCloudDiscoveryengineV1SearchRequestSpellCorrectionSpec) MarshalJSO
 type GoogleCloudDiscoveryengineV1SearchResponse struct {
 	// AttributionToken: A unique search token. This should be included in the
 	// UserEvent logs resulting from this search, which enables accurate
-	// attribution of search model performance.
+	// attribution of search model performance. This also helps to identify a
+	// request during the customer support scenarios.
 	AttributionToken string `json:"attributionToken,omitempty"`
 	// CorrectedQuery: Contains the spell corrected query, if found. If the spell
 	// correction type is AUTOMATIC, then the search results are based on
@@ -10001,6 +10012,8 @@ type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
 	//   "TRAINING_FAILED" - The model training failed.
 	//   "NO_IMPROVEMENT" - The model training finished successfully but metrics
 	// did not improve.
+	//   "INPUT_VALIDATION_FAILED" - Input data validation failed. Model training
+	// didn't start.
 	ModelState string `json:"modelState,omitempty"`
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
@@ -14352,6 +14365,8 @@ type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
 	//   "TRAINING_FAILED" - The model training failed.
 	//   "NO_IMPROVEMENT" - The model training finished successfully but metrics
 	// did not improve.
+	//   "INPUT_VALIDATION_FAILED" - Input data validation failed. Model training
+	// didn't start.
 	ModelState string `json:"modelState,omitempty"`
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
@@ -18953,6 +18968,16 @@ type ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall
 func (r *ProjectsLocationsCollectionsDataStoresBranchesService) BatchGetDocumentsMetadata(parent string) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
 	c := &ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// MatcherFhirMatcherFhirResources sets the optional parameter
+// "matcher.fhirMatcher.fhirResources": Required. The FHIR resources to match
+// by. Format:
+// projects/{project}/locations/{location}/datasets/{dataset}/fhirStores/{fhir_s
+// tore}/fhir/{resource_type}/{fhir_resource_id}
+func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall) MatcherFhirMatcherFhirResources(matcherFhirMatcherFhirResources ...string) *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.SetMulti("matcher.fhirMatcher.fhirResources", append([]string{}, matcherFhirMatcherFhirResources...))
 	return c
 }
 
@@ -31076,6 +31101,16 @@ type ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall struct {
 func (r *ProjectsLocationsDataStoresBranchesService) BatchGetDocumentsMetadata(parent string) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
 	c := &ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// MatcherFhirMatcherFhirResources sets the optional parameter
+// "matcher.fhirMatcher.fhirResources": Required. The FHIR resources to match
+// by. Format:
+// projects/{project}/locations/{location}/datasets/{dataset}/fhirStores/{fhir_s
+// tore}/fhir/{resource_type}/{fhir_resource_id}
+func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) MatcherFhirMatcherFhirResources(matcherFhirMatcherFhirResources ...string) *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall {
+	c.urlParams_.SetMulti("matcher.fhirMatcher.fhirResources", append([]string{}, matcherFhirMatcherFhirResources...))
 	return c
 }
 

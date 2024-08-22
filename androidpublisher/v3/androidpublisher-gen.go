@@ -2652,6 +2652,30 @@ func (s ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalOfferInitialAcquisitionDetails: Details about the first time a
+// user/device completed a transaction using external offers.
+type ExternalOfferInitialAcquisitionDetails struct {
+	// ExternalTransactionId: Required. The external transaction id of the first
+	// completed purchase made by the user.
+	ExternalTransactionId string `json:"externalTransactionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalTransactionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalTransactionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalOfferInitialAcquisitionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalOfferInitialAcquisitionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalSubscription: Details of an external subscription.
 type ExternalSubscription struct {
 	// SubscriptionType: Required. The type of the external subscription.
@@ -2693,6 +2717,11 @@ type ExternalTransaction struct {
 	// current tax amount including any refunds that may have been applied to this
 	// transaction.
 	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
+	// ExternalOfferInitialAcquisitionDetails: Optional. Details about the first
+	// time a user/device completed a transaction using external offers. Not
+	// required for transactions made using user choice billing or alternative
+	// billing only.
+	ExternalOfferInitialAcquisitionDetails *ExternalOfferInitialAcquisitionDetails `json:"externalOfferInitialAcquisitionDetails,omitempty"`
 	// ExternalTransactionId: Output only. The id of this transaction. All
 	// transaction ids under the same package name must be unique. Set when
 	// creating the external transaction.

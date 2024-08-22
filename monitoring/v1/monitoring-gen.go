@@ -1411,7 +1411,7 @@ type HttpBody struct {
 	// of the body.
 	ContentType string `json:"contentType,omitempty"`
 	// Data: The HTTP request/response body as raw binary.
-	Data string `json:"data,omitempty"`
+	Data any `json:"data,omitempty"`
 	// Extensions: Application specific response metadata. Must be set in the first
 	// response for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`

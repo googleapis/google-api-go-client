@@ -1587,6 +1587,14 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			typ = "*" + typ
 		}
 
+		// HACK(chrisdsmith) Hardcodes HttpBody.Data to the Go type "any" only
+		// for monitoring:v1 in order to avoid errors with JSON objects in the responses.
+		// (json: cannot unmarshal object into Go struct field HttpBody.data of type string)
+		// See https://github.com/googleapis/google-api-go-client/issues/2304
+		if s.api.Name == "monitoring" && s.api.Version == "v1" && s.GoName() == "HttpBody" && pname == "Data" {
+			typ = "any"
+		}
+
 		s.api.pn(" %s %s `json:\"%s,omitempty%s\"`", pname, typ, p.p.Name, extraOpt)
 		if firstFieldName == "" {
 			firstFieldName = pname

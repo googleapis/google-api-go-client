@@ -1,5 +1,17 @@
 # Changes
 
+## [0.194.0](https://github.com/googleapis/google-api-go-client/compare/v0.193.0...v0.194.0) (2024-08-22)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2746](https://github.com/googleapis/google-api-go-client/issues/2746)) ([5d61f08](https://github.com/googleapis/google-api-go-client/commit/5d61f08943c359fa97c9764f9e7e6592894b251e))
+
+
+### Bug Fixes
+
+* **gen:** Change HttpBody.Data from string to any for monitoring:v1 ([#2744](https://github.com/googleapis/google-api-go-client/issues/2744)) ([eda6a59](https://github.com/googleapis/google-api-go-client/commit/eda6a594194b59d5089c3bfbe52bd125a542da4e)), refs [#2304](https://github.com/googleapis/google-api-go-client/issues/2304)
+
 ## [0.193.0](https://github.com/googleapis/google-api-go-client/compare/v0.192.0...v0.193.0) (2024-08-20)
 
 

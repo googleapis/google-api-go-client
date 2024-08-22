@@ -1337,25 +1337,7 @@ func (s EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, erro
 }
 
 // Entitlement:  *Deprecated:* New integrations cannot use this method and can
-// refer to our new recommendations. The presence of an Entitlements resource
-// indicates that a user has the right to use a particular app. Entitlements
-// are user specific, not device specific. This allows a user with an
-// entitlement to an app to install the app on all their devices. It's also
-// possible for a user to hold an entitlement to an app without installing the
-// app on any device. The API can be used to create an entitlement. As an
-// option, you can also use the API to trigger the installation of an app on
-// all a user's managed devices at the same time the entitlement is created. If
-// the app is free, creating the entitlement also creates a group license for
-// that app. For paid apps, creating the entitlement consumes one license, and
-// that license remains consumed until the entitlement is removed. If the
-// enterprise hasn't purchased enough licenses, then no entitlement is created
-// and the installation fails. An entitlement is also not created for an app if
-// the app requires permissions that the enterprise hasn't accepted. If an
-// entitlement is deleted, the app may be uninstalled from a user's device. As
-// a best practice, uninstall the app by calling Installs.delete() before
-// deleting the entitlement. Entitlements for apps that a user pays for on an
-// unmanaged profile have "userPurchase" as the entitlement reason. These
-// entitlements cannot be removed via the API.
+// refer to our new recommendations.
 type Entitlement struct {
 	// ProductId: The ID of the product that the entitlement is for. For example,
 	// "app:com.google.android.gm".
@@ -1452,20 +1434,7 @@ func (s GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
 }
 
 // GroupLicense:  *Deprecated:* New integrations cannot use this method and can
-// refer to our new recommendations. Group license objects allow you to keep
-// track of licenses (called entitlements) for both free and paid apps. For a
-// free app, a group license is created when an enterprise admin first approves
-// the product in Google Play or when the first entitlement for the product is
-// created for a user via the API. For a paid app, a group license object is
-// only created when an enterprise admin purchases the product in Google Play
-// for the first time. Use the API to query group licenses. A Grouplicenses
-// resource includes the total number of licenses purchased (paid apps only)
-// and the total number of licenses currently in use. In other words, the total
-// number of Entitlements that exist for the product. Only one group license
-// object is created per product and group license objects are never deleted.
-// If a product is unapproved, its group license remains. This allows
-// enterprise admins to keep track of any remaining entitlements for the
-// product.
+// refer to our new recommendations
 type GroupLicense struct {
 	// AcquisitionKind: How this group license was acquired. "bulkPurchase" means
 	// that this Grouplicenses resource was created because the enterprise
@@ -1801,10 +1770,7 @@ func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 }
 
 // ManagedConfiguration:  *Deprecated:* New integrations cannot use this method
-// and can refer to our new recommendations. A managed configuration resource
-// contains the set of managed properties defined by the app developer in the
-// app's managed configurations schema, as well as any configuration variables
-// defined for the user.
+// and can refer to our new recommendations
 type ManagedConfiguration struct {
 	// ConfigurationVariables: Contains the ID of the managed configuration profile
 	// and the set of configuration variables (if any) defined for the user.
@@ -2872,8 +2838,7 @@ func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceAccountKey:  *Deprecated:* New integrations cannot use this method
-// and can refer to our new recommendations. Credentials that can be used to
-// authenticate as a service account.
+// and can refer to our new recommendations
 type ServiceAccountKey struct {
 	// Data: The body of the private key credentials file, in string format. This
 	// is only populated when the ServiceAccountKey is created, and is not stored

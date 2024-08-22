@@ -175,6 +175,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ImportJobs = NewProjectsLocationsImportJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.PreferenceSets = NewProjectsLocationsPreferenceSetsService(s)
+	rs.Relations = NewProjectsLocationsRelationsService(s)
 	rs.ReportConfigs = NewProjectsLocationsReportConfigsService(s)
 	rs.Sources = NewProjectsLocationsSourcesService(s)
 	return rs
@@ -196,6 +197,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	PreferenceSets *ProjectsLocationsPreferenceSetsService
+
+	Relations *ProjectsLocationsRelationsService
 
 	ReportConfigs *ProjectsLocationsReportConfigsService
 
@@ -274,6 +277,15 @@ func NewProjectsLocationsPreferenceSetsService(s *Service) *ProjectsLocationsPre
 }
 
 type ProjectsLocationsPreferenceSetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRelationsService(s *Service) *ProjectsLocationsRelationsService {
+	rs := &ProjectsLocationsRelationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRelationsService struct {
 	s *Service
 }
 
@@ -1039,6 +1051,9 @@ type BatchDeleteAssetsRequest struct {
 	// https://google.aip.dev/135#delete-if-existing for additional details.
 	// Default value is `false`.
 	AllowMissing bool `json:"allowMissing,omitempty"`
+	// CascadingRules: Optional. Optional cascading rules for deleting related
+	// assets.
+	CascadingRules []*CascadingRule `json:"cascadingRules,omitempty"`
 	// Names: Required. The IDs of the assets to delete. A maximum of 1000 assets
 	// can be deleted in a batch. Format:
 	// projects/{project}/locations/{location}/assets/{name}.
@@ -1142,6 +1157,32 @@ func (s BiosDetails) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CascadeLogicalDBsRule: Cascading rule for related logical DBs.
+type CascadeLogicalDBsRule struct {
+}
+
+// CascadingRule: Specifies cascading rules for traversing relations.
+type CascadingRule struct {
+	// CascadeLogicalDbs: Cascading rule for related logical DBs.
+	CascadeLogicalDbs *CascadeLogicalDBsRule `json:"cascadeLogicalDbs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CascadeLogicalDbs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CascadeLogicalDbs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CascadingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CascadingRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudDatabaseMigrationTarget: Cloud database migration target.
@@ -3934,6 +3975,34 @@ func (s ListPreferenceSetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListRelationsResponse: Response message for listing relations.
+type ListRelationsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Relations: A list of relations.
+	Relations []*Relation `json:"relations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRelationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRelationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListReportConfigsResponse: Response message for listing report configs.
 type ListReportConfigsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
@@ -5165,6 +5234,45 @@ type RegionPreferences struct {
 
 func (s RegionPreferences) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionPreferences
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Relation: Message representing a relation between 2 resource.
+type Relation struct {
+	// CreateTime: Output only. The timestamp when the relation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DstAsset: Output only. The destination asset name in the relation.
+	DstAsset string `json:"dstAsset,omitempty"`
+	// Name: Output only. Identifier. The identifier of the relation.
+	Name string `json:"name,omitempty"`
+	// SrcAsset: Output only. The source asset name in the relation.
+	SrcAsset string `json:"srcAsset,omitempty"`
+	// Type: Optional. The type of the relation.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "LOGICAL_DATABASE" - DBDeployment -> Database
+	//   "DATABASE_DEPLOYMENT_HOSTING_SERVER" - A relation between a machine/VM and
+	// the database deployment it hosts.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Relation) MarshalJSON() ([]byte, error) {
+	type NoMethod Relation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13374,6 +13482,270 @@ func (c *ProjectsLocationsPreferenceSetsPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsRelationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of an relation.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsRelationsService) Get(name string) *ProjectsLocationsRelationsGetCall {
+	c := &ProjectsLocationsRelationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRelationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRelationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRelationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRelationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRelationsGetCall) Context(ctx context.Context) *ProjectsLocationsRelationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRelationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRelationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.relations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Relation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRelationsGetCall) Do(opts ...googleapi.CallOption) (*Relation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Relation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRelationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the relations in a given project and location.
+//
+// - parent: Parent value for `ListRelationsRequest`.
+func (r *ProjectsLocationsRelationsService) List(parent string) *ProjectsLocationsRelationsListCall {
+	c := &ProjectsLocationsRelationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results.
+func (c *ProjectsLocationsRelationsListCall) Filter(filter string) *ProjectsLocationsRelationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsRelationsListCall) OrderBy(orderBy string) *ProjectsLocationsRelationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsRelationsListCall) PageSize(pageSize int64) *ProjectsLocationsRelationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsRelationsListCall) PageToken(pageToken string) *ProjectsLocationsRelationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRelationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRelationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRelationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRelationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRelationsListCall) Context(ctx context.Context) *ProjectsLocationsRelationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRelationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRelationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/relations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.relations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRelationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRelationsListCall) Do(opts ...googleapi.CallOption) (*ListRelationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRelationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRelationsListCall) Pages(ctx context.Context, f func(*ListRelationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsReportConfigsCreateCall struct {

@@ -38,8 +38,14 @@ import (
 	_ "google.golang.org/grpc/balancer/grpclb"
 )
 
-// Check env to disable DirectPath traffic.
-const disableDirectPath = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH"
+const (
+	// Check env to disable DirectPath traffic.
+	disableDirectPath = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH"
+
+	// 3 minutes and 45 seconds before expiration. The shortest MDS cache is 4 minutes,
+	// so we give it 15 seconds to refresh it's cache before attempting to refresh a token.
+	newAuthDefaultExpiryDelta = 225 * time.Second
+)
 
 // Check env to decide if using google-c2p resolver for DirectPath traffic.
 const enableDirectPathXds = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS"
@@ -231,10 +237,11 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		Credentials:           creds,
 		APIKey:                ds.APIKey,
 		DetectOpts: &credentials.DetectOptions{
-			Scopes:          ds.Scopes,
-			Audience:        aud,
-			CredentialsFile: ds.CredentialsFile,
-			CredentialsJSON: ds.CredentialsJSON,
+			Scopes:            ds.Scopes,
+			Audience:          aud,
+			CredentialsFile:   ds.CredentialsFile,
+			CredentialsJSON:   ds.CredentialsJSON,
+			EarlyTokenRefresh: newAuthDefaultExpiryDelta,
 		},
 		InternalOptions: &grpctransport.InternalOptions{
 			EnableNonDefaultSAForDirectPath: ds.AllowNonDefaultServiceAccount,

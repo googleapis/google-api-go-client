@@ -425,7 +425,7 @@ type AdaptiveMtTranslateRequest struct {
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
 	// within the same region (have the same location-id) as the model, otherwise
 	// an INVALID_ARGUMENT (400) error is returned.
-	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+	GlossaryConfig *GlossaryConfig `json:"glossaryConfig,omitempty"`
 	// ReferenceSentenceConfig: Configuration for caller provided reference
 	// sentences.
 	ReferenceSentenceConfig *ReferenceSentenceConfig `json:"referenceSentenceConfig,omitempty"`
@@ -1052,7 +1052,7 @@ type Empty struct {
 type Example struct {
 	// Name: Output only. The resource name of the example, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
-	// }/examples/{example_id}'
+	// }/examples/{example_id}`
 	Name string `json:"name,omitempty"`
 	// SourceText: Sentence in source language.
 	SourceText string `json:"sourceText,omitempty"`
@@ -1267,12 +1267,41 @@ func (s Glossary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GlossaryConfig: Configures which glossary is used for a specific target
+// language and defines options for applying that glossary.
+type GlossaryConfig struct {
+	// Glossary: Required. The `glossary` to be applied for this translation. The
+	// format depends on the glossary: - User-provided custom glossary:
+	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary
+	// -id}`
+	Glossary string `json:"glossary,omitempty"`
+	// IgnoreCase: Optional. Indicates match is case insensitive. The default value
+	// is `false` if missing.
+	IgnoreCase bool `json:"ignoreCase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Glossary") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Glossary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GlossaryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GlossaryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GlossaryEntry: Represents a single entry in a glossary.
 type GlossaryEntry struct {
 	// Description: Describes the glossary entry.
 	Description string `json:"description,omitempty"`
 	// Name: Identifier. The resource name of the entry. Format:
-	// "projects/*/locations/*/glossaries/*/glossaryEntries/*"
+	// `projects/*/locations/*/glossaries/*/glossaryEntries/*`
 	Name string `json:"name,omitempty"`
 	// TermsPair: Used for an unidirectional glossary.
 	TermsPair *GlossaryTermsPair `json:"termsPair,omitempty"`
@@ -7349,7 +7378,7 @@ type ProjectsLocationsGlossariesGlossaryEntriesPatchCall struct {
 // Patch: Updates a glossary entry.
 //
 //   - name: Identifier. The resource name of the entry. Format:
-//     "projects/*/locations/*/glossaries/*/glossaryEntries/*".
+//     `projects/*/locations/*/glossaries/*/glossaryEntries/*`.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Patch(name string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

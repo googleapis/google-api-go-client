@@ -1127,9 +1127,6 @@ type BackupVault struct {
 	// EffectiveTime: Optional. Time after which the BackupVault resource is
 	// locked.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
-	// EnforcedRetentionDuration: Required. The default retention period for each
-	// backup in the backup vault (Deprecated).
-	EnforcedRetentionDuration string `json:"enforcedRetentionDuration,omitempty"`
 	// Etag: Optional. Server specified ETag for the backup vault resource to
 	// prevent simultaneous updates from overwiting each other.
 	Etag string `json:"etag,omitempty"`

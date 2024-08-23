@@ -443,6 +443,9 @@ type ApprovalRequest struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: The time at which approval was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// RequestedAugmentedInfo: This field contains the augmented information of the
+	// request.
+	RequestedAugmentedInfo *AugmentedInfo `json:"requestedAugmentedInfo,omitempty"`
 	// RequestedDuration: The requested access duration.
 	RequestedDuration string `json:"requestedDuration,omitempty"`
 	// RequestedExpiration: The original requested expiration for the approval.
@@ -536,6 +539,30 @@ type ApproveDecision struct {
 
 func (s ApproveDecision) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveDecision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AugmentedInfo: This field contains the augmented information of the request.
+type AugmentedInfo struct {
+	// Command: For command-line tools, the full command-line exactly as entered by
+	// the actor without adding any additional characters (such as quotation
+	// marks).
+	Command string `json:"command,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Command") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AugmentedInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AugmentedInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

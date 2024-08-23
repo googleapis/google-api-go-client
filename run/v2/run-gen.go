@@ -2337,6 +2337,8 @@ type GoogleCloudRunV2Service struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Uri: Output only. The main URI in which this Service is serving traffic.
 	Uri string `json:"uri,omitempty"`
+	// Urls: Output only. All URLs serving traffic for this Service.
+	Urls []string `json:"urls,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -14633,9 +14633,12 @@ func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string)
 // of restrictions implicitly uses `AND`. * A restriction has the form of
 // `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
 // The Google Cloud project ID. - `file_store_path` - The path like
-// "gs://bucket". - `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level`
-// - HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
-// `status_code` - an RPC status code as defined in
+// "gs://bucket". - `data_source_type` - The profile's data source type, like
+// "google/storage/bucket". - `data_storage_location` - The location where the
+// file store's data is stored, like "us-central1". - `sensitivity_level` -
+// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
+// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
+// code as defined in
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
@@ -24673,9 +24676,12 @@ func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *Pro
 // of restrictions implicitly uses `AND`. * A restriction has the form of
 // `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
 // The Google Cloud project ID. - `file_store_path` - The path like
-// "gs://bucket". - `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level`
-// - HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
-// `status_code` - an RPC status code as defined in
+// "gs://bucket". - `data_source_type` - The profile's data source type, like
+// "google/storage/bucket". - `data_storage_location` - The location where the
+// file store's data is stored, like "us-central1". - `sensitivity_level` -
+// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
+// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
+// code as defined in
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *

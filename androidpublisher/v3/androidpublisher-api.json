@@ -741,7 +741,8 @@
               ],
               "parameters": {
                 "ackBundleInstallationWarning": {
-                  "description": "Must be set to true if the app bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
+                  "deprecated": true,
+                  "description": "Deprecated. The installation warning has been removed, it's not necessary to set this field anymore.",
                   "location": "query",
                   "type": "boolean"
                 },
@@ -4731,7 +4732,7 @@
       }
     }
   },
-  "revision": "20240820",
+  "revision": "20240821",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {

@@ -9628,9 +9628,8 @@ func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBu
 }
 
 // AckBundleInstallationWarning sets the optional parameter
-// "ackBundleInstallationWarning": Must be set to true if the app bundle
-// installation may trigger a warning on user devices (for example, if
-// installation size may be over a threshold, typically 100 MB).
+// "ackBundleInstallationWarning": Deprecated. The installation warning has
+// been removed, it's not necessary to set this field anymore.
 func (c *EditsBundlesUploadCall) AckBundleInstallationWarning(ackBundleInstallationWarning bool) *EditsBundlesUploadCall {
 	c.urlParams_.Set("ackBundleInstallationWarning", fmt.Sprint(ackBundleInstallationWarning))
 	return c

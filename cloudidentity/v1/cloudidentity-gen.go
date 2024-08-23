@@ -4309,7 +4309,7 @@ func (c *DevicesListCall) PageToken(pageToken string) *DevicesListCall {
 //
 // company admin. Each device in the response contains all information
 // specified by the company admin when importing the device (i.e. asset tags).
-// This includes devices that may be unaassigned or assigned to users.
+// This includes devices that may be unassigned or assigned to users.
 //
 //	"USER_ASSIGNED_DEVICES" - This view contains all devices with at least one
 //

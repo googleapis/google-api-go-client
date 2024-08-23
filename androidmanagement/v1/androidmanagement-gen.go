@@ -6134,6 +6134,8 @@ func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 type TelephonyInfo struct {
 	// CarrierName: The carrier name associated with this SIM card.
 	CarrierName string `json:"carrierName,omitempty"`
+	// IccId: Output only. The ICCID associated with this SIM card.
+	IccId string `json:"iccId,omitempty"`
 	// PhoneNumber: The phone number associated with this SIM card.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CarrierName") to

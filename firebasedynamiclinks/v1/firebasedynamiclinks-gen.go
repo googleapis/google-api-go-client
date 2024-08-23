@@ -544,6 +544,8 @@ func (s DynamicLinkInfo) MarshalJSON() ([]byte, error) {
 type DynamicLinkStats struct {
 	// LinkEventStats: Dynamic Link event stats.
 	LinkEventStats []*DynamicLinkEventStat `json:"linkEventStats,omitempty"`
+	// Warnings: Optional warnings associated this API request.
+	Warnings []*DynamicLinkWarning `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -602,8 +604,8 @@ type DynamicLinkWarning struct {
 	//   "BAD_DEBUG_PARAM" - Debug param format is incorrect.
 	//   "BAD_AD_PARAM" - isAd param format is incorrect.
 	//   "DEPRECATED_PARAM" - Indicates a certain param is deprecated.
-	//   "UNRECOGNIZED_PARAM" - Indicates certain paramater is not recognized.
-	//   "TOO_LONG_PARAM" - Indicates certain paramater is too long.
+	//   "UNRECOGNIZED_PARAM" - Indicates certain parameter is not recognized.
+	//   "TOO_LONG_PARAM" - Indicates certain parameter is too long.
 	//   "NOT_URI_SOCIAL_IMAGE_LINK" - Social meta tag image link is not a valid
 	// URI.
 	//   "BAD_URI_SCHEME_SOCIAL_IMAGE_LINK" - Social meta tag image link has an
@@ -614,6 +616,7 @@ type DynamicLinkWarning struct {
 	//   "LINK_WITH_FRAGMENTS" - Dynamic Link URL contains fragments.
 	//   "NOT_MATCHING_IOS_BUNDLE_ID_AND_STORE_ID" - The iOS bundle ID does not
 	// match with the given iOS store ID.
+	//   "API_DEPRECATED" - The API is deprecated.
 	WarningCode string `json:"warningCode,omitempty"`
 	// WarningDocumentLink: The document describing the warning, and helps resolve.
 	WarningDocumentLink string `json:"warningDocumentLink,omitempty"`
@@ -853,6 +856,8 @@ type GetIosReopenAttributionResponse struct {
 	UtmSource string `json:"utmSource,omitempty"`
 	// UtmTerm: Scion term value to be propagated by iSDK to Scion at app-reopen.
 	UtmTerm string `json:"utmTerm,omitempty"`
+	// Warning: Optional warnings associated this API request.
+	Warning []*DynamicLinkWarning `json:"warning,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -989,8 +994,7 @@ type ManagedShortLink struct {
 	// Possible values:
 	//   "UNSPECIFIED_ATTRIBUTE" - Indicates that no attributes were found for this
 	// short url.
-	//   "SPAM" - Indicates that short url has been flagged by AbuseIAm team as
-	// spam.
+	//   "SPAM" - Indicates that short url has been flagged as spam.
 	FlaggedAttribute []string `json:"flaggedAttribute,omitempty"`
 	// Info: Full Dyamic Link info
 	Info *DynamicLinkInfo `json:"info,omitempty"`

@@ -6013,6 +6013,12 @@ type StreamingConfigTask struct {
 	StreamingComputationConfigs []*StreamingComputationConfig `json:"streamingComputationConfigs,omitempty"`
 	// UserStepToStateFamilyNameMap: Map from user step names to state families.
 	UserStepToStateFamilyNameMap map[string]string `json:"userStepToStateFamilyNameMap,omitempty"`
+	// UserWorkerRunnerV1Settings: Binary encoded proto to control runtime behavior
+	// of the java runner v1 user worker.
+	UserWorkerRunnerV1Settings string `json:"userWorkerRunnerV1Settings,omitempty"`
+	// UserWorkerRunnerV2Settings: Binary encoded proto to control runtime behavior
+	// of the runner v2 user worker.
+	UserWorkerRunnerV2Settings string `json:"userWorkerRunnerV2Settings,omitempty"`
 	// WindmillServiceEndpoint: If present, the worker must use this endpoint to
 	// communicate with Windmill Service dispatchers, otherwise the worker must
 	// continue to use whatever endpoint it had been using.

@@ -938,10 +938,21 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "SOVEREIGN_CONTROLS_BY_SIA_MINSAIT" - Enum representing SIA_MINSAIT
 	// (Indra) partner.
 	//   "SOVEREIGN_CONTROLS_BY_PSN" - Enum representing PSN (TIM) partner.
+	//   "SOVEREIGN_CONTROLS_BY_CNTXT" - Enum representing CNTXT (Kingdom of Saudi
+	// Arabia) partner.
+	//   "SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM" - Enum representing CNTXT (Kingdom of
+	// Saudi Arabia) partner offering without EKM.
 	Partner string `json:"partner,omitempty"`
 	// PartnerPermissions: Optional. Permissions granted to the AW Partner SA
 	// account for the customer workload
 	PartnerPermissions *GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions `json:"partnerPermissions,omitempty"`
+	// PartnerServicesBillingAccount: Optional. Billing account necessary for
+	// purchasing services from Sovereign Partners. This field is required for
+	// creating SIA/PSN partner workloads. The caller should have
+	// 'billing.resourceAssociations.create' IAM permission on this
+	// billing-account. The format of this string is
+	// billingAccounts/AAAAAA-BBBBBB-CCCCCC
+	PartnerServicesBillingAccount string `json:"partnerServicesBillingAccount,omitempty"`
 	// ProvisionedResourcesParent: Input only. The parent resource for the
 	// resources managed by this Assured Workload. May be either empty or a folder
 	// resource which is a child of the Workload parent. If not specified all

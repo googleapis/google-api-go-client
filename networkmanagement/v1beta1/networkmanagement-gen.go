@@ -1168,6 +1168,12 @@ type Endpoint struct {
 	// provide is from the service project. In this case, the network that the IP
 	// address resides in is defined in the host project.
 	ProjectId string `json:"projectId,omitempty"`
+	// RedisCluster: A Redis Cluster
+	// (https://cloud.google.com/memorystore/docs/cluster) URI.
+	RedisCluster string `json:"redisCluster,omitempty"`
+	// RedisInstance: A Redis Instance
+	// (https://cloud.google.com/memorystore/docs/redis) URI.
+	RedisInstance string `json:"redisInstance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4825,10 +4831,10 @@ type ProjectsLocationsVpcFlowLogsConfigsCreateCall struct {
 // Create: Creates a new `VpcFlowLogsConfig`. If a configuration with the exact
 // same settings already exists (even if the ID is different), the creation
 // fails. Notes: 1. Creating a configuration with state=DISABLED will fail. 2.
-// The following fields are not considrered as `settings` for the purpose of
-// the check mentioned above, therefore - creating another configuration with
-// the same fields but different values for the following fields will fail as
-// well: - name - create_time - update_time - labels - description
+// The following fields are not considered as `settings` for the purpose of the
+// check mentioned above, therefore - creating another configuration with the
+// same fields but different values for the following fields will fail as well:
+// - name - create_time - update_time - labels - description
 //
 //   - parent: The parent resource of the VPC Flow Logs configuration to create:
 //     `projects/{project_id}/locations/global`.
@@ -5306,11 +5312,12 @@ type ProjectsLocationsVpcFlowLogsConfigsPatchCall struct {
 
 // Patch: Updates an existing `VpcFlowLogsConfig`. If a configuration with the
 // exact same settings already exists (even if the ID is different), the
-// creation fails. Notes: 1. The following fields are not considrered as
-// `settings` for the purpose of the check mentioned above, therefore -
-// updating another configuration with the same fields but different values for
-// the following fields will fail as well: - name - create_time - update_time -
-// labels - description
+// creation fails. Notes: 1. Updating a configuration with state=DISABLED will
+// fail. 2. The following fields are not considered as `settings` for the
+// purpose of the check mentioned above, therefore - updating another
+// configuration with the same fields but different values for the following
+// fields will fail as well: - name - create_time - update_time - labels -
+// description
 //
 //   - name: Identifier. Unique name of the configuration using the form:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c

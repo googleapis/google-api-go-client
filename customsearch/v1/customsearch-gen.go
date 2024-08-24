@@ -1118,6 +1118,14 @@ func (c *CseListCall) DateRestrict(dateRestrict string) *CseListCall {
 	return c
 }
 
+// EnableAlternateSearchHandler sets the optional parameter
+// "enableAlternateSearchHandler": Enables routing of Programmable Search
+// Engine requests to an alternate search handler.
+func (c *CseListCall) EnableAlternateSearchHandler(enableAlternateSearchHandler bool) *CseListCall {
+	c.urlParams_.Set("enableAlternateSearchHandler", fmt.Sprint(enableAlternateSearchHandler))
+	return c
+}
+
 // ExactTerms sets the optional parameter "exactTerms": Identifies a phrase
 // that all documents in the search results must contain.
 func (c *CseListCall) ExactTerms(exactTerms string) *CseListCall {
@@ -1580,6 +1588,14 @@ func (c *CseSiterestrictListCall) Cx(cx string) *CseSiterestrictListCall {
 // results from the specified number of past years.
 func (c *CseSiterestrictListCall) DateRestrict(dateRestrict string) *CseSiterestrictListCall {
 	c.urlParams_.Set("dateRestrict", dateRestrict)
+	return c
+}
+
+// EnableAlternateSearchHandler sets the optional parameter
+// "enableAlternateSearchHandler": Enables routing of Programmable Search
+// Engine requests to an alternate search handler.
+func (c *CseSiterestrictListCall) EnableAlternateSearchHandler(enableAlternateSearchHandler bool) *CseSiterestrictListCall {
+	c.urlParams_.Set("enableAlternateSearchHandler", fmt.Sprint(enableAlternateSearchHandler))
 	return c
 }
 

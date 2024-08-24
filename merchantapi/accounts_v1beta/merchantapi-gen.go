@@ -614,6 +614,10 @@ type BusinessInfo struct {
 	Address *PostalAddress `json:"address,omitempty"`
 	// CustomerService: Optional. The customer service of the business.
 	CustomerService *CustomerService `json:"customerService,omitempty"`
+	// KoreanBusinessRegistrationNumber: Optional. The 10-digit Korean business
+	// registration number (https://support.google.com/merchants/answer/9037766)
+	// separated with dashes in the format: XXX-XX-XXXXX.
+	KoreanBusinessRegistrationNumber string `json:"koreanBusinessRegistrationNumber,omitempty"`
 	// Name: Identifier. The resource name of the business info. Format:
 	// `accounts/{account}/businessInfo`
 	Name string `json:"name,omitempty"`

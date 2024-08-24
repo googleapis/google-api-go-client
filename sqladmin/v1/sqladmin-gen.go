@@ -770,6 +770,11 @@ type CloneContext struct {
 	// PointInTime: Timestamp, if specified, identifies the time to which the
 	// source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
+	// PreferredSecondaryZone: Optional. Copy clone and point-in-time recovery
+	// clone of a regional instance in the specified zones. If not specified, clone
+	// to the same secondary zone as the source instance. This value cannot be the
+	// same as the preferred_zone field. This field applies to all DB types.
+	PreferredSecondaryZone string `json:"preferredSecondaryZone,omitempty"`
 	// PreferredZone: Optional. Copy clone and point-in-time recovery clone of an
 	// instance to the specified zone. If no zone is specified, clone to the same
 	// primary zone as the source instance. This field applies to all DB types.
@@ -871,8 +876,6 @@ type ConnectSettings struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
-	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
-	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1118,8 +1121,6 @@ type DatabaseInstance struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
-	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
-	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1898,8 +1899,6 @@ type Flag struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
-	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
-	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -4671,9 +4670,11 @@ type User struct {
 	//   "BUILT_IN" - The database's built-in user type.
 	//   "CLOUD_IAM_USER" - Cloud IAM user.
 	//   "CLOUD_IAM_SERVICE_ACCOUNT" - Cloud IAM service account.
-	//   "CLOUD_IAM_GROUP" - Cloud IAM group non-login user.
-	//   "CLOUD_IAM_GROUP_USER" - Cloud IAM group login user.
-	//   "CLOUD_IAM_GROUP_SERVICE_ACCOUNT" - Cloud IAM group login service account.
+	//   "CLOUD_IAM_GROUP" - Cloud IAM group. Not used for login.
+	//   "CLOUD_IAM_GROUP_USER" - Read-only. Login for a user that belongs to the
+	// Cloud IAM group.
+	//   "CLOUD_IAM_GROUP_SERVICE_ACCOUNT" - Read-only. Login for a service account
+	// that belongs to the Cloud IAM group.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -800,6 +800,12 @@ type Instance struct {
 	PlatformEdition string `json:"platformEdition,omitempty"`
 	// PrivateIpEnabled: Whether private IP is enabled on the Looker instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`
+	// PscConfig: Optional. PSC configuration. Used when `psc_enabled` is true.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
+	// PscEnabled: Optional. Whether to use Private Service Connect (PSC) for
+	// private IP connectivity. If true, neither `public_ip_enabled` nor
+	// `private_ip_enabled` can be true.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
 	// PublicIpEnabled: Whether public IP is enabled on the Looker instance.
 	PublicIpEnabled bool `json:"publicIpEnabled,omitempty"`
 	// ReservedRange: Name of a reserved IP address range within the
@@ -1231,8 +1237,79 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PscConfig: Information for Private Service Connect (PSC) setup for a Looker
+// instance.
+type PscConfig struct {
+	// AllowedVpcs: Optional. List of VPCs that are allowed ingress into looker.
+	// Format: projects/{project}/global/networks/{network}
+	AllowedVpcs []string `json:"allowedVpcs,omitempty"`
+	// LookerServiceAttachmentUri: Output only. URI of the Looker service
+	// attachment.
+	LookerServiceAttachmentUri string `json:"lookerServiceAttachmentUri,omitempty"`
+	// ServiceAttachments: Optional. List of egress service attachment
+	// configurations.
+	ServiceAttachments []*ServiceAttachment `json:"serviceAttachments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedVpcs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedVpcs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestartInstanceRequest: Request options for restarting an instance.
 type RestartInstanceRequest struct {
+}
+
+// ServiceAttachment: Service attachment configuration.
+type ServiceAttachment struct {
+	// ConnectionStatus: Output only. Connection status.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Connection status is unspecified.
+	//   "ACCEPTED" - Connection is established and functioning normally.
+	//   "PENDING" - Connection is not established (Looker tenant project hasn't
+	// been allowlisted).
+	//   "REJECTED" - Connection is not established (Looker tenant project is
+	// explicitly in reject list).
+	//   "NEEDS_ATTENTION" - Issue with target service attachment, e.g. NAT subnet
+	// is exhausted.
+	//   "CLOSED" - Target service attachment does not exist. This status is a
+	// terminal state.
+	ConnectionStatus string `json:"connectionStatus,omitempty"`
+	// LocalFqdn: Required. Fully qualified domain name that will be used in the
+	// private DNS record created for the service attachment.
+	LocalFqdn string `json:"localFqdn,omitempty"`
+	// TargetServiceAttachmentUri: Required. URI of the service attachment to
+	// connect to. Format:
+	// projects/{project}/regions/{region}/serviceAttachments/{service_attachment}
+	TargetServiceAttachmentUri string `json:"targetServiceAttachmentUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAttachment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.

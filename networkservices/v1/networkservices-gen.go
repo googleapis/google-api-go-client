@@ -967,6 +967,19 @@ type Gateway struct {
 	// 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple
 	// ports.
 	Ports []int64 `json:"ports,omitempty"`
+	// RoutingMode: Optional. The routing mode of the Gateway. This field is
+	// configurable only for gateways of type SECURE_WEB_GATEWAY. This field is
+	// required for gateways of type SECURE_WEB_GATEWAY.
+	//
+	// Possible values:
+	//   "EXPLICIT_ROUTING_MODE" - The routing mode is explicit; clients are
+	// configured to send traffic through the gateway. This is the default routing
+	// mode.
+	//   "NEXT_HOP_ROUTING_MODE" - The routing mode is next-hop. Clients are
+	// unaware of the gateway, and a route (advanced route or other route type) can
+	// be configured to direct traffic from client to gateway. The gateway then
+	// acts as a next-hop to the destination.
+	RoutingMode string `json:"routingMode,omitempty"`
 	// Scope: Optional. Scope determines how configuration across multiple Gateway
 	// instances are merged. The configuration for multiple Gateway instances with
 	// the same scope will be merged as presented as a single coniguration to the
@@ -1278,7 +1291,8 @@ func (s GrpcRouteMethodMatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GrpcRouteRetryPolicy: The specifications for retries.
+// GrpcRouteRetryPolicy: The specifications for retries. Specifies one or more
+// conditions for which this retry rule applies. Valid values are:
 type GrpcRouteRetryPolicy struct {
 	// NumRetries: Specifies the allowed number of retries. This number must be >
 	// 0. If not specified, default to 1.

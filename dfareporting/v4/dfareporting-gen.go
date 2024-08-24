@@ -2569,6 +2569,82 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CartData: Contains additional information about cart data.
+type CartData struct {
+	// Items: Data of the items purchased.
+	Items []*CartDataItem `json:"items,omitempty"`
+	// MerchantFeedLabel: The feed labels associated with the feed where your items
+	// are uploaded. For more information, please refer to ​​
+	// https://support.google.com/merchants/answer/12453549. This is a required
+	// field.
+	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
+	// MerchantFeedLanguage: The language associated with the feed where your items
+	// are uploaded. Use ISO 639-1 language codes. This field is needed only when
+	// item IDs are not unique across multiple Merchant Center feeds.
+	MerchantFeedLanguage string `json:"merchantFeedLanguage,omitempty"`
+	// MerchantId: The Merchant Center ID where the items are uploaded.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CartData) MarshalJSON() ([]byte, error) {
+	type NoMethod CartData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CartDataItem: Contains data of the items purchased.
+type CartDataItem struct {
+	// ItemId: The shopping id of the item. Must be equal to the Merchant Center
+	// product identifier. This is a required field.
+	ItemId string `json:"itemId,omitempty"`
+	// Quantity: Number of items sold. This is a required field.
+	Quantity int64 `json:"quantity,omitempty"`
+	// UnitPrice: Unit price excluding tax, shipping, and any transaction level
+	// discounts. Interpreted in CM360 Floodlight config parent advertiser's
+	// currency code. This is a required field.
+	UnitPrice float64 `json:"unitPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ItemId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ItemId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CartDataItem) MarshalJSON() ([]byte, error) {
+	type NoMethod CartDataItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CartDataItem) UnmarshalJSON(data []byte) error {
+	type NoMethod CartDataItem
+	var s1 struct {
+		UnitPrice gensupport.JSONFloat64 `json:"unitPrice"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.UnitPrice = float64(s1.UnitPrice)
+	return nil
+}
+
 // ChangeLog: Describes a change that a user has made to a resource.
 type ChangeLog struct {
 	// AccountId: Account ID of the modified object.
@@ -3047,6 +3123,8 @@ type Conversion struct {
 	//   "GRANTED" - Granted.
 	//   "DENIED" - Denied.
 	AdUserDataConsent string `json:"adUserDataConsent,omitempty"`
+	// CartData: The cart data associated with this conversion.
+	CartData *CartData `json:"cartData,omitempty"`
 	// ChildDirectedTreatment: Whether this particular request may come from a user
 	// under the age of 13, under COPPA compliance.
 	ChildDirectedTreatment bool `json:"childDirectedTreatment,omitempty"`
@@ -5741,6 +5819,16 @@ type DirectorySite struct {
 	Kind string `json:"kind,omitempty"`
 	// Name: Name of this directory site.
 	Name string `json:"name,omitempty"`
+	// PublisherSpecificationId: Output only. Default publisher specification ID of
+	// video placements under this directory site. Possible values are: * `1`, Hulu
+	// * `2`, NBC * `3`, CBS * `4`, CBS Desktop * `5`, Discovery * `6`, VEVO HD *
+	// `7`, VEVO Vertical * `8`, Fox * `9`, CW Network * `10`, Disney * `11`, IGN *
+	// `12`, NFL.com * `13`, Turner Broadcasting * `14`, Tubi on Fox * `15`, Hearst
+	// Corporation * `16`, Twitch Desktop * `17`, ABC * `18`, Univision * `19`,
+	// MLB.com * `20`, MLB.com Mobile * `21`, MLB.com OTT * `22`, Polsat * `23`,
+	// TVN * `24`, Mediaset * `25`, Antena 3 * `26`, Mediamond * `27`, Sky Italia *
+	// `28`, Tubi on CBS * `29`, Spotify * `30`, Paramount * `31`, Max
+	PublisherSpecificationId int64 `json:"publisherSpecificationId,omitempty,string"`
 	// Settings: Directory site settings.
 	Settings *DirectorySiteSettings `json:"settings,omitempty"`
 	// Url: URL of this directory site.
@@ -8389,6 +8477,16 @@ type Placement struct {
 	// ad blocking is disabled for this placement. When false, the campaign and
 	// site settings take effect.
 	AdBlockingOptOut bool `json:"adBlockingOptOut,omitempty"`
+	// AdServingPlatformId: Optional. Ad serving platform ID to identify the ad
+	// serving platform used by the placement. Measurement partners can use this
+	// field to add ad-server specific macros. Possible values are: * `1`, Adelphic
+	// * `2`, Adform * `3`, Adobe * `4`, Amobee * `5`, Basis (Centro) * `6`,
+	// Beeswax * `7`, Amazon * `8`, DV360 (DBM) * `9`, Innovid * `10`, MediaMath *
+	// `11`, Roku OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`,
+	// Xandr Invest DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout *
+	// `18`, Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`,
+	// Cognitiv
+	AdServingPlatformId int64 `json:"adServingPlatformId,omitempty,string"`
 	// AdditionalSizes: Additional sizes associated with this placement. When
 	// inserting or updating a placement, only the size ID field is used.
 	AdditionalSizes []*Size `json:"additionalSizes,omitempty"`
@@ -8498,6 +8596,10 @@ type Placement struct {
 	// SiteIdDimensionValue: Dimension value for the ID of the site. This is a
 	// read-only, auto-generated field.
 	SiteIdDimensionValue *DimensionValue `json:"siteIdDimensionValue,omitempty"`
+	// SiteServed: Optional. Whether the ads in the placement are served by another
+	// platform and CM is only used for tracking or they are served by CM. A false
+	// value indicates the ad is served by CM.
+	SiteServed bool `json:"siteServed,omitempty"`
 	// Size: Size associated with this placement. When inserting or updating a
 	// placement, only the size ID field is used. This field is required on
 	// insertion.
@@ -10312,6 +10414,16 @@ type Site struct {
 	// AccountId: Account ID of this site. This is a read-only field that can be
 	// left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
+	// AdServingPlatformId: Optional. Ad serving platform ID to identify the ad
+	// serving platform used by the site. Measurement partners can use this field
+	// to add ad-server specific macros. If set, this value acts as the default
+	// during placement creation. Possible values are: * `1`, Adelphic * `2`,
+	// Adform * `3`, Adobe * `4`, Amobee * `5`, Basis (Centro) * `6`, Beeswax *
+	// `7`, Amazon * `8`, DV360 (DBM) * `9`, Innovid * `10`, MediaMath * `11`, Roku
+	// OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`, Xandr Invest
+	// DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout * `18`,
+	// Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`, Cognitiv
+	AdServingPlatformId int64 `json:"adServingPlatformId,omitempty,string"`
 	// Approved: Whether this site is approved.
 	Approved bool `json:"approved,omitempty"`
 	// DirectorySiteId: Directory site associated with this site. This is a
@@ -10572,7 +10684,14 @@ type SiteVideoSettings struct {
 	// PublisherSpecificationId: Publisher specification ID used to identify
 	// site-associated publisher requirements and automatically populate transcode
 	// settings. If publisher specification ID is specified, it will take
-	// precedence over transcode settings.
+	// precedence over transcode settings. Possible values are: * `1`, Hulu * `2`,
+	// NBC * `3`, CBS * `4`, CBS Desktop * `5`, Discovery * `6`, VEVO HD * `7`,
+	// VEVO Vertical * `8`, Fox * `9`, CW Network * `10`, Disney * `11`, IGN *
+	// `12`, NFL.com * `13`, Turner Broadcasting * `14`, Tubi on Fox * `15`, Hearst
+	// Corporation * `16`, Twitch Desktop * `17`, ABC * `18`, Univision * `19`,
+	// MLB.com * `20`, MLB.com Mobile * `21`, MLB.com OTT * `22`, Polsat * `23`,
+	// TVN * `24`, Mediaset * `25`, Antena 3 * `26`, Mediamond * `27`, Sky Italia *
+	// `28`, Tubi on CBS * `29`, Spotify * `30`, Paramount * `31`, Max
 	PublisherSpecificationId int64 `json:"publisherSpecificationId,omitempty,string"`
 	// SkippableSettings: Settings for the skippability of video creatives served
 	// to this site. This will act as default for new placements created under this
@@ -11939,6 +12058,14 @@ type VideoSettings struct {
 	//   "PORTRAIT"
 	Orientation string `json:"orientation,omitempty"`
 	// PublisherSpecificationId: Publisher specification ID of a video placement.
+	// Possible values are: * `1`, Hulu * `2`, NBC * `3`, CBS * `4`, CBS Desktop *
+	// `5`, Discovery * `6`, VEVO HD * `7`, VEVO Vertical * `8`, Fox * `9`, CW
+	// Network * `10`, Disney * `11`, IGN * `12`, NFL.com * `13`, Turner
+	// Broadcasting * `14`, Tubi on Fox * `15`, Hearst Corporation * `16`, Twitch
+	// Desktop * `17`, ABC * `18`, Univision * `19`, MLB.com * `20`, MLB.com Mobile
+	// * `21`, MLB.com OTT * `22`, Polsat * `23`, TVN * `24`, Mediaset * `25`,
+	// Antena 3 * `26`, Mediamond * `27`, Sky Italia * `28`, Tubi on CBS * `29`,
+	// Spotify * `30`, Paramount * `31`, Max
 	PublisherSpecificationId int64 `json:"publisherSpecificationId,omitempty,string"`
 	// SkippableSettings: Settings for the skippability of video creatives served
 	// to this placement. If this object is provided, the creative-level skippable

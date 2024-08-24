@@ -4189,9 +4189,8 @@ type Job struct {
 	Etag string `json:"etag,omitempty"`
 	// Id: Output only. Opaque ID field of the job.
 	Id string `json:"id,omitempty"`
-	// JobCreationReason: Output only. If set, it provides the reason why a Job was
-	// created. If not set, it should be treated as the default: REQUESTED. This
-	// feature is not yet available. Jobs will always be created.
+	// JobCreationReason: Output only. The reason why a Job was created. Preview
+	// (/products/#product-launch-stages)
 	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 	// JobReference: Optional. Reference describing the unique-per-user name of the
 	// job.
@@ -4894,8 +4893,8 @@ func (s JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query) method
 // when used with `JOB_CREATION_OPTIONAL` Job creation mode. For `jobs.insert`
 // (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert)
-// method calls it will always be `REQUESTED`. This feature is not yet
-// available. Jobs will always be created.
+// method calls it will always be `REQUESTED`. Preview
+// (/products/#product-launch-stages)
 type JobCreationReason struct {
 	// Code: Output only. Specifies the high level reason why a Job was created.
 	//
@@ -6900,8 +6899,8 @@ type QueryRequest struct {
 	// FormatOptions: Optional. Output format adjustments.
 	FormatOptions *DataFormatOptions `json:"formatOptions,omitempty"`
 	// JobCreationMode: Optional. If not set, jobs are always required. If set, the
-	// query request will follow the behavior described JobCreationMode. This
-	// feature is not yet available. Jobs will always be created.
+	// query request will follow the behavior described JobCreationMode. Preview
+	// (/products/#product-launch-stages)
 	//
 	// Possible values:
 	//   "JOB_CREATION_MODE_UNSPECIFIED" - If unspecified JOB_CREATION_REQUIRED is
@@ -7028,18 +7027,17 @@ type QueryResponse struct {
 	// are present, this will always be true. If this is false, totalRows will not
 	// be available.
 	JobComplete bool `json:"jobComplete,omitempty"`
-	// JobCreationReason: Optional. Only relevant when a job_reference is present
-	// in the response. If job_reference is not present it will always be unset.
-	// When job_reference is present, this field should be interpreted as follows:
-	// If set, it will provide the reason of why a Job was created. If not set, it
-	// should be treated as the default: REQUESTED. This feature is not yet
-	// available. Jobs will always be created.
+	// JobCreationReason: Optional. The reason why a Job was created. Only relevant
+	// when a job_reference is present in the response. If job_reference is not
+	// present it will always be unset. Preview (/products/#product-launch-stages)
 	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 	// JobReference: Reference to the Job that was created to run the query. This
 	// field will be present even if the original request timed out, in which case
 	// GetQueryResults can be used to read the results once the query has
 	// completed. Since this API only returns the first page of results, subsequent
-	// pages can be fetched via the same mechanism (GetQueryResults).
+	// pages can be fetched via the same mechanism (GetQueryResults). If
+	// job_creation_mode was set to `JOB_CREATION_OPTIONAL` and the query completes
+	// without creating a job, this field will be empty.
 	JobReference *JobReference `json:"jobReference,omitempty"`
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
@@ -7053,9 +7051,8 @@ type QueryResponse struct {
 	// method. For more information, see Paging through table data
 	// (https://cloud.google.com/bigquery/docs/paging-results).
 	PageToken string `json:"pageToken,omitempty"`
-	// QueryId: Query ID for the completed query. This ID will be auto-generated.
-	// This field is not yet available and it is currently not guaranteed to be
-	// populated.
+	// QueryId: Auto-generated ID for the query. Preview
+	// (/products/#product-launch-stages)
 	QueryId string `json:"queryId,omitempty"`
 	// Rows: An object with as many results as can be contained within the maximum
 	// permitted reply size. To get any additional rows, you can call
@@ -8216,7 +8213,8 @@ func (s StagePerformanceStandaloneInsight) MarshalJSON() ([]byte, error) {
 // "typeKind": "ARRAY", "arrayElementType": {"typeKind": "STRING"} } * STRUCT>:
 // { "typeKind": "STRUCT", "structType": { "fields": [ { "name": "x", "type":
 // {"typeKind": "STRING"} }, { "name": "y", "type": { "typeKind": "ARRAY",
-// "arrayElementType": {"typeKind": "DATE"} } } ] } }
+// "arrayElementType": {"typeKind": "DATE"} } } ] } } * RANGE: { "typeKind":
+// "RANGE", "rangeElementType": {"typeKind": "DATE"} }
 type StandardSqlDataType struct {
 	// ArrayElementType: The type of the array's elements, if type_kind = "ARRAY".
 	ArrayElementType *StandardSqlDataType `json:"arrayElementType,omitempty"`
@@ -9053,8 +9051,8 @@ type TableFieldSchema struct {
 	// Type: Required. The field data type. Possible values include: * STRING *
 	// BYTES * INTEGER (or INT64) * FLOAT (or FLOAT64) * BOOLEAN (or BOOL) *
 	// TIMESTAMP * DATE * TIME * DATETIME * GEOGRAPHY * NUMERIC * BIGNUMERIC * JSON
-	// * RECORD (or STRUCT) * RANGE (Preview (/products/#product-launch-stages))
-	// Use of RECORD/STRUCT indicates that the field contains a nested schema.
+	// * RECORD (or STRUCT) * RANGE Use of RECORD/STRUCT indicates that the field
+	// contains a nested schema.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Categories") to
 	// unconditionally include in API requests. By default, fields with empty or

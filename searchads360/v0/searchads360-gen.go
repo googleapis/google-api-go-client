@@ -4774,6 +4774,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAdLabel struct {
 	AdGroupAd string `json:"adGroupAd,omitempty"`
 	// Label: Immutable. The label assigned to the ad group ad.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group ad label. Ad
 	// group ad label resource names have the form:
 	// `customers/{customer_id}/adGroupAdLabels/{ad_group_id}~{ad_id}~{label_id}`
@@ -5154,6 +5156,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
 	AdGroupCriterion string `json:"adGroupCriterion,omitempty"`
 	// Label: Immutable. The label assigned to the ad group criterion.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group criterion label.
 	// Ad group criterion label resource names have the form:
 	// `customers/{customer_id}/adGroupCriterionLabels/{ad_group_id}~{criterion_id}~
@@ -5184,6 +5188,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupLabel struct {
 	AdGroup string `json:"adGroup,omitempty"`
 	// Label: Immutable. The label assigned to the ad group.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group label. Ad group
 	// label resource names have the form:
 	// `customers/{customer_id}/adGroupLabels/{ad_group_id}~{label_id}`
@@ -6615,6 +6621,8 @@ type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
 	Campaign string `json:"campaign,omitempty"`
 	// Label: Immutable. The label assigned to the campaign.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. Name of the resource. Campaign label resource names
 	// have the form:
 	// `customers/{customer_id}/campaignLabels/{campaign_id}~{label_id}`
@@ -7225,6 +7233,22 @@ type GoogleAdsSearchads360V0Resources__CustomColumn struct {
 	// ReferencesMetrics: Output only. True when the custom column is referring to
 	// one or more metrics.
 	ReferencesMetrics bool `json:"referencesMetrics,omitempty"`
+	// RenderType: Output only. How the result value of the custom column should be
+	// interpreted.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Unknown.
+	//   "NUMBER" - The custom column is a raw numerical value. See value_type
+	// field to determine if it is an integer or a double.
+	//   "PERCENT" - The custom column should be multiplied by 100 to retrieve the
+	// percentage value.
+	//   "MONEY" - The custom column value is a monetary value and is in micros.
+	//   "STRING" - The custom column value is a string.
+	//   "BOOLEAN" - The custom column value is a boolean.
+	//   "DATE" - The custom column value is a date represented as an integer in
+	// YYYYMMDD format.
+	RenderType string `json:"renderType,omitempty"`
 	// ResourceName: Immutable. The resource name of the custom column. Custom
 	// column resource names have the form:
 	// `customers/{customer_id}/customColumns/{custom_column_id}`
@@ -7238,6 +7262,7 @@ type GoogleAdsSearchads360V0Resources__CustomColumn struct {
 	//   "INT64" - The custom column value is an int64 number.
 	//   "DOUBLE" - The custom column value is a double number.
 	//   "BOOLEAN" - The custom column value is a boolean.
+	//   "DATE" - The custom column value is a date, in YYYYMMDD format.
 	ValueType string `json:"valueType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

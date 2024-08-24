@@ -259,6 +259,20 @@ func (s Callback) MarshalJSON() ([]byte, error) {
 type CancelExecutionRequest struct {
 }
 
+// DeleteExecutionHistoryRequest: Request for the DeleteExecutionHistory
+// method.
+type DeleteExecutionHistoryRequest struct {
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Error: Error describes why the execution was abnormally terminated.
 type Error struct {
 	// Context: Human-readable stack trace string.
@@ -839,6 +853,8 @@ type StepEntry struct {
 	StepType string `json:"stepType,omitempty"`
 	// UpdateTime: Output only. The most recently updated time of the step entry.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VariableData: Output only. The VariableData associated to this step.
+	VariableData *VariableData `json:"variableData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -936,6 +952,28 @@ type TriggerPubsubExecutionRequest struct {
 
 func (s TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TriggerPubsubExecutionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VariableData: VariableData contains the variable data for this step.
+type VariableData struct {
+	// Variables: Variables that are associated with this step.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Variables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Variables") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VariableData) MarshalJSON() ([]byte, error) {
+	type NoMethod VariableData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1237,6 +1275,110 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall struct {
+	s                             *Service
+	name                          string
+	deleteexecutionhistoryrequest *DeleteExecutionHistoryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// DeleteExecutionHistory: Deletes all step entries for an execution.
+//
+//   - name: Name of the execution for which step entries should be deleted.
+//     Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executions/{ex
+//     ecution}.
+func (r *ProjectsLocationsWorkflowsExecutionsService) DeleteExecutionHistory(name string, deleteexecutionhistoryrequest *DeleteExecutionHistoryRequest) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c := &ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deleteexecutionhistoryrequest = deleteexecutionhistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deleteexecutionhistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteExecutionHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.deleteExecutionHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1850,6 +1992,21 @@ func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) Get(name string
 	return c
 }
 
+// View sets the optional parameter "view": Deprecated field.
+//
+// Possible values:
+//
+//	"EXECUTION_ENTRY_VIEW_UNSPECIFIED" - The default/unset value.
+//	"EXECUTION_ENTRY_VIEW_BASIC" - Include basic information in the step
+//
+// entries. All fields in StepEntry are returned except for variable_data.
+//
+//	"EXECUTION_ENTRY_VIEW_DETAILED" - Include all data.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -1953,7 +2110,7 @@ type ProjectsLocationsWorkflowsExecutionsStepEntriesListCall struct {
 //
 //   - parent: Name of the workflow execution to list entries for. Format:
 //     projects/{project}/locations/{location}/workflows/{workflow}/executions/{ex
-//     ecution}/stepEntries/.
+//     ecution}.
 func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) List(parent string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsStepEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1963,9 +2120,9 @@ func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) List(parent str
 // Filter sets the optional parameter "filter": Filters applied to the
 // `[StepEntries.ListStepEntries]` results. The following fields are supported
 // for filtering: `entryId`, `createTime`, `updateTime`, `routine`, `step`,
-// `stepType`, `state`. For details, see AIP-160. For example, if you are using
-// the Google APIs Explorer: `state="SUCCEEDED" or `createTime>"2023-08-01"
-// AND state="FAILED"
+// `stepType`, `parent`, `state`. For details, see AIP-160. For example, if you
+// are using the Google APIs Explorer: `state="SUCCEEDED" or
+// `createTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2004,6 +2161,21 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) PageToken(page
 // page.
 func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Skip(skip int64) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c.urlParams_.Set("skip", fmt.Sprint(skip))
+	return c
+}
+
+// View sets the optional parameter "view": Deprecated field.
+//
+// Possible values:
+//
+//	"EXECUTION_ENTRY_VIEW_UNSPECIFIED" - The default/unset value.
+//	"EXECUTION_ENTRY_VIEW_BASIC" - Include basic information in the step
+//
+// entries. All fields in StepEntry are returned except for variable_data.
+//
+//	"EXECUTION_ENTRY_VIEW_DETAILED" - Include all data.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

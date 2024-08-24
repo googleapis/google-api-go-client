@@ -4007,6 +4007,9 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/web-demo)
 	// integration.
 	AvatarUri string `json:"avatarUri,omitempty"`
+	// ClientCertificateSettings: Optional. Settings for custom client
+	// certificates.
+	ClientCertificateSettings *GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings `json:"clientCertificateSettings,omitempty"`
 	// DefaultLanguageCode: Required. Immutable. The default language of the agent
 	// as a language tag. See Language Support
 	// (https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list
@@ -4111,6 +4114,39 @@ type GoogleCloudDialogflowCxV3beta1AgentAnswerFeedbackSettings struct {
 
 func (s GoogleCloudDialogflowCxV3beta1AgentAnswerFeedbackSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AgentAnswerFeedbackSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings: Settings for
+// custom client certificates.
+type GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings struct {
+	// Passphrase: Optional. The name of the SecretManager secret version resource
+	// storing the passphrase. 'passphrase' should be left unset if the private key
+	// is not encrypted. Format:
+	// `projects/{project}/secrets/{secret}/versions/{version}`
+	Passphrase string `json:"passphrase,omitempty"`
+	// PrivateKey: Required. The name of the SecretManager secret version resource
+	// storing the private key encoded in PEM format. Format:
+	// `projects/{project}/secrets/{secret}/versions/{version}`
+	PrivateKey string `json:"privateKey,omitempty"`
+	// SslCertificate: Required. The ssl certificate encoded in PEM format. This
+	// string must include the begin header and end footer lines.
+	SslCertificate string `json:"sslCertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Passphrase") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Passphrase") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

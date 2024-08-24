@@ -973,7 +973,7 @@ func (s ClusterUpgradeUpgradeStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommonFeatureSpec: CommonFeatureSpec contains Hub-wide configuration
+// CommonFeatureSpec: CommonFeatureSpec contains Fleet-wide configuration
 // information
 type CommonFeatureSpec struct {
 	// Appdevexperience: Appdevexperience specific spec.
@@ -1004,7 +1004,7 @@ func (s CommonFeatureSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommonFeatureState: CommonFeatureState contains Hub-wide Feature status
+// CommonFeatureState: CommonFeatureState contains Fleet-wide Feature status
 // information.
 type CommonFeatureState struct {
 	// Appdevexperience: Appdevexperience specific state.
@@ -1013,7 +1013,7 @@ type CommonFeatureState struct {
 	Clusterupgrade *ClusterUpgradeFleetState `json:"clusterupgrade,omitempty"`
 	// Fleetobservability: FleetObservability feature state.
 	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
-	// State: Output only. The "running state" of the Feature in this Hub.
+	// State: Output only. The "running state" of the Feature in this Fleet.
 	State *FeatureState `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1685,6 +1685,9 @@ type ConfigManagementMembershipSpec struct {
 	// ConfigSync: Config Sync configuration for the cluster.
 	ConfigSync *ConfigManagementConfigSync `json:"configSync,omitempty"`
 	// HierarchyController: Hierarchy Controller configuration for the cluster.
+	// Deprecated: Configuring Hierarchy Controller through the configmanagement
+	// feature is no longer recommended. Use
+	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
 	// Management: Enables automatic Feature management.
 	//
@@ -2219,7 +2222,7 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Feature: Feature represents the settings and status of any Hub Feature.
+// Feature: Feature represents the settings and status of any Fleet Feature.
 type Feature struct {
 	// CreateTime: Output only. When the Feature resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2273,10 +2276,10 @@ type Feature struct {
 	// `projects/{p}/locations/global/scopes/{s}` Where {p} is the project, {s} is
 	// a valid Scope in this project. {p} WILL match the Feature's project.
 	ScopeStates map[string]ScopeFeatureState `json:"scopeStates,omitempty"`
-	// Spec: Optional. Hub-wide Feature configuration. If this Feature does not
-	// support any Hub-wide configuration, this field may be unused.
+	// Spec: Optional. Fleet-wide Feature configuration. If this Feature does not
+	// support any Fleet-wide configuration, this field may be unused.
 	Spec *CommonFeatureSpec `json:"spec,omitempty"`
-	// State: Output only. The Hub-wide Feature state.
+	// State: Output only. The Fleet-wide Feature state.
 	State *CommonFeatureState `json:"state,omitempty"`
 	// Unreachable: Output only. List of locations that could not be reached while
 	// fetching this feature.
@@ -2306,7 +2309,7 @@ func (s Feature) MarshalJSON() ([]byte, error) {
 
 // FeatureResourceState: FeatureResourceState describes the state of a Feature
 // *resource* in the GkeHub API. See `FeatureState` for the "running state" of
-// the Feature in the Hub and across Memberships.
+// the Feature in the Fleet and across Memberships.
 type FeatureResourceState struct {
 	// State: The current state of the Feature resource in the Hub API.
 	//
@@ -2314,10 +2317,10 @@ type FeatureResourceState struct {
 	//   "STATE_UNSPECIFIED" - State is unknown or not set.
 	//   "ENABLING" - The Feature is being enabled, and the Feature resource is
 	// being created. Once complete, the corresponding Feature will be enabled in
-	// this Hub.
-	//   "ACTIVE" - The Feature is enabled in this Hub, and the Feature resource is
-	// fully available.
-	//   "DISABLING" - The Feature is being disabled in this Hub, and the Feature
+	// this Fleet.
+	//   "ACTIVE" - The Feature is enabled in this Fleet, and the Feature resource
+	// is fully available.
+	//   "DISABLING" - The Feature is being disabled in this Fleet, and the Feature
 	// resource is being deleted.
 	//   "UPDATING" - The Feature resource is being updated.
 	//   "SERVICE_UPDATING" - The Feature resource is being updated by the Hub
@@ -3961,8 +3964,7 @@ func (s MembershipEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
-// information for a single Membership. NOTE: Please use snake case in your
-// feature name.
+// information for a single Membership.
 type MembershipFeatureSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
@@ -5319,6 +5321,8 @@ type ServiceMeshCondition struct {
 	// Possible values:
 	//   "CODE_UNSPECIFIED" - Default Unspecified code
 	//   "MESH_IAM_PERMISSION_DENIED" - Mesh IAM permission denied error code
+	//   "MESH_IAM_CROSS_PROJECT_PERMISSION_DENIED" - Permission denied error code
+	// for cross-project
 	//   "CNI_CONFIG_UNSUPPORTED" - CNI config unsupported error code
 	//   "GKE_SANDBOX_UNSUPPORTED" - GKE sandbox unsupported error code
 	//   "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED" - Nodepool workload

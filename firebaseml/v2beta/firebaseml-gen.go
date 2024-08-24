@@ -1323,8 +1323,8 @@ func (s GoogleCloudAiplatformV1beta1SafetySetting) MarshalJSON() ([]byte, error)
 
 // GoogleCloudAiplatformV1beta1Schema: Schema is used to define the format of
 // input/output data. Represents a select subset of an OpenAPI 3.0 schema
-// object (https://spec.openapis.org/oas/v3.0.3#schema). More fields may be
-// added in the future as needed.
+// object (https://spec.openapis.org/oas/v3.0.3#schema-object). More fields may
+// be added in the future as needed.
 type GoogleCloudAiplatformV1beta1Schema struct {
 	// Default: Optional. Default value of the data.
 	Default interface{} `json:"default,omitempty"`

@@ -1376,6 +1376,9 @@ type Cluster struct {
 	// ProtectConfig: Deprecated: Use SecurityPostureConfig instead. Enable/Disable
 	// Protect API features for the cluster.
 	ProtectConfig *ProtectConfig `json:"protectConfig,omitempty"`
+	// RbacBindingConfig: RBACBindingConfig allows user to restrict
+	// ClusterRoleBindings an RoleBindings that can be created.
+	RbacBindingConfig *RBACBindingConfig `json:"rbacBindingConfig,omitempty"`
 	// ReleaseChannel: Release channel configuration. If left unspecified on
 	// cluster creation and a version is specified, the cluster is enrolled in the
 	// most mature release channel where the version is available (first checking
@@ -1775,6 +1778,9 @@ type ClusterUpdate struct {
 	// DesiredProtectConfig: Deprecated: Use DesiredSecurityPostureConfig instead.
 	// Enable/Disable Protect API features for the cluster.
 	DesiredProtectConfig *ProtectConfig `json:"desiredProtectConfig,omitempty"`
+	// DesiredRbacBindingConfig: RBACBindingConfig allows user to restrict
+	// ClusterRoleBindings an RoleBindings that can be created.
+	DesiredRbacBindingConfig *RBACBindingConfig `json:"desiredRbacBindingConfig,omitempty"`
 	// DesiredReleaseChannel: The desired release channel configuration.
 	DesiredReleaseChannel *ReleaseChannel `json:"desiredReleaseChannel,omitempty"`
 	// DesiredResourceUsageExportConfig: The desired configuration for exporting
@@ -3832,7 +3838,8 @@ type Master struct {
 // certificates.
 type MasterAuth struct {
 	// ClientCertificate: Output only. Base64-encoded public certificate used by
-	// clients to authenticate to the cluster endpoint.
+	// clients to authenticate to the cluster endpoint. Issued only if
+	// client_certificate_config is set.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientCertificateConfig: Configuration for client certificate authentication
 	// on the cluster. For clusters before v1.12, if no configuration is specified,
@@ -5608,6 +5615,36 @@ type QueuedProvisioning struct {
 
 func (s QueuedProvisioning) MarshalJSON() ([]byte, error) {
 	type NoMethod QueuedProvisioning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RBACBindingConfig: RBACBindingConfig allows user to restrict
+// ClusterRoleBindings an RoleBindings that can be created.
+type RBACBindingConfig struct {
+	// EnableInsecureBindingSystemAuthenticated: Setting this to true will allow
+	// any ClusterRoleBinding and RoleBinding with subjects system:authenticated.
+	EnableInsecureBindingSystemAuthenticated bool `json:"enableInsecureBindingSystemAuthenticated,omitempty"`
+	// EnableInsecureBindingSystemUnauthenticated: Setting this to true will allow
+	// any ClusterRoleBinding and RoleBinding with subjets system:anonymous or
+	// system:unauthenticated.
+	EnableInsecureBindingSystemUnauthenticated bool `json:"enableInsecureBindingSystemUnauthenticated,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableInsecureBindingSystemAuthenticated") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EnableInsecureBindingSystemAuthenticated") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RBACBindingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RBACBindingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

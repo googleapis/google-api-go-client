@@ -1182,6 +1182,18 @@ func (s InstancePolicy) MarshalJSON() ([]byte, error) {
 // instance template. If undefined, Batch picks the type of VM to use and
 // doesn't include optional VM resources such as GPUs and extra disks.
 type InstancePolicyOrTemplate struct {
+	// BlockProjectSshKeys: Optional. Set this field to `true` if you want Batch to
+	// block project-level SSH keys from accessing this job's VMs. Alternatively,
+	// you can configure the job to specify a VM instance template that blocks
+	// project-level SSH keys. In either case, Batch blocks project-level SSH keys
+	// while creating the VMs for this job. Batch allows project-level SSH keys for
+	// a job's VMs only if all the following are true: + This field is undefined or
+	// set to `false`. + The job's VM instance template (if any) doesn't block
+	// project-level SSH keys. Notably, you can override this behavior by manually
+	// updating a VM to block or allow project-level SSH keys. For more information
+	// about blocking project-level SSH keys, see the Compute Engine documentation:
+	// https://cloud.google.com/compute/docs/connect/restrict-ssh-keys#block-keys
+	BlockProjectSshKeys bool `json:"blockProjectSshKeys,omitempty"`
 	// InstallGpuDrivers: Set this field true if you want Batch to help fetch
 	// drivers from a third party location and install them for GPUs specified in
 	// `policy.accelerators` or `instance_template` on your behalf. Default is
@@ -1200,15 +1212,15 @@ type InstancePolicyOrTemplate struct {
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 	// Policy: InstancePolicy.
 	Policy *InstancePolicy `json:"policy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstallGpuDrivers") to
+	// ForceSendFields is a list of field names (e.g. "BlockProjectSshKeys") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstallGpuDrivers") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockProjectSshKeys") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

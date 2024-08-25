@@ -1941,6 +1941,12 @@ type WorkstationConfig struct {
 	// delete requests to make sure that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GrantWorkstationAdminRoleOnCreate: Optional. Grant creator of a workstation
+	// `roles/workstations.policyAdmin` role along with `roles/workstations.user`
+	// role on the workstation created by them. This allows workstation users to
+	// share access to either their entire workstation, or individual ports.
+	// Defaults to false.
+	GrantWorkstationAdminRoleOnCreate bool `json:"grantWorkstationAdminRoleOnCreate,omitempty"`
 	// Host: Optional. Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
 	// HttpOptions: Optional. HTTP options that customize the behavior of the

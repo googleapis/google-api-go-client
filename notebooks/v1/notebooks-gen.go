@@ -272,6 +272,8 @@ type AcceleratorConfig struct {
 	// Workstations.
 	//   "NVIDIA_TESLA_P4_VWS" - Accelerator type is NVIDIA Tesla P4 Virtual
 	// Workstations.
+	//   "NVIDIA_H100_80GB" - Accelerator type is NVIDIA H100 80GB.
+	//   "NVIDIA_H100_MEGA_80GB" - Accelerator type is NVIDIA H100 Mega 80GB.
 	//   "TPU_V2" - (Coming soon) Accelerator type is TPU V2.
 	//   "TPU_V3" - (Coming soon) Accelerator type is TPU V3.
 	Type string `json:"type,omitempty"`
@@ -2723,6 +2725,8 @@ type SetInstanceAcceleratorRequest struct {
 	// Workstations.
 	//   "NVIDIA_TESLA_P4_VWS" - Accelerator type is NVIDIA Tesla P4 Virtual
 	// Workstations.
+	//   "NVIDIA_H100_80GB" - Accelerator type is NVIDIA H100 80GB.
+	//   "NVIDIA_H100_MEGA_80GB" - Accelerator type is NVIDIA H100 Mega 80GB.
 	//   "TPU_V2" - (Coming soon) Accelerator type is TPU V2.
 	//   "TPU_V3" - (Coming soon) Accelerator type is TPU V3.
 	Type string `json:"type,omitempty"`

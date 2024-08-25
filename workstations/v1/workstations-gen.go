@@ -1876,6 +1876,12 @@ type WorkstationConfig struct {
 	// delete requests to make sure that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GrantWorkstationAdminRoleOnCreate: Optional. Grant creator of a workstation
+	// `roles/workstations.policyAdmin` role along with `roles/workstations.user`
+	// role on the workstation created by them. This allows workstation users to
+	// share access to either their entire workstation, or individual ports.
+	// Defaults to false.
+	GrantWorkstationAdminRoleOnCreate bool `json:"grantWorkstationAdminRoleOnCreate,omitempty"`
 	// Host: Optional. Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
 	// IdleTimeout: Optional. Number of seconds to wait before automatically
@@ -1891,6 +1897,15 @@ type WorkstationConfig struct {
 	// applied to the workstation configuration and that are also propagated to the
 	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaxUsableWorkstations: Optional. Maximum number of workstations under this
+	// config a user can have `workstations.workstation.use` permission on. Only
+	// enforced on CreateWorkstation API calls on the user issuing the API request.
+	// Can be overridden by: - granting a user
+	// workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission,
+	// or - having a user with that permission create a workstation and granting
+	// another user `workstations.workstation.use` permission on that workstation.
+	// If not specified defaults to 0 which indicates unlimited.
+	MaxUsableWorkstations int64 `json:"maxUsableWorkstations,omitempty"`
 	// Name: Identifier. Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`
 	// PersistentDirectories: Optional. Directories to persist across workstation

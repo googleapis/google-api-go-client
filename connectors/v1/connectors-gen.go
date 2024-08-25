@@ -1865,6 +1865,24 @@ type EndpointAttachment struct {
 	Name string `json:"name,omitempty"`
 	// ServiceAttachment: Required. The path of the service attachment
 	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+	// State: Output only. The Private Service Connect Connection Endpoint State.
+	// This value is only available in the Full view.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - STATE_UNSPECIFIED.
+	//   "PENDING" - The endpoint is pending acceptance by the producer.
+	//   "ACCEPTED" - The endpoint has been accepted by the producer.
+	//   "REJECTED" - The endpoint has been rejected by the producer.
+	//   "CLOSED" - The endpoint has been closed by the producer and will not serve
+	// traffic going forward.
+	//   "FROZEN" - The endpoint has been frozen by the producer and will not serve
+	// traffic.
+	//   "NEEDS_ATTENTION" - The endpoint has been accepted by the producer, but it
+	// is not ready to serve the traffic due to producer side issues.
+	//   "ACCEPTED_NOT_PROGRAMMED" - The endpoint has been accepted by the
+	// producer, but it cannot be programmed to the data plane due to invariant
+	// violation.
+	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -9588,6 +9606,23 @@ func (r *ProjectsLocationsEndpointAttachmentsService) Get(name string) *Projects
 	return c
 }
 
+// View sets the optional parameter "view": Specifies which fields of the
+// EndpointAttachment are returned in the response. Defaults to
+// `ENDPOINT_ATTACHMENT_VIEW_BASIC` view.
+//
+// Possible values:
+//
+//	"ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED" -
+//
+// ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED.
+//
+//	"ENDPOINT_ATTACHMENT_VIEW_BASIC" - Do not include status.
+//	"ENDPOINT_ATTACHMENT_VIEW_FULL" - Includes Status.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) View(view string) *ProjectsLocationsEndpointAttachmentsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9718,6 +9753,23 @@ func (c *ProjectsLocationsEndpointAttachmentsListCall) PageSize(pageSize int64) 
 // PageToken sets the optional parameter "pageToken": Page token.
 func (c *ProjectsLocationsEndpointAttachmentsListCall) PageToken(pageToken string) *ProjectsLocationsEndpointAttachmentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields of the
+// EndpointAttachment are returned in the response. Defaults to
+// `ENDPOINT_ATTACHMENT_VIEW_BASIC` view.
+//
+// Possible values:
+//
+//	"ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED" -
+//
+// ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED.
+//
+//	"ENDPOINT_ATTACHMENT_VIEW_BASIC" - Do not include status.
+//	"ENDPOINT_ATTACHMENT_VIEW_FULL" - Includes Status.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) View(view string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

@@ -906,6 +906,11 @@ type CertificateDescription struct {
 	// particular public key, per
 	// https://tools.ietf.org/html/rfc5280#section-4.2.1.2.
 	SubjectKeyId *KeyId `json:"subjectKeyId,omitempty"`
+	// TbsCertificateDigest: The hash of the pre-signed certificate, which will be
+	// signed by the CA. Corresponds to the TBS Certificate in
+	// https://tools.ietf.org/html/rfc5280#section-4.1.2. The field will always be
+	// populated.
+	TbsCertificateDigest string `json:"tbsCertificateDigest,omitempty"`
 	// X509Description: Describes some of the technical X.509 fields in a
 	// certificate.
 	X509Description *X509Parameters `json:"x509Description,omitempty"`

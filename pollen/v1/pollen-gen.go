@@ -549,6 +549,8 @@ type PlantInfo struct {
 	//   "GRAMINALES" - Graminales is classified as a grass pollen type.
 	//   "RAGWEED" - Ragweed is classified as a weed pollen type.
 	//   "MUGWORT" - Mugwort is classified as a weed pollen type.
+	//   "JAPANESE_CEDAR" - Japanese cedar is classified as a tree pollen type.
+	//   "JAPANESE_CYPRESS" - Japanese cypress is classified as a tree pollen type.
 	Code string `json:"code,omitempty"`
 	// DisplayName: A human readable representation of the plant name. Example:
 	// “Cottonwood".
